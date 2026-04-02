@@ -81,17 +81,19 @@ src/
 - `src/hooks/` — Vazio, aguardando custom hooks.
 - Apenas 1 componente shadcn instalado (`button`). Expandir conforme necessário.
 - Apenas 1 rota (`/`). CRM precisa de rotas para contatos, empresas, oportunidades, etc.
+- **Testes**: Infraestrutura configurada (Vitest, Testing Library, jsdom) mas **nenhum teste escrito** ainda.
+- **Título da página** ainda é `"TanStack Start Starter"` — não personalizado para o CRM.
 
 ### Arquitetura
 
-- **Router**: `src/router.tsx` cria o router com `scrollRestoration` e `defaultPreload: "intent"`.
+- **Router**: `src/router.tsx` cria o router com `scrollRestoration`, `defaultPreload: "intent"` e `defaultPreloadStaleTime: 0`.
 - **Root Route**: `src/routes/__root.tsx` define o shell component (`RootDocument`) e os metadados globais.
 - **Query Provider**: `src/integrations/tanstack/query/root-provider.tsx` exporta `getQueryContext()` que cria o `QueryClient`.
 - **Tema**: Fluxo completo — `ThemeScript` (inline, SSR-safe) → `getStoredTheme()` → `applyThemeMode()` → `ThemeToggle` (componente React).
 
 ## Convenções
 
-- **Imports**: Usar alias `#/` para `src/` (configurado no tsconfig e package.json).
+- **Imports**: Usar alias `#/` ou `@/` para `src/` (ambos configurados no tsconfig). Preferir `#/`.
 - **Formatação**: Tabs para indentação, aspas duplas para strings.
 - **Componentes UI**: Usar shadcn/ui — adicionar com `npx shadcn add <component>`.
 - **Tipo de rota**: File-based routing em `src/routes/`.
@@ -103,28 +105,42 @@ src/
 | ----------------------------- | --------------- | ----------- | ----------------------------------------------------------- |
 | `SERVER_URL`                  | URL (server)    | Não         | URL do servidor backend                                     |
 | `VITE_LOCAL_STORAGE_BASE_KEY` | string (client) | Não         | Prefixo para chaves do localStorage (default: `crm-atplus`) |
-| `ANTHROPIC_API_KEY`           | string (server) | Não         | Chave da API Anthropic (IA)                                 |
 
 ## Dependências Principais
 
-| Pacote                   | Versão | Uso                                       |
-| ------------------------ | ------ | ----------------------------------------- |
-| `@tanstack/react-start`  | latest | Framework fullstack                       |
-| `@tanstack/react-router` | latest | Roteamento file-based                     |
-| `@tanstack/react-query`  | latest | Data fetching e cache                     |
-| `@tanstack/react-store`  | latest | Gerenciamento de estado                   |
-| `@tanstack/react-table`  | latest | Tabelas de dados                          |
-| `@tanstack/react-form`   | latest | Formulários                               |
-| `@tanstack/ai-*`         | latest | Integração com múltiplos provedores de IA |
-| `tailwindcss`            | v4.2+  | Estilização                               |
-| `shadcn`                 | v4     | Componentes UI                            |
-| `radix-ui`               | v1.4+  | Primitivos de acessibilidade              |
-| `lucide-react`           | latest | Ícones                                    |
-| `zod`                    | v4     | Validação de schemas                      |
-| `@t3-oss/env-core`       | latest | Tipagem de variáveis de ambiente          |
-| `react`                  | v19    | UI library                                |
-| `highlight.js`           | latest | Syntax highlighting                       |
-| `@faker-js/faker`        | v10    | Geração de dados mock                     |
+| Pacote                       | Versão | Uso                                       |
+| ---------------------------- | ------ | ----------------------------------------- |
+| `react`                      | ^19.2  | UI library                                |
+| `@tanstack/react-start`      | latest | Framework fullstack                       |
+| `@tanstack/react-router`     | latest | Roteamento file-based                     |
+| `@tanstack/react-query`      | latest | Data fetching e cache                     |
+| `@tanstack/react-store`      | latest | Gerenciamento de estado                   |
+| `@tanstack/react-table`      | latest | Tabelas de dados                          |
+| `@tanstack/react-form`       | latest | Formulários                               |
+| `@tanstack/ai-*`             | latest | Integração com múltiplos provedores de IA |
+| `tailwindcss`                | ^4.2   | Estilização                               |
+| `@tailwindcss/vite`          | ^4.2   | Plugin Vite do Tailwind                   |
+| `@tailwindcss/typography`    | ^0.5   | Plugin tipográfico do Tailwind (dev)      |
+| `tw-animate-css`             | ^1.4   | Animações CSS para Tailwind               |
+| `shadcn`                     | ^4.1   | Componentes UI                            |
+| `radix-ui`                   | ^1.4   | Primitivos de acessibilidade              |
+| `lucide-react`               | ^1.7   | Ícones                                    |
+| `zod`                        | ^4.3   | Validação de schemas                      |
+| `@t3-oss/env-core`           | ^0.13  | Tipagem de variáveis de ambiente          |
+| `@fontsource-variable/geist` | ^5.2   | Fonte Geist Variable                      |
+| `@faker-js/faker`            | ^10.4  | Geração de dados mock                     |
+| `highlight.js`               | ^11.11 | Syntax highlighting                       |
+| `streamdown`                 | ^2.5   | Streaming markdown renderer               |
+| `class-variance-authority`   | ^0.7   | Variantes de componentes (CVA)            |
+| `clsx`                       | ^2.1   | Utilidade de classes condicionais         |
+| `tailwind-merge`             | ^3.5   | Merge inteligente de classes Tailwind     |
+| `typescript`                 | ^6.0   | Linguagem (dev)                           |
+| `vite`                       | ^8.0   | Build tool (dev)                          |
+| `vitest`                     | ^4.1   | Testes (dev)                              |
+| `@biomejs/biome`             | 2.4.10 | Linting e formatação (dev)                |
+| `@testing-library/react`     | ^16.3  | Testes de componentes React (dev)         |
+| `@testing-library/dom`       | ^10.4  | Testes de DOM (dev)                       |
+| `jsdom`                      | ^29.0  | Ambiente DOM para testes (dev)            |
 
 ## Guia de Adição de Rotas
 
@@ -178,3 +194,22 @@ function ContactsPage() {
   // ...
 }
 ```
+
+<!-- intent-skills:start -->
+
+# Skill mappings - when working in these areas, load the linked skill file into context.
+
+skills:
+
+- task: "Adding or configuring routes"
+  load: "node_modules/@tanstack/router-core/skills/router-core/SKILL.md"
+- task: "Data loading with route loaders"
+  load: "node_modules/@tanstack/router-core/skills/router-core/data-loading/SKILL.md"
+- task: "Server functions and API endpoints"
+  load: "node_modules/@tanstack/start-client-core/skills/start-core/server-functions/SKILL.md"
+- task: "SSR setup and streaming"
+  load: "node_modules/@tanstack/router-core/skills/router-core/ssr/SKILL.md"
+- task: "React Start framework setup"
+  load: "node_modules/@tanstack/react-start/skills/react-start/SKILL.md"
+
+<!-- intent-skills:end -->
