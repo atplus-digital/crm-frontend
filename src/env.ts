@@ -5,6 +5,9 @@ import { z } from "zod";
 export const env = createEnv({
 	server: {
 		SERVER_URL: z.url().optional(),
+		// NocoBase API credentials for types generation script
+		CRM_NOCOBASE_URL: z.url(),
+		CRM_NOCOBASE_TOKEN: z.string(),
 	},
 	clientPrefix: "VITE_",
 	client: {

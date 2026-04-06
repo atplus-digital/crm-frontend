@@ -2,12 +2,6 @@
 name: markdown-tables
 user-invocable: false
 description: Use when creating or formatting tables in markdown. Covers table syntax, alignment, escaping, and best practices.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Grep
-  - Glob
 ---
 
 # Markdown Tables
@@ -18,7 +12,7 @@ Comprehensive guide to creating and formatting tables in markdown.
 
 ```markdown
 | Header 1 | Header 2 | Header 3 |
-|----------|----------|----------|
+| -------- | -------- | -------- |
 | Cell 1   | Cell 2   | Cell 3   |
 | Cell 4   | Cell 5   | Cell 6   |
 ```
@@ -26,25 +20,25 @@ Comprehensive guide to creating and formatting tables in markdown.
 Renders as:
 
 | Header 1 | Header 2 | Header 3 |
-|----------|----------|----------|
+| -------- | -------- | -------- |
 | Cell 1   | Cell 2   | Cell 3   |
 | Cell 4   | Cell 5   | Cell 6   |
 
 ## Column Alignment
 
 ```markdown
-| Left     | Center   | Right    |
-|:---------|:--------:|---------:|
-| Left     | Center   | Right    |
-| aligned  | aligned  | aligned  |
+| Left    | Center  |   Right |
+| :------ | :-----: | ------: |
+| Left    | Center  |   Right |
+| aligned | aligned | aligned |
 ```
 
 Renders as:
 
-| Left     | Center   | Right    |
-|:---------|:--------:|---------:|
-| Left     | Center   | aligned  |
-| text     | text     | text     |
+| Left | Center |   Right |
+| :--- | :----: | ------: |
+| Left | Center | aligned |
+| text |  text  |    text |
 
 - `:---` Left align (default)
 - `:--:` Center align
@@ -55,9 +49,9 @@ Renders as:
 The pipes and dashes don't need to align:
 
 ```markdown
-|Header|Header|
-|-|-|
-|Cell|Cell|
+| Header | Header |
+| ------ | ------ |
+| Cell   | Cell   |
 ```
 
 However, aligned tables are more readable in source.
@@ -67,10 +61,10 @@ However, aligned tables are more readable in source.
 Use `\|` to include a literal pipe in a cell:
 
 ```markdown
-| Command | Description |
-|---------|-------------|
-| `a \| b` | Pipe operator |
-| `cmd \|\| exit` | Or operator |
+| Command         | Description   |
+| --------------- | ------------- |
+| `a \| b`        | Pipe operator |
+| `cmd \|\| exit` | Or operator   |
 ```
 
 ## Inline Formatting in Tables
@@ -78,11 +72,11 @@ Use `\|` to include a literal pipe in a cell:
 Tables support inline markdown:
 
 ```markdown
-| Feature | Syntax |
-|---------|--------|
-| **Bold** | `**text**` |
-| *Italic* | `*text*` |
-| `Code` | `` `code` `` |
+| Feature     | Syntax        |
+| ----------- | ------------- |
+| **Bold**    | `**text**`    |
+| _Italic_    | `*text*`      |
+| `Code`      | `` `code` ``  |
 | [Link](url) | `[text](url)` |
 ```
 
@@ -93,10 +87,10 @@ Standard markdown tables don't support multi-line cells. Workarounds:
 ### Using `<br>` Tags
 
 ```markdown
-| Step | Description |
-|------|-------------|
-| 1 | First line<br>Second line |
-| 2 | Another step |
+| Step | Description               |
+| ---- | ------------------------- |
+| 1    | First line<br>Second line |
+| 2    | Another step              |
 ```
 
 ### Using HTML Tables
@@ -126,10 +120,10 @@ For complex layouts, use HTML:
 Use a space or leave empty:
 
 ```markdown
-| A | B | C |
-|---|---|---|
-| 1 |   | 3 |
-| 4 | 5 |   |
+| A   | B   | C   |
+| --- | --- | --- |
+| 1   |     | 3   |
+| 4   | 5   |     |
 ```
 
 ## Wide Tables
@@ -140,11 +134,9 @@ For tables with many columns, consider:
 
 ```html
 <div style="overflow-x: auto;">
-
-| Col 1 | Col 2 | Col 3 | Col 4 | Col 5 | Col 6 |
-|-------|-------|-------|-------|-------|-------|
-| Data  | Data  | Data  | Data  | Data  | Data  |
-
+  | Col 1 | Col 2 | Col 3 | Col 4 | Col 5 | Col 6 |
+  |-------|-------|-------|-------|-------|-------| | Data | Data | Data | Data
+  | Data | Data |
 </div>
 ```
 
@@ -155,10 +147,10 @@ Transform wide tables into key-value pairs:
 ```markdown
 ### Item 1
 
-| Property | Value |
-|----------|-------|
-| Name     | Foo   |
-| Type     | Bar   |
+| Property | Value  |
+| -------- | ------ |
+| Name     | Foo    |
+| Type     | Bar    |
 | Status   | Active |
 ```
 
@@ -167,28 +159,28 @@ Transform wide tables into key-value pairs:
 ### Comparison Table
 
 ```markdown
-| Feature | Free | Pro | Enterprise |
-|---------|:----:|:---:|:----------:|
-| Users   | 5    | 50  | Unlimited  |
-| Storage | 1GB  | 10GB| 100GB      |
-| Support | ❌   | ✅  | ✅         |
+| Feature | Free | Pro  | Enterprise |
+| ------- | :--: | :--: | :--------: |
+| Users   |  5   |  50  | Unlimited  |
+| Storage | 1GB  | 10GB |   100GB    |
+| Support |  ❌  |  ✅  |     ✅     |
 ```
 
 ### API Reference
 
 ```markdown
-| Parameter | Type | Required | Description |
-|-----------|------|:--------:|-------------|
-| `id`      | string | ✅ | Unique identifier |
-| `name`    | string | ✅ | Display name |
-| `limit`   | number | ❌ | Max results (default: 10) |
+| Parameter | Type   | Required | Description               |
+| --------- | ------ | :------: | ------------------------- |
+| `id`      | string |    ✅    | Unique identifier         |
+| `name`    | string |    ✅    | Display name              |
+| `limit`   | number |    ❌    | Max results (default: 10) |
 ```
 
 ### Keyboard Shortcuts
 
 ```markdown
 | Action | Windows/Linux | macOS |
-|--------|---------------|-------|
+| ------ | ------------- | ----- |
 | Copy   | `Ctrl+C`      | `⌘+C` |
 | Paste  | `Ctrl+V`      | `⌘+V` |
 | Undo   | `Ctrl+Z`      | `⌘+Z` |
@@ -197,11 +189,11 @@ Transform wide tables into key-value pairs:
 ### Changelog
 
 ```markdown
-| Version | Date | Changes |
-|---------|------|---------|
-| 2.0.0 | 2024-01-15 | Breaking: New API |
-| 1.2.0 | 2024-01-01 | Added feature X |
-| 1.1.0 | 2023-12-15 | Bug fixes |
+| Version | Date       | Changes           |
+| ------- | ---------- | ----------------- |
+| 2.0.0   | 2024-01-15 | Breaking: New API |
+| 1.2.0   | 2024-01-01 | Added feature X   |
+| 1.1.0   | 2023-12-15 | Bug fixes         |
 ```
 
 ## Best Practices
@@ -216,10 +208,10 @@ Transform wide tables into key-value pairs:
 
 ## Markdownlint Rules for Tables
 
-| Rule | Description |
-|------|-------------|
-| MD055 | Table pipe style should be consistent |
-| MD056 | Table column count should match header |
+| Rule  | Description                                |
+| ----- | ------------------------------------------ |
+| MD055 | Table pipe style should be consistent      |
+| MD056 | Table column count should match header     |
 | MD058 | Tables should be surrounded by blank lines |
 
 ## Alternatives to Tables

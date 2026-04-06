@@ -10,17 +10,17 @@ description: >
 The following markdown content rules are enforced in the validators:
 
 1. Headings: Use appropriate heading levels (H2, H3, etc.) to structure your content.
-  Do not use an H1 heading, as this will be generated based on the title.
+   Do not use an H1 heading, as this will be generated based on the title.
 2. Lists: Use bullet points or numbered lists for lists. Ensure proper
-  indentation and spacing.
+   indentation and spacing.
 3. Code Blocks: Use fenced code blocks for code snippets. Specify the language
-  for syntax highlighting.
+   for syntax highlighting.
 4. Links: Use proper markdown syntax for links. Ensure that links are valid and
-  accessible.
+   accessible.
 5. Images: Use proper markdown syntax for images. Include alt text for
-  accessibility.
+   accessibility.
 6. Tables: Use markdown tables for tabular data. Ensure proper formatting and
-  alignment.
+   alignment.
 7. Line Length: Limit line length to 120 characters for readability.
 8. Whitespace: Use appropriate whitespace to separate sections and improve readability.
 9. Front Matter: Include YAML front matter at the beginning of the file with required metadata fields.
@@ -50,18 +50,6 @@ Follow these guidelines for formatting and structuring your markdown content:
 - Line Length: Break lines at 120 characters to improve readability. Use soft
   line breaks for long paragraphs.
 - Whitespace: Use blank lines to separate sections and improve readability. Avoid excessive whitespace.
-
-## Post-Edit Verification
-
-After editing any `.md` or `.mdx` file, run the following command and resolve all reported
-errors before considering the task complete:
-
-```shell
-npx markdownlint-cli2 <edited-file>
-```
-
-This closes the feedback loop so violations are caught and fixed immediately rather than
-relying on an external CI run.
 
 ## Validation Requirements
 
