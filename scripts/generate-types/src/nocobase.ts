@@ -58,7 +58,7 @@ export async function fetchCollectionFields(
 }
 
 export function isRelation(field: NocoBaseField): boolean {
-	const relInterfaces = ["belongsTo", "hasMany", "belongsToMany"];
+	const relInterfaces = ["m2o", "o2m", "m2m"];
 	return relInterfaces.includes(field.interface);
 }
 
@@ -70,19 +70,19 @@ export function mapFieldType(
 	const interface_type = field.interface;
 
 	switch (interface_type) {
-		case "belongsTo":
+		case "m2o":
 			if (field.target) {
 				const targetName = toPascalCase(field.target);
 				return `${targetName}Base | null`;
 			}
 			return "unknown | null";
-		case "hasMany":
+		case "o2m":
 			if (field.target) {
 				const targetName = toPascalCase(field.target);
 				return `${targetName}Base[]`;
 			}
 			return "unknown[]";
-		case "belongsToMany":
+		case "m2m":
 			if (field.target) {
 				const targetName = toPascalCase(field.target);
 				return `${targetName}Base[]`;

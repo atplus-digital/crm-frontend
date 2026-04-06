@@ -24,7 +24,7 @@ export function generateTypeDefinitions(
 			lines.push(`	${formatKey(fieldName)}: ${fieldType};`);
 		}
 		for (const [fieldName, relInfo] of relations) {
-			if (relInfo.type === "belongsTo") {
+			if (relInfo.type === "belongsTo" || relInfo.type === "m2o") {
 				const targetName = toPascalCase(relInfo.targetCollection);
 				lines.push(`	${formatKey(fieldName)}: ${targetName}Base | null;`);
 			}
@@ -132,6 +132,7 @@ export function generateContent(collectionTypes: CollectionTypesMap): string {
 /**
  * Arquivo gerado automaticamente
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
+ * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
 `;

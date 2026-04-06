@@ -1,8 +1,10 @@
-
 /**
  * Arquivo gerado automaticamente
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
+ * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
+
+interface StoragesBase {}
 
 export interface NegociacoesComentariosBase {
 	id: number;
@@ -18,7 +20,8 @@ export interface NegociacoesComentariosBase {
 
 export type NegociacoesComentariosRelations = object;
 
-export type NegociacoesComentariosRelationKey = keyof NegociacoesComentariosRelations;
+export type NegociacoesComentariosRelationKey =
+	keyof NegociacoesComentariosRelations;
 
 export interface FContatosBase {
 	id: number;
@@ -43,25 +46,23 @@ export interface SuspensaoContratoBase {
 	createdBy: unknown;
 	updatedAt: string;
 	updatedBy: unknown;
-	f_pessoas: unknown;
-	f_pessoas_pj: unknown;
 	f_status: string;
 	f_titulo: string;
 	f_dias_suspensao: string;
-	f_responsavel: unknown;
 	f_id_contrato: string;
 	f_teste: unknown;
 	f_email: string;
 	f_cpf: string;
 	f_telefone: string;
 	f_link_assinatura: string;
-	f_contratos: unknown;
-	f_comentarios: unknown;
 	f_inicio_suspensao: string;
 	f_final_suspensao: string;
+	f_pessoas: PessoasBase | null;
+	f_pessoas_pj: EmpresasBase | null;
+	f_responsavel: UsersBase | null;
 }
 
-export type SuspensaoContratoRelations = object;
+export interface SuspensaoContratoRelations {}
 
 export type SuspensaoContratoRelationKey = keyof SuspensaoContratoRelations;
 
@@ -96,11 +97,11 @@ export interface ComprasProdutosBase {
 	f_quantidade: unknown;
 	f_valor_uni: unknown;
 	f_sub_total: unknown;
-	f_fk_produtos_solicitacao_compra: unknown;
 	f_link_produto: string;
+	f_fk_produtos_solicitacao_compra: SolicitacaoComprasBase | null;
 }
 
-export type ComprasProdutosRelations = object;
+export interface ComprasProdutosRelations {}
 
 export type ComprasProdutosRelationKey = keyof ComprasProdutosRelations;
 
@@ -115,37 +116,33 @@ export interface TelecomRecursosBase {
 	f_fk_rack_b: number;
 	f_2ew016ynyo6: number;
 	f_fk_fornecedor_recurso: number;
-	parent: unknown;
-	children: unknown;
 	createdAt: string;
 	createdBy: unknown;
 	updatedAt: string;
 	updatedBy: unknown;
 	f_nome: string;
 	f_status: string;
-	f_site_a: unknown;
-	f_site_b: unknown;
-	f_fornecedor: unknown;
-	f_cliente: unknown;
 	f_opcoes_link_ip: unknown;
 	f_opcoes_colocation: unknown;
 	f_opcoes_l2l: unknown;
 	f_tipo: string;
 	f_designacao_atplus: unknown;
 	f_designacao_externa: string;
-	f_interface_ponta_a: unknown;
-	f_interface_ponta_b: unknown;
-	f_rack_a: unknown;
-	f_rack_b: unknown;
 	f_contrato_ixc: number;
-	f_anexos: unknown;
 	f_detalhes: string;
 	f_finalidade: string;
 	f_id_produto: string;
-	f_equipamento_a: unknown;
+	parent: TelecomRecursosBase | null;
+	f_site_a: SitesBase | null;
+	f_site_b: SitesBase | null;
+	f_fornecedor: FornecedoresTelecomBase | null;
+	f_cliente: FornecedoresTelecomBase | null;
+	f_rack_a: TelecomRacksBase | null;
+	f_rack_b: TelecomRacksBase | null;
+	f_equipamento_a: EquipamentosBase | null;
 }
 
-export type TelecomRecursosRelations = object;
+export interface TelecomRecursosRelations {}
 
 export type TelecomRecursosRelationKey = keyof TelecomRecursosRelations;
 
@@ -171,17 +168,13 @@ export interface EquipamentosBase {
 	f_modelo: string;
 	f_nome: string;
 	f_observacoes: string;
-	f_site: unknown;
 	f_sigla: unknown;
 	f_sn: string;
-	f_interfaces: unknown;
-	f_fwvce6bqigw: unknown;
-	f_rack: unknown;
-	f_recurso_equipamento_a: unknown;
-	f_hcqrd9qhcid: unknown;
+	f_site: SitesBase | null;
+	f_rack: TelecomRacksBase | null;
 }
 
-export type EquipamentosRelations = object;
+export interface EquipamentosRelations {}
 
 export type EquipamentosRelationKey = keyof EquipamentosRelations;
 
@@ -245,11 +238,9 @@ export interface DcServidoresBase {
 	f_sn: string;
 	f_obs: string;
 	f_status: string;
-	f_discos: unknown;
-	f_memorias: unknown;
 }
 
-export type DcServidoresRelations = object;
+export interface DcServidoresRelations {}
 
 export type DcServidoresRelationKey = keyof DcServidoresRelations;
 
@@ -260,7 +251,8 @@ export interface InterfacesEquipamentosBase {
 
 export type InterfacesEquipamentosRelations = object;
 
-export type InterfacesEquipamentosRelationKey = keyof InterfacesEquipamentosRelations;
+export type InterfacesEquipamentosRelationKey =
+	keyof InterfacesEquipamentosRelations;
 
 export interface OeQualirunBase {
 	id: unknown;
@@ -271,12 +263,12 @@ export interface OeQualirunBase {
 	updatedBy: unknown;
 	f_link_externo: string;
 	f_status: string;
-	f_negociacoes: unknown;
 	f_procedimento: string;
 	f_id_externo: string;
+	f_negociacoes: NegociacoesBase | null;
 }
 
-export type OeQualirunRelations = object;
+export interface OeQualirunRelations {}
 
 export type OeQualirunRelationKey = keyof OeQualirunRelations;
 
@@ -295,7 +287,8 @@ export interface DadosAdicionaisClienteContratoBase {
 
 export type DadosAdicionaisClienteContratoRelations = object;
 
-export type DadosAdicionaisClienteContratoRelationKey = keyof DadosAdicionaisClienteContratoRelations;
+export type DadosAdicionaisClienteContratoRelationKey =
+	keyof DadosAdicionaisClienteContratoRelations;
 
 export interface TelecomTransitoOpcoesBase {
 	id: number;
@@ -310,7 +303,8 @@ export interface TelecomTransitoOpcoesBase {
 
 export type TelecomTransitoOpcoesRelations = object;
 
-export type TelecomTransitoOpcoesRelationKey = keyof TelecomTransitoOpcoesRelations;
+export type TelecomTransitoOpcoesRelationKey =
+	keyof TelecomTransitoOpcoesRelations;
 
 export interface TelecomContratosBase {
 	id: number;
@@ -321,13 +315,12 @@ export interface TelecomContratosBase {
 	createdBy: unknown;
 	updatedAt: string;
 	updatedBy: unknown;
-	f_cliente: unknown;
-	f_fornecedor: unknown;
-	f_servicos: unknown;
 	f_descricao: string;
+	f_cliente: FornecedoresTelecomBase | null;
+	f_fornecedor: FornecedoresTelecomBase | null;
 }
 
-export type TelecomContratosRelations = object;
+export interface TelecomContratosRelations {}
 
 export type TelecomContratosRelationKey = keyof TelecomContratosRelations;
 
@@ -349,10 +342,6 @@ export interface NegociacoesBase {
 	f_valor_instalacao: unknown;
 	f_status: string;
 	f_ordenacao: unknown;
-	f_anexos: unknown;
-	f_pacote: unknown;
-	f_pessoa: unknown;
-	f_itens_negociacao: unknown;
 	f_valor_mensal_sem_desconto: unknown;
 	f_fidelidade: string;
 	f_valor_beneficios: unknown;
@@ -364,10 +353,8 @@ export interface NegociacoesBase {
 	f_endereco_cidade: string;
 	f_endereco_referencia: string;
 	f_tipo_pessoa: string;
-	f_negociacao_pessoa_juridica: unknown;
 	f_bairro: string;
 	f_email_cobranca: string;
-	f_comentarios: unknown;
 	f_telefone: string;
 	f_telefone_2: string;
 	f_responsavel_assinatura: string;
@@ -380,10 +367,7 @@ export interface NegociacoesBase {
 	f_sva: number;
 	f_data_vencimento: string;
 	f_ixc_tipo_cobranca: string;
-	f_vendedor: unknown;
 	f_motivo: string;
-	f_negociacao_contrato: unknown;
-	f_pacotes_adicionais: unknown;
 	f_endereco_estado: string;
 	f_contrato_ixc: string;
 	f_cpf_cnpj: string;
@@ -391,7 +375,6 @@ export interface NegociacoesBase {
 	f_rg_ie: string;
 	f_nome_fantasia: string;
 	f_valor_mensal_antigo: unknown;
-	f_cupom_desconto: unknown;
 	f_Incremento: unknown;
 	f_endereco_cobranca: string;
 	f_cep_cobranca: string;
@@ -413,14 +396,17 @@ export interface NegociacoesBase {
 	f_motivo_pontos: unknown[];
 	f_zapsign: boolean;
 	f_assinatura_gov: boolean;
-	f_fk_oe_qualirun: unknown;
-	f_qualirun_assinatura_gov: unknown;
 	f_nome_edificio: string;
 	f_apartamento: string;
 	f_bloco_quadra: string;
+	f_pacote: PacotesBase | null;
+	f_pessoa: PessoasBase | null;
+	f_negociacao_pessoa_juridica: EmpresasBase | null;
+	f_vendedor: UsersBase | null;
+	f_cupom_desconto: CuponsDescontoBase | null;
 }
 
-export type NegociacoesRelations = object;
+export interface NegociacoesRelations {}
 
 export type NegociacoesRelationKey = keyof NegociacoesRelations;
 
@@ -482,7 +468,8 @@ export interface TemplatesXOrdensDeServicoBase {
 
 export type TemplatesXOrdensDeServicoRelations = object;
 
-export type TemplatesXOrdensDeServicoRelationKey = keyof TemplatesXOrdensDeServicoRelations;
+export type TemplatesXOrdensDeServicoRelationKey =
+	keyof TemplatesXOrdensDeServicoRelations;
 
 export interface P10scfhrhkwBase {
 	id: unknown;
@@ -507,11 +494,11 @@ export interface InfoArquivosBase {
 	updatedBy: unknown;
 	f_arquivo_externo: string;
 	f_arquivos: unknown;
-	f_funcionarios: unknown;
 	f_titulo: string;
+	f_funcionarios: FFuncionariosBase | null;
 }
 
-export type InfoArquivosRelations = object;
+export interface InfoArquivosRelations {}
 
 export type InfoArquivosRelationKey = keyof InfoArquivosRelations;
 
@@ -536,19 +523,20 @@ export interface ArquivosFuncionariosBase {
 	path: string;
 	url: string;
 	preview: string;
-	storage: unknown;
 	meta: unknown;
 	createdAt: string;
 	createdBy: unknown;
 	updatedAt: string;
 	updatedBy: unknown;
-	f_funcionarios: unknown;
 	f_info_arquivos: unknown;
+	storage: StoragesBase | null;
+	f_funcionarios: FFuncionariosBase | null;
 }
 
-export type ArquivosFuncionariosRelations = object;
+export interface ArquivosFuncionariosRelations {}
 
-export type ArquivosFuncionariosRelationKey = keyof ArquivosFuncionariosRelations;
+export type ArquivosFuncionariosRelationKey =
+	keyof ArquivosFuncionariosRelations;
 
 export interface ContratosBase {
 	id: number;
@@ -598,11 +586,11 @@ export interface LinhaCorporativaBase {
 	updatedBy: unknown;
 	f_numero_movel_corporativo: string;
 	f_iccid_corporativo: string;
-	f_funcionarios: unknown;
 	f_tipo: string;
+	f_funcionarios: FFuncionariosBase | null;
 }
 
-export type LinhaCorporativaRelations = object;
+export interface LinhaCorporativaRelations {}
 
 export type LinhaCorporativaRelationKey = keyof LinhaCorporativaRelations;
 
@@ -647,14 +635,13 @@ export interface AtendimentosIxcBase {
 	f_datainicio: string;
 	f_datafim: string;
 	f_diagnosticos: string;
-	f_templates_atendimentos: unknown;
 	f_idatendimento: string;
 	f_usuario: string;
 	f_prioridade: string;
 	f_id_login: string;
 }
 
-export type AtendimentosIxcRelations = object;
+export interface AtendimentosIxcRelations {}
 
 export type AtendimentosIxcRelationKey = keyof AtendimentosIxcRelations;
 
@@ -671,8 +658,6 @@ export interface TelecomInterfacesBase {
 	id: number;
 	f_p9gxrkh5utl: number;
 	parentId: number;
-	parent: unknown;
-	children: unknown;
 	createdAt: string;
 	createdBy: unknown;
 	updatedAt: string;
@@ -681,14 +666,11 @@ export interface TelecomInterfacesBase {
 	f_interface: string;
 	f_tipo: string;
 	f_configuracao: string;
-	f_fk_interfaces_equipamentos: unknown;
-	f_fk_equipamento: unknown;
-	f_fk_recurso_interface_ponta_a: unknown;
-	f_fk_recurso_interface_ponta_b: unknown;
 	f_s3gs1jjkqzm: unknown;
+	parent: TelecomInterfacesBase | null;
 }
 
-export type TelecomInterfacesRelations = object;
+export interface TelecomInterfacesRelations {}
 
 export type TelecomInterfacesRelationKey = keyof TelecomInterfacesRelations;
 
@@ -759,7 +741,6 @@ export interface PacotesBase {
 	updatedBy: unknown;
 	f_nome_pacote: string;
 	f_mensalidade_com_desconto: unknown;
-	f_itens_do_pacote: unknown;
 	f_mensalidade_sem_desconto: unknown;
 	f_status: string;
 	f_pacote_principal: string;
@@ -768,7 +749,7 @@ export interface PacotesBase {
 	f_abre_atendimento: string;
 }
 
-export type PacotesRelations = object;
+export interface PacotesRelations {}
 
 export type PacotesRelationKey = keyof PacotesRelations;
 
@@ -784,7 +765,8 @@ export interface TrocasdetitularidadeComentariosBase {
 
 export type TrocasdetitularidadeComentariosRelations = object;
 
-export type TrocasdetitularidadeComentariosRelationKey = keyof TrocasdetitularidadeComentariosRelations;
+export type TrocasdetitularidadeComentariosRelationKey =
+	keyof TrocasdetitularidadeComentariosRelations;
 
 export interface TelecomAnexosBase {
 	id: number;
@@ -822,10 +804,9 @@ export interface ContratosIxcBase {
 	f_descricao: string;
 	f_vencimento: string;
 	f_expiracao: string;
-	f_itens_contrato: unknown;
 }
 
-export type ContratosIxcRelations = object;
+export interface ContratosIxcRelations {}
 
 export type ContratosIxcRelationKey = keyof ContratosIxcRelations;
 
@@ -848,14 +829,13 @@ export interface AcessosBase {
 	updatedAt: string;
 	updatedBy: unknown;
 	f_tipo: string;
-	f_site: unknown;
-	f_insumos: unknown;
-	f_xzuv9d6zkhr: unknown;
-	f_equipamento: unknown;
 	f_interface: unknown;
+	f_site: SitesBase | null;
+	f_xzuv9d6zkhr: ServicosBase | null;
+	f_equipamento: EquipamentosBase | null;
 }
 
-export type AcessosRelations = object;
+export interface AcessosRelations {}
 
 export type AcessosRelationKey = keyof AcessosRelations;
 
@@ -920,12 +900,12 @@ export interface LogsCargosBase {
 	f_descricao: string;
 	f_atividades: string;
 	CBO: string;
-	f_funcionarios: unknown;
 	f_data_inicio_cargo: string;
 	f_cargo_anterior: string;
+	f_funcionarios: FFuncionariosBase | null;
 }
 
-export type LogsCargosRelations = object;
+export interface LogsCargosRelations {}
 
 export type LogsCargosRelationKey = keyof LogsCargosRelations;
 
@@ -986,10 +966,10 @@ export interface ParentescoBase {
 	f_nome: string;
 	f_cpf: string;
 	f_vinculo_colaborador: string;
-	f_funcionarios: unknown;
+	f_funcionarios: FFuncionariosBase | null;
 }
 
-export type ParentescoRelations = object;
+export interface ParentescoRelations {}
 
 export type ParentescoRelationKey = keyof ParentescoRelations;
 
@@ -1010,7 +990,8 @@ export interface EquipamentosEmPrediosBase {
 
 export type EquipamentosEmPrediosRelations = object;
 
-export type EquipamentosEmPrediosRelationKey = keyof EquipamentosEmPrediosRelations;
+export type EquipamentosEmPrediosRelationKey =
+	keyof EquipamentosEmPrediosRelations;
 
 export interface OrigemXTiposBase {
 	f_fk_origem_tipo_1: number;
@@ -1029,12 +1010,12 @@ export interface ConsultasPfBase {
 	updatedAt: string;
 	updatedBy: unknown;
 	f_retorno_spc: string;
-	f_id_pessoa: unknown;
 	f_status_consulta: string;
 	f_justificativa: string;
+	f_id_pessoa: PessoasBase | null;
 }
 
-export type ConsultasPfRelations = object;
+export interface ConsultasPfRelations {}
 
 export type ConsultasPfRelationKey = keyof ConsultasPfRelations;
 
@@ -1053,7 +1034,8 @@ export interface TelecomColocationOpcoesBase {
 
 export type TelecomColocationOpcoesRelations = object;
 
-export type TelecomColocationOpcoesRelationKey = keyof TelecomColocationOpcoesRelations;
+export type TelecomColocationOpcoesRelationKey =
+	keyof TelecomColocationOpcoesRelations;
 
 export interface CuponsDescontoBase {
 	id: number;
@@ -1072,15 +1054,13 @@ export interface CuponsDescontoBase {
 	f_cep: string;
 	f_endereco: string;
 	f_endereco_numero: string;
-	f_vendedor: unknown;
-	f_pacotes: unknown;
 	f_status: string;
 	f_valor_renovacao: number;
 	f_tipo_negociacao: string;
 	f_nome: string;
 }
 
-export type CuponsDescontoRelations = object;
+export interface CuponsDescontoRelations {}
 
 export type CuponsDescontoRelationKey = keyof CuponsDescontoRelations;
 
@@ -1202,11 +1182,11 @@ export interface InfoAsoBase {
 	f_data_prox_exame: unknown;
 	f_dias_afastamento: string;
 	f_aso: unknown;
-	f_funcionarios_2: unknown;
 	f_obs: string;
+	f_funcionarios_2: FFuncionariosBase | null;
 }
 
-export type InfoAsoRelations = object;
+export interface InfoAsoRelations {}
 
 export type InfoAsoRelationKey = keyof InfoAsoRelations;
 
@@ -1221,8 +1201,6 @@ export interface FFuncionariosBase {
 	updatedAt: string;
 	updatedBy: unknown;
 	f_id_tecnico_ixc: unknown;
-	f_arquivos_funcionarios: unknown;
-	f_patrimonio_funcionarios: unknown;
 	f_empresa: string;
 	f_nome: string;
 	f_cpf: string;
@@ -1264,7 +1242,6 @@ export interface FFuncionariosBase {
 	f_epi_calcado: string;
 	f_mobilidade: string;
 	f_ativo: string;
-	f_foto_funcionarios: unknown;
 	f_rg: string;
 	f_orgao_expedidor: string;
 	f_cnh: string;
@@ -1276,22 +1253,14 @@ export interface FFuncionariosBase {
 	f_tipo_deficiencia: string;
 	f_nacionalidade: string;
 	f_naturalidade: string;
-	f_chip_corporativo: unknown;
-	f_cargo: unknown;
-	f_departamento: unknown;
 	f_checklist_admissional: unknown[];
-	f_parentesco: unknown;
-	f_logs_cargos: unknown;
-	f_turnos: unknown;
-	f_asos: unknown;
-	f_info_aso: unknown;
-	f_info_arquivos: unknown;
-	f_qualirun_processos: unknown;
-	t_qualirun_info_adicionais: unknown;
 	f_mes_nascimento: unknown;
+	f_cargo: CargosBase | null;
+	f_departamento: DepartamentosBase | null;
+	f_turnos: TurnosBase | null;
 }
 
-export type FFuncionariosRelations = object;
+export interface FFuncionariosRelations {}
 
 export type FFuncionariosRelationKey = keyof FFuncionariosRelations;
 
@@ -1339,7 +1308,8 @@ export interface TemplatesAtendimentoN1Base {
 
 export type TemplatesAtendimentoN1Relations = object;
 
-export type TemplatesAtendimentoN1RelationKey = keyof TemplatesAtendimentoN1Relations;
+export type TemplatesAtendimentoN1RelationKey =
+	keyof TemplatesAtendimentoN1Relations;
 
 export interface DemandasViabilidadesBase {
 	id: number;
@@ -1360,7 +1330,8 @@ export interface DemandasViabilidadesBase {
 
 export type DemandasViabilidadesRelations = object;
 
-export type DemandasViabilidadesRelationKey = keyof DemandasViabilidadesRelations;
+export type DemandasViabilidadesRelationKey =
+	keyof DemandasViabilidadesRelations;
 
 export interface UsersBase {
 	id: number;
@@ -1379,18 +1350,16 @@ export interface UsersBase {
 	createdAt: string;
 	updatedAt: string;
 	sort: unknown;
-	roles: unknown;
 	createdBy: unknown;
 	createdById: unknown;
 	updatedBy: unknown;
 	updatedById: unknown;
 	f_id_vendedor_ixc: number;
 	f_id_tecnico_ixc: number;
-	departments: unknown;
-	mainDepartment: unknown;
+	mainDepartment: DepartmentsBase | null;
 }
 
-export type UsersRelations = object;
+export interface UsersRelations {}
 
 export type UsersRelationKey = keyof UsersRelations;
 
@@ -1405,10 +1374,10 @@ export interface CargosBase {
 	f_descricao: string;
 	f_atividades: string;
 	f_cbo: string;
-	f_responsavel: unknown;
+	f_responsavel: UsersBase | null;
 }
 
-export type CargosRelations = object;
+export interface CargosRelations {}
 
 export type CargosRelationKey = keyof CargosRelations;
 
@@ -1436,7 +1405,8 @@ export interface LinksIndicadoresUsuariosBase {
 
 export type LinksIndicadoresUsuariosRelations = object;
 
-export type LinksIndicadoresUsuariosRelationKey = keyof LinksIndicadoresUsuariosRelations;
+export type LinksIndicadoresUsuariosRelationKey =
+	keyof LinksIndicadoresUsuariosRelations;
 
 export interface AsosBase {
 	id: unknown;
@@ -1450,17 +1420,17 @@ export interface AsosBase {
 	path: string;
 	url: string;
 	preview: string;
-	storage: unknown;
 	meta: unknown;
 	createdAt: string;
 	createdBy: unknown;
 	updatedAt: string;
 	updatedBy: unknown;
-	f_funcionarios: unknown;
 	f_info_aso: unknown;
+	storage: StoragesBase | null;
+	f_funcionarios: FFuncionariosBase | null;
 }
 
-export type AsosRelations = object;
+export interface AsosRelations {}
 
 export type AsosRelationKey = keyof AsosRelations;
 
@@ -1489,7 +1459,8 @@ export interface ComentariosSuspensaoDeContratoBase {
 
 export type ComentariosSuspensaoDeContratoRelations = object;
 
-export type ComentariosSuspensaoDeContratoRelationKey = keyof ComentariosSuspensaoDeContratoRelations;
+export type ComentariosSuspensaoDeContratoRelationKey =
+	keyof ComentariosSuspensaoDeContratoRelations;
 
 export interface RecursosViagemBase {
 	id: number;
@@ -1536,19 +1507,17 @@ export interface DepartmentsBase {
 	id: unknown;
 	title: string;
 	isLeaf: boolean;
-	parent: unknown;
 	children: unknown;
 	members: unknown;
-	roles: unknown;
-	owners: unknown;
 	sort: unknown;
 	createdBy: unknown;
 	createdById: unknown;
 	updatedBy: unknown;
 	updatedById: unknown;
+	parent: DepartmentsBase | null;
 }
 
-export type DepartmentsRelations = object;
+export interface DepartmentsRelations {}
 
 export type DepartmentsRelationKey = keyof DepartmentsRelations;
 
@@ -1579,7 +1548,6 @@ export interface PatrimonioBase {
 	f_valor_patrimonio: unknown;
 	f_tipo_patrimonio: string;
 	f_id_tecnico_ixc: unknown;
-	f_funcionarios: unknown;
 	f_estado_uso: string;
 	f_numero_serie: string;
 	f_modelo: string;
@@ -1587,9 +1555,10 @@ export interface PatrimonioBase {
 	f_ram: string;
 	f_armazenamento: string;
 	f_so: string;
+	f_funcionarios: FFuncionariosBase | null;
 }
 
-export type PatrimonioRelations = object;
+export interface PatrimonioRelations {}
 
 export type PatrimonioRelationKey = keyof PatrimonioRelations;
 
@@ -1599,23 +1568,19 @@ export interface TelecomRacksBase {
 	f_fk_rack_sala: number;
 	f_fk_site_racks: number;
 	parentId: number;
-	parent: unknown;
-	children: unknown;
 	createdAt: string;
 	createdBy: unknown;
 	updatedAt: string;
 	updatedBy: unknown;
-	f_fk_rack_sites: unknown;
 	f_rack: string;
 	f_sigla: string;
-	f_sala: unknown;
-	f_fila: unknown;
-	f_fk_rack_ativos: unknown;
-	f_fk_rack_a_recursos: unknown;
-	f_fk_recursos_rack_b: unknown;
+	parent: TelecomRacksBase | null;
+	f_fk_rack_sites: SitesBase | null;
+	f_sala: TelecomSalasBase | null;
+	f_fila: TelecomFilaBase | null;
 }
 
-export type TelecomRacksRelations = object;
+export interface TelecomRacksRelations {}
 
 export type TelecomRacksRelationKey = keyof TelecomRacksRelations;
 
@@ -1641,10 +1606,9 @@ export interface TurnosBase {
 	updatedAt: string;
 	updatedBy: unknown;
 	f_turno: string;
-	f_funcionarios: unknown;
 }
 
-export type TurnosRelations = object;
+export interface TurnosRelations {}
 
 export type TurnosRelationKey = keyof TurnosRelations;
 
@@ -1683,10 +1647,9 @@ export interface TelecomFilaBase {
 	updatedAt: string;
 	updatedBy: unknown;
 	f_nome: string;
-	f_fk_fila_rack: unknown;
 }
 
-export type TelecomFilaRelations = object;
+export interface TelecomFilaRelations {}
 
 export type TelecomFilaRelationKey = keyof TelecomFilaRelations;
 
@@ -1707,8 +1670,6 @@ export interface SolicitacaoComprasBase {
 	f_categoria: string;
 	f_departamento: string;
 	f_observacoes_finais: string;
-	f_produtos: unknown;
-	f_fornecedor: unknown;
 	f_metodo_de_pagamento: string;
 	f_prazo: string;
 	f_valor_total: unknown;
@@ -1717,9 +1678,10 @@ export interface SolicitacaoComprasBase {
 	f_prazo_de_entrega: string;
 	f_motivo_arquivamento: string;
 	f_link: string;
+	f_fornecedor: ComprasFornecedoresBase | null;
 }
 
-export type SolicitacaoComprasRelations = object;
+export interface SolicitacaoComprasRelations {}
 
 export type SolicitacaoComprasRelationKey = keyof SolicitacaoComprasRelations;
 
@@ -1730,7 +1692,8 @@ export interface ColaboradoresDoSetorBase {
 
 export type ColaboradoresDoSetorRelations = object;
 
-export type ColaboradoresDoSetorRelationKey = keyof ColaboradoresDoSetorRelations;
+export type ColaboradoresDoSetorRelationKey =
+	keyof ColaboradoresDoSetorRelations;
 
 export interface DepartamentosBase {
 	id: number;
@@ -1740,10 +1703,10 @@ export interface DepartamentosBase {
 	updatedAt: string;
 	updatedBy: unknown;
 	f_nome: string;
-	f_responsavel: unknown;
+	f_responsavel: UsersBase | null;
 }
 
-export type DepartamentosRelations = object;
+export interface DepartamentosRelations {}
 
 export type DepartamentosRelationKey = keyof DepartamentosRelations;
 
@@ -1781,8 +1744,6 @@ export interface CrmTrocaTitularidadeBase {
 	f_rw7rp8431ty: unknown;
 	f_link_assinatura_cedente: string;
 	f_link_assinatura_cessionario: string;
-	f_trocadetitularidade_contrato: unknown;
-	f_vendedor: unknown;
 	f_substatus: string;
 	f_endereco: string;
 	f_bairro: string;
@@ -1790,17 +1751,17 @@ export interface CrmTrocaTitularidadeBase {
 	f_estado: string;
 	f_complemento: string;
 	f_cep: string;
-	f_comentarios: unknown;
-	f_anexos: unknown;
 	f_tipo_pessoa: string;
-	f_pessoa_pf: unknown;
-	f_pessoa_pj: unknown;
 	f_numero: string;
+	f_vendedor: UsersBase | null;
+	f_pessoa_pf: PessoasBase | null;
+	f_pessoa_pj: EmpresasBase | null;
 }
 
-export type CrmTrocaTitularidadeRelations = object;
+export interface CrmTrocaTitularidadeRelations {}
 
-export type CrmTrocaTitularidadeRelationKey = keyof CrmTrocaTitularidadeRelations;
+export type CrmTrocaTitularidadeRelationKey =
+	keyof CrmTrocaTitularidadeRelations;
 
 export interface FotoFuncionariosBase {
 	id: number;
@@ -1813,16 +1774,16 @@ export interface FotoFuncionariosBase {
 	path: string;
 	url: string;
 	preview: string;
-	storage: unknown;
 	meta: unknown;
 	createdAt: string;
 	createdBy: unknown;
 	updatedAt: string;
 	updatedBy: unknown;
-	f_funcionarios: unknown;
+	storage: StoragesBase | null;
+	f_funcionarios: FFuncionariosBase | null;
 }
 
-export type FotoFuncionariosRelations = object;
+export interface FotoFuncionariosRelations {}
 
 export type FotoFuncionariosRelationKey = keyof FotoFuncionariosRelations;
 
@@ -1892,13 +1853,10 @@ export interface SitesBase {
 	f_cidade: string;
 	f_complemento: string;
 	f_status: string;
-	f_fk_sites_equipamentos: unknown;
-	f_racks: unknown;
-	f_anexos: unknown;
-	f_contatos: unknown;
+	f_contatos: FContatosBase | null;
 }
 
-export type SitesRelations = object;
+export interface SitesRelations {}
 
 export type SitesRelationKey = keyof SitesRelations;
 
@@ -1913,10 +1871,9 @@ export interface SetorBase {
 	f_fk_sistemas_acessos: unknown;
 	f_funcionarios: unknown;
 	f_fk_funcionarios: unknown;
-	f_funcionarios_1: unknown;
 }
 
-export type SetorRelations = object;
+export interface SetorRelations {}
 
 export type SetorRelationKey = keyof SetorRelations;
 
@@ -1988,17 +1945,18 @@ export interface QualirunAssinaturaGovBase {
 	path: string;
 	url: string;
 	preview: string;
-	storage: unknown;
 	meta: unknown;
 	createdAt: string;
 	createdBy: unknown;
 	updatedAt: string;
 	updatedBy: unknown;
+	storage: StoragesBase | null;
 }
 
-export type QualirunAssinaturaGovRelations = object;
+export interface QualirunAssinaturaGovRelations {}
 
-export type QualirunAssinaturaGovRelationKey = keyof QualirunAssinaturaGovRelations;
+export type QualirunAssinaturaGovRelationKey =
+	keyof QualirunAssinaturaGovRelations;
 
 export interface FornecedoresTelecomBase {
 	id: number;
@@ -2011,13 +1969,9 @@ export interface FornecedoresTelecomBase {
 	f_nome_fantasia: string;
 	f_razao_social: string;
 	f_instrucoes: string;
-	f_fk_recurso_fornecedor: unknown;
-	f_fk_recurso_cliente: unknown;
-	f_fk_cliente_contrato: unknown;
-	f_fk_contrato_fornecedor: unknown;
 }
 
-export type FornecedoresTelecomRelations = object;
+export interface FornecedoresTelecomRelations {}
 
 export type FornecedoresTelecomRelationKey = keyof FornecedoresTelecomRelations;
 
@@ -2038,16 +1992,17 @@ export interface QualirunInfoAdicionaisBase {
 	f_parentesco_nome: string;
 	f_parentesco_cpf: string;
 	f_parentesco_vinculo: string;
-	f_funcionarios: unknown;
 	f_status: string;
 	f_2fxykekjpk2: string;
 	f_sqt1x7ndy5j: string;
 	f_tkxxh3xi2zw: unknown;
+	f_funcionarios: FFuncionariosBase | null;
 }
 
-export type QualirunInfoAdicionaisRelations = object;
+export interface QualirunInfoAdicionaisRelations {}
 
-export type QualirunInfoAdicionaisRelationKey = keyof QualirunInfoAdicionaisRelations;
+export type QualirunInfoAdicionaisRelationKey =
+	keyof QualirunInfoAdicionaisRelations;
 
 export interface DatacenterMemoriasBase {
 	id: number;
@@ -2059,13 +2014,13 @@ export interface DatacenterMemoriasBase {
 	f_fabricante: string;
 	f_capacidade: string;
 	f_tipo: string;
-	f_fk_servidor: unknown;
 	f_sn: string;
 	f_status: string;
 	f_valor_locacao: unknown;
+	f_fk_servidor: DcServidoresBase | null;
 }
 
-export type DatacenterMemoriasRelations = object;
+export interface DatacenterMemoriasRelations {}
 
 export type DatacenterMemoriasRelationKey = keyof DatacenterMemoriasRelations;
 
@@ -2077,10 +2032,9 @@ export interface TelecomSalasBase {
 	updatedAt: string;
 	updatedBy: unknown;
 	f_nome: string;
-	f_fk_sala_racks: unknown;
 }
 
-export type TelecomSalasRelations = object;
+export interface TelecomSalasRelations {}
 
 export type TelecomSalasRelationKey = keyof TelecomSalasRelations;
 
@@ -2122,7 +2076,8 @@ export interface AnexosTrocaTitularidadeBase {
 
 export type AnexosTrocaTitularidadeRelations = object;
 
-export type AnexosTrocaTitularidadeRelationKey = keyof AnexosTrocaTitularidadeRelations;
+export type AnexosTrocaTitularidadeRelationKey =
+	keyof AnexosTrocaTitularidadeRelations;
 
 export interface ServicosBase {
 	id: number;
@@ -2133,8 +2088,6 @@ export interface ServicosBase {
 	updatedBy: unknown;
 	f_designacao_externa: string;
 	f_tipo: string;
-	f_acessos: unknown;
-	f_kyyzn4kut6e: unknown;
 	f_descricao: string;
 	f_velocidade: string;
 	f_status: string;
@@ -2143,12 +2096,10 @@ export interface ServicosBase {
 	f_id_servico_ixc: string;
 	f_designacao_atplus: unknown;
 	f_caracteristicas: string;
-	f_arquivos: unknown;
-	f_servicos_relacionados: unknown;
-	f_rj1pckkkeqi: unknown;
+	f_kyyzn4kut6e: TelecomContratosBase | null;
 }
 
-export type ServicosRelations = object;
+export interface ServicosRelations {}
 
 export type ServicosRelationKey = keyof ServicosRelations;
 
@@ -2181,14 +2132,14 @@ export interface QualirunProcessosBase {
 	updatedAt: string;
 	updatedBy: unknown;
 	f_procedimento: string;
-	f_funcionarios: unknown;
 	f_status: string;
 	f_link_externo: string;
 	f_id_externo: string;
 	f_detalhes_procedimento: string;
+	f_funcionarios: FFuncionariosBase | null;
 }
 
-export type QualirunProcessosRelations = object;
+export interface QualirunProcessosRelations {}
 
 export type QualirunProcessosRelationKey = keyof QualirunProcessosRelations;
 
