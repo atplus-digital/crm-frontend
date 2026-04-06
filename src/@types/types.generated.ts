@@ -1,6 +1,6 @@
 
 /**
- * Arquivo gerado automaticamente em 2026-04-06T20:30:52.547Z
+ * Arquivo gerado automaticamente
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
  */
 

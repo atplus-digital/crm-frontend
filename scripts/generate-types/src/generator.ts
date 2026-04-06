@@ -130,7 +130,7 @@ export function generateContent(collectionTypes: CollectionTypesMap): string {
 
 	const banner = `
 /**
- * Arquivo gerado automaticamente em ${new Date().toISOString()}
+ * Arquivo gerado automaticamente
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
  */
 
