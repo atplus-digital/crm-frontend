@@ -135,6 +135,8 @@ export function generateContent(collectionTypes: CollectionTypesMap): string {
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+interface StoragesBase {}
+
 `;
 	const content = banner + output;
 

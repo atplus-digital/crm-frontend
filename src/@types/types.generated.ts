@@ -1,3 +1,4 @@
+
 /**
  * Arquivo gerado automaticamente
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
@@ -20,8 +21,7 @@ export interface NegociacoesComentariosBase {
 
 export type NegociacoesComentariosRelations = object;
 
-export type NegociacoesComentariosRelationKey =
-	keyof NegociacoesComentariosRelations;
+export type NegociacoesComentariosRelationKey = keyof NegociacoesComentariosRelations;
 
 export interface FContatosBase {
 	id: number;
@@ -62,7 +62,8 @@ export interface SuspensaoContratoBase {
 	f_responsavel: UsersBase | null;
 }
 
-export interface SuspensaoContratoRelations {}
+export interface SuspensaoContratoRelations {
+}
 
 export type SuspensaoContratoRelationKey = keyof SuspensaoContratoRelations;
 
@@ -101,7 +102,8 @@ export interface ComprasProdutosBase {
 	f_fk_produtos_solicitacao_compra: SolicitacaoComprasBase | null;
 }
 
-export interface ComprasProdutosRelations {}
+export interface ComprasProdutosRelations {
+}
 
 export type ComprasProdutosRelationKey = keyof ComprasProdutosRelations;
 
@@ -142,7 +144,8 @@ export interface TelecomRecursosBase {
 	f_equipamento_a: EquipamentosBase | null;
 }
 
-export interface TelecomRecursosRelations {}
+export interface TelecomRecursosRelations {
+}
 
 export type TelecomRecursosRelationKey = keyof TelecomRecursosRelations;
 
@@ -174,7 +177,8 @@ export interface EquipamentosBase {
 	f_rack: TelecomRacksBase | null;
 }
 
-export interface EquipamentosRelations {}
+export interface EquipamentosRelations {
+}
 
 export type EquipamentosRelationKey = keyof EquipamentosRelations;
 
@@ -240,7 +244,8 @@ export interface DcServidoresBase {
 	f_status: string;
 }
 
-export interface DcServidoresRelations {}
+export interface DcServidoresRelations {
+}
 
 export type DcServidoresRelationKey = keyof DcServidoresRelations;
 
@@ -251,8 +256,7 @@ export interface InterfacesEquipamentosBase {
 
 export type InterfacesEquipamentosRelations = object;
 
-export type InterfacesEquipamentosRelationKey =
-	keyof InterfacesEquipamentosRelations;
+export type InterfacesEquipamentosRelationKey = keyof InterfacesEquipamentosRelations;
 
 export interface OeQualirunBase {
 	id: unknown;
@@ -268,7 +272,8 @@ export interface OeQualirunBase {
 	f_negociacoes: NegociacoesBase | null;
 }
 
-export interface OeQualirunRelations {}
+export interface OeQualirunRelations {
+}
 
 export type OeQualirunRelationKey = keyof OeQualirunRelations;
 
@@ -287,8 +292,7 @@ export interface DadosAdicionaisClienteContratoBase {
 
 export type DadosAdicionaisClienteContratoRelations = object;
 
-export type DadosAdicionaisClienteContratoRelationKey =
-	keyof DadosAdicionaisClienteContratoRelations;
+export type DadosAdicionaisClienteContratoRelationKey = keyof DadosAdicionaisClienteContratoRelations;
 
 export interface TelecomTransitoOpcoesBase {
 	id: number;
@@ -303,8 +307,7 @@ export interface TelecomTransitoOpcoesBase {
 
 export type TelecomTransitoOpcoesRelations = object;
 
-export type TelecomTransitoOpcoesRelationKey =
-	keyof TelecomTransitoOpcoesRelations;
+export type TelecomTransitoOpcoesRelationKey = keyof TelecomTransitoOpcoesRelations;
 
 export interface TelecomContratosBase {
 	id: number;
@@ -320,7 +323,8 @@ export interface TelecomContratosBase {
 	f_fornecedor: FornecedoresTelecomBase | null;
 }
 
-export interface TelecomContratosRelations {}
+export interface TelecomContratosRelations {
+}
 
 export type TelecomContratosRelationKey = keyof TelecomContratosRelations;
 
@@ -406,7 +410,8 @@ export interface NegociacoesBase {
 	f_cupom_desconto: CuponsDescontoBase | null;
 }
 
-export interface NegociacoesRelations {}
+export interface NegociacoesRelations {
+}
 
 export type NegociacoesRelationKey = keyof NegociacoesRelations;
 
@@ -468,8 +473,7 @@ export interface TemplatesXOrdensDeServicoBase {
 
 export type TemplatesXOrdensDeServicoRelations = object;
 
-export type TemplatesXOrdensDeServicoRelationKey =
-	keyof TemplatesXOrdensDeServicoRelations;
+export type TemplatesXOrdensDeServicoRelationKey = keyof TemplatesXOrdensDeServicoRelations;
 
 export interface P10scfhrhkwBase {
 	id: unknown;
@@ -498,7 +502,8 @@ export interface InfoArquivosBase {
 	f_funcionarios: FFuncionariosBase | null;
 }
 
-export interface InfoArquivosRelations {}
+export interface InfoArquivosRelations {
+}
 
 export type InfoArquivosRelationKey = keyof InfoArquivosRelations;
 
@@ -533,10 +538,10 @@ export interface ArquivosFuncionariosBase {
 	f_funcionarios: FFuncionariosBase | null;
 }
 
-export interface ArquivosFuncionariosRelations {}
+export interface ArquivosFuncionariosRelations {
+}
 
-export type ArquivosFuncionariosRelationKey =
-	keyof ArquivosFuncionariosRelations;
+export type ArquivosFuncionariosRelationKey = keyof ArquivosFuncionariosRelations;
 
 export interface ContratosBase {
 	id: number;
@@ -590,7 +595,8 @@ export interface LinhaCorporativaBase {
 	f_funcionarios: FFuncionariosBase | null;
 }
 
-export interface LinhaCorporativaRelations {}
+export interface LinhaCorporativaRelations {
+}
 
 export type LinhaCorporativaRelationKey = keyof LinhaCorporativaRelations;
 
@@ -641,7 +647,8 @@ export interface AtendimentosIxcBase {
 	f_id_login: string;
 }
 
-export interface AtendimentosIxcRelations {}
+export interface AtendimentosIxcRelations {
+}
 
 export type AtendimentosIxcRelationKey = keyof AtendimentosIxcRelations;
 
@@ -670,7 +677,8 @@ export interface TelecomInterfacesBase {
 	parent: TelecomInterfacesBase | null;
 }
 
-export interface TelecomInterfacesRelations {}
+export interface TelecomInterfacesRelations {
+}
 
 export type TelecomInterfacesRelationKey = keyof TelecomInterfacesRelations;
 
@@ -749,7 +757,8 @@ export interface PacotesBase {
 	f_abre_atendimento: string;
 }
 
-export interface PacotesRelations {}
+export interface PacotesRelations {
+}
 
 export type PacotesRelationKey = keyof PacotesRelations;
 
@@ -765,8 +774,7 @@ export interface TrocasdetitularidadeComentariosBase {
 
 export type TrocasdetitularidadeComentariosRelations = object;
 
-export type TrocasdetitularidadeComentariosRelationKey =
-	keyof TrocasdetitularidadeComentariosRelations;
+export type TrocasdetitularidadeComentariosRelationKey = keyof TrocasdetitularidadeComentariosRelations;
 
 export interface TelecomAnexosBase {
 	id: number;
@@ -806,7 +814,8 @@ export interface ContratosIxcBase {
 	f_expiracao: string;
 }
 
-export interface ContratosIxcRelations {}
+export interface ContratosIxcRelations {
+}
 
 export type ContratosIxcRelationKey = keyof ContratosIxcRelations;
 
@@ -835,7 +844,8 @@ export interface AcessosBase {
 	f_equipamento: EquipamentosBase | null;
 }
 
-export interface AcessosRelations {}
+export interface AcessosRelations {
+}
 
 export type AcessosRelationKey = keyof AcessosRelations;
 
@@ -905,7 +915,8 @@ export interface LogsCargosBase {
 	f_funcionarios: FFuncionariosBase | null;
 }
 
-export interface LogsCargosRelations {}
+export interface LogsCargosRelations {
+}
 
 export type LogsCargosRelationKey = keyof LogsCargosRelations;
 
@@ -969,7 +980,8 @@ export interface ParentescoBase {
 	f_funcionarios: FFuncionariosBase | null;
 }
 
-export interface ParentescoRelations {}
+export interface ParentescoRelations {
+}
 
 export type ParentescoRelationKey = keyof ParentescoRelations;
 
@@ -990,8 +1002,7 @@ export interface EquipamentosEmPrediosBase {
 
 export type EquipamentosEmPrediosRelations = object;
 
-export type EquipamentosEmPrediosRelationKey =
-	keyof EquipamentosEmPrediosRelations;
+export type EquipamentosEmPrediosRelationKey = keyof EquipamentosEmPrediosRelations;
 
 export interface OrigemXTiposBase {
 	f_fk_origem_tipo_1: number;
@@ -1015,7 +1026,8 @@ export interface ConsultasPfBase {
 	f_id_pessoa: PessoasBase | null;
 }
 
-export interface ConsultasPfRelations {}
+export interface ConsultasPfRelations {
+}
 
 export type ConsultasPfRelationKey = keyof ConsultasPfRelations;
 
@@ -1034,8 +1046,7 @@ export interface TelecomColocationOpcoesBase {
 
 export type TelecomColocationOpcoesRelations = object;
 
-export type TelecomColocationOpcoesRelationKey =
-	keyof TelecomColocationOpcoesRelations;
+export type TelecomColocationOpcoesRelationKey = keyof TelecomColocationOpcoesRelations;
 
 export interface CuponsDescontoBase {
 	id: number;
@@ -1060,7 +1071,8 @@ export interface CuponsDescontoBase {
 	f_nome: string;
 }
 
-export interface CuponsDescontoRelations {}
+export interface CuponsDescontoRelations {
+}
 
 export type CuponsDescontoRelationKey = keyof CuponsDescontoRelations;
 
@@ -1186,7 +1198,8 @@ export interface InfoAsoBase {
 	f_funcionarios_2: FFuncionariosBase | null;
 }
 
-export interface InfoAsoRelations {}
+export interface InfoAsoRelations {
+}
 
 export type InfoAsoRelationKey = keyof InfoAsoRelations;
 
@@ -1260,7 +1273,8 @@ export interface FFuncionariosBase {
 	f_turnos: TurnosBase | null;
 }
 
-export interface FFuncionariosRelations {}
+export interface FFuncionariosRelations {
+}
 
 export type FFuncionariosRelationKey = keyof FFuncionariosRelations;
 
@@ -1308,8 +1322,7 @@ export interface TemplatesAtendimentoN1Base {
 
 export type TemplatesAtendimentoN1Relations = object;
 
-export type TemplatesAtendimentoN1RelationKey =
-	keyof TemplatesAtendimentoN1Relations;
+export type TemplatesAtendimentoN1RelationKey = keyof TemplatesAtendimentoN1Relations;
 
 export interface DemandasViabilidadesBase {
 	id: number;
@@ -1330,8 +1343,7 @@ export interface DemandasViabilidadesBase {
 
 export type DemandasViabilidadesRelations = object;
 
-export type DemandasViabilidadesRelationKey =
-	keyof DemandasViabilidadesRelations;
+export type DemandasViabilidadesRelationKey = keyof DemandasViabilidadesRelations;
 
 export interface UsersBase {
 	id: number;
@@ -1359,7 +1371,8 @@ export interface UsersBase {
 	mainDepartment: DepartmentsBase | null;
 }
 
-export interface UsersRelations {}
+export interface UsersRelations {
+}
 
 export type UsersRelationKey = keyof UsersRelations;
 
@@ -1377,7 +1390,8 @@ export interface CargosBase {
 	f_responsavel: UsersBase | null;
 }
 
-export interface CargosRelations {}
+export interface CargosRelations {
+}
 
 export type CargosRelationKey = keyof CargosRelations;
 
@@ -1405,8 +1419,7 @@ export interface LinksIndicadoresUsuariosBase {
 
 export type LinksIndicadoresUsuariosRelations = object;
 
-export type LinksIndicadoresUsuariosRelationKey =
-	keyof LinksIndicadoresUsuariosRelations;
+export type LinksIndicadoresUsuariosRelationKey = keyof LinksIndicadoresUsuariosRelations;
 
 export interface AsosBase {
 	id: unknown;
@@ -1430,7 +1443,8 @@ export interface AsosBase {
 	f_funcionarios: FFuncionariosBase | null;
 }
 
-export interface AsosRelations {}
+export interface AsosRelations {
+}
 
 export type AsosRelationKey = keyof AsosRelations;
 
@@ -1459,8 +1473,7 @@ export interface ComentariosSuspensaoDeContratoBase {
 
 export type ComentariosSuspensaoDeContratoRelations = object;
 
-export type ComentariosSuspensaoDeContratoRelationKey =
-	keyof ComentariosSuspensaoDeContratoRelations;
+export type ComentariosSuspensaoDeContratoRelationKey = keyof ComentariosSuspensaoDeContratoRelations;
 
 export interface RecursosViagemBase {
 	id: number;
@@ -1517,7 +1530,8 @@ export interface DepartmentsBase {
 	parent: DepartmentsBase | null;
 }
 
-export interface DepartmentsRelations {}
+export interface DepartmentsRelations {
+}
 
 export type DepartmentsRelationKey = keyof DepartmentsRelations;
 
@@ -1558,7 +1572,8 @@ export interface PatrimonioBase {
 	f_funcionarios: FFuncionariosBase | null;
 }
 
-export interface PatrimonioRelations {}
+export interface PatrimonioRelations {
+}
 
 export type PatrimonioRelationKey = keyof PatrimonioRelations;
 
@@ -1580,7 +1595,8 @@ export interface TelecomRacksBase {
 	f_fila: TelecomFilaBase | null;
 }
 
-export interface TelecomRacksRelations {}
+export interface TelecomRacksRelations {
+}
 
 export type TelecomRacksRelationKey = keyof TelecomRacksRelations;
 
@@ -1608,7 +1624,8 @@ export interface TurnosBase {
 	f_turno: string;
 }
 
-export interface TurnosRelations {}
+export interface TurnosRelations {
+}
 
 export type TurnosRelationKey = keyof TurnosRelations;
 
@@ -1649,7 +1666,8 @@ export interface TelecomFilaBase {
 	f_nome: string;
 }
 
-export interface TelecomFilaRelations {}
+export interface TelecomFilaRelations {
+}
 
 export type TelecomFilaRelationKey = keyof TelecomFilaRelations;
 
@@ -1681,7 +1699,8 @@ export interface SolicitacaoComprasBase {
 	f_fornecedor: ComprasFornecedoresBase | null;
 }
 
-export interface SolicitacaoComprasRelations {}
+export interface SolicitacaoComprasRelations {
+}
 
 export type SolicitacaoComprasRelationKey = keyof SolicitacaoComprasRelations;
 
@@ -1692,8 +1711,7 @@ export interface ColaboradoresDoSetorBase {
 
 export type ColaboradoresDoSetorRelations = object;
 
-export type ColaboradoresDoSetorRelationKey =
-	keyof ColaboradoresDoSetorRelations;
+export type ColaboradoresDoSetorRelationKey = keyof ColaboradoresDoSetorRelations;
 
 export interface DepartamentosBase {
 	id: number;
@@ -1706,7 +1724,8 @@ export interface DepartamentosBase {
 	f_responsavel: UsersBase | null;
 }
 
-export interface DepartamentosRelations {}
+export interface DepartamentosRelations {
+}
 
 export type DepartamentosRelationKey = keyof DepartamentosRelations;
 
@@ -1758,10 +1777,10 @@ export interface CrmTrocaTitularidadeBase {
 	f_pessoa_pj: EmpresasBase | null;
 }
 
-export interface CrmTrocaTitularidadeRelations {}
+export interface CrmTrocaTitularidadeRelations {
+}
 
-export type CrmTrocaTitularidadeRelationKey =
-	keyof CrmTrocaTitularidadeRelations;
+export type CrmTrocaTitularidadeRelationKey = keyof CrmTrocaTitularidadeRelations;
 
 export interface FotoFuncionariosBase {
 	id: number;
@@ -1783,7 +1802,8 @@ export interface FotoFuncionariosBase {
 	f_funcionarios: FFuncionariosBase | null;
 }
 
-export interface FotoFuncionariosRelations {}
+export interface FotoFuncionariosRelations {
+}
 
 export type FotoFuncionariosRelationKey = keyof FotoFuncionariosRelations;
 
@@ -1856,7 +1876,8 @@ export interface SitesBase {
 	f_contatos: FContatosBase | null;
 }
 
-export interface SitesRelations {}
+export interface SitesRelations {
+}
 
 export type SitesRelationKey = keyof SitesRelations;
 
@@ -1873,7 +1894,8 @@ export interface SetorBase {
 	f_fk_funcionarios: unknown;
 }
 
-export interface SetorRelations {}
+export interface SetorRelations {
+}
 
 export type SetorRelationKey = keyof SetorRelations;
 
@@ -1953,10 +1975,10 @@ export interface QualirunAssinaturaGovBase {
 	storage: StoragesBase | null;
 }
 
-export interface QualirunAssinaturaGovRelations {}
+export interface QualirunAssinaturaGovRelations {
+}
 
-export type QualirunAssinaturaGovRelationKey =
-	keyof QualirunAssinaturaGovRelations;
+export type QualirunAssinaturaGovRelationKey = keyof QualirunAssinaturaGovRelations;
 
 export interface FornecedoresTelecomBase {
 	id: number;
@@ -1971,7 +1993,8 @@ export interface FornecedoresTelecomBase {
 	f_instrucoes: string;
 }
 
-export interface FornecedoresTelecomRelations {}
+export interface FornecedoresTelecomRelations {
+}
 
 export type FornecedoresTelecomRelationKey = keyof FornecedoresTelecomRelations;
 
@@ -1999,10 +2022,10 @@ export interface QualirunInfoAdicionaisBase {
 	f_funcionarios: FFuncionariosBase | null;
 }
 
-export interface QualirunInfoAdicionaisRelations {}
+export interface QualirunInfoAdicionaisRelations {
+}
 
-export type QualirunInfoAdicionaisRelationKey =
-	keyof QualirunInfoAdicionaisRelations;
+export type QualirunInfoAdicionaisRelationKey = keyof QualirunInfoAdicionaisRelations;
 
 export interface DatacenterMemoriasBase {
 	id: number;
@@ -2020,7 +2043,8 @@ export interface DatacenterMemoriasBase {
 	f_fk_servidor: DcServidoresBase | null;
 }
 
-export interface DatacenterMemoriasRelations {}
+export interface DatacenterMemoriasRelations {
+}
 
 export type DatacenterMemoriasRelationKey = keyof DatacenterMemoriasRelations;
 
@@ -2034,7 +2058,8 @@ export interface TelecomSalasBase {
 	f_nome: string;
 }
 
-export interface TelecomSalasRelations {}
+export interface TelecomSalasRelations {
+}
 
 export type TelecomSalasRelationKey = keyof TelecomSalasRelations;
 
@@ -2076,8 +2101,7 @@ export interface AnexosTrocaTitularidadeBase {
 
 export type AnexosTrocaTitularidadeRelations = object;
 
-export type AnexosTrocaTitularidadeRelationKey =
-	keyof AnexosTrocaTitularidadeRelations;
+export type AnexosTrocaTitularidadeRelationKey = keyof AnexosTrocaTitularidadeRelations;
 
 export interface ServicosBase {
 	id: number;
@@ -2099,7 +2123,8 @@ export interface ServicosBase {
 	f_kyyzn4kut6e: TelecomContratosBase | null;
 }
 
-export interface ServicosRelations {}
+export interface ServicosRelations {
+}
 
 export type ServicosRelationKey = keyof ServicosRelations;
 
@@ -2139,7 +2164,8 @@ export interface QualirunProcessosBase {
 	f_funcionarios: FFuncionariosBase | null;
 }
 
-export interface QualirunProcessosRelations {}
+export interface QualirunProcessosRelations {
+}
 
 export type QualirunProcessosRelationKey = keyof QualirunProcessosRelations;
 
