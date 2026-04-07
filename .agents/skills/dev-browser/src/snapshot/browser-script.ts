@@ -9,8 +9,7 @@
  * window.__devBrowser_selectSnapshotRef().
  */
 
-import * as fs from "fs";
-import * as path from "path";
+import * as path from "node:path";
 
 // Cache the bundled script
 let cachedScript: string | null = null;
@@ -23,14 +22,14 @@ let cachedScript: string | null = null;
  * 3. Exposes window.__devBrowser_selectSnapshotRef()
  */
 export function getSnapshotScript(): string {
-  if (cachedScript) return cachedScript;
+	if (cachedScript) return cachedScript;
 
-  // Read the compiled JavaScript files
-  const snapshotDir = path.dirname(new URL(import.meta.url).pathname);
+	// Read the compiled JavaScript files
+	const _snapshotDir = path.dirname(new URL(import.meta.url).pathname);
 
-  // For now, we'll inline the functions directly
-  // In production, we could use a bundler like esbuild to create a single file
-  cachedScript = `
+	// For now, we'll inline the functions directly
+	// In production, we could use a bundler like esbuild to create a single file
+	cachedScript = `
 (function() {
   // Skip if already injected
   if (window.__devBrowser_getAISnapshot) return;
@@ -46,11 +45,11 @@ export function getSnapshotScript(): string {
 })();
 `;
 
-  return cachedScript;
+	return cachedScript;
 }
 
 function getDomUtilsCode(): string {
-  return `
+	return `
 // === domUtils ===
 let cacheStyle;
 let cachesCounter = 0;
@@ -161,7 +160,7 @@ function normalizeWhiteSpace(text) {
 }
 
 function getYamlCode(): string {
-  return `
+	return `
 // === yaml ===
 function yamlEscapeKeyIfNeeded(str) {
   if (!yamlStringNeedsQuotes(str)) return str;
@@ -204,7 +203,7 @@ function yamlStringNeedsQuotes(str) {
 }
 
 function getRoleUtilsCode(): string {
-  return `
+	return `
 // === roleUtils ===
 const validRoles = ["alert","alertdialog","application","article","banner","blockquote","button","caption","cell","checkbox","code","columnheader","combobox","complementary","contentinfo","definition","deletion","dialog","directory","document","emphasis","feed","figure","form","generic","grid","gridcell","group","heading","img","insertion","link","list","listbox","listitem","log","main","mark","marquee","math","meter","menu","menubar","menuitem","menuitemcheckbox","menuitemradio","navigation","none","note","option","paragraph","presentation","progressbar","radio","radiogroup","region","row","rowgroup","rowheader","scrollbar","search","searchbox","separator","slider","spinbutton","status","strong","subscript","superscript","switch","tab","table","tablist","tabpanel","term","textbox","time","timer","toolbar","tooltip","tree","treegrid","treeitem"];
 
@@ -626,7 +625,7 @@ function getCSSContent(element, pseudo) {
 }
 
 function getAriaSnapshotCode(): string {
-  return `
+	return `
 // === ariaSnapshot ===
 let lastRef = 0;
 
@@ -873,5 +872,5 @@ function selectSnapshotRef(ref) {
  * Clear the cached script (useful for development/testing)
  */
 export function clearSnapshotScriptCache(): void {
-  cachedScript = null;
+	cachedScript = null;
 }

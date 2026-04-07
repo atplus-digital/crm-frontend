@@ -10,4 +10,4 @@
  * - window.__devBrowserRefs: Map of ref -> Element (persists across connections)
  */
 
-export { getSnapshotScript, clearSnapshotScriptCache } from "./browser-script";
+export { clearSnapshotScriptCache, getSnapshotScript } from "./browser-script";

@@ -4,11 +4,11 @@ import { createRootRouteWithContext } from "@tanstack/react-router";
 import { RootDocument } from "#/components/root/root-document";
 import appCss from "#/styles.css?url";
 
-interface MyRouterContext {
+interface AppRouterContext {
 	queryClient: QueryClient;
 }
 
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = createRootRouteWithContext<AppRouterContext>()({
 	head: () => ({
 		meta: [
 			{

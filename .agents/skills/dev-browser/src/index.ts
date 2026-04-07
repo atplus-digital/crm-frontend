@@ -1,7 +1,11 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: external code */
+/** biome-ignore-all lint/security/noGlobalEval: external code */
+/** biome-ignore-all lint/suspicious/noImplicitAnyLet: external code */
+/** biome-ignore-all lint/style/noNonNullAssertion: external code */
+import { mkdirSync } from "node:fs";
+import type { Socket } from "node:net";
+import { join } from "node:path";
 import express, { type Express, type Request, type Response } from "express";
-import { mkdirSync } from "fs";
-import type { Socket } from "net";
-import { join } from "path";
 import { type BrowserContext, chromium, type Page } from "playwright";
 import type {
 	GetPageRequest,
@@ -292,14 +296,18 @@ export async function serve(
 	};
 
 	// Register handlers
-	signals.forEach((sig) => process.on(sig, signalHandler));
+	signals.forEach((sig) => {
+		process.on(sig, signalHandler);
+	});
 	process.on("uncaughtException", errorHandler);
 	process.on("unhandledRejection", errorHandler);
 	process.on("exit", syncCleanup);
 
 	// Helper to remove all handlers
 	const removeHandlers = () => {
-		signals.forEach((sig) => process.off(sig, signalHandler));
+		signals.forEach((sig) => {
+			process.off(sig, signalHandler);
+		});
 		process.off("uncaughtException", errorHandler);
 		process.off("unhandledRejection", errorHandler);
 		process.off("exit", syncCleanup);

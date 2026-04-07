@@ -1,3 +1,7 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: external code */
+/** biome-ignore-all lint/security/noGlobalEval: external code */
+/** biome-ignore-all lint/suspicious/noImplicitAnyLet: external code */
+/** biome-ignore-all lint/style/noNonNullAssertion: external code */
 import {
 	type Browser,
 	chromium,
@@ -267,7 +271,7 @@ export async function connect(
 
 	async function ensureConnected(): Promise<Browser> {
 		// Return existing connection if still active
-		if (browser && browser.isConnected()) {
+		if (browser?.isConnected()) {
 			return browser;
 		}
 
@@ -365,7 +369,7 @@ export async function connect(
 		if (isExtensionMode) {
 			// In extension mode, DON'T use findPageByTargetId as it corrupts page state
 			// Instead, find page by URL or use the only available page
-			const allPages = b.contexts().flatMap((ctx) => ctx.pages());
+			const allPages = b.contexts().flatMap((ctx: any) => ctx.pages());
 
 			if (allPages.length === 0) {
 				throw new Error(`No pages available in browser`);
@@ -377,7 +381,9 @@ export async function connect(
 
 			// Multiple pages - try to match by URL if available
 			if (pageInfo.url) {
-				const matchingPage = allPages.find((p) => p.url() === pageInfo.url);
+				const matchingPage = allPages.find(
+					(p: any) => p.url() === pageInfo.url,
+				);
 				if (matchingPage) {
 					return matchingPage;
 				}
@@ -442,6 +448,7 @@ export async function connect(
 				const w = globalThis as any;
 				if (!w.__devBrowser_getAISnapshot) {
 					// eslint-disable-next-line no-eval
+
 					eval(script);
 				}
 				return w.__devBrowser_getAISnapshot();

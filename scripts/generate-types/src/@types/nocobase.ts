@@ -6,8 +6,8 @@ export interface NocoBaseCollection {
 export interface NocoBaseField {
 	name: string;
 	type: string;
-	interface: string;
-	target?: string;
+	interface: string | null;
+	target?: string | null;
 }
 
 export interface NocoBaseCollectionResponse {
@@ -21,11 +21,8 @@ export interface NocoBaseCollectionsListResponse {
 	data: NocoBaseCollection[];
 }
 
-export interface GeneratedTypes {
-	scalars: Map<string, string>;
-	relations: Map<string, { type: string; targetCollection: string }>;
-}
-
-export interface CollectionTypesMap {
-	[collectionName: string]: GeneratedTypes;
+export interface NocoBaseCredentials {
+	baseUrl: string;
+	token: string;
+	timeoutMs: number;
 }
