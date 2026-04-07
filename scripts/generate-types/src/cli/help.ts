@@ -33,7 +33,7 @@ Estrutura de saída:
        • t_telecom_recursos.ts
 
 Tipos gerados por collection:
-  - <Collection>Base: interface com campos escalares + relações one
+  - <Collection>Base: interface com campos escalares/FKs
   - <Collection>Relations: interface com todas as relações (opcional)
   - <Collection>RelationKey: union type das chaves de relação
 `.trim(),

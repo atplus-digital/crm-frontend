@@ -12,7 +12,6 @@ import type { UsersBase } from "./users";
 
 export interface ServicosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_caracteristicas: string;
 	f_descricao: string;
 	f_designacao_atplus: string;
@@ -26,16 +25,16 @@ export interface ServicosBase {
 	f_velocidade: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_kyyzn4kut6e: TelecomContratosBase | null;
 }
 
 export interface ServicosRelations {
+	createdBy?: UsersBase | null;
 	f_acessos?: AcessosBase[];
 	f_arquivos?: TelecomAnexosBase[];
 	f_kyyzn4kut6e?: TelecomContratosBase | null;
 	f_rj1pckkkeqi?: ServicosBase[];
 	f_servicos_relacionados?: ServicosBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type ServicosRelationKey = keyof ServicosRelations;

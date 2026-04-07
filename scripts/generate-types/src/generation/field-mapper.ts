@@ -1,34 +1,16 @@
 import type { RelationInfo } from "@scripts/generate-types/src/@types/generation";
 import type { NocoBaseField } from "@scripts/generate-types/src/@types/nocobase";
-import { toCollectionBaseTypeName } from "@scripts/generate-types/src/utils/naming";
-import {
-	renderRelationValueType,
-	resolveRelationByType,
-	resolveRelationInterface,
-} from "./relations";
+import { resolveRelationByType, resolveRelationInterface } from "./relations";
 
 /**
- * Campos de sistema do NocoBase com mapeamento fixo.
- * Baseado em análise de 110 collections (2026-04-07).
+ * Campos escalares de sistema do NocoBase com mapeamento fixo.
+ * Esses campos aparecem no payload mas não devem entrar no fluxo de relações.
  */
-const SYSTEM_FIELDS: Record<string, (field: NocoBaseField) => string> = {
-	// Auditoria - 88 collections (100% consistente -> users)
-	// Relações belongsTo que sempre apontam para collection "users"
-	createdBy: () => `${toCollectionBaseTypeName("users")} | null`,
-	updatedBy: () => `${toCollectionBaseTypeName("users")} | null`,
-
-	// Foreign keys de auditoria - 2 collections
-	// Campos numéricos que referenciam users.id
+const SYSTEM_SCALAR_FIELDS: Record<string, () => string> = {
+	// Chaves de auditoria são expostas como números no payload,
+	// embora o schema de fields as reporte como `context`.
 	createdById: () => "number | null",
 	updatedById: () => "number | null",
-
-	// Hierarquia - self-reference (parent/children)
-	// Usado em collections como t_telecom_recursos, t_telecom_interfaces, departments, etc
-	parent: (field) => renderRelationValueType(field.target ?? "", "one"),
-	children: (field) => renderRelationValueType(field.target ?? "", "many"),
-
-	// Metadata - armazenamento genérico
-	storage: () => "Record<string, unknown>",
 };
 
 /**
@@ -41,6 +23,7 @@ const FIELD_TYPE_MAP: Record<string, string> = {
 
 	// Boolean
 	boolean: "boolean",
+	context: "unknown",
 
 	// Date/Time types (representados como string no JSON)
 	date: "string",
@@ -79,7 +62,7 @@ const FIELD_TYPE_MAP: Record<string, string> = {
 	phone: "string",
 	point: "string",
 	sequence: "string",
-	snowflakeId: "string",
+	snowflakeId: "number",
 	string: "string",
 	text: "string",
 	uid: "string",
@@ -94,8 +77,8 @@ const FIELD_TYPE_MAP: Record<string, string> = {
  * @returns Informações da relação ou null
  */
 export function extractRelationInfo(field: NocoBaseField): RelationInfo | null {
-	// Campos de sistema não são relações customizadas
-	if (field.name in SYSTEM_FIELDS) {
+	// Campos escalares de sistema não devem ser tratados como relações
+	if (field.name in SYSTEM_SCALAR_FIELDS) {
 		return null;
 	}
 
@@ -128,12 +111,12 @@ export function extractRelationInfo(field: NocoBaseField): RelationInfo | null {
  */
 export function mapFieldType(field: NocoBaseField): string {
 	// 1. Campos de sistema têm mapeamento fixo
-	if (field.name in SYSTEM_FIELDS) {
-		return SYSTEM_FIELDS[field.name](field);
+	if (field.name in SYSTEM_SCALAR_FIELDS) {
+		return SYSTEM_SCALAR_FIELDS[field.name]();
 	}
 
 	// 2. Interfaces especiais que precisam tratamento custom
-	if (field.interface === "context") {
+	if (field.interface === "context" || field.type === "context") {
 		return "unknown";
 	}
 

@@ -7,6 +7,7 @@ import { toCollectionBaseTypeName } from "@scripts/generate-types/src/utils/nami
 const RELATION_INTERFACE_MAP: Record<string, RelationInterface> = {
 	m2o: "m2o",
 	belongsto: "belongsTo",
+	createdby: "belongsTo",
 	o2m: "o2m",
 	hasmany: "hasMany",
 	m2m: "m2m",
@@ -16,6 +17,7 @@ const RELATION_INTERFACE_MAP: Record<string, RelationInterface> = {
 	mbm: "mbm",
 	belongstoarray: "belongsToArray",
 	attachment: "m2m",
+	updatedby: "belongsTo",
 };
 
 /**

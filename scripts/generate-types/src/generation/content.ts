@@ -33,7 +33,7 @@ export function generateFileHeader(): string {
 }
 
 /**
- * Gera a interface Base de uma collection (campos escalares + relações one).
+ * Gera a interface Base de uma collection (apenas campos escalares/FKs).
  */
 export function generateCollectionBaseInterface(
 	collectionName: string,
@@ -41,19 +41,11 @@ export function generateCollectionBaseInterface(
 ): string {
 	const lines: string[] = [];
 	const scalarEntries = _sortMapEntries(types.scalars);
-	const relationEntries = _sortMapEntries(types.relations);
 	const typeName = toCollectionTypeName(collectionName);
 
 	lines.push(`export interface ${typeName}Base {`);
 	for (const [fieldName, fieldType] of scalarEntries) {
 		lines.push(`\t${formatKey(fieldName)}: ${fieldType};`);
-	}
-	for (const [fieldName, relation] of relationEntries) {
-		if (getRelationCardinality(relation.type) === "one") {
-			lines.push(
-				`\t${formatKey(fieldName)}: ${_renderRelationFieldType(relation)};`,
-			);
-		}
 	}
 	lines.push("}");
 

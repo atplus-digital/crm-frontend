@@ -7,7 +7,6 @@ import type { UsersBase } from "./users";
 
 export interface ContratosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	extname: string;
 	f_fk_negociacao_contrato: number;
 	f_fk_suspensao: number;
@@ -18,14 +17,16 @@ export interface ContratosBase {
 	path: string;
 	preview: string;
 	size: number;
-	storage: Record<string, unknown>;
 	storageId: number;
 	title: string;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 	url: string;
 }
 
-export type ContratosRelations = Record<string, never>;
+export interface ContratosRelations {
+	createdBy?: UsersBase | null;
+	storage?: unknown | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type ContratosRelationKey = keyof ContratosRelations;

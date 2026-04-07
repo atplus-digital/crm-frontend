@@ -13,7 +13,6 @@ import type { UsersBase } from "./users";
 
 export interface SitesBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_bairro: string;
 	f_cep: string;
 	f_cidade: string;
@@ -29,15 +28,15 @@ export interface SitesBase {
 	f_uf: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_contatos: FContatosBase | null;
 }
 
 export interface SitesRelations {
+	createdBy?: UsersBase | null;
 	f_anexos?: TelecomAnexosBase[];
 	f_contatos?: FContatosBase | null;
 	f_fk_sites_equipamentos?: EquipamentosBase[];
 	f_racks?: TelecomRacksBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type SitesRelationKey = keyof SitesRelations;

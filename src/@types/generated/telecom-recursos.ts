@@ -17,9 +17,7 @@ import type { SitesBase } from "./sites";
 import type { UsersBase } from "./users";
 
 export interface TelecomRecursosBase {
-	children: TelecomRecursosBase[];
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_2ew016ynyo6: number;
 	f_contrato_ixc: number;
 	f_designacao_atplus: string;
@@ -38,23 +36,13 @@ export interface TelecomRecursosBase {
 	f_status: string;
 	f_tipo: string;
 	id: number;
-	parent: TelecomRecursosBase | null;
 	parentId: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_cliente: FornecedoresTelecomBase | null;
-	f_equipamento_a: EquipamentosBase | null;
-	f_fornecedor: FornecedoresTelecomBase | null;
-	f_opcoes_colocation: TelecomColocationOpcoesBase | null;
-	f_opcoes_l2l: TelecomOpcoesL2lBase | null;
-	f_opcoes_link_ip: TelecomTransitoOpcoesBase | null;
-	f_rack_a: TelecomRacksBase | null;
-	f_rack_b: TelecomRacksBase | null;
-	f_site_a: SitesBase | null;
-	f_site_b: SitesBase | null;
 }
 
 export interface TelecomRecursosRelations {
+	children?: TelecomRecursosBase[];
+	createdBy?: UsersBase | null;
 	f_anexos?: TelecomAnexosBase[];
 	f_cliente?: FornecedoresTelecomBase | null;
 	f_equipamento_a?: EquipamentosBase | null;
@@ -68,6 +56,8 @@ export interface TelecomRecursosRelations {
 	f_rack_b?: TelecomRacksBase | null;
 	f_site_a?: SitesBase | null;
 	f_site_b?: SitesBase | null;
+	parent?: TelecomRecursosBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type TelecomRecursosRelationKey = keyof TelecomRecursosRelations;

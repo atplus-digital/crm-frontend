@@ -38,7 +38,10 @@ function sortByName<T extends { name: string }>(items: T[]): T[] {
  * @param fields - Array de campos da collection
  * @returns GeneratedTypes com scalars e relations separados
  */
-function buildGeneratedTypes(fields: NocoBaseField[]): GeneratedTypes {
+function buildGeneratedTypes(
+	fields: NocoBaseField[],
+	knownCollections: ReadonlySet<string>,
+): GeneratedTypes {
 	const generated: GeneratedTypes = {
 		scalars: new Map(),
 		relations: new Map(),
@@ -47,7 +50,12 @@ function buildGeneratedTypes(fields: NocoBaseField[]): GeneratedTypes {
 	for (const field of fields) {
 		const relationInfo = extractRelationInfo(field);
 		if (relationInfo) {
-			generated.relations.set(field.name, relationInfo);
+			generated.relations.set(field.name, {
+				...relationInfo,
+				targetCollection: knownCollections.has(relationInfo.targetCollection)
+					? relationInfo.targetCollection
+					: "",
+			});
 			continue;
 		}
 
@@ -123,6 +131,9 @@ export async function buildCollectionTypes(
 	options: BuildCollectionTypesOptions = {},
 ): Promise<CollectionTypesMap> {
 	const sortedCollections = sortByName(collections);
+	const knownCollections = new Set(
+		sortedCollections.map((collection) => collection.name),
+	);
 	const concurrency = options.concurrency ?? config.requestConcurrency;
 
 	const entries = await mapWithConcurrency(
@@ -136,7 +147,10 @@ export async function buildCollectionTypes(
 			});
 
 			const fields = await client.fetchCollectionFields(collection.name);
-			return [collection.name, buildGeneratedTypes(fields)] as const;
+			return [
+				collection.name,
+				buildGeneratedTypes(fields, knownCollections),
+			] as const;
 		},
 	);
 

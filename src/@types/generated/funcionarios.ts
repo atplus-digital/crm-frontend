@@ -15,6 +15,7 @@ import type {
 	LogsCargosBase,
 	ParentescoBase,
 	PatrimonioBase,
+	PeriodosFeriasBase,
 	QualirunInfoAdicionaisBase,
 	QualirunProcessosBase,
 	TurnosBase,
@@ -23,12 +24,11 @@ import type { UsersBase } from "./users";
 
 export interface FFuncionariosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_ativo: string;
 	f_bairro: string;
 	f_celular: string;
 	f_cep: string;
-	f_checklist_admissional: unknown[];
+	f_checklist_admissional: string[];
 	f_cnh: string;
 	f_cnpj: string;
 	f_conta_salario_pix: string;
@@ -85,13 +85,10 @@ export interface FFuncionariosBase {
 	f_zona_eleitoral: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_cargo: CargosBase | null;
-	f_departamento: DepartamentosBase | null;
-	f_turnos: TurnosBase | null;
 }
 
 export interface FFuncionariosRelations {
+	createdBy?: UsersBase | null;
 	f_arquivos_funcionarios?: ArquivosFuncionariosBase[];
 	f_asos?: AsosBase[];
 	f_cargo?: CargosBase | null;
@@ -103,9 +100,11 @@ export interface FFuncionariosRelations {
 	f_logs_cargos?: LogsCargosBase[];
 	f_parentesco?: ParentescoBase[];
 	f_patrimonio_funcionarios?: PatrimonioBase[];
+	f_periodos_ferias?: PeriodosFeriasBase[];
 	f_qualirun_processos?: QualirunProcessosBase[];
 	f_turnos?: TurnosBase | null;
 	t_qualirun_info_adicionais?: QualirunInfoAdicionaisBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type FFuncionariosRelationKey = keyof FFuncionariosRelations;

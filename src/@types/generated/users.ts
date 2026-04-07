@@ -8,7 +8,6 @@ import type { DepartmentsBase, RolesBase } from "./index";
 export interface UsersBase {
 	appLang: string;
 	createdAt: string;
-	createdBy: UsersBase | null;
 	createdById: number | null;
 	email: string;
 	f_fk_cargos: number;
@@ -25,16 +24,16 @@ export interface UsersBase {
 	sort: number;
 	systemSettings: Record<string, unknown>;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 	updatedById: number | null;
 	username: string;
-	mainDepartment: DepartmentsBase | null;
 }
 
 export interface UsersRelations {
+	createdBy?: UsersBase | null;
 	departments?: DepartmentsBase[];
 	mainDepartment?: DepartmentsBase | null;
 	roles?: RolesBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type UsersRelationKey = keyof UsersRelations;

@@ -7,7 +7,6 @@ import type { UsersBase } from "./users";
 
 export interface PessoasBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_analise_ixc: string;
 	f_cpf: string;
 	f_credito: string;
@@ -17,9 +16,11 @@ export interface PessoasBase {
 	f_vky78cvjtdw: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type PessoasRelations = Record<string, never>;
+export interface PessoasRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type PessoasRelationKey = keyof PessoasRelations;

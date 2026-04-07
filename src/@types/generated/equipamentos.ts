@@ -15,7 +15,6 @@ import type { UsersBase } from "./users";
 
 export interface EquipamentosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_34u76klwxoj: number;
 	f_fk_ativo_rack: number;
 	f_fk_equipamentos_anexos: number;
@@ -27,18 +26,17 @@ export interface EquipamentosBase {
 	f_sn: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_rack: TelecomRacksBase | null;
-	f_site: SitesBase | null;
 }
 
 export interface EquipamentosRelations {
+	createdBy?: UsersBase | null;
 	f_fwvce6bqigw?: TelecomAnexosBase[];
 	f_hcqrd9qhcid?: AcessosBase[];
 	f_interfaces?: TelecomInterfacesBase[];
 	f_rack?: TelecomRacksBase | null;
 	f_recurso_equipamento_a?: TelecomRecursosBase[];
 	f_site?: SitesBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type EquipamentosRelationKey = keyof EquipamentosRelations;

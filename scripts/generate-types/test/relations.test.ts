@@ -36,6 +36,11 @@ describe("relations - resolveRelationInterface", () => {
 		expect(resolveRelationInterface("attachment")).toBe("m2m");
 	});
 
+	it("deve resolver interfaces de auditoria como belongsTo", () => {
+		expect(resolveRelationInterface("createdBy")).toBe("belongsTo");
+		expect(resolveRelationInterface("updatedBy")).toBe("belongsTo");
+	});
+
 	it("deve retornar null para valores inválidos", () => {
 		expect(resolveRelationInterface("invalid")).toBeNull();
 		expect(resolveRelationInterface("xyz")).toBeNull();

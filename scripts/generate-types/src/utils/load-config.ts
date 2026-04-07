@@ -14,6 +14,10 @@ function resolveEnvPath(envPath: string): string {
 	return path.resolve(process.cwd(), envPath);
 }
 
+function getEnvPaths(defaultEnvPath: string): string[] {
+	return [...new Set([defaultEnvPath, ".env"])];
+}
+
 function formatZodError(error: z.ZodError): string {
 	return error.issues
 		.map((issue) => {
@@ -41,10 +45,12 @@ function createEnvSchema(defaultTimeoutMs: number) {
 }
 
 export function resolveEnvConfig(scriptConfig: ScriptConfig): EnvConfig {
-	loadDotEnv({
-		path: resolveEnvPath(scriptConfig.defaultEnvPath),
-		quiet: true,
-	});
+	for (const envPath of getEnvPaths(scriptConfig.defaultEnvPath)) {
+		loadDotEnv({
+			path: resolveEnvPath(envPath),
+			quiet: true,
+		});
+	}
 
 	const parsed = createEnvSchema(scriptConfig.requestTimeoutMs).safeParse(
 		process.env,
@@ -52,7 +58,7 @@ export function resolveEnvConfig(scriptConfig: ScriptConfig): EnvConfig {
 
 	if (!parsed.success) {
 		throw new Error(
-			`Variáveis de ambiente inválidas em ${scriptConfig.defaultEnvPath}: ${formatZodError(parsed.error)}`,
+			`Variáveis de ambiente inválidas após carregar ${getEnvPaths(scriptConfig.defaultEnvPath).join(" e ")}: ${formatZodError(parsed.error)}`,
 		);
 	}
 

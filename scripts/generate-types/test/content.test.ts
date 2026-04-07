@@ -8,6 +8,7 @@ import {
 	generateContentForCollections,
 	generateFileHeader,
 	generateSplitFiles,
+	generateTypeDefinitions,
 } from "@scripts/generate-types/src/generation/content";
 import { describe, expect, it } from "vitest";
 import {
@@ -37,7 +38,7 @@ describe("content", () => {
 			expect(result).toContain("}");
 		});
 
-		it("deve gerar interface Base com campos escalares e relações one", () => {
+		it("deve manter apenas campos escalares na interface Base", () => {
 			const types = createMockGeneratedTypes(
 				{ id: "number" },
 				{ company: { type: "m2o", targetCollection: "companies" } },
@@ -46,7 +47,7 @@ describe("content", () => {
 
 			expect(result).toContain("export interface ContactBase {");
 			expect(result).toContain("\tid: number;");
-			expect(result).toContain("\tcompany: CompaniesBase | null;");
+			expect(result).not.toContain("company");
 			expect(result).toContain("}");
 		});
 
@@ -262,6 +263,18 @@ describe("content", () => {
 			const result = generateContent(collections);
 
 			expect(result).toContain("Arquivo gerado automaticamente");
+			expect(result).toContain("export interface UsersBase {");
+		});
+	});
+
+	describe("generateTypeDefinitions", () => {
+		it("deve gerar conteúdo sem header para compatibilidade retroativa", () => {
+			const collections = createMockCollectionTypesMap({
+				users: { scalars: { id: "number" } },
+			});
+			const result = generateTypeDefinitions(collections);
+
+			expect(result).not.toContain("Arquivo gerado automaticamente");
 			expect(result).toContain("export interface UsersBase {");
 		});
 	});

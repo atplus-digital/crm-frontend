@@ -34,22 +34,22 @@ export type ColaboradoresXSetorRelations = Record<string, never>;
 export type ColaboradoresXSetorRelationKey = keyof ColaboradoresXSetorRelations;
 
 export interface DepartmentsBase {
-	children: DepartmentsBase[];
-	createdBy: UsersBase | null;
 	createdById: number | null;
-	id: string;
+	id: number;
 	isLeaf: boolean;
-	members: unknown;
-	parent: DepartmentsBase | null;
 	sort: number;
 	title: string;
-	updatedBy: UsersBase | null;
 	updatedById: number | null;
 }
 
 export interface DepartmentsRelations {
+	children?: DepartmentsBase[];
+	createdBy?: UsersBase | null;
+	members?: UsersBase[];
 	owners?: UsersBase[];
+	parent?: DepartmentsBase | null;
 	roles?: RolesBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type DepartmentsRelationKey = keyof DepartmentsRelations;
@@ -65,15 +65,16 @@ export type EventosDemandaRelationKey = keyof EventosDemandaRelations;
 
 export interface FContatosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_contato: string;
 	f_nome: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type FContatosRelations = Record<string, never>;
+export interface FContatosRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type FContatosRelationKey = keyof FContatosRelations;
 
@@ -131,18 +132,19 @@ export interface RolesBase {
 	default: boolean;
 	description: string;
 	hidden: boolean;
-	menuUiSchemas: unknown;
-	mobileRoutes: unknown;
 	name: string;
-	resources: unknown;
-	snippets: unknown;
+	snippets: unknown[];
 	sort: number;
 	strategy: Record<string, unknown>;
 	title: string;
-	users: unknown;
 }
 
-export type RolesRelations = Record<string, never>;
+export interface RolesRelations {
+	menuUiSchemas?: unknown[];
+	mobileRoutes?: unknown[];
+	resources?: unknown[];
+	users?: UsersBase[];
+}
 
 export type RolesRelationKey = keyof RolesRelations;
 
@@ -157,48 +159,42 @@ export type _3advfk0gv0zRelationKey = keyof _3advfk0gv0zRelations;
 
 export interface _902ctke5dhqBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_bmu9tsi11d4: P10scfhrhkwBase | null;
 }
 
 export interface _902ctke5dhqRelations {
+	createdBy?: UsersBase | null;
 	f_bmu9tsi11d4?: P10scfhrhkwBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type _902ctke5dhqRelationKey = keyof _902ctke5dhqRelations;
 
 export interface AcessosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_fk_servicos_x_acessos: number;
 	f_fk_site: number;
 	f_tipo: string;
 	f_x7w60fv71f9: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_equipamento: EquipamentosBase | null;
-	f_interface: TelecomInterfacesBase | null;
-	f_site: SitesBase | null;
-	f_xzuv9d6zkhr: ServicosBase | null;
 }
 
 export interface AcessosRelations {
+	createdBy?: UsersBase | null;
 	f_equipamento?: EquipamentosBase | null;
 	f_insumos?: ServicosBase[];
 	f_interface?: TelecomInterfacesBase | null;
 	f_site?: SitesBase | null;
 	f_xzuv9d6zkhr?: ServicosBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type AcessosRelationKey = keyof AcessosRelations;
 
 export interface AegisBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_idlogin: string;
 	f_notas: string;
 	f_notas_cliente: string;
@@ -207,16 +203,17 @@ export interface AegisBase {
 	f_statusmac: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type AegisRelations = Record<string, never>;
+export interface AegisRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type AegisRelationKey = keyof AegisRelations;
 
 export interface AnexosNegociacoesBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	extname: string;
 	f_anexos_fk: number;
 	filename: string;
@@ -226,21 +223,22 @@ export interface AnexosNegociacoesBase {
 	path: string;
 	preview: string;
 	size: number;
-	storage: Record<string, unknown>;
 	storageId: number;
 	title: string;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 	url: string;
 }
 
-export type AnexosNegociacoesRelations = Record<string, never>;
+export interface AnexosNegociacoesRelations {
+	createdBy?: UsersBase | null;
+	storage?: unknown | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type AnexosNegociacoesRelationKey = keyof AnexosNegociacoesRelations;
 
 export interface AnexosTrocaTitularidadeBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	extname: string;
 	f_anexos_fk: number;
 	filename: string;
@@ -250,22 +248,23 @@ export interface AnexosTrocaTitularidadeBase {
 	path: string;
 	preview: string;
 	size: number;
-	storage: Record<string, unknown>;
 	storageId: number;
 	title: string;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 	url: string;
 }
 
-export type AnexosTrocaTitularidadeRelations = Record<string, never>;
+export interface AnexosTrocaTitularidadeRelations {
+	createdBy?: UsersBase | null;
+	storage?: unknown | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type AnexosTrocaTitularidadeRelationKey =
 	keyof AnexosTrocaTitularidadeRelations;
 
 export interface ArquivosFuncionariosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	extname: string;
 	f_fk_funcionarios: number;
 	f_fk_info_arquivos: number;
@@ -276,18 +275,17 @@ export interface ArquivosFuncionariosBase {
 	path: string;
 	preview: string;
 	size: number;
-	storage: Record<string, unknown>;
 	title: string;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 	url: string;
-	f_funcionarios: FFuncionariosBase | null;
-	f_info_arquivos: InfoArquivosBase | null;
 }
 
 export interface ArquivosFuncionariosRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase | null;
 	f_info_arquivos?: InfoArquivosBase | null;
+	storage?: unknown | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type ArquivosFuncionariosRelationKey =
@@ -295,36 +293,33 @@ export type ArquivosFuncionariosRelationKey =
 
 export interface AsosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	extname: string;
 	f_fk_funcionarios: number;
 	f_fk_infos_aso: number;
 	filename: string;
-	id: string;
+	id: number;
 	meta: Record<string, unknown>;
 	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
-	storage: Record<string, unknown>;
 	title: string;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 	url: string;
-	f_funcionarios: FFuncionariosBase | null;
-	f_info_aso: InfoAsoBase | null;
 }
 
 export interface AsosRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase | null;
 	f_info_aso?: InfoAsoBase | null;
+	storage?: unknown | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type AsosRelationKey = keyof AsosRelations;
 
 export interface AtendimentosIxcBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_assunto: string;
 	f_cliente: string;
 	f_contrato: string;
@@ -345,34 +340,35 @@ export interface AtendimentosIxcBase {
 	f_usuario: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
 export interface AtendimentosIxcRelations {
+	createdBy?: UsersBase | null;
 	f_templates_atendimentos?: TemplatesAtendimentoN1Base[];
+	updatedBy?: UsersBase | null;
 }
 
 export type AtendimentosIxcRelationKey = keyof AtendimentosIxcRelations;
 
 export interface AuditoriaAutomaticaBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_conferencia: boolean;
 	f_id_negociacao: string;
 	f_titulo_negociacao: string;
 	f_valor_mensal: number;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type AuditoriaAutomaticaRelations = Record<string, never>;
+export interface AuditoriaAutomaticaRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type AuditoriaAutomaticaRelationKey = keyof AuditoriaAutomaticaRelations;
 
 export interface CargosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_atividades: string;
 	f_cbo: string;
 	f_descricao: string;
@@ -380,77 +376,80 @@ export interface CargosBase {
 	f_nome: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_responsavel: UsersBase | null;
 }
 
 export interface CargosRelations {
+	createdBy?: UsersBase | null;
 	f_responsavel?: UsersBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type CargosRelationKey = keyof CargosRelations;
 
 export interface ComentarioViagemBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_comentario: string;
 	f_comentario_viagem: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type ComentarioViagemRelations = Record<string, never>;
+export interface ComentarioViagemRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type ComentarioViagemRelationKey = keyof ComentarioViagemRelations;
 
 export interface ComentariosComprasBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_comentarios: string;
 	f_comentarios_compras: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type ComentariosComprasRelations = Record<string, never>;
+export interface ComentariosComprasRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type ComentariosComprasRelationKey = keyof ComentariosComprasRelations;
 
 export interface ComentariosSuspensaoDeContratoBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_comentario: string;
 	f_fk_suspensao: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type ComentariosSuspensaoDeContratoRelations = Record<string, never>;
+export interface ComentariosSuspensaoDeContratoRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type ComentariosSuspensaoDeContratoRelationKey =
 	keyof ComentariosSuspensaoDeContratoRelations;
 
 export interface ComprasFornecedoresBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_contato: string;
 	f_nome: string;
 	f_site: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type ComprasFornecedoresRelations = Record<string, never>;
+export interface ComprasFornecedoresRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type ComprasFornecedoresRelationKey = keyof ComprasFornecedoresRelations;
 
 export interface ComprasProdutosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_834gi7nhict: number;
 	f_link_produto: string;
 	f_produto: string;
@@ -459,55 +458,54 @@ export interface ComprasProdutosBase {
 	f_valor_uni: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_fk_produtos_solicitacao_compra: SolicitacaoComprasBase | null;
 }
 
 export interface ComprasProdutosRelations {
+	createdBy?: UsersBase | null;
 	f_fk_produtos_solicitacao_compra?: SolicitacaoComprasBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type ComprasProdutosRelationKey = keyof ComprasProdutosRelations;
 
 export interface ConfiguracoesBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_chave: string;
 	f_descricao: string;
-	f_escopo: unknown[];
+	f_escopo: string[];
 	f_nome: string;
 	f_valor: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type ConfiguracoesRelations = Record<string, never>;
+export interface ConfiguracoesRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type ConfiguracoesRelationKey = keyof ConfiguracoesRelations;
 
 export interface ConsultasPfBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_id_pessoa_fk: number;
 	f_justificativa: string;
 	f_retorno_spc: string;
 	f_status_consulta: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_id_pessoa: PessoasBase | null;
 }
 
 export interface ConsultasPfRelations {
+	createdBy?: UsersBase | null;
 	f_id_pessoa?: PessoasBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type ConsultasPfRelationKey = keyof ConsultasPfRelations;
 
 export interface ContratoIxcItensBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_fk_itens_contrato_ixc: number;
 	f_id_produto_contrato_ixc: string;
 	f_mensalidade: string;
@@ -515,33 +513,34 @@ export interface ContratoIxcItensBase {
 	f_quantidade: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type ContratoIxcItensRelations = Record<string, never>;
+export interface ContratoIxcItensRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type ContratoIxcItensRelationKey = keyof ContratoIxcItensRelations;
 
 export interface ContratosIxcBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_descricao: string;
 	f_expiracao: string;
 	f_vencimento: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
 export interface ContratosIxcRelations {
+	createdBy?: UsersBase | null;
 	f_itens_contrato?: ContratoIxcItensBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type ContratosIxcRelationKey = keyof ContratosIxcRelations;
 
 export interface CrmTrocaTitularidadeBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_bairro: string;
 	f_cedente: string;
 	f_cedente_documento: string;
@@ -572,19 +571,17 @@ export interface CrmTrocaTitularidadeBase {
 	f_tipo_pessoa: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_pessoa_pf: PessoasBase | null;
-	f_pessoa_pj: EmpresasBase | null;
-	f_vendedor: UsersBase | null;
 }
 
 export interface CrmTrocaTitularidadeRelations {
+	createdBy?: UsersBase | null;
 	f_anexos?: AnexosTrocaTitularidadeBase[];
 	f_comentarios?: TrocasdetitularidadeComentariosBase[];
 	f_pessoa_pf?: PessoasBase | null;
 	f_pessoa_pj?: EmpresasBase | null;
 	f_trocadetitularidade_contrato?: ContratosBase[];
 	f_vendedor?: UsersBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type CrmTrocaTitularidadeRelationKey =
@@ -592,7 +589,6 @@ export type CrmTrocaTitularidadeRelationKey =
 
 export interface CuponsDescontoBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_cep: string;
 	f_codigo: string;
 	f_data_fim: string;
@@ -610,37 +606,38 @@ export interface CuponsDescontoBase {
 	f_valor_renovacao: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
 export interface CuponsDescontoRelations {
+	createdBy?: UsersBase | null;
 	f_pacotes?: PacotesBase[];
 	f_vendedor?: UsersBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type CuponsDescontoRelationKey = keyof CuponsDescontoRelations;
 
 export interface DadosAdicionaisClienteContratoBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_forma_de_pagamento: string;
 	f_id_cliente_contrato: number;
 	f_origem_cliente: string;
-	f_perfil_de_uso: unknown[];
+	f_perfil_de_uso: string[];
 	f_pessoas_na_residencia: number;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type DadosAdicionaisClienteContratoRelations = Record<string, never>;
+export interface DadosAdicionaisClienteContratoRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type DadosAdicionaisClienteContratoRelationKey =
 	keyof DadosAdicionaisClienteContratoRelations;
 
 export interface DatacenterMemoriasBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_capacidade: string;
 	f_fabricante: string;
 	f_fk_memorias: number;
@@ -650,19 +647,18 @@ export interface DatacenterMemoriasBase {
 	f_valor_locacao: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_fk_servidor: DcServidoresBase | null;
 }
 
 export interface DatacenterMemoriasRelations {
+	createdBy?: UsersBase | null;
 	f_fk_servidor?: DcServidoresBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type DatacenterMemoriasRelationKey = keyof DatacenterMemoriasRelations;
 
 export interface DcServidoresBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_fabricante: string;
 	f_fk_discos: number;
 	f_memoria: string;
@@ -673,19 +669,19 @@ export interface DcServidoresBase {
 	f_status: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
 export interface DcServidoresRelations {
+	createdBy?: UsersBase | null;
 	f_discos?: DiscosBase[];
 	f_memorias?: DatacenterMemoriasBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type DcServidoresRelationKey = keyof DcServidoresRelations;
 
 export interface DemandasViabilidadesBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_custo_recorrente: number;
 	f_endereco: string;
 	f_fk_viabilidades: number;
@@ -697,34 +693,34 @@ export interface DemandasViabilidadesBase {
 	f_velocidade_pretendida: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type DemandasViabilidadesRelations = Record<string, never>;
+export interface DemandasViabilidadesRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type DemandasViabilidadesRelationKey =
 	keyof DemandasViabilidadesRelations;
 
 export interface DepartamentosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_fk_funcionarios: number;
 	f_nome: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_responsavel: UsersBase | null;
 }
 
 export interface DepartamentosRelations {
+	createdBy?: UsersBase | null;
 	f_responsavel?: UsersBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type DepartamentosRelationKey = keyof DepartamentosRelations;
 
 export interface DiscosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_capacidade: string;
 	f_data_aquisicao: string;
 	f_fk_discos: number;
@@ -736,16 +732,17 @@ export interface DiscosBase {
 	f_tipo: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type DiscosRelations = Record<string, never>;
+export interface DiscosRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type DiscosRelationKey = keyof DiscosRelations;
 
 export interface EquipamentosEmPrediosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_contato_sindico: string;
 	f_endereco: string;
 	f_modelo_equipamento: string;
@@ -753,33 +750,35 @@ export interface EquipamentosEmPrediosBase {
 	f_observacao: string;
 	f_sn: string;
 	f_tipo_equipamento: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type EquipamentosEmPrediosRelations = Record<string, never>;
+export interface EquipamentosEmPrediosRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type EquipamentosEmPrediosRelationKey =
 	keyof EquipamentosEmPrediosRelations;
 
 export interface FacilidadeBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_descricao: string;
 	f_nome: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type FacilidadeRelations = Record<string, never>;
+export interface FacilidadeRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type FacilidadeRelationKey = keyof FacilidadeRelations;
 
 export interface FornecedoresTelecomBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_fk_cliente_circuiro: number;
 	f_fk_fornecedor_circuito: number;
 	f_instrucoes: string;
@@ -787,21 +786,21 @@ export interface FornecedoresTelecomBase {
 	f_razao_social: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
 export interface FornecedoresTelecomRelations {
+	createdBy?: UsersBase | null;
 	f_fk_cliente_contrato?: TelecomContratosBase[];
 	f_fk_contrato_fornecedor?: TelecomContratosBase[];
 	f_fk_recurso_cliente?: TelecomRecursosBase[];
 	f_fk_recurso_fornecedor?: TelecomRecursosBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type FornecedoresTelecomRelationKey = keyof FornecedoresTelecomRelations;
 
 export interface FotoFuncionariosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	extname: string;
 	f_fk_funcionarios: number;
 	filename: string;
@@ -811,16 +810,16 @@ export interface FotoFuncionariosBase {
 	path: string;
 	preview: string;
 	size: number;
-	storage: Record<string, unknown>;
 	title: string;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 	url: string;
-	f_funcionarios: FFuncionariosBase | null;
 }
 
 export interface FotoFuncionariosRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase | null;
+	storage?: unknown | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type FotoFuncionariosRelationKey = keyof FotoFuncionariosRelations;
@@ -836,27 +835,24 @@ export type Ij93gv1hx9mRelationKey = keyof Ij93gv1hx9mRelations;
 
 export interface InfoArquivosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_arquivo_externo: string;
 	f_fk_funcionarios: number;
 	f_titulo: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_arquivos: ArquivosFuncionariosBase | null;
-	f_funcionarios: FFuncionariosBase | null;
 }
 
 export interface InfoArquivosRelations {
+	createdBy?: UsersBase | null;
 	f_arquivos?: ArquivosFuncionariosBase | null;
 	f_funcionarios?: FFuncionariosBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type InfoArquivosRelationKey = keyof InfoArquivosRelations;
 
 export interface InfoAsoBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_apto: boolean;
 	f_data_exame: string;
 	f_data_prox_exame: string;
@@ -865,23 +861,21 @@ export interface InfoAsoBase {
 	f_informado: string;
 	f_obs: string;
 	f_tipo_exame: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_aso: AsosBase | null;
-	f_funcionarios_2: FFuncionariosBase | null;
 }
 
 export interface InfoAsoRelations {
+	createdBy?: UsersBase | null;
 	f_aso?: AsosBase | null;
 	f_funcionarios_2?: FFuncionariosBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type InfoAsoRelationKey = keyof InfoAsoRelations;
 
 export interface ItensPacotesBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_ch3bjzt4zr7: number;
 	f_fk1: number;
 	f_fk2: number;
@@ -894,65 +888,85 @@ export interface ItensPacotesBase {
 	f_vna9rme0f5j: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type ItensPacotesRelations = Record<string, never>;
+export interface ItensPacotesRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type ItensPacotesRelationKey = keyof ItensPacotesRelations;
 
+export interface LancamentosFeriasBase {
+	createdAt: string;
+	f_data_retorno: string;
+	f_data_saida: string;
+	f_dias_gozados: number;
+	f_dias_vendidos: number;
+	f_observacoes: string;
+	f_status: string;
+	id: number;
+	updatedAt: string;
+}
+
+export interface LancamentosFeriasRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
+
+export type LancamentosFeriasRelationKey = keyof LancamentosFeriasRelations;
+
 export interface LinhaCorporativaBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_fk_funcionarios: number;
 	f_iccid_corporativo: string;
 	f_numero_movel_corporativo: string;
 	f_tipo: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_funcionarios: FFuncionariosBase | null;
 }
 
 export interface LinhaCorporativaRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type LinhaCorporativaRelationKey = keyof LinhaCorporativaRelations;
 
 export interface LogsBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_log_data: Record<string, unknown>;
 	f_log_level: string;
 	f_log_message: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type LogsRelations = Record<string, never>;
+export interface LogsRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type LogsRelationKey = keyof LogsRelations;
 
 export interface LogsCargosBase {
 	CBO: string;
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_atividades: string;
 	f_cargo_anterior: string;
 	f_data_inicio_cargo: string;
 	f_descricao: string;
 	f_fk_funcionarios: number;
 	f_nome_cargo: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_funcionarios: FFuncionariosBase | null;
 }
 
 export interface LogsCargosRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type LogsCargosRelationKey = keyof LogsCargosRelations;
@@ -977,24 +991,24 @@ export type Na4eifobeszRelationKey = keyof Na4eifobeszRelations;
 
 export interface NegociacoesComentariosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_comentario: string;
 	f_fk_comentarios_negociacoes: number;
 	f_insere_atendimento_ixc: string;
 	f_setor_para_obs: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type NegociacoesComentariosRelations = Record<string, never>;
+export interface NegociacoesComentariosRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type NegociacoesComentariosRelationKey =
 	keyof NegociacoesComentariosRelations;
 
 export interface NegociacoesItensBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_fk_id_negociacao: number;
 	f_id_ixc: number;
 	f_mensalidade_com_desconto: number;
@@ -1007,14 +1021,13 @@ export interface NegociacoesItensBase {
 	f_tipo_produto: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_opcoes_smp: OpcoesSmpBase | null;
-	f_opcoes_stfc: OpcoesStfcBase | null;
 }
 
 export interface NegociacoesItensRelations {
+	createdBy?: UsersBase | null;
 	f_opcoes_smp?: OpcoesSmpBase | null;
 	f_opcoes_stfc?: OpcoesStfcBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type NegociacoesItensRelationKey = keyof NegociacoesItensRelations;
@@ -1030,27 +1043,25 @@ export type Nukww9tmq83RelationKey = keyof Nukww9tmq83Relations;
 
 export interface OeQualirunBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_fk_negociacoes: number;
 	f_id_externo: string;
 	f_link_externo: string;
 	f_procedimento: string;
 	f_status: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_negociacoes: NegociacoesBase | null;
 }
 
 export interface OeQualirunRelations {
+	createdBy?: UsersBase | null;
 	f_negociacoes?: NegociacoesBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type OeQualirunRelationKey = keyof OeQualirunRelations;
 
 export interface OpcoesSmpBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_bonus: string;
 	f_fk_prod_negociacao_opcoes_smp: number;
 	f_franquia_dados: string;
@@ -1064,16 +1075,17 @@ export interface OpcoesSmpBase {
 	f_valor_sva: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type OpcoesSmpRelations = Record<string, never>;
+export interface OpcoesSmpRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type OpcoesSmpRelationKey = keyof OpcoesSmpRelations;
 
 export interface OpcoesSmpTemplateBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_bonus: string;
 	f_fk_smp_produtos: number;
 	f_franquia_dados: string;
@@ -1085,16 +1097,17 @@ export interface OpcoesSmpTemplateBase {
 	f_valor_sva: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type OpcoesSmpTemplateRelations = Record<string, never>;
+export interface OpcoesSmpTemplateRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type OpcoesSmpTemplateRelationKey = keyof OpcoesSmpTemplateRelations;
 
 export interface OpcoesStfcBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_canais: string;
 	f_fk_opcoes_stfc: number;
 	f_franquia: string;
@@ -1103,16 +1116,17 @@ export interface OpcoesStfcBase {
 	f_terminais: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type OpcoesStfcRelations = Record<string, never>;
+export interface OpcoesStfcRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type OpcoesStfcRelationKey = keyof OpcoesStfcRelations;
 
 export interface OpcoesStfcTemplateBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_canais: number;
 	f_fk_opcoes_stfc_template: number;
 	f_franquia: string;
@@ -1121,32 +1135,32 @@ export interface OpcoesStfcTemplateBase {
 	f_terminais: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type OpcoesStfcTemplateRelations = Record<string, never>;
+export interface OpcoesStfcTemplateRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type OpcoesStfcTemplateRelationKey = keyof OpcoesStfcTemplateRelations;
 
 export interface P10scfhrhkwBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_m7vet8zixc9: number;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_ytw8yxxeul0: _902ctke5dhqBase | null;
 }
 
 export interface P10scfhrhkwRelations {
+	createdBy?: UsersBase | null;
 	f_ytw8yxxeul0?: _902ctke5dhqBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type P10scfhrhkwRelationKey = keyof P10scfhrhkwRelations;
 
 export interface PacotesBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_abre_atendimento: string;
 	f_fk_desconto_pacotes: number;
 	f_fk_id_pacote: number;
@@ -1156,40 +1170,39 @@ export interface PacotesBase {
 	f_pacote_adicional: string;
 	f_pacote_principal: string;
 	f_status: string;
-	f_vender_para: unknown[];
+	f_vender_para: string[];
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
 export interface PacotesRelations {
+	createdBy?: UsersBase | null;
 	f_itens_do_pacote?: ProdutosBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type PacotesRelationKey = keyof PacotesRelations;
 
 export interface ParentescoBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_cpf: string;
 	f_fk_funcionarios: number;
 	f_nome: string;
 	f_vinculo_colaborador: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_funcionarios: FFuncionariosBase | null;
 }
 
 export interface ParentescoRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type ParentescoRelationKey = keyof ParentescoRelations;
 
 export interface PatrimonioBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_armazenamento: string;
 	f_estado_uso: string;
 	f_fk_funcionarios: number;
@@ -1205,19 +1218,37 @@ export interface PatrimonioBase {
 	f_valor_patrimonio: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_funcionarios: FFuncionariosBase | null;
 }
 
 export interface PatrimonioRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type PatrimonioRelationKey = keyof PatrimonioRelations;
 
+export interface PeriodosFeriasBase {
+	createdAt: string;
+	f_dias_direito: number;
+	f_fk_funcionarios: number;
+	f_periodo_aquisitivo_fim: string;
+	f_periodo_aquisitivo_inicio: string;
+	f_status_periodo: string;
+	id: number;
+	updatedAt: string;
+}
+
+export interface PeriodosFeriasRelations {
+	createdBy?: UsersBase | null;
+	f_funcionarios?: FFuncionariosBase | null;
+	updatedBy?: UsersBase | null;
+}
+
+export type PeriodosFeriasRelationKey = keyof PeriodosFeriasRelations;
+
 export interface ProdutosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_descricao_produto: string;
 	f_id_ixc: number;
 	f_mensalidade_com_desconto: number;
@@ -1227,45 +1258,44 @@ export interface ProdutosBase {
 	f_tipo_produto: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_opcoes_smp_template: OpcoesSmpTemplateBase | null;
-	f_opcoes_STFC: OpcoesStfcTemplateBase | null;
 }
 
 export interface ProdutosRelations {
+	createdBy?: UsersBase | null;
 	f_opcoes_smp_template?: OpcoesSmpTemplateBase | null;
 	f_opcoes_STFC?: OpcoesStfcTemplateBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type ProdutosRelationKey = keyof ProdutosRelations;
 
 export interface QualirunAssinaturaGovBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	extname: string;
 	f_fk_negociacoes: number;
 	filename: string;
-	id: string;
+	id: number;
 	meta: Record<string, unknown>;
 	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
-	storage: Record<string, unknown>;
 	title: string;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 	url: string;
 }
 
-export type QualirunAssinaturaGovRelations = Record<string, never>;
+export interface QualirunAssinaturaGovRelations {
+	createdBy?: UsersBase | null;
+	storage?: unknown | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type QualirunAssinaturaGovRelationKey =
 	keyof QualirunAssinaturaGovRelations;
 
 export interface QualirunInfoAdicionaisBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_2fxykekjpk2: string;
 	f_contato_emergencia: string;
 	f_curso: string;
@@ -1281,14 +1311,14 @@ export interface QualirunInfoAdicionaisBase {
 	f_telefone_contato_emergencia: string;
 	f_tkxxh3xi2zw: string;
 	f_vinculo_contato_emergencia: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_funcionarios: FFuncionariosBase | null;
 }
 
 export interface QualirunInfoAdicionaisRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type QualirunInfoAdicionaisRelationKey =
@@ -1296,28 +1326,26 @@ export type QualirunInfoAdicionaisRelationKey =
 
 export interface QualirunProcessosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_detalhes_procedimento: string;
 	f_fk_funcionarios: number;
 	f_id_externo: string;
 	f_link_externo: string;
 	f_procedimento: string;
 	f_status: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_funcionarios: FFuncionariosBase | null;
 }
 
 export interface QualirunProcessosRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type QualirunProcessosRelationKey = keyof QualirunProcessosRelations;
 
 export interface RecursosViagemBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_destino_viagem: string;
 	f_fk_recursos_viagem: number;
 	f_km_percorrido: number;
@@ -1325,16 +1353,17 @@ export interface RecursosViagemBase {
 	f_observacoes: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type RecursosViagemRelations = Record<string, never>;
+export interface RecursosViagemRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type RecursosViagemRelationKey = keyof RecursosViagemRelations;
 
 export interface RegistrosDeContatoBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_categoria: string;
 	f_encaminhamento_pendencia: string;
 	f_feedback_observacao: string;
@@ -1344,12 +1373,14 @@ export interface RegistrosDeContatoBase {
 	f_nota_vendas: string;
 	f_resumo_contato: string;
 	f_titulo: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type RegistrosDeContatoRelations = Record<string, never>;
+export interface RegistrosDeContatoRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type RegistrosDeContatoRelationKey = keyof RegistrosDeContatoRelations;
 
@@ -1373,36 +1404,36 @@ export type ServicosXServicosRelationKey = keyof ServicosXServicosRelations;
 
 export interface SetorBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
-	f_fk_funcionarios: unknown;
-	f_fk_sistemas_acessos: unknown;
+	f_fk_funcionarios: unknown[];
+	f_fk_sistemas_acessos: unknown[];
 	f_nome_setor: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
 export interface SetorRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase[];
 	f_funcionarios_1?: FFuncionariosBase[];
 	f_sistemas_acessos?: SistemasAcessosBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type SetorRelationKey = keyof SetorRelations;
 
 export interface SistemasAcessosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
-	f_fk_funcionarios: unknown;
+	f_fk_funcionarios: unknown[];
 	f_sistemas_acessos: string;
 	f_url: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
 export interface SistemasAcessosRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type SistemasAcessosRelationKey = keyof SistemasAcessosRelations;
@@ -1418,9 +1449,7 @@ export type Siurxeb1juyRelationKey = keyof Siurxeb1juyRelations;
 
 export interface SolicitacaoComprasBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_0i82r8a2t99: number;
-	f_anexos: unknown;
 	f_categoria: string;
 	f_departamento: string;
 	f_justificativa: string;
@@ -1440,20 +1469,20 @@ export interface SolicitacaoComprasBase {
 	fk_solicitacao_compras: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_fornecedor: ComprasFornecedoresBase | null;
 }
 
 export interface SolicitacaoComprasRelations {
+	createdBy?: UsersBase | null;
+	f_anexos?: unknown[];
 	f_fornecedor?: ComprasFornecedoresBase | null;
 	f_produtos?: ComprasProdutosBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type SolicitacaoComprasRelationKey = keyof SolicitacaoComprasRelations;
 
 export interface SuspensaoContratoBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_cpf: string;
 	f_dias_suspensao: string;
 	f_email: string;
@@ -1470,37 +1499,35 @@ export interface SuspensaoContratoBase {
 	f_titulo: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_pessoas: PessoasBase | null;
-	f_pessoas_pj: EmpresasBase | null;
-	f_responsavel: UsersBase | null;
 }
 
 export interface SuspensaoContratoRelations {
+	createdBy?: UsersBase | null;
 	f_comentarios?: ComentariosSuspensaoDeContratoBase[];
 	f_contratos?: ContratosBase[];
 	f_pessoas?: PessoasBase | null;
 	f_pessoas_pj?: EmpresasBase | null;
 	f_responsavel?: UsersBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type SuspensaoContratoRelationKey = keyof SuspensaoContratoRelations;
 
 export interface TabelaGeralBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type TabelaGeralRelations = Record<string, never>;
+export interface TabelaGeralRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type TabelaGeralRelationKey = keyof TabelaGeralRelations;
 
 export interface TelecomAnexosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	extname: string;
 	f_6j2u7ptvn88: number;
 	f_88kxg6s8bb8: number;
@@ -1513,104 +1540,103 @@ export interface TelecomAnexosBase {
 	path: string;
 	preview: string;
 	size: number;
-	storage: Record<string, unknown>;
 	storageId: number;
 	title: string;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 	url: string;
 }
 
-export type TelecomAnexosRelations = Record<string, never>;
+export interface TelecomAnexosRelations {
+	createdBy?: UsersBase | null;
+	storage?: unknown | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type TelecomAnexosRelationKey = keyof TelecomAnexosRelations;
 
 export interface TelecomColocationOpcoesBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_6c1tv6gt1ey: number;
 	f_designacao_rack: string;
-	f_energia: unknown[];
+	f_energia: string[];
 	f_espaco_rack: string;
 	fk_opcoes_colocation: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type TelecomColocationOpcoesRelations = Record<string, never>;
+export interface TelecomColocationOpcoesRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type TelecomColocationOpcoesRelationKey =
 	keyof TelecomColocationOpcoesRelations;
 
 export interface TelecomContratosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_descricao: string;
 	f_fk_cliente: number;
 	f_fk_fornecedor: number;
 	f_o6r7bgwk9bb: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_cliente: FornecedoresTelecomBase | null;
-	f_fornecedor: FornecedoresTelecomBase | null;
 }
 
 export interface TelecomContratosRelations {
+	createdBy?: UsersBase | null;
 	f_cliente?: FornecedoresTelecomBase | null;
 	f_fornecedor?: FornecedoresTelecomBase | null;
 	f_servicos?: ServicosBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type TelecomContratosRelationKey = keyof TelecomContratosRelations;
 
 export interface TelecomFilaBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_fk_fila: number;
 	f_nome: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
 export interface TelecomFilaRelations {
+	createdBy?: UsersBase | null;
 	f_fk_fila_rack?: TelecomRacksBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type TelecomFilaRelationKey = keyof TelecomFilaRelations;
 
 export interface TelecomInterfacesBase {
-	children: TelecomInterfacesBase[];
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_configuracao: string;
 	f_descricao: string;
 	f_interface: string;
 	f_p9gxrkh5utl: number;
 	f_tipo: string;
 	id: number;
-	parent: TelecomInterfacesBase | null;
 	parentId: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_s3gs1jjkqzm: AcessosBase | null;
 }
 
 export interface TelecomInterfacesRelations {
+	children?: TelecomInterfacesBase[];
+	createdBy?: UsersBase | null;
 	f_fk_equipamento?: EquipamentosBase[];
 	f_fk_interfaces_equipamentos?: EquipamentosBase[];
 	f_fk_recurso_interface_ponta_a?: TelecomRecursosBase[];
 	f_fk_recurso_interface_ponta_b?: TelecomRecursosBase[];
 	f_s3gs1jjkqzm?: AcessosBase | null;
+	parent?: TelecomInterfacesBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type TelecomInterfacesRelationKey = keyof TelecomInterfacesRelations;
 
 export interface TelecomIpsFixosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_contrato_ixc: string;
 	f_controle: string;
 	f_ip: string;
@@ -1618,95 +1644,95 @@ export interface TelecomIpsFixosBase {
 	f_possui_ip_fixo: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type TelecomIpsFixosRelations = Record<string, never>;
+export interface TelecomIpsFixosRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type TelecomIpsFixosRelationKey = keyof TelecomIpsFixosRelations;
 
 export interface TelecomOpcoesL2lBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_rmfqnk0k53u: number;
 	f_velocidade: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type TelecomOpcoesL2lRelations = Record<string, never>;
+export interface TelecomOpcoesL2lRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type TelecomOpcoesL2lRelationKey = keyof TelecomOpcoesL2lRelations;
 
 export interface TelecomRacksBase {
-	children: TelecomRacksBase[];
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_fk_rack_fila: number;
 	f_fk_rack_sala: number;
 	f_fk_site_racks: number;
 	f_rack: string;
 	f_sigla: string;
 	id: number;
-	parent: TelecomRacksBase | null;
 	parentId: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_fila: TelecomFilaBase | null;
-	f_fk_rack_sites: SitesBase | null;
-	f_sala: TelecomSalasBase | null;
 }
 
 export interface TelecomRacksRelations {
+	children?: TelecomRacksBase[];
+	createdBy?: UsersBase | null;
 	f_fila?: TelecomFilaBase | null;
 	f_fk_rack_a_recursos?: TelecomRecursosBase[];
 	f_fk_rack_ativos?: EquipamentosBase[];
 	f_fk_rack_sites?: SitesBase | null;
 	f_fk_recursos_rack_b?: TelecomRecursosBase[];
 	f_sala?: TelecomSalasBase | null;
+	parent?: TelecomRacksBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type TelecomRacksRelationKey = keyof TelecomRacksRelations;
 
 export interface TelecomSalasBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_fk_salas: number;
 	f_nome: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
 export interface TelecomSalasRelations {
+	createdBy?: UsersBase | null;
 	f_fk_sala_racks?: TelecomRacksBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type TelecomSalasRelationKey = keyof TelecomSalasRelations;
 
 export interface TelecomTransitoOpcoesBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_1eu8gjcf9js: number;
 	f_ips: string;
 	f_velocidade: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type TelecomTransitoOpcoesRelations = Record<string, never>;
+export interface TelecomTransitoOpcoesRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type TelecomTransitoOpcoesRelationKey =
 	keyof TelecomTransitoOpcoesRelations;
 
 export interface TemplatesAtendimentoN1Base {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_acessa_pela_rede_da_atplus: string;
 	f_alteracoes: string;
-	f_aplicativo: unknown[];
+	f_aplicativo: string[];
 	f_aplicativo_especifico: string;
 	f_apn_preenchida: string;
 	f_descricao_do_cliente: string;
@@ -1740,17 +1766,18 @@ export interface TemplatesAtendimentoN1Base {
 	f_torre_rede: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type TemplatesAtendimentoN1Relations = Record<string, never>;
+export interface TemplatesAtendimentoN1Relations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type TemplatesAtendimentoN1RelationKey =
 	keyof TemplatesAtendimentoN1Relations;
 
 export interface TrocaEnderecoBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_bairro: string;
 	f_cep: string;
 	f_cliente: string;
@@ -1768,47 +1795,48 @@ export interface TrocaEnderecoBase {
 	f_telefone_contato: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type TrocaEnderecoRelations = Record<string, never>;
+export interface TrocaEnderecoRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type TrocaEnderecoRelationKey = keyof TrocaEnderecoRelations;
 
 export interface TrocasdetitularidadeComentariosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_comentario: string;
 	f_comentario_troca_de_titularidade: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type TrocasdetitularidadeComentariosRelations = Record<string, never>;
+export interface TrocasdetitularidadeComentariosRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type TrocasdetitularidadeComentariosRelationKey =
 	keyof TrocasdetitularidadeComentariosRelations;
 
 export interface TurnosBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_turno: string;
-	id: string;
+	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
 export interface TurnosRelations {
+	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase[];
+	updatedBy?: UsersBase | null;
 }
 
 export type TurnosRelationKey = keyof TurnosRelations;
 
 export interface ViagemSolicitacaoBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
-	f_anexos: unknown;
 	f_colaborador_beneficiado: string;
 	f_data_retorno: string;
 	f_data_viagem: string;
@@ -1828,23 +1856,27 @@ export interface ViagemSolicitacaoBase {
 	f_valor_pedagio: number;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type ViagemSolicitacaoRelations = Record<string, never>;
+export interface ViagemSolicitacaoRelations {
+	createdBy?: UsersBase | null;
+	f_anexos?: unknown[];
+	updatedBy?: UsersBase | null;
+}
 
 export type ViagemSolicitacaoRelationKey = keyof ViagemSolicitacaoRelations;
 
 export interface VlanTagsBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_tag: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type VlanTagsRelations = Record<string, never>;
+export interface VlanTagsRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type VlanTagsRelationKey = keyof VlanTagsRelations;
 
@@ -1859,7 +1891,6 @@ export type Ynltolqbwj1RelationKey = keyof Ynltolqbwj1Relations;
 
 export interface ZapsignBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_data_de_encerramento: string;
 	f_nome_do_plano: string;
 	f_numero_de_creditos: string;
@@ -1867,10 +1898,12 @@ export interface ZapsignBase {
 	f_status: string;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
 }
 
-export type ZapsignRelations = Record<string, never>;
+export interface ZapsignRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
 
 export type ZapsignRelationKey = keyof ZapsignRelations;
 

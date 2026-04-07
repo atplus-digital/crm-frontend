@@ -19,7 +19,6 @@ import type { UsersBase } from "./users";
 
 export interface NegociacoesBase {
 	createdAt: string;
-	createdBy: UsersBase | null;
 	f_apartamento: string;
 	f_assinatura_gov: boolean;
 	f_bairro: string;
@@ -57,7 +56,7 @@ export interface NegociacoesBase {
 	f_ixc_tipo_cobranca: string;
 	f_link_assinatura: string;
 	f_motivo: string;
-	f_motivo_pontos: unknown[];
+	f_motivo_pontos: string[];
 	f_multa_juros: number;
 	f_nome_edificio: string;
 	f_nome_fantasia: string;
@@ -91,15 +90,10 @@ export interface NegociacoesBase {
 	f_zapsign: boolean;
 	id: number;
 	updatedAt: string;
-	updatedBy: UsersBase | null;
-	f_cupom_desconto: CuponsDescontoBase | null;
-	f_negociacao_pessoa_juridica: EmpresasBase | null;
-	f_pacote: PacotesBase | null;
-	f_pessoa: PessoasBase | null;
-	f_vendedor: UsersBase | null;
 }
 
 export interface NegociacoesRelations {
+	createdBy?: UsersBase | null;
 	f_anexos?: AnexosNegociacoesBase[];
 	f_comentarios?: NegociacoesComentariosBase[];
 	f_cupom_desconto?: CuponsDescontoBase | null;
@@ -112,6 +106,7 @@ export interface NegociacoesRelations {
 	f_pessoa?: PessoasBase | null;
 	f_qualirun_assinatura_gov?: QualirunAssinaturaGovBase[];
 	f_vendedor?: UsersBase | null;
+	updatedBy?: UsersBase | null;
 }
 
 export type NegociacoesRelationKey = keyof NegociacoesRelations;

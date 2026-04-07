@@ -3,7 +3,7 @@ title: Generate Types Script
 description: Gera tipos TypeScript a partir das collections do NocoBase via API.
 ---
 
-Script CLI que conecta à API NocoBase, busca o schema de ~110 collections e gera interfaces TypeScript tipadas para a aplicação CRM ATPlus.
+Script CLI que conecta à API NocoBase, busca o schema das collections disponíveis e gera interfaces TypeScript tipadas para a aplicação CRM ATPlus.
 
 ## Uso Rápido
 
@@ -22,17 +22,17 @@ pnpm generate-types --help     # Ajuda
 
 O script gera dois tipos de arquivo:
 
-- **Arquivo principal** (`src/@types/types.generated.ts`): ~100 collections em um único arquivo
+- **Arquivo principal** (`src/@types/generated/index.ts`): collections agregadas em um único arquivo
 - **Arquivos individuais** (`src/@types/generated/<collection>.ts`): 10 collections críticas separadas para imports otimizados
 
 Para cada collection, gera 3 tipos:
 
 ```typescript
-// Campos escalares + relações one (many-to-one, one-to-one)
+// Campos escalares/FKs que vêm no payload base
 export interface UsersBase { id: number; email: string; ... }
 
-// Relações opcionais (many-to-many, one-to-many) — todas com `?`
-export interface UsersRelations { roles?: RolesBase[]; ... }
+// Relações opcionais carregadas via `appends`
+export interface UsersRelations { createdBy?: UsersBase | null; roles?: RolesBase[]; ... }
 
 // Union type das chaves de relação — para typesafe appends
 export type UsersRelationKey = keyof UsersRelations;
@@ -79,9 +79,11 @@ scripts/generate-types/
 ## Decisões de Design
 
 - **Multi-file output**: Collections críticas em arquivos separados para tree-shaking e rebuilds isolados
-- **Lazy config**: Env vars carregadas via getter — `--help` funciona sem `.env.local`
-- **System fields fixos**: `createdBy`/`updatedBy` sempre mapeiam para `UsersBase | null`, independentemente da API
-- **Relations opcionais**: Todas as relações são `?` pois dependem de `appends` no fetch
+- **Lazy config**: Env vars carregadas via getter — `--help` funciona sem forçar leitura imediata dos arquivos
+- **Fallback de env**: o loader tenta `.env.local` primeiro e usa `.env` como fallback
+- **Base sem appends**: `Base` contém apenas escalares/FKs observáveis sem `appends`
+- **Relations opcionais**: Todas as relações ficam em `Relations` com `?`, pois dependem de `appends`
+- **Targets ocultos**: relações para collections não expostas no schema público são rebaixadas para `unknown`
 - **Concurrency pool**: Máximo 5 requisições simultâneas para não sobrecarregar a API
 - **Escrita idempotente**: Só reescreve arquivo se conteúdo mudou (preserva timestamps)
 
@@ -92,24 +94,26 @@ scripts/generate-types/
 | Categoria  | Tipos NocoBase                                            | TypeScript                |
 | ---------- | --------------------------------------------------------- | ------------------------- |
 | Numeric    | `integer`, `bigInt`, `double`, `float`, `decimal`, `sort` | `number`                  |
-| String     | `string`, `text`, `uid`, `nanoid`, `snowflakeId`, `email` | `string`                  |
+| Numeric (2)| `snowflakeId`, `timestamp`                                | `number`                  |
+| String     | `string`, `text`, `uid`, `nanoid`, `email`                | `string`                  |
 | String (2) | `phone`, `url`, `ipv4`, `ipv6`, `password`, `formula`     | `string`                  |
 | String (3) | `sequence`, `point`, `lineString`                         | `string`                  |
 | Date/Time  | `date`, `dateOnly`, `datetime`, `time`, `month`, `year`   | `string` (ISO 8601)       |
-| Object     | `json`, `jsonb`, `object`, `set`                          | `Record<string, unknown>` |
+| Object     | `json`, `jsonb`, `object`                                 | `Record<string, unknown>` |
 | Boolean    | `boolean`                                                 | `boolean`                 |
-| Array      | `array`                                                   | `unknown[]`               |
+| Array      | `array`, `set`                                            | `string[]` / `unknown[]`  |
 | Special    | `context`                                                 | `unknown`                 |
-| Timestamp  | `timestamp`                                               | `number`                  |
 
 ### System Fields
 
-| Campo       | Tipo                       | Nota                       |
-| ----------- | -------------------------- | -------------------------- |
-| `createdBy` | `UsersBase \| null`        | Override fixo, ignora API  |
-| `updatedBy` | `UsersBase \| null`        | Override fixo, ignora API  |
-| `parent`    | `<Collection>Base \| null` | Self-reference hierárquica |
-| `children`  | `<Collection>Base[]`       | Self-reference hierárquica |
+| Campo         | Tipo              | Nota                                     |
+| ------------- | ----------------- | ---------------------------------------- |
+| `createdById` | `number \| null`  | Override fixo para chaves de auditoria   |
+| `updatedById` | `number \| null`  | Override fixo para chaves de auditoria   |
+| `createdBy`   | `UsersBase \| null` | Relação opcional em `Relations`        |
+| `updatedBy`   | `UsersBase \| null` | Relação opcional em `Relations`        |
+| `parent`      | `<Collection>Base \| null` | Relação opcional hierárquica |
+| `children`    | `<Collection>Base[]` | Relação opcional hierárquica         |
 
 ### Relation Interfaces
 
@@ -179,7 +183,7 @@ Estratégia: funções puras sem mocks (unit) + mock do client para fluxo comple
 
 | Problema                         | Solução                                                 |
 | -------------------------------- | ------------------------------------------------------- |
-| `ENOENT: .env.local`             | Criar `.env.local` na raiz com URL e token              |
+| Variáveis ausentes em `.env.local` | Definir em `.env.local` ou usar `.env` como fallback |
 | `Request timeout`                | Verificar servidor ou aumentar `requestTimeoutMs`       |
 | `Unauthorized`                   | Regenerar token no NocoBase                             |
 | Tipos incorretos                 | Rodar `pnpm generate-types` (schema mudou)              |

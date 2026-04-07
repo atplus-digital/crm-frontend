@@ -8,39 +8,13 @@ import { createMockField } from "./setup";
 describe("field-mapper", () => {
 	describe("mapFieldType", () => {
 		describe("campos de sistema de auditoria", () => {
-			it("deve mapear createdBy para UsersBase | null", () => {
-				expect(
-					mapFieldType(
-						createMockField({
-							name: "createdBy",
-							type: "belongsTo",
-							interface: "createdBy",
-							target: "users",
-						}),
-					),
-				).toBe("UsersBase | null");
-			});
-
-			it("deve mapear updatedBy para UsersBase | null", () => {
-				expect(
-					mapFieldType(
-						createMockField({
-							name: "updatedBy",
-							type: "belongsTo",
-							interface: "updatedBy",
-							target: "users",
-						}),
-					),
-				).toBe("UsersBase | null");
-			});
-
 			it("deve mapear createdById para number | null", () => {
 				expect(
 					mapFieldType(
 						createMockField({
 							name: "createdById",
-							type: "bigInt",
-							interface: "integer",
+							type: "context",
+							interface: null,
 						}),
 					),
 				).toBe("number | null");
@@ -51,53 +25,11 @@ describe("field-mapper", () => {
 					mapFieldType(
 						createMockField({
 							name: "updatedById",
-							type: "bigInt",
-							interface: "integer",
+							type: "context",
+							interface: null,
 						}),
 					),
 				).toBe("number | null");
-			});
-		});
-
-		describe("campos de hierarquia (self-reference)", () => {
-			it("deve mapear parent corretamente", () => {
-				expect(
-					mapFieldType(
-						createMockField({
-							name: "parent",
-							type: "belongsTo",
-							interface: "m2o",
-							target: "t_telecom_recursos",
-						}),
-					),
-				).toBe("TelecomRecursosBase | null");
-			});
-
-			it("deve mapear children corretamente", () => {
-				expect(
-					mapFieldType(
-						createMockField({
-							name: "children",
-							type: "hasMany",
-							interface: "o2m",
-							target: "departments",
-						}),
-					),
-				).toBe("DepartmentsBase[]");
-			});
-		});
-
-		describe("campo de metadata", () => {
-			it("deve mapear storage para Record<string, unknown>", () => {
-				expect(
-					mapFieldType(
-						createMockField({
-							name: "storage",
-							type: "json",
-							interface: "json",
-						}),
-					),
-				).toBe("Record<string, unknown>");
 			});
 		});
 
@@ -112,7 +44,6 @@ describe("field-mapper", () => {
 				{ name: "email", type: "string", iface: "email" },
 				{ name: "website", type: "string", iface: "url" },
 				{ name: "telefone", type: "string", iface: "phone" },
-				{ name: "id", type: "snowflakeId", iface: "snowflakeId" },
 				{ name: "calculado", type: "formula", iface: "formula" },
 				{ name: "numero", type: "sequence", iface: "sequence" },
 				{ name: "senha", type: "password", iface: "password" },
@@ -129,6 +60,18 @@ describe("field-mapper", () => {
 					).toBe("string");
 				});
 			}
+
+			it("deve mapear snowflakeId para number", () => {
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "id",
+							type: "snowflakeId",
+							interface: "snowflakeId",
+						}),
+					),
+				).toBe("number");
+			});
 		});
 
 		describe("tipos de data/hora", () => {
@@ -271,39 +214,97 @@ describe("field-mapper", () => {
 	});
 
 	describe("extractRelationInfo", () => {
-		describe("campos de sistema", () => {
-			const systemFields = [
-				{
-					name: "createdBy",
-					type: "belongsTo",
-					interface: "createdBy",
-					target: "users",
-				},
-				{
-					name: "updatedBy",
-					type: "belongsTo",
-					interface: "updatedBy",
-					target: "users",
-				},
-				{
-					name: "parent",
-					type: "belongsTo",
-					interface: "m2o",
-					target: "departments",
-				},
-				{
-					name: "children",
-					type: "hasMany",
-					interface: "o2m",
-					target: "departments",
-				},
-			];
+		describe("campos escalares de sistema", () => {
+			it("deve retornar null para createdById", () => {
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "createdById",
+							type: "context",
+							interface: null,
+						}),
+					),
+				).toBeNull();
+			});
 
-			for (const field of systemFields) {
-				it(`deve retornar null para ${field.name}`, () => {
-					expect(extractRelationInfo(createMockField(field))).toBeNull();
-				});
-			}
+			it("deve retornar null para updatedById", () => {
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "updatedById",
+							type: "context",
+							interface: null,
+						}),
+					),
+				).toBeNull();
+			});
+		});
+
+		describe("relações de sistema", () => {
+			it("deve detectar createdBy como belongsTo users", () => {
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "createdBy",
+							type: "belongsTo",
+							interface: "createdBy",
+							target: "users",
+						}),
+					),
+				).toEqual({ type: "belongsTo", targetCollection: "users" });
+			});
+
+			it("deve detectar updatedBy como belongsTo users", () => {
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "updatedBy",
+							type: "belongsTo",
+							interface: "updatedBy",
+							target: "users",
+						}),
+					),
+				).toEqual({ type: "belongsTo", targetCollection: "users" });
+			});
+
+			it("deve detectar parent como relação one", () => {
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "parent",
+							type: "belongsTo",
+							interface: "m2o",
+							target: "departments",
+						}),
+					),
+				).toEqual({ type: "m2o", targetCollection: "departments" });
+			});
+
+			it("deve detectar children como relação many", () => {
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "children",
+							type: "hasMany",
+							interface: null,
+							target: "departments",
+						}),
+					),
+				).toEqual({ type: "hasMany", targetCollection: "departments" });
+			});
+
+			it("deve detectar storage como belongsTo", () => {
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "storage",
+							type: "belongsTo",
+							interface: null,
+							target: "storages",
+						}),
+					),
+				).toEqual({ type: "belongsTo", targetCollection: "storages" });
+			});
 		});
 
 		describe("relações many-to-one (m2o)", () => {
