@@ -1,5 +1,19 @@
 const VALID_IDENTIFIER = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
 
+/**
+ * Converte nome para PascalCase.
+ * Remove prefixo "t_" se presente.
+ *
+ * @param name - Nome a ser convertido
+ * @returns Nome em PascalCase
+ *
+ * @example
+ * ```typescript
+ * toPascalCase("t_negociacoes")    // "Negociacoes"
+ * toPascalCase("user_roles")       // "UserRoles"
+ * toPascalCase("departments")      // "Departments"
+ * ```
+ */
 export function toPascalCase(name: string): string {
 	const withoutPrefix = name.startsWith("t_") ? name.slice(2) : name;
 	return withoutPrefix
@@ -9,6 +23,20 @@ export function toPascalCase(name: string): string {
 		.join("");
 }
 
+/**
+ * Converte nome para identificador TypeScript válido.
+ * Substitui caracteres inválidos por underscore.
+ *
+ * @param name - Nome a ser convertido
+ * @returns Identificador válido
+ *
+ * @example
+ * ```typescript
+ * toValidIdentifier("my-var")      // "my_var"
+ * toValidIdentifier("123abc")      // "_123abc"
+ * toValidIdentifier("user@email")  // "user_email"
+ * ```
+ */
 export function toValidIdentifier(name: string): string {
 	const normalized = name.replace(/[^a-zA-Z0-9_$]/g, "_");
 	if (!normalized) {
@@ -18,14 +46,56 @@ export function toValidIdentifier(name: string): string {
 	return /^\d/.test(normalized) ? `_${normalized}` : normalized;
 }
 
+/**
+ * Formata chave de objeto TypeScript.
+ * Adiciona aspas se não for identificador válido.
+ *
+ * @param name - Nome da chave
+ * @returns Chave formatada (com ou sem aspas)
+ *
+ * @example
+ * ```typescript
+ * formatKey("userId")        // "userId"
+ * formatKey("user-id")       // "\"user-id\""
+ * formatKey("123")           // "\"123\""
+ * ```
+ */
 export function formatKey(name: string): string {
 	return VALID_IDENTIFIER.test(name) ? name : `"${name}"`;
 }
 
+/**
+ * Converte nome de collection para nome de tipo TypeScript.
+ * Aplica PascalCase e normalização.
+ *
+ * @param collectionName - Nome da collection
+ * @returns Nome do tipo TypeScript
+ *
+ * @example
+ * ```typescript
+ * toCollectionTypeName("users")             // "Users"
+ * toCollectionTypeName("t_negociacoes")     // "Negociacoes"
+ * toCollectionTypeName("user-roles")        // "UserRoles"
+ * ```
+ */
 export function toCollectionTypeName(collectionName: string): string {
 	return toValidIdentifier(toPascalCase(collectionName));
 }
 
+/**
+ * Converte nome de collection para nome de tipo Base.
+ * Adiciona sufixo "Base" ao nome do tipo.
+ *
+ * @param collectionName - Nome da collection
+ * @returns Nome do tipo Base (ex: UsersBase)
+ *
+ * @example
+ * ```typescript
+ * toCollectionBaseTypeName("users")         // "UsersBase"
+ * toCollectionBaseTypeName("t_negociacoes") // "NegociacoesBase"
+ * toCollectionBaseTypeName("")              // "unknown"
+ * ```
+ */
 export function toCollectionBaseTypeName(collectionName: string): string {
 	const normalizedName = collectionName.trim();
 	if (!normalizedName) {
@@ -33,4 +103,28 @@ export function toCollectionBaseTypeName(collectionName: string): string {
 	}
 
 	return `${toCollectionTypeName(normalizedName)}Base`;
+}
+
+/**
+ * Converte nome de collection para nome de arquivo kebab-case.
+ * Remove prefixo "t_" ou "f_" se presente.
+ *
+ * @param collectionName - Nome da collection
+ * @returns Nome de arquivo em kebab-case
+ *
+ * @example
+ * ```typescript
+ * toFileName("t_negociacoes")    // "negociacoes"
+ * toFileName("f_funcionarios")   // "funcionarios"
+ * toFileName("user_roles")       // "user-roles"
+ * toFileName("users")            // "users"
+ * ```
+ */
+export function toFileName(collectionName: string): string {
+	const withoutPrefix = collectionName.replace(/^[tf]_/, "");
+	return withoutPrefix
+		.split(/[^a-zA-Z0-9]+/)
+		.filter(Boolean)
+		.map((part) => part.toLowerCase())
+		.join("-");
 }

@@ -1,5 +1,5 @@
-import { config } from "../../config";
-import { runGenerateTypes } from "../generate-types";
+import { config } from "@scripts/generate-types/config";
+import { runGenerateTypes } from "@scripts/generate-types/src/generate-types";
 import { printHelp } from "./help";
 import { printResult } from "./report";
 

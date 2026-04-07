@@ -1,0 +1,187 @@
+---
+title: Generate Types Script
+description: Gera tipos TypeScript a partir das collections do NocoBase via API.
+---
+
+Script CLI que conecta à API NocoBase, busca o schema de ~110 collections e gera interfaces TypeScript tipadas para a aplicação CRM ATPlus.
+
+## Uso Rápido
+
+```bash
+# Variáveis de ambiente (raiz do projeto)
+CRM_NOCOBASE_URL=http://localhost:13000/api
+CRM_NOCOBASE_TOKEN=seu_token_aqui
+
+# Comandos
+pnpm generate-types            # Gera tipos (escreve arquivos)
+pnpm generate-types --dry-run  # Preview de diff sem escrever
+pnpm generate-types --help     # Ajuda
+```
+
+## Output
+
+O script gera dois tipos de arquivo:
+
+- **Arquivo principal** (`src/@types/types.generated.ts`): ~100 collections em um único arquivo
+- **Arquivos individuais** (`src/@types/generated/<collection>.ts`): 10 collections críticas separadas para imports otimizados
+
+Para cada collection, gera 3 tipos:
+
+```typescript
+// Campos escalares + relações one (many-to-one, one-to-one)
+export interface UsersBase { id: number; email: string; ... }
+
+// Relações opcionais (many-to-many, one-to-many) — todas com `?`
+export interface UsersRelations { roles?: RolesBase[]; ... }
+
+// Union type das chaves de relação — para typesafe appends
+export type UsersRelationKey = keyof UsersRelations;
+```
+
+## Arquitetura
+
+O script segue Clean Architecture com 5 camadas independentes e testáveis:
+
+```
+CLI Layer (args.ts → main.ts → help.ts/report.ts)
+  → Configuration Layer (config.ts + load-config.ts, lazy-loaded)
+    → Generation Layer (client.ts → collection-types.ts → field-mapper/relations/content)
+      → Processing Layer (collection-splitter.ts — divide main vs split)
+        → Output Layer (writer.ts + diff.ts → report.ts)
+```
+
+### Estrutura de Diretórios
+
+```
+scripts/generate-types/
+├── src/
+│   ├── @types/                    # Tipos internos (generation, nocobase, script)
+│   ├── cli/                       # args.ts, help.ts, main.ts, report.ts
+│   ├── generation/                # client.ts, collection-types.ts, content.ts, field-mapper.ts, relations.ts
+│   ├── utils/                     # collection-splitter.ts, concurrency.ts, diff.ts, load-config.ts, naming.ts, writer.ts
+│   └── generate-types.ts          # Função principal orquestradora
+├── config.ts                      # Configuração central (splitCollections, paths, timeout)
+└── index.ts                       # Entry point
+```
+
+### Módulos Principais
+
+| Módulo                   | Responsabilidade                                 |
+| ------------------------ | ------------------------------------------------ |
+| `client.ts`              | API NocoBase — fetch collections + fields        |
+| `field-mapper.ts`        | Mapeia 27 field types NocoBase → TypeScript      |
+| `collection-types.ts`    | Orquestra build de tipos por collection (conc=5) |
+| `content.ts`             | Gera código TypeScript final (interfaces)        |
+| `relations.ts`           | Resolve cardinalidade de relações                |
+| `collection-splitter.ts` | Divide collections main vs split                 |
+| `writer.ts`              | I/O idempotente (só escreve se mudou) + dry-run  |
+
+## Decisões de Design
+
+- **Multi-file output**: Collections críticas em arquivos separados para tree-shaking e rebuilds isolados
+- **Lazy config**: Env vars carregadas via getter — `--help` funciona sem `.env.local`
+- **System fields fixos**: `createdBy`/`updatedBy` sempre mapeiam para `UsersBase | null`, independentemente da API
+- **Relations opcionais**: Todas as relações são `?` pois dependem de `appends` no fetch
+- **Concurrency pool**: Máximo 5 requisições simultâneas para não sobrecarregar a API
+- **Escrita idempotente**: Só reescreve arquivo se conteúdo mudou (preserva timestamps)
+
+## Mapeamento de Tipos
+
+### Field Types (27 tipos)
+
+| Categoria  | Tipos NocoBase                                            | TypeScript                |
+| ---------- | --------------------------------------------------------- | ------------------------- |
+| Numeric    | `integer`, `bigInt`, `double`, `float`, `decimal`, `sort` | `number`                  |
+| String     | `string`, `text`, `uid`, `nanoid`, `snowflakeId`, `email` | `string`                  |
+| String (2) | `phone`, `url`, `ipv4`, `ipv6`, `password`, `formula`     | `string`                  |
+| String (3) | `sequence`, `point`, `lineString`                         | `string`                  |
+| Date/Time  | `date`, `dateOnly`, `datetime`, `time`, `month`, `year`   | `string` (ISO 8601)       |
+| Object     | `json`, `jsonb`, `object`, `set`                          | `Record<string, unknown>` |
+| Boolean    | `boolean`                                                 | `boolean`                 |
+| Array      | `array`                                                   | `unknown[]`               |
+| Special    | `context`                                                 | `unknown`                 |
+| Timestamp  | `timestamp`                                               | `number`                  |
+
+### System Fields
+
+| Campo       | Tipo                       | Nota                       |
+| ----------- | -------------------------- | -------------------------- |
+| `createdBy` | `UsersBase \| null`        | Override fixo, ignora API  |
+| `updatedBy` | `UsersBase \| null`        | Override fixo, ignora API  |
+| `parent`    | `<Collection>Base \| null` | Self-reference hierárquica |
+| `children`  | `<Collection>Base[]`       | Self-reference hierárquica |
+
+### Relation Interfaces
+
+| Interface NocoBase               | Cardinalidade | Renderização         |
+| -------------------------------- | ------------- | -------------------- |
+| `m2o`, `belongsTo`, `oho`, `obo` | one           | `TargetBase \| null` |
+| `o2m`, `hasMany`, `m2m`, `mbm`   | many          | `TargetBase[]`       |
+| `manyToMany`, `belongsToArray`   | many          | `TargetBase[]`       |
+
+## Configuração
+
+Arquivo `config.ts` — propriedades principais:
+
+```typescript
+{
+  splitCollections: ["users", "f_funcionarios", "t_negociacoes", ...], // 10 collections
+  splitOutputDir: "src/@types/generated",
+  mainOutputPath: "src/@types/types.generated.ts",
+  requestTimeoutMs: 15_000,
+  concurrency: 5,
+}
+```
+
+Para adicionar uma collection ao split: adicionar em `splitCollections` no `config.ts` e rodar `pnpm generate-types`.
+
+## Padrões de Código
+
+- **Funções puras**: Geração é determinística (mesmo input → mesmo output), I/O isolado em `writer.ts` e `client.ts`
+- **Naming**: `users` → `UsersBase` / `UsersRelations` / `UsersRelationKey`; funções privadas prefixadas com `_`
+- **Error handling**: Erros de API propagados com contexto (collection name, status code)
+- **Type-driven**: Tipos definidos antes da implementação em `@types/`
+
+## Extensão
+
+### Adicionar novo field type
+
+1. Adicionar em `FIELD_TYPE_MAP` no `field-mapper.ts`
+2. Opcionalmente adicionar em `_KNOWN_FIELD_TYPES`
+3. Rodar `pnpm test field-mapper`
+
+### Adicionar nova interface de relação
+
+1. Adicionar tipo em `RelationInterface` no `relations.ts`
+2. Mapear em `RELATION_INTERFACE_MAP`
+3. Definir cardinalidade em `getRelationCardinality`
+
+### Adicionar novo formato de output (ex: Zod schemas)
+
+1. Criar novo gerador em `src/generation/`
+2. Adicionar flag em `config.ts`
+3. Condicional no `generate-types.ts`
+
+## Testes
+
+```bash
+pnpm test                      # Todos
+pnpm test field-mapper         # Mapeamento de tipos
+pnpm test content              # Geração de código
+pnpm test collection-splitter  # Divisão de collections
+pnpm test writer               # Escrita/dry-run
+pnpm test --watch              # Watch mode
+```
+
+Estratégia: funções puras sem mocks (unit) + mock do client para fluxo completo (integration em `integration.test.ts`).
+
+## Troubleshooting
+
+| Problema                         | Solução                                                 |
+| -------------------------------- | ------------------------------------------------------- |
+| `ENOENT: .env.local`             | Criar `.env.local` na raiz com URL e token              |
+| `Request timeout`                | Verificar servidor ou aumentar `requestTimeoutMs`       |
+| `Unauthorized`                   | Regenerar token no NocoBase                             |
+| Tipos incorretos                 | Rodar `pnpm generate-types` (schema mudou)              |
+| Arquivo não mudou após rodar     | Esperado — idempotente. Usar `--dry-run` para verificar |
+| Imports lentos em arquivo grande | Adicionar collection ao `splitCollections` no `config`  |

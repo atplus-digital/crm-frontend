@@ -8,7 +8,8 @@ export type RelationInterface =
 	| "oho"
 	| "obo"
 	| "mbm"
-	| "belongsToArray";
+	| "belongsToArray"
+	| "hasOne";
 
 export type RelationCardinality = "one" | "many";
 

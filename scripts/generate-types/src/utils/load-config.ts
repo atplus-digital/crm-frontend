@@ -1,7 +1,10 @@
 import * as path from "node:path";
+import type {
+	EnvConfig,
+	ScriptConfig,
+} from "@scripts/generate-types/src/@types/script";
 import { config as loadDotEnv } from "dotenv";
 import { z } from "zod";
-import type { EnvConfig, ScriptConfig } from "../@types/script";
 
 function normalizeBaseUrl(baseUrl: string): string {
 	return baseUrl.replace(/\/+$/, "");

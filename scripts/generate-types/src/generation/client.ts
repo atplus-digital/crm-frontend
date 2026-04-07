@@ -4,16 +4,37 @@ import type {
 	NocoBaseCollectionsListResponse,
 	NocoBaseCredentials,
 	NocoBaseField,
-} from "../@types/nocobase";
+} from "@scripts/generate-types/src/@types/nocobase";
 
+/**
+ * Ordena array de objetos por propriedade 'name' (ordem alfabética).
+ */
 function sortByName<T extends { name: string }>(items: T[]): T[] {
 	return [...items].sort((a, b) => a.name.localeCompare(b.name));
 }
 
+/**
+ * Retorna preview do body de erro HTTP (primeiros 200 caracteres, sem quebras de linha).
+ */
 function getErrorBodyPreview(rawBody: string): string {
 	return rawBody.replaceAll(/\s+/g, " ").trim().slice(0, 200);
 }
 
+/**
+ * Cliente HTTP para a API do NocoBase.
+ *
+ * @example
+ * ```typescript
+ * const client = new NocoBaseClient({
+ *   baseUrl: "http://localhost:13000",
+ *   token: "abc123",
+ *   timeoutMs: 15000
+ * });
+ *
+ * const collections = await client.fetchCollections();
+ * const fields = await client.fetchCollectionFields("users");
+ * ```
+ */
 export class NocoBaseClient {
 	public readonly baseUrl: string;
 
@@ -21,6 +42,12 @@ export class NocoBaseClient {
 		this.baseUrl = credentials.baseUrl;
 	}
 
+	/**
+	 * Busca todas as collections da API NocoBase.
+	 *
+	 * @returns Array de collections ordenadas por nome
+	 * @throws {Error} Se timeout ou erro HTTP
+	 */
 	public async fetchCollections(): Promise<NocoBaseCollection[]> {
 		const response = await this.fetchJson<NocoBaseCollectionsListResponse>(
 			"collections:list?paginate=false",
@@ -29,6 +56,13 @@ export class NocoBaseClient {
 		return sortByName(response.data);
 	}
 
+	/**
+	 * Busca todos os campos de uma collection específica.
+	 *
+	 * @param collectionName - Nome da collection
+	 * @returns Array de campos ordenados por nome
+	 * @throws {Error} Se timeout ou erro HTTP
+	 */
 	public async fetchCollectionFields(
 		collectionName: string,
 	): Promise<NocoBaseField[]> {

@@ -7,7 +7,20 @@ import { parseArgs } from "./src/cli/args";
 import { resolveEnvConfig } from "./src/utils/load-config";
 
 const scriptConfig: ScriptConfig = {
-	outputPath: "src/@types/types.generated.ts",
+	outputPath: "src/@types/generated/index.ts",
+	splitOutputDir: "src/@types/generated",
+	splitCollections: [
+		"users",
+		"f_funcionarios",
+		"t_negociacoes",
+		"t_pessoas",
+		"t_empresas",
+		"t_contratos",
+		"t_servicos",
+		"t_sites",
+		"t_equipamentos",
+		"t_telecom_recursos",
+	],
 	defaultEnvPath: ".env.local",
 	requestTimeoutMs: 15_000,
 	requestConcurrency: 5,

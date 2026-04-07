@@ -1,8 +1,8 @@
 import type {
 	RelationCardinality,
 	RelationInterface,
-} from "../@types/generation";
-import { toCollectionBaseTypeName } from "../utils/naming";
+} from "@scripts/generate-types/src/@types/generation";
+import { toCollectionBaseTypeName } from "@scripts/generate-types/src/utils/naming";
 
 const RELATION_INTERFACE_MAP: Record<string, RelationInterface> = {
 	m2o: "m2o",
@@ -15,6 +15,19 @@ const RELATION_INTERFACE_MAP: Record<string, RelationInterface> = {
 	obo: "obo",
 	mbm: "mbm",
 	belongstoarray: "belongsToArray",
+	attachment: "m2m",
+};
+
+/**
+ * Mapeamento de field.type para RelationInterface como fallback.
+ * Usado quando field.interface é null/None mas field.type indica uma relação.
+ */
+const RELATION_TYPE_MAP: Record<string, RelationInterface> = {
+	belongsTo: "belongsTo",
+	belongsToArray: "belongsToArray",
+	belongsToMany: "m2m",
+	hasMany: "hasMany",
+	hasOne: "hasOne",
 };
 
 export function resolveRelationInterface(
@@ -26,6 +39,20 @@ export function resolveRelationInterface(
 
 	const normalized = value.trim().toLowerCase();
 	return RELATION_INTERFACE_MAP[normalized] ?? null;
+}
+
+/**
+ * Resolve o tipo de relação pelo field.type como fallback.
+ * Usado quando field.interface é null/None mas field.type indica uma relação.
+ */
+export function resolveRelationByType(
+	fieldType: string | null | undefined,
+): RelationInterface | null {
+	if (!fieldType) {
+		return null;
+	}
+
+	return RELATION_TYPE_MAP[fieldType] ?? null;
 }
 
 export function getRelationCardinality(
@@ -43,6 +70,7 @@ export function getRelationCardinality(
 		case "belongsTo":
 		case "oho":
 		case "obo":
+		case "hasOne":
 			return "one";
 	}
 }

@@ -1,4 +1,7 @@
-import type { GenerateTypesArgs, ParsedArgs } from "../@types/script";
+import type {
+	GenerateTypesArgs,
+	ParsedArgs,
+} from "@scripts/generate-types/src/@types/script";
 
 export function parseArgs(argv: string[]): ParsedArgs {
 	const options: GenerateTypesArgs = {

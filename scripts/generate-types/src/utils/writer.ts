@@ -1,8 +1,14 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { config } from "../../config";
-import type { DryRunDiffResult, PersistResult } from "../@types/script";
+import { config } from "@scripts/generate-types/config";
+import type {
+	DryRunDiffResult,
+	MultiFileDryRunResult,
+	MultiFilePersistResult,
+	PersistResult,
+} from "@scripts/generate-types/src/@types/script";
 import { buildDiffOnly } from "./diff";
+import { toFileName } from "./naming";
 
 export function writeGeneratedFile(
 	content: string,
@@ -70,4 +76,89 @@ function readExistingContent(filePath: string): string {
 	}
 
 	return fs.readFileSync(filePath, "utf-8");
+}
+
+/**
+ * Escreve múltiplos arquivos TypeScript gerados.
+ * @param filesMap - Map<collectionName, content>
+ * @param outputDir - Diretório base (ex: "src/@types/generated")
+ * @returns Resultado com lista de arquivos escritos
+ */
+export function writeMultipleFiles(
+	filesMap: Map<string, string>,
+	outputDir: string = config.splitOutputDir,
+): MultiFilePersistResult {
+	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
+	const files: Array<{ outputPath: string; changed: boolean }> = [];
+	let totalChanged = 0;
+
+	// Garante que o diretório existe
+	if (!fs.existsSync(resolvedOutputDir)) {
+		fs.mkdirSync(resolvedOutputDir, { recursive: true });
+	}
+
+	for (const [collectionName, content] of filesMap) {
+		const fileName = `${toFileName(collectionName)}.ts`;
+		const outputPath = path.join(resolvedOutputDir, fileName);
+		const currentContent = readExistingContent(outputPath);
+
+		let changed = false;
+		if (currentContent !== content) {
+			fs.writeFileSync(outputPath, content, "utf-8");
+			changed = true;
+			totalChanged++;
+		}
+
+		files.push({ outputPath, changed });
+	}
+
+	return {
+		mode: "write",
+		files,
+		totalFiles: filesMap.size,
+		totalChanged,
+	};
+}
+
+/**
+ * Preview de múltiplos arquivos em dry-run mode.
+ * @param filesMap - Map<collectionName, content>
+ * @param outputDir - Diretório base
+ * @returns Resultado com diffs de todos os arquivos
+ */
+export function previewMultipleFiles(
+	filesMap: Map<string, string>,
+	outputDir: string = config.splitOutputDir,
+): MultiFileDryRunResult {
+	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
+	const files: Array<{
+		outputPath: string;
+		changed: boolean;
+		diff: string;
+	}> = [];
+	let totalChanged = 0;
+
+	for (const [collectionName, content] of filesMap) {
+		const fileName = `${toFileName(collectionName)}.ts`;
+		const outputPath = path.join(resolvedOutputDir, fileName);
+		const currentContent = readExistingContent(outputPath);
+
+		let changed = false;
+		let diff = "";
+
+		if (currentContent !== content) {
+			changed = true;
+			diff = buildDiffOnly(currentContent, content);
+			totalChanged++;
+		}
+
+		files.push({ outputPath, changed, diff });
+	}
+
+	return {
+		mode: "dry-run",
+		files,
+		totalFiles: filesMap.size,
+		totalChanged,
+	};
 }
