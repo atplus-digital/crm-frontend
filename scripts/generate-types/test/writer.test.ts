@@ -1,4 +1,5 @@
 import * as fs from "node:fs";
+import * as os from "node:os";
 import * as path from "node:path";
 import {
 	previewGeneratedFile,
@@ -10,8 +11,8 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 describe("writer - single file", () => {
 	const testOutputPath = path.resolve(
-		process.cwd(),
-		"test-output/writer-single/generated.ts",
+		os.tmpdir(),
+		"crm-atplus-test/writer-single/generated.ts",
 	);
 
 	beforeEach(() => {
@@ -115,7 +116,10 @@ describe("writer - single file", () => {
 });
 
 describe("writer - multiple files", () => {
-	const testOutputDir = path.resolve(process.cwd(), "test-output/writer-multi");
+	const testOutputDir = path.resolve(
+		os.tmpdir(),
+		"crm-atplus-test/writer-multi",
+	);
 
 	beforeEach(() => {
 		// Garante que o diretório de teste não existe

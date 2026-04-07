@@ -1,35 +1,14 @@
-import type { CollectionTypesMap } from "@scripts/generate-types/src/@types/generation";
 import { splitCollectionsByConfig } from "@scripts/generate-types/src/utils/collection-splitter";
 import { describe, expect, it } from "vitest";
+import { createMockCollectionTypesMap } from "./setup";
 
 describe("splitCollectionsByConfig", () => {
-	const mockCollections: CollectionTypesMap = {
-		users: {
-			scalars: new Map([
-				["id", "number"],
-				["email", "string"],
-			]),
-			relations: new Map(),
-		},
-		f_funcionarios: {
-			scalars: new Map([
-				["id", "number"],
-				["nome", "string"],
-			]),
-			relations: new Map(),
-		},
-		t_negociacoes: {
-			scalars: new Map([
-				["id", "number"],
-				["titulo", "string"],
-			]),
-			relations: new Map(),
-		},
-		t_outros: {
-			scalars: new Map([["id", "number"]]),
-			relations: new Map(),
-		},
-	};
+	const mockCollections = createMockCollectionTypesMap({
+		users: { scalars: { id: "number", email: "string" } },
+		f_funcionarios: { scalars: { id: "number", nome: "string" } },
+		t_negociacoes: { scalars: { id: "number", titulo: "string" } },
+		t_outros: { scalars: { id: "number" } },
+	});
 
 	it("deve dividir collections corretamente", () => {
 		const result = splitCollectionsByConfig(mockCollections, [

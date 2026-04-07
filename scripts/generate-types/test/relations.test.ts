@@ -1,6 +1,7 @@
 import {
 	getRelationCardinality,
 	renderRelationValueType,
+	resolveRelationByType,
 	resolveRelationInterface,
 } from "@scripts/generate-types/src/generation/relations";
 import { describe, expect, it } from "vitest";
@@ -29,6 +30,10 @@ describe("relations - resolveRelationInterface", () => {
 		expect(resolveRelationInterface("obo")).toBe("obo");
 		expect(resolveRelationInterface("mbm")).toBe("mbm");
 		expect(resolveRelationInterface("belongstoarray")).toBe("belongsToArray");
+	});
+
+	it("deve resolver interface attachment como m2m", () => {
+		expect(resolveRelationInterface("attachment")).toBe("m2m");
 	});
 
 	it("deve retornar null para valores inválidos", () => {
@@ -78,6 +83,10 @@ describe("relations - getRelationCardinality", () => {
 		expect(getRelationCardinality("oho")).toBe("one");
 		expect(getRelationCardinality("obo")).toBe("one");
 	});
+
+	it("deve retornar 'one' para relação hasOne", () => {
+		expect(getRelationCardinality("hasOne")).toBe("one");
+	});
 });
 
 describe("relations - renderRelationValueType", () => {
@@ -106,5 +115,38 @@ describe("relations - renderRelationValueType", () => {
 		expect(renderRelationValueType("  users  ", "one")).toBe(
 			"UsersBase | null",
 		);
+	});
+});
+
+describe("relations - resolveRelationByType", () => {
+	it("deve resolver belongsTo pelo field.type", () => {
+		expect(resolveRelationByType("belongsTo")).toBe("belongsTo");
+	});
+
+	it("deve resolver belongsToArray pelo field.type", () => {
+		expect(resolveRelationByType("belongsToArray")).toBe("belongsToArray");
+	});
+
+	it("deve resolver belongsToMany como m2m", () => {
+		expect(resolveRelationByType("belongsToMany")).toBe("m2m");
+	});
+
+	it("deve resolver hasMany pelo field.type", () => {
+		expect(resolveRelationByType("hasMany")).toBe("hasMany");
+	});
+
+	it("deve resolver hasOne pelo field.type", () => {
+		expect(resolveRelationByType("hasOne")).toBe("hasOne");
+	});
+
+	it("deve retornar null para tipos não relacionais", () => {
+		expect(resolveRelationByType("string")).toBeNull();
+		expect(resolveRelationByType("integer")).toBeNull();
+		expect(resolveRelationByType("array")).toBeNull();
+	});
+
+	it("deve retornar null para null ou undefined", () => {
+		expect(resolveRelationByType(null)).toBeNull();
+		expect(resolveRelationByType(undefined)).toBeNull();
 	});
 });

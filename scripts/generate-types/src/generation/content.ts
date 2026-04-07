@@ -3,7 +3,10 @@ import type {
 	GeneratedTypes,
 	RelationInfo,
 } from "@scripts/generate-types/src/@types/generation";
-import { formatKey, toCollectionTypeName } from "@scripts/generate-types/src/utils/naming";
+import {
+	formatKey,
+	toCollectionTypeName,
+} from "@scripts/generate-types/src/utils/naming";
 import { getRelationCardinality, renderRelationValueType } from "./relations";
 
 function _sortMapEntries<T>(map: Map<string, T>): [string, T][] {

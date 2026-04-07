@@ -1,509 +1,427 @@
-import type { NocoBaseField } from "@scripts/generate-types/src/@types/nocobase";
 import {
 	extractRelationInfo,
 	mapFieldType,
 } from "@scripts/generate-types/src/generation/field-mapper";
 import { describe, expect, it } from "vitest";
+import { createMockField } from "./setup";
 
 describe("field-mapper", () => {
 	describe("mapFieldType", () => {
 		describe("campos de sistema de auditoria", () => {
 			it("deve mapear createdBy para UsersBase | null", () => {
-				const field: NocoBaseField = {
-					name: "createdBy",
-					type: "belongsTo",
-					interface: "createdBy",
-					target: "users",
-				};
-
-				expect(mapFieldType(field)).toBe("UsersBase | null");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "createdBy",
+							type: "belongsTo",
+							interface: "createdBy",
+							target: "users",
+						}),
+					),
+				).toBe("UsersBase | null");
 			});
 
 			it("deve mapear updatedBy para UsersBase | null", () => {
-				const field: NocoBaseField = {
-					name: "updatedBy",
-					type: "belongsTo",
-					interface: "updatedBy",
-					target: "users",
-				};
-
-				expect(mapFieldType(field)).toBe("UsersBase | null");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "updatedBy",
+							type: "belongsTo",
+							interface: "updatedBy",
+							target: "users",
+						}),
+					),
+				).toBe("UsersBase | null");
 			});
 
 			it("deve mapear createdById para number | null", () => {
-				const field: NocoBaseField = {
-					name: "createdById",
-					type: "bigInt",
-					interface: "integer",
-				};
-
-				expect(mapFieldType(field)).toBe("number | null");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "createdById",
+							type: "bigInt",
+							interface: "integer",
+						}),
+					),
+				).toBe("number | null");
 			});
 
 			it("deve mapear updatedById para number | null", () => {
-				const field: NocoBaseField = {
-					name: "updatedById",
-					type: "bigInt",
-					interface: "integer",
-				};
-
-				expect(mapFieldType(field)).toBe("number | null");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "updatedById",
+							type: "bigInt",
+							interface: "integer",
+						}),
+					),
+				).toBe("number | null");
 			});
 		});
 
 		describe("campos de hierarquia (self-reference)", () => {
 			it("deve mapear parent corretamente", () => {
-				const field: NocoBaseField = {
-					name: "parent",
-					type: "belongsTo",
-					interface: "m2o",
-					target: "t_telecom_recursos",
-				};
-
-				const result = mapFieldType(field);
-				expect(result).toBe("TelecomRecursosBase | null");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "parent",
+							type: "belongsTo",
+							interface: "m2o",
+							target: "t_telecom_recursos",
+						}),
+					),
+				).toBe("TelecomRecursosBase | null");
 			});
 
 			it("deve mapear children corretamente", () => {
-				const field: NocoBaseField = {
-					name: "children",
-					type: "hasMany",
-					interface: "o2m",
-					target: "departments",
-				};
-
-				const result = mapFieldType(field);
-				expect(result).toBe("DepartmentsBase[]");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "children",
+							type: "hasMany",
+							interface: "o2m",
+							target: "departments",
+						}),
+					),
+				).toBe("DepartmentsBase[]");
 			});
 		});
 
 		describe("campo de metadata", () => {
 			it("deve mapear storage para Record<string, unknown>", () => {
-				const field: NocoBaseField = {
-					name: "storage",
-					type: "json",
-					interface: "json",
-				};
-
-				expect(mapFieldType(field)).toBe("Record<string, unknown>");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "storage",
+							type: "json",
+							interface: "json",
+						}),
+					),
+				).toBe("Record<string, unknown>");
 			});
 		});
 
 		describe("tipos de string", () => {
-			it("deve mapear string para string", () => {
-				const field: NocoBaseField = {
-					name: "nome",
-					type: "string",
-					interface: "input",
-				};
+			const stringCases: Array<{
+				name: string;
+				type: string;
+				iface: string | null;
+			}> = [
+				{ name: "nome", type: "string", iface: "input" },
+				{ name: "descricao", type: "text", iface: "textarea" },
+				{ name: "email", type: "string", iface: "email" },
+				{ name: "website", type: "string", iface: "url" },
+				{ name: "telefone", type: "string", iface: "phone" },
+				{ name: "id", type: "snowflakeId", iface: "snowflakeId" },
+				{ name: "calculado", type: "formula", iface: "formula" },
+				{ name: "numero", type: "sequence", iface: "sequence" },
+				{ name: "senha", type: "password", iface: "password" },
+				{ name: "uid", type: "nanoid", iface: "nanoid" },
+				{ name: "identificador", type: "uid", iface: "input" },
+				{ name: "rota", type: "lineString", iface: "lineString" },
+				{ name: "localizacao", type: "point", iface: "point" },
+			];
 
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear text para string", () => {
-				const field: NocoBaseField = {
-					name: "descricao",
-					type: "text",
-					interface: "textarea",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear email para string", () => {
-				const field: NocoBaseField = {
-					name: "email",
-					type: "string",
-					interface: "email",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear url para string", () => {
-				const field: NocoBaseField = {
-					name: "website",
-					type: "string",
-					interface: "url",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear phone para string", () => {
-				const field: NocoBaseField = {
-					name: "telefone",
-					type: "string",
-					interface: "phone",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear snowflakeId para string", () => {
-				const field: NocoBaseField = {
-					name: "id",
-					type: "snowflakeId",
-					interface: "snowflakeId",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear formula para string", () => {
-				const field: NocoBaseField = {
-					name: "calculado",
-					type: "formula",
-					interface: "formula",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear sequence para string", () => {
-				const field: NocoBaseField = {
-					name: "numero",
-					type: "sequence",
-					interface: "sequence",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear password para string", () => {
-				const field: NocoBaseField = {
-					name: "senha",
-					type: "password",
-					interface: "password",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear nanoid para string", () => {
-				const field: NocoBaseField = {
-					name: "uid",
-					type: "nanoid",
-					interface: "nanoid",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear uid para string", () => {
-				const field: NocoBaseField = {
-					name: "identificador",
-					type: "uid",
-					interface: "input",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear lineString para string", () => {
-				const field: NocoBaseField = {
-					name: "rota",
-					type: "lineString",
-					interface: "lineString",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear point para string", () => {
-				const field: NocoBaseField = {
-					name: "localizacao",
-					type: "point",
-					interface: "point",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
+			for (const { name, type, iface } of stringCases) {
+				it(`deve mapear ${type} para string (campo: ${name})`, () => {
+					expect(
+						mapFieldType(createMockField({ name, type, interface: iface })),
+					).toBe("string");
+				});
+			}
 		});
 
 		describe("tipos de data/hora", () => {
-			it("deve mapear date para string", () => {
-				const field: NocoBaseField = {
-					name: "dataEvento",
-					type: "date",
-					interface: "datetime",
-				};
+			const dateCases = [
+				{ name: "dataEvento", type: "date", iface: "datetime" },
+				{ name: "dataNascimento", type: "dateOnly", iface: "date" },
+			];
 
-				expect(mapFieldType(field)).toBe("string");
-			});
-
-			it("deve mapear dateOnly para string", () => {
-				const field: NocoBaseField = {
-					name: "dataNascimento",
-					type: "dateOnly",
-					interface: "date",
-				};
-
-				expect(mapFieldType(field)).toBe("string");
-			});
+			for (const { name, type, iface } of dateCases) {
+				it(`deve mapear ${type} para string (campo: ${name})`, () => {
+					expect(
+						mapFieldType(createMockField({ name, type, interface: iface })),
+					).toBe("string");
+				});
+			}
 		});
 
 		describe("tipos numéricos", () => {
-			it("deve mapear integer para number", () => {
-				const field: NocoBaseField = {
-					name: "quantidade",
-					type: "integer",
-					interface: "integer",
-				};
+			const numericCases = [
+				{ name: "quantidade", type: "integer", iface: "integer" },
+				{ name: "id", type: "bigInt", iface: "integer" },
+				{ name: "preco", type: "double", iface: "number" },
+				{ name: "ordem", type: "sort", iface: "sort" },
+			];
 
-				expect(mapFieldType(field)).toBe("number");
-			});
-
-			it("deve mapear bigInt para number", () => {
-				const field: NocoBaseField = {
-					name: "id",
-					type: "bigInt",
-					interface: "integer",
-				};
-
-				expect(mapFieldType(field)).toBe("number");
-			});
-
-			it("deve mapear double para number", () => {
-				const field: NocoBaseField = {
-					name: "preco",
-					type: "double",
-					interface: "number",
-				};
-
-				expect(mapFieldType(field)).toBe("number");
-			});
-
-			it("deve mapear sort para number", () => {
-				const field: NocoBaseField = {
-					name: "ordem",
-					type: "sort",
-					interface: "sort",
-				};
-
-				expect(mapFieldType(field)).toBe("number");
-			});
+			for (const { name, type, iface } of numericCases) {
+				it(`deve mapear ${type} para number (campo: ${name})`, () => {
+					expect(
+						mapFieldType(createMockField({ name, type, interface: iface })),
+					).toBe("number");
+				});
+			}
 		});
 
 		describe("tipo boolean", () => {
 			it("deve mapear boolean para boolean", () => {
-				const field: NocoBaseField = {
-					name: "ativo",
-					type: "boolean",
-					interface: "checkbox",
-				};
-
-				expect(mapFieldType(field)).toBe("boolean");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "ativo",
+							type: "boolean",
+							interface: "checkbox",
+						}),
+					),
+				).toBe("boolean");
 			});
 		});
 
 		describe("tipos de objeto/JSON", () => {
 			it("deve mapear json para Record<string, unknown>", () => {
-				const field: NocoBaseField = {
-					name: "config",
-					type: "json",
-					interface: "json",
-				};
-
-				expect(mapFieldType(field)).toBe("Record<string, unknown>");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "config",
+							type: "json",
+							interface: "json",
+						}),
+					),
+				).toBe("Record<string, unknown>");
 			});
 
 			it("deve mapear jsonb para Record<string, unknown>", () => {
-				const field: NocoBaseField = {
-					name: "metadata",
-					type: "jsonb",
-					interface: "json",
-				};
-
-				expect(mapFieldType(field)).toBe("Record<string, unknown>");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "metadata",
+							type: "jsonb",
+							interface: "json",
+						}),
+					),
+				).toBe("Record<string, unknown>");
 			});
 		});
 
 		describe("tipo array", () => {
 			it("deve mapear array para string[]", () => {
-				const field: NocoBaseField = {
-					name: "tags",
-					type: "array",
-					interface: "multipleSelect",
-				};
-
-				expect(mapFieldType(field)).toBe("string[]");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "tags",
+							type: "array",
+							interface: "multipleSelect",
+						}),
+					),
+				).toBe("string[]");
 			});
 		});
 
 		describe("interfaces especiais", () => {
 			it("deve mapear context para unknown", () => {
-				const field: NocoBaseField = {
-					name: "contexto",
-					type: "string",
-					interface: "context",
-				};
-
-				expect(mapFieldType(field)).toBe("unknown");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "contexto",
+							type: "string",
+							interface: "context",
+						}),
+					),
+				).toBe("unknown");
 			});
 
 			it("deve mapear interface set para unknown[]", () => {
-				const field: NocoBaseField = {
-					name: "opcoes",
-					type: "string",
-					interface: "set",
-				};
-
-				expect(mapFieldType(field)).toBe("unknown[]");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "opcoes",
+							type: "string",
+							interface: "set",
+						}),
+					),
+				).toBe("unknown[]");
 			});
 
 			it("deve mapear type set para unknown[] via FIELD_TYPE_MAP", () => {
-				const field: NocoBaseField = {
-					name: "f_fk_funcionarios",
-					type: "set",
-					interface: "json",
-				};
-
-				expect(mapFieldType(field)).toBe("unknown[]");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "f_fk_funcionarios",
+							type: "set",
+							interface: "json",
+						}),
+					),
+				).toBe("unknown[]");
 			});
 		});
 
 		describe("tipos desconhecidos", () => {
 			it("deve retornar unknown para tipo não mapeado", () => {
-				const field = {
-					name: "campo",
-					type: "tipoDesconhecido",
-					interface: "input",
-				} as NocoBaseField;
-
-				expect(mapFieldType(field)).toBe("unknown");
+				expect(
+					mapFieldType(
+						createMockField({
+							name: "campo",
+							type: "tipoDesconhecido",
+							interface: "input",
+						}),
+					),
+				).toBe("unknown");
 			});
 		});
 	});
 
 	describe("extractRelationInfo", () => {
 		describe("campos de sistema", () => {
-			it("deve retornar null para createdBy", () => {
-				const field: NocoBaseField = {
+			const systemFields = [
+				{
 					name: "createdBy",
 					type: "belongsTo",
 					interface: "createdBy",
 					target: "users",
-				};
-
-				expect(extractRelationInfo(field)).toBeNull();
-			});
-
-			it("deve retornar null para updatedBy", () => {
-				const field: NocoBaseField = {
+				},
+				{
 					name: "updatedBy",
 					type: "belongsTo",
 					interface: "updatedBy",
 					target: "users",
-				};
-
-				expect(extractRelationInfo(field)).toBeNull();
-			});
-
-			it("deve retornar null para parent", () => {
-				const field: NocoBaseField = {
+				},
+				{
 					name: "parent",
 					type: "belongsTo",
 					interface: "m2o",
 					target: "departments",
-				};
-
-				expect(extractRelationInfo(field)).toBeNull();
-			});
-
-			it("deve retornar null para children", () => {
-				const field: NocoBaseField = {
+				},
+				{
 					name: "children",
 					type: "hasMany",
 					interface: "o2m",
 					target: "departments",
-				};
+				},
+			];
 
-				expect(extractRelationInfo(field)).toBeNull();
-			});
+			for (const field of systemFields) {
+				it(`deve retornar null para ${field.name}`, () => {
+					expect(extractRelationInfo(createMockField(field))).toBeNull();
+				});
+			}
 		});
 
 		describe("relações many-to-one (m2o)", () => {
 			it("deve extrair informações de relação belongsTo", () => {
-				const field: NocoBaseField = {
-					name: "f_setor",
-					type: "belongsTo",
-					interface: "m2o",
-					target: "t_setores",
-				};
-
-				const result = extractRelationInfo(field);
-				expect(result).toEqual({
-					type: "m2o",
-					targetCollection: "t_setores",
-				});
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "f_setor",
+							type: "belongsTo",
+							interface: "m2o",
+							target: "t_setores",
+						}),
+					),
+				).toEqual({ type: "m2o", targetCollection: "t_setores" });
 			});
 		});
 
 		describe("relações one-to-many (o2m)", () => {
 			it("deve extrair informações de relação hasMany", () => {
-				const field: NocoBaseField = {
-					name: "funcionarios",
-					type: "hasMany",
-					interface: "o2m",
-					target: "f_funcionarios",
-				};
-
-				const result = extractRelationInfo(field);
-				expect(result).toEqual({
-					type: "o2m",
-					targetCollection: "f_funcionarios",
-				});
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "funcionarios",
+							type: "hasMany",
+							interface: "o2m",
+							target: "f_funcionarios",
+						}),
+					),
+				).toEqual({ type: "o2m", targetCollection: "f_funcionarios" });
 			});
 		});
 
 		describe("relações many-to-many (m2m)", () => {
 			it("deve extrair informações de relação belongsToMany", () => {
-				const field: NocoBaseField = {
-					name: "servicos",
-					type: "belongsToMany",
-					interface: "m2m",
-					target: "t_servicos",
-				};
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "servicos",
+							type: "belongsToMany",
+							interface: "m2m",
+							target: "t_servicos",
+						}),
+					),
+				).toEqual({ type: "m2m", targetCollection: "t_servicos" });
+			});
+		});
 
-				const result = extractRelationInfo(field);
-				expect(result).toEqual({
-					type: "m2m",
-					targetCollection: "t_servicos",
+		describe("relações com interface null (fallback por field.type)", () => {
+			it("deve detectar belongsToMany quando interface é None", () => {
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "menuUiSchemas",
+							type: "belongsToMany",
+							interface: null,
+							target: "uiSchemas",
+						}),
+					),
+				).toEqual({ type: "m2m", targetCollection: "uiSchemas" });
+			});
+
+			it("deve detectar hasMany quando interface é None", () => {
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "resources",
+							type: "hasMany",
+							interface: null,
+							target: "dataSourcesRolesResources",
+						}),
+					),
+				).toEqual({
+					type: "hasMany",
+					targetCollection: "dataSourcesRolesResources",
 				});
+			});
+
+			it("deve detectar belongsTo quando interface é None", () => {
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "f_categoria",
+							type: "belongsTo",
+							interface: null,
+							target: "t_categorias",
+						}),
+					),
+				).toEqual({ type: "belongsTo", targetCollection: "t_categorias" });
+			});
+		});
+
+		describe("relações com interface attachment", () => {
+			it("deve detectar belongsToMany com interface attachment", () => {
+				expect(
+					extractRelationInfo(
+						createMockField({
+							name: "f_anexos",
+							type: "belongsToMany",
+							interface: "attachment",
+							target: "attachments",
+						}),
+					),
+				).toEqual({ type: "m2m", targetCollection: "attachments" });
 			});
 		});
 
 		describe("campos não relacionais", () => {
-			it("deve retornar null para campos string", () => {
-				const field: NocoBaseField = {
-					name: "nome",
-					type: "string",
-					interface: "input",
-				};
+			const nonRelationalFields = [
+				{ name: "nome", type: "string", interface: "input" },
+				{ name: "idade", type: "integer", interface: "integer" },
+				{ name: "ativo", type: "boolean", interface: "checkbox" },
+			];
 
-				expect(extractRelationInfo(field)).toBeNull();
-			});
-
-			it("deve retornar null para campos numéricos", () => {
-				const field: NocoBaseField = {
-					name: "idade",
-					type: "integer",
-					interface: "integer",
-				};
-
-				expect(extractRelationInfo(field)).toBeNull();
-			});
-
-			it("deve retornar null para campos boolean", () => {
-				const field: NocoBaseField = {
-					name: "ativo",
-					type: "boolean",
-					interface: "checkbox",
-				};
-
-				expect(extractRelationInfo(field)).toBeNull();
-			});
+			for (const field of nonRelationalFields) {
+				it(`deve retornar null para campos ${field.type}`, () => {
+					expect(extractRelationInfo(createMockField(field))).toBeNull();
+				});
+			}
 		});
 	});
 });

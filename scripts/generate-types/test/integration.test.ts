@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
+import * as os from "node:os";
 import * as path from "node:path";
-import type { CollectionTypesMap } from "@scripts/generate-types/src/@types/generation";
 import {
 	generateContent,
 	generateSplitFiles,
@@ -11,43 +11,24 @@ import {
 	writeMultipleFiles,
 } from "@scripts/generate-types/src/utils/writer";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { createMockCollectionTypesMap } from "./setup";
 
 describe("integration - fluxo completo de geração", () => {
-	const testOutputDir = path.resolve(process.cwd(), "test-output/integration");
+	const testOutputDir = path.resolve(
+		os.tmpdir(),
+		"crm-atplus-test/integration",
+	);
 
-	const mockCollectionTypes: CollectionTypesMap = {
-		users: {
-			scalars: new Map([
-				["id", "number"],
-				["email", "string"],
-				["name", "string"],
-			]),
-			relations: new Map(),
-		},
+	const mockCollectionTypes = createMockCollectionTypesMap({
+		users: { scalars: { id: "number", email: "string", name: "string" } },
 		f_funcionarios: {
-			scalars: new Map([
-				["id", "number"],
-				["nome", "string"],
-				["cargo", "string"],
-			]),
-			relations: new Map(),
+			scalars: { id: "number", nome: "string", cargo: "string" },
 		},
 		t_negociacoes: {
-			scalars: new Map([
-				["id", "number"],
-				["titulo", "string"],
-				["valor", "number"],
-			]),
-			relations: new Map(),
+			scalars: { id: "number", titulo: "string", valor: "number" },
 		},
-		other_collection: {
-			scalars: new Map([
-				["id", "number"],
-				["data", "string"],
-			]),
-			relations: new Map(),
-		},
-	};
+		other_collection: { scalars: { id: "number", data: "string" } },
+	});
 
 	beforeEach(() => {
 		if (fs.existsSync(testOutputDir)) {
