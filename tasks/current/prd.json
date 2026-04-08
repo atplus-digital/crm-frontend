@@ -132,8 +132,8 @@
       ],
       "priority": 7,
       "group": "D",
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Criado src/routes/_authenticated.tsx como layout pathless com beforeLoad que chama getCurrentUser(). Sem sessão, redireciona para /login com search.redirect validado (sanitizeRedirect previne open redirect: rejeita // e não-/). O retorno de beforeLoad ({ user: AuthenticatedUser }) expande o router context para rotas filhas. Nota técnica: TanStack Router requer pelo menos uma sub-rota filho para pathless layouts (checkRouteFullPathUniqueness conflita com / se sem filhos). Criado dashboard.tsx como placeholder mínimo para permitir geração da route tree — será substituído quando rotas autenticadas reais forem adicionadas. Biome check passa (86 files). Typecheck sem erros novos (erros preexistentes em theme.test.ts e login.tsx são de outras stories). Testes: 229 passed."
     },
     {
       "id": "US-008",

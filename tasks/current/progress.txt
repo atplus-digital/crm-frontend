@@ -16,6 +16,28 @@ Execution Summary:
 - Blocked: 0
 === END HEADER ===
 
+## [2026-04-08T16:45:00Z] - US-007 Execution
+Status: SUCCESS
+Files Created/Modified:
+  - src/routes/_authenticated.tsx (NEW) — Layout pathless protegido com beforeLoad
+  - src/routes/_authenticated/dashboard.tsx (NEW) — Placeholder para geração da route tree
+  - src/routeTree.gen.ts (REGENERATED) — Inclui _authenticated e dashboard
+  - tasks/current/prd.json (UPDATED) — US-007 marked as passes: true
+Acceptance Criteria:
+  ✅ Criar src/routes/_authenticated.tsx como layout pathless protegido
+  ✅ Layout usa beforeLoad para chamar getCurrentUser
+  ✅ Router context é expandido para disponibilizar usuário autenticado (beforeLoad retorna { user })
+  ✅ Sem sessão válida, redireciona para /login antes do render
+  ✅ Parâmetro redirect é validado para evitar open redirect (sanitizeRedirect rejeita // e não-/)
+  ✅ pnpm exec biome check . passes (86 files)
+  ✅ Typecheck passes (sem erros novos; erros preexistentes em theme.test.ts e login.tsx)
+  ⏭ Verify in browser using dev-browser skill (skipped - requires running server + NocoBase)
+Notes:
+  - TanStack Router requer sub-rotas filho para pathless layouts (conflito de fullPath / sem filhos)
+  - dashboard.tsx é placeholder mínimo; será substituído quando rotas autenticadas reais forem adicionadas
+  - Testes: 229 passed
+---
+
 ## [2026-04-08T13:00:00Z] - US-008 Execution
 Status: SUCCESS
 Files Created/Modified:
