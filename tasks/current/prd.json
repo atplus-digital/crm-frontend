@@ -170,8 +170,8 @@
       ],
       "priority": 9,
       "group": "E",
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Substituído o placeholder dashboard.tsx com a página autenticada completa em src/routes/_authenticated/dashboard.tsx. Nota técnica: não foi possível criar _authenticated/index.tsx porque TanStack Router file-based conflita com src/routes/index.tsx (ambos resolvem para /). A rota /dashboard sob o layout _authenticated serve como página inicial protegida. A página consome user via Route.useRouteContext() do layout pai, exibe perfil (email, username, nickname) e roles como badges informativos. Roles são apenas para exibição — nenhuma decisão de autorização é tomada no cliente. Inclui header com nome do app, ThemeToggle e botão de logout. Biome check passa (86 files). Typecheck sem erros novos (erro pré-existente em theme.test.ts/jsdom)."
     },
     {
       "id": "US-010",
