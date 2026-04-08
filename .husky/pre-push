@@ -1,11 +1,14 @@
 branch=$(git rev-parse --abbrev-ref HEAD)
 
+#if [ "$branch" = "main" ]; then
+#  echo -e "\033[0;31m🚫 ERRO: Push para branch main bloqueado!\033[0m"
+#  echo -e "\033[0;33m💡 Use uma branch de feature/fix/hotfix para suas alterações.\033[0m"
+#  exit 1
+#fi
+
 echo "pre-push checks..."
 
 pnpm knip:silent
 pnpm biome check
-
-if [ "$branch" = "main" ]; then
-  echo "⏳ Rodando checagens antes do push para main..."
   pnpm test
-fi
+

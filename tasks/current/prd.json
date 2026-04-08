@@ -1,0 +1,195 @@
+{
+  "project": "CRM ATPlus",
+  "branchName": "ralph/implement-nocobase-authentication",
+  "description": "Implementar autenticação e sessão com NocoBase como fonte única, mantendo token sensível apenas no servidor e protegendo rotas privadas antes do render.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Expandir configuração de ambiente para autenticação",
+      "description": "As a developer, I want validated auth environment variables so that the authentication flow can run with explicit and safe configuration.",
+      "acceptanceCriteria": [
+        "src/env.ts valida AUTH_SESSION_SECRET no servidor",
+        "CRM_NOCOBASE_URL permanece compatível",
+        "Fluxo de autenticação do usuário não depende de CRM_NOCOBASE_TOKEN",
+        "Mocks de ambiente e .env.example refletem a nova configuração",
+        "pnpm exec biome check . passes",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "group": "A",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Definir contratos de autenticação do app",
+      "description": "As a developer, I want normalized schemas and types for auth so that all layers use the same payload contracts.",
+      "acceptanceCriteria": [
+        "Criar src/modules/auth/auth.schemas.ts com schemas Zod de login, sessão e usuário autenticado",
+        "Criar src/modules/auth/auth.types.ts com tipos normalizados para usuário, sessão e roles",
+        "Usuário autenticado mínimo inclui id, email, username, nickname e roles",
+        "roles é normalizado e exposto como string[]",
+        "Helpers explícitos de roles existem, como hasRole e/ou hasSnippet",
+        "pnpm exec biome check . passes",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "group": "A",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Implementar client server-only para autenticação NocoBase",
+      "description": "As a developer, I want a server-only auth client so that sign-in, session validation, and sign-out use a single integration boundary.",
+      "acceptanceCriteria": [
+        "Criar src/modules/auth/auth-api.server.ts encapsulando POST /auth:signIn, GET /auth:check e POST /auth:signOut",
+        "Cliente HTTP usa axios em contexto server-only",
+        "Login envia header X-Authenticator: basic",
+        "Identificador de login usado pelo app é email",
+        "Erros de autenticação são normalizados para consumo seguro nas server functions",
+        "Respostas sensíveis de autenticação são tratadas com no-store",
+        "Implementação não depende de persistência automática de token no browser",
+        "pnpm exec biome check . passes",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "group": "B",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Implementar serviço de sessão por cookie HttpOnly",
+      "description": "As a developer, I want a dedicated session service so that the app can encrypt, sign, read, and clear the crm_session cookie consistently.",
+      "acceptanceCriteria": [
+        "Criar src/modules/auth/auth-session.server.ts",
+        "Cookie de sessão se chama crm_session",
+        "Token do NocoBase é cifrado e assinado antes de persistir no cookie",
+        "Cookie usa HttpOnly, SameSite=Lax e Path=/",
+        "Secure é obrigatório em produção e compatível com HTTP em desenvolvimento local",
+        "Expiração alinha com TTL do token quando disponível e aplica fallback de 8 horas",
+        "Existe função dedicada para remover imediatamente o cookie",
+        "pnpm exec biome check . passes",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "group": "B",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Implementar server functions de autenticação",
+      "description": "As a developer, I want server functions for sign-in, sign-out, and current user so that the UI can authenticate without exposing sensitive token data.",
+      "acceptanceCriteria": [
+        "Criar src/modules/auth/auth.functions.ts com signIn, signOut e getCurrentUser",
+        "signIn chama client NocoBase, cria cookie e retorna usuário normalizado",
+        "getCurrentUser lê cookie, valida com GET /auth:check e remove cookie em caso de 401",
+        "signOut tenta POST /auth:signOut e sempre limpa cookie local",
+        "Mensagens de erro de login retornadas para UI são genéricas",
+        "Fluxo valida Origin e Host para POST state-changing conforme padrão do app",
+        "signIn e signOut invalidam estado local relevante de router/sessão",
+        "pnpm exec biome check . passes",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "group": "C",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Criar wrapper autenticado server-only para chamadas NocoBase",
+      "description": "As a developer, I want a server-only repository wrapper so that future authenticated NocoBase calls can safely reuse user session data.",
+      "acceptanceCriteria": [
+        "Criar src/modules/repository/nocobase/server-client.ts",
+        "Wrapper usa token da sessão do usuário lido no servidor e não variável de automação",
+        "Wrapper reutiliza axios em contexto server-only para chamadas autenticadas",
+        "Wrapper fica pronto para features protegidas sem depender do browser para headers sensíveis",
+        "Contrato deixa claro que autorização real continua no backend NocoBase",
+        "pnpm exec biome check . passes",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "group": "C",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Proteger navegação com layout autenticado e contexto do router",
+      "description": "As a user, I want protected routes to redirect before render so that I never see authenticated screens without a valid session.",
+      "acceptanceCriteria": [
+        "Criar src/routes/_authenticated.tsx como layout pathless protegido",
+        "Layout usa beforeLoad para chamar getCurrentUser",
+        "Router context é expandido para disponibilizar usuário autenticado",
+        "Sem sessão válida, redireciona para /login antes do render",
+        "Parâmetro redirect é validado para evitar open redirect",
+        "pnpm exec biome check . passes",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 7,
+      "group": "D",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Implementar rota pública de login e ação de logout",
+      "description": "As a user, I want a login screen and logout action so that I can enter and leave the authenticated area safely.",
+      "acceptanceCriteria": [
+        "Criar src/routes/login.tsx como rota pública",
+        "Tela coleta email e senha e envia para signIn",
+        "Em sucesso redireciona para rota autenticada inicial ou redirect válido",
+        "Ao acessar /login com sessão válida redireciona para rota autenticada inicial ou redirect válido",
+        "Em falha, UI mostra apenas mensagem genérica",
+        "Ação de logout chama signOut e invalida estado local",
+        "pnpm exec biome check . passes",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 8,
+      "group": "D",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Criar bootstrap da área autenticada",
+      "description": "As an authenticated user, I want an initial protected page so that the app can confirm session state and expose my roles to the UI.",
+      "acceptanceCriteria": [
+        "Criar src/routes/_authenticated/index.tsx",
+        "Página consome usuário autenticado já validado pelo layout protegido",
+        "UI consegue ler roles para navegação e experiência",
+        "Implementação não usa roles da UI como autorização backend",
+        "pnpm exec biome check . passes",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 9,
+      "group": "E",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Cobrir autenticação com testes unitários e de integração",
+      "description": "As a developer, I want automated tests for the auth flow so that regressions in session handling and route protection are caught early.",
+      "acceptanceCriteria": [
+        "Existem testes para schemas e tipos críticos de autenticação",
+        "Existem testes para leitura, escrita e remoção do cookie de sessão",
+        "Existem testes para getCurrentUser limpando sessão quando auth:check retorna 401",
+        "Existem testes para redirecionamento de rota protegida sem sessão válida",
+        "Mocks de ambiente e HTTP não dependem de token persistido no browser",
+        "Tests pass",
+        "Typecheck passes"
+      ],
+      "priority": 10,
+      "group": "F",
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

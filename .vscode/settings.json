@@ -34,9 +34,5 @@
 	"editor.codeActionsOnSave": {
 		"source.organizeImports.biome": "explicit"
 	},
-	"cSpell.words": [
-		"atplus",
-		"nocobase",
-		"NOCOBASE"
-	]
+	"cSpell.words": ["atplus", "nocobase", "NOCOBASE"]
 }
