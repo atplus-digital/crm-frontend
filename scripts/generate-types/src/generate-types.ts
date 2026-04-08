@@ -328,9 +328,6 @@ export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 	}
 
 	const mainResult = writeGeneratedFile(mainContent);
-	const splitResult = writeMultipleFiles(
-		splitFilesContent,
-		config.outputDir,
-	);
+	const splitResult = writeMultipleFiles(splitFilesContent, config.outputDir);
 	return combineWriteResults(mainResult, splitResult);
 }

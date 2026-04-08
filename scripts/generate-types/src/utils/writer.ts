@@ -61,7 +61,9 @@ export function previewGeneratedFile(
 	};
 }
 
-function resolveOutputPath(outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE)): string {
+function resolveOutputPath(
+	outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE),
+): string {
 	return path.resolve(process.cwd(), outputPath);
 }
 

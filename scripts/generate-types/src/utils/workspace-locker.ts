@@ -72,7 +72,9 @@ function lockWorkspace(): void {
 				true;
 
 			// Adiciona também o arquivo principal se não estiver incluído
-			const mainOutputPattern = path.join(config.outputDir, "index.ts").replace(/^\.\//, "**/");
+			const mainOutputPattern = path
+				.join(config.outputDir, "index.ts")
+				.replace(/^\.\//, "**/");
 			if (!(mainOutputPattern in readonlyInclude)) {
 				(readonlyInclude as Record<string, boolean>)[mainOutputPattern] = true;
 			}
