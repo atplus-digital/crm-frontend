@@ -37,16 +37,16 @@ pnpm preview      # preview do build
 
 ### Scripts Disponíveis
 
-| Comando          | Descrição                                 |
-| ---------------- | ----------------------------------------- |
-| `pnpm dev`       | Servidor de desenvolvimento na porta 3000 |
-| `pnpm build`     | Build de produção                         |
-| `pnpm preview`   | Preview do build de produção              |
-| `pnpm test`      | Executa testes com Vitest                 |
-| `pnpm lint`      | Lint com Biome                            |
-| `pnpm format`    | Formatação com Biome                      |
-| `pnpm check`     | Check completo do Biome (lint + format)   |
-| `pnpm biome:fix` | Auto-fix de problemas do Biome            |
+| Comando               | Descrição                                  |
+| --------------------- | ------------------------------------------ |
+| `pnpm dev`            | Servidor de desenvolvimento na porta 3000  |
+| `pnpm build`          | Build de produção                          |
+| `pnpm preview`        | Preview do build de produção               |
+| `pnpm test`           | Executa testes com Vitest                  |
+| `pnpm biome:fix`      | Auto-fix de problemas do Biome             |
+| `pnpm knip`           | Verificação de dependências não utilizadas |
+| `pnpm generate-types` | Gera tipos a partir do NocoBase            |
+| `pnpm prepare`        | Setup do Husky (git hooks)                 |
 
 ### Convenções
 

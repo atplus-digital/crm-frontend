@@ -14,14 +14,7 @@
     "knip": "knip",
     "knip:silent": "knip --exclude dependencies --no-config-hints",
     "generate-types": "tsx scripts/generate-types/index.ts",
-    "prepare": "husky",
-    "lint-staged": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "biome check --write"
-    ],
-    "lint-staged": "lint-staged"
+    "prepare": "husky"
   },
   "dependencies": {
     "@faker-js/faker": "^10.4.0",
@@ -57,7 +50,6 @@
     "radix-ui": "^1.4.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "shadcn": "^4.2.0",
     "streamdown": "^2.5.0",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.2",
@@ -71,6 +63,7 @@
     "@tanstack/devtools-vite": "^0.6.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.2",
+    "@types/jsdom": "^28.0.1",
     "@types/node": "^25.5.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -80,7 +73,7 @@
     "husky": "^9.1.7",
     "jsdom": "^29.0.2",
     "knip": "^6.3.1",
-    "lint-staged": "^16.4.0",
+    "shadcn": "^4.2.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.7",

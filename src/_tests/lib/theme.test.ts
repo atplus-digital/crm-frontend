@@ -15,7 +15,7 @@ describe("theme", () => {
 	});
 
 	it("deve retornar light como fallback sem window", async () => {
-		const { getSystemTheme } = await import("./theme");
+		const { getSystemTheme } = await import("@/lib/theme");
 
 		expect(getSystemTheme()).toBe("light");
 	});
@@ -36,7 +36,7 @@ describe("theme", () => {
 		});
 
 		const { getStoredTheme, getSystemTheme, THEME_STORAGE_KEY } = await import(
-			"./theme"
+			"@/lib/theme"
 		);
 
 		expect(getSystemTheme()).toBe("dark");
@@ -62,7 +62,7 @@ describe("theme", () => {
 		});
 
 		const { applyThemeMode, toggleTheme, THEME_STORAGE_KEY } = await import(
-			"./theme"
+			"@/lib/theme"
 		);
 
 		applyThemeMode("dark");

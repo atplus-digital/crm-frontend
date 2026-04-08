@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import type { FormEvent } from "react";
 import { useState } from "react";
+import z from "zod";
 import { Button } from "#/components/ui/button";
 import {
 	Card,
@@ -15,9 +16,9 @@ import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { signIn, signOut } from "#/modules/auth/auth.functions";
 
-const loginSearchSchema = {
-	redirect: { type: "string" as const, optional: true as const },
-};
+const loginSearchSchema = z.object({
+	redirect: z.string().optional(),
+});
 
 export const Route = createFileRoute("/login")({
 	validateSearch: loginSearchSchema,
