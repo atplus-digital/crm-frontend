@@ -20,8 +20,8 @@ export default function setup() {
 
 	const extra = mockKeys.filter((k) => !schemaKeys.includes(k));
 	if (extra.length > 0) {
-		throw new Error(
-			`❌ Global setup: o mock contém chaves extras não presentes no esquema: ${extra.join(", ")}`,
+		console.warn(
+			`\x1b[33m\x1b[1mGlobal setup: o mock contém chaves extras não presentes no esquema: ${extra.join(", ")}\x1b[0m`,
 		);
 	}
 

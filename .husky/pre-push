@@ -1,9 +1,11 @@
 branch=$(git rev-parse --abbrev-ref HEAD)
 
+echo "pre-push checks..."
+
 pnpm knip:silent
+pnpm biome check
 
 if [ "$branch" = "main" ]; then
   echo "⏳ Rodando checagens antes do push para main..."
-  pnpm biome check
   pnpm test
 fi
