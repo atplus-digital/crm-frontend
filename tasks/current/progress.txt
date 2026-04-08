@@ -27,6 +27,14 @@ Execution Summary:
 - Blocked: 0
 === END HEADER ===
 
+## [2026-04-08T12:30:00Z] - Group C Execution
+Stories: US-005, US-006 (parallel)
+Results:
+  - US-005: SUCCESS — auth.functions.ts criado com signIn, signOut, getCurrentUser server functions
+  - US-006: PENDING
+Group Status: IN PROGRESS
+---
+
 ## [2026-04-08T12:20:00Z] - Group B Execution
 Stories: US-003, US-004 (parallel)
 Results:

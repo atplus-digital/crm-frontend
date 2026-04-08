@@ -95,8 +95,8 @@
       ],
       "priority": 5,
       "group": "C",
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Criado auth.functions.ts com signIn (POST, validação Origin/Host, cookie cifrado, usuário normalizado, erro genérico), signOut (POST, validação Origin/Host, best-effort NocoBase + sempre limpa cookie) e getCurrentUser (GET, lê cookie, valida com auth:check, remove cookie em 401). Usa inputValidator com loginSchema. Biome check e typecheck passam."
     },
     {
       "id": "US-006",
