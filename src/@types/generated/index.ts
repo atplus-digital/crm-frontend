@@ -3,15 +3,6 @@
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
-import type { ContratosBase } from "./contratos";
-import type { EmpresasBase } from "./empresas";
-import type { EquipamentosBase } from "./equipamentos";
-import type { FFuncionariosBase } from "./funcionarios";
-import type { NegociacoesBase } from "./negociacoes";
-import type { PessoasBase } from "./pessoas";
-import type { ServicosBase } from "./servicos";
-import type { SitesBase } from "./sites";
-import type { TelecomRecursosBase } from "./telecom-recursos";
 import type { UsersBase } from "./users";
 
 export interface ColaboradoresDoSetorBase {
@@ -86,6 +77,93 @@ export interface FFkOrigemTiposBase {
 export type FFkOrigemTiposRelations = Record<string, never>;
 
 export type FFkOrigemTiposRelationKey = keyof FFkOrigemTiposRelations;
+
+export interface FFuncionariosBase {
+	createdAt: string;
+	f_ativo: string;
+	f_bairro: string;
+	f_celular: string;
+	f_cep: string;
+	f_checklist_admissional: string[];
+	f_cnh: string;
+	f_cnpj: string;
+	f_conta_salario_pix: string;
+	f_cpf: string;
+	f_curso: string;
+	f_data_admissao: string;
+	f_data_demissao: string;
+	f_data_nascimento: string;
+	f_email_corporativo: string;
+	f_email_pessoal: string;
+	f_empresa: string;
+	f_endereco: string;
+	f_endereco_cidade: string;
+	f_endereco_cnpj: string;
+	f_endereco_complemento: string;
+	f_endereco_estado: string;
+	f_endereco_numero: string;
+	f_endereco_referencia: string;
+	f_epi_calca: string;
+	f_epi_calcado: string;
+	f_epi_jaleco: string;
+	f_escolaridade: string;
+	f_estado_civil: string;
+	f_fk_funcionarios: number;
+	f_fk_funcionarios2: number;
+	f_fk_setor: number;
+	f_fk_turnos: number;
+	f_genero: string;
+	f_id_tecnico_ixc: number;
+	f_mes_nascimento: string;
+	f_mobilidade: string;
+	f_motivo_demissao: string;
+	f_nacionalidade: string;
+	f_naturalidade: string;
+	f_nome: string;
+	f_nome_contato_emergencia: string;
+	f_orgao_expedidor: string;
+	f_pcd: string;
+	f_razao_social: string;
+	f_reservista: string;
+	f_rg: string;
+	f_secao_eleitoral: string;
+	f_situacao_escolaridade: string;
+	f_telefone_emergencia: string;
+	f_terceiro: string;
+	f_tipo_contrato: string;
+	f_tipo_deficiencia: string;
+	f_titulo_eleitor: string;
+	f_unidade: string;
+	f_universidade: string;
+	f_valor_rescisao: number;
+	f_vencimento_contrato: string;
+	f_vinculo_com_colaborador: string;
+	f_zona_eleitoral: string;
+	id: number;
+	updatedAt: string;
+}
+
+export interface FFuncionariosRelations {
+	createdBy?: UsersBase | null;
+	f_arquivos_funcionarios?: ArquivosFuncionariosBase[];
+	f_asos?: AsosBase[];
+	f_cargo?: CargosBase | null;
+	f_chip_corporativo?: LinhaCorporativaBase[];
+	f_departamento?: DepartamentosBase | null;
+	f_foto_funcionarios?: FotoFuncionariosBase[];
+	f_info_arquivos?: InfoArquivosBase[];
+	f_info_aso?: InfoAsoBase[];
+	f_logs_cargos?: LogsCargosBase[];
+	f_parentesco?: ParentescoBase[];
+	f_patrimonio_funcionarios?: PatrimonioBase[];
+	f_periodos_ferias?: PeriodosFeriasBase[];
+	f_qualirun_processos?: QualirunProcessosBase[];
+	f_turnos?: TurnosBase | null;
+	t_qualirun_info_adicionais?: QualirunInfoAdicionaisBase[];
+	updatedBy?: UsersBase | null;
+}
+
+export type FFuncionariosRelationKey = keyof FFuncionariosRelations;
 
 export interface FRecursosFilhoBase {
 	f_7q4zyk2d0kz: number;
@@ -522,6 +600,32 @@ export interface ContratoIxcItensRelations {
 
 export type ContratoIxcItensRelationKey = keyof ContratoIxcItensRelations;
 
+export interface ContratosBase {
+	createdAt: string;
+	extname: string;
+	f_fk_negociacao_contrato: number;
+	f_fk_suspensao: number;
+	filename: string;
+	id: number;
+	meta: Record<string, unknown>;
+	mimetype: string;
+	path: string;
+	preview: string;
+	size: number;
+	storageId: number;
+	title: string;
+	updatedAt: string;
+	url: string;
+}
+
+export interface ContratosRelations {
+	createdBy?: UsersBase | null;
+	storage?: unknown | null;
+	updatedBy?: UsersBase | null;
+}
+
+export type ContratosRelationKey = keyof ContratosRelations;
+
 export interface ContratosIxcBase {
 	createdAt: string;
 	f_descricao: string;
@@ -741,6 +845,55 @@ export interface DiscosRelations {
 
 export type DiscosRelationKey = keyof DiscosRelations;
 
+export interface EmpresasBase {
+	createdAt: string;
+	f_cnpj: string;
+	f_cpf_responsavel: string;
+	f_email_responsavel: string;
+	f_fundacao: string;
+	f_ie: string;
+	f_nome_fantasia: string;
+	f_razao_social: string;
+	f_responsavel: string;
+	id: number;
+	updatedAt: string;
+}
+
+export interface EmpresasRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
+
+export type EmpresasRelationKey = keyof EmpresasRelations;
+
+export interface EquipamentosBase {
+	createdAt: string;
+	f_34u76klwxoj: number;
+	f_fk_ativo_rack: number;
+	f_fk_equipamentos_anexos: number;
+	f_fk_equipamentos_interfaces: number;
+	f_modelo: string;
+	f_nome: string;
+	f_observacoes: string;
+	f_sigla: string;
+	f_sn: string;
+	id: number;
+	updatedAt: string;
+}
+
+export interface EquipamentosRelations {
+	createdBy?: UsersBase | null;
+	f_fwvce6bqigw?: TelecomAnexosBase[];
+	f_hcqrd9qhcid?: AcessosBase[];
+	f_interfaces?: TelecomInterfacesBase[];
+	f_rack?: TelecomRacksBase | null;
+	f_recurso_equipamento_a?: TelecomRecursosBase[];
+	f_site?: SitesBase | null;
+	updatedBy?: UsersBase | null;
+}
+
+export type EquipamentosRelationKey = keyof EquipamentosRelations;
+
 export interface EquipamentosEmPrediosBase {
 	createdAt: string;
 	f_contato_sindico: string;
@@ -903,6 +1056,7 @@ export interface LancamentosFeriasBase {
 	f_data_saida: string;
 	f_dias_gozados: number;
 	f_dias_vendidos: number;
+	f_fk_periodos_ferias: number;
 	f_observacoes: string;
 	f_status: string;
 	id: number;
@@ -911,6 +1065,7 @@ export interface LancamentosFeriasBase {
 
 export interface LancamentosFeriasRelations {
 	createdBy?: UsersBase | null;
+	f_periodos_ferias?: PeriodosFeriasBase | null;
 	updatedBy?: UsersBase | null;
 }
 
@@ -988,6 +1143,100 @@ export interface Na4eifobeszBase {
 export type Na4eifobeszRelations = Record<string, never>;
 
 export type Na4eifobeszRelationKey = keyof Na4eifobeszRelations;
+
+export interface NegociacoesBase {
+	createdAt: string;
+	f_apartamento: string;
+	f_assinatura_gov: boolean;
+	f_bairro: string;
+	f_bairro_cobranca: string;
+	f_bloco_quadra: string;
+	f_cep: string;
+	f_cep_cobranca: string;
+	f_cidade_cobranca: string;
+	f_complemento_cobranca: string;
+	f_confissao_divida: string;
+	f_contrato_ixc: string;
+	f_cpf_cnpj: string;
+	f_cpf_responsavel_assinatura: string;
+	f_data_vencimento: string;
+	f_email_cobranca: string;
+	f_endereco: string;
+	f_endereco_cidade: string;
+	f_endereco_cobranca: string;
+	f_endereco_complemento: string;
+	f_endereco_de_cobranca: string;
+	f_endereco_estado: string;
+	f_endereco_numero: string;
+	f_endereco_referencia: string;
+	f_entrada_saldo_devedor: number;
+	f_estado_cobranca: string;
+	f_fidelidade: string;
+	f_fk_contrato_ixc: number;
+	f_fk_cupom_desconto: number;
+	f_fk_negociacao_indicador: number;
+	f_fk_negociacao_vendedor: number;
+	f_fk_pacote: number;
+	f_fk_pessoa_negociacao: number;
+	f_fk_pessoa_pj_negociacao: number;
+	f_Incremento: string;
+	f_ixc_tipo_cobranca: string;
+	f_link_assinatura: string;
+	f_motivo: string;
+	f_motivo_pontos: string[];
+	f_multa_juros: number;
+	f_nome_edificio: string;
+	f_nome_fantasia: string;
+	f_nome_razao: string;
+	f_numero_cobranca: string;
+	f_ordenacao: number;
+	f_parcelas_mensais: number;
+	f_periodo_final: string;
+	f_pontos_atencao: string;
+	f_responsavel_assinatura: string;
+	f_rg_ie: string;
+	f_scm: number;
+	f_smp: number;
+	f_status: string;
+	f_stfc: number;
+	f_substatus: string;
+	f_sva: number;
+	f_telefone: string;
+	f_telefone_2: string;
+	f_tipo_pessoa: string;
+	f_titulo: string;
+	f_valor_beneficios: number;
+	f_valor_da_parcela: string;
+	f_valor_devedor: number;
+	f_valor_devedor_total: string;
+	f_valor_instalacao: number;
+	f_valor_mensal: number;
+	f_valor_mensal_antigo: number;
+	f_valor_mensal_sem_desconto: number;
+	f_valor_multa_mes_faltante: number;
+	f_zapsign: boolean;
+	id: number;
+	updatedAt: string;
+}
+
+export interface NegociacoesRelations {
+	createdBy?: UsersBase | null;
+	f_anexos?: AnexosNegociacoesBase[];
+	f_comentarios?: NegociacoesComentariosBase[];
+	f_cupom_desconto?: CuponsDescontoBase | null;
+	f_fk_oe_qualirun?: OeQualirunBase[];
+	f_itens_negociacao?: NegociacoesItensBase[];
+	f_negociacao_contrato?: ContratosBase[];
+	f_negociacao_pessoa_juridica?: EmpresasBase | null;
+	f_pacote?: PacotesBase | null;
+	f_pacotes_adicionais?: PacotesBase[];
+	f_pessoa?: PessoasBase | null;
+	f_qualirun_assinatura_gov?: QualirunAssinaturaGovBase[];
+	f_vendedor?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
+
+export type NegociacoesRelationKey = keyof NegociacoesRelations;
 
 export interface NegociacoesComentariosBase {
 	createdAt: string;
@@ -1242,10 +1491,31 @@ export interface PeriodosFeriasBase {
 export interface PeriodosFeriasRelations {
 	createdBy?: UsersBase | null;
 	f_funcionarios?: FFuncionariosBase | null;
+	f_lancamentos_ferias?: LancamentosFeriasBase[];
 	updatedBy?: UsersBase | null;
 }
 
 export type PeriodosFeriasRelationKey = keyof PeriodosFeriasRelations;
+
+export interface PessoasBase {
+	createdAt: string;
+	f_analise_ixc: string;
+	f_cpf: string;
+	f_credito: string;
+	f_data_nascimento: string;
+	f_nome: string;
+	f_sexo: string;
+	f_vky78cvjtdw: number;
+	id: number;
+	updatedAt: string;
+}
+
+export interface PessoasRelations {
+	createdBy?: UsersBase | null;
+	updatedBy?: UsersBase | null;
+}
+
+export type PessoasRelationKey = keyof PessoasRelations;
 
 export interface ProdutosBase {
 	createdAt: string;
@@ -1393,6 +1663,35 @@ export type Rguxtr9p91dRelations = Record<string, never>;
 
 export type Rguxtr9p91dRelationKey = keyof Rguxtr9p91dRelations;
 
+export interface ServicosBase {
+	createdAt: string;
+	f_caracteristicas: string;
+	f_descricao: string;
+	f_designacao_atplus: string;
+	f_designacao_externa: string;
+	f_fk_servico_x_contrato: number;
+	f_id_contrato_ixc: string;
+	f_id_servico_ixc: string;
+	f_propriedades: string;
+	f_status: string;
+	f_tipo: string;
+	f_velocidade: string;
+	id: number;
+	updatedAt: string;
+}
+
+export interface ServicosRelations {
+	createdBy?: UsersBase | null;
+	f_acessos?: AcessosBase[];
+	f_arquivos?: TelecomAnexosBase[];
+	f_kyyzn4kut6e?: TelecomContratosBase | null;
+	f_rj1pckkkeqi?: ServicosBase[];
+	f_servicos_relacionados?: ServicosBase[];
+	updatedBy?: UsersBase | null;
+}
+
+export type ServicosRelationKey = keyof ServicosRelations;
+
 export interface ServicosXServicosBase {
 	f_8n72gqelvp5: number;
 	f_d40asyeldtp: number;
@@ -1437,6 +1736,36 @@ export interface SistemasAcessosRelations {
 }
 
 export type SistemasAcessosRelationKey = keyof SistemasAcessosRelations;
+
+export interface SitesBase {
+	createdAt: string;
+	f_bairro: string;
+	f_cep: string;
+	f_cidade: string;
+	f_complemento: string;
+	f_dados_acesso: string;
+	f_endereco: string;
+	f_fk_telecom_contatos: number;
+	f_nome: string;
+	f_numero: string;
+	f_sigla: string;
+	f_status: string;
+	f_tipo: string;
+	f_uf: string;
+	id: number;
+	updatedAt: string;
+}
+
+export interface SitesRelations {
+	createdBy?: UsersBase | null;
+	f_anexos?: TelecomAnexosBase[];
+	f_contatos?: FContatosBase | null;
+	f_fk_sites_equipamentos?: EquipamentosBase[];
+	f_racks?: TelecomRacksBase[];
+	updatedBy?: UsersBase | null;
+}
+
+export type SitesRelationKey = keyof SitesRelations;
 
 export interface Siurxeb1juyBase {
 	f_stgjevi19lg: number;
@@ -1694,6 +2023,52 @@ export interface TelecomRacksRelations {
 }
 
 export type TelecomRacksRelationKey = keyof TelecomRacksRelations;
+
+export interface TelecomRecursosBase {
+	createdAt: string;
+	f_2ew016ynyo6: number;
+	f_contrato_ixc: number;
+	f_designacao_atplus: string;
+	f_designacao_externa: string;
+	f_detalhes: string;
+	f_finalidade: string;
+	f_fk_anexos_recursos: number;
+	f_fk_cliente_recurso: number;
+	f_fk_fornecedor_recurso: number;
+	f_fk_rack_a: number;
+	f_fk_rack_b: number;
+	f_fk_site_a: number;
+	f_fk_site_b: number;
+	f_id_produto: string;
+	f_nome: string;
+	f_status: string;
+	f_tipo: string;
+	id: number;
+	parentId: number;
+	updatedAt: string;
+}
+
+export interface TelecomRecursosRelations {
+	children?: TelecomRecursosBase[];
+	createdBy?: UsersBase | null;
+	f_anexos?: TelecomAnexosBase[];
+	f_cliente?: FornecedoresTelecomBase | null;
+	f_equipamento_a?: EquipamentosBase | null;
+	f_fornecedor?: FornecedoresTelecomBase | null;
+	f_interface_ponta_a?: TelecomInterfacesBase[];
+	f_interface_ponta_b?: TelecomInterfacesBase[];
+	f_opcoes_colocation?: TelecomColocationOpcoesBase | null;
+	f_opcoes_l2l?: TelecomOpcoesL2lBase | null;
+	f_opcoes_link_ip?: TelecomTransitoOpcoesBase | null;
+	f_rack_a?: TelecomRacksBase | null;
+	f_rack_b?: TelecomRacksBase | null;
+	f_site_a?: SitesBase | null;
+	f_site_b?: SitesBase | null;
+	parent?: TelecomRecursosBase | null;
+	updatedBy?: UsersBase | null;
+}
+
+export type TelecomRecursosRelationKey = keyof TelecomRecursosRelations;
 
 export interface TelecomSalasBase {
 	createdAt: string;

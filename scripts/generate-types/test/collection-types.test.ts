@@ -85,7 +85,10 @@ describe("collection-types", () => {
 		};
 
 		await expect(
-			buildCollectionTypes(client as never, [{ name: "abc" }, { name: "t_abc" }]),
+			buildCollectionTypes(client as never, [
+				{ name: "abc" },
+				{ name: "t_abc" },
+			]),
 		).rejects.toThrow("Conflito de nomes após normalização");
 	});
 
@@ -97,7 +100,10 @@ describe("collection-types", () => {
 		};
 
 		await expect(
-			buildCollectionTypes(client as never, [{ name: "users" }, { name: "users" }]),
+			buildCollectionTypes(client as never, [
+				{ name: "users" },
+				{ name: "users" },
+			]),
 		).rejects.toThrow("Conflito de nomes após normalização: users");
 	});
 });

@@ -134,12 +134,14 @@ describe("runGenerateTypes", () => {
 			},
 		});
 
-		const previewGeneratedFile = vi.fn().mockImplementation((content: string) => ({
-			mode: "dry-run" as const,
-			outputPath: "/tmp/index.ts",
-			changed: true,
-			diff: content,
-		}));
+		const previewGeneratedFile = vi
+			.fn()
+			.mockImplementation((content: string) => ({
+				mode: "dry-run" as const,
+				outputPath: "/tmp/index.ts",
+				changed: true,
+				diff: content,
+			}));
 		const previewMultipleFiles = vi
 			.fn()
 			.mockImplementation((files: Map<string, string>) => ({
@@ -152,11 +154,13 @@ describe("runGenerateTypes", () => {
 				totalFiles: files.size,
 				totalChanged: files.size,
 			}));
-		const fetchCollections = vi.fn().mockResolvedValue([
-			{ name: "departments" },
-			{ name: "roles" },
-			{ name: "users" },
-		]);
+		const fetchCollections = vi
+			.fn()
+			.mockResolvedValue([
+				{ name: "departments" },
+				{ name: "roles" },
+				{ name: "users" },
+			]);
 
 		vi.doMock("../src/generation/client", () => ({
 			NocoBaseClient: class MockNocoBaseClient {
@@ -211,10 +215,9 @@ describe("runGenerateTypes", () => {
 			totalFiles: 1,
 			totalChanged: 0,
 		});
-		const fetchCollections = vi.fn().mockResolvedValue([
-			{ name: "departments" },
-			{ name: "users" },
-		]);
+		const fetchCollections = vi
+			.fn()
+			.mockResolvedValue([{ name: "departments" }, { name: "users" }]);
 
 		vi.doMock("../src/generation/client", () => ({
 			NocoBaseClient: class MockNocoBaseClient {

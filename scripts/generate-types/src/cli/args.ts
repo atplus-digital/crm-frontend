@@ -1,10 +1,10 @@
 import type {
-	GenerateTypesArgs,
+	CliArgs,
 	ParsedArgs,
 } from "@scripts/generate-types/src/@types/script";
 
 export function parseArgs(argv: string[]): ParsedArgs {
-	const options: GenerateTypesArgs = {
+	const options: CliArgs = {
 		dryRun: false,
 	};
 
@@ -24,6 +24,11 @@ export function parseArgs(argv: string[]): ParsedArgs {
 
 		if (arg === "--dry-run") {
 			options.dryRun = true;
+			continue;
+		}
+
+		if (arg === "--lock-workspace") {
+			options.lockWorkspace = true;
 			continue;
 		}
 

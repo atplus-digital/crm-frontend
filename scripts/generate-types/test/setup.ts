@@ -4,16 +4,12 @@ import type {
 	RelationInfo,
 } from "@scripts/generate-types/src/@types/generation";
 import type { NocoBaseField } from "@scripts/generate-types/src/@types/nocobase";
-import type {
-	EnvConfig,
-	RuntimeConfig,
-	ScriptConfig,
-} from "@scripts/generate-types/src/@types/script";
+import type { RuntimeConfig } from "@scripts/generate-types/src/@types/script";
 import { vi } from "vitest";
 
 // ── Mock de variáveis de ambiente ─────────────────────────────────────────────
 
-const mockEnvConfig: EnvConfig = {
+const mockEnvConfig = {
 	baseUrl: "http://localhost:13000",
 	token: "test-token",
 	timeoutMs: 15_000,
@@ -25,7 +21,7 @@ process.env.CRM_NOCOBASE_TIMEOUT_MS = String(mockEnvConfig.timeoutMs);
 
 // ── Mock do módulo de config ──────────────────────────────────────────────────
 
-const mockScriptConfig: ScriptConfig = {
+const mockScriptConfig = {
 	outputPath: "/tmp/test-generated/index.ts",
 	splitOutputDir: "/tmp/test-generated",
 	splitCollections: [
@@ -39,7 +35,7 @@ const mockScriptConfig: ScriptConfig = {
 		"t_sites",
 		"t_equipamentos",
 		"t_telecom_recursos",
-	],
+	] as string[],
 	defaultEnvPath: ".env.local",
 	requestTimeoutMs: 15_000,
 	requestConcurrency: 5,
@@ -48,14 +44,11 @@ const mockScriptConfig: ScriptConfig = {
 const mockRuntimeConfig: RuntimeConfig = {
 	...mockScriptConfig,
 	dryRun: false,
+	showHelp: false,
+	lockWorkspace: false,
 	baseUrl: mockEnvConfig.baseUrl,
 	token: mockEnvConfig.token,
 	timeoutMs: mockEnvConfig.timeoutMs,
-	script: mockScriptConfig,
-	args: { dryRun: false },
-	parsedArgs: { showHelp: false, options: { dryRun: false } },
-	env: mockEnvConfig,
-	showHelp: false,
 };
 
 vi.mock("@scripts/generate-types/config", () => ({

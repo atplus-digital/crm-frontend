@@ -1,12 +1,13 @@
 import type { NocoBaseCredentials } from "./nocobase";
 
-export interface GenerateTypesArgs {
+export interface CliArgs {
 	dryRun: boolean;
+	lockWorkspace?: boolean;
 }
 
 export interface ParsedArgs {
 	showHelp: boolean;
-	options: GenerateTypesArgs;
+	options: CliArgs;
 }
 
 export interface PersistResult {
@@ -64,17 +65,13 @@ export interface ScriptConfig {
 	defaultEnvPath: string;
 	requestTimeoutMs: number;
 	requestConcurrency: number;
+	lockWorkspaceFolder?: boolean; // Quando ativado, verifica .vscode/settings.json e bloqueia acesso de escrita à pasta de interfaces
 }
 
-export interface EnvConfig extends NocoBaseCredentials {}
+export type EnvConfig = NocoBaseCredentials;
 
-export interface RuntimeConfig
-	extends ScriptConfig,
-		GenerateTypesArgs,
-		NocoBaseCredentials {
-	script: ScriptConfig;
-	args: GenerateTypesArgs;
-	parsedArgs: ParsedArgs;
-	env: EnvConfig;
+export interface RuntimeConfig extends ScriptConfig, NocoBaseCredentials {
+	dryRun: boolean;
 	showHelp: boolean;
+	lockWorkspace: boolean;
 }

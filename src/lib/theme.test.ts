@@ -25,15 +25,19 @@ describe("theme", () => {
 			url: "https://example.com",
 		});
 
-		vi.stubGlobal("window", dom.window as unknown as Window & typeof globalThis);
+		vi.stubGlobal(
+			"window",
+			dom.window as unknown as Window & typeof globalThis,
+		);
 		vi.stubGlobal("document", dom.window.document);
 		Object.defineProperty(dom.window, "matchMedia", {
 			value: vi.fn().mockReturnValue({ matches: true }),
 			configurable: true,
 		});
 
-		const { getStoredTheme, getSystemTheme, THEME_STORAGE_KEY } =
-			await import("./theme");
+		const { getStoredTheme, getSystemTheme, THEME_STORAGE_KEY } = await import(
+			"./theme"
+		);
 
 		expect(getSystemTheme()).toBe("dark");
 		dom.window.localStorage.setItem(THEME_STORAGE_KEY, "dark");
@@ -47,23 +51,27 @@ describe("theme", () => {
 			url: "https://example.com",
 		});
 
-		vi.stubGlobal("window", dom.window as unknown as Window & typeof globalThis);
+		vi.stubGlobal(
+			"window",
+			dom.window as unknown as Window & typeof globalThis,
+		);
 		vi.stubGlobal("document", dom.window.document);
 		Object.defineProperty(dom.window, "matchMedia", {
 			value: vi.fn().mockReturnValue({ matches: false }),
 			configurable: true,
 		});
 
-		const { applyThemeMode, toggleTheme, THEME_STORAGE_KEY } =
-			await import("./theme");
+		const { applyThemeMode, toggleTheme, THEME_STORAGE_KEY } = await import(
+			"./theme"
+		);
 
 		applyThemeMode("dark");
 		expect(dom.window.document.documentElement.classList.contains("dark")).toBe(
 			true,
 		);
-		expect(
-			dom.window.document.documentElement.getAttribute("data-theme"),
-		).toBe("dark");
+		expect(dom.window.document.documentElement.getAttribute("data-theme")).toBe(
+			"dark",
+		);
 		expect(dom.window.document.documentElement.style.colorScheme).toBe("dark");
 
 		expect(toggleTheme("dark")).toBe("light");

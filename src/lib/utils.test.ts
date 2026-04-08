@@ -1,5 +1,5 @@
-import { cn } from "./utils";
 import { describe, expect, it } from "vitest";
+import { cn } from "./utils";
 
 describe("cn", () => {
 	it("deve mesclar classes com deduplicação do tailwind-merge", () => {

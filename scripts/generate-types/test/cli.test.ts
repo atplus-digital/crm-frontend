@@ -41,7 +41,9 @@ describe("cli", () => {
 			printHelp();
 
 			expect(consoleSpy).toHaveBeenCalledWith(
-				expect.stringContaining("<Collection>Base: interface com campos escalares/FKs"),
+				expect.stringContaining(
+					"<Collection>Base: interface com campos escalares/FKs",
+				),
 			);
 		});
 	});
@@ -61,9 +63,10 @@ describe("cli", () => {
 		});
 
 		it("deve imprimir preview de dry-run com diff truncado", () => {
-			const diff = Array.from({ length: 125 }, (_, index) => `linha ${index}`).join(
-				"\n",
-			);
+			const diff = Array.from(
+				{ length: 125 },
+				(_, index) => `linha ${index}`,
+			).join("\n");
 
 			printResult({
 				mode: "dry-run",

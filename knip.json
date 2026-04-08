@@ -1,0 +1,28 @@
+{
+	"$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
+	"tags": [
+		"-lintignore"
+	],
+
+	"entry": [
+		"src/routes/__root.tsx",
+		"scripts/**/index.ts"
+	],
+	"project": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"scripts/**/*.ts"
+	],
+	"rules": {
+		"unlisted": "off",
+		"exports": "warn",
+		"types": "warn"
+	},
+  	"ignore": [
+		".agents/**",
+		"src/@types/generated/**"
+	],
+	"ignoreDependencies": [
+    "/.*/"
+	]
+}

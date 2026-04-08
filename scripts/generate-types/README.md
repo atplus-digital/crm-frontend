@@ -179,6 +179,16 @@ pnpm test --watch              # Watch mode
 
 Estratégia: funções puras sem mocks (unit) + mock do client para fluxo completo (integration em `integration.test.ts`).
 
+## Opções de Execução
+
+| Opção                          | Descrição                                           |
+| ------------------------------ | --------------------------------------------------- |
+| `--dry-run`                    | Exibe diferenças sem escrever os arquivos          |
+| `--help` ou `-h`               | Mostra ajuda de uso do script                       |
+| `--lock-workspace`             | Ativa o bloqueio de escrita dos arquivos gerados    |
+
+Quando a opção `--lock-workspace` é usada, ou quando `lockWorkspaceFolder` está ativado no `config.ts`, o script verifica o arquivo `.vscode/settings.json` e adiciona as configurações necessárias para tornar os arquivos gerados somente leitura no VS Code.
+
 ## Troubleshooting
 
 | Problema                         | Solução                                                 |
@@ -189,3 +199,4 @@ Estratégia: funções puras sem mocks (unit) + mock do client para fluxo comple
 | Tipos incorretos                 | Rodar `pnpm generate-types` (schema mudou)              |
 | Arquivo não mudou após rodar     | Esperado — idempotente. Usar `--dry-run` para verificar |
 | Imports lentos em arquivo grande | Adicionar collection ao `splitCollections` no `config`  |
+| Arquivos gerados sendo modificados | Usar a opção `--lock-workspace` para proteger contra edições acidentais |

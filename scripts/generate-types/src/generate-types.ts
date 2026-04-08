@@ -12,6 +12,7 @@ import { buildCollectionTypes } from "./generation/collection-types";
 import { generateContent, generateSplitFiles } from "./generation/content";
 import { splitCollectionsByConfig } from "./utils/collection-splitter";
 import { toCollectionBaseTypeName, toFileName } from "./utils/naming";
+import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 import {
 	previewGeneratedFile,
 	previewMultipleFiles,
@@ -210,6 +211,9 @@ export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 	const collections = await client.fetchCollections();
 
 	console.log(`📋 Encontradas ${collections.length} collections`);
+
+	// Aplica o bloqueio de workspace se a configuração estiver ativada
+	applyWorkspaceLockIfNeeded();
 
 	const collectionTypes = await buildCollectionTypes(client, collections, {
 		onCollectionStart: ({ collectionName, index, total }) => {
