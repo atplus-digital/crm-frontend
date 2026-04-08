@@ -1,2 +1,2 @@
 pnpm biome:fix
-pnpm knip --ignore dependencies
+pnpm knip:silent

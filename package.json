@@ -12,6 +12,7 @@
     "test": "vitest run",
     "biome:fix": "biome check --write",
     "knip": "knip",
+    "knip:silent": "knip --exclude dependencies --no-config-hints",
     "generate-types": "tsx scripts/generate-types/index.ts",
     "prepare": "husky",
     "lint-staged": "lint-staged"
