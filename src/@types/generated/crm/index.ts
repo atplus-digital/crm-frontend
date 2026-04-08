@@ -25,12 +25,12 @@ export type ColaboradoresXSetorRelations = Record<string, never>;
 export type ColaboradoresXSetorRelationKey = keyof ColaboradoresXSetorRelations;
 
 export interface DepartmentsBase {
-	createdById: number | null;
 	id: number;
-	isLeaf: boolean;
 	sort: number;
+	isLeaf: boolean;
 	title: string;
 	updatedById: number | null;
+	createdById: number | null;
 }
 
 export interface DepartmentsRelations {
@@ -55,11 +55,11 @@ export type EventosDemandaRelations = Record<string, never>;
 export type EventosDemandaRelationKey = keyof EventosDemandaRelations;
 
 export interface FContatosBase {
-	createdAt: string;
+	id: number;
 	f_contato: string;
 	f_nome: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface FContatosRelations {
@@ -79,7 +79,12 @@ export type FFkOrigemTiposRelations = Record<string, never>;
 export type FFkOrigemTiposRelationKey = keyof FFkOrigemTiposRelations;
 
 export interface FFuncionariosBase {
-	createdAt: string;
+	id: number;
+	f_fk_funcionarios: number;
+	f_fk_funcionarios2: number;
+	f_fk_setor: number;
+	f_fk_turnos: number;
+	f_id_tecnico_ixc: number;
 	f_ativo: string;
 	f_bairro: string;
 	f_celular: string;
@@ -108,12 +113,7 @@ export interface FFuncionariosBase {
 	f_epi_jaleco: string;
 	f_escolaridade: string;
 	f_estado_civil: string;
-	f_fk_funcionarios: number;
-	f_fk_funcionarios2: number;
-	f_fk_setor: number;
-	f_fk_turnos: number;
 	f_genero: string;
-	f_id_tecnico_ixc: number;
 	f_mes_nascimento: string;
 	f_mobilidade: string;
 	f_motivo_demissao: string;
@@ -139,8 +139,8 @@ export interface FFuncionariosBase {
 	f_vencimento_contrato: string;
 	f_vinculo_com_colaborador: string;
 	f_zona_eleitoral: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface FFuncionariosRelations {
@@ -204,6 +204,7 @@ export type OrigemXTiposRelations = Record<string, never>;
 export type OrigemXTiposRelationKey = keyof OrigemXTiposRelations;
 
 export interface RolesBase {
+	sort: number;
 	allowConfigure: boolean;
 	allowNewMenu: boolean;
 	allowNewMobileMenu: boolean;
@@ -212,7 +213,6 @@ export interface RolesBase {
 	hidden: boolean;
 	name: string;
 	snippets: unknown[];
-	sort: number;
 	strategy: Record<string, unknown>;
 	title: string;
 }
@@ -236,9 +236,9 @@ export type _3advfk0gv0zRelations = Record<string, never>;
 export type _3advfk0gv0zRelationKey = keyof _3advfk0gv0zRelations;
 
 export interface _902ctke5dhqBase {
-	createdAt: string;
 	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface _902ctke5dhqRelations {
@@ -250,13 +250,13 @@ export interface _902ctke5dhqRelations {
 export type _902ctke5dhqRelationKey = keyof _902ctke5dhqRelations;
 
 export interface AcessosBase {
-	createdAt: string;
+	id: number;
 	f_fk_servicos_x_acessos: number;
 	f_fk_site: number;
 	f_tipo: string;
 	f_x7w60fv71f9: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface AcessosRelations {
@@ -272,15 +272,15 @@ export interface AcessosRelations {
 export type AcessosRelationKey = keyof AcessosRelations;
 
 export interface AegisBase {
-	createdAt: string;
+	id: number;
 	f_idlogin: string;
 	f_notas: string;
 	f_notas_cliente: string;
 	f_statusdesbloqueioconfiaca: string;
 	f_statuslogin: string;
 	f_statusmac: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface AegisRelations {
@@ -291,11 +291,10 @@ export interface AegisRelations {
 export type AegisRelationKey = keyof AegisRelations;
 
 export interface AnexosNegociacoesBase {
-	createdAt: string;
+	id: number;
 	extname: string;
 	f_anexos_fk: number;
 	filename: string;
-	id: number;
 	meta: Record<string, unknown>;
 	mimetype: string;
 	path: string;
@@ -303,8 +302,9 @@ export interface AnexosNegociacoesBase {
 	size: number;
 	storageId: number;
 	title: string;
-	updatedAt: string;
 	url: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface AnexosNegociacoesRelations {
@@ -316,11 +316,10 @@ export interface AnexosNegociacoesRelations {
 export type AnexosNegociacoesRelationKey = keyof AnexosNegociacoesRelations;
 
 export interface AnexosTrocaTitularidadeBase {
-	createdAt: string;
+	id: number;
 	extname: string;
 	f_anexos_fk: number;
 	filename: string;
-	id: number;
 	meta: Record<string, unknown>;
 	mimetype: string;
 	path: string;
@@ -328,8 +327,9 @@ export interface AnexosTrocaTitularidadeBase {
 	size: number;
 	storageId: number;
 	title: string;
-	updatedAt: string;
 	url: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface AnexosTrocaTitularidadeRelations {
@@ -342,20 +342,20 @@ export type AnexosTrocaTitularidadeRelationKey =
 	keyof AnexosTrocaTitularidadeRelations;
 
 export interface ArquivosFuncionariosBase {
-	createdAt: string;
-	extname: string;
+	id: number;
 	f_fk_funcionarios: number;
 	f_fk_info_arquivos: number;
+	extname: string;
 	filename: string;
-	id: number;
 	meta: Record<string, unknown>;
 	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
 	title: string;
-	updatedAt: string;
 	url: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ArquivosFuncionariosRelations {
@@ -370,20 +370,20 @@ export type ArquivosFuncionariosRelationKey =
 	keyof ArquivosFuncionariosRelations;
 
 export interface AsosBase {
-	createdAt: string;
-	extname: string;
+	id: number;
 	f_fk_funcionarios: number;
 	f_fk_infos_aso: number;
+	extname: string;
 	filename: string;
-	id: number;
 	meta: Record<string, unknown>;
 	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
 	title: string;
-	updatedAt: string;
 	url: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface AsosRelations {
@@ -397,7 +397,7 @@ export interface AsosRelations {
 export type AsosRelationKey = keyof AsosRelations;
 
 export interface AtendimentosIxcBase {
-	createdAt: string;
+	id: number;
 	f_assunto: string;
 	f_cliente: string;
 	f_contrato: string;
@@ -416,8 +416,8 @@ export interface AtendimentosIxcBase {
 	f_responsavel: string;
 	f_tarefas: string;
 	f_usuario: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface AtendimentosIxcRelations {
@@ -429,13 +429,13 @@ export interface AtendimentosIxcRelations {
 export type AtendimentosIxcRelationKey = keyof AtendimentosIxcRelations;
 
 export interface AuditoriaAutomaticaBase {
-	createdAt: string;
+	id: number;
 	f_conferencia: boolean;
 	f_id_negociacao: string;
 	f_titulo_negociacao: string;
 	f_valor_mensal: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface AuditoriaAutomaticaRelations {
@@ -446,14 +446,14 @@ export interface AuditoriaAutomaticaRelations {
 export type AuditoriaAutomaticaRelationKey = keyof AuditoriaAutomaticaRelations;
 
 export interface CargosBase {
-	createdAt: string;
+	id: number;
+	f_fk_funcionarios: number;
 	f_atividades: string;
 	f_cbo: string;
 	f_descricao: string;
-	f_fk_funcionarios: number;
 	f_nome: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface CargosRelations {
@@ -465,11 +465,11 @@ export interface CargosRelations {
 export type CargosRelationKey = keyof CargosRelations;
 
 export interface ComentarioViagemBase {
-	createdAt: string;
+	id: number;
 	f_comentario: string;
 	f_comentario_viagem: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ComentarioViagemRelations {
@@ -480,11 +480,11 @@ export interface ComentarioViagemRelations {
 export type ComentarioViagemRelationKey = keyof ComentarioViagemRelations;
 
 export interface ComentariosComprasBase {
-	createdAt: string;
+	id: number;
 	f_comentarios: string;
 	f_comentarios_compras: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ComentariosComprasRelations {
@@ -495,11 +495,11 @@ export interface ComentariosComprasRelations {
 export type ComentariosComprasRelationKey = keyof ComentariosComprasRelations;
 
 export interface ComentariosSuspensaoDeContratoBase {
-	createdAt: string;
-	f_comentario: string;
-	f_fk_suspensao: number;
 	id: number;
+	f_fk_suspensao: number;
+	f_comentario: string;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ComentariosSuspensaoDeContratoRelations {
@@ -511,12 +511,12 @@ export type ComentariosSuspensaoDeContratoRelationKey =
 	keyof ComentariosSuspensaoDeContratoRelations;
 
 export interface ComprasFornecedoresBase {
-	createdAt: string;
+	id: number;
 	f_contato: string;
 	f_nome: string;
 	f_site: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ComprasFornecedoresRelations {
@@ -527,15 +527,15 @@ export interface ComprasFornecedoresRelations {
 export type ComprasFornecedoresRelationKey = keyof ComprasFornecedoresRelations;
 
 export interface ComprasProdutosBase {
-	createdAt: string;
+	id: number;
 	f_834gi7nhict: number;
 	f_link_produto: string;
 	f_produto: string;
 	f_quantidade: number;
 	f_sub_total: string;
 	f_valor_uni: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ComprasProdutosRelations {
@@ -547,14 +547,14 @@ export interface ComprasProdutosRelations {
 export type ComprasProdutosRelationKey = keyof ComprasProdutosRelations;
 
 export interface ConfiguracoesBase {
-	createdAt: string;
+	id: number;
 	f_chave: string;
 	f_descricao: string;
 	f_escopo: string[];
 	f_nome: string;
 	f_valor: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ConfiguracoesRelations {
@@ -565,13 +565,13 @@ export interface ConfiguracoesRelations {
 export type ConfiguracoesRelationKey = keyof ConfiguracoesRelations;
 
 export interface ConsultasPfBase {
-	createdAt: string;
+	id: number;
 	f_id_pessoa_fk: number;
 	f_justificativa: string;
 	f_retorno_spc: string;
 	f_status_consulta: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ConsultasPfRelations {
@@ -583,14 +583,14 @@ export interface ConsultasPfRelations {
 export type ConsultasPfRelationKey = keyof ConsultasPfRelations;
 
 export interface ContratoIxcItensBase {
-	createdAt: string;
+	id: number;
 	f_fk_itens_contrato_ixc: number;
 	f_id_produto_contrato_ixc: string;
 	f_mensalidade: string;
 	f_produto: string;
 	f_quantidade: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ContratoIxcItensRelations {
@@ -601,12 +601,11 @@ export interface ContratoIxcItensRelations {
 export type ContratoIxcItensRelationKey = keyof ContratoIxcItensRelations;
 
 export interface ContratosBase {
-	createdAt: string;
-	extname: string;
+	id: number;
 	f_fk_negociacao_contrato: number;
 	f_fk_suspensao: number;
+	extname: string;
 	filename: string;
-	id: number;
 	meta: Record<string, unknown>;
 	mimetype: string;
 	path: string;
@@ -614,8 +613,9 @@ export interface ContratosBase {
 	size: number;
 	storageId: number;
 	title: string;
-	updatedAt: string;
 	url: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ContratosRelations {
@@ -627,12 +627,12 @@ export interface ContratosRelations {
 export type ContratosRelationKey = keyof ContratosRelations;
 
 export interface ContratosIxcBase {
-	createdAt: string;
+	id: number;
 	f_descricao: string;
 	f_expiracao: string;
 	f_vencimento: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ContratosIxcRelations {
@@ -644,7 +644,10 @@ export interface ContratosIxcRelations {
 export type ContratosIxcRelationKey = keyof ContratosIxcRelations;
 
 export interface CrmTrocaTitularidadeBase {
-	createdAt: string;
+	id: number;
+	f_fk_negociacao_vendedor: number;
+	f_fk_pessoa_negociacao: number;
+	f_fk_pessoa_pj_negociacao: number;
 	f_bairro: string;
 	f_cedente: string;
 	f_cedente_documento: string;
@@ -661,9 +664,6 @@ export interface CrmTrocaTitularidadeBase {
 	f_complemento: string;
 	f_endereco: string;
 	f_estado: string;
-	f_fk_negociacao_vendedor: number;
-	f_fk_pessoa_negociacao: number;
-	f_fk_pessoa_pj_negociacao: number;
 	f_id_contrato: string;
 	f_link_assinatura_cedente: string;
 	f_link_assinatura_cessionario: string;
@@ -673,8 +673,8 @@ export interface CrmTrocaTitularidadeBase {
 	f_status: string;
 	f_substatus: string;
 	f_tipo_pessoa: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface CrmTrocaTitularidadeRelations {
@@ -692,15 +692,15 @@ export type CrmTrocaTitularidadeRelationKey =
 	keyof CrmTrocaTitularidadeRelations;
 
 export interface CuponsDescontoBase {
-	createdAt: string;
+	id: number;
+	f_fk_pacotes_desconto: number;
+	f_fk_vendedor_desconto: number;
 	f_cep: string;
 	f_codigo: string;
 	f_data_fim: string;
 	f_data_inicio: string;
 	f_endereco: string;
 	f_endereco_numero: string;
-	f_fk_pacotes_desconto: number;
-	f_fk_vendedor_desconto: number;
 	f_nome: string;
 	f_status: string;
 	f_tipo: string;
@@ -708,8 +708,8 @@ export interface CuponsDescontoBase {
 	f_utilizacoes: number;
 	f_valor: number;
 	f_valor_renovacao: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface CuponsDescontoRelations {
@@ -722,14 +722,14 @@ export interface CuponsDescontoRelations {
 export type CuponsDescontoRelationKey = keyof CuponsDescontoRelations;
 
 export interface DadosAdicionaisClienteContratoBase {
-	createdAt: string;
+	id: number;
 	f_forma_de_pagamento: string;
 	f_id_cliente_contrato: number;
 	f_origem_cliente: string;
 	f_perfil_de_uso: string[];
 	f_pessoas_na_residencia: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface DadosAdicionaisClienteContratoRelations {
@@ -741,16 +741,16 @@ export type DadosAdicionaisClienteContratoRelationKey =
 	keyof DadosAdicionaisClienteContratoRelations;
 
 export interface DatacenterMemoriasBase {
-	createdAt: string;
+	id: number;
+	f_fk_memorias: number;
 	f_capacidade: string;
 	f_fabricante: string;
-	f_fk_memorias: number;
 	f_sn: string;
 	f_status: string;
 	f_tipo: string;
 	f_valor_locacao: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface DatacenterMemoriasRelations {
@@ -762,17 +762,17 @@ export interface DatacenterMemoriasRelations {
 export type DatacenterMemoriasRelationKey = keyof DatacenterMemoriasRelations;
 
 export interface DcServidoresBase {
-	createdAt: string;
-	f_fabricante: string;
+	id: number;
 	f_fk_discos: number;
+	f_fabricante: string;
 	f_memoria: string;
 	f_modelo: string;
 	f_obs: string;
 	f_processador: string;
 	f_sn: string;
 	f_status: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface DcServidoresRelations {
@@ -785,18 +785,18 @@ export interface DcServidoresRelations {
 export type DcServidoresRelationKey = keyof DcServidoresRelations;
 
 export interface DemandasViabilidadesBase {
-	createdAt: string;
+	id: number;
+	f_fk_viabilidades: number;
 	f_custo_recorrente: number;
 	f_endereco: string;
-	f_fk_viabilidades: number;
 	f_forma_atendimento: string;
 	f_localizacao: string;
 	f_servico_pretendido: string;
 	f_status: string;
 	f_valor_investimento: number;
 	f_velocidade_pretendida: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface DemandasViabilidadesRelations {
@@ -808,11 +808,11 @@ export type DemandasViabilidadesRelationKey =
 	keyof DemandasViabilidadesRelations;
 
 export interface DepartamentosBase {
-	createdAt: string;
+	id: number;
 	f_fk_funcionarios: number;
 	f_nome: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface DepartamentosRelations {
@@ -824,18 +824,18 @@ export interface DepartamentosRelations {
 export type DepartamentosRelationKey = keyof DepartamentosRelations;
 
 export interface DiscosBase {
-	createdAt: string;
+	id: number;
+	f_fk_discos: number;
 	f_capacidade: string;
 	f_data_aquisicao: string;
-	f_fk_discos: number;
 	f_fornecedor: string;
 	f_modelo: string;
 	f_preco_compra: number;
 	f_preco_venda_locacao: number;
 	f_SN: string;
 	f_tipo: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface DiscosRelations {
@@ -846,7 +846,7 @@ export interface DiscosRelations {
 export type DiscosRelationKey = keyof DiscosRelations;
 
 export interface EmpresasBase {
-	createdAt: string;
+	id: number;
 	f_cnpj: string;
 	f_cpf_responsavel: string;
 	f_email_responsavel: string;
@@ -855,8 +855,8 @@ export interface EmpresasBase {
 	f_nome_fantasia: string;
 	f_razao_social: string;
 	f_responsavel: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface EmpresasRelations {
@@ -867,18 +867,18 @@ export interface EmpresasRelations {
 export type EmpresasRelationKey = keyof EmpresasRelations;
 
 export interface EquipamentosBase {
-	createdAt: string;
-	f_34u76klwxoj: number;
+	id: number;
 	f_fk_ativo_rack: number;
 	f_fk_equipamentos_anexos: number;
 	f_fk_equipamentos_interfaces: number;
+	f_34u76klwxoj: number;
 	f_modelo: string;
 	f_nome: string;
 	f_observacoes: string;
 	f_sigla: string;
 	f_sn: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface EquipamentosRelations {
@@ -895,7 +895,7 @@ export interface EquipamentosRelations {
 export type EquipamentosRelationKey = keyof EquipamentosRelations;
 
 export interface EquipamentosEmPrediosBase {
-	createdAt: string;
+	id: number;
 	f_contato_sindico: string;
 	f_endereco: string;
 	f_modelo_equipamento: string;
@@ -903,8 +903,8 @@ export interface EquipamentosEmPrediosBase {
 	f_observacao: string;
 	f_sn: string;
 	f_tipo_equipamento: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface EquipamentosEmPrediosRelations {
@@ -916,11 +916,11 @@ export type EquipamentosEmPrediosRelationKey =
 	keyof EquipamentosEmPrediosRelations;
 
 export interface FacilidadeBase {
-	createdAt: string;
+	id: number;
 	f_descricao: string;
 	f_nome: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface FacilidadeRelations {
@@ -931,14 +931,14 @@ export interface FacilidadeRelations {
 export type FacilidadeRelationKey = keyof FacilidadeRelations;
 
 export interface FornecedoresTelecomBase {
-	createdAt: string;
+	id: number;
 	f_fk_cliente_circuiro: number;
 	f_fk_fornecedor_circuito: number;
 	f_instrucoes: string;
 	f_nome_fantasia: string;
 	f_razao_social: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface FornecedoresTelecomRelations {
@@ -953,19 +953,19 @@ export interface FornecedoresTelecomRelations {
 export type FornecedoresTelecomRelationKey = keyof FornecedoresTelecomRelations;
 
 export interface FotoFuncionariosBase {
-	createdAt: string;
-	extname: string;
-	f_fk_funcionarios: number;
-	filename: string;
 	id: number;
+	f_fk_funcionarios: number;
+	extname: string;
+	filename: string;
 	meta: Record<string, unknown>;
 	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
 	title: string;
-	updatedAt: string;
 	url: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface FotoFuncionariosRelations {
@@ -987,12 +987,12 @@ export type Ij93gv1hx9mRelations = Record<string, never>;
 export type Ij93gv1hx9mRelationKey = keyof Ij93gv1hx9mRelations;
 
 export interface InfoArquivosBase {
-	createdAt: string;
-	f_arquivo_externo: string;
-	f_fk_funcionarios: number;
-	f_titulo: string;
 	id: number;
+	f_fk_funcionarios: number;
+	f_arquivo_externo: string;
+	f_titulo: string;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface InfoArquivosRelations {
@@ -1005,17 +1005,17 @@ export interface InfoArquivosRelations {
 export type InfoArquivosRelationKey = keyof InfoArquivosRelations;
 
 export interface InfoAsoBase {
-	createdAt: string;
+	id: number;
+	f_fk_funcionarios: number;
 	f_apto: boolean;
 	f_data_exame: string;
 	f_data_prox_exame: string;
 	f_dias_afastamento: string;
-	f_fk_funcionarios: number;
 	f_informado: string;
 	f_obs: string;
 	f_tipo_exame: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface InfoAsoRelations {
@@ -1028,7 +1028,7 @@ export interface InfoAsoRelations {
 export type InfoAsoRelationKey = keyof InfoAsoRelations;
 
 export interface ItensPacotesBase {
-	createdAt: string;
+	id: number;
 	f_ch3bjzt4zr7: number;
 	f_fk1: number;
 	f_fk2: number;
@@ -1039,8 +1039,8 @@ export interface ItensPacotesBase {
 	f_tipo_ixc: string;
 	f_tipo_produto: string;
 	f_vna9rme0f5j: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ItensPacotesRelations {
@@ -1051,16 +1051,16 @@ export interface ItensPacotesRelations {
 export type ItensPacotesRelationKey = keyof ItensPacotesRelations;
 
 export interface LancamentosFeriasBase {
-	createdAt: string;
+	id: number;
+	f_fk_periodos_ferias: number;
 	f_data_retorno: string;
 	f_data_saida: string;
 	f_dias_gozados: number;
 	f_dias_vendidos: number;
-	f_fk_periodos_ferias: number;
 	f_observacoes: string;
 	f_status: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface LancamentosFeriasRelations {
@@ -1072,13 +1072,13 @@ export interface LancamentosFeriasRelations {
 export type LancamentosFeriasRelationKey = keyof LancamentosFeriasRelations;
 
 export interface LinhaCorporativaBase {
-	createdAt: string;
+	id: number;
 	f_fk_funcionarios: number;
 	f_iccid_corporativo: string;
 	f_numero_movel_corporativo: string;
 	f_tipo: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface LinhaCorporativaRelations {
@@ -1090,12 +1090,12 @@ export interface LinhaCorporativaRelations {
 export type LinhaCorporativaRelationKey = keyof LinhaCorporativaRelations;
 
 export interface LogsBase {
-	createdAt: string;
+	id: number;
 	f_log_data: Record<string, unknown>;
 	f_log_level: string;
 	f_log_message: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface LogsRelations {
@@ -1106,16 +1106,16 @@ export interface LogsRelations {
 export type LogsRelationKey = keyof LogsRelations;
 
 export interface LogsCargosBase {
+	id: number;
+	f_fk_funcionarios: number;
 	CBO: string;
-	createdAt: string;
 	f_atividades: string;
 	f_cargo_anterior: string;
 	f_data_inicio_cargo: string;
 	f_descricao: string;
-	f_fk_funcionarios: number;
 	f_nome_cargo: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface LogsCargosRelations {
@@ -1145,7 +1145,14 @@ export type Na4eifobeszRelations = Record<string, never>;
 export type Na4eifobeszRelationKey = keyof Na4eifobeszRelations;
 
 export interface NegociacoesBase {
-	createdAt: string;
+	id: number;
+	f_fk_contrato_ixc: number;
+	f_fk_cupom_desconto: number;
+	f_fk_negociacao_indicador: number;
+	f_fk_negociacao_vendedor: number;
+	f_fk_pacote: number;
+	f_fk_pessoa_negociacao: number;
+	f_fk_pessoa_pj_negociacao: number;
 	f_apartamento: string;
 	f_assinatura_gov: boolean;
 	f_bairro: string;
@@ -1172,13 +1179,6 @@ export interface NegociacoesBase {
 	f_entrada_saldo_devedor: number;
 	f_estado_cobranca: string;
 	f_fidelidade: string;
-	f_fk_contrato_ixc: number;
-	f_fk_cupom_desconto: number;
-	f_fk_negociacao_indicador: number;
-	f_fk_negociacao_vendedor: number;
-	f_fk_pacote: number;
-	f_fk_pessoa_negociacao: number;
-	f_fk_pessoa_pj_negociacao: number;
 	f_Incremento: string;
 	f_ixc_tipo_cobranca: string;
 	f_link_assinatura: string;
@@ -1215,8 +1215,8 @@ export interface NegociacoesBase {
 	f_valor_mensal_sem_desconto: number;
 	f_valor_multa_mes_faltante: number;
 	f_zapsign: boolean;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface NegociacoesRelations {
@@ -1239,13 +1239,13 @@ export interface NegociacoesRelations {
 export type NegociacoesRelationKey = keyof NegociacoesRelations;
 
 export interface NegociacoesComentariosBase {
-	createdAt: string;
-	f_comentario: string;
+	id: number;
 	f_fk_comentarios_negociacoes: number;
+	f_comentario: string;
 	f_insere_atendimento_ixc: string;
 	f_setor_para_obs: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface NegociacoesComentariosRelations {
@@ -1257,7 +1257,7 @@ export type NegociacoesComentariosRelationKey =
 	keyof NegociacoesComentariosRelations;
 
 export interface NegociacoesItensBase {
-	createdAt: string;
+	id: number;
 	f_fk_id_negociacao: number;
 	f_id_ixc: number;
 	f_mensalidade_com_desconto: number;
@@ -1268,8 +1268,8 @@ export interface NegociacoesItensBase {
 	f_relacao: string;
 	f_tipo_ixc: string;
 	f_tipo_produto: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface NegociacoesItensRelations {
@@ -1291,14 +1291,14 @@ export type Nukww9tmq83Relations = Record<string, never>;
 export type Nukww9tmq83RelationKey = keyof Nukww9tmq83Relations;
 
 export interface OeQualirunBase {
-	createdAt: string;
+	id: number;
 	f_fk_negociacoes: number;
 	f_id_externo: string;
 	f_link_externo: string;
 	f_procedimento: string;
 	f_status: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface OeQualirunRelations {
@@ -1310,9 +1310,9 @@ export interface OeQualirunRelations {
 export type OeQualirunRelationKey = keyof OeQualirunRelations;
 
 export interface OpcoesSmpBase {
-	createdAt: string;
-	f_bonus: string;
+	id: number;
 	f_fk_prod_negociacao_opcoes_smp: number;
+	f_bonus: string;
 	f_franquia_dados: string;
 	f_minutos: string;
 	f_nome_do_plano: string;
@@ -1322,8 +1322,8 @@ export interface OpcoesSmpBase {
 	f_terminal: string;
 	f_valor_smp: number;
 	f_valor_sva: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface OpcoesSmpRelations {
@@ -1334,9 +1334,9 @@ export interface OpcoesSmpRelations {
 export type OpcoesSmpRelationKey = keyof OpcoesSmpRelations;
 
 export interface OpcoesSmpTemplateBase {
-	createdAt: string;
-	f_bonus: string;
+	id: number;
 	f_fk_smp_produtos: number;
+	f_bonus: string;
 	f_franquia_dados: string;
 	f_minutos: string;
 	f_nome_plano: string;
@@ -1344,8 +1344,8 @@ export interface OpcoesSmpTemplateBase {
 	f_sva_incluso: string;
 	f_valor_smp: number;
 	f_valor_sva: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface OpcoesSmpTemplateRelations {
@@ -1356,15 +1356,15 @@ export interface OpcoesSmpTemplateRelations {
 export type OpcoesSmpTemplateRelationKey = keyof OpcoesSmpTemplateRelations;
 
 export interface OpcoesStfcBase {
-	createdAt: string;
-	f_canais: string;
+	id: number;
 	f_fk_opcoes_stfc: number;
+	f_canais: string;
 	f_franquia: string;
 	f_nome_do_plano: string;
 	f_portabilidade: string;
 	f_terminais: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface OpcoesStfcRelations {
@@ -1375,15 +1375,15 @@ export interface OpcoesStfcRelations {
 export type OpcoesStfcRelationKey = keyof OpcoesStfcRelations;
 
 export interface OpcoesStfcTemplateBase {
-	createdAt: string;
-	f_canais: number;
+	id: number;
 	f_fk_opcoes_stfc_template: number;
+	f_canais: number;
 	f_franquia: string;
 	f_nome_do_plano: string;
 	f_portabilidade: string;
 	f_terminais: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface OpcoesStfcTemplateRelations {
@@ -1394,10 +1394,10 @@ export interface OpcoesStfcTemplateRelations {
 export type OpcoesStfcTemplateRelationKey = keyof OpcoesStfcTemplateRelations;
 
 export interface P10scfhrhkwBase {
-	createdAt: string;
-	f_m7vet8zixc9: number;
 	id: number;
+	f_m7vet8zixc9: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface P10scfhrhkwRelations {
@@ -1409,10 +1409,10 @@ export interface P10scfhrhkwRelations {
 export type P10scfhrhkwRelationKey = keyof P10scfhrhkwRelations;
 
 export interface PacotesBase {
-	createdAt: string;
-	f_abre_atendimento: string;
+	id: number;
 	f_fk_desconto_pacotes: number;
 	f_fk_id_pacote: number;
+	f_abre_atendimento: string;
 	f_mensalidade_com_desconto: number;
 	f_mensalidade_sem_desconto: number;
 	f_nome_pacote: string;
@@ -1420,8 +1420,8 @@ export interface PacotesBase {
 	f_pacote_principal: string;
 	f_status: string;
 	f_vender_para: string[];
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface PacotesRelations {
@@ -1433,13 +1433,13 @@ export interface PacotesRelations {
 export type PacotesRelationKey = keyof PacotesRelations;
 
 export interface ParentescoBase {
-	createdAt: string;
-	f_cpf: string;
+	id: number;
 	f_fk_funcionarios: number;
+	f_cpf: string;
 	f_nome: string;
 	f_vinculo_colaborador: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ParentescoRelations {
@@ -1451,11 +1451,11 @@ export interface ParentescoRelations {
 export type ParentescoRelationKey = keyof ParentescoRelations;
 
 export interface PatrimonioBase {
-	createdAt: string;
-	f_armazenamento: string;
-	f_estado_uso: string;
+	id: number;
 	f_fk_funcionarios: number;
 	f_id_tecnico_ixc: number;
+	f_armazenamento: string;
+	f_estado_uso: string;
 	f_modelo: string;
 	f_nome_patrimonio: string;
 	f_numero_serie: string;
@@ -1465,8 +1465,8 @@ export interface PatrimonioBase {
 	f_so: string;
 	f_tipo_patrimonio: string;
 	f_valor_patrimonio: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface PatrimonioRelations {
@@ -1478,14 +1478,14 @@ export interface PatrimonioRelations {
 export type PatrimonioRelationKey = keyof PatrimonioRelations;
 
 export interface PeriodosFeriasBase {
-	createdAt: string;
-	f_dias_direito: number;
+	id: number;
 	f_fk_funcionarios: number;
+	f_dias_direito: number;
 	f_periodo_aquisitivo_fim: string;
 	f_periodo_aquisitivo_inicio: string;
 	f_status_periodo: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface PeriodosFeriasRelations {
@@ -1498,7 +1498,7 @@ export interface PeriodosFeriasRelations {
 export type PeriodosFeriasRelationKey = keyof PeriodosFeriasRelations;
 
 export interface PessoasBase {
-	createdAt: string;
+	id: number;
 	f_analise_ixc: string;
 	f_cpf: string;
 	f_credito: string;
@@ -1506,8 +1506,8 @@ export interface PessoasBase {
 	f_nome: string;
 	f_sexo: string;
 	f_vky78cvjtdw: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface PessoasRelations {
@@ -1518,7 +1518,7 @@ export interface PessoasRelations {
 export type PessoasRelationKey = keyof PessoasRelations;
 
 export interface ProdutosBase {
-	createdAt: string;
+	id: number;
 	f_descricao_produto: string;
 	f_id_ixc: number;
 	f_mensalidade_com_desconto: number;
@@ -1526,8 +1526,8 @@ export interface ProdutosBase {
 	f_nome_produto: string;
 	f_tipo_ixc: string;
 	f_tipo_produto: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ProdutosRelations {
@@ -1540,19 +1540,19 @@ export interface ProdutosRelations {
 export type ProdutosRelationKey = keyof ProdutosRelations;
 
 export interface QualirunAssinaturaGovBase {
-	createdAt: string;
-	extname: string;
-	f_fk_negociacoes: number;
-	filename: string;
 	id: number;
+	f_fk_negociacoes: number;
+	extname: string;
+	filename: string;
 	meta: Record<string, unknown>;
 	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
 	title: string;
-	updatedAt: string;
 	url: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface QualirunAssinaturaGovRelations {
@@ -1565,11 +1565,11 @@ export type QualirunAssinaturaGovRelationKey =
 	keyof QualirunAssinaturaGovRelations;
 
 export interface QualirunInfoAdicionaisBase {
-	createdAt: string;
+	id: number;
+	f_fk_funcionarios: number;
 	f_2fxykekjpk2: string;
 	f_contato_emergencia: string;
 	f_curso: string;
-	f_fk_funcionarios: number;
 	f_grau_escolaridade: string;
 	f_id_externo: string;
 	f_parentesco_cpf: string;
@@ -1581,8 +1581,8 @@ export interface QualirunInfoAdicionaisBase {
 	f_telefone_contato_emergencia: string;
 	f_tkxxh3xi2zw: string;
 	f_vinculo_contato_emergencia: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface QualirunInfoAdicionaisRelations {
@@ -1595,15 +1595,16 @@ export type QualirunInfoAdicionaisRelationKey =
 	keyof QualirunInfoAdicionaisRelations;
 
 export interface QualirunProcessosBase {
-	createdAt: string;
-	f_detalhes_procedimento: string;
+	id: number;
 	f_fk_funcionarios: number;
+	f_detalhes_procedimento: string;
 	f_id_externo: string;
+	f_id_procedimento_qualirun: string;
 	f_link_externo: string;
 	f_procedimento: string;
 	f_status: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface QualirunProcessosRelations {
@@ -1615,14 +1616,14 @@ export interface QualirunProcessosRelations {
 export type QualirunProcessosRelationKey = keyof QualirunProcessosRelations;
 
 export interface RecursosViagemBase {
-	createdAt: string;
-	f_destino_viagem: string;
+	id: number;
 	f_fk_recursos_viagem: number;
+	f_destino_viagem: string;
 	f_km_percorrido: number;
 	f_meio_transporte: string;
 	f_observacoes: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface RecursosViagemRelations {
@@ -1633,18 +1634,18 @@ export interface RecursosViagemRelations {
 export type RecursosViagemRelationKey = keyof RecursosViagemRelations;
 
 export interface RegistrosDeContatoBase {
-	createdAt: string;
+	id: number;
+	f_fk_id_contrato: number;
 	f_categoria: string;
 	f_encaminhamento_pendencia: string;
 	f_feedback_observacao: string;
-	f_fk_id_contrato: number;
 	f_ha_pendencia: boolean;
 	f_nota_tecnico: string;
 	f_nota_vendas: string;
 	f_resumo_contato: string;
 	f_titulo: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface RegistrosDeContatoRelations {
@@ -1664,20 +1665,20 @@ export type Rguxtr9p91dRelations = Record<string, never>;
 export type Rguxtr9p91dRelationKey = keyof Rguxtr9p91dRelations;
 
 export interface ServicosBase {
-	createdAt: string;
+	id: number;
+	f_fk_servico_x_contrato: number;
+	f_id_contrato_ixc: string;
+	f_id_servico_ixc: string;
 	f_caracteristicas: string;
 	f_descricao: string;
 	f_designacao_atplus: string;
 	f_designacao_externa: string;
-	f_fk_servico_x_contrato: number;
-	f_id_contrato_ixc: string;
-	f_id_servico_ixc: string;
 	f_propriedades: string;
 	f_status: string;
 	f_tipo: string;
 	f_velocidade: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ServicosRelations {
@@ -1702,12 +1703,12 @@ export type ServicosXServicosRelations = Record<string, never>;
 export type ServicosXServicosRelationKey = keyof ServicosXServicosRelations;
 
 export interface SetorBase {
-	createdAt: string;
+	id: number;
 	f_fk_funcionarios: unknown[];
 	f_fk_sistemas_acessos: unknown[];
 	f_nome_setor: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface SetorRelations {
@@ -1721,12 +1722,12 @@ export interface SetorRelations {
 export type SetorRelationKey = keyof SetorRelations;
 
 export interface SistemasAcessosBase {
-	createdAt: string;
+	id: number;
 	f_fk_funcionarios: unknown[];
 	f_sistemas_acessos: string;
 	f_url: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface SistemasAcessosRelations {
@@ -1738,22 +1739,22 @@ export interface SistemasAcessosRelations {
 export type SistemasAcessosRelationKey = keyof SistemasAcessosRelations;
 
 export interface SitesBase {
-	createdAt: string;
+	id: number;
+	f_fk_telecom_contatos: number;
 	f_bairro: string;
 	f_cep: string;
 	f_cidade: string;
 	f_complemento: string;
 	f_dados_acesso: string;
 	f_endereco: string;
-	f_fk_telecom_contatos: number;
 	f_nome: string;
 	f_numero: string;
 	f_sigla: string;
 	f_status: string;
 	f_tipo: string;
 	f_uf: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface SitesRelations {
@@ -1777,7 +1778,7 @@ export type Siurxeb1juyRelations = Record<string, never>;
 export type Siurxeb1juyRelationKey = keyof Siurxeb1juyRelations;
 
 export interface SolicitacaoComprasBase {
-	createdAt: string;
+	id: number;
 	f_0i82r8a2t99: number;
 	f_categoria: string;
 	f_departamento: string;
@@ -1796,8 +1797,8 @@ export interface SolicitacaoComprasBase {
 	f_xm95ss7u5xw: number;
 	fk_demandas_solicitacao_compras: number;
 	fk_solicitacao_compras: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface SolicitacaoComprasRelations {
@@ -1811,14 +1812,14 @@ export interface SolicitacaoComprasRelations {
 export type SolicitacaoComprasRelationKey = keyof SolicitacaoComprasRelations;
 
 export interface SuspensaoContratoBase {
-	createdAt: string;
+	id: number;
+	f_fk_pessoas: number;
+	f_fk_pessoas_pj: number;
+	f_fk_responsavel: number;
 	f_cpf: string;
 	f_dias_suspensao: string;
 	f_email: string;
 	f_final_suspensao: string;
-	f_fk_pessoas: number;
-	f_fk_pessoas_pj: number;
-	f_fk_responsavel: number;
 	f_id_contrato: string;
 	f_inicio_suspensao: string;
 	f_link_assinatura: string;
@@ -1826,8 +1827,8 @@ export interface SuspensaoContratoBase {
 	f_telefone: string;
 	f_teste: number;
 	f_titulo: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface SuspensaoContratoRelations {
@@ -1843,9 +1844,9 @@ export interface SuspensaoContratoRelations {
 export type SuspensaoContratoRelationKey = keyof SuspensaoContratoRelations;
 
 export interface TabelaGeralBase {
-	createdAt: string;
 	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TabelaGeralRelations {
@@ -1856,14 +1857,13 @@ export interface TabelaGeralRelations {
 export type TabelaGeralRelationKey = keyof TabelaGeralRelations;
 
 export interface TelecomAnexosBase {
-	createdAt: string;
+	id: number;
 	extname: string;
 	f_6j2u7ptvn88: number;
 	f_88kxg6s8bb8: number;
 	f_wo3wzgdoyoa: number;
 	f_ycsq6mkkvk7: number;
 	filename: string;
-	id: number;
 	meta: Record<string, unknown>;
 	mimetype: string;
 	path: string;
@@ -1871,8 +1871,9 @@ export interface TelecomAnexosBase {
 	size: number;
 	storageId: number;
 	title: string;
-	updatedAt: string;
 	url: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TelecomAnexosRelations {
@@ -1884,14 +1885,14 @@ export interface TelecomAnexosRelations {
 export type TelecomAnexosRelationKey = keyof TelecomAnexosRelations;
 
 export interface TelecomColocationOpcoesBase {
-	createdAt: string;
+	id: number;
 	f_6c1tv6gt1ey: number;
 	f_designacao_rack: string;
 	f_energia: string[];
 	f_espaco_rack: string;
 	fk_opcoes_colocation: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TelecomColocationOpcoesRelations {
@@ -1903,13 +1904,13 @@ export type TelecomColocationOpcoesRelationKey =
 	keyof TelecomColocationOpcoesRelations;
 
 export interface TelecomContratosBase {
-	createdAt: string;
-	f_descricao: string;
+	id: number;
 	f_fk_cliente: number;
 	f_fk_fornecedor: number;
+	f_descricao: string;
 	f_o6r7bgwk9bb: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TelecomContratosRelations {
@@ -1923,11 +1924,11 @@ export interface TelecomContratosRelations {
 export type TelecomContratosRelationKey = keyof TelecomContratosRelations;
 
 export interface TelecomFilaBase {
-	createdAt: string;
+	id: number;
 	f_fk_fila: number;
 	f_nome: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TelecomFilaRelations {
@@ -1939,15 +1940,15 @@ export interface TelecomFilaRelations {
 export type TelecomFilaRelationKey = keyof TelecomFilaRelations;
 
 export interface TelecomInterfacesBase {
-	createdAt: string;
+	id: number;
 	f_configuracao: string;
 	f_descricao: string;
 	f_interface: string;
 	f_p9gxrkh5utl: number;
 	f_tipo: string;
-	id: number;
 	parentId: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TelecomInterfacesRelations {
@@ -1965,14 +1966,14 @@ export interface TelecomInterfacesRelations {
 export type TelecomInterfacesRelationKey = keyof TelecomInterfacesRelations;
 
 export interface TelecomIpsFixosBase {
-	createdAt: string;
+	id: number;
 	f_contrato_ixc: string;
 	f_controle: string;
 	f_ip: string;
 	f_login: string;
 	f_possui_ip_fixo: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TelecomIpsFixosRelations {
@@ -1983,11 +1984,11 @@ export interface TelecomIpsFixosRelations {
 export type TelecomIpsFixosRelationKey = keyof TelecomIpsFixosRelations;
 
 export interface TelecomOpcoesL2lBase {
-	createdAt: string;
+	id: number;
 	f_rmfqnk0k53u: number;
 	f_velocidade: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TelecomOpcoesL2lRelations {
@@ -1998,15 +1999,15 @@ export interface TelecomOpcoesL2lRelations {
 export type TelecomOpcoesL2lRelationKey = keyof TelecomOpcoesL2lRelations;
 
 export interface TelecomRacksBase {
-	createdAt: string;
+	id: number;
 	f_fk_rack_fila: number;
 	f_fk_rack_sala: number;
 	f_fk_site_racks: number;
 	f_rack: string;
 	f_sigla: string;
-	id: number;
 	parentId: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TelecomRacksRelations {
@@ -2025,13 +2026,7 @@ export interface TelecomRacksRelations {
 export type TelecomRacksRelationKey = keyof TelecomRacksRelations;
 
 export interface TelecomRecursosBase {
-	createdAt: string;
-	f_2ew016ynyo6: number;
-	f_contrato_ixc: number;
-	f_designacao_atplus: string;
-	f_designacao_externa: string;
-	f_detalhes: string;
-	f_finalidade: string;
+	id: number;
 	f_fk_anexos_recursos: number;
 	f_fk_cliente_recurso: number;
 	f_fk_fornecedor_recurso: number;
@@ -2039,13 +2034,19 @@ export interface TelecomRecursosBase {
 	f_fk_rack_b: number;
 	f_fk_site_a: number;
 	f_fk_site_b: number;
+	f_2ew016ynyo6: number;
+	f_contrato_ixc: number;
+	f_designacao_atplus: string;
+	f_designacao_externa: string;
+	f_detalhes: string;
+	f_finalidade: string;
 	f_id_produto: string;
 	f_nome: string;
 	f_status: string;
 	f_tipo: string;
-	id: number;
 	parentId: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TelecomRecursosRelations {
@@ -2071,11 +2072,11 @@ export interface TelecomRecursosRelations {
 export type TelecomRecursosRelationKey = keyof TelecomRecursosRelations;
 
 export interface TelecomSalasBase {
-	createdAt: string;
+	id: number;
 	f_fk_salas: number;
 	f_nome: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TelecomSalasRelations {
@@ -2087,12 +2088,12 @@ export interface TelecomSalasRelations {
 export type TelecomSalasRelationKey = keyof TelecomSalasRelations;
 
 export interface TelecomTransitoOpcoesBase {
-	createdAt: string;
+	id: number;
 	f_1eu8gjcf9js: number;
 	f_ips: string;
 	f_velocidade: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TelecomTransitoOpcoesRelations {
@@ -2104,7 +2105,8 @@ export type TelecomTransitoOpcoesRelationKey =
 	keyof TelecomTransitoOpcoesRelations;
 
 export interface TemplatesAtendimentoN1Base {
-	createdAt: string;
+	id: number;
+	f_fk_templates_atendimentos: number;
 	f_acessa_pela_rede_da_atplus: string;
 	f_alteracoes: string;
 	f_aplicativo: string[];
@@ -2114,7 +2116,6 @@ export interface TemplatesAtendimentoN1Base {
 	"f_e-mail": string;
 	f_endereco_do_site: string;
 	f_fabricante: string;
-	f_fk_templates_atendimentos: number;
 	f_ip_fixo: string;
 	f_ip_interno_para_liberacao: string;
 	f_login_pppoe: string;
@@ -2139,8 +2140,8 @@ export interface TemplatesAtendimentoN1Base {
 	f_tipo_de_conexao_do_dispositivo: string;
 	f_tipo_de_problema_mvno: string;
 	f_torre_rede: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TemplatesAtendimentoN1Relations {
@@ -2152,7 +2153,7 @@ export type TemplatesAtendimentoN1RelationKey =
 	keyof TemplatesAtendimentoN1Relations;
 
 export interface TrocaEnderecoBase {
-	createdAt: string;
+	id: number;
 	f_bairro: string;
 	f_cep: string;
 	f_cliente: string;
@@ -2168,8 +2169,8 @@ export interface TrocaEnderecoBase {
 	f_status: string;
 	f_taxa_instalacao: string;
 	f_telefone_contato: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TrocaEnderecoRelations {
@@ -2180,11 +2181,11 @@ export interface TrocaEnderecoRelations {
 export type TrocaEnderecoRelationKey = keyof TrocaEnderecoRelations;
 
 export interface TrocasdetitularidadeComentariosBase {
-	createdAt: string;
+	id: number;
 	f_comentario: string;
 	f_comentario_troca_de_titularidade: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TrocasdetitularidadeComentariosRelations {
@@ -2196,10 +2197,10 @@ export type TrocasdetitularidadeComentariosRelationKey =
 	keyof TrocasdetitularidadeComentariosRelations;
 
 export interface TurnosBase {
-	createdAt: string;
-	f_turno: string;
 	id: number;
+	f_turno: string;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TurnosRelations {
@@ -2211,14 +2212,14 @@ export interface TurnosRelations {
 export type TurnosRelationKey = keyof TurnosRelations;
 
 export interface ViagemSolicitacaoBase {
-	createdAt: string;
+	id: number;
+	f_fk_solicitacao_viagem: number;
 	f_colaborador_beneficiado: string;
 	f_data_retorno: string;
 	f_data_viagem: string;
 	f_destino_viagem: string;
 	f_diaria: string;
 	f_fase: string;
-	f_fk_solicitacao_viagem: number;
 	f_kaban_viagem: number;
 	f_meio_transporte: string;
 	f_observacoes: string;
@@ -2229,8 +2230,8 @@ export interface ViagemSolicitacaoBase {
 	f_valor_cobrado: number;
 	f_valor_diaria: number;
 	f_valor_pedagio: number;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ViagemSolicitacaoRelations {
@@ -2242,10 +2243,10 @@ export interface ViagemSolicitacaoRelations {
 export type ViagemSolicitacaoRelationKey = keyof ViagemSolicitacaoRelations;
 
 export interface VlanTagsBase {
-	createdAt: string;
-	f_tag: string;
 	id: number;
+	f_tag: string;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface VlanTagsRelations {
@@ -2265,14 +2266,14 @@ export type Ynltolqbwj1Relations = Record<string, never>;
 export type Ynltolqbwj1RelationKey = keyof Ynltolqbwj1Relations;
 
 export interface ZapsignBase {
-	createdAt: string;
+	id: number;
 	f_data_de_encerramento: string;
 	f_nome_do_plano: string;
 	f_numero_de_creditos: string;
 	f_periodo: string;
 	f_status: string;
-	id: number;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ZapsignRelations {

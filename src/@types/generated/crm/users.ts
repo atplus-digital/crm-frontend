@@ -6,26 +6,26 @@
 import type { DepartmentsBase, RolesBase } from "./index";
 
 export interface UsersBase {
-	appLang: string;
-	createdAt: string;
-	createdById: number | null;
-	email: string;
+	id: number;
+	sort: number;
 	f_fk_cargos: number;
 	f_fk_departamentos: number;
 	f_fk_desconto_vendedor: number;
 	f_id_tecnico_ixc: number;
 	f_id_vendedor_ixc: number;
-	id: number;
+	appLang: string;
+	email: string;
 	nickname: string;
 	password: string;
 	passwordChangeTz: number;
 	phone: string;
 	resetToken: string;
-	sort: number;
 	systemSettings: Record<string, unknown>;
+	username: string;
 	updatedAt: string;
 	updatedById: number | null;
-	username: string;
+	createdAt: string;
+	createdById: number | null;
 }
 
 export interface UsersRelations {

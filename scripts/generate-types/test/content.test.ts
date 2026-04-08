@@ -63,18 +63,47 @@ describe("content", () => {
 			expect(result).not.toContain("contacts");
 		});
 
-		it("deve ordenar campos alfabeticamente", () => {
+		it("deve ordenar campos com ordem customizada (id → f_fk_ → f_id_*_ixc → outros → audit)", () => {
 			const types = createMockGeneratedTypes({
 				zulu: "string",
 				alpha: "number",
 				bravo: "boolean",
+				id: "number",
+				sort: "number",
+				f_fk_company: "number",
+				f_fk_role: "number",
+				f_id_tecnico_ixc: "number",
+				createdAt: "string",
+				createdById: "number | null",
+				updatedAt: "string",
+				updatedById: "number | null",
 			});
 			const result = generateCollectionBaseInterface("Test", types);
 			const lines = result.split("\n");
 
-			expect(lines[1]).toContain("alpha");
-			expect(lines[2]).toContain("bravo");
-			expect(lines[3]).toContain("zulu");
+			// id e sort vêm primeiro (categoria id), ordem alfabética dentro da categoria
+			expect(lines[1]).toContain("id");
+			expect(lines[2]).toContain("sort");
+
+			// f_fk_ vêm depois (categoria fk), ordem alfabética
+			expect(lines[3]).toContain("f_fk_company");
+			expect(lines[4]).toContain("f_fk_role");
+
+			// f_id_*_ixc (categoria tech_id)
+			expect(lines[5]).toContain("f_id_tecnico_ixc");
+
+			// demais campos (categoria other), ordem alfabética
+			expect(lines[6]).toContain("alpha");
+			expect(lines[7]).toContain("bravo");
+			expect(lines[8]).toContain("zulu");
+
+			// audit update
+			expect(lines[9]).toContain("updatedAt");
+			expect(lines[10]).toContain("updatedById");
+
+			// audit create (por último)
+			expect(lines[11]).toContain("createdAt");
+			expect(lines[12]).toContain("createdById");
 		});
 
 		it("deve aplicar nomenclatura customizada na interface base", () => {

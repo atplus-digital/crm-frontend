@@ -8,7 +8,7 @@
 	"files.readonlyInclude": {
 		"**/routeTree.gen.ts": true,
 		"src/@types/generated/**": true,
-		"src/@types/generated/index.ts": true
+		"src/@types/generated/crm/index.ts": true
 	},
 	"[javascript]": {
 		"editor.defaultFormatter": "biomejs.biome"
@@ -34,5 +34,9 @@
 	"editor.codeActionsOnSave": {
 		"source.organizeImports.biome": "explicit"
 	},
-	"cSpell.words": ["atplus", "nocobase", "NOCOBASE"]
+	"cSpell.words": [
+		"atplus",
+		"nocobase",
+		"NOCOBASE"
+	]
 }
