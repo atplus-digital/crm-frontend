@@ -75,8 +75,8 @@
       ],
       "priority": 4,
       "group": "B",
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Criado src/modules/auth/auth-session.server.ts com createSession, getSession e removeSession. Token cifrado com AES-256-GCM e assinado com HMAC-SHA256. Cookie crm_session usa HttpOnly, SameSite=Lax, Path=/, Secure em HTTPS. Fallback de 8h. removeSession usa deleteCookie. Biome check e testes passam."
     },
     {
       "id": "US-005",

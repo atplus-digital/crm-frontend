@@ -1,44 +1,41 @@
 === RALPH ORCHESTRATOR SESSION ===
 Task: current
 Status: RUNNING
-Last Updated: 2026-04-08T12:00:00Z
-Current Group: A
-
----
-[US-001] Expandir configuração de ambiente para autenticação
-Status: PASSED (2026-04-08)
-- AUTH_SESSION_SECRET adicionado ao schema server-side em src/env.ts (z.string().min(32))
-- CRM_NOCOBASE_URL permanece compatível (inalterado)
-- CRM_NOCOBASE_TOKEN removido do mock-env.ts (fluxo de autenticação não depende dele)
-- .env.example atualizado com AUTH_SESSION_SECRET e documentação
-- mock-env.ts atualizado com AUTH_SESSION_SECRET (removido CRM_NOCOBASE_TOKEN)
-- Biome check: PASS (76 arquivos, 162ms)
-- Testes: 181/181 passaram, global-setup valida 4/4 vars mockadas
-- Typecheck: erro preexistente em theme.test.ts (jsdom types), não relacionado
-
----
-[US-001] Expandir configuração de ambiente para autenticação
-Status: PASSED (2026-04-08)
-- AUTH_SESSION_SECRET adicionado ao schema server-side em src/env.ts (z.string().min(32))
-- CRM_NOCOBASE_URL permanece compatível (inalterado)
-- CRM_NOCOBASE_TOKEN removido do mock-env.ts (fluxo de autenticação não depende dele)
-- .env.example atualizado com AUTH_SESSION_SECRET e documentação
-- mock-env.ts atualizado com AUTH_SESSION_SECRET (removido CRM_NOCOBASE_TOKEN)
-- Biome check: PASS (76 arquivos, 162ms)
-- Testes: 181/181 passaram, global-setup valida 4/4 vars mockadas
-- Typecheck: erro preexistente em theme.test.ts (jsdom types), não relacionado
-Current Story: US-001 - Expandir configuração de ambiente para autenticação
-Parallel Stories: US-001, US-002
+Last Updated: 2026-04-08T12:15:00Z
+Current Group: B
+Current Story: US-003 - Implementar client server-only para autenticação NocoBase
+Parallel Stories: US-003, US-004
 Attempts: 1/3
 Worker Timeout: 1800s
 
 Execution Summary:
-- Completed: 0 / 10
-- In Progress: US-001, US-002 (parallel)
-- Current Group: A (0/2 complete)
+- Completed: 2 / 10
+- In Progress: US-003, US-004 (parallel)
+- Current Group: B (0/2 complete)
 - Failed: 0
 - Blocked: 0
 === END HEADER ===
+
+## [2026-04-08T12:05:00Z] - Group A Execution
+Stories: US-001, US-002 (parallel)
+Results:
+  - US-001: SUCCESS — AUTH_SESSION_SECRET adicionado, env atualizado, mock-env atualizado
+  - US-002: SUCCESS — auth.schemas.ts e auth.types.ts criados com schemas Zod e helpers de roles
+Group Status: COMPLETE
+---
+
+[US-001] Expandir configuração de ambiente para autenticação
+Status: PASSED (2026-04-08)
+- AUTH_SESSION_SECRET adicionado ao schema server-side em src/env.ts (z.string().min(32))
+- CRM_NOCOBASE_URL permanece compatível (inalterado)
+- CRM_NOCOBASE_TOKEN removido do mock-env.ts (fluxo de autenticação não depende dele)
+- .env.example atualizado com AUTH_SESSION_SECRET e documentação
+- mock-env.ts atualizado com AUTH_SESSION_SECRET (removido CRM_NOCOBASE_TOKEN)
+- Biome check: PASS (76 arquivos, 162ms)
+- Testes: 181/181 passaram, global-setup valida 4/4 vars mockadas
+- Typecheck: erro preexistente em theme.test.ts (jsdom types), não relacionado
+
+---
 
 [US-002] Definir contratos de autenticação do app
 Status: PASSED (2026-04-08)
@@ -47,4 +44,21 @@ Status: PASSED (2026-04-08)
 - Usuário autenticado inclui id, email, username, nickname, roles (string[])
 - Biome check: PASS (76 arquivos, 177ms)
 - Typecheck: PASS (0 erros nos arquivos criados)
-- Nota: testes com hang preexistente (não relacionado às mudanças)
+
+---
+
+[US-004] Implementar serviço de sessão por cookie HttpOnly
+Status: PASSED (2026-04-08)
+- Criado src/modules/auth/auth-session.server.ts com createSession, getSession e removeSession
+- Cookie de sessão: crm_session
+- Token cifrado com AES-256-GCM (iv + ciphertext + authTag) e assinado com HMAC-SHA256
+- Formato do cookie: encrypted_token.signature (base64)
+- Chaves derivadas de AUTH_SESSION_SECRET via SHA-256 (encryption) e SHA-512 (signing)
+- Cookie usa HttpOnly=true, SameSite=lax, Path=/
+- Secure=true quando protocolo é HTTPS, false em HTTP (dev local)
+- Expiração: alinha com TTL do token (ms) quando fornecido, fallback 8 horas
+- removeSession() usa deleteCookie do TanStack Start para remoção imediata
+- verify() usa timingSafeEqual para comparação constante contra timing attacks
+- Biome check: PASS (77 arquivos, 148ms)
+- Testes: 229/229 passaram
+- Nota: arquivos de US-002 restaurados do commit ceedb6f (não estavam no HEAD)
