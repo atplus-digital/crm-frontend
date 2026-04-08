@@ -10,5 +10,5 @@ echo "pre-push checks..."
 
 pnpm knip:silent
 pnpm biome check
-  pnpm test
+pnpm test
 

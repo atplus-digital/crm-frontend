@@ -18,6 +18,8 @@
 		"types": "warn",
 		"dependencies": "warn",
 		"devDependencies": "warn",
+		"files": "warn",
+		"unlisted": "warn"
 	},
   	"ignore": [
 		".agents/**",
