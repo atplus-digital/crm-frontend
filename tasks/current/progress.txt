@@ -62,3 +62,20 @@ Status: PASSED (2026-04-08)
 - Biome check: PASS (77 arquivos, 148ms)
 - Testes: 229/229 passaram
 - Nota: arquivos de US-002 restaurados do commit ceedb6f (não estavam no HEAD)
+
+---
+
+[US-003] Implementar client server-only para autenticação NocoBase
+Status: PASSED (2026-04-08)
+- Criado src/modules/auth/auth-api.server.ts com 3 funções: signIn, checkSession, signOut
+- signIn: POST /auth:signIn com header X-Authenticator: basic, body { email, password }
+- checkSession: GET /auth:check com Authorization: Bearer token + Cache-Control: no-store
+- signOut: POST /auth:signOut com Authorization: Bearer token (erros engolidos, retorna boolean)
+- Cliente HTTP usa axios em contexto server-only (arquivo .server.ts)
+- Instância axios dedicada com baseURL=CRM_NOCOBASE_URL, timeout=15s
+- Token NÃO é persistido automaticamente — callers gerenciam ciclo de vida via cookies
+- Erros normalizados via AuthError com códigos: INVALID_CREDENTIALS, SESSION_EXPIRED, NETWORK_ERROR, UNKNOWN
+- normalizeUser extrai roles[] de array de objetos { name: string } do NocoBase
+- Respostas validadas com schemas Zod (nocobaseAuthResponseSchema, nocobaseCheckResponseSchema)
+- Biome check: PASS (78 arquivos, sem fixes)
+- Typecheck: PASS (0 erros nos arquivos auth; erro preexistente em theme.test.ts)

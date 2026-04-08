@@ -56,7 +56,7 @@
       "priority": 3,
       "group": "B",
       "passes": true,
-      "notes": "AUTH_SESSION_SECRET adicionado ao schema server-side com z.string().min(32). CRM_NOCOBASE_TOKEN removido do mock (não usado no fluxo de autenticação). .env.example atualizado. Biome check e testes passam. Typecheck tem erro preexistente em theme.test.ts (jsdom types) não relacionado."
+      "notes": "Criado auth-api.server.ts com signIn (POST /auth:signIn + X-Authenticator: basic), checkSession (GET /auth:check + no-store), signOut (POST /auth:signOut). Usa axios em contexto server-only. Erros normalizados via AuthError com códigos seguros. Sem persistência automática de token. Biome check e typecheck passam."
     },
     {
       "id": "US-004",
