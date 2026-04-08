@@ -2,6 +2,22 @@ import fs from "node:fs";
 import path from "node:path";
 
 export default function setup() {
+	// Verifica se .env.local existe e copia de .env.example se não existir
+	const envLocalPath = path.resolve(process.cwd(), ".env.local");
+
+	if (!fs.existsSync(envLocalPath)) {
+		const envExamplePath = path.resolve(process.cwd(), ".env.example");
+
+		if (fs.existsSync(envExamplePath)) {
+			fs.copyFileSync(envExamplePath, envLocalPath);
+			console.log("✅ Arquivo .env.local criado a partir do .env.example");
+		} else {
+			console.warn(
+				"⚠️  Arquivo .env.example não encontrado, não foi possível criar .env.local",
+			);
+		}
+	}
+
 	const schemaKeys = extractSchemaKeys();
 	const mockKeys = extractMockKeys();
 
