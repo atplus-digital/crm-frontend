@@ -5,6 +5,7 @@ export const env = createEnv({
 	server: {
 		SERVER_URL: z.url().optional(),
 		CRM_NOCOBASE_URL: z.url(),
+		AUTH_SESSION_SECRET: z.string().min(32),
 	},
 	clientPrefix: "VITE_",
 	client: {

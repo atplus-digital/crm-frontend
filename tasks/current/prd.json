@@ -17,8 +17,8 @@
       ],
       "priority": 1,
       "group": "A",
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "AUTH_SESSION_SECRET adicionado ao schema server-side com z.string().min(32). CRM_NOCOBASE_TOKEN removido do mock (não usado no fluxo de autenticação). .env.example atualizado. Biome check e testes passam. Typecheck tem erro preexistente em theme.test.ts (jsdom types) não relacionado."
     },
     {
       "id": "US-002",
@@ -35,8 +35,8 @@
       ],
       "priority": 2,
       "group": "A",
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Criados auth.schemas.ts (loginSchema, authenticatedUserSchema, sessionSchema, schemas de resposta NocoBase) e auth.types.ts (tipos re-exportados + hasRole + hasSnippet). Biome check e typecheck passam."
     },
     {
       "id": "US-003",
@@ -55,8 +55,8 @@
       ],
       "priority": 3,
       "group": "B",
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "AUTH_SESSION_SECRET adicionado ao schema server-side com z.string().min(32). CRM_NOCOBASE_TOKEN removido do mock (não usado no fluxo de autenticação). .env.example atualizado. Biome check e testes passam. Typecheck tem erro preexistente em theme.test.ts (jsdom types) não relacionado."
     },
     {
       "id": "US-004",
