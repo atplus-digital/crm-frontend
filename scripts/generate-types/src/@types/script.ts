@@ -2,6 +2,7 @@ import type { NocoBaseCredentials } from "./nocobase";
 
 export interface CliArgs {
 	dryRun: boolean;
+	write: boolean;
 	lockWorkspace?: boolean;
 }
 
@@ -56,14 +57,19 @@ export type GenerateTypesResult =
 	| MultiFilePersistResult
 	| MultiFileDryRunResult;
 
+export interface BaseInterfaceNamingConfig {
+	prefix: string;
+	suffix: string;
+}
+
 export interface ScriptConfig {
-	outputPath: string;
-	splitOutputDir: string; // Diretório para arquivos split (ex: "src/@types/generated")
+	outputDir: string; // Diretório de saída (ex: "src/@types/generated") — split usa esta pasta; não-split usa <outputDir>/index.ts
 	splitCollections: string[]; // Collections que serão salvas em arquivos individuais
 	defaultEnvPath: string;
 	requestTimeoutMs: number;
 	requestConcurrency: number;
 	lockWorkspaceFolder?: boolean; // Quando ativado, verifica .vscode/settings.json e bloqueia acesso de escrita à pasta de interfaces
+	baseInterfaceNaming: BaseInterfaceNamingConfig;
 }
 
 export type EnvConfig = NocoBaseCredentials;
@@ -71,5 +77,6 @@ export type EnvConfig = NocoBaseCredentials;
 export interface RuntimeConfig extends ScriptConfig, NocoBaseCredentials {
 	dryRun: boolean;
 	showHelp: boolean;
+	write: boolean;
 	lockWorkspace: boolean;
 }

@@ -5,24 +5,29 @@ describe("runGenerateTypes", () => {
 	const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 	const originalConfig = {
 		dryRun: mockRuntimeConfig.dryRun,
-		outputPath: mockRuntimeConfig.outputPath,
+		outputDir: mockRuntimeConfig.outputDir,
 		splitCollections: [...mockRuntimeConfig.splitCollections],
-		splitOutputDir: mockRuntimeConfig.splitOutputDir,
+		baseInterfaceNaming: { ...mockRuntimeConfig.baseInterfaceNaming },
 	};
 
 	beforeEach(() => {
 		consoleLogSpy.mockClear();
 		mockRuntimeConfig.dryRun = false;
-		mockRuntimeConfig.outputPath = "/tmp/index.ts";
-		mockRuntimeConfig.splitOutputDir = "/tmp/generated";
+		mockRuntimeConfig.outputDir = "/tmp/generated";
 		mockRuntimeConfig.splitCollections = [];
+		mockRuntimeConfig.baseInterfaceNaming = {
+			prefix: "",
+			suffix: "Base",
+		};
 	});
 
 	afterEach(() => {
 		mockRuntimeConfig.dryRun = originalConfig.dryRun;
-		mockRuntimeConfig.outputPath = originalConfig.outputPath;
-		mockRuntimeConfig.splitOutputDir = originalConfig.splitOutputDir;
+		mockRuntimeConfig.outputDir = originalConfig.outputDir;
 		mockRuntimeConfig.splitCollections = [...originalConfig.splitCollections];
+		mockRuntimeConfig.baseInterfaceNaming = {
+			...originalConfig.baseInterfaceNaming,
+		};
 		vi.resetModules();
 		vi.restoreAllMocks();
 	});
@@ -177,6 +182,8 @@ describe("runGenerateTypes", () => {
 			previewMultipleFiles,
 			writeGeneratedFile: vi.fn(),
 			writeMultipleFiles: vi.fn(),
+			getUnusedFiles: vi.fn().mockReturnValue([]),
+			cleanOutputDirectory: vi.fn().mockReturnValue([]),
 		}));
 
 		const { runGenerateTypes } = await import("../src/generate-types");
@@ -234,6 +241,8 @@ describe("runGenerateTypes", () => {
 			previewMultipleFiles: vi.fn(),
 			writeGeneratedFile,
 			writeMultipleFiles,
+			getUnusedFiles: vi.fn().mockReturnValue([]),
+			cleanOutputDirectory: vi.fn().mockReturnValue([]),
 		}));
 
 		const { runGenerateTypes } = await import("../src/generate-types");
@@ -248,5 +257,85 @@ describe("runGenerateTypes", () => {
 			totalFiles: 2,
 			totalChanged: 1,
 		});
+	});
+
+	it("deve resolver imports usando nomenclatura customizada da interface base", async () => {
+		mockRuntimeConfig.dryRun = true;
+		mockRuntimeConfig.splitCollections = ["users"];
+		mockRuntimeConfig.baseInterfaceNaming = {
+			prefix: "I",
+			suffix: "",
+		};
+
+		const collectionTypes = createMockCollectionTypesMap({
+			departments: {
+				scalars: { id: "number" },
+				relations: {
+					owner: { type: "belongsTo", targetCollection: "users" },
+				},
+			},
+			users: {
+				scalars: { id: "number" },
+				relations: {
+					mainDepartment: {
+						type: "belongsTo",
+						targetCollection: "departments",
+					},
+				},
+			},
+		});
+
+		const previewGeneratedFile = vi
+			.fn()
+			.mockImplementation((content: string) => ({
+				mode: "dry-run" as const,
+				outputPath: "/tmp/index.ts",
+				changed: true,
+				diff: content,
+			}));
+		const previewMultipleFiles = vi
+			.fn()
+			.mockImplementation((files: Map<string, string>) => ({
+				mode: "dry-run" as const,
+				files: [...files.entries()].map(([fileName, content]) => ({
+					outputPath: `/tmp/generated/${fileName}.ts`,
+					changed: true,
+					diff: content,
+				})),
+				totalFiles: files.size,
+				totalChanged: files.size,
+			}));
+		const fetchCollections = vi
+			.fn()
+			.mockResolvedValue([{ name: "departments" }, { name: "users" }]);
+
+		vi.doMock("../src/generation/client", () => ({
+			NocoBaseClient: class MockNocoBaseClient {
+				public baseUrl = "https://example.com/api";
+
+				public fetchCollections = fetchCollections;
+			},
+		}));
+		vi.doMock("../src/generation/collection-types", () => ({
+			buildCollectionTypes: vi.fn().mockResolvedValue(collectionTypes),
+		}));
+		vi.doMock("../src/utils/writer", () => ({
+			previewGeneratedFile,
+			previewMultipleFiles,
+			writeGeneratedFile: vi.fn(),
+			writeMultipleFiles: vi.fn(),
+			getUnusedFiles: vi.fn().mockReturnValue([]),
+			cleanOutputDirectory: vi.fn().mockReturnValue([]),
+		}));
+
+		const { runGenerateTypes } = await import("../src/generate-types");
+		await runGenerateTypes();
+
+		expect(previewGeneratedFile.mock.calls[0][0]).toContain(
+			'import type { IUsers } from "./users";',
+		);
+		expect(previewMultipleFiles.mock.calls[0][0].get("users")).toContain(
+			'import type { IDepartments } from "./index";',
+		);
 	});
 });

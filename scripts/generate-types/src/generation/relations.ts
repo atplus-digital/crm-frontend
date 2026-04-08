@@ -2,6 +2,7 @@ import type {
 	RelationCardinality,
 	RelationInterface,
 } from "@scripts/generate-types/src/@types/generation";
+import type { BaseInterfaceNamingConfig } from "@scripts/generate-types/src/@types/script";
 import { toCollectionBaseTypeName } from "@scripts/generate-types/src/utils/naming";
 
 const RELATION_INTERFACE_MAP: Record<string, RelationInterface> = {
@@ -80,9 +81,10 @@ export function getRelationCardinality(
 export function renderRelationValueType(
 	targetCollection: string,
 	cardinality: RelationCardinality,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 ): string {
 	const targetType = targetCollection.trim()
-		? toCollectionBaseTypeName(targetCollection)
+		? toCollectionBaseTypeName(targetCollection, baseInterfaceNaming)
 		: "unknown";
 
 	return cardinality === "many" ? `${targetType}[]` : `${targetType} | null`;

@@ -121,6 +121,21 @@ describe("relations - renderRelationValueType", () => {
 			"UsersBase | null",
 		);
 	});
+
+	it("deve aplicar nomenclatura customizada na interface base relacionada", () => {
+		expect(
+			renderRelationValueType("users", "many", {
+				prefix: "I",
+				suffix: "",
+			}),
+		).toBe("IUsers[]");
+		expect(
+			renderRelationValueType("users", "one", {
+				prefix: "",
+				suffix: "",
+			}),
+		).toBe("Users | null");
+	});
 });
 
 describe("relations - resolveRelationByType", () => {

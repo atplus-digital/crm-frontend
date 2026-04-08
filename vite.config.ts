@@ -6,9 +6,12 @@ import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
 const config = defineConfig({
-	plugins: [devtools(), tailwindcss(), tanstackStart(), nitro(), viteReact()],
+	plugins: [devtools(), tailwindcss(), tanstackStart(), viteReact(), nitro()],
 	resolve: {
 		tsconfigPaths: true,
+	},
+	nitro: {
+		serverDir: "./",
 	},
 });
 

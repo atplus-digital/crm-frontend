@@ -10,9 +10,11 @@ import type {
 import { buildDiffOnly } from "./diff";
 import { toFileName } from "./naming";
 
+const MAIN_OUTPUT_FILE = "index.ts";
+
 export function writeGeneratedFile(
 	content: string,
-	outputPath: string = config.outputPath,
+	outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE),
 ): PersistResult {
 	const resolvedOutputPath = resolveOutputPath(outputPath);
 	const currentContent = readExistingContent(resolvedOutputPath);
@@ -37,7 +39,7 @@ export function writeGeneratedFile(
 
 export function previewGeneratedFile(
 	content: string,
-	outputPath: string = config.outputPath,
+	outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE),
 ): DryRunDiffResult {
 	const resolvedOutputPath = resolveOutputPath(outputPath);
 	const currentContent = readExistingContent(resolvedOutputPath);
@@ -59,7 +61,7 @@ export function previewGeneratedFile(
 	};
 }
 
-function resolveOutputPath(outputPath: string = config.outputPath): string {
+function resolveOutputPath(outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE)): string {
 	return path.resolve(process.cwd(), outputPath);
 }
 
@@ -86,7 +88,7 @@ function readExistingContent(filePath: string): string {
  */
 export function writeMultipleFiles(
 	filesMap: Map<string, string>,
-	outputDir: string = config.splitOutputDir,
+	outputDir: string = config.outputDir,
 ): MultiFilePersistResult {
 	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
 	const files: Array<{ outputPath: string; changed: boolean }> = [];
@@ -128,7 +130,7 @@ export function writeMultipleFiles(
  */
 export function previewMultipleFiles(
 	filesMap: Map<string, string>,
-	outputDir: string = config.splitOutputDir,
+	outputDir: string = config.outputDir,
 ): MultiFileDryRunResult {
 	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
 	const files: Array<{
@@ -161,4 +163,48 @@ export function previewMultipleFiles(
 		totalFiles: filesMap.size,
 		totalChanged,
 	};
+}
+
+/**
+ * Identifica arquivos .ts na pasta de destino que não estão na lista de arquivos gerados.
+ * @param generatedFiles - Array de caminhos de arquivos que serão gerados
+ * @param outputDir - Diretório base
+ * @returns Array de caminhos de arquivos não utilizados
+ */
+export function getUnusedFiles(
+	generatedFiles: string[],
+	outputDir: string = config.outputDir,
+): string[] {
+	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
+
+	if (!fs.existsSync(resolvedOutputDir)) {
+		return [];
+	}
+
+	const existingFiles = fs.readdirSync(resolvedOutputDir);
+	const generatedFileNames = new Set(
+		generatedFiles.map((f) => path.basename(f)),
+	);
+
+	return existingFiles
+		.filter((file) => file.endsWith(".ts") && !generatedFileNames.has(file))
+		.map((file) => path.join(resolvedOutputDir, file));
+}
+
+/**
+ * Remove arquivos não utilizados da pasta de destino.
+ * @param unusedFiles - Array de caminhos de arquivos para remover
+ * @returns Array de arquivos removidos
+ */
+export function cleanOutputDirectory(unusedFiles: string[]): string[] {
+	const removed: string[] = [];
+
+	for (const filePath of unusedFiles) {
+		if (fs.existsSync(filePath)) {
+			fs.unlinkSync(filePath);
+			removed.push(filePath);
+		}
+	}
+
+	return removed;
 }

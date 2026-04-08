@@ -21,11 +21,11 @@ describe("cli", () => {
 		it("deve reconhecer --help, -h, --dry-run e --", () => {
 			expect(parseArgs(["--help", "--dry-run"])).toEqual({
 				showHelp: true,
-				options: { dryRun: true },
+				options: { dryRun: true, write: false },
 			});
 			expect(parseArgs(["-h", "--"])).toEqual({
 				showHelp: true,
-				options: { dryRun: false },
+				options: { dryRun: false, write: false },
 			});
 		});
 
@@ -42,7 +42,7 @@ describe("cli", () => {
 
 			expect(consoleSpy).toHaveBeenCalledWith(
 				expect.stringContaining(
-					"<Collection>Base: interface com campos escalares/FKs",
+					`${mockRuntimeConfig.baseInterfaceNaming.prefix}<Collection>${mockRuntimeConfig.baseInterfaceNaming.suffix}: interface com campos escalares/FKs`,
 				),
 			);
 		});

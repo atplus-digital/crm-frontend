@@ -1,4 +1,34 @@
+import type { BaseInterfaceNamingConfig } from "@scripts/generate-types/src/@types/script";
+
 const VALID_IDENTIFIER = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
+
+export const DEFAULT_BASE_INTERFACE_NAMING: BaseInterfaceNamingConfig = {
+	prefix: "",
+	suffix: "Base",
+};
+
+export function resolveBaseInterfaceNamingConfig(
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
+): BaseInterfaceNamingConfig {
+	return {
+		prefix: baseInterfaceNaming?.prefix ?? DEFAULT_BASE_INTERFACE_NAMING.prefix,
+		suffix: baseInterfaceNaming?.suffix ?? DEFAULT_BASE_INTERFACE_NAMING.suffix,
+	};
+}
+
+export function formatBaseInterfaceName(
+	typeName: string,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
+): string {
+	const naming = resolveBaseInterfaceNamingConfig(baseInterfaceNaming);
+	return `${naming.prefix}${typeName}${naming.suffix}`;
+}
+
+export function formatBaseInterfacePattern(
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
+): string {
+	return formatBaseInterfaceName("<Collection>", baseInterfaceNaming);
+}
 
 /**
  * Converte nome para PascalCase.
@@ -84,7 +114,7 @@ export function toCollectionTypeName(collectionName: string): string {
 
 /**
  * Converte nome de collection para nome de tipo Base.
- * Adiciona sufixo "Base" ao nome do tipo.
+ * Aplica prefixo/sufixo configuráveis ao nome do tipo.
  *
  * @param collectionName - Nome da collection
  * @returns Nome do tipo Base (ex: UsersBase)
@@ -93,16 +123,23 @@ export function toCollectionTypeName(collectionName: string): string {
  * ```typescript
  * toCollectionBaseTypeName("users")         // "UsersBase"
  * toCollectionBaseTypeName("t_negociacoes") // "NegociacoesBase"
+ * toCollectionBaseTypeName("users", { prefix: "I" }) // "IUsersBase"
  * toCollectionBaseTypeName("")              // "unknown"
  * ```
  */
-export function toCollectionBaseTypeName(collectionName: string): string {
+export function toCollectionBaseTypeName(
+	collectionName: string,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
+): string {
 	const normalizedName = collectionName.trim();
 	if (!normalizedName) {
 		return "unknown";
 	}
 
-	return `${toCollectionTypeName(normalizedName)}Base`;
+	return formatBaseInterfaceName(
+		toCollectionTypeName(normalizedName),
+		baseInterfaceNaming,
+	);
 }
 
 /**

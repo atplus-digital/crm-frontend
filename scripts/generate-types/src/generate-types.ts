@@ -1,6 +1,8 @@
+import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type { CollectionTypesMap } from "./@types/generation";
 import type {
+	BaseInterfaceNamingConfig,
 	DryRunDiffResult,
 	GenerateTypesResult,
 	MultiFileDryRunResult,
@@ -11,16 +13,22 @@ import { NocoBaseClient } from "./generation/client";
 import { buildCollectionTypes } from "./generation/collection-types";
 import { generateContent, generateSplitFiles } from "./generation/content";
 import { splitCollectionsByConfig } from "./utils/collection-splitter";
-import { toCollectionBaseTypeName, toFileName } from "./utils/naming";
+import {
+	resolveBaseInterfaceNamingConfig,
+	toCollectionBaseTypeName,
+	toFileName,
+} from "./utils/naming";
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 import {
+	cleanOutputDirectory,
+	getUnusedFiles,
 	previewGeneratedFile,
 	previewMultipleFiles,
 	writeGeneratedFile,
 	writeMultipleFiles,
 } from "./utils/writer";
 
-const BASE_TYPE_REFERENCE_REGEX = /\b([A-Z][A-Za-z0-9_$]*Base)\b/g;
+const IDENTIFIER_REFERENCE_REGEX = /[$A-Z_a-z][$0-9A-Z_a-z]*/g;
 
 function combineWriteResults(
 	mainResult: PersistResult,
@@ -58,22 +66,31 @@ function combineDryRunResults(
 
 function buildCollectionBaseTypeIndex(
 	collectionTypes: CollectionTypesMap,
+	baseInterfaceNaming: BaseInterfaceNamingConfig,
 ): Map<string, string> {
 	const index = new Map<string, string>();
 
 	for (const collectionName of Object.keys(collectionTypes)) {
-		index.set(toCollectionBaseTypeName(collectionName), collectionName);
+		index.set(
+			toCollectionBaseTypeName(collectionName, baseInterfaceNaming),
+			collectionName,
+		);
 	}
 
 	return index;
 }
 
-function collectBaseTypeReferences(content: string): Set<string> {
+function collectBaseTypeReferences(
+	content: string,
+	baseTypeIndex: ReadonlyMap<string, string>,
+): Set<string> {
 	const references = new Set<string>();
 
-	for (const match of content.matchAll(BASE_TYPE_REFERENCE_REGEX)) {
-		const [_, baseTypeName] = match;
-		references.add(baseTypeName);
+	for (const match of content.matchAll(IDENTIFIER_REFERENCE_REGEX)) {
+		const [typeName] = match;
+		if (baseTypeIndex.has(typeName)) {
+			references.add(typeName);
+		}
 	}
 
 	return references;
@@ -134,15 +151,16 @@ function withMainFileImports(
 	mainCollections: CollectionTypesMap,
 	splitCollectionNames: ReadonlySet<string>,
 	baseTypeIndex: Map<string, string>,
+	baseInterfaceNaming: BaseInterfaceNamingConfig,
 ): string {
 	const localBaseTypes = new Set(
 		Object.keys(mainCollections).map((collectionName) =>
-			toCollectionBaseTypeName(collectionName),
+			toCollectionBaseTypeName(collectionName, baseInterfaceNaming),
 		),
 	);
 	const importsBySource = new Map<string, Set<string>>();
 
-	for (const typeName of collectBaseTypeReferences(content)) {
+	for (const typeName of collectBaseTypeReferences(content, baseTypeIndex)) {
 		if (localBaseTypes.has(typeName)) {
 			continue;
 		}
@@ -163,6 +181,7 @@ function withSplitFileImports(
 	splitCollections: Map<string, CollectionTypesMap>,
 	splitCollectionNames: ReadonlySet<string>,
 	baseTypeIndex: Map<string, string>,
+	baseInterfaceNaming: BaseInterfaceNamingConfig,
 ): Map<string, string> {
 	const result = new Map<string, string>();
 
@@ -170,12 +189,12 @@ function withSplitFileImports(
 		const fileCollections = splitCollections.get(fileName);
 		const localBaseTypes = new Set(
 			Object.keys(fileCollections ?? {}).map((collectionName) =>
-				toCollectionBaseTypeName(collectionName),
+				toCollectionBaseTypeName(collectionName, baseInterfaceNaming),
 			),
 		);
 		const importsBySource = new Map<string, Set<string>>();
 
-		for (const typeName of collectBaseTypeReferences(content)) {
+		for (const typeName of collectBaseTypeReferences(content, baseTypeIndex)) {
 			if (localBaseTypes.has(typeName)) {
 				continue;
 			}
@@ -205,6 +224,9 @@ function withSplitFileImports(
 
 export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 	const client = new NocoBaseClient(config);
+	const baseInterfaceNaming = resolveBaseInterfaceNamingConfig(
+		config.baseInterfaceNaming,
+	);
 
 	console.log(`📡 Conectando a: ${client.baseUrl}`);
 
@@ -226,13 +248,17 @@ export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 		config.splitCollections,
 	);
 	const splitCollectionNames = new Set(splitCollections.keys());
-	const baseTypeIndex = buildCollectionBaseTypeIndex(collectionTypes);
+	const baseTypeIndex = buildCollectionBaseTypeIndex(
+		collectionTypes,
+		baseInterfaceNaming,
+	);
 
 	const mainContent = withMainFileImports(
-		generateContent(mainCollections),
+		generateContent(mainCollections, baseInterfaceNaming),
 		mainCollections,
 		splitCollectionNames,
 		baseTypeIndex,
+		baseInterfaceNaming,
 	);
 
 	if (splitCollections.size === 0) {
@@ -244,17 +270,59 @@ export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 	}
 
 	const splitFilesContent = withSplitFileImports(
-		generateSplitFiles(splitCollections),
+		generateSplitFiles(splitCollections, baseInterfaceNaming),
 		splitCollections,
 		splitCollectionNames,
 		baseTypeIndex,
+		baseInterfaceNaming,
 	);
+
+	// Coleta todos os arquivos que serão gerados para identificar os não utilizados
+	const generatedFilePaths = [
+		path.resolve(process.cwd(), config.outputDir, "index.ts"),
+		...[...splitFilesContent.keys()].map((fileName) =>
+			path.resolve(process.cwd(), config.outputDir, fileName),
+		),
+	];
+
+	// Identifica arquivos não utilizados na pasta de destino
+	const unusedFiles = getUnusedFiles(generatedFilePaths, config.outputDir);
+
+	if (unusedFiles.length > 0) {
+		console.log(
+			`\n⚠️  Encontrados ${unusedFiles.length} arquivo(s) não utilizado(s) em ${config.outputDir}/:`,
+		);
+		for (const file of unusedFiles) {
+			console.log(`   - ${path.basename(file)}`);
+		}
+
+		if (!config.write) {
+			const readline = await import("node:readline");
+			const rl = readline.createInterface({
+				input: process.stdin,
+				output: process.stdout,
+			});
+
+			const answer = await new Promise<string>((resolve) => {
+				rl.question("\n❓ Deseja remover estes arquivos? (s/N): ", resolve);
+			});
+			rl.close();
+
+			if (answer.toLowerCase() !== "s") {
+				console.log("Operação cancelada pelo usuário.");
+				process.exit(0);
+			}
+		}
+
+		const removed = cleanOutputDirectory(unusedFiles);
+		console.log(`🗑️  Removidos ${removed.length} arquivo(s) não utilizado(s).`);
+	}
 
 	if (config.dryRun) {
 		const mainResult = previewGeneratedFile(mainContent);
 		const splitResult = previewMultipleFiles(
 			splitFilesContent,
-			config.splitOutputDir,
+			config.outputDir,
 		);
 		return combineDryRunResults(mainResult, splitResult);
 	}
@@ -262,7 +330,7 @@ export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 	const mainResult = writeGeneratedFile(mainContent);
 	const splitResult = writeMultipleFiles(
 		splitFilesContent,
-		config.splitOutputDir,
+		config.outputDir,
 	);
 	return combineWriteResults(mainResult, splitResult);
 }

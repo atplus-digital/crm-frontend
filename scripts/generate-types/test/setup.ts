@@ -7,23 +7,8 @@ import type { NocoBaseField } from "@scripts/generate-types/src/@types/nocobase"
 import type { RuntimeConfig } from "@scripts/generate-types/src/@types/script";
 import { vi } from "vitest";
 
-// ── Mock de variáveis de ambiente ─────────────────────────────────────────────
-
-const mockEnvConfig = {
-	baseUrl: "http://localhost:13000",
-	token: "test-token",
-	timeoutMs: 15_000,
-};
-
-process.env.CRM_NOCOBASE_URL = mockEnvConfig.baseUrl;
-process.env.CRM_NOCOBASE_TOKEN = mockEnvConfig.token;
-process.env.CRM_NOCOBASE_TIMEOUT_MS = String(mockEnvConfig.timeoutMs);
-
-// ── Mock do módulo de config ──────────────────────────────────────────────────
-
 const mockScriptConfig = {
-	outputPath: "/tmp/test-generated/index.ts",
-	splitOutputDir: "/tmp/test-generated",
+	outputDir: "/tmp/test-generated",
 	splitCollections: [
 		"users",
 		"f_funcionarios",
@@ -39,16 +24,21 @@ const mockScriptConfig = {
 	defaultEnvPath: ".env.local",
 	requestTimeoutMs: 15_000,
 	requestConcurrency: 5,
+	baseInterfaceNaming: {
+		prefix: "",
+		suffix: "Base",
+	},
 };
 
 const mockRuntimeConfig: RuntimeConfig = {
 	...mockScriptConfig,
 	dryRun: false,
 	showHelp: false,
+	write: false,
 	lockWorkspace: false,
-	baseUrl: mockEnvConfig.baseUrl,
-	token: mockEnvConfig.token,
-	timeoutMs: mockEnvConfig.timeoutMs,
+	baseUrl: "https://example.com/api",
+	token: "fake-token",
+	timeoutMs: 30_000,
 };
 
 vi.mock("@scripts/generate-types/config", () => ({
@@ -112,4 +102,4 @@ export function createMockCollectionTypesMap(
 	return map;
 }
 
-export { mockEnvConfig, mockRuntimeConfig, mockScriptConfig };
+export { mockRuntimeConfig, mockScriptConfig };

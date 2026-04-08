@@ -76,6 +76,16 @@ describe("content", () => {
 			expect(lines[2]).toContain("bravo");
 			expect(lines[3]).toContain("zulu");
 		});
+
+		it("deve aplicar nomenclatura customizada na interface base", () => {
+			const types = createMockGeneratedTypes({ id: "number" });
+			const result = generateCollectionBaseInterface("users", types, {
+				prefix: "I",
+				suffix: "",
+			});
+
+			expect(result).toContain("export interface IUsers {");
+		});
 	});
 
 	describe("generateCollectionRelationsInterface", () => {
@@ -110,6 +120,19 @@ describe("content", () => {
 			const result = generateCollectionRelationsInterface("Task", types);
 
 			expect(result).toContain("\towner?: UsersBase | null;");
+		});
+
+		it("deve usar a nomenclatura customizada nas relações", () => {
+			const types = createMockGeneratedTypes(
+				{},
+				{ owner: { type: "m2o", targetCollection: "users" } },
+			);
+			const result = generateCollectionRelationsInterface("Task", types, {
+				prefix: "",
+				suffix: "",
+			});
+
+			expect(result).toContain("\towner?: Users | null;");
 		});
 	});
 
@@ -264,6 +287,24 @@ describe("content", () => {
 
 			expect(result).toContain("Arquivo gerado automaticamente");
 			expect(result).toContain("export interface UsersBase {");
+		});
+
+		it("deve permitir gerar conteúdo sem prefixo e sem sufixo na interface base", () => {
+			const collections = createMockCollectionTypesMap({
+				users: {
+					scalars: { id: "number" },
+					relations: {
+						manager: { type: "m2o", targetCollection: "users" },
+					},
+				},
+			});
+			const result = generateContentForCollections(collections, false, {
+				prefix: "",
+				suffix: "",
+			});
+
+			expect(result).toContain("export interface Users {");
+			expect(result).toContain("\tmanager?: Users | null;");
 		});
 	});
 

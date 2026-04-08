@@ -1,6 +1,7 @@
 import type { QueryClient } from "@tanstack/react-query";
 
 import { createRootRouteWithContext } from "@tanstack/react-router";
+import { NotFoundPage } from "#/components/document/not-found-page";
 import { RootDocument } from "#/components/document/root-document";
 import appCss from "#/styles.css?url";
 
@@ -54,4 +55,5 @@ export const Route = createRootRouteWithContext<AppRouterContext>()({
 		],
 	}),
 	shellComponent: RootDocument,
+	notFoundComponent: NotFoundPage,
 });

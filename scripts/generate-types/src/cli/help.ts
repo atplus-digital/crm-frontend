@@ -1,4 +1,5 @@
 import { config } from "@scripts/generate-types/config";
+import { formatBaseInterfacePattern } from "@scripts/generate-types/src/utils/naming";
 
 export function printHelp() {
 	console.log(
@@ -8,18 +9,21 @@ Uso:
 
 Opções:
   --dry-run           Executa sem escrever arquivos (preview de alterações)
+  --write             Bypass na confirmação de remoção de arquivos não utilizados
   -h, --help          Exibe esta ajuda
 
 Configuração:
   env: ${config.defaultEnvPath}
-  output principal: ${config.outputPath}
-  output split: ${config.splitOutputDir}/
+  output: ${config.outputDir}/
+  output principal: ${config.outputDir}/index.ts
+  output split: ${config.outputDir}/
+  interface base: ${formatBaseInterfacePattern(config.baseInterfaceNaming)}
 
 Estrutura de saída:
-  - Arquivo principal: ${config.outputPath}
+  - Arquivo principal: ${config.outputDir}/index.ts
     └─ ~100 collections (todas exceto as splitCollections)
 
-  - Arquivos individuais: ${config.splitOutputDir}/<collection>.ts
+  - Arquivos individuais: ${config.outputDir}/<collection>.ts
     └─ 10 collections em arquivos separados:
        • users.ts
        • f_funcionarios.ts
@@ -33,7 +37,7 @@ Estrutura de saída:
        • t_telecom_recursos.ts
 
 Tipos gerados por collection:
-  - <Collection>Base: interface com campos escalares/FKs
+  - ${formatBaseInterfacePattern(config.baseInterfaceNaming)}: interface com campos escalares/FKs
   - <Collection>Relations: interface com todas as relações (opcional)
   - <Collection>RelationKey: union type das chaves de relação
 `.trim(),

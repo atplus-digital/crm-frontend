@@ -1,5 +1,8 @@
 import {
+	formatBaseInterfaceName,
+	formatBaseInterfacePattern,
 	formatKey,
+	resolveBaseInterfaceNamingConfig,
 	toCollectionBaseTypeName,
 	toCollectionTypeName,
 	toFileName,
@@ -170,6 +173,62 @@ describe("naming - toCollectionBaseTypeName", () => {
 
 	it("deve lidar com caracteres especiais", () => {
 		expect(toCollectionBaseTypeName("user-profiles")).toBe("UserProfilesBase");
+	});
+
+	it("deve permitir prefixo e sufixo customizados", () => {
+		expect(
+			toCollectionBaseTypeName("users", {
+				prefix: "I",
+				suffix: "Entity",
+			}),
+		).toBe("IUsersEntity");
+	});
+
+	it("deve permitir apenas prefixo customizado", () => {
+		expect(
+			toCollectionBaseTypeName("users", {
+				prefix: "I",
+				suffix: "",
+			}),
+		).toBe("IUsers");
+	});
+
+	it("deve permitir remover prefixo e sufixo", () => {
+		expect(
+			toCollectionBaseTypeName("users", {
+				prefix: "",
+				suffix: "",
+			}),
+		).toBe("Users");
+	});
+});
+
+describe("naming - base interface helpers", () => {
+	it("deve normalizar configuração parcial com defaults", () => {
+		expect(resolveBaseInterfaceNamingConfig({ prefix: "I" })).toEqual({
+			prefix: "I",
+			suffix: "Base",
+		});
+	});
+
+	it("deve montar padrão de nomenclatura da interface base", () => {
+		expect(formatBaseInterfacePattern()).toBe("<Collection>Base");
+		expect(
+			formatBaseInterfacePattern({
+				prefix: "I",
+				suffix: "",
+			}),
+		).toBe("I<Collection>");
+	});
+
+	it("deve montar nome final da interface base", () => {
+		expect(formatBaseInterfaceName("Users")).toBe("UsersBase");
+		expect(
+			formatBaseInterfaceName("Users", {
+				prefix: "",
+				suffix: "",
+			}),
+		).toBe("Users");
 	});
 });
 

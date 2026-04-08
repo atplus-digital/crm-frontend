@@ -3,8 +3,10 @@ import type {
 	GeneratedTypes,
 	RelationInfo,
 } from "@scripts/generate-types/src/@types/generation";
+import type { BaseInterfaceNamingConfig } from "@scripts/generate-types/src/@types/script";
 import {
 	formatKey,
+	toCollectionBaseTypeName,
 	toCollectionTypeName,
 } from "@scripts/generate-types/src/utils/naming";
 import { getRelationCardinality, renderRelationValueType } from "./relations";
@@ -13,10 +15,14 @@ function _sortMapEntries<T>(map: Map<string, T>): [string, T][] {
 	return Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b));
 }
 
-function _renderRelationFieldType(relation: RelationInfo): string {
+function _renderRelationFieldType(
+	relation: RelationInfo,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
+): string {
 	return renderRelationValueType(
 		relation.targetCollection,
 		getRelationCardinality(relation.type),
+		baseInterfaceNaming,
 	);
 }
 
@@ -38,12 +44,16 @@ export function generateFileHeader(): string {
 export function generateCollectionBaseInterface(
 	collectionName: string,
 	types: GeneratedTypes,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 ): string {
 	const lines: string[] = [];
 	const scalarEntries = _sortMapEntries(types.scalars);
-	const typeName = toCollectionTypeName(collectionName);
+	const typeName = toCollectionBaseTypeName(
+		collectionName,
+		baseInterfaceNaming,
+	);
 
-	lines.push(`export interface ${typeName}Base {`);
+	lines.push(`export interface ${typeName} {`);
 	for (const [fieldName, fieldType] of scalarEntries) {
 		lines.push(`\t${formatKey(fieldName)}: ${fieldType};`);
 	}
@@ -58,6 +68,7 @@ export function generateCollectionBaseInterface(
 export function generateCollectionRelationsInterface(
 	collectionName: string,
 	types: GeneratedTypes,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 ): string {
 	const lines: string[] = [];
 	const relationEntries = _sortMapEntries(types.relations);
@@ -69,7 +80,7 @@ export function generateCollectionRelationsInterface(
 		lines.push(`export interface ${typeName}Relations {`);
 		for (const [fieldName, relation] of relationEntries) {
 			lines.push(
-				`\t${formatKey(fieldName)}?: ${_renderRelationFieldType(relation)};`,
+				`\t${formatKey(fieldName)}?: ${_renderRelationFieldType(relation, baseInterfaceNaming)};`,
 			);
 		}
 		lines.push("}");
@@ -104,12 +115,21 @@ export function generateCollectionRelationKeyType(
 export function generateCollectionTypes(
 	collectionName: string,
 	types: GeneratedTypes,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 ): string {
 	const lines: string[] = [];
 
-	lines.push(generateCollectionBaseInterface(collectionName, types));
+	lines.push(
+		generateCollectionBaseInterface(collectionName, types, baseInterfaceNaming),
+	);
 	lines.push("");
-	lines.push(generateCollectionRelationsInterface(collectionName, types));
+	lines.push(
+		generateCollectionRelationsInterface(
+			collectionName,
+			types,
+			baseInterfaceNaming,
+		),
+	);
 	lines.push("");
 	lines.push(generateCollectionRelationKeyType(collectionName));
 
@@ -123,6 +143,7 @@ export function generateCollectionTypes(
 export function generateContentForCollections(
 	collections: CollectionTypesMap,
 	includeHeader = true,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 ): string {
 	const lines: string[] = [];
 
@@ -135,7 +156,9 @@ export function generateContentForCollections(
 	);
 
 	for (const [collectionName, types] of sortedCollections) {
-		lines.push(generateCollectionTypes(collectionName, types));
+		lines.push(
+			generateCollectionTypes(collectionName, types, baseInterfaceNaming),
+		);
 		lines.push("");
 	}
 
@@ -148,11 +171,16 @@ export function generateContentForCollections(
  */
 export function generateSplitFiles(
 	splitCollections: Map<string, CollectionTypesMap>,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 ): Map<string, string> {
 	const result = new Map<string, string>();
 
 	for (const [fileName, collections] of splitCollections) {
-		const content = generateContentForCollections(collections, true);
+		const content = generateContentForCollections(
+			collections,
+			true,
+			baseInterfaceNaming,
+		);
 		result.set(fileName, content);
 	}
 
@@ -164,13 +192,25 @@ export function generateSplitFiles(
  */
 export function generateTypeDefinitions(
 	collectionTypes: CollectionTypesMap,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 ): string {
-	return generateContentForCollections(collectionTypes, false);
+	return generateContentForCollections(
+		collectionTypes,
+		false,
+		baseInterfaceNaming,
+	);
 }
 
 /**
  * Gera conteúdo TypeScript completo com header.
  */
-export function generateContent(collectionTypes: CollectionTypesMap): string {
-	return generateContentForCollections(collectionTypes, true);
+export function generateContent(
+	collectionTypes: CollectionTypesMap,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
+): string {
+	return generateContentForCollections(
+		collectionTypes,
+		true,
+		baseInterfaceNaming,
+	);
 }
