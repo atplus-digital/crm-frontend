@@ -188,8 +188,8 @@
       ],
       "priority": 10,
       "group": "F",
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Criados testes para auth.schemas (22 tests), auth.types/hasRole+hasSnippet (9 tests), auth-session.server (13 tests: createSession, getSession, removeSession, round-trip), auth-api.server (14 tests: signIn, checkSession, signOut com mocks HTTP), auth.functions (11 tests: getCurrentUser limpando sessão em 401, signIn/signOut server functions com validação CSRF), rota protegida _authenticated (5 tests: sanitizeRedirect, redirect sem sessão). Todos os mocks de ambiente e HTTP são independentes de tokens persistidos no browser. Biome check limpo (92 files). Typecheck sem erros novos (apenas jsdom preexistente em theme.test.ts). 303 tests pass."
     }
   ]
 }
