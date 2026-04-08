@@ -113,8 +113,8 @@
       ],
       "priority": 6,
       "group": "C",
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Criado src/modules/repository/nocobase/server-client.ts com nocobaseClient (get/post/put/patch/delete autenticados). Usa getSession() para token da sessão do usuário (cookie crm_session), axios em contexto server-only. Instância criada por requisição (sem persistência de token). Erros normalizados via NocoBaseClientError. UnauthenticatedError para sessão ausente. JSDoc documenta que autorização real continua no NocoBase backend. Biome check passa. Typecheck do arquivo passa (erro pré-existente em auth.functions.ts pertence ao US-005 paralelo)."
     },
     {
       "id": "US-007",

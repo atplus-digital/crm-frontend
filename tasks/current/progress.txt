@@ -1,20 +1,39 @@
 === RALPH ORCHESTRATOR SESSION ===
 Task: current
 Status: RUNNING
-Last Updated: 2026-04-08T12:15:00Z
-Current Group: B
-Current Story: US-003 - Implementar client server-only para autenticação NocoBase
-Parallel Stories: US-003, US-004
+Last Updated: 2026-04-08T12:30:00Z
+Current Group: C
+Current Story: US-005 - Implementar server functions de autenticação
+Parallel Stories: US-005, US-006
 Attempts: 1/3
 Worker Timeout: 1800s
 
+--- US-006: Criar wrapper autenticado server-only para chamadas NocoBase ---
+STATUS: SUCCESS
+File: src/modules/repository/nocobase/server-client.ts
+- nocobaseClient with authenticated get/post/put/patch/delete methods
+- Uses getSession() from auth-session.server.ts for user token (not automation variable)
+- Uses axios in server-only context, instance created per-request
+- NocoBaseClientError for normalized API errors, UnauthenticatedError for missing session
+- JSDoc documents that real authorization continues on NocoBase backend
+- Biome check: PASS (80 files, no fixes needed)
+- Typecheck: PASS for server-client.ts (pre-existing error in auth.functions.ts belongs to US-005)
+
 Execution Summary:
-- Completed: 2 / 10
-- In Progress: US-003, US-004 (parallel)
-- Current Group: B (0/2 complete)
+- Completed: 4 / 10
+- In Progress: US-005, US-006 (parallel)
+- Current Group: C (0/2 complete)
 - Failed: 0
 - Blocked: 0
 === END HEADER ===
+
+## [2026-04-08T12:20:00Z] - Group B Execution
+Stories: US-003, US-004 (parallel)
+Results:
+  - US-003: SUCCESS — auth-api.server.ts criado com signIn, checkSession, signOut
+  - US-004: SUCCESS — auth-session.server.ts criado com createSession, getSession, removeSession
+Group Status: COMPLETE
+---
 
 ## [2026-04-08T12:05:00Z] - Group A Execution
 Stories: US-001, US-002 (parallel)
