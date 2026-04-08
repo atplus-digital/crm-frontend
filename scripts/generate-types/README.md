@@ -91,29 +91,29 @@ scripts/generate-types/
 
 ### Field Types (27 tipos)
 
-| Categoria  | Tipos NocoBase                                            | TypeScript                |
-| ---------- | --------------------------------------------------------- | ------------------------- |
-| Numeric    | `integer`, `bigInt`, `double`, `float`, `decimal`, `sort` | `number`                  |
-| Numeric (2)| `snowflakeId`, `timestamp`                                | `number`                  |
-| String     | `string`, `text`, `uid`, `nanoid`, `email`                | `string`                  |
-| String (2) | `phone`, `url`, `ipv4`, `ipv6`, `password`, `formula`     | `string`                  |
-| String (3) | `sequence`, `point`, `lineString`                         | `string`                  |
-| Date/Time  | `date`, `dateOnly`, `datetime`, `time`, `month`, `year`   | `string` (ISO 8601)       |
-| Object     | `json`, `jsonb`, `object`                                 | `Record<string, unknown>` |
-| Boolean    | `boolean`                                                 | `boolean`                 |
-| Array      | `array`, `set`                                            | `string[]` / `unknown[]`  |
-| Special    | `context`                                                 | `unknown`                 |
+| Categoria   | Tipos NocoBase                                            | TypeScript                |
+| ----------- | --------------------------------------------------------- | ------------------------- |
+| Numeric     | `integer`, `bigInt`, `double`, `float`, `decimal`, `sort` | `number`                  |
+| Numeric (2) | `snowflakeId`, `timestamp`                                | `number`                  |
+| String      | `string`, `text`, `uid`, `nanoid`, `email`                | `string`                  |
+| String (2)  | `phone`, `url`, `ipv4`, `ipv6`, `password`, `formula`     | `string`                  |
+| String (3)  | `sequence`, `point`, `lineString`                         | `string`                  |
+| Date/Time   | `date`, `dateOnly`, `datetime`, `time`, `month`, `year`   | `string` (ISO 8601)       |
+| Object      | `json`, `jsonb`, `object`                                 | `Record<string, unknown>` |
+| Boolean     | `boolean`                                                 | `boolean`                 |
+| Array       | `array`, `set`                                            | `string[]` / `unknown[]`  |
+| Special     | `context`                                                 | `unknown`                 |
 
 ### System Fields
 
-| Campo         | Tipo              | Nota                                     |
-| ------------- | ----------------- | ---------------------------------------- |
-| `createdById` | `number \| null`  | Override fixo para chaves de auditoria   |
-| `updatedById` | `number \| null`  | Override fixo para chaves de auditoria   |
-| `createdBy`   | `UsersBase \| null` | Relação opcional em `Relations`        |
-| `updatedBy`   | `UsersBase \| null` | Relação opcional em `Relations`        |
-| `parent`      | `<Collection>Base \| null` | Relação opcional hierárquica |
-| `children`    | `<Collection>Base[]` | Relação opcional hierárquica         |
+| Campo         | Tipo                       | Nota                                   |
+| ------------- | -------------------------- | -------------------------------------- |
+| `createdById` | `number \| null`           | Override fixo para chaves de auditoria |
+| `updatedById` | `number \| null`           | Override fixo para chaves de auditoria |
+| `createdBy`   | `UsersBase \| null`        | Relação opcional em `Relations`        |
+| `updatedBy`   | `UsersBase \| null`        | Relação opcional em `Relations`        |
+| `parent`      | `<Collection>Base \| null` | Relação opcional hierárquica           |
+| `children`    | `<Collection>Base[]`       | Relação opcional hierárquica           |
 
 ### Relation Interfaces
 
@@ -181,22 +181,22 @@ Estratégia: funções puras sem mocks (unit) + mock do client para fluxo comple
 
 ## Opções de Execução
 
-| Opção                          | Descrição                                           |
-| ------------------------------ | --------------------------------------------------- |
-| `--dry-run`                    | Exibe diferenças sem escrever os arquivos          |
-| `--help` ou `-h`               | Mostra ajuda de uso do script                       |
-| `--lock-workspace`             | Ativa o bloqueio de escrita dos arquivos gerados    |
+| Opção              | Descrição                                        |
+| ------------------ | ------------------------------------------------ |
+| `--dry-run`        | Exibe diferenças sem escrever os arquivos        |
+| `--help` ou `-h`   | Mostra ajuda de uso do script                    |
+| `--lock-workspace` | Ativa o bloqueio de escrita dos arquivos gerados |
 
 Quando a opção `--lock-workspace` é usada, ou quando `lockWorkspaceFolder` está ativado no `config.ts`, o script verifica o arquivo `.vscode/settings.json` e adiciona as configurações necessárias para tornar os arquivos gerados somente leitura no VS Code.
 
 ## Troubleshooting
 
-| Problema                         | Solução                                                 |
-| -------------------------------- | ------------------------------------------------------- |
-| Variáveis ausentes em `.env.local` | Definir em `.env.local` ou usar `.env` como fallback |
-| `Request timeout`                | Verificar servidor ou aumentar `requestTimeoutMs`       |
-| `Unauthorized`                   | Regenerar token no NocoBase                             |
-| Tipos incorretos                 | Rodar `pnpm generate-types` (schema mudou)              |
-| Arquivo não mudou após rodar     | Esperado — idempotente. Usar `--dry-run` para verificar |
-| Imports lentos em arquivo grande | Adicionar collection ao `splitCollections` no `config`  |
+| Problema                           | Solução                                                                 |
+| ---------------------------------- | ----------------------------------------------------------------------- |
+| Variáveis ausentes em `.env.local` | Definir em `.env.local` ou usar `.env` como fallback                    |
+| `Request timeout`                  | Verificar servidor ou aumentar `requestTimeoutMs`                       |
+| `Unauthorized`                     | Regenerar token no NocoBase                                             |
+| Tipos incorretos                   | Rodar `pnpm generate-types` (schema mudou)                              |
+| Arquivo não mudou após rodar       | Esperado — idempotente. Usar `--dry-run` para verificar                 |
+| Imports lentos em arquivo grande   | Adicionar collection ao `splitCollections` no `config`                  |
 | Arquivos gerados sendo modificados | Usar a opção `--lock-workspace` para proteger contra edições acidentais |

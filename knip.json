@@ -14,15 +14,15 @@
 		"scripts/**/*.ts"
 	],
 	"rules": {
-		"unlisted": "off",
 		"exports": "warn",
-		"types": "warn"
+		"types": "warn",
+		"dependencies": "warn",
+		"devDependencies": "warn",
 	},
   	"ignore": [
 		".agents/**",
 		"src/@types/generated/**"
 	],
 	"ignoreDependencies": [
-    "/.*/"
 	]
 }

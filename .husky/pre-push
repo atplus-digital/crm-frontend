@@ -1,0 +1,7 @@
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$branch" = "main" ]; then
+  echo "⏳ Rodando checagens antes do push para main..."
+  pnpm check
+  pnpm test
+fi

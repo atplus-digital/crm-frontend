@@ -34,6 +34,8 @@ jobs:
       - name: Run test coverage build
         run: |
           pnpm install --frozen-lockfile
+          pnpm biome:fix
+          pnpm knip
           pnpm test --coverage
 
       - name: Upload artifact

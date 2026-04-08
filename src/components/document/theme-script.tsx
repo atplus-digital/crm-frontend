@@ -1,7 +1,7 @@
 import { ScriptOnce } from "@tanstack/react-router";
 import { THEME_STORAGE_KEY, THEMES } from "#/lib/theme";
 
-export const THEME_INIT_SCRIPT = `
+const THEME_INIT_SCRIPT = `
 (function () {
   try {
     var stored = window.localStorage.getItem("${THEME_STORAGE_KEY}");
