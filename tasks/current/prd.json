@@ -152,8 +152,8 @@
       ],
       "priority": 8,
       "group": "D",
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Criado src/routes/login.tsx com formulário de login (email/senha) usando shadcn/ui (Card, Input, Label, Button). beforeLoad chama getCurrentUser e redireciona para rota autenticada se sessão válida. Login usa signIn server function via useMutation. Em sucesso redireciona para /authenticated ou redirect seguro (validado contra open redirect). Em falha mostra mensagem genérica. Botão 'Limpar sessão' chama signOut. Componentes shadcn input, label, card adicionados. Biome check passa (85 arquivos). Typecheck: único erro pré-existente em tsconfig.json (baseUrl deprecation)."
     },
     {
       "id": "US-009",
