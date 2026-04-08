@@ -10,6 +10,6 @@ export const env = createEnv({
 	client: {
 		VITE_LOCAL_STORAGE_BASE_KEY: z.string().optional().default("crm-atplus"),
 	},
-	runtimeEnv: import.meta.env,
+	runtimeEnv: process.env,
 	emptyStringAsUndefined: true,
 });

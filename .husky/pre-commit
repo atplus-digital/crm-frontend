@@ -1,3 +1,2 @@
-pnpm exec lint-staged
+pnpm biome:fix
 pnpm knip
-pnpm biome check

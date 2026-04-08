@@ -50,8 +50,6 @@ export interface MultiFileDryRunResult {
 	totalChanged: number;
 }
 
-export type MultiFileResult = MultiFilePersistResult | MultiFileDryRunResult;
-
 export type GenerateTypesResult =
 	| PersistResult
 	| DryRunDiffResult

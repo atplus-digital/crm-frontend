@@ -7,4 +7,3 @@ export function getQueryContext() {
 		queryClient,
 	};
 }
-export default function TanstackQueryProvider() {}

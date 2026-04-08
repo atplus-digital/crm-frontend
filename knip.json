@@ -24,5 +24,6 @@
 		"src/@types/generated/**"
 	],
 	"ignoreDependencies": [
-	]
+	],
+	"ignoreExportsUsedInFile": true
 }
