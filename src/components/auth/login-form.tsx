@@ -1,11 +1,10 @@
-import { useState, type FormEvent } from "react";
-
-import { useNavigate, Link } from "@tanstack/react-router";
-import { signIn } from "#/modules/auth/service";
-import { setError, setLoading, authStore } from "#/modules/auth/store";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { type FormEvent, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
+import { signIn } from "#/modules/auth/service";
+import { authStore, setError, setLoading } from "#/modules/auth/store";
 
 export function LoginForm() {
 	const navigate = useNavigate();

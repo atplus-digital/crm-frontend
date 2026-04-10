@@ -1,10 +1,9 @@
-import { useState, type FormEvent } from "react";
-
 import { useNavigate } from "@tanstack/react-router";
-import { confirmPasswordReset } from "#/modules/auth/service";
+import { type FormEvent, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
+import { confirmPasswordReset } from "#/modules/auth/service";
 
 interface ResetPasswordConfirmFormProps {
 	token: string;

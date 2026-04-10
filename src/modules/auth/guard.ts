@@ -1,7 +1,6 @@
 import { redirect } from "@tanstack/react-router";
-
-import { authStore, setUser, reset } from "./store";
 import { checkAuth } from "./service";
+import { authStore, reset, setUser } from "./store";
 
 /**
  * Require authentication — redirect to /login if not authenticated.

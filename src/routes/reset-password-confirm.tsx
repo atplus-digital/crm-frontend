@@ -1,6 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-
-import { authStore } from "#/modules/auth";
+import ResetPasswordConfirmForm from "#/components/auth/reset-password-confirm-form";
 import {
 	Card,
 	CardContent,
@@ -8,7 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "#/components/ui/card";
-import ResetPasswordConfirmForm from "#/components/auth/reset-password-confirm-form";
+import { authStore } from "#/modules/auth";
 
 function ResetPasswordConfirmPage() {
 	const { token } = Route.useSearch();
@@ -24,7 +23,7 @@ function ResetPasswordConfirmPage() {
 				</CardContent>
 			</Card>
 		</div>
-	)
+	);
 }
 
 export const Route = createFileRoute("/reset-password-confirm")({

@@ -1,6 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-
-import { authStore } from "#/modules/auth";
+import ResetPasswordForm from "#/components/auth/reset-password-form";
 import {
 	Card,
 	CardContent,
@@ -8,7 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "#/components/ui/card";
-import ResetPasswordForm from "#/components/auth/reset-password-form";
+import { authStore } from "#/modules/auth";
 
 function ResetPasswordPage() {
 	return (
