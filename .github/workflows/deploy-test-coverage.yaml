@@ -31,6 +31,15 @@ jobs:
           node-version: 24
           cache: pnpm
 
+      - name: Ensure .env.local exists
+        run: |
+          if [ ! -f .env.local ]; then
+            cp .env.example .env.local
+            echo "Copied .env.example to .env.local"
+          else
+            echo ".env.local already exists"
+          fi
+
       - name: Run test coverage build
         run: |
           pnpm install --frozen-lockfile
