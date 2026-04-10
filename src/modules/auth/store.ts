@@ -1,4 +1,4 @@
-import { store } from "@tanstack/react-store";
+import { createStore } from "@tanstack/store";
 
 import { env } from "#/env";
 
@@ -24,7 +24,7 @@ function removeTokenFromStorage(): void {
 }
 
 // Auth store with initial state
-export const authStore = store<AuthState>({
+export const authStore = createStore<AuthState>({
 	user: null,
 	token: getTokenFromStorage(),
 	isAuthenticated: !!getTokenFromStorage(),

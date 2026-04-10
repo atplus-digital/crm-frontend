@@ -3,13 +3,24 @@ import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext } from "@tanstack/react-router";
 import { NotFoundPage } from "#/components/document/not-found-page";
 import { RootDocument } from "#/components/document/root-document";
+import { authStore } from "#/modules/auth";
+import { validateTokenOnInit } from "#/modules/auth/guard";
 import appCss from "#/styles.css?url";
 
 interface AppRouterContext {
 	queryClient: QueryClient;
+	authStore: typeof authStore;
 }
 
 export const Route = createRootRouteWithContext<AppRouterContext>()({
+	beforeLoad: async () => {
+		if (typeof window === "undefined") return;
+
+		const state = authStore.state;
+		if (state.token && !state.user) {
+			await validateTokenOnInit();
+		}
+	},
 	head: () => ({
 		meta: [
 			{
