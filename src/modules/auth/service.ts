@@ -14,9 +14,8 @@ export async function signIn(
 	const response = (await nocobaseClient.auth.signIn(
 		credentials,
 	)) as AuthResponse;
-	const { token, user } = response.data;
+	const { token, user } = response.data?.data ?? response.data;
 
-	nocobaseClient.auth.token = token;
 	setToken(token);
 	setUser(user);
 

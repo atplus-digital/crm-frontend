@@ -13,6 +13,7 @@ const config = defineConfig({
 	nitro: {
 		serverDir: "./",
 	},
+	server: { allowedHosts: ["fifteen-unglue-rascal.ngrok-free.dev"] },
 });
 
 export default config;

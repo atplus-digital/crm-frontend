@@ -16,6 +16,8 @@ export default defineConfig({
 				"src/routeTree.gen.ts",
 				"scripts/generate-types/config.ts",
 				"scripts/generate-types/src/@types/**",
+				"src/_tests/global-setup.ts",
+				"src/_tests/mock-env.ts"
 			],
 		},
 	},
@@ -25,5 +27,5 @@ export default defineConfig({
 			"@": path.resolve(__dirname, "./src"),
 			"#": path.resolve(__dirname, "./src"),
 		},
-	},
+	}
 });
