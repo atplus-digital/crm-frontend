@@ -6,6 +6,7 @@
 		"**/routeTree.gen.ts": true
 	},
 	"files.readonlyInclude": {
+		"**/.husky/**": true,
 		"**/routeTree.gen.ts": true,
 		"src/@types/generated/**": true,
 		"src/@types/generated/crm/index.ts": true

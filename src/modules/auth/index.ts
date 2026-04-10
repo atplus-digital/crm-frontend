@@ -10,8 +10,6 @@ export {
 export {
 	authStore,
 	reset,
-	setError,
-	setLoading,
 	setToken,
 	setUser,
 } from "./store";

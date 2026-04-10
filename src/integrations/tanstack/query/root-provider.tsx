@@ -1,8 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { reset } from "#/modules/auth";
 
-let isRedirecting = false;
-
 function isUnauthorizedError(
 	error: unknown,
 ): error is { status?: number; response?: { status?: number } } {
@@ -18,6 +16,8 @@ function isUnauthorizedError(
 }
 
 export function getQueryContext() {
+	let isRedirecting = false;
+
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {

@@ -10,8 +10,6 @@ export const authStore = createStore<AuthState>({
 	user: null,
 	token: persistedToken,
 	isAuthenticated: !!persistedToken,
-	isLoading: false,
-	error: null,
 });
 
 export function setUser(user: AuthUser | null): void {
@@ -26,20 +24,10 @@ export function setToken(token: string | null): void {
 	}));
 }
 
-export function setLoading(isLoading: boolean): void {
-	authStore.setState((state) => ({ ...state, isLoading }));
-}
-
-export function setError(error: string | null): void {
-	authStore.setState((state) => ({ ...state, error }));
-}
-
 export function reset(): void {
 	authStore.setState(() => ({
 		user: null,
 		token: null,
 		isAuthenticated: false,
-		isLoading: false,
-		error: null,
 	}));
 }

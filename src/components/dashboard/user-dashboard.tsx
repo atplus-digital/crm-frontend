@@ -12,44 +12,8 @@ import {
 	CardTitle,
 } from "#/components/ui/card";
 import { Separator } from "#/components/ui/separator";
+import { formatDateInPortuguese, getInitials } from "#/lib/utils";
 import { authStore } from "#/modules/auth";
-
-function formatDateInPortuguese(date: Date): string {
-	const weekdays = [
-		"Domingo",
-		"Segunda-feira",
-		"Terça-feira",
-		"Quarta-feira",
-		"Quinta-feira",
-		"Sexta-feira",
-		"Sábado",
-	];
-	const months = [
-		"janeiro",
-		"fevereiro",
-		"março",
-		"abril",
-		"maio",
-		"junho",
-		"julho",
-		"agosto",
-		"setembro",
-		"outubro",
-		"novembro",
-		"dezembro",
-	];
-
-	const weekday = weekdays[date.getDay()];
-	const day = date.getDate();
-	const month = months[date.getMonth()];
-	const year = date.getFullYear();
-
-	return `${weekday}, ${day} de ${month} de ${year}`;
-}
-
-function getInitials(name: string): string {
-	return name.charAt(0).toUpperCase();
-}
 
 export function UserDashboard() {
 	const user = useStore(authStore, (state) => state.user);

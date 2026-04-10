@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
-import { setError, setLoading, signIn } from "#/modules/auth";
+import { signIn } from "#/modules/auth";
 
 export function LoginForm() {
 	const navigate = useNavigate();
@@ -16,8 +16,6 @@ export function LoginForm() {
 		e.preventDefault();
 		setIsLoading(true);
 		setErrorLocal(null);
-		setLoading(true);
-		setError(null);
 
 		try {
 			await signIn({ email, password });
@@ -25,12 +23,10 @@ export function LoginForm() {
 			const returnTo = search.get("returnTo") || "/";
 			await navigate({ to: returnTo });
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			setErrorLocal("E-mail ou senha inválidos");
-			setError("E-mail ou senha inválidos");
 		} finally {
 			setIsLoading(false);
-			setLoading(false);
 		}
 	}
 

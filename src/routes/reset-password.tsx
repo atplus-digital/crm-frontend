@@ -1,38 +1,20 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { AuthLayout } from "#/components/auth/auth-layout";
 import ResetPasswordForm from "#/components/auth/reset-password-form";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "#/components/ui/card";
-import { authStore } from "#/modules/auth";
+import { requireGuest } from "#/modules/auth";
 
 function ResetPasswordPage() {
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-background p-4">
-			<Card className="w-full max-w-md">
-				<CardHeader className="text-center">
-					<CardTitle className="text-2xl font-bold">Redefinir Senha</CardTitle>
-					<CardDescription>
-						Informe seu e-mail para receber as instruções
-					</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<ResetPasswordForm />
-				</CardContent>
-			</Card>
-		</div>
+		<AuthLayout
+			title="Redefinir Senha"
+			description="Informe seu e-mail para receber as instruções"
+		>
+			<ResetPasswordForm />
+		</AuthLayout>
 	);
 }
 
 export const Route = createFileRoute("/reset-password")({
-	beforeLoad: () => {
-		if (typeof window === "undefined") return;
-		if (authStore.state.isAuthenticated && authStore.state.token) {
-			throw redirect({ to: "/" });
-		}
-	},
+	beforeLoad: () => requireGuest(),
 	component: ResetPasswordPage,
 });

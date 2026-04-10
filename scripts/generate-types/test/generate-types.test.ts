@@ -338,4 +338,66 @@ describe("runGenerateTypes", () => {
 			'import type { IDepartments } from "./index";',
 		);
 	});
+
+	it("deve combinar resultados de dry-run para múltiplos arquivos", async () => {
+		mockRuntimeConfig.dryRun = true;
+		mockRuntimeConfig.splitCollections = ["users"];
+
+		const collectionTypes = createMockCollectionTypesMap({
+			departments: { scalars: { id: "number" } },
+			users: { scalars: { id: "number" } },
+		});
+
+		const previewGeneratedFile = vi
+			.fn()
+			.mockImplementation((content: string) => ({
+				mode: "dry-run" as const,
+				outputPath: "/tmp/index.ts",
+				changed: true,
+				diff: content,
+			}));
+		const previewMultipleFiles = vi.fn().mockReturnValue({
+			mode: "dry-run" as const,
+			files: [
+				{
+					outputPath: "/tmp/generated/users.ts",
+					changed: true,
+					diff: "+ export interface UsersBase",
+				},
+			],
+			totalFiles: 1,
+			totalChanged: 1,
+		});
+
+		vi.doMock("../src/generation/client", () => ({
+			NocoBaseClient: class MockNocoBaseClient {
+				public baseUrl = "https://example.com/api";
+				public fetchCollections = vi
+					.fn()
+					.mockResolvedValue([{ name: "departments" }, { name: "users" }]);
+			},
+		}));
+		vi.doMock("../src/generation/collection-types", () => ({
+			buildCollectionTypes: vi.fn().mockResolvedValue(collectionTypes),
+		}));
+		vi.doMock("../src/utils/writer", () => ({
+			previewGeneratedFile,
+			previewMultipleFiles,
+			writeGeneratedFile: vi.fn(),
+			writeMultipleFiles: vi.fn(),
+			getUnusedFiles: vi.fn().mockReturnValue([]),
+			cleanOutputDirectory: vi.fn().mockReturnValue([]),
+		}));
+
+		const { runGenerateTypes } = await import("../src/generate-types");
+		const result = await runGenerateTypes();
+
+		expect(result).toMatchObject({
+			mode: "dry-run",
+			totalFiles: 2,
+			totalChanged: 2,
+		});
+		expect(previewGeneratedFile).toHaveBeenCalledTimes(1);
+		expect(previewMultipleFiles).toHaveBeenCalledTimes(1);
+	});
 });

@@ -1,28 +1,14 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { AuthLayout } from "#/components/auth/auth-layout";
 import ResetPasswordConfirmForm from "#/components/auth/reset-password-confirm-form";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "#/components/ui/card";
-import { authStore } from "#/modules/auth";
+import { requireGuest } from "#/modules/auth";
 
 function ResetPasswordConfirmPage() {
 	const { token } = Route.useSearch();
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-background p-4">
-			<Card className="w-full max-w-md">
-				<CardHeader className="text-center">
-					<CardTitle className="text-2xl font-bold">Nova Senha</CardTitle>
-					<CardDescription>Defina sua nova senha</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<ResetPasswordConfirmForm token={token} />
-				</CardContent>
-			</Card>
-		</div>
+		<AuthLayout title="Nova Senha" description="Defina sua nova senha">
+			<ResetPasswordConfirmForm token={token} />
+		</AuthLayout>
 	);
 }
 
@@ -32,9 +18,7 @@ export const Route = createFileRoute("/reset-password-confirm")({
 	},
 	beforeLoad: ({ search }) => {
 		if (typeof window === "undefined") return;
-		if (authStore.state.isAuthenticated && authStore.state.token) {
-			throw redirect({ to: "/" });
-		}
+		requireGuest();
 		if (!search.token) {
 			throw redirect({ to: "/reset-password" });
 		}
