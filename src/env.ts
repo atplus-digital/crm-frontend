@@ -10,6 +10,7 @@ export const env = createEnv({
 	clientPrefix: "VITE_",
 	client: {
 		VITE_LOCAL_STORAGE_BASE_KEY: z.string().optional().default("crm-atplus"),
+		VITE_CRM_NOCOBASE_URL: z.url(),
 	},
 	runtimeEnv: process.env,
 	emptyStringAsUndefined: true,

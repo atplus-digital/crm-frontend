@@ -14,6 +14,9 @@ importers:
       '@fontsource-variable/geist':
         specifier: ^5.2.8
         version: 5.2.8
+      '@nocobase/sdk':
+        specifier: ^2.0.36
+        version: 2.0.36
       '@t3-oss/env-core':
         specifier: ^0.13.11
         version: 0.13.11(typescript@6.0.2)(zod@4.3.6)
@@ -780,6 +783,9 @@ packages:
   '@noble/hashes@1.8.0':
     resolution: {integrity: sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==}
     engines: {node: ^14.21.3 || >=16}
+
+  '@nocobase/sdk@2.0.36':
+    resolution: {integrity: sha512-IUjpUDkk59UM6cdWV5XBwQR+E2gMGE8c1utMYSA1p26AM3ZSVviSd7SR1IoFYfyc6V3agODuJUfDR+YMsMd0ww==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -5951,6 +5957,13 @@ snapshots:
       '@noble/hashes': 1.8.0
 
   '@noble/hashes@1.8.0': {}
+
+  '@nocobase/sdk@2.0.36':
+    dependencies:
+      axios: 1.15.0
+      qs: 6.15.1
+    transitivePeerDependencies:
+      - debug
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
