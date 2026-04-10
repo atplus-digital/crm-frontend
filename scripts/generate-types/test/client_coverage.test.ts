@@ -10,10 +10,10 @@ describe("Client coverage tests", () => {
 		);
 
 		const fetchMock = vi.fn(() => {
-			return new Promise((_, reject) => {
+			return new Promise<never>((_, reject) => {
 				setTimeout(() => reject(abortError), 10);
 			});
-		}) as any;
+		}) as unknown as typeof fetch;
 
 		global.fetch = fetchMock;
 

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { printResult } from "./scripts/generate-types/src/cli/report";
+import { printResult } from "../src/cli/report";
 
 describe("Report coverage gap tests", () => {
 	it("should cover printPersistResult with changed=true (line 39)", () => {

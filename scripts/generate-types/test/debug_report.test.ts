@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { printResult } from "./scripts/generate-types/src/cli/report";
+import { printResult } from "../src/cli/report";
 
 describe("Debug report test", () => {
 	it("should debug printMultiFileDryRunResult with long diff", () => {

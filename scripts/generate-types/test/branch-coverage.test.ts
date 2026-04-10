@@ -109,8 +109,6 @@ describe("Branch coverage tests", () => {
 
 			printResult(result);
 
-			const loggedMessages = consoleSpy.mock.calls.map((call) => call[0]);
-
 			consoleSpy.mockRestore();
 		});
 	});
