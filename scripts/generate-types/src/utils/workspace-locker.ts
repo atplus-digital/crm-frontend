@@ -10,7 +10,7 @@ interface VSCodeSettings {
  * Verifica se o workspace está configurado para bloquear a edição dos arquivos gerados
  * @returns Verdadeiro se os arquivos gerados estiverem protegidos contra escrita
  */
-function isWorkspaceLocked(): boolean {
+export function isWorkspaceLocked(): boolean {
 	try {
 		const settingsPath = path.join(process.cwd(), ".vscode", "settings.json");
 

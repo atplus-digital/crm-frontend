@@ -34,6 +34,32 @@ describe("cli", () => {
 				"Argumento desconhecido: --invalido",
 			);
 		});
+
+		it("deve processar --dry-run seguido de --write", () => {
+			const result = parseArgs(["--dry-run", "--write"]);
+			expect(result.options.dryRun).toBe(true);
+			expect(result.options.write).toBe(true);
+			expect(result.showHelp).toBe(false);
+		});
+
+		it("deve reconhecer --lock-workspace", () => {
+			const result = parseArgs(["--lock-workspace"]);
+			expect(result.options.lockWorkspace).toBe(true);
+		});
+
+		it("deve ignorar separador -- e continuar processando", () => {
+			// When -- is encountered, it should be skipped with continue
+			const result = parseArgs(["--help", "--", "--dry-run"]);
+			expect(result.showHelp).toBe(true);
+			expect(result.options.dryRun).toBe(true);
+		});
+
+		it("deve processar argumentos em ordem", () => {
+			const result = parseArgs(["--dry-run", "--write", "--lock-workspace"]);
+			expect(result.options.dryRun).toBe(true);
+			expect(result.options.write).toBe(true);
+			expect(result.options.lockWorkspace).toBe(true);
+		});
 	});
 
 	describe("printHelp", () => {

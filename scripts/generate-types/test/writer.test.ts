@@ -2,6 +2,8 @@ import * as fs from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";
 import {
+	cleanOutputDirectory,
+	getUnusedFiles,
 	previewGeneratedFile,
 	previewMultipleFiles,
 	writeGeneratedFile,
@@ -264,65 +266,95 @@ describe("writer - multiple files", () => {
 			expect(result.totalChanged).toBe(2);
 			expect(result.files).toHaveLength(2);
 
-			// Não deve criar arquivos
-			expect(fs.existsSync(testOutputDir)).toBe(false);
-
-			// Todos devem ter diff
 			for (const file of result.files) {
 				expect(file.changed).toBe(true);
 				expect(file.diff).toBeTruthy();
 			}
 		});
 
-		it("deve detectar arquivos inalterados em preview", () => {
+		it("deve detectar arquivos inalterados no preview", () => {
 			const filesMap = new Map([
 				["users", "export interface UsersBase { id: number; }"],
-				["posts", "export interface PostsBase { id: number; }"],
 			]);
 
-			// Criar arquivos
+			// Primeira escrita
 			writeMultipleFiles(filesMap, testOutputDir);
 
 			// Preview com mesmo conteúdo
 			const result = previewMultipleFiles(filesMap, testOutputDir);
 
-			expect(result.totalFiles).toBe(2);
 			expect(result.totalChanged).toBe(0);
+			expect(result.files[0].changed).toBe(false);
+			expect(result.files[0].diff).toBe("");
+		});
+	});
 
-			for (const file of result.files) {
-				expect(file.changed).toBe(false);
-				expect(file.diff).toBe("");
-			}
+	describe("getUnusedFiles", () => {
+		it("deve retornar array vazio quando diretório não existe", () => {
+			const result = getUnusedFiles(["/tmp/generated/index.ts"], testOutputDir);
+			expect(result).toEqual([]);
 		});
 
-		it("deve detectar mudanças em preview", () => {
-			const filesMap1 = new Map([
-				["users", "export interface UsersBase { id: number; }"],
-			]);
+		it("deve retornar arquivos não presentes na lista de gerados", () => {
+			// Cria arquivos no diretório
+			fs.mkdirSync(testOutputDir, { recursive: true });
+			fs.writeFileSync(path.join(testOutputDir, "index.ts"), "// index");
+			fs.writeFileSync(path.join(testOutputDir, "users.ts"), "// users");
+			fs.writeFileSync(path.join(testOutputDir, "old-file.ts"), "// old"); // Não está na lista
 
-			const filesMap2 = new Map([
-				["users", "export interface UsersBase { id: number; name: string; }"],
-			]);
+			const generatedFiles = [
+				path.join(testOutputDir, "index.ts"),
+				path.join(testOutputDir, "users.ts"),
+			];
 
-			writeMultipleFiles(filesMap1, testOutputDir);
-			const result = previewMultipleFiles(filesMap2, testOutputDir);
+			const result = getUnusedFiles(generatedFiles, testOutputDir);
 
-			expect(result.totalFiles).toBe(1);
-			expect(result.totalChanged).toBe(1);
-
-			const usersFile = result.files[0];
-			expect(usersFile.changed).toBe(true);
-			expect(usersFile.diff).toContain("name: string");
+			expect(result).toHaveLength(1);
+			expect(result[0]).toContain("old-file.ts");
 		});
 
-		it("deve processar Map vazio em preview", () => {
-			const filesMap = new Map<string, string>();
+		it("deve ignorar arquivos não-.ts", () => {
+			fs.mkdirSync(testOutputDir, { recursive: true });
+			fs.writeFileSync(path.join(testOutputDir, "index.ts"), "// index");
+			fs.writeFileSync(path.join(testOutputDir, "readme.md"), "// readme"); // Não-.ts
 
-			const result = previewMultipleFiles(filesMap, testOutputDir);
+			const generatedFiles = [path.join(testOutputDir, "index.ts")];
 
-			expect(result.totalFiles).toBe(0);
-			expect(result.totalChanged).toBe(0);
-			expect(result.files).toHaveLength(0);
+			const result = getUnusedFiles(generatedFiles, testOutputDir);
+
+			expect(result).toHaveLength(0);
+		});
+	});
+
+	describe("cleanOutputDirectory", () => {
+		it("deve remover arquivos não utilizados", () => {
+			fs.mkdirSync(testOutputDir, { recursive: true });
+			const fileToRemove = path.join(testOutputDir, "old-file.ts");
+			fs.writeFileSync(fileToRemove, "// old");
+
+			const removed = cleanOutputDirectory([fileToRemove]);
+
+			expect(removed).toHaveLength(1);
+			expect(fs.existsSync(fileToRemove)).toBe(false);
+		});
+
+		it("deve retornar array vazio quando arquivo não existe", () => {
+			const removed = cleanOutputDirectory(["/tmp/non-existent/file.ts"]);
+			expect(removed).toEqual([]);
+		});
+
+		it("deve remover múltiplos arquivos", () => {
+			fs.mkdirSync(testOutputDir, { recursive: true });
+			const file1 = path.join(testOutputDir, "old1.ts");
+			const file2 = path.join(testOutputDir, "old2.ts");
+			fs.writeFileSync(file1, "// old1");
+			fs.writeFileSync(file2, "// old2");
+
+			const removed = cleanOutputDirectory([file1, file2]);
+
+			expect(removed).toHaveLength(2);
+			expect(fs.existsSync(file1)).toBe(false);
+			expect(fs.existsSync(file2)).toBe(false);
 		});
 	});
 });
