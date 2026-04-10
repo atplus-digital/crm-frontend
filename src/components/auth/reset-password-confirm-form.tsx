@@ -3,7 +3,7 @@ import { type FormEvent, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
-import { confirmPasswordReset } from "#/modules/auth/service";
+import { confirmPasswordReset } from "#/modules/auth";
 
 interface ResetPasswordConfirmFormProps {
 	token: string;

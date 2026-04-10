@@ -11,7 +11,8 @@
 	"project": [
 		"src/**/*.ts",
 		"src/**/*.tsx",
-		"scripts/**/*.ts"
+		"scripts/**/*.ts",
+		"src/**/*.css"
 	],
 	"rules": {
 		"exports": "warn",
@@ -21,11 +22,7 @@
 		"files": "warn",
 		"unlisted": "warn"
 	},
-  	"ignore": [
-		".agents/**",
-		"src/@types/generated/**"
-	],
-	"ignoreDependencies": [
-	],
+	"ignore": ["src/@types/generated/**"],
+	"ignoreDependencies": [],
 	"ignoreExportsUsedInFile": true
 }

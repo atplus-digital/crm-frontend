@@ -1,7 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
-import { signOut } from "#/modules/auth/service";
-import { reset } from "#/modules/auth/store";
 import { Button } from "#/components/ui/button";
+import { signOut } from "#/modules/auth";
 
 export function LogoutButton() {
 	const navigate = useNavigate();
@@ -12,7 +11,6 @@ export function LogoutButton() {
 		} catch {
 			// Best-effort — API call may fail
 		}
-		reset();
 		await navigate({ to: "/login" });
 	}
 

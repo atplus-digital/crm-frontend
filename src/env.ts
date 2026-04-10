@@ -10,8 +10,15 @@ export const env = createEnv({
 	clientPrefix: "VITE_",
 	client: {
 		VITE_LOCAL_STORAGE_BASE_KEY: z.string().optional().default("crm-atplus"),
-		VITE_CRM_NOCOBASE_URL: z.url(),
+		VITE_NOCOBASE_URL: z.url(),
 	},
-	runtimeEnv: process.env,
+	isServer: typeof window === "undefined",
+	runtimeEnvStrict: {
+		SERVER_URL: process.env.SERVER_URL,
+		CRM_NOCOBASE_URL: process.env.CRM_NOCOBASE_URL,
+		AUTH_SESSION_SECRET: process.env.AUTH_SESSION_SECRET,
+		VITE_LOCAL_STORAGE_BASE_KEY: import.meta.env.VITE_LOCAL_STORAGE_BASE_KEY,
+		VITE_NOCOBASE_URL: import.meta.env.VITE_NOCOBASE_URL,
+	},
 	emptyStringAsUndefined: true,
 });

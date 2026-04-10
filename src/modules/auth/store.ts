@@ -60,11 +60,11 @@ export function setError(error: string | null): void {
 
 export function reset(): void {
 	removeTokenFromStorage();
-	authStore.setState({
+	authStore.setState(() => ({
 		user: null,
 		token: null,
 		isAuthenticated: false,
 		isLoading: false,
 		error: null,
-	});
+	}));
 }

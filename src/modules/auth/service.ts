@@ -1,12 +1,20 @@
 import { nocobaseClient } from "./client";
 import { reset, setToken, setUser } from "./store";
-import type { AuthUser, LoginCredentials, ResetPasswordConfirm } from "./types";
+import type {
+	AuthResponse,
+	AuthUser,
+	LoginCredentials,
+	ResetPasswordConfirm,
+	ResetPasswordRequest,
+} from "./types";
 
 export async function signIn(
 	credentials: LoginCredentials,
 ): Promise<{ token: string; user: AuthUser }> {
-	const response = await nocobaseClient.auth.signIn(credentials);
-	const { token, user } = response.data?.data ?? response.data;
+	const response = (await nocobaseClient.auth.signIn(
+		credentials,
+	)) as AuthResponse;
+	const { token, user } = response.data;
 
 	nocobaseClient.auth.token = token;
 	setToken(token);
@@ -37,7 +45,8 @@ export async function checkAuth(): Promise<AuthUser> {
 }
 
 export async function requestPasswordReset(email: string): Promise<void> {
-	await nocobaseClient.auth.lostPassword({ email });
+	const payload: ResetPasswordRequest = { email };
+	await nocobaseClient.auth.lostPassword(payload);
 }
 
 export async function confirmPasswordReset(

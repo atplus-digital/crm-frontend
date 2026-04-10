@@ -1,64 +1,125 @@
-# CRM ATPlus
+<!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
+<!-- Managed by agent: keep sections and order; edit content, not structure -->
+<!-- Last updated: 2026-04-10 | Last verified: 2026-04-10 -->
 
-Aplicação CRM construída com TanStack Start, React 19, Tailwind CSS e shadcn/ui.
+# AGENTS.md
 
-## Visão Geral do Projeto
+**Precedence:** the **closest `AGENTS.md`** to the files you're changing wins. Root holds global defaults only.
 
-### Arquitetura
+## Commands
+<!-- AGENTS-GENERATED:START commands -->
+| Task | Command | ~Time |
+|------|---------|-------|
+| Typecheck | pnpm dlx tsc --noEmit | ~15s |
+| Lint + Format | pnpm biome:fix | ~5s |
+| Test | pnpm test | ~30s |
+| Build | pnpm build | ~30s |
+| Dev | pnpm dev | — |
+| Generate types | pnpm generate-types | ~10s |
+<!-- AGENTS-GENERATED:END commands -->
 
-- **Router**: `src/router.tsx` cria o router com `scrollRestoration`, `defaultPreload: "intent"` e `defaultPreloadStaleTime: 0`.
-- **Root Route**: `src/routes/__root.tsx` define o shell component (`RootDocument`) e os metadados globais.
-- **Integração TanStack Query**: QueryClient configurado com SSR query integration.
-- **Query Provider**: `src/integrations/tanstack/query/root-provider.tsx` exporta `getQueryContext()` que cria o `QueryClient`.
-- **Tema**: Fluxo completo — `ThemeScript` (inline, SSR-safe) → `getStoredTheme()` → `applyThemeMode()` → `ThemeToggle` (componente React).
-- **Formatação**: Tabs para indentação, aspas duplas para strings.
+> If commands fail, verify against Makefile/package.json/composer.json or ask user to update.
 
-| Aspecto                    | Detalhe                                      |
-| -------------------------- | -------------------------------------------- |
-| **Framework**              | TanStack Start (SSR/SPA)                     |
-| **Linguagem**              | TypeScript (strict mode)                     |
-| **Estilização**            | Tailwind CSS v4 + shadcn/ui                  |
-| **Roteamento**             | TanStack Router (file-based)                 |
-| **Estado/Servidor**        | TanStack Query + TanStack Store              |
-| **Linting/Formatting**     | Biome (indentStyle: tab, quoteStyle: double) |
-| **Testes**                 | Vitest + Testing Library                     |
-| **Fonte**                  | Geist Variable                               |
-| **Idioma da interface**    | pt-BR                                        |
-| **Gerenciador de pacotes** | pnpm                                         |
+## Workflow
+1. **Before coding**: Read nearest `AGENTS.md` + check Golden Samples for the area you're touching
+2. **After each change**: Run the smallest relevant check (lint → typecheck → single test)
+3. **Before committing**: Run full test suite if changes affect >2 files or touch shared code
+4. **Before claiming done**: Run verification and **show output as evidence** — never say "try again" or "should work now" without proof
 
-### Como Rodar
-
-```bash
-pnpm install
-pnpm dev          # http://localhost:3000
-pnpm build        # build de produção
-pnpm preview      # preview do build
+## File Map
+<!-- AGENTS-GENERATED:START filemap -->
 ```
+scripts/         → automation scripts
+src/             → application source code
+public/          → public static files
+docs/            → documentation
+```
+<!-- AGENTS-GENERATED:END filemap -->
 
-### Scripts Disponíveis
+## Golden Samples (follow these patterns)
+<!-- AGENTS-GENERATED:START golden-samples -->
+| For | Reference | Key patterns |
+|-----|-----------|--------------|
+| Route (protected) | `src/routes/index.tsx` | `requireAuth` in `beforeLoad` |
+| Route (public auth) | `src/routes/login.tsx` | `requireGuest` in `beforeLoad` |
+| Auth module | `src/modules/auth/index.ts` | barrel export pattern |
+<!-- AGENTS-GENERATED:END golden-samples -->
 
-| Comando               | Descrição                                  |
-| --------------------- | ------------------------------------------ |
-| `pnpm dev`            | Servidor de desenvolvimento na porta 3000  |
-| `pnpm build`          | Build de produção                          |
-| `pnpm preview`        | Preview do build de produção               |
-| `pnpm test`           | Executa testes com Vitest                  |
-| `pnpm biome:fix`      | Auto-fix de problemas do Biome             |
-| `pnpm knip`           | Verificação de dependências não utilizadas |
-| `pnpm generate-types` | Gera tipos a partir do NocoBase            |
-| `pnpm prepare`        | Setup do Husky (git hooks)                 |
+## Heuristics (quick decisions)
+<!-- AGENTS-GENERATED:START heuristics -->
+| When | Do |
+|------|-----|
+| Adding env var | Add to `.env.example` first |
+| Merging PRs | Squash and merge |
+| Adding dependency | Ask first - we minimize deps |
+| Unsure about pattern | Check Golden Samples above |
+<!-- AGENTS-GENERATED:END heuristics -->
 
-### Convenções
+## Repository Settings
+<!-- AGENTS-GENERATED:START repo-settings -->
+- **Default branch:** `main`
+- **Merge strategy:** squash, merge, rebase
+<!-- AGENTS-GENERATED:END repo-settings -->
 
-- **Imports**: Usar alias `#/` ou `@/` para `src/` (ambos configurados no tsconfig). Preferir `#/`.
-- **Componentes UI**: Usar shadcn/ui — adicionar com `npx shadcn@latest add <component>`.
-- **Tipo de rota**: File-based routing em `src/routes/`.
-- **Variáveis de ambiente**: Definir em `src/env.ts` com validação Zod via T3Env.
+<!-- AGENTS-GENERATED:START ci-rules -->
+## CI/Quality Gates
+> Platform: github-actions
 
-## Skill mappings - when working in these areas, load the linked skill file into context.
+### Version Matrix
+- Node 24
+<!-- AGENTS-GENERATED:END ci-rules -->
+
+## Boundaries
+
+### Always Do
+- Run pre-commit checks before committing
+- Add tests for new code paths
+- Use conventional commit format: `type(scope): subject`
+- **Show test output as evidence before claiming work is complete** — never say "try again" or "should work now" without proof
+- For upstream dependency fixes: run **full** test suite, not just affected tests
+- Use TypeScript strict mode with proper type annotations
+
+### Ask First
+- Adding new dependencies
+- Modifying CI/CD configuration
+- Changing public API signatures
+- Running full e2e test suites
+- Repo-wide refactoring or rewrites
+
+### Never Do
+- Commit secrets, credentials, or sensitive data
+- Modify vendor/, node_modules/, or generated files
+- Push directly to main/master branch
+- Delete migration files or schema changes
+- Commit package-lock.json without package.json changes
+- Use any type without justification
+
+## Contributing (for AI agents)
+- **Comprehension**: Understand the problem before submitting code. Read the linked issue, understand *why* the change is needed, not just *what* to change.
+- **Context**: Every PR must explain the trade-offs considered and link to the issue it addresses. Disclose AI assistance if the project requires it.
+- **Continuity**: Respond to review feedback. Drive-by PRs without follow-up will be closed.
+
+<!-- AGENTS-GENERATED:START module-boundaries -->
+
+<!-- AGENTS-GENERATED:END module-boundaries -->
+
+## Codebase State
+<!-- AGENTS-GENERATED:START codebase-state -->
+
+- Contains deprecated code (grep for @deprecated)
+<!-- AGENTS-GENERATED:END codebase-state -->
+
+## Scoped AGENTS.md (MUST read when working in these directories)
+<!-- AGENTS-GENERATED:START scope-index -->
+- `./src/AGENTS.md` — Frontend application (TypeScript/React/Vue)
+- `./.github/workflows/AGENTS.md` — GitHub Actions workflows and CI/CD automation
+<!-- AGENTS-GENERATED:END scope-index -->
+
+> **Agents**: When you read or edit files in a listed directory, you **must** load its AGENTS.md first. It contains directory-specific conventions that override this root file.
+
+## Skill Mappings — load when working in these areas
 
 <!-- intent-skills:start -->
-
 - task: "Adding or configuring routes"
   load: "node_modules/@tanstack/router-core/skills/router-core/SKILL.md"
 - task: "Data loading with route loaders"
@@ -69,7 +130,10 @@ pnpm preview      # preview do build
   load: "node_modules/@tanstack/router-core/skills/router-core/ssr/SKILL.md"
 - task: "React Start framework setup"
   load: "node_modules/@tanstack/react-start/skills/react-start/SKILL.md"
-
+- task: "Creating or updating feature AGENTS.md files"
+  load: ".agents/skills/feature-agents-md/SKILL.md"
 <!-- intent-skills:end -->
 
-## Agents
+## When instructions conflict
+The nearest `AGENTS.md` wins. Explicit user prompts override files.
+- For TypeScript/JavaScript patterns, follow Biome config (`biome.json`)

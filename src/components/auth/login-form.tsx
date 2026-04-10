@@ -1,10 +1,9 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { type FormEvent, useState } from "react";
+import { useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
-import { signIn } from "#/modules/auth/service";
-import { authStore, setError, setLoading } from "#/modules/auth/store";
+import { setError, setLoading, signIn } from "#/modules/auth";
 
 export function LoginForm() {
 	const navigate = useNavigate();
@@ -13,7 +12,7 @@ export function LoginForm() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setErrorLocal] = useState<string | null>(null);
 
-	async function handleSubmit(e: FormEvent) {
+	async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
 		setIsLoading(true);
 		setErrorLocal(null);
@@ -25,7 +24,8 @@ export function LoginForm() {
 			const search = new URLSearchParams(window.location.search);
 			const returnTo = search.get("returnTo") || "/";
 			await navigate({ to: returnTo });
-		} catch {
+		} catch (e) {
+			console.log(e);
 			setErrorLocal("E-mail ou senha inválidos");
 			setError("E-mail ou senha inválidos");
 		} finally {

@@ -1,11 +1,13 @@
 ---
 name: nocobase-docs
 description: >-
-  Access NocoBase API documentation, collection schemas, and endpoints for the
-  CRM ATPlus instance. Use when: the user asks about NocoBase features, API
-  endpoints, collection fields, relationships, or how to query/manipulate data
-  in NocoBase; user mentions "nocobase", "NocoBase API", "collection",
-  "swagger", or needs to look up NocoBase documentation or schema info.
+  Query the NocoBase instance configured in this project's .env files —
+  collection schemas, field info, swagger docs, and read-only data exploration.
+  Use when: the user asks about the schema or structure of a collection, wants
+  to know what fields exist, needs to list or inspect data from the project's
+  NocoBase, or is about to make a NocoBase API call and needs the correct URL
+  and credentials. Always use this skill before making any NocoBase API call so
+  the right URL/token are loaded and read-only rules are enforced.
 metadata:
   authors:
     - copilot
@@ -15,7 +17,7 @@ metadata:
     - api
     - schema
     - collections
-  version: 2.0.0
+  version: 3.0.0
 user-invocable: true
 ---
 
@@ -24,90 +26,107 @@ user-invocable: true
 ## Overview
 
 This skill retrieves up-to-date documentation and schema information from the
-CRM ATPlus NocoBase instance (crm.atplus.cloud) by querying the API directly
-using credentials from environment files.
+NocoBase instance configured in this project, querying the API directly using
+the URL and credentials resolved in Step 1.
 
-## Variables (from `.env.local` then `.env`)
+**This skill is read-only.** Never call `create`, `update`, or `destroy`
+endpoints. The purpose is exploration and reference, not data mutation.
 
-As variáveis são procuradas **nesta ordem**:
+---
 
-1. **`.env.local`** — Variáveis específicas do ambiente local (prioridade)
-2. **`.env`** — Variáveis com valores padrão ou fallback
+## Step 1 — Resolver URL e token
 
-| Variable                  | Descrição                                            |
-| ------------------------- | ---------------------------------------------------- |
-| `CRM_NOCOBASE_URL`        | URL base da API (ex: `https://crm.atplus.cloud/api`) |
-| `CRM_NOCOBASE_TOKEN`      | Token permanente JWT para autenticação (read-only)   |
-| `CRM_NOCOBASE_TIMEOUT_MS` | Timeout das requisições em ms (default: 15000)       |
+Siga esta ordem para cada variável. Pare no primeiro método que funcionar.
 
-> **Importante**: As variáveis são validadas em `src/env.ts` via T3Env + Zod.
-> O script de geração de tipos usa as mesmas vars. Se uma variável existir
-> em ambos os arquivos, `.env.local` tem precedência.
+### 1a. Variáveis de ambiente
 
-## Workflow
+Leia `.env.local` primeiro, depois `.env` como fallback.
 
-1. **Verificar variáveis de ambiente** — Buscar `CRM_NOCOBASE_URL` e
-   `CRM_NOCOBASE_TOKEN` primeiro em `.env.local`, depois em `.env` como fallback.
-2. **Usar curl com autenticação** — Incluir `Authorization: Bearer` header.
-3. **Consultar a documentação relevante** — Swagger, collections ou campos.
+| Variável                  | Descrição                                      |
+| ------------------------- | ---------------------------------------------- |
+| `CRM_NOCOBASE_URL`        | URL base da API (ex: `https://exemplo.com/api`) |
+| `CRM_NOCOBASE_TOKEN`      | Token JWT permanente para autenticação          |
+| `CRM_NOCOBASE_TIMEOUT_MS` | Timeout em ms (default: `15000`)               |
 
-## Autenticação
+> Se existir em ambos os arquivos, `.env.local` tem precedência.
 
-Todas as requisições exigem o header Bearer:
+### 1b. Perguntar ao usuário (fallback)
+
+Se qualquer uma das variáveis **não for encontrada** no `.env`, pergunte ao
+usuário antes de prosseguir:
+
+```
+Não encontrei <URL|token> nas variáveis de ambiente (.env.local / .env).
+Por favor, informe:
+- URL base da API NocoBase (ex: https://meusite.com/api):   [se URL faltando]
+- Email (ou username):                                       [se token faltando]
+- Senha:                                                     [se token faltando]
+```
+
+Se o token estiver faltando, autentique com as credenciais informadas:
+
+```bash
+curl -s -X POST "${CRM_NOCOBASE_URL}/auth:signIn" \
+  -H "Content-Type: application/json" \
+  -d '{"email": "<EMAIL>", "password": "<SENHA>"}'
+```
+
+> Se o login for por **username**, use `"username"` no lugar de `"email"`.
+> A resposta retorna `{ "data": { "token": "...", "user": {...} } }`.
+> Extraia `data.token` e use como bearer. Este token de sessão expira quando
+> a sessão encerrar.
+
+---
+
+## Step 2 — Consultar a API (somente leitura)
+
+Todas as requisições devem incluir o header `Authorization: Bearer`:
 
 ```bash
 curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
   "${CRM_NOCOBASE_URL}/<endpoint>"
 ```
 
-## Endpoints Principais
-
 ### Swagger (OpenAPI Spec)
 
-Retorna a especificação OpenAPI/Swagger completa de todas as rotas:
-
 ```bash
-# Documentação completa
+# Documentação completa de todas as rotas
 curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
   "${CRM_NOCOBASE_URL}/swagger:get"
 
-# Documentação de collections customizadas
+# Apenas collections customizadas
 curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
   "${CRM_NOCOBASE_URL}/swagger:get?ns=collections"
 
-# Schema de uma collection específica (e suas associações)
+# Schema de uma collection específica (com associações)
 curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
   "${CRM_NOCOBASE_URL}/swagger:get?ns=collections/t_pessoas"
 ```
 
-### Collections (Listar todas)
+### Collections
 
 ```bash
+# Listar todas as collections
 curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
   "${CRM_NOCOBASE_URL}/collections:list?paginate=false"
-```
 
-### Collection específica (com campos)
-
-```bash
+# Detalhes de uma collection com seus campos
 curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
   "${CRM_NOCOBASE_URL}/collections:get?filterByTk=t_pessoas&appends=fields"
 ```
 
-### CRUD padrão por collection
+### Endpoints de leitura por collection
 
-| Método | Endpoint                                | Descrição                  |
-| ------ | --------------------------------------- | -------------------------- |
-| `GET`  | `/{collection}:list`                    | Lista registros (paginado) |
-| `GET`  | `/{collection}:get?filterByTk={id}`     | Busca por ID               |
-| `POST` | `/{collection}:create`                  | Cria registro              |
-| `POST` | `/{collection}:update?filterByTk={id}`  | Atualiza registro          |
-| `POST` | `/{collection}:destroy?filterByTk={id}` | Remove registro            |
+| Método | Endpoint                            | Descrição                  |
+| ------ | ----------------------------------- | -------------------------- |
+| `GET`  | `/{collection}:list`                | Lista registros (paginado) |
+| `GET`  | `/{collection}:get?filterByTk={id}` | Busca por ID               |
+| `GET`  | `/{collection}:count`               | Conta registros            |
 
-> **Nota**: Todos os métodos de escrita (`create`, `update`, `destroy`) usam `POST`.
-> O token atual tem **permissão de escrita** (role `admin`). Use com cautela em automações.
+> **Somente leitura.** Nunca use `:create`, `:update` ou `:destroy` — esses
+> endpoints mutam dados de produção e estão fora do escopo desta skill.
 
-### Parâmetros de Query Comuns
+### Parâmetros de query comuns
 
 | Parâmetro  | Tipo       | Descrição                       |
 | ---------- | ---------- | ------------------------------- |
@@ -119,23 +138,17 @@ curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
 | `appends`  | `string[]` | Relações a incluir              |
 | `except`   | `string[]` | Campos a excluir                |
 
-## Documentação de Referência
+---
+
+## Documentação de referência
 
 - `docs/integracao-api-client.md` — Guia completo de integração com a API
-- `scripts/generate-types/README.md` — Documentação do script de geração de tipos
-- `scripts/generate-types/ARCHITECTURE.md` — Arquitetura do gerador de tipos
-- `src/@types/types.generated.ts` — Tipos agregados gerados
+- `scripts/generate-types/README.md` — Script de geração de tipos
+- `scripts/generate-types/ARCHITECTURE.md` — Arquitetura do gerador
+- `src/@types/types.generated.ts` — Tipos TypeScript gerados
 
-## Notas
-
-- O token atual tem **role `admin`** com permissão de escrita — endpoints create/update/destroy
-  funcionam normalmente. Evite operações de escrita acidentais em automações.
-- A URL base **não** deve ter barra final (`/`).
-- O projeto usa `@nocobase/sdk` como client HTTP na aplicação (ver `src/env.ts`).
-- O script `pnpm generate-types` usa as mesmas credenciais para gerar tipos TypeScript.
-- Consulte sempre a documentação em `docs/` antes de implementar novas integrações.
-
-## References
+## Links externos
 
 - [NocoBase API Documentation](https://docs.nocobase.com/integration/api-doc/)
-- [NocoBase Documentation](https://docs.nocobase.com/api)
+- [NocoBase Auth SDK](https://docs.nocobase.com/api/sdk/auth)
+- [Filter Operators](https://docs.nocobase.com/api/database/operators)

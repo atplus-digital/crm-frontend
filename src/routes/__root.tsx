@@ -3,8 +3,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext } from "@tanstack/react-router";
 import { NotFoundPage } from "#/components/document/not-found-page";
 import { RootDocument } from "#/components/document/root-document";
-import { authStore } from "#/modules/auth";
-import { validateTokenOnInit } from "#/modules/auth/guard";
+import { authStore, validateTokenOnInit } from "#/modules/auth";
 import appCss from "#/styles.css?url";
 
 interface AppRouterContext {

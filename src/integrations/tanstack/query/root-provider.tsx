@@ -3,14 +3,28 @@ import { reset } from "#/modules/auth";
 
 let isRedirecting = false;
 
+function isUnauthorizedError(
+	error: unknown,
+): error is { status?: number; response?: { status?: number } } {
+	if (!error || typeof error !== "object") {
+		return false;
+	}
+
+	const candidate = error as {
+		status?: number;
+		response?: { status?: number };
+	};
+	return candidate.status === 401 || candidate.response?.status === 401;
+}
+
 export function getQueryContext() {
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
 				staleTime: 1000 * 60 * 5, // 5 minutes
-				retry: (failureCount, error: any) => {
+				retry: (failureCount, error: unknown) => {
 					// Don't retry on 401 — token is invalid
-					if (error?.status === 401) return false;
+					if (isUnauthorizedError(error)) return false;
 					return failureCount < 3;
 				},
 			},
@@ -18,8 +32,8 @@ export function getQueryContext() {
 	});
 
 	// Global error handler for 401 responses
-	queryClient.getQueryCache().config.onError = (error: any) => {
-		if (error?.status === 401 && !isRedirecting) {
+	queryClient.getQueryCache().config.onError = (error: unknown) => {
+		if (isUnauthorizedError(error) && !isRedirecting) {
 			isRedirecting = true;
 			reset();
 			queryClient.clear();
