@@ -65,6 +65,7 @@ vi.mock("#/modules/auth/store", () => ({
 }));
 
 import {
+	isNetworkError,
 	requireAuth,
 	requireGuest,
 	validateTokenOnInit,
@@ -223,5 +224,85 @@ describe("validateTokenOnInit", () => {
 		expect(mockCheckAuth).toHaveBeenCalled();
 		expect(mockSetUser).not.toHaveBeenCalled();
 		expect(mockReset).toHaveBeenCalled();
+	});
+
+	it("does NOT call reset when checkAuth throws a TypeError (network error)", async () => {
+		mockAuthStoreState.token = "valid-token";
+		mockAuthStoreState.isAuthenticated = true;
+		mockCheckAuth.mockRejectedValue(new TypeError("Failed to fetch"));
+
+		await validateTokenOnInit();
+
+		expect(mockCheckAuth).toHaveBeenCalled();
+		expect(mockSetUser).not.toHaveBeenCalled();
+		expect(mockReset).not.toHaveBeenCalled();
+	});
+
+	it("does NOT call reset when checkAuth throws an ECONNREFUSED error", async () => {
+		mockAuthStoreState.token = "valid-token";
+		mockAuthStoreState.isAuthenticated = true;
+		mockCheckAuth.mockRejectedValue(
+			new Error(
+				"request to /api/auth:check failed, reason: connect ECONNREFUSED 127.0.0.1:13000",
+			),
+		);
+
+		await validateTokenOnInit();
+
+		expect(mockCheckAuth).toHaveBeenCalled();
+		expect(mockReset).not.toHaveBeenCalled();
+	});
+
+	it("calls reset when checkAuth throws a 401 auth error", async () => {
+		mockAuthStoreState.token = "expired-token";
+		mockAuthStoreState.isAuthenticated = true;
+		const authError = new Error("Unauthorized");
+		Object.defineProperty(authError, "status", { value: 401 });
+		mockCheckAuth.mockRejectedValue(authError);
+
+		await validateTokenOnInit();
+
+		expect(mockCheckAuth).toHaveBeenCalled();
+		expect(mockReset).toHaveBeenCalled();
+	});
+});
+
+describe("isNetworkError", () => {
+	it("returns true for TypeError", () => {
+		expect(isNetworkError(new TypeError("Failed to fetch"))).toBe(true);
+	});
+
+	it("returns true for Error with 'fetch' in message", () => {
+		expect(isNetworkError(new Error("fetch failed"))).toBe(true);
+	});
+
+	it("returns true for Error with 'network' in message", () => {
+		expect(isNetworkError(new Error("Network request failed"))).toBe(true);
+	});
+
+	it("returns true for Error with 'ECONNREFUSED' in message", () => {
+		expect(
+			isNetworkError(new Error("connect ECONNREFUSED 127.0.0.1:13000")),
+		).toBe(true);
+	});
+
+	it("returns true for Error with 'timeout' in message", () => {
+		expect(isNetworkError(new Error("Request timeout after 30000ms"))).toBe(
+			true,
+		);
+	});
+
+	it("returns false for auth errors (no network keywords)", () => {
+		expect(isNetworkError(new Error("Unauthorized"))).toBe(false);
+	});
+
+	it("returns false for generic errors", () => {
+		expect(isNetworkError(new Error("Something went wrong"))).toBe(false);
+	});
+
+	it("returns false for non-Error values", () => {
+		expect(isNetworkError("string error")).toBe(false);
+		expect(isNetworkError(42)).toBe(false);
+		expect(isNetworkError(null)).toBe(false);
 	});
 });

@@ -33,9 +33,24 @@ export function requireGuest(): void {
 }
 
 /**
+ * Classify an error as a network/transport error (vs an auth error).
+ * Network errors should NOT log the user out — they're transient.
+ */
+export function isNetworkError(err: unknown): boolean {
+	if (err instanceof TypeError) return true;
+	if (
+		err instanceof Error &&
+		/fetch|network|ECONNREFUSED|timeout/i.test(err.message)
+	)
+		return true;
+	return false;
+}
+
+/**
  * Validate stored token on app initialization.
  * Calls auth:check to verify token is still valid.
  * If invalid, clears the store.
+ * Network errors preserve auth state to avoid logging out on transient failures.
  */
 export async function validateTokenOnInit(): Promise<void> {
 	if (typeof window === "undefined") return;
@@ -46,7 +61,16 @@ export async function validateTokenOnInit(): Promise<void> {
 	try {
 		const user = await checkAuth();
 		setUser(user);
-	} catch {
+	} catch (err) {
+		if (isNetworkError(err)) {
+			// Don't log out user on network errors — preserve auth state
+			if (import.meta.env.DEV) {
+				console.warn(
+					"[auth] Network error during token validation, preserving auth state",
+				);
+			}
+			return;
+		}
 		reset();
 	}
 }
