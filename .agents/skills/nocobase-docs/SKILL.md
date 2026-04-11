@@ -1,15 +1,15 @@
 ---
 name: nocobase-docs
 description: >-
-  Query the NocoBase instance configured in this project's .env files —
-  collection schemas, field info, swagger docs, and read-only data exploration.
-  Use when: the user asks about the schema or structure of a collection, wants
-  to know what fields exist, needs to list or inspect data from the project's
-  NocoBase, or is about to make a NocoBase API call and needs the correct URL
-  and credentials. Always use this skill before making any NocoBase API call so
-  the right URL/token are loaded and read-only rules are enforced. This skill
-  enforces a strict read-only policy via a TypeScript client script — never call
-  the NocoBase API directly with curl or fetch.
+  Query the NocoBase instance configured in this project — collection schemas,
+  field definitions, swagger docs, and read-only data exploration. Use this skill
+  whenever you need to understand what collections exist, what fields a collection
+  has, inspect sample data, or look up API endpoint details. Always use this skill
+  before making any NocoBase API call — it loads the correct URL/token and enforces
+  read-only safety. Triggers on: questions about database schema, collection structure,
+  field types, API endpoints, data exploration, or any mention of NocoBase, collections,
+  or the CRM backend. Also use when generating types, writing API integrations, or
+  debugging data-related issues in this project.
 metadata:
   authors:
     - copilot
@@ -19,147 +19,114 @@ metadata:
     - api
     - schema
     - collections
-  version: 4.0.0
+  version: 5.0.0
 user-invocable: true
 ---
 
 # NocoBase Documentation Skill
 
-## Overview
+This skill gives you read-only access to the project's NocoBase instance so you can
+explore schemas, inspect data, and understand the API — without risking accidental writes.
 
-This skill retrieves up-to-date documentation and schema information from the
-NocoBase instance configured in this project. It uses a **read-only TypeScript
-client script** that enforces access restrictions and logs every request for
-auditing.
-
-**This skill is strictly read-only.** All API calls must go through the
-bundled script — it blocks write operations (`:create`, `:update`, `:destroy`)
-and logs every request to stderr in structured JSON format.
+All API calls go through a bundled TypeScript script that **blocks write operations**
+and logs every request for auditing. Never call the NocoBase API directly with curl or
+fetch — the script is the only authorized path.
 
 ---
 
-## Step 1 — Chamar a API (obrigatório via script)
+## Quick Start
 
-**Never call the NocoBase API directly with `curl`, `fetch`, or any HTTP client.**
-Always use the bundled TypeScript client script — it enforces read-only access
-and logs all requests.
-
-### Primeiro uso — instalar dependências
-
-Antes de rodar o script pela primeira vez, instale as dependências:
+### First-time setup (install dependencies)
 
 ```bash
 cd .agents/skills/nocobase-docs/scripts && pnpm install
 ```
 
-Se `node_modules` não existir na pasta `scripts/`, o script falhará com erro
-de módulo não encontrado. Sempre execute `pnpm install` antes de usar.
+If you skip this, the script will fail with a module-not-found error. Always run
+`pnpm install` once before first use.
 
-### Script location
-
-```
-.agents/skills/nocobase-docs/scripts/nocobase-client.ts
-```
-
-### Run with `npx tsx`
+### Run commands
 
 ```bash
 npx tsx .agents/skills/nocobase-docs/scripts/nocobase-client.ts <command> [args...]
 ```
 
-### Commands
+### Command reference
 
-| Command | Description | Example |
+| Command | What it does | Example |
 |---------|-------------|---------|
-| `swagger` | Fetch swagger/OpenAPI spec | `swagger --ns=collections` |
-| `collections` | List all collections or get one | `collections --name=t_pessoas` |
+| `swagger` | Fetch the full OpenAPI spec | `swagger` |
+| `swagger --ns=collections` | Fetch spec for all collections | `swagger --ns=collections` |
+| `swagger --ns=collections/t_pessoas` | Fetch spec for one collection | `swagger --ns=collections/t_pessoas` |
+| `collections` | List all collections | `collections` |
+| `collections --name=t_pessoas` | Get one collection with its fields | `collections --name=t_pessoas` |
 | `list <collection>` | List records (paginated) | `list t_pessoas --page=1 --pageSize=20` |
-| `get <collection> <id>` | Get record by ID | `get t_pessoas 42` |
-| `count <collection>` | Count records | `count t_pessoas` |
+| `get <collection> <id>` | Get a single record by ID | `get t_pessoas 42` |
+| `count <collection>` | Count records in a collection | `count t_pessoas` |
 | `raw <endpoint>` | Raw GET to any read-only endpoint | `raw "swagger:get?ns=collections"` |
 | `help` | Show usage help | `help` |
 
-### Query parameters (for list/get/count)
+### Query parameters
+
+These work with `list`, `get`, and `count`:
 
 | Parameter | Example | Description |
 |-----------|---------|-------------|
 | `--page=N` | `--page=1` | Page number |
 | `--pageSize=N` | `--pageSize=20` | Items per page |
-| `--sort=<field>` | `--sort=-id` | Sort (prefix `-` for desc) |
-| `--fields=<list>` | `--fields=id,name` | Fields to return |
-| `--appends=<list>` | `--appends=createdBy` | Relations to include |
-| `--except=<list>` | `--except=password` | Fields to exclude |
-| `--filter=<json>` | `--filter='{"id":{"$eq":1}}'` | Advanced filters |
-
-### Swagger-specific
-
-| Parameter | Example | Description |
-|-----------|---------|-------------|
-| `--ns=<namespace>` | `--ns=collections` | Swagger namespace filter |
-| `--ns=<ns>/<col>` | `--ns=collections/t_pessoas` | Specific collection schema |
-
-### Collections-specific
-
-| Parameter | Example | Description |
-|-----------|---------|-------------|
-| `--name=<name>` | `--name=t_pessoas` | Get a specific collection with fields |
+| `--sort=<field>` | `--sort=-id` | Sort (prefix `-` for descending) |
+| `--fields=<list>` | `--fields=id,name` | Only return these fields |
+| `--appends=<list>` | `--appends=createdBy` | Include related records |
+| `--except=<list>` | `--except=password` | Exclude these fields |
+| `--filter=<json>` | `--filter='{"id":{"$eq":1}}'` | Advanced filter (JSON) |
 
 ---
 
-## Step 2 — Entendendo o output
+## Workflow Guide
 
-The script outputs JSON to stdout. Request logs go to stderr (structured JSON
-+ human-readable), so you can pipe stdout to files or parse it programmatically
-without log noise.
+Here's how to use each command in practice:
 
-### Log format (stderr)
+### When someone asks "what collections exist?" or "what's the schema?"
 
-Every request produces two log entries: one at start (`status: "pending"`)
-and one at completion (`status: "success"` or `status: "error"`).
+1. Run `collections` to list all collections
+2. If they ask about a specific one, run `collections --name=<name>` to see its fields
+3. For detailed API specs, use `swagger --ns=collections/<name>`
 
-```json
-{
-  "timestamp": "2026-04-10T12:00:00.000Z",
-  "method": "GET",
-  "endpoint": "t_pessoas:list",
-  "fullUrl": "https://crm.example.com/api/t_pessoas:list?page=1&pageSize=20",
-  "status": "success",
-  "statusCode": 200,
-  "durationMs": 150
-}
-```
+### When someone asks "show me the data" or "what does this collection contain?"
 
-### Read-only enforcement
+1. Run `list <collection> --page=1 --pageSize=5` for a quick sample
+2. Use `--fields=<important_fields>` to narrow the output if it's too verbose
+3. Use `count <collection>` to find out how many records exist before paginating
 
-If you attempt a write operation, the script blocks it immediately:
+### When someone asks about API endpoints or integration
 
-```
-BLOCKED: Endpoint "t_pessoas:create" is not read-only.
-Only GET actions (list, get, count, swagger, collections) are permitted.
-```
+1. Run `swagger --ns=collections` to see all collection endpoints
+2. The swagger spec shows available actions, parameters, and response shapes
+3. Remember: only `:list`, `:get`, `:count`, `swagger:get`, and `collections:list/get`
+   are permitted — the script blocks all mutations
+
+### When generating TypeScript types
+
+1. Run `swagger --ns=collections` to get all collection schemas
+2. Cross-reference with `collections --name=<name>` for field details
+3. Check `scripts/generate-types/` for the project's type generation tooling
 
 ---
 
-## Step 3 — Configuração de ambiente
+## Credentials
 
-The script automatically loads credentials from `.env.local` or `.env` in this
-order:
+The script loads credentials **only** from
+`.agents/skills/nocobase-docs/.env.local`. It does not fall back to `.env`
+or `.env.local` in the project root — the skill is self-contained.
 
-1. `.agents/skills/nocobase-docs/.env.local` (skill-local, takes precedence)
-2. `.env.local` in the current working directory
-3. `.env` in the current working directory
+If `.env.local` is missing or incomplete, **ask the user** for credentials:
 
-If no credentials are found in any env file, **ask the user** before proceeding:
+> I need your NocoBase credentials to continue. Please provide:
+> - NocoBase API base URL (e.g., https://your-instance.com/api)
+> - JWT authentication token
 
-```
-Não encontrei as credenciais do NocoBase nos arquivos .env.
-Por favor, informe:
-- URL base da API NocoBase (ex: https://meusite.com/api):
-- Token JWT de autenticação:
-```
-
-Then create `.agents/skills/nocobase-docs/.env.local` with the provided values
-so future invocations work without asking again.
+Then create `.agents/skills/nocobase-docs/.env.local` with the values so future
+invocations work without asking again.
 
 | Variable | Description | Example |
 |----------|-------------|---------|
@@ -167,15 +134,37 @@ so future invocations work without asking again.
 | `CRM_NOCOBASE_TOKEN` | JWT token for auth | `eyJhbGci...` |
 | `CRM_NOCOBASE_TIMEOUT_MS` | Request timeout in ms (default: 15000) | `15000` |
 
-If credentials are missing and the user hasn't provided them, the script will
-exit with instructions on how to configure them.
+---
+
+## Output and Logging
+
+The script outputs JSON to stdout. Logs go to stderr (structured JSON + human-readable)
+and are appended to `.agents/skills/nocobase-docs/nocobase-client.log` for auditing.
+You can pipe stdout to files or parse it programmatically — log noise stays on stderr.
+
+Every request produces two log entries: `status: "pending"` at start, then
+`status: "success"` or `status: "error"` at completion.
+
+### Error handling
+
+If the script exits with an error, check these common causes:
+
+- **CREDENTIALS_REQUIRED** → `.env.local` is missing or incomplete. Ask the user
+  for their NocoBase URL and token, then create the file.
+- **BLOCKED: Endpoint is not read-only** → You tried a mutation endpoint. The script
+  only permits `:list`, `:get`, `:count`, `swagger:get`, `collections:list`, and
+  `collections:get`.
+- **HTTP 401** → Token expired or invalid. Ask the user to provide a fresh token.
+- **HTTP 404** → Collection name is wrong. Run `collections` to see valid names.
+- **Timeout** → The server is slow or unreachable. Try increasing
+  `CRM_NOCOBASE_TIMEOUT_MS` in `.env.local`.
 
 ---
 
-## NocoBase API Reference (read-only endpoints)
+## API Reference (read-only endpoints)
 
-These are the endpoints the script permits, following the NocoBase swagger
-convention (`/{resource}:{action}`):
+These are the only endpoints the script permits, following NocoBase's
+`/{resource}:{action}` convention:
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -184,22 +173,22 @@ convention (`/{resource}:{action}`):
 | `GET` | `collections:list` | List all collections |
 | `GET` | `collections:get?filterByTk=<name>` | Collection with fields |
 | `GET` | `/{collection}:list` | List records (paginated) |
-| `GET` | `/{collection}:get?filterByTk={id}` | Get record by ID |
+| `POST` | `/{collection}:get` | Get record by ID (NocoBase uses POST for :get) |
 | `GET` | `/{collection}:count` | Count records |
 
-**Blocked actions:** `:create`, `:update`, `:destroy`, and any other
-mutation endpoints.
+**Blocked actions:** `:create`, `:update`, `:destroy`, and all other mutation
+endpoints. The script enforces this at the HTTP level — no workaround exists.
 
 ---
 
-## Documentação de referência
+## Reference Documentation
 
-- `docs/integracao-api-client.md` — Guia completo de integração com a API
-- `scripts/generate-types/README.md` — Script de geração de tipos
-- `scripts/generate-types/ARCHITECTURE.md` — Arquitetura do gerador
-- `src/@types/types.generated.ts` — Tipos TypeScript gerados
+- `docs/integracao-api-client.md` — Full API integration guide (Portuguese)
+- `scripts/generate-types/README.md` — Type generation script documentation
+- `scripts/generate-types/ARCHITECTURE.md` — Type generator architecture
+- `src/@types/types.generated.ts` — Generated TypeScript types
 
-## Links externos
+## External Links
 
 - [NocoBase API Documentation](https://docs.nocobase.com/integration/api-doc/)
 - [NocoBase Auth SDK](https://docs.nocobase.com/api/sdk/auth)

@@ -11,6 +11,7 @@
  *   swagger [--ns=<namespace>]       Fetch swagger/OpenAPI spec (GET)
  *   collections [--name=<name>]      List collections or get one by name (GET)
  *   list <collection> [params...]    List records — GET /{collection}:list
+ *   count <collection>              Count records — GET /{collection}:count
  *   get <collection> <id>           Get record by ID — POST /{collection}:get
  *   raw <endpoint>                  Raw request to any read-only endpoint
  *   help                            Show this help
@@ -42,15 +43,9 @@ interface EnvConfig {
 function loadEnv(): EnvConfig {
 	const scriptDir = path.dirname(new URL(import.meta.url).pathname);
 	const skillDir = path.resolve(scriptDir, "..");
+	const envPath = path.join(skillDir, ".env.local");
 
-	const envPaths = [
-		path.join(skillDir, ".env.local"),
-		path.join(process.cwd(), ".env.local"),
-		path.join(process.cwd(), ".env"),
-	];
-
-	for (const envPath of envPaths) {
-		if (!fs.existsSync(envPath)) continue;
+	if (fs.existsSync(envPath)) {
 		const content = fs.readFileSync(envPath, "utf-8");
 		for (const line of content.split("\n")) {
 			const trimmed = line.trim();
@@ -72,21 +67,19 @@ function loadEnv(): EnvConfig {
 	const token = process.env.CRM_NOCOBASE_TOKEN;
 	const timeoutMs = Number(process.env.CRM_NOCOBASE_TIMEOUT_MS) || 15_000;
 
-	if (!baseUrl) {
-		console.error(
-			"ERROR: CRM_NOCOBASE_URL not found in environment.\n" +
-				"Create a .env.local file in the skill directory or project root with:\n" +
-				"  CRM_NOCOBASE_URL=https://your-instance.com/api\n" +
-				"  CRM_NOCOBASE_TOKEN=your-api-token",
-		);
-		process.exit(1);
-	}
+	if (!baseUrl || !token) {
+		const missing: string[] = [];
+		if (!baseUrl) missing.push("CRM_NOCOBASE_URL");
+		if (!token) missing.push("CRM_NOCOBASE_TOKEN");
 
-	if (!token) {
 		console.error(
-			"ERROR: CRM_NOCOBASE_TOKEN not found in environment.\n" +
-				"Create a .env.local file in the skill directory or project root with:\n" +
-				"  CRM_NOCOBASE_TOKEN=your-api-token",
+			`CREDENTIALS_REQUIRED:${JSON.stringify(missing)}\n` +
+				`Missing required credentials: ${missing.join(", ")}.\n` +
+				`The file ${envPath} does not exist or is incomplete.\n` +
+				`Ask the user for their NocoBase credentials and create ${envPath} with:\n` +
+				`  CRM_NOCOBASE_URL=https://your-instance.com/api\n` +
+				`  CRM_NOCOBASE_TOKEN=your-api-token\n` +
+				`  CRM_NOCOBASE_TIMEOUT_MS=15000`,
 		);
 		process.exit(1);
 	}
@@ -104,7 +97,7 @@ function loadEnv(): EnvConfig {
  * Per the official NocoBase OpenAPI spec (swagger:index.json), the core
  * actions are :list (GET) and :get (POST with filterByTk in body).
  */
-const READONLY_ACTIONS = new Set(["list", "get"]);
+const READONLY_ACTIONS = new Set(["list", "get", "count"]);
 
 const READONLY_SPECIAL_ENDPOINTS = new Set([
 	"swagger:get",
@@ -165,6 +158,21 @@ function createLogEntry(
 	};
 }
 
+function getLogFilePath(): string {
+	const scriptDir = path.dirname(new URL(import.meta.url).pathname);
+	const skillDir = path.resolve(scriptDir, "..");
+	return path.join(skillDir, "nocobase-client.log");
+}
+
+function appendLogFile(log: RequestLog): void {
+	const logLine = JSON.stringify(log);
+	try {
+		fs.appendFileSync(getLogFilePath(), `${logLine}\n`, "utf-8");
+	} catch {
+		// Silently fail — file logging is best-effort and must never break the client
+	}
+}
+
 function logRequest(log: RequestLog): void {
 	const logLine = JSON.stringify(log);
 	process.stderr.write(`${logLine}\n`);
@@ -182,6 +190,7 @@ function logRequest(log: RequestLog): void {
 	console.error(
 		`[NocoBase] ${log.timestamp} ${log.method} ${log.endpoint} → ${status}${duration}${bodyHint}`,
 	);
+	appendLogFile(log);
 }
 
 // ---------------------------------------------------------------------------
@@ -363,6 +372,25 @@ async function cmdGet(
 	console.log(JSON.stringify(data, null, 2));
 }
 
+async function cmdCount(
+	config: EnvConfig,
+	collection: string,
+	args: string[],
+): Promise<void> {
+	const queryParams: Record<string, string> = {};
+
+	for (const arg of args) {
+		if (arg.startsWith("--filter=")) queryParams.filter = arg.slice(9);
+	}
+
+	const data = await fetchReadOnly(
+		config,
+		`${collection}:count`,
+		queryParams,
+	);
+	console.log(JSON.stringify(data, null, 2));
+}
+
 async function cmdRaw(
 	config: EnvConfig,
 	endpoint: string,
@@ -391,6 +419,7 @@ Commands:
   collections [--name=<name>]       List collections or get one by name
   list <collection> [options]       List records (GET /{collection}:list)
   get <collection> <id> [options]   Get record by ID (POST /{collection}:get)
+  count <collection> [options]      Count records (GET /{collection}:count)
   raw <endpoint>                    Raw request to any read-only endpoint
   help                              Show this help
 
@@ -461,6 +490,16 @@ async function main(): Promise<void> {
 				process.exit(1);
 			}
 			await cmdGet(config, collection, id, rest.slice(2));
+			break;
+		}
+		case "count": {
+			const collection = rest[0];
+			if (!collection) {
+				console.error("ERROR: 'count' requires a collection name.");
+				console.error("Usage: nocobase-client.ts count <collection> [--filter=<json>]");
+				process.exit(1);
+			}
+			await cmdCount(config, collection, rest.slice(1));
 			break;
 		}
 		case "raw": {

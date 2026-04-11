@@ -1,0 +1,61 @@
+# Raw terminal output — nocobase-client.ts commands
+# Date: 2026-04-10
+
+## Command 1: collections (list all collections)
+
+$ npx tsx .agents/skills/nocobase-docs/scripts/nocobase-client.ts collections
+
+---
+CREDENTIALS_REQUIRED:["CRM_NOCOBASE_URL","CRM_NOCOBASE_TOKEN"]
+Missing required credentials: CRM_NOCOBASE_URL, CRM_NOCOBASE_TOKEN.
+The file /home/gustavo_carbonera/%C3%81rea%20de%20trabalho/crm-atplus/.agents/skills/nocobase-docs/.env.local does not exist or is incomplete.
+Ask the user for their NocoBase credentials and create /home/gustavo_carbonera/%C3%81rea%20de%20trabalho/crm-atplus/.agents/skills/nocobase-docs/.env.local with:
+  CRM_NOCOBASE_URL=https://your-instance.com/api
+  CRM_NOCOBASE_TOKEN=your-api-token
+  CRM_NOCOBASE_TIMEOUT_MS=15000
+
+## Command 2: help (sanity check — works without credentials)
+
+$ npx tsx .agents/skills/nocobase-docs/scripts/nocobase-client.ts help
+
+---
+NocoBase Read-Only Client
+=========================
+
+A strictly read-only client for exploring NocoBase APIs.
+All requests are logged (structured JSON to stderr) for auditability.
+
+Usage:
+  npx tsx .agents/skills/nocobase-docs/scripts/nocobase-client.ts <command> [args...]
+
+Commands:
+  swagger [--ns=<namespace>]        Fetch swagger/OpenAPI spec (GET)
+  collections [--name=<name>]       List collections or get one by name
+  list <collection> [options]       List records (GET /{collection}:list)
+  get <collection> <id> [options]   Get record by ID (POST /{collection}:get)
+  count <collection> [options]      Count records (GET /{collection}:count)
+  raw <endpoint>                    Raw request to any read-only endpoint
+  help                              Show this help
+
+Options for list:
+  --page=N          Page number (default: 1)
+  --pageSize=N      Items per page
+  --sort=<field>    Sort field (prefix with - for desc)
+  --fields=<list>   Fields to return (comma-separated)
+  --appends=<list>  Relations to include (comma-separated)
+  --except=<list>   Fields to exclude (comma-separated)
+  --filter=<json>   Filter object (JSON string)
+
+Options for get:
+  --fields=<list>   Fields to return (comma-separated)
+  --appends=<list>  Relations to include (comma-separated)
+  --except=<list>   Fields to exclude (comma-separated)
+
+Examples:
+  nocobase-client.ts swagger
+  nocobase-client.ts swagger --ns=collections/t_pessoas
+  nocobase-client.ts collections
+  nocobase-client.ts collections --name=t_pessoas
+  nocobase-client.ts list t_pessoas --page=1 --pageSize=20
+  nocobase-client.ts get t_pessoas 42 --appends=createdBy
+  nocobase-client.ts raw "swagger:get?ns=collections"

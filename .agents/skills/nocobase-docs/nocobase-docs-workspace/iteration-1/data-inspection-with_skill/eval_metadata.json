@@ -1,0 +1,6 @@
+{
+  "eval_id": 1,
+  "eval_name": "data-inspection",
+  "prompt": "Show me the first 3 records from t_pessoas in our NocoBase. I want to see what the data looks like.",
+  "assertions": []
+}
