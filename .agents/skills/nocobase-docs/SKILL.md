@@ -7,7 +7,9 @@ description: >-
   to know what fields exist, needs to list or inspect data from the project's
   NocoBase, or is about to make a NocoBase API call and needs the correct URL
   and credentials. Always use this skill before making any NocoBase API call so
-  the right URL/token are loaded and read-only rules are enforced.
+  the right URL/token are loaded and read-only rules are enforced. This skill
+  enforces a strict read-only policy via a TypeScript client script — never call
+  the NocoBase API directly with curl or fetch.
 metadata:
   authors:
     - copilot
@@ -17,7 +19,7 @@ metadata:
     - api
     - schema
     - collections
-  version: 3.0.0
+  version: 4.0.0
 user-invocable: true
 ---
 
@@ -26,117 +28,167 @@ user-invocable: true
 ## Overview
 
 This skill retrieves up-to-date documentation and schema information from the
-NocoBase instance configured in this project, querying the API directly using
-the URL and credentials resolved in Step 1.
+NocoBase instance configured in this project. It uses a **read-only TypeScript
+client script** that enforces access restrictions and logs every request for
+auditing.
 
-**This skill is read-only.** Never call `create`, `update`, or `destroy`
-endpoints. The purpose is exploration and reference, not data mutation.
+**This skill is strictly read-only.** All API calls must go through the
+bundled script — it blocks write operations (`:create`, `:update`, `:destroy`)
+and logs every request to stderr in structured JSON format.
 
 ---
 
-## Step 1 — Resolver URL e token
+## Step 1 — Chamar a API (obrigatório via script)
 
-Siga esta ordem para cada variável. Pare no primeiro método que funcionar.
+**Never call the NocoBase API directly with `curl`, `fetch`, or any HTTP client.**
+Always use the bundled TypeScript client script — it enforces read-only access
+and logs all requests.
 
-### 1a. Variáveis de ambiente
+### Primeiro uso — instalar dependências
 
-Leia `.env.local` primeiro, depois `.env` como fallback.
+Antes de rodar o script pela primeira vez, instale as dependências:
 
-| Variável                  | Descrição                                      |
-| ------------------------- | ---------------------------------------------- |
-| `CRM_NOCOBASE_URL`        | URL base da API (ex: `https://exemplo.com/api`) |
-| `CRM_NOCOBASE_TOKEN`      | Token JWT permanente para autenticação          |
-| `CRM_NOCOBASE_TIMEOUT_MS` | Timeout em ms (default: `15000`)               |
+```bash
+cd .agents/skills/nocobase-docs/scripts && pnpm install
+```
 
-> Se existir em ambos os arquivos, `.env.local` tem precedência.
+Se `node_modules` não existir na pasta `scripts/`, o script falhará com erro
+de módulo não encontrado. Sempre execute `pnpm install` antes de usar.
 
-### 1b. Perguntar ao usuário (fallback)
-
-Se qualquer uma das variáveis **não for encontrada** no `.env`, pergunte ao
-usuário antes de prosseguir:
+### Script location
 
 ```
-Não encontrei <URL|token> nas variáveis de ambiente (.env.local / .env).
+.agents/skills/nocobase-docs/scripts/nocobase-client.ts
+```
+
+### Run with `npx tsx`
+
+```bash
+npx tsx .agents/skills/nocobase-docs/scripts/nocobase-client.ts <command> [args...]
+```
+
+### Commands
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `swagger` | Fetch swagger/OpenAPI spec | `swagger --ns=collections` |
+| `collections` | List all collections or get one | `collections --name=t_pessoas` |
+| `list <collection>` | List records (paginated) | `list t_pessoas --page=1 --pageSize=20` |
+| `get <collection> <id>` | Get record by ID | `get t_pessoas 42` |
+| `count <collection>` | Count records | `count t_pessoas` |
+| `raw <endpoint>` | Raw GET to any read-only endpoint | `raw "swagger:get?ns=collections"` |
+| `help` | Show usage help | `help` |
+
+### Query parameters (for list/get/count)
+
+| Parameter | Example | Description |
+|-----------|---------|-------------|
+| `--page=N` | `--page=1` | Page number |
+| `--pageSize=N` | `--pageSize=20` | Items per page |
+| `--sort=<field>` | `--sort=-id` | Sort (prefix `-` for desc) |
+| `--fields=<list>` | `--fields=id,name` | Fields to return |
+| `--appends=<list>` | `--appends=createdBy` | Relations to include |
+| `--except=<list>` | `--except=password` | Fields to exclude |
+| `--filter=<json>` | `--filter='{"id":{"$eq":1}}'` | Advanced filters |
+
+### Swagger-specific
+
+| Parameter | Example | Description |
+|-----------|---------|-------------|
+| `--ns=<namespace>` | `--ns=collections` | Swagger namespace filter |
+| `--ns=<ns>/<col>` | `--ns=collections/t_pessoas` | Specific collection schema |
+
+### Collections-specific
+
+| Parameter | Example | Description |
+|-----------|---------|-------------|
+| `--name=<name>` | `--name=t_pessoas` | Get a specific collection with fields |
+
+---
+
+## Step 2 — Entendendo o output
+
+The script outputs JSON to stdout. Request logs go to stderr (structured JSON
++ human-readable), so you can pipe stdout to files or parse it programmatically
+without log noise.
+
+### Log format (stderr)
+
+Every request produces two log entries: one at start (`status: "pending"`)
+and one at completion (`status: "success"` or `status: "error"`).
+
+```json
+{
+  "timestamp": "2026-04-10T12:00:00.000Z",
+  "method": "GET",
+  "endpoint": "t_pessoas:list",
+  "fullUrl": "https://crm.example.com/api/t_pessoas:list?page=1&pageSize=20",
+  "status": "success",
+  "statusCode": 200,
+  "durationMs": 150
+}
+```
+
+### Read-only enforcement
+
+If you attempt a write operation, the script blocks it immediately:
+
+```
+BLOCKED: Endpoint "t_pessoas:create" is not read-only.
+Only GET actions (list, get, count, swagger, collections) are permitted.
+```
+
+---
+
+## Step 3 — Configuração de ambiente
+
+The script automatically loads credentials from `.env.local` or `.env` in this
+order:
+
+1. `.agents/skills/nocobase-docs/.env.local` (skill-local, takes precedence)
+2. `.env.local` in the current working directory
+3. `.env` in the current working directory
+
+If no credentials are found in any env file, **ask the user** before proceeding:
+
+```
+Não encontrei as credenciais do NocoBase nos arquivos .env.
 Por favor, informe:
-- URL base da API NocoBase (ex: https://meusite.com/api):   [se URL faltando]
-- Email (ou username):                                       [se token faltando]
-- Senha:                                                     [se token faltando]
+- URL base da API NocoBase (ex: https://meusite.com/api):
+- Token JWT de autenticação:
 ```
 
-Se o token estiver faltando, autentique com as credenciais informadas:
+Then create `.agents/skills/nocobase-docs/.env.local` with the provided values
+so future invocations work without asking again.
 
-```bash
-curl -s -X POST "${CRM_NOCOBASE_URL}/auth:signIn" \
-  -H "Content-Type: application/json" \
-  -d '{"email": "<EMAIL>", "password": "<SENHA>"}'
-```
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `CRM_NOCOBASE_URL` | Base API URL | `https://crm.atplus.cloud/api` |
+| `CRM_NOCOBASE_TOKEN` | JWT token for auth | `eyJhbGci...` |
+| `CRM_NOCOBASE_TIMEOUT_MS` | Request timeout in ms (default: 15000) | `15000` |
 
-> Se o login for por **username**, use `"username"` no lugar de `"email"`.
-> A resposta retorna `{ "data": { "token": "...", "user": {...} } }`.
-> Extraia `data.token` e use como bearer. Este token de sessão expira quando
-> a sessão encerrar.
+If credentials are missing and the user hasn't provided them, the script will
+exit with instructions on how to configure them.
 
 ---
 
-## Step 2 — Consultar a API (somente leitura)
+## NocoBase API Reference (read-only endpoints)
 
-Todas as requisições devem incluir o header `Authorization: Bearer`:
+These are the endpoints the script permits, following the NocoBase swagger
+convention (`/{resource}:{action}`):
 
-```bash
-curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
-  "${CRM_NOCOBASE_URL}/<endpoint>"
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `swagger:get` | Full OpenAPI spec |
+| `GET` | `swagger:get?ns=<namespace>` | Filtered spec |
+| `GET` | `collections:list` | List all collections |
+| `GET` | `collections:get?filterByTk=<name>` | Collection with fields |
+| `GET` | `/{collection}:list` | List records (paginated) |
+| `GET` | `/{collection}:get?filterByTk={id}` | Get record by ID |
+| `GET` | `/{collection}:count` | Count records |
 
-### Swagger (OpenAPI Spec)
-
-```bash
-# Documentação completa de todas as rotas
-curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
-  "${CRM_NOCOBASE_URL}/swagger:get"
-
-# Apenas collections customizadas
-curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
-  "${CRM_NOCOBASE_URL}/swagger:get?ns=collections"
-
-# Schema de uma collection específica (com associações)
-curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
-  "${CRM_NOCOBASE_URL}/swagger:get?ns=collections/t_pessoas"
-```
-
-### Collections
-
-```bash
-# Listar todas as collections
-curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
-  "${CRM_NOCOBASE_URL}/collections:list?paginate=false"
-
-# Detalhes de uma collection com seus campos
-curl -s -H "Authorization: Bearer $CRM_NOCOBASE_TOKEN" \
-  "${CRM_NOCOBASE_URL}/collections:get?filterByTk=t_pessoas&appends=fields"
-```
-
-### Endpoints de leitura por collection
-
-| Método | Endpoint                            | Descrição                  |
-| ------ | ----------------------------------- | -------------------------- |
-| `GET`  | `/{collection}:list`                | Lista registros (paginado) |
-| `GET`  | `/{collection}:get?filterByTk={id}` | Busca por ID               |
-| `GET`  | `/{collection}:count`               | Conta registros            |
-
-> **Somente leitura.** Nunca use `:create`, `:update` ou `:destroy` — esses
-> endpoints mutam dados de produção e estão fora do escopo desta skill.
-
-### Parâmetros de query comuns
-
-| Parâmetro  | Tipo       | Descrição                       |
-| ---------- | ---------- | ------------------------------- |
-| `page`     | `number`   | Página atual (default: 1)       |
-| `pageSize` | `number`   | Itens por página                |
-| `filter`   | `object`   | Filtros avançados (JSON)        |
-| `sort`     | `string[]` | Ordenação (ex: `-id,createdAt`) |
-| `fields`   | `string[]` | Campos específicos a retornar   |
-| `appends`  | `string[]` | Relações a incluir              |
-| `except`   | `string[]` | Campos a excluir                |
+**Blocked actions:** `:create`, `:update`, `:destroy`, and any other
+mutation endpoints.
 
 ---
 
