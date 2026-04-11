@@ -14,7 +14,6 @@ export {
 	setUser,
 } from "./store";
 export type {
-	AuthResponse,
 	AuthState,
 	AuthUser,
 	LoginCredentials,
@@ -25,5 +24,4 @@ export {
 	AuthValidationError,
 	authResponseSchema,
 	authUserSchema,
-	checkAuthResponseSchema,
 } from "./types";

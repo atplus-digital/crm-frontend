@@ -1,15 +1,15 @@
 import { nocobaseClient } from "./client";
 import { reset, setToken, setUser } from "./store";
-import {
-	AuthValidationError,
-	authResponseSchema,
-	checkAuthResponseSchema,
-} from "./types";
 import type {
 	AuthUser,
 	LoginCredentials,
 	ResetPasswordConfirm,
 	ResetPasswordRequest,
+} from "./types";
+import {
+	AuthValidationError,
+	authResponseSchema,
+	authUserSchema,
 } from "./types";
 
 export async function signIn(
@@ -54,7 +54,7 @@ export async function checkAuth(): Promise<AuthUser> {
 		method: "GET",
 	});
 	const responseData = response.data?.data ?? response.data;
-	const parsed = checkAuthResponseSchema.safeParse(responseData);
+	const parsed = authUserSchema.safeParse(responseData);
 	if (!parsed.success) {
 		throw new AuthValidationError(
 			"Resposta de verificação de autenticação inválida",
