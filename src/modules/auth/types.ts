@@ -1,4 +1,5 @@
 import type { UsersBase } from "#/@types/generated/crm/users";
+import { z } from "zod";
 
 export type AuthUser = Pick<
 	UsersBase,
@@ -11,6 +12,31 @@ export interface AuthResponse {
 		user: AuthUser;
 	};
 }
+
+export class AuthValidationError extends Error {
+	constructor(
+		message: string,
+		public readonly zodError?: z.ZodError,
+	) {
+		super(message);
+		this.name = "AuthValidationError";
+	}
+}
+
+export const authUserSchema = z
+	.object({
+		id: z.number(),
+	})
+	.passthrough();
+
+export const authResponseSchema = z.object({
+	data: z.object({
+		token: z.string().min(1),
+		user: authUserSchema,
+	}),
+});
+
+export const checkAuthResponseSchema = authUserSchema;
 
 export interface AuthState {
 	user: AuthUser | null;

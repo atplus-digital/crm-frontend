@@ -21,3 +21,9 @@ export type {
 	ResetPasswordConfirm,
 	ResetPasswordRequest,
 } from "./types";
+export {
+	AuthValidationError,
+	authResponseSchema,
+	authUserSchema,
+	checkAuthResponseSchema,
+} from "./types";

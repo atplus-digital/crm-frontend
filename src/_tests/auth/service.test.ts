@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { AuthUser } from "#/modules/auth/types";
+import { AuthValidationError } from "#/modules/auth/types";
 
 const { mockAuth, mockRequest, mockSetToken, mockSetUser, mockReset } =
 	vi.hoisted(() => ({
@@ -121,6 +122,34 @@ describe("auth service", () => {
 				signIn({ email: "test@example.com", password: "wrong" }),
 			).rejects.toThrow("Invalid credentials");
 		});
+
+		it("throws AuthValidationError when response has no token", async () => {
+			mockAuth.signIn.mockResolvedValue({
+				data: { data: { user: MOCK_USER } },
+			});
+
+			await expect(
+				signIn({ email: "test@example.com", password: "pass123" }),
+			).rejects.toThrow(AuthValidationError);
+		});
+
+		it("throws AuthValidationError when response has no user", async () => {
+			mockAuth.signIn.mockResolvedValue({
+				data: { data: { token: "abc123" } },
+			});
+
+			await expect(
+				signIn({ email: "test@example.com", password: "pass123" }),
+			).rejects.toThrow(AuthValidationError);
+		});
+
+		it("throws AuthValidationError for malformed response", async () => {
+			mockAuth.signIn.mockResolvedValue({ data: "not-an-object" });
+
+			await expect(
+				signIn({ email: "test@example.com", password: "pass123" }),
+			).rejects.toThrow(AuthValidationError);
+		});
 	});
 
 	describe("signOut", () => {
@@ -194,15 +223,20 @@ describe("auth service", () => {
 			expect(result).toEqual(MOCK_USER);
 		});
 
-		it("handles null data.data", async () => {
+		it("throws AuthValidationError for null data.data", async () => {
 			mockRequest.mockResolvedValue({
 				data: { data: null },
 			});
 
-			const result = await checkAuth();
+			await expect(checkAuth()).rejects.toThrow(AuthValidationError);
+		});
 
-			expect(mockSetUser).toHaveBeenCalledWith({ data: null });
-			expect(result).toEqual({ data: null });
+		it("throws AuthValidationError for malformed response", async () => {
+			mockRequest.mockResolvedValue({
+				data: "not-a-user-object",
+			});
+
+			await expect(checkAuth()).rejects.toThrow(AuthValidationError);
 		});
 	});
 

@@ -1,7 +1,11 @@
 import { nocobaseClient } from "./client";
 import { reset, setToken, setUser } from "./store";
+import {
+	AuthValidationError,
+	authResponseSchema,
+	checkAuthResponseSchema,
+} from "./types";
 import type {
-	AuthResponse,
 	AuthUser,
 	LoginCredentials,
 	ResetPasswordConfirm,
@@ -11,10 +15,16 @@ import type {
 export async function signIn(
 	credentials: LoginCredentials,
 ): Promise<{ token: string; user: AuthUser }> {
-	const response = (await nocobaseClient.auth.signIn(
-		credentials,
-	)) as AuthResponse;
-	const { token, user } = response.data?.data ?? response.data;
+	const rawResponse = await nocobaseClient.auth.signIn(credentials);
+	const responseData = rawResponse.data?.data ?? rawResponse.data;
+	const parsed = authResponseSchema.safeParse({ data: responseData });
+	if (!parsed.success) {
+		throw new AuthValidationError(
+			"Resposta de autenticação inválida",
+			parsed.error,
+		);
+	}
+	const { token, user } = parsed.data.data;
 
 	setToken(token);
 	setUser(user);
@@ -38,7 +48,15 @@ export async function checkAuth(): Promise<AuthUser> {
 		url: "auth:check",
 		method: "GET",
 	});
-	const user = response.data?.data ?? response.data;
+	const responseData = response.data?.data ?? response.data;
+	const parsed = checkAuthResponseSchema.safeParse(responseData);
+	if (!parsed.success) {
+		throw new AuthValidationError(
+			"Resposta de verificação de autenticação inválida",
+			parsed.error,
+		);
+	}
+	const user = parsed.data;
 	setUser(user);
 	return user;
 }
