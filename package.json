@@ -14,7 +14,12 @@
     "knip": "knip",
     "knip:silent": "knip --exclude dependencies --no-config-hints",
     "generate-types": "tsx scripts/generate-types/index.ts",
+    "lint-staged": "lint-staged",
     "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,jsx,json,css,html,md}": "biome check --write --no-errors-on-unmatched",
+    "*.{ts,tsx}": "knip --no-progress"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",

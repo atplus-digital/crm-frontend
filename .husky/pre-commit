@@ -1,1 +1,1 @@
-pnpm biome:fix
+pnpm lint-staged
