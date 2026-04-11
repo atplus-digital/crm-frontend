@@ -1,41 +1,32 @@
 {
-  "active_plan": "/home/gustavo_carbonera/Área de trabalho/crm-atplus/.sisyphus/plans/auth-nocobase.md",
-  "started_at": "2026-04-10T18:38:38.827Z",
+  "active_plan": "/home/gustavo_carbonera/Área de trabalho/crm-atplus/.sisyphus/plans/auth-review-fixes.md",
+  "started_at": "2026-04-11T00:34:33.571Z",
   "session_ids": [
-    "ses_2877189f0ffeGWOw7wHRXTcoO0"
+    "ses_2861b42a6ffeDopIPF6zWnGMAH"
   ],
   "session_origins": {
-    "ses_2877189f0ffeGWOw7wHRXTcoO0": "direct"
+    "ses_2861b42a6ffeDopIPF6zWnGMAH": "direct"
   },
-  "plan_name": "auth-nocobase",
+  "plan_name": "auth-review-fixes",
   "agent": "atlas",
   "task_sessions": {
     "todo:1": {
       "task_key": "todo:1",
       "task_label": "1",
-      "task_title": "Instalar `@nocobase/sdk` + Configurar Variáveis de Ambiente",
-      "session_id": "ses_2874d5c47ffe4CuOlv0g1WKV7T",
+      "task_title": "Atualizar `.gitignore` — adicionar `.env.*` e `.env.example` ao ignore",
+      "session_id": "ses_28608b613ffeiDalMu5iLrK7wq",
       "agent": "Sisyphus-Junior",
       "category": "quick",
-      "updated_at": "2026-04-10T18:42:01.443Z"
+      "updated_at": "2026-04-11T00:36:15.919Z"
     },
-    "todo:4": {
-      "task_key": "todo:4",
-      "task_label": "4",
-      "task_title": "NocoBase Client + Auth Service",
-      "session_id": "ses_28748be72ffepB3dcc2uy5kQ5W",
+    "todo:2": {
+      "task_key": "todo:2",
+      "task_label": "2",
+      "task_title": "Corrigir mismatch de nomes de env vars entre `env.ts`, `client.ts` e `.env.example`",
+      "session_id": "ses_286074dd9ffekRSXnoQ5FeiN6a",
       "agent": "Sisyphus-Junior",
-      "category": "unspecified-high",
-      "updated_at": "2026-04-10T18:49:19.244Z"
-    },
-    "todo:9": {
-      "task_key": "todo:9",
-      "task_label": "9",
-      "task_title": "Auth Integration — Wire Everything Together",
-      "session_id": "ses_2873bd7a1ffeFdskDBHgyGavB9",
-      "agent": "Sisyphus-Junior",
-      "category": "deep",
-      "updated_at": "2026-04-10T19:03:45.663Z"
+      "category": "quick",
+      "updated_at": "2026-04-11T00:40:33.399Z"
     }
   }
 }
