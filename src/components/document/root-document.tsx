@@ -10,7 +10,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</head>
 			<body className="font-sans antialiased wrap-anywhere">
 				{children}
-				<TanstackDevTools />
+				{import.meta.env.DEV && <TanstackDevTools />}
 				<ThemeScript />
 				<Scripts />
 			</body>
