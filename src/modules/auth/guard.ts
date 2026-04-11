@@ -1,4 +1,8 @@
 import { redirect } from "@tanstack/react-router";
+import {
+	resetPermissions,
+	setPermissionsFromRoles,
+} from "#/modules/permissions";
 import { checkAuth } from "./service";
 import { authStore, reset, setUser } from "./store";
 
@@ -61,6 +65,7 @@ export async function validateTokenOnInit(): Promise<void> {
 	try {
 		const user = await checkAuth();
 		setUser(user);
+		setPermissionsFromRoles(user.roles);
 	} catch (err) {
 		if (isNetworkError(err)) {
 			// Don't log out user on network errors — preserve auth state
@@ -72,5 +77,6 @@ export async function validateTokenOnInit(): Promise<void> {
 			return;
 		}
 		reset();
+		resetPermissions();
 	}
 }

@@ -33,16 +33,38 @@ describe("clearAllMocks test", () => {
 	});
 
 	it("first test sets resolvedValue", async () => {
-		mockFn.mockResolvedValue({ data: { token: "abc", user: { id: 1 } } });
+		mockFn.mockResolvedValue({
+			data: {
+				token: "abc",
+				user: {
+					id: 1,
+					email: "a@b.c",
+					username: "a",
+					nickname: "A",
+					appLang: "en",
+					phone: "0",
+				},
+			},
+		});
 		const result = await signIn({ email: "a@b.c", password: "p" });
-		console.log("FIRST result:", JSON.stringify(result));
 		expect(result.token).toBe("abc");
 	});
 
 	it("second test also sets resolvedValue", async () => {
-		mockFn.mockResolvedValue({ data: { token: "def", user: { id: 2 } } });
+		mockFn.mockResolvedValue({
+			data: {
+				token: "def",
+				user: {
+					id: 2,
+					email: "d@e.f",
+					username: "d",
+					nickname: "D",
+					appLang: "en",
+					phone: "0",
+				},
+			},
+		});
 		const result = await signIn({ email: "a@b.c", password: "p" });
-		console.log("SECOND result:", JSON.stringify(result));
 		expect(result.token).toBe("def");
 	});
 });

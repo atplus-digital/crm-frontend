@@ -53,6 +53,7 @@ const MOCK_USER: AuthUser = {
 	nickname: "Test",
 	appLang: "en",
 	phone: "1234567890",
+	roles: [],
 };
 
 describe("auth service", () => {

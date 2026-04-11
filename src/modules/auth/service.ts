@@ -1,3 +1,7 @@
+import {
+	resetPermissions,
+	setPermissionsFromRoles,
+} from "#/modules/permissions";
 import { nocobaseClient } from "./client";
 import { reset, setToken, setUser } from "./store";
 import type {
@@ -28,6 +32,7 @@ export async function signIn(
 
 	setToken(token);
 	setUser(user);
+	setPermissionsFromRoles(user.roles);
 
 	return { token, user };
 }
@@ -45,6 +50,7 @@ export async function signOut(): Promise<void> {
 	} finally {
 		nocobaseClient.auth.token = "";
 		reset();
+		resetPermissions();
 	}
 }
 
@@ -63,6 +69,7 @@ export async function checkAuth(): Promise<AuthUser> {
 	}
 	const user = parsed.data;
 	setUser(user);
+	setPermissionsFromRoles(user.roles);
 	return user;
 }
 

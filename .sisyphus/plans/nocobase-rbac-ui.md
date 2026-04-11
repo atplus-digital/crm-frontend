@@ -186,7 +186,7 @@ Max Concurrent: 4 (Wave 2)
 
 ## TODOs
 
-- [ ] 1. Validar shape real do `auth:check` com roles e criar tipos com Zod
+- [x] 1. Validar shape real do `auth:check` com roles e criar tipos com Zod
 
   **What to do**:
   - Chamar `nocobaseClient.request({ url: "auth:check" })` diretamente e inspecionar a resposta completa, especialmente o campo `roles[]`
@@ -255,7 +255,7 @@ Max Concurrent: 4 (Wave 2)
   - Files: `src/modules/permissions/types.ts`, `src/modules/permissions/index.ts`
   - Pre-commit: `pnpm dlx tsc --noEmit`
 
-- [ ] 2. Criar `permissionsStore` seguindo padrão do `authStore`
+- [x] 2. Criar `permissionsStore` seguindo padrão do `authStore`
 
   **What to do**:
   - Criar `src/modules/permissions/store.ts` com:
@@ -329,7 +329,7 @@ Max Concurrent: 4 (Wave 2)
   - Files: `src/modules/permissions/types.ts`, `src/modules/permissions/index.ts`, `src/modules/permissions/store.ts`, `src/modules/permissions/compute.ts`
   - Pre-commit: `pnpm dlx tsc --noEmit`
 
-- [ ] 3. Estender `auth` para extrair roles do `auth:check` e popular `permissionsStore`
+- [x] 3. Estender `auth` para extrair roles do `auth:check` e popular `permissionsStore`
 
   **What to do**:
   - Estender `src/modules/auth/types.ts`:
@@ -418,7 +418,7 @@ Max Concurrent: 4 (Wave 2)
   - Files: `src/modules/auth/types.ts`, `src/modules/auth/service.ts`, `src/modules/auth/store.ts`
   - Pre-commit: `pnpm dlx tsc --noEmit && pnpm biome:fix`
 
-- [ ] 4. Criar hooks `useCan`, `useHasSnippet`, `useCanEdit` e guards `requireSnippet`, `requireAction`
+- [x] 4. Criar hooks `useCan`, `useHasSnippet`, `useCanEdit` e guards `requireSnippet`, `requireAction`
 
   **What to do**:
   - Criar `src/modules/permissions/hooks.ts`:
@@ -512,7 +512,7 @@ Max Concurrent: 4 (Wave 2)
   - Files: `src/modules/permissions/hooks.ts`, `src/modules/permissions/guards.ts`, `src/modules/permissions/index.ts`
   - Pre-commit: `pnpm dlx tsc --noEmit`
 
-- [ ] 5. Criar componente `<Can>` e `<PermissionField>`
+- [x] 5. Criar componente `<Can>` e `<PermissionField>`
 
   **What to do**:
   - Criar `src/modules/permissions/components/can.tsx`:
@@ -594,7 +594,7 @@ Max Concurrent: 4 (Wave 2)
   - Files: `src/modules/permissions/components/can.tsx`, `src/modules/permissions/components/permission-field.tsx`, `src/modules/permissions/index.ts`
   - Pre-commit: `pnpm dlx tsc --noEmit`
 
-- [ ] 6. Criar nav-config declarativo e integrar guards nas rotas existentes
+- [x] 6. Criar nav-config declarativo e integrar guards nas rotas existentes
 
   **What to do**:
   - Criar `src/modules/permissions/nav-config.ts`:

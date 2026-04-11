@@ -1,10 +1,14 @@
 import { z } from "zod";
 import type { UsersBase } from "#/@types/generated/crm/users";
+import type { PermissionRole } from "#/modules/permissions";
+import { permissionRoleSchema } from "#/modules/permissions";
 
 export type AuthUser = Pick<
 	UsersBase,
 	"id" | "email" | "username" | "nickname" | "appLang" | "phone"
->;
+> & {
+	roles: PermissionRole[];
+};
 
 export class AuthValidationError extends Error {
 	constructor(
@@ -16,11 +20,15 @@ export class AuthValidationError extends Error {
 	}
 }
 
-export const authUserSchema = z
-	.object({
-		id: z.number(),
-	})
-	.passthrough();
+export const authUserSchema = z.object({
+	id: z.number(),
+	email: z.string(),
+	username: z.string(),
+	nickname: z.string(),
+	appLang: z.string(),
+	phone: z.string(),
+	roles: z.array(permissionRoleSchema).optional().default([]),
+});
 
 export const authResponseSchema = z.object({
 	data: z.object({
