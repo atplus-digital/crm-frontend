@@ -35,8 +35,13 @@ export async function signIn(
 export async function signOut(): Promise<void> {
 	try {
 		await nocobaseClient.auth.signOut();
-	} catch {
-		// Best-effort — API call may fail if token expired
+	} catch (err) {
+		if (import.meta.env.DEV) {
+			console.warn(
+				"[auth] signOut API call failed:",
+				err instanceof Error ? err.message : String(err),
+			);
+		}
 	} finally {
 		nocobaseClient.auth.token = "";
 		reset();

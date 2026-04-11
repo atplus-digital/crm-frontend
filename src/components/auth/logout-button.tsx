@@ -8,8 +8,13 @@ export function LogoutButton() {
 	async function handleLogout() {
 		try {
 			await signOut();
-		} catch {
-			// Best-effort — API call may fail
+		} catch (err) {
+			if (import.meta.env.DEV) {
+				console.warn(
+					"[auth] logout API call failed:",
+					err instanceof Error ? err.message : String(err),
+				);
+			}
 		}
 		await navigate({ to: "/login" });
 	}

@@ -13,7 +13,11 @@ const THEME_INIT_SCRIPT = `
     root.classList.add(mode);
     root.setAttribute("data-theme", mode);
     root.style.colorScheme = mode;
-  } catch (_) {}
+  } catch (err) {
+    if (import.meta.env.DEV) {
+      console.warn("[theme] initialization failed:", err instanceof Error ? err.message : String(err));
+    }
+  }
 })();
 `.trim();
 

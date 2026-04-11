@@ -22,8 +22,7 @@ export function LoginForm() {
 			const search = new URLSearchParams(window.location.search);
 			const returnTo = search.get("returnTo") || "/";
 			await navigate({ to: returnTo });
-		} catch (e) {
-			console.error(e);
+		} catch {
 			setErrorLocal("E-mail ou senha inválidos");
 		} finally {
 			setIsLoading(false);
