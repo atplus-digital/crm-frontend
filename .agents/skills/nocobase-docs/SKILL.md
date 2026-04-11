@@ -19,7 +19,7 @@ metadata:
     - api
     - schema
     - collections
-  version: 5.0.0
+  version: 5.1.0
 user-invocable: true
 ---
 
@@ -119,7 +119,14 @@ The script loads credentials **only** from
 `.agents/skills/nocobase-docs/.env.local`. It does not fall back to `.env`
 or `.env.local` in the project root — the skill is self-contained.
 
-If `.env.local` is missing or incomplete, **ask the user** for credentials:
+If `.env.local` is missing or incomplete, try these steps in order:
+
+1. **Check the project root** for `.env.local` or `.env` — if `CRM_NOCOBASE_URL` and
+   `CRM_NOCOBASE_TOKEN` exist there, copy them into `.agents/skills/nocobase-docs/.env.local`.
+   The skill's script only reads from its own `.env.local`, but the credentials may already
+   be configured elsewhere in the project.
+
+2. **Ask the user** if credentials aren't found anywhere:
 
 > I need your NocoBase credentials to continue. Please provide:
 > - NocoBase API base URL (e.g., https://your-instance.com/api)
@@ -171,7 +178,7 @@ These are the only endpoints the script permits, following NocoBase's
 | `GET` | `swagger:get` | Full OpenAPI spec |
 | `GET` | `swagger:get?ns=<namespace>` | Filtered spec |
 | `GET` | `collections:list` | List all collections |
-| `GET` | `collections:get?filterByTk=<name>` | Collection with fields |
+| `POST` | `collections:get` | Collection with fields (sends filterByTk in body) |
 | `GET` | `/{collection}:list` | List records (paginated) |
 | `POST` | `/{collection}:get` | Get record by ID (NocoBase uses POST for :get) |
 | `GET` | `/{collection}:count` | Count records |
