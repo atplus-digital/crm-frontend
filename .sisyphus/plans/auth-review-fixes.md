@@ -65,12 +65,12 @@ Corrigir todos os problemas CRITICAL e HIGH identificados na revisão do módulo
 - DevTools carregado condicionalmente (só em DEV)
 
 ### Definition of Done
-- [ ] `pnpm build` passa sem erros
-- [ ] `pnpm test` passa (333+ tests)
-- [ ] `pnpm biome:fix` não reporta problemas novos
-- [ ] `.env.local` não está mais no git tracking
-- [ ] Nenhum `console.error`/`console.log` em src/ (exceto testes)
-- [ ] DevTools não incluído no bundle de produção
+- [x] `pnpm build` passa sem erros
+- [x] `pnpm test` passa (333+ tests)
+- [x] `pnpm biome:fix` não reporta problemas novos
+- [x] `.env.local` não está mais no git tracking
+- [x] Nenhum `console.error`/`console.log` em src/ (exceto testes)
+- [x] DevTools não incluído no bundle de produção
 
 ### Must Have
 - Todas as correções CRITICAL e HIGH implementadas
@@ -242,7 +242,7 @@ Max Concurrent: 5 (Wave 1)
 
   ⚠️ **AÇÃO MANUAL NECESSÁRIA**: Após esta task, rotacionar o token JWT no painel admin do NocoBase. O token está no histórico do git.
 
-- [ ] 2. Corrigir mismatch de nomes de env vars entre `env.ts`, `client.ts` e `.env.example`
+- [x] 2. Corrigir mismatch de nomes de env vars entre `env.ts`, `client.ts` e `.env.example`
 
   **What to do**:
   - Auditar TODAS as env vars usadas no projeto: `grep -rn 'env\.\VITE_\|env\.CRM_\|env\.SERVER_\|env\.AUTH_' src/`
@@ -321,7 +321,7 @@ Max Concurrent: 5 (Wave 1)
   - Files: `src/env.ts`, `.env.example`
   - Pre-commit: `pnpm build`
 
-- [ ] 3. Resolver `AUTH_SESSION_SECRET` — remover ou implementar
+- [x] 3. Resolver `AUTH_SESSION_SECRET` — remover ou implementar
 
   **What to do**:
   - Buscar TODAS as referências a `AUTH_SESSION_SECRET` no código: `grep -rn 'AUTH_SESSION_SECRET' src/`
@@ -393,7 +393,7 @@ Max Concurrent: 5 (Wave 1)
   - Files: `src/env.ts`, `.env.example`, `.env.local`
   - Pre-commit: `pnpm build`
 
-- [ ] 4. Remover ngrok URL hardcoded do `vite.config.ts`
+- [x] 4. Remover ngrok URL hardcoded do `vite.config.ts`
 
   **What to do**:
   - Abrir `vite.config.ts` e localizar `allowedHosts: ["fifteen-unglue-rascal.ngrok-free.dev"]`
@@ -447,7 +447,7 @@ Max Concurrent: 5 (Wave 1)
   - Files: `vite.config.ts`
   - Pre-commit: `pnpm build`
 
-- [ ] 5. **Fix `validateTokenOnInit` — distinguish network errors from auth errors**
+- [x] 5. **Fix `validateTokenOnInit` — distinguish network errors from auth errors**
 
   **What to do**:
   - In `src/modules/auth/guard.ts`, modify `validateTokenOnInit` to catch specific error types
@@ -511,12 +511,12 @@ Max Concurrent: 5 (Wave 1)
 
   **Acceptance Criteria**:
 
-  - [ ] `src/modules/auth/guard.ts` has `isNetworkError()` classifier function
-  - [ ] `validateTokenOnInit` catch block distinguishes network vs auth errors
-  - [ ] Network errors do NOT clear auth state
-  - [ ] Auth errors (401/403) DO clear auth state
-  - [ ] `pnpm test -- src/_tests/auth/guard.test.ts` → ALL PASS
-  - [ ] New test cases added: network error preserves state, 401 clears state
+  - [x] `src/modules/auth/guard.ts` has `isNetworkError()` classifier function
+  - [x] `validateTokenOnInit` catch block distinguishes network vs auth errors
+  - [x] Network errors do NOT clear auth state
+  - [x] Auth errors (401/403) DO clear auth state
+  - [x] `pnpm test -- src/_tests/auth/guard.test.ts` → ALL PASS
+  - [x] New test cases added: network error preserves state, 401 clears state
 
   **QA Scenarios (MANDATORY)**:
 
@@ -550,7 +550,7 @@ Max Concurrent: 5 (Wave 1)
 
 ---
 
-- [ ] 6. **Add runtime validation for `AuthResponse` — replace unsafe `as` cast**
+- [x] 6. **Add runtime validation for `AuthResponse` — replace unsafe `as` cast**
 
   **What to do**:
   - In `src/modules/auth/service.ts`, replace `as AuthResponse` with runtime validation
@@ -643,13 +643,13 @@ Max Concurrent: 5 (Wave 1)
 
   **Acceptance Criteria**:
 
-  - [ ] `AuthResponse` has a corresponding Zod schema in `types.ts`
-  - [ ] `signIn` uses `.safeParse()` instead of `as AuthResponse`
-  - [ ] `checkAuth` uses runtime validation instead of `??` fallback
-  - [ ] `AuthValidationError` class exists in `types.ts`
-  - [ ] `grep -r 'as AuthResponse' src/modules/auth/service.ts` returns empty
-  - [ ] `pnpm test -- src/_tests/auth/service.test.ts` → ALL PASS
-  - [ ] New test: invalid response shape throws `AuthValidationError`
+  - [x] `AuthResponse` has a corresponding Zod schema in `types.ts`
+  - [x] `signIn` uses `.safeParse()` instead of `as AuthResponse`
+  - [x] `checkAuth` uses runtime validation instead of `??` fallback
+  - [x] `AuthValidationError` class exists in `types.ts`
+  - [x] `grep -r 'as AuthResponse' src/modules/auth/service.ts` returns empty
+  - [x] `pnpm test -- src/_tests/auth/service.test.ts` → ALL PASS
+  - [x] New test: invalid response shape throws `AuthValidationError`
 
   **QA Scenarios (MANDATORY)**:
 
@@ -681,7 +681,7 @@ Max Concurrent: 5 (Wave 1)
 
 ---
 
-- [ ] 7. **Remove `console.error` leak and replace empty catch blocks with structured warnings**
+- [x] 7. **Remove `console.error` leak and replace empty catch blocks with structured warnings**
 
   **What to do**:
   - In `src/components/auth/login-form.tsx:26`, replace `console.error(e)` with a sanitized user-facing error:
@@ -758,11 +758,11 @@ Max Concurrent: 5 (Wave 1)
 
   **Acceptance Criteria**:
 
-  - [ ] `grep -r 'console\.error' src/components/auth/login-form.tsx` returns empty
-  - [ ] Empty catch blocks replaced with DEV-only `console.warn`
-  - [ ] `grep -r 'console\.error' src/modules/auth/` returns empty (or only test files)
-  - [ ] `pnpm test` → ALL PASS
-  - [ ] `pnpm biome:fix` → no errors
+  - [x] `grep -r 'console\.error' src/components/auth/login-form.tsx` returns empty
+  - [x] Empty catch blocks replaced with DEV-only `console.warn`
+  - [x] `grep -r 'console\.error' src/modules/auth/` returns empty (or only test files)
+  - [x] `pnpm test` → ALL PASS
+  - [x] `pnpm biome:fix` → no errors
 
   **QA Scenarios (MANDATORY)**:
 
@@ -794,7 +794,7 @@ Max Concurrent: 5 (Wave 1)
 
 ---
 
-- [ ] 8. **Gate DevTools behind DEV environment check**
+- [x] 8. **Gate DevTools behind DEV environment check**
 
   **What to do**:
   - In `src/components/document/root-document.tsx`, wrap `<TanstackDevTools />` in a DEV check:
@@ -836,10 +836,10 @@ Max Concurrent: 5 (Wave 1)
 
   **Acceptance Criteria**:
 
-  - [ ] `src/components/document/root-document.tsx` has `import.meta.env.DEV` check around DevTools
-  - [ ] `pnpm build` succeeds
-  - [ ] `pnpm dev` starts and DevTools are visible
-  - [ ] Build output does not include devtools bundle (verify via grep or bundle analysis)
+  - [x] `src/components/document/root-document.tsx` has `import.meta.env.DEV` check around DevTools
+  - [x] `pnpm build` succeeds
+  - [x] `pnpm dev` starts and DevTools are visible
+  - [x] Build output does not include devtools bundle (verify via grep or bundle analysis)
 
   **QA Scenarios (MANDATORY)**:
 
@@ -907,19 +907,19 @@ Max Concurrent: 5 (Wave 1)
 
 > 4 review agents run in PARALLEL. ALL must APPROVE. Present consolidated results to user and get explicit "okay" before completing.
 
-- [ ] F1. **Plan Compliance Audit** — `oracle`
+- [x] F1. **Plan Compliance Audit** — `oracle`
   Read the plan end-to-end. For each "Must Have": verify implementation exists (read file, curl endpoint, run command). For each "Must NOT Have": search codebase for forbidden patterns — reject with file:line if found. Check evidence files exist in .sisyphus/evidence/. Compare deliverables against plan.
   Output: `Must Have [N/N] | Must NOT Have [N/N] | Tasks [N/N] | VERDICT: APPROVE/REJECT`
 
-- [ ] F2. **Code Quality Review** — `unspecified-high`
+- [x] F2. **Code Quality Review** — `unspecified-high`
   Run `pnpm dlx tsc --noEmit` + `pnpm biome:fix` + `pnpm test`. Review all changed files for: `as any`/`@ts-ignore`, empty catches, console.log in prod, commented-out code, unused imports. Check AI slop: excessive comments, over-abstraction, generic names (data/result/item/temp).
   Output: `Build [PASS/FAIL] | Lint [PASS/FAIL] | Tests [N pass/N fail] | Files [N clean/N issues] | VERDICT`
 
-- [ ] F3. **Real Manual QA** — `unspecified-high`
+- [x] F3. **Real Manual QA** — `unspecified-high`
   Start from clean state. Execute EVERY QA scenario from EVERY task — follow exact steps, capture evidence. Test cross-task integration (features working together, not isolation). Test edge cases: empty state, invalid input, rapid actions. Save to `.sisyphus/evidence/final-qa/`.
   Output: `Scenarios [N/N pass] | Integration [N/N] | Edge Cases [N tested] | VERDICT`
 
-- [ ] F4. **Scope Fidelity Check** — `deep`
+- [x] F4. **Scope Fidelity Check** — `deep`
   For each task: read "What to do", read actual diff (git log/diff). Verify 1:1 — everything in spec was built (no missing), nothing beyond spec was built (no creep). Check "Must NOT do" compliance. Detect cross-task contamination: Task N touching Task M's files. Flag unaccounted changes.
   Output: `Tasks [N/N compliant] | Contamination [CLEAN/N issues] | Unaccounted [CLEAN/N files] | VERDICT`
 
@@ -973,7 +973,7 @@ grep -r 'console\.\(error\|log\|warn\)' src/ --include='*.ts' --include='*.tsx' 
 | HIGH | GitHub Actions sem SHA pinning | Infra, não auth fix |
 
 ### Final Checklist
-- [ ] All "Must Have" present
-- [ ] All "Must NOT Have" absent
-- [ ] All tests pass
-- [ ] No secrets in git history
+- [x] All "Must Have" present
+- [x] All "Must NOT Have" absent
+- [x] All tests pass
+- [x] No secrets in git history
