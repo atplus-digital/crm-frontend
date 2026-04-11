@@ -15,7 +15,7 @@ interface PermissionFieldProps {
  * - If user lacks action permission but has "view" → renders children(false) (readOnly)
  */
 export function PermissionField({
-	label,
+	label: _label,
 	action = "update",
 	children,
 }: PermissionFieldProps): ReactNode {

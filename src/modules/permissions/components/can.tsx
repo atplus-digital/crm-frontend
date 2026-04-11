@@ -10,25 +10,24 @@ interface CanProps {
 
 interface CanActionProps {
 	action: string;
-	snippet?: string;
-	fallback: ReactNode;
-	children: ReactNode;
-}
-
-interface CanSnippetProps {
-	snippet: string;
-	fallback: ReactNode;
+	fallback?: ReactNode;
 	children: ReactNode;
 }
 
 interface CanBothProps {
 	action: string;
 	snippet: string;
-	fallback: ReactNode;
+	fallback?: ReactNode;
 	children: ReactNode;
 }
 
-function CanAction({ action, fallback, children }: CanSnippetProps) {
+interface CanSnippetProps {
+	snippet: string;
+	fallback?: ReactNode;
+	children: ReactNode;
+}
+
+function CanAction({ action, fallback, children }: CanActionProps) {
 	const hasPermission = useCan(action);
 	if (!hasPermission) return fallback;
 	return children;

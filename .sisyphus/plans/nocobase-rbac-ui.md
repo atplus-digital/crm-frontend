@@ -670,7 +670,7 @@ Max Concurrent: 4 (Wave 2)
   - Files: `src/modules/permissions/nav-config.ts`, `src/routes/forbidden.tsx`, `src/routes/index.tsx`, `src/modules/permissions/index.ts`
   - Pre-commit: `pnpm dlx tsc --noEmit`
 
-- [ ] 7. Criar testes unitários para o módulo de permissions
+- [x] 7. Criar testes unitários para o módulo de permissions
 
   **What to do**:
   - Criar `src/modules/permissions/__tests__/compute.test.ts`:
@@ -749,7 +749,7 @@ Max Concurrent: 4 (Wave 2)
 
 > 4 review agents run in PARALLEL. ALL must APPROVE. Present consolidated results to user and get explicit "okay" before completing.
 
-- [ ] F1. **Plan Compliance Audit** — `oracle`
+- [x] F1. **Plan Compliance Audit** — `oracle`
   Read the plan end-to-end. For each "Must Have": verify implementation exists (read file, run command). For each "Must NOT Have": search codebase for forbidden patterns — reject with file:line if found. Check evidence files exist in .sisyphus/evidence/. Compare deliverables against plan.
   Output: `Must Have [N/N] | Must NOT Have [N/N] | Tasks [N/N] | VERDICT: APPROVE/REJECT`
 
