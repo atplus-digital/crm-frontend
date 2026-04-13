@@ -362,7 +362,7 @@ describe("runGenerateTypes", () => {
 				{
 					outputPath: "/tmp/generated/users.ts",
 					changed: true,
-					diff: "+ export interface UsersBase",
+					diff: "+ export interface Users",
 				},
 			],
 			totalFiles: 1,

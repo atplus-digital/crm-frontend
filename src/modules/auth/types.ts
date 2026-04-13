@@ -1,10 +1,10 @@
 import { z } from "zod";
-import type { UsersBase } from "#/@types/generated/crm/users";
+import type { Users } from "#/@types/generated/crm/users";
 import type { PermissionRole } from "#/modules/permissions";
 import { permissionRoleSchema } from "#/modules/permissions";
 
 export type AuthUser = Pick<
-	UsersBase,
+	Users,
 	"id" | "email" | "username" | "nickname" | "phone"
 > & {
 	roles: PermissionRole[];

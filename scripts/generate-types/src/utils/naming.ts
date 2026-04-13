@@ -117,13 +117,13 @@ export function toCollectionTypeName(collectionName: string): string {
  * Aplica prefixo/sufixo configuráveis ao nome do tipo.
  *
  * @param collectionName - Nome da collection
- * @returns Nome do tipo Base (ex: UsersBase)
+ * @returns Nome do tipo Base (ex: Users)
  *
  * @example
  * ```typescript
- * toCollectionBaseTypeName("users")         // "UsersBase"
+ * toCollectionBaseTypeName("users")         // "Users"
  * toCollectionBaseTypeName("t_negociacoes") // "NegociacoesBase"
- * toCollectionBaseTypeName("users", { prefix: "I" }) // "IUsersBase"
+ * toCollectionBaseTypeName("users", { prefix: "I" }) // "IUsers"
  * toCollectionBaseTypeName("")              // "unknown"
  * ```
  */

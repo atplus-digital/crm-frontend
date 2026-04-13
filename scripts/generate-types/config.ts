@@ -8,7 +8,7 @@ const scriptConfig: Partial<ScriptConfig> = {
 	lockWorkspaceFolder: true,
 	baseInterfaceNaming: {
 		prefix: "",
-		suffix: "Base",
+		suffix: "",
 	},
 } as const;
 

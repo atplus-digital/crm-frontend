@@ -3,9 +3,9 @@
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
-import type { DepartmentsBase, RolesBase } from "./index";
+import type { Departments, Roles } from "./index";
 
-export interface UsersBase {
+export interface Users {
 	id: number;
 	sort: number;
 	f_fk_cargos: number;
@@ -29,11 +29,11 @@ export interface UsersBase {
 }
 
 export interface UsersRelations {
-	createdBy?: UsersBase | null;
-	departments?: DepartmentsBase[];
-	mainDepartment?: DepartmentsBase | null;
-	roles?: RolesBase[];
-	updatedBy?: UsersBase | null;
+	createdBy?: Users | null;
+	departments?: Departments[];
+	mainDepartment?: Departments | null;
+	roles?: Roles[];
+	updatedBy?: Users | null;
 }
 
 export type UsersRelationKey = keyof UsersRelations;

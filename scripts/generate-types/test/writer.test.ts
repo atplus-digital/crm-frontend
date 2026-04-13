@@ -140,7 +140,7 @@ describe("writer - multiple files", () => {
 	describe("writeMultipleFiles", () => {
 		it("deve criar múltiplos arquivos", () => {
 			const filesMap = new Map([
-				["users", "export interface UsersBase { id: number; }"],
+				["users", "export interface Users { id: number; }"],
 				["posts", "export interface PostsBase { id: number; }"],
 				["comments", "export interface CommentsBase { id: number; }"],
 			]);
@@ -161,7 +161,7 @@ describe("writer - multiple files", () => {
 			// Verifica conteúdo
 			expect(
 				fs.readFileSync(path.join(testOutputDir, "users.ts"), "utf-8"),
-			).toBe("export interface UsersBase { id: number; }");
+			).toBe("export interface Users { id: number; }");
 			expect(
 				fs.readFileSync(path.join(testOutputDir, "posts.ts"), "utf-8"),
 			).toBe("export interface PostsBase { id: number; }");
@@ -169,7 +169,7 @@ describe("writer - multiple files", () => {
 
 		it("deve criar diretório automaticamente", () => {
 			const filesMap = new Map([
-				["users", "export interface UsersBase { id: number; }"],
+				["users", "export interface Users { id: number; }"],
 			]);
 
 			writeMultipleFiles(filesMap, testOutputDir);
@@ -179,7 +179,7 @@ describe("writer - multiple files", () => {
 
 		it("deve detectar arquivos inalterados", () => {
 			const filesMap = new Map([
-				["users", "export interface UsersBase { id: number; }"],
+				["users", "export interface Users { id: number; }"],
 				["posts", "export interface PostsBase { id: number; }"],
 			]);
 
@@ -199,12 +199,12 @@ describe("writer - multiple files", () => {
 
 		it("deve detectar mudanças parciais", () => {
 			const filesMap1 = new Map([
-				["users", "export interface UsersBase { id: number; }"],
+				["users", "export interface Users { id: number; }"],
 				["posts", "export interface PostsBase { id: number; }"],
 			]);
 
 			const filesMap2 = new Map([
-				["users", "export interface UsersBase { id: number; name: string; }"],
+				["users", "export interface Users { id: number; name: string; }"],
 				["posts", "export interface PostsBase { id: number; }"], // Sem mudança
 			]);
 
@@ -255,7 +255,7 @@ describe("writer - multiple files", () => {
 	describe("previewMultipleFiles", () => {
 		it("deve gerar preview para múltiplos arquivos", () => {
 			const filesMap = new Map([
-				["users", "export interface UsersBase { id: number; }"],
+				["users", "export interface Users { id: number; }"],
 				["posts", "export interface PostsBase { id: number; }"],
 			]);
 
@@ -274,7 +274,7 @@ describe("writer - multiple files", () => {
 
 		it("deve detectar arquivos inalterados no preview", () => {
 			const filesMap = new Map([
-				["users", "export interface UsersBase { id: number; }"],
+				["users", "export interface Users { id: number; }"],
 			]);
 
 			// Primeira escrita

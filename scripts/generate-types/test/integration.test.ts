@@ -85,7 +85,7 @@ describe("integration - fluxo completo de geração", () => {
 			"utf-8",
 		);
 
-		expect(usersContent).toContain("export interface UsersBase");
+		expect(usersContent).toContain("export interface Users");
 		expect(usersContent).toContain("id: number");
 		expect(usersContent).toContain("email: string");
 		expect(usersContent).toContain("name: string");

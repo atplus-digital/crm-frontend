@@ -29,10 +29,10 @@ Para cada collection, gera 3 tipos:
 
 ```typescript
 // Campos escalares/FKs que vêm no payload base
-export interface UsersBase { id: number; email: string; ... }
+export interface Users { id: number; email: string; ... }
 
 // Relações opcionais carregadas via `appends`
-export interface UsersRelations { createdBy?: UsersBase | null; roles?: RolesBase[]; ... }
+export interface UsersRelations { createdBy?: Users | null; roles?: RolesBase[]; ... }
 
 // Union type das chaves de relação — para typesafe appends
 export type UsersRelationKey = keyof UsersRelations;
@@ -110,8 +110,8 @@ scripts/generate-types/
 | ------------- | -------------------------- | -------------------------------------- |
 | `createdById` | `number \| null`           | Override fixo para chaves de auditoria |
 | `updatedById` | `number \| null`           | Override fixo para chaves de auditoria |
-| `createdBy`   | `UsersBase \| null`        | Relação opcional em `Relations`        |
-| `updatedBy`   | `UsersBase \| null`        | Relação opcional em `Relations`        |
+| `createdBy`   | `Users \| null`            | Relação opcional em `Relations`        |
+| `updatedBy`   | `Users \| null`            | Relação opcional em `Relations`        |
 | `parent`      | `<Collection>Base \| null` | Relação opcional hierárquica           |
 | `children`    | `<Collection>Base[]`       | Relação opcional hierárquica           |
 
@@ -142,7 +142,7 @@ Para adicionar uma collection ao split: adicionar em `splitCollections` no `conf
 ## Padrões de Código
 
 - **Funções puras**: Geração é determinística (mesmo input → mesmo output), I/O isolado em `writer.ts` e `client.ts`
-- **Naming**: `users` → `UsersBase` / `UsersRelations` / `UsersRelationKey`; funções privadas prefixadas com `_`
+- **Naming**: `users` → `Users` / `UsersRelations` / `UsersRelationKey`; funções privadas prefixadas com `_`
 - **Error handling**: Erros de API propagados com contexto (collection name, status code)
 - **Type-driven**: Tipos definidos antes da implementação em `@types/`
 
