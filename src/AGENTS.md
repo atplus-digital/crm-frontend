@@ -9,25 +9,27 @@ Frontend application (TypeScript/React/Vue)
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
-| File | Purpose |
-|------|---------|
-| `src/routes/index.tsx` | Rota protegida `/` — valida auth no `beforeLoad`, redireciona para `/login` |
-| `src/routes/__root.tsx` | Shell da aplicação, metadados globais, `validateTokenOnInit()` no `beforeLoad` |
-| `src/routes/login.tsx` | Rota pública `/login` — `requireGuest()` no `beforeLoad` |
-| `src/routes/reset-password.tsx` | Rota pública `/reset-password` |
-| `src/routes/reset-password-confirm.tsx` | Rota pública `/reset-password-confirm` |
-| `src/modules/auth/index.ts` | Barrel export do módulo de autenticação (client, store, service, guard) |
-| `src/env.ts` | Validação de variáveis de ambiente via T3Env + Zod |
-| `src/router.tsx` | Criação do router com `queryClient` e `authStore` no contexto |
+| File                                    | Purpose                                                                        |
+| --------------------------------------- | ------------------------------------------------------------------------------ |
+| `src/routes/index.tsx`                  | Rota protegida `/` — valida auth no `beforeLoad`, redireciona para `/login`    |
+| `src/routes/__root.tsx`                 | Shell da aplicação, metadados globais, `validateTokenOnInit()` no `beforeLoad` |
+| `src/routes/login.tsx`                  | Rota pública `/login` — `requireGuest()` no `beforeLoad`                       |
+| `src/routes/reset-password.tsx`         | Rota pública `/reset-password`                                                 |
+| `src/routes/reset-password-confirm.tsx` | Rota pública `/reset-password-confirm`                                         |
+| `src/modules/auth/index.ts`             | Barrel export do módulo de autenticação (client, store, service, guard)        |
+| `src/env.ts`                            | Validação de variáveis de ambiente via T3Env + Zod                             |
+| `src/router.tsx`                        | Criação do router com `queryClient` e `authStore` no contexto                  |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples (follow these patterns)
-| Pattern | Reference |
-|---------|-----------|
-| Rota protegida | `src/routes/index.tsx` |
-| Componente de auth | `src/components/auth/login-form.tsx` |
-| Módulo com barrel export | `src/modules/auth/index.ts` |
+| Pattern                       | Reference                                      |
+| ----------------------------- | ---------------------------------------------- |
+| Rota protegida                | `src/routes/index.tsx`                         |
+| Componente de auth            | `src/components/auth/login-form.tsx`           |
+| Módulo com barrel export      | `src/modules/auth/index.ts`                    |
+| Error Boundary                | `src/components/error-boundary.tsx`            |
+| Dashboard component structure | `src/components/dashboard/profile-details.tsx` |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->

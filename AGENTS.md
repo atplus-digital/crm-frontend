@@ -43,6 +43,8 @@ docs/            → documentation
 | Route (protected) | `src/routes/index.tsx` | `requireAuth` in `beforeLoad` |
 | Route (public auth) | `src/routes/login.tsx` | `requireGuest` in `beforeLoad` |
 | Auth module | `src/modules/auth/index.ts` | barrel export pattern |
+| Error handling | `src/components/error-boundary.tsx` | React Error Boundary pattern with user-friendly UI |
+| Component structure | `src/components/dashboard/profile-details.tsx` | Separate business logic from presentation in dashboard |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 ## Heuristics (quick decisions)

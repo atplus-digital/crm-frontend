@@ -1,3 +1,5 @@
+export { Can } from "./components/can";
+export { PermissionField } from "./components/permission-field";
 export { mergeActions, mergeSnippets } from "./compute";
 export { requireAction, requireSnippet } from "./guards";
 export {

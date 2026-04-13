@@ -202,6 +202,7 @@ describe("validateTokenOnInit", () => {
 			nickname: "Test",
 			appLang: "en",
 			phone: "1234567890",
+			roles: [],
 		};
 		mockAuthStoreState.token = "valid-token";
 		mockAuthStoreState.isAuthenticated = true;

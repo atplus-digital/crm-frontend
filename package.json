@@ -6,16 +6,16 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "dev": "vite dev --port 3000",
+    "dev": "vite dev",
+    "test": "vitest run",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run",
+    "prepare": "husky",
     "biome:fix": "biome check --write",
     "knip": "knip",
     "knip:silent": "knip --exclude dependencies --no-config-hints",
-    "generate-types": "tsx scripts/generate-types/index.ts",
     "lint-staged": "lint-staged",
-    "prepare": "husky"
+    "generate-types": "tsx scripts/generate-types/index.ts"
   },
 
   "dependencies": {
