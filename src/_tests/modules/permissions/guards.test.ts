@@ -1,16 +1,8 @@
-import {
-	afterEach,
-	beforeAll,
-	beforeEach,
-	describe,
-	expect,
-	it,
-	vi,
-} from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const { mockRedirect } = vi.hoisted(() => ({
-	mockRedirect: vi.fn((options: { to: string }) => {
-		throw new Error(`Redirect to ${options.to}`);
+	mockRedirect: vi.fn((url: string) => {
+		throw new Error(`Redirect to ${url}`);
 	}),
 }));
 
@@ -21,7 +13,7 @@ const { mockPermissionsStoreState } = vi.hoisted(() => ({
 	},
 }));
 
-vi.mock("@tanstack/react-router", () => ({
+vi.mock("react-router", () => ({
 	redirect: mockRedirect,
 }));
 
@@ -35,10 +27,6 @@ vi.mock("#/modules/permissions/store", () => ({
 
 import { requireAction, requireSnippet } from "#/modules/permissions/guards";
 
-beforeAll(() => {
-	vi.stubGlobal("window", {});
-});
-
 describe("requireSnippet", () => {
 	beforeEach(() => {
 		mockPermissionsStoreState.effectiveSnippets = [];
@@ -47,12 +35,6 @@ describe("requireSnippet", () => {
 
 	afterEach(() => {
 		vi.restoreAllMocks();
-	});
-
-	it("returns without throwing when window is undefined (SSR)", () => {
-		vi.stubGlobal("window", undefined);
-		expect(() => requireSnippet("pm")).not.toThrow();
-		vi.stubGlobal("window", {});
 	});
 
 	it("returns without throwing when snippet is granted (exact match)", () => {
@@ -64,7 +46,7 @@ describe("requireSnippet", () => {
 	it("throws redirect to /forbidden when snippet is not granted", () => {
 		mockPermissionsStoreState.effectiveSnippets = ["app"];
 		expect(() => requireSnippet("pm")).toThrow("Redirect to /forbidden");
-		expect(mockRedirect).toHaveBeenCalledWith({ to: "/forbidden" });
+		expect(mockRedirect).toHaveBeenCalledWith("/forbidden");
 	});
 
 	it("throws redirect when effectiveSnippets is empty", () => {
@@ -93,12 +75,6 @@ describe("requireAction", () => {
 		vi.restoreAllMocks();
 	});
 
-	it("returns without throwing when window is undefined (SSR)", () => {
-		vi.stubGlobal("window", undefined);
-		expect(() => requireAction("create")).not.toThrow();
-		vi.stubGlobal("window", {});
-	});
-
 	it("returns without throwing when action is granted (exact match)", () => {
 		mockPermissionsStoreState.effectiveActions = ["create", "view"];
 		expect(() => requireAction("create")).not.toThrow();
@@ -108,7 +84,7 @@ describe("requireAction", () => {
 	it("throws redirect to /forbidden when action is not granted", () => {
 		mockPermissionsStoreState.effectiveActions = ["create", "view"];
 		expect(() => requireAction("destroy")).toThrow("Redirect to /forbidden");
-		expect(mockRedirect).toHaveBeenCalledWith({ to: "/forbidden" });
+		expect(mockRedirect).toHaveBeenCalledWith("/forbidden");
 	});
 
 	it("throws redirect when effectiveActions is empty", () => {

@@ -1,30 +1,19 @@
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Button } from "#/components/ui/button";
-import { getStoredTheme, type ThemeMode, toggleTheme } from "#/lib/theme";
+import { useTheme } from "./theme-provider";
 
 export function ThemeToggle() {
-	const [mode, setMode] = useState<ThemeMode>("light");
-	const [mounted, setMounted] = useState(false);
-
-	useEffect(() => {
-		setMode(getStoredTheme());
-		setMounted(true);
-	}, []);
-
-	function handleToggle() {
-		setMode(toggleTheme(mode));
-	}
+	const { toggleTheme, theme } = useTheme();
 
 	return (
 		<Button
 			type="button"
 			size="icon-lg"
-			onClick={handleToggle}
-			aria-label={`Theme: ${mode}. Click to switch.`}
-			title={`Theme: ${mode}. Click to switch.`}
+			onClick={toggleTheme}
+			aria-label={`Theme: ${theme}. Click to switch.`}
+			title={`Theme: ${theme}. Click to switch.`}
 		>
-			{mounted ? mode === "dark" ? <Moon /> : <Sun /> : <Sun />}
+			{theme === "dark" ? <Moon /> : <Sun />}
 		</Button>
 	);
 }

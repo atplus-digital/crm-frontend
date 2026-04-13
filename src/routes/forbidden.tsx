@@ -1,11 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router";
 import { Button } from "#/components/ui/button";
 
-export const Route = createFileRoute("/forbidden")({
-	component: ForbiddenPage,
-});
-
-function ForbiddenPage() {
+export function Component() {
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-center gap-6">
 			<h1 className="text-6xl font-bold text-destructive">403</h1>

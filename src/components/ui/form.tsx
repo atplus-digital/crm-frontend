@@ -1,96 +1,98 @@
-import { createFormHookContexts, useStore } from "@tanstack/react-form";
 import { Slot } from "radix-ui";
 import * as React from "react";
+import {
+	Controller,
+	type FieldPath,
+	type FieldValues,
+	FormProvider as RHFProvider,
+	type UseFormReturn,
+	useFormContext as useRHFContext,
+} from "react-hook-form";
 import * as scn from "#/components/ui/field";
 
-const { useFieldContext, useFormContext, fieldContext, formContext } =
-	createFormHookContexts();
+type FormProps<T extends FieldValues = FieldValues> = Omit<
+	React.ComponentProps<"form">,
+	"onSubmit"
+> & {
+	form: UseFormReturn<T>;
+	onSubmit: (values: T) => unknown;
+};
 
-function Form(props: React.ComponentProps<"form">) {
-	const form = useFormContext();
-
+function Form<T extends FieldValues = FieldValues>({
+	form,
+	onSubmit,
+	...props
+}: FormProps<T>) {
 	return (
-		<form
-			onSubmit={(e) => {
-				e.stopPropagation();
-				e.preventDefault();
-				form.handleSubmit();
-			}}
-			{...props}
-		/>
+		<RHFProvider {...form}>
+			<form onSubmit={form.handleSubmit(onSubmit)} {...props} />
+		</RHFProvider>
 	);
 }
 
 const IdContext = React.createContext<string>(null as never);
+const ErrorContext = React.createContext<{
+	error: string | null;
+	hasError: boolean;
+	formControlId: string;
+	formDescriptionId: string;
+	formMessageId: string;
+} | null>(null);
 
-function useFieldComponentContext() {
-	const field = useFieldContext();
-	const idContext = React.useContext(IdContext);
-
-	if (typeof idContext !== "string") {
-		throw new Error("Form components should be used within <Field>");
-	}
-
-	const errors = useStore(field.store, (state) => state.meta.errors);
-	const isTouched = useStore(field.store, (state) => state.meta.isTouched);
-	const submissionAttempts = useStore(
-		field.form.store,
-		(state) => state.submissionAttempts,
-	);
-
-	const fieldComponent = React.useMemo(() => {
-		const showError = isTouched || submissionAttempts > 0;
-
-		let errorMessage: string | null = null;
-		if (showError && errors.length > 0) {
-			const error = errors[0];
-
-			if (typeof error === "string") {
-				errorMessage = error;
-			} else if (typeof error === "object" && error !== null) {
-				if ("message" in error && typeof error.message === "string") {
-					errorMessage = error.message;
-				}
-			} else if (error !== null && error !== undefined) {
-				errorMessage = String(error);
-			}
-		}
-
-		return {
-			formControlId: `${idContext}-form-item`,
-			formDescriptionId: `${idContext}-form-item-description`,
-			formMessageId: `${idContext}-form-item-message`,
-			error: errorMessage,
-			hasError: showError && errorMessage !== null,
-		};
-	}, [idContext, isTouched, submissionAttempts, errors]);
-
-	return fieldComponent;
+function useErrorContext() {
+	const ctx = React.useContext(ErrorContext);
+	if (!ctx)
+		throw new Error("Form field components must be used within <Field>");
+	return ctx;
 }
 
-function Field({
-	className,
+function Field<
+	T extends FieldValues = FieldValues,
+	TName extends FieldPath<T> = FieldPath<T>,
+>({
+	name,
+	control,
 	...props
-}: React.ComponentProps<typeof scn.Field>) {
+}: {
+	name: TName;
+	control?: UseFormReturn<T>["control"];
+} & React.ComponentProps<typeof scn.Field>) {
+	const form = useRHFContext<T>();
 	const id = React.useId();
-	const field = useFieldContext();
-	const errors = useStore(field.store, (state) => state.meta.errors);
-	const isTouched = useStore(field.store, (state) => state.meta.isTouched);
-	const submissionAttempts = useStore(
-		field.form.store,
-		(state) => state.submissionAttempts,
-	);
-	const showError = isTouched || submissionAttempts > 0;
-	const hasError = showError && errors.length > 0;
+	const { formState } = form;
+	const fieldError = (formState.errors as Record<string, unknown>)[
+		name as string
+	];
+	const isTouched = (formState.touchedFields as Record<string, unknown>)[
+		name as string
+	];
+	const hasSubmitAttempt = formState.submitCount > 0;
+	const errorMessage = getErrorMessage(fieldError);
+	const hasError = (isTouched || hasSubmitAttempt) && !!errorMessage;
 
 	return (
 		<IdContext.Provider value={id}>
-			<scn.Field
-				data-slot="form-item"
-				data-invalid={hasError ? "true" : undefined}
-				className={className}
-				{...props}
-			/>
+			<ErrorContext.Provider
+				value={{
+					error: errorMessage,
+					hasError,
+					formControlId: `${id}-form-item`,
+					formDescriptionId: `${id}-form-item-description`,
+					formMessageId: `${id}-form-item-message`,
+				}}
+			>
+				<Controller
+					name={name}
+					control={control ?? form.control}
+					render={() => (
+						<scn.Field
+							data-slot="form-item"
+							data-invalid={hasError ? "true" : undefined}
+							{...props}
+						/>
+					)}
+				/>
+			</ErrorContext.Provider>
 		</IdContext.Provider>
 	);
 }
@@ -99,7 +101,7 @@ function FieldLabel({
 	className,
 	...props
 }: React.ComponentProps<typeof scn.FieldLabel>) {
-	const { formControlId, hasError } = useFieldComponentContext();
+	const { formControlId, hasError } = useErrorContext();
 
 	return (
 		<scn.FieldLabel
@@ -114,7 +116,7 @@ function FieldLabel({
 
 function FieldControl(props: React.ComponentProps<typeof Slot.Root>) {
 	const { formControlId, formDescriptionId, formMessageId, hasError } =
-		useFieldComponentContext();
+		useErrorContext();
 
 	const describedBy = [formDescriptionId, hasError ? formMessageId : null]
 		.filter(Boolean)
@@ -125,7 +127,7 @@ function FieldControl(props: React.ComponentProps<typeof Slot.Root>) {
 			data-slot="form-control"
 			id={formControlId}
 			aria-describedby={describedBy || undefined}
-			aria-invalid={hasError}
+			aria-invalid={hasError || undefined}
 			{...props}
 		/>
 	);
@@ -135,7 +137,7 @@ function FieldDescription({
 	className,
 	...props
 }: React.ComponentProps<typeof scn.FieldDescription>) {
-	const { formDescriptionId } = useFieldComponentContext();
+	const { formDescriptionId } = useErrorContext();
 
 	return (
 		<scn.FieldDescription
@@ -151,7 +153,7 @@ function FieldError({
 	className,
 	...props
 }: React.ComponentProps<typeof scn.FieldError>) {
-	const { error, formMessageId } = useFieldComponentContext();
+	const { error, formMessageId } = useErrorContext();
 	const body = error ?? props.children;
 
 	if (!body) {
@@ -170,6 +172,17 @@ function FieldError({
 	);
 }
 
+function getErrorMessage(error: unknown): string | null {
+	if (!error) return null;
+	if (typeof error === "string") return error;
+	if (error instanceof Error) return error.message;
+	if (typeof error === "object" && error !== null) {
+		if ("message" in error && typeof error.message === "string")
+			return error.message;
+	}
+	return null;
+}
+
 export {
 	Field,
 	FieldControl,
@@ -177,8 +190,6 @@ export {
 	FieldError,
 	FieldLabel,
 	Form,
-	fieldContext,
-	formContext,
-	useFieldContext,
-	useFormContext,
+	RHFProvider as FormProvider,
+	useRHFContext as useFormContext,
 };

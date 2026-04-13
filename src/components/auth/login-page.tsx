@@ -1,13 +1,13 @@
-import { AuthLayout } from "./auth-layout";
+import { GuestLayout } from "./auth-layout";
 import { LoginForm } from "./login-form";
 
 export function LoginPage() {
 	return (
-		<AuthLayout
+		<GuestLayout
 			title="CRM ATPlus"
 			description="Entre com suas credenciais para acessar o sistema"
 		>
 			<LoginForm />
-		</AuthLayout>
+		</GuestLayout>
 	);
 }

@@ -19,7 +19,6 @@ export default defineConfig({
 			include: ["src/**/*.ts", "scripts/**/*.ts"],
 			exclude: [
 				"src/@types/generated/**",
-				"src/routeTree.gen.ts",
 				"scripts/generate-types/config.ts",
 				"scripts/generate-types/src/@types/**",
 				"src/_tests/global-setup.ts",

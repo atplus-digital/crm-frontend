@@ -7,13 +7,17 @@ import {
 	CardTitle,
 } from "#/components/ui/card";
 
-interface AuthLayoutProps {
+interface GuestLayoutProps {
 	title: string;
 	description?: string;
 	children: ReactNode;
 }
 
-export function AuthLayout({ title, description, children }: AuthLayoutProps) {
+export function GuestLayout({
+	title,
+	description,
+	children,
+}: GuestLayoutProps) {
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-background p-4">
 			<Card className="w-full max-w-md">

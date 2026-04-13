@@ -1,4 +1,4 @@
-import { redirect } from "@tanstack/react-router";
+import { redirect } from "react-router";
 import { isDev } from "#/env";
 import {
 	resetPermissions,
@@ -11,30 +11,23 @@ import { authStore, reset, setUser } from "./store";
  * Require authentication — redirect to /login if not authenticated.
  * Includes returnTo parameter for post-login redirect.
  */
-export function requireAuth(pathname: string): void {
-	if (typeof window === "undefined") return;
-
+export function requireAuth(pathname: string): Response {
 	const state = authStore.state;
 	if (!state.isAuthenticated || !state.token) {
-		throw redirect({
-			to: "/login",
-			search: { returnTo: pathname },
-		});
+		throw redirect(`/login?returnTo=${encodeURIComponent(pathname)}`);
 	}
+	return new Response(null);
 }
 
 /**
  * Require guest (not authenticated) — redirect to / if already authenticated.
  */
-export function requireGuest(): void {
-	console.log("Checking guest access...");
-	if (typeof window === "undefined") return;
+export function requireGuest(): Response {
 	const state = authStore.state;
 	if (state.isAuthenticated && state.token) {
-		throw redirect({
-			to: "/",
-		});
+		throw redirect("/");
 	}
+	return new Response(null);
 }
 
 /**
@@ -58,8 +51,6 @@ export function isNetworkError(err: unknown): boolean {
  * Network errors preserve auth state to avoid logging out on transient failures.
  */
 export async function validateTokenOnInit(): Promise<void> {
-	if (typeof window === "undefined") return;
-
 	const state = authStore.state;
 	if (!state.token) return;
 
@@ -69,7 +60,6 @@ export async function validateTokenOnInit(): Promise<void> {
 		setPermissionsFromRoles(user.roles);
 	} catch (err) {
 		if (isNetworkError(err)) {
-			// Don't log out user on network errors — preserve auth state
 			if (isDev) {
 				console.warn(
 					"[auth] Network error during token validation, preserving auth state",

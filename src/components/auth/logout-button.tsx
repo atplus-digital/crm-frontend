@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "react-router";
 import { Button } from "#/components/ui/button";
 import { isDev } from "#/env";
 import { signOut } from "#/modules/auth";
@@ -17,7 +17,7 @@ export function LogoutButton() {
 				);
 			}
 		}
-		await navigate({ to: "/login" });
+		navigate("/login");
 	}
 
 	return (

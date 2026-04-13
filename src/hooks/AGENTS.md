@@ -9,8 +9,8 @@ Reusable frontend hooks shared across routes and components.
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
-| File | Purpose |
-|------|---------|
+| File        | Purpose                             |
+| ----------- | ----------------------------------- |
 | `AGENTS.md` | Scoped instructions for this folder |
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -23,8 +23,8 @@ Reusable frontend hooks shared across routes and components.
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples
-| Pattern | Reference file |
-|---------|---------------|
-| Auth bootstrap usage | `src/routes/__root.tsx` |
+| Pattern              | Reference file                                      |
+| -------------------- | --------------------------------------------------- |
+| Auth bootstrap usage | `src/routes/__root.tsx`                             |
 | Shared query context | `src/integrations/tanstack/query/root-provider.tsx` |
 <!-- AGENTS-GENERATED:END golden-samples -->

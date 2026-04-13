@@ -40,8 +40,8 @@ docs/            → documentation
 <!-- AGENTS-GENERATED:START golden-samples -->
 | For | Reference | Key patterns |
 |-----|-----------|--------------|
-| Route (protected) | `src/routes/index.tsx` | `requireAuth` in `beforeLoad` |
-| Route (public auth) | `src/routes/login.tsx` | `requireGuest` in `beforeLoad` |
+| Route (protected) | `src/routes/index.tsx` | `requireAuth` in `loader`, `Component` export |
+| Route (public auth) | `src/routes/login.tsx` | `requireGuest` in `loader`, `Component` export |
 | Auth module | `src/modules/auth/index.ts` | barrel export pattern |
 | Error handling | `src/components/error-boundary.tsx` | React Error Boundary pattern with user-friendly UI |
 | Component structure | `src/components/dashboard/profile-details.tsx` | Separate business logic from presentation in dashboard |
@@ -122,16 +122,6 @@ docs/            → documentation
 ## Skill Mappings — load when working in these areas
 
 <!-- intent-skills:start -->
-- task: "Adding or configuring routes"
-  load: "node_modules/@tanstack/router-core/skills/router-core/SKILL.md"
-- task: "Data loading with route loaders"
-  load: "node_modules/@tanstack/router-core/skills/router-core/data-loading/SKILL.md"
-- task: "Server functions and API endpoints"
-  load: "node_modules/@tanstack/start-client-core/skills/start-core/server-functions/SKILL.md"
-- task: "SSR setup and streaming"
-  load: "node_modules/@tanstack/router-core/skills/router-core/ssr/SKILL.md"
-- task: "React Start framework setup"
-  load: "node_modules/@tanstack/react-start/skills/react-start/SKILL.md"
 - task: "Creating or updating feature AGENTS.md files"
   load: ".agents/skills/feature-agents-md/SKILL.md"
 <!-- intent-skills:end -->
