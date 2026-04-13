@@ -1,5 +1,5 @@
-export { Can } from "./components/can";
-export { PermissionField } from "./components/permission-field";
+// export { Can } from "./components/can";
+// export { PermissionField } from "./components/permission-field";
 export { mergeActions, mergeSnippets } from "./compute";
 export { requireAction, requireSnippet } from "./guards";
 export {
@@ -10,7 +10,11 @@ export {
 	useRoleNames,
 } from "./hooks";
 export type { NavItem } from "./nav-config";
-export { filterNavByPermissions, NAV_CONFIG } from "./nav-config";
+export {
+	filterNavByPermissions,
+	//  NAV_CONFIG
+} from "./nav-config";
+
 export {
 	permissionsStore,
 	resetPermissions,
@@ -19,6 +23,6 @@ export {
 export type {
 	PermissionRole,
 	PermissionState,
-	PermissionValidationError,
+	// PermissionValidationError,
 } from "./types";
 export { permissionRoleSchema, permissionStateSchema } from "./types";
