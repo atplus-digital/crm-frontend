@@ -1,28 +1,30 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-02-05 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-13 | Last verified: 2026-04-13 -->
 
 # AGENTS.md — src
 
 <!-- AGENTS-GENERATED:START overview -->
 ## Overview
-Backend services (Python)
+Backend services (Python) — FastAPI routers, services, and Pydantic models
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
 | File | Purpose |
 |------|---------|
-| `src/config.py` | Application |
-| `src/__init__.py` | (add description) |
-| `src/services/__init__.py` | (add description) |
-| `src/services/item_service.py` | (add description) |
-| `src/services/user_service.py` | (add description) |
+| `src/main.py` | FastAPI app, CORS, middleware setup |
+| `src/config.py` | Settings, environment variables |
+| `src/routers/items.py` | Item CRUD API endpoints |
+| `src/services/item_service.py` | Business logic layer |
+| `src/models/item.py` | Pydantic schemas |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples (follow these patterns)
-| Pattern | Reference |
-|---------|-----------|
-| Standard implementation | `src/services/item_service.py` |
+| Pattern | Reference | Key patterns |
+|---------|-----------|--------------|
+| Router | `src/routers/items.py` | APIRouter, dependency injection, HTTP status codes |
+| Service | `src/services/item_service.py` | CRUD operations, validation, error handling |
+| Model | `src/models/item.py` | Pydantic v2 Field validators, computed fields |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->

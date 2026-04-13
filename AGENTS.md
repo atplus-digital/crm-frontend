@@ -1,21 +1,25 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-04-10 | Last verified: 2026-04-10 -->
+<!-- Last updated: 2026-04-13 | Last verified: 2026-04-13 -->
 
-# AGENTS.md
+# AGENTS.md — CRM AT+
 
+**Project:** CRM AT+ — Customer Relationship Management system powered by NocoBase  
+**Stack:** React 19, TypeScript, Vite, Tailwind CSS v4, shadcn/ui, React Router v7, NocoBase SDK  
 **Precedence:** the **closest `AGENTS.md`** to the files you're changing wins. Root holds global defaults only.
 
 ## Commands
 <!-- AGENTS-GENERATED:START commands -->
 | Task | Command | ~Time |
 |------|---------|-------|
-| Typecheck | pnpm dlx tsc --noEmit | ~15s |
-| Lint + Format | pnpm biome:fix | ~5s |
-| Test | pnpm test | ~30s |
-| Build | pnpm build | ~30s |
-| Dev | pnpm dev | — |
-| Generate types | pnpm generate-types | ~10s |
+| Dev server | `pnpm dev` | — |
+| Typecheck | `pnpm typecheck` ou `pnpm dlx tsc --noEmit` | ~15s |
+| Lint + Format | `pnpm biome:fix` | ~5s |
+| Test | `pnpm test` | ~30s |
+| Build | `pnpm build` | ~30s |
+| Preview build | `pnpm preview` | — |
+| Generate types | `pnpm generate-types` | ~10s |
+| Check unused code | `pnpm knip` | ~10s |
 <!-- AGENTS-GENERATED:END commands -->
 
 > If commands fail, verify against Makefile/package.json/composer.json or ask user to update.
@@ -91,7 +95,7 @@ docs/            → documentation
 ### Never Do
 - Commit secrets, credentials, or sensitive data
 - Modify vendor/, node_modules/, or generated files
-- Push directly to main/master branch
+- Push diretamente na branch main/master
 - Delete migration files or schema changes
 - Commit package-lock.json without package.json changes
 - Use any type without justification

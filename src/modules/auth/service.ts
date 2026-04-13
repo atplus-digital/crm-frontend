@@ -78,14 +78,32 @@ export async function checkAuth(): Promise<AuthUser> {
 
 export async function requestPasswordReset(email: string): Promise<void> {
 	const payload: ResetPasswordRequest = { email };
-	await nocobaseClient.auth.lostPassword(payload);
+
+	await nocobaseClient.request({
+		url: "auth:lostPassword",
+		method: "POST",
+		data: {
+			...payload,
+			baseURL: window.location.origin,
+		},
+		headers: {
+			"X-Authenticator": "basic",
+		},
+	});
 }
 
 export async function confirmPasswordReset(
 	data: ResetPasswordConfirm,
 ): Promise<void> {
-	await nocobaseClient.auth.resetPassword({
-		token: data.token,
-		password: data.password,
+	await nocobaseClient.request({
+		url: "auth:resetPassword",
+		method: "POST",
+		data: {
+			token: data.token,
+			password: data.password,
+		},
+		headers: {
+			"X-Authenticator": "basic",
+		},
 	});
 }

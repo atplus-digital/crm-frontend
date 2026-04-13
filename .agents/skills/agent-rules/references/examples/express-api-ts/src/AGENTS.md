@@ -1,28 +1,31 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-02-05 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-13 | Last verified: 2026-04-13 -->
 
 # AGENTS.md — src
 
 <!-- AGENTS-GENERATED:START overview -->
 ## Overview
-Backend services (TypeScript/Node.js)
+Backend services (TypeScript/Node.js) — Express API handlers, middleware, and utilities
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
 | File | Purpose |
 |------|---------|
-| `src/config.ts` | (add description) |
-| `src/routes/health.ts` | Add database connectivity check here |
-| `src/routes/users.ts` | (add description) |
-| `src/index.ts` | Middleware |
-| `src/utils/logger.ts` | (add description) |
+| `src/index.ts` | Express app setup, middleware registration |
+| `src/config.ts` | Environment configuration, validation |
+| `src/routes/health.ts` | Health check endpoint |
+| `src/routes/users.ts` | User CRUD endpoints |
+| `src/middleware/auth.ts` | JWT authentication middleware |
+| `src/utils/logger.ts` | Winston/Pino logger configuration |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples (follow these patterns)
-| Pattern | Reference |
-|---------|-----------|
-| Standard implementation | `src/controllers/userController.ts` |
+| Pattern | Reference | Key patterns |
+|---------|-----------|--------------|
+| Route Handler | `src/routes/users.ts` | Async handler, error propagation, response formatting |
+| Middleware | `src/middleware/auth.ts` | Request validation, JWT verification, user attachment |
+| Service Layer | `src/services/userService.ts` | Business logic, database operations |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->

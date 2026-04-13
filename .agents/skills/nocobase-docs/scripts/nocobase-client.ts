@@ -28,7 +28,7 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { URLSearchParams } from "node:url";
+import { URLSearchParams, fileURLToPath } from "node:url";
 
 // ---------------------------------------------------------------------------
 // Environment configuration
@@ -41,7 +41,7 @@ interface EnvConfig {
 }
 
 function loadEnv(): EnvConfig {
-	const scriptDir = path.dirname(new URL(import.meta.url).pathname);
+	const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 	const skillDir = path.resolve(scriptDir, "..");
 	const envPath = path.join(skillDir, ".env.local");
 
@@ -159,7 +159,7 @@ function createLogEntry(
 }
 
 function getLogFilePath(): string {
-	const scriptDir = path.dirname(new URL(import.meta.url).pathname);
+	const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 	const skillDir = path.resolve(scriptDir, "..");
 	return path.join(skillDir, "nocobase-client.log");
 }

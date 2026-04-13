@@ -1,9 +1,11 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-02-05 | Last verified: never -->
+<!-- Last updated: 2026-04-13 | Last verified: 2026-04-13 -->
 
-# AGENTS.md
+# AGENTS.md — ldap-selfservice
 
+**Project:** ldap-selfservice — Self-service LDAP user management  
+**Stack:** Go 1.25, LDAP SDK, Web UI  
 **Precedence:** the **closest `AGENTS.md`** to the files you're changing wins. Root holds global defaults only.
 
 ## Commands (unverified)
@@ -25,6 +27,24 @@
 1. **Before coding**: Read nearest `AGENTS.md` + check Golden Samples for the area you're touching
 2. **After each change**: Run the smallest relevant check (lint → typecheck → single test)
 3. **Before committing**: Run full test suite if changes affect >2 files or touch shared code
+4. **Before claiming done**: Run verification and **show output as evidence** — never say "try again" or "should work now" without proof
+
+## File Map
+<!-- AGENTS-GENERATED:START filemap -->
+```
+cmd/             → CLI entrypoints
+internal/        → internal packages (not exported)
+pkg/ldap/        → LDAP operations package
+```
+<!-- AGENTS-GENERATED:END filemap -->
+
+## Golden Samples (follow these patterns)
+<!-- AGENTS-GENERATED:START golden-samples -->
+| For | Reference | Key patterns |
+|-----|-----------|--------------|
+| LDAP Connection | `pkg/ldap/connection.go` | Connection pooling, TLS setup |
+| User Handler | `internal/handler/user.go` | Password change, profile update |
+<!-- AGENTS-GENERATED:END golden-samples -->
 
 ## Heuristics (quick decisions)
 <!-- AGENTS-GENERATED:START heuristics -->
@@ -50,6 +70,8 @@
 - Add tests for new code paths
 - Use conventional commit format: `type(scope): subject`
 - Follow Go 1.25 conventions and idioms
+- Use `errors.Is` and `errors.As` for error handling
+- Validate LDAP inputs to prevent injection attacks
 
 ### Ask First
 - Adding new dependencies
@@ -61,9 +83,11 @@
 ### Never Do
 - Commit secrets, credentials, or sensitive data
 - Modify vendor/, node_modules/, or generated files
-- Push directly to main/master branch
+- Push diretamente na branch main/master
 - Delete migration files or schema changes
 - Commit go.sum without go.mod changes
+- Use `panic()` for expected errors
+- Log sensitive user data
 
 ## When instructions conflict
 The nearest `AGENTS.md` wins. Explicit user prompts override files.

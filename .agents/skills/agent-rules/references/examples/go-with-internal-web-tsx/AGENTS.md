@@ -1,9 +1,11 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-02-05 | Last verified: never -->
+<!-- Last updated: 2026-04-13 | Last verified: 2026-04-13 -->
 
-# AGENTS.md
+# AGENTS.md — go-with-internal-web-tsx
 
+**Project:** go-with-internal-web-tsx — Go backend with embedded TSX frontend  
+**Stack:** Go 1.22, Go embed, React/TSX, Vite  
 **Precedence:** the **closest `AGENTS.md`** to the files you're changing wins. Root holds global defaults only.
 
 ## Commands (unverified)
@@ -25,11 +27,13 @@
 1. **Before coding**: Read nearest `AGENTS.md` + check Golden Samples for the area you're touching
 2. **After each change**: Run the smallest relevant check (lint → typecheck → single test)
 3. **Before committing**: Run full test suite if changes affect >2 files or touch shared code
+4. **Before claiming done**: Run verification and **show output as evidence** — never say "try again" or "should work now" without proof
 
 ## File Map
 <!-- AGENTS-GENERATED:START filemap -->
 ```
 internal/        → internal packages (not exported)
+internal/web/    → embedded frontend (TSX/React)
 ```
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -37,7 +41,8 @@ internal/        → internal packages (not exported)
 <!-- AGENTS-GENERATED:START golden-samples -->
 | For | Reference | Key patterns |
 |-----|-----------|--------------|
-| Entrypoint | `main.go` | standard patterns |
+| Go Entrypoint | `main.go` | Server setup, embed directives |
+| Web Component | `internal/web/src/App.tsx` | React component structure |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 ## Heuristics (quick decisions)
@@ -64,6 +69,8 @@ internal/        → internal packages (not exported)
 - Add tests for new code paths
 - Use conventional commit format: `type(scope): subject`
 - Follow Go 1.22 conventions and idioms
+- Use `errors.Is` and `errors.As` for error handling
+- Keep frontend build artifacts out of git
 
 ### Ask First
 - Adding new dependencies
@@ -75,14 +82,17 @@ internal/        → internal packages (not exported)
 ### Never Do
 - Commit secrets, credentials, or sensitive data
 - Modify vendor/, node_modules/, or generated files
-- Push directly to main/master branch
+- Push diretamente na branch main/master
 - Delete migration files or schema changes
 - Commit go.sum without go.mod changes
+- Use `panic()` for expected errors
 
-## Index of scoped AGENTS.md
+## Scoped AGENTS.md (MUST read when working in these directories)
 <!-- AGENTS-GENERATED:START scope-index -->
-- `./internal/web/AGENTS.md` — Frontend application (TypeScript/React/Vue)
+- `./internal/web/AGENTS.md` — Frontend application (TypeScript/React)
 <!-- AGENTS-GENERATED:END scope-index -->
+
+> **Agents**: When you read or edit files in a listed directory, you **must** load its AGENTS.md first. It contains directory-specific conventions that override this root file.
 
 ## When instructions conflict
 The nearest `AGENTS.md` wins. Explicit user prompts override files.

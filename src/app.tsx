@@ -14,8 +14,8 @@ export function App() {
 			<QueryClientProvider client={queryClient}>
 				<ErrorBoundary>
 					<Outlet />
+					{isDev && <ReactQueryDevtools initialIsOpen={false} />}
 				</ErrorBoundary>
-				{isDev && <ReactQueryDevtools initialIsOpen={false} />}
 			</QueryClientProvider>
 		</ThemeProvider>
 	);

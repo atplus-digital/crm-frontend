@@ -1,36 +1,39 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-02-05 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-13 | Last verified: 2026-04-13 -->
 
 # AGENTS.md — web
 
 <!-- AGENTS-GENERATED:START overview -->
 ## Overview
-Frontend application (TypeScript/React/Vue)
+Frontend application (TypeScript/React) — Modern UI consuming PHP backend APIs
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
 | File | Purpose |
 |------|---------|
-| `web/src/App.tsx` | (add description) |
-| `web/src/Button.tsx` | (add description) |
-| `web/src/Header.tsx` | (add description) |
-| `web/src/main.tsx` | (add description) |
-| `web/src/Footer.tsx` | (add description) |
+| `web/src/App.tsx` | Main application component, routing setup |
+| `web/src/components/Button.tsx` | Reusable button component |
+| `web/src/components/Header.tsx` | Application header with navigation |
+| `web/src/main.tsx` | React entrypoint, provider setup |
+| `web/src/api/` | API client, HTTP interceptors |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples (follow these patterns)
-| Pattern | Reference |
-|---------|-----------|
-| Standard implementation | `web/src/Button.tsx` |
+| Pattern | Reference | Key patterns |
+|---------|-----------|--------------|
+| Component | `web/src/components/Button.tsx` | Props interface, styled component |
+| API Hook | `web/src/hooks/useApi.ts` | React Query integration, error handling |
+| Page | `web/src/pages/Dashboard.tsx` | Layout composition, data fetching |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->
 ## Setup & environment
 - Node version: >=20.0.0
-- Framework: react
+- Framework: React 18+
 - Package manager: npm
 - Environment variables: See .env.example
+- API Base URL: Configured via VITE_API_URL env var
 <!-- AGENTS-GENERATED:END setup -->
 
 <!-- AGENTS-GENERATED:START commands -->

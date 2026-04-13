@@ -1,9 +1,11 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-02-05 | Last verified: never -->
+<!-- Last updated: 2026-04-13 | Last verified: 2026-04-13 -->
 
-# AGENTS.md
+# AGENTS.md — express-api-ts
 
+**Project:** express-api-ts — TypeScript REST API with Express  
+**Stack:** TypeScript 5, Express 4, Vitest, ESLint, Prettier  
 **Precedence:** the **closest `AGENTS.md`** to the files you're changing wins. Root holds global defaults only.
 
 ## Commands (unverified)
@@ -26,11 +28,15 @@
 1. **Before coding**: Read nearest `AGENTS.md` + check Golden Samples for the area you're touching
 2. **After each change**: Run the smallest relevant check (lint → typecheck → single test)
 3. **Before committing**: Run full test suite if changes affect >2 files or touch shared code
+4. **Before claiming done**: Run verification and **show output as evidence** — never say "try again" or "should work now" without proof
 
 ## File Map
 <!-- AGENTS-GENERATED:START filemap -->
 ```
 src/             → application source code
+src/routes/      → API route handlers
+src/middleware/  → Express middleware
+src/utils/       → utility functions
 ```
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -38,7 +44,9 @@ src/             → application source code
 <!-- AGENTS-GENERATED:START golden-samples -->
 | For | Reference | Key patterns |
 |-----|-----------|--------------|
-| Entrypoint | `src/index.ts` | standard patterns |
+| Entrypoint | `src/index.ts` | Express app setup, middleware registration |
+| Route Handler | `src/routes/users.ts` | Async handlers, error propagation |
+| Middleware | `src/middleware/auth.ts` | Request validation, JWT verification |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 ## Heuristics (quick decisions)
@@ -65,6 +73,8 @@ src/             → application source code
 - Add tests for new code paths
 - Use conventional commit format: `type(scope): subject`
 - Use TypeScript strict mode with proper type annotations
+- Validate all inputs with zod or similar
+- Use async/await consistently
 
 ### Ask First
 - Adding new dependencies
@@ -76,15 +86,18 @@ src/             → application source code
 ### Never Do
 - Commit secrets, credentials, or sensitive data
 - Modify vendor/, node_modules/, or generated files
-- Push directly to main/master branch
+- Push diretamente na branch main/master
 - Delete migration files or schema changes
 - Commit package-lock.json without package.json changes
 - Use any type without justification
+- Mix CommonJS and ES modules
 
-## Index of scoped AGENTS.md
+## Scoped AGENTS.md (MUST read when working in these directories)
 <!-- AGENTS-GENERATED:START scope-index -->
 - `./src/AGENTS.md` — Backend services (TypeScript/Node.js)
 <!-- AGENTS-GENERATED:END scope-index -->
+
+> **Agents**: When you read or edit files in a listed directory, you **must** load its AGENTS.md first. It contains directory-specific conventions that override this root file.
 
 ## When instructions conflict
 The nearest `AGENTS.md` wins. Explicit user prompts override files.

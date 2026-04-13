@@ -1,28 +1,29 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-02-04 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-13 | Last verified: 2026-04-13 -->
 
 # AGENTS.md — web
 
 <!-- AGENTS-GENERATED:START overview -->
 ## Overview
-Frontend application (TypeScript/React/Vue)
+Frontend application (TypeScript/React) — Embedded web UI served by Go backend
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
 | File | Purpose |
 |------|---------|
-| `internal/web/src/Sidebar.tsx` | (add description) |
-| `internal/web/src/App.tsx` | (add description) |
-| `internal/web/src/Button.tsx` | (add description) |
-| `internal/web/src/Header.tsx` | (add description) |
-| `internal/web/src/Footer.tsx` | (add description) |
+| `internal/web/src/App.tsx` | Main application component, routing |
+| `internal/web/src/components/Button.tsx` | Reusable button component |
+| `internal/web/src/components/Sidebar.tsx` | Navigation sidebar |
+| `internal/web/src/components/Header.tsx` | Application header |
+| `internal/web/src/main.tsx` | React entrypoint |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples (follow these patterns)
-| Pattern | Reference |
-|---------|-----------|
-| Standard implementation | `internal/web/src/Sidebar.tsx` |
+| Pattern | Reference | Key patterns |
+|---------|-----------|--------------|
+| Component | `internal/web/src/components/Button.tsx` | Props interface, click handler |
+| Layout | `internal/web/src/App.tsx` | Component composition, state management |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->

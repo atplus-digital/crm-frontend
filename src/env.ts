@@ -4,14 +4,12 @@ import { z } from "zod";
 export const env = createEnv({
 	clientPrefix: "VITE_",
 	client: {
+		VITE_DISABLE_FORGOT_PASSWORD: z.boolean().optional().default(false),
 		VITE_LOCAL_STORAGE_BASE_KEY: z.string().optional().default("crm-atplus"),
 		VITE_NOCOBASE_URL: z.url(),
 	},
-	runtimeEnv: {
-		VITE_LOCAL_STORAGE_BASE_KEY: import.meta.env.VITE_LOCAL_STORAGE_BASE_KEY,
-		VITE_NOCOBASE_URL: import.meta.env.VITE_NOCOBASE_URL,
-	},
 	emptyStringAsUndefined: true,
+	runtimeEnv: import.meta.env,
 });
 
 export const isDev = import.meta.env.DEV;

@@ -1,8 +1,9 @@
-import { Calendar, Mail, Phone, Shield, User } from "lucide-react";
+import { Mail, Phone, Shield, User } from "lucide-react";
 import { Badge } from "#/components/ui/badge";
 import { Separator } from "#/components/ui/separator";
-import { formatDateInPortuguese } from "#/lib/utils";
 import type { AuthUser } from "#/modules/auth";
+import { DetailItem } from "./detail-item";
+import { InfoCard } from "./info-card";
 
 interface ProfileDetailsProps {
 	user: AuthUser;
@@ -10,24 +11,9 @@ interface ProfileDetailsProps {
 
 export function ProfileDetails({ user }: ProfileDetailsProps) {
 	const displayName = user.nickname || user.username;
-	const currentDate = formatDateInPortuguese(new Date());
 
 	return (
 		<>
-			<header className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-				<div className="flex flex-col gap-1">
-					<h1 className="font-heading text-2xl font-semibold tracking-tight">
-						{displayName ? `Olá, ${displayName}!` : "Olá!"}
-					</h1>
-					<p className="flex items-center gap-2 text-sm text-muted-foreground">
-						<Calendar className="size-4" />
-						{currentDate}
-					</p>
-				</div>
-			</header>
-
-			<Separator />
-
 			{/* Profile Card */}
 			<section className="mx-auto w-full max-w-2xl">
 				<div className="flex flex-col gap-6">
@@ -87,41 +73,5 @@ export function ProfileDetails({ user }: ProfileDetailsProps) {
 				/>
 			</section>
 		</>
-	);
-}
-
-interface DetailItemProps {
-	label: string;
-	value: string | React.ReactNode;
-	icon: React.ReactNode;
-}
-
-function DetailItem({ label, value, icon }: DetailItemProps) {
-	return (
-		<div className="flex flex-col gap-1">
-			<span className="text-xs font-medium text-muted-foreground uppercase">
-				{label}
-			</span>
-			<div className="flex items-center gap-2">
-				{icon}
-				<span className="text-sm">{value}</span>
-			</div>
-		</div>
-	);
-}
-
-interface InfoCardProps {
-	title: string;
-	value: string | React.ReactNode;
-}
-
-function InfoCard({ title, value }: InfoCardProps) {
-	return (
-		<div className="bg-card rounded-lg border p-4">
-			<h3 className="text-sm font-medium text-muted-foreground mb-1">
-				{title}
-			</h3>
-			<p className="font-heading text-2xl font-semibold">{value}</p>
-		</div>
 	);
 }

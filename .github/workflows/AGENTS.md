@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-10 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-13 -->
 
 # AGENTS.md — workflows
 
@@ -9,14 +9,74 @@ GitHub Actions workflows and CI/CD automation
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
-| File | Purpose |
-|------|---------|
+| File                        | Purpose                              |
+| --------------------------- | ------------------------------------ |
 | `deploy-test-coverage.yaml` | Deploy Test Coverage to GitHub Pages |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Workflow files
 - Workflows: 1 workflow file(s)
+
+### Active Workflows
+
+#### `deploy-test-coverage.yaml`
+**Purpose:** Deploy test coverage reports to GitHub Pages
+
+**Triggers:**
+- `push` to `main` branch
+- `workflow_dispatch` (manual trigger)
+
+**Jobs:**
+| Job      | Runs On         | Dependencies | Purpose                                                |
+| -------- | --------------- | ------------ | ------------------------------------------------------ |
+| `build`  | `ubuntu-latest` | none         | Install deps, run tests with coverage, upload artifact |
+| `deploy` | `ubuntu-latest` | `build`      | Deploy coverage artifact to GitHub Pages               |
+
+**Environment Variables:**
+- Node.js: `24`
+- pnpm: `10`
+- Coverage output: `./coverage`
+
+**Permissions:**
+```yaml
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+```
+
+**Concurrency:**
+- Group: `pages`
+- Cancel in progress: `false`
+
+**Key Steps (build job):**
+1. Checkout code
+2. Setup pnpm (v5)
+3. Setup Node.js (v6)
+4. Ensure `.env.local` exists (copy from `.env.example`)
+5. Run: `pnpm install --frozen-lockfile`
+6. Run: `pnpm biome:fix`
+7. Run: `pnpm knip`
+8. Run: `pnpm test --coverage`
+9. Upload artifact to `./coverage`
+
+**Key Steps (deploy job):**
+1. Deploy to GitHub Pages environment
+2. Output: `${{ steps.deployment.outputs.page_url }}`
+
+**Actions Used:**
+| Action                          | Version | Purpose                    |
+| ------------------------------- | ------- | -------------------------- |
+| `actions/checkout`              | `v6`    | Repository checkout        |
+| `pnpm/action-setup`             | `v5`    | pnpm package manager setup |
+| `actions/setup-node`            | `v6`    | Node.js environment setup  |
+| `actions/upload-pages-artifact` | `v4`    | Upload coverage artifact   |
+| `actions/deploy-pages`          | `v5`    | Deploy to GitHub Pages     |
+
+**Environment:**
+- Name: `github-pages`
+- URL: Dynamic (output from deployment step)
 <!-- AGENTS-GENERATED:END setup -->
 
 <!-- AGENTS-GENERATED:START structure -->
@@ -24,14 +84,8 @@ GitHub Actions workflows and CI/CD automation
 ```
 .github/
   workflows/
-    ci.yml              → Main CI workflow (lint, test, build)
-    release.yml         → Release/deploy workflow
-    dependabot.yml      → Dependency updates
-  actions/
-    <action-name>/      → Composite actions (reusable)
-      action.yml
-  CODEOWNERS            → Code ownership rules
-  pull_request_template.md
+    deploy-test-coverage.yaml  → Deploy test coverage to GitHub Pages
+  AGENTS.md                    → This file (workflow documentation)
 ```
 <!-- AGENTS-GENERATED:END structure -->
 
@@ -44,19 +98,67 @@ GitHub Actions workflows and CI/CD automation
 - **Caching**: Use `actions/cache` for dependencies (npm, composer, go)
 
 ### Naming conventions
-| Type | Convention | Example |
-|------|------------|---------|
-| Workflow file | `<purpose>.yml` | `ci.yml`, `release.yml` |
-| Workflow name | Title Case | `CI Pipeline`, `Release` |
-| Job ID | kebab-case | `build-and-test`, `deploy-staging` |
-| Step name | Sentence case | `Install dependencies` |
-| Secret | SCREAMING_SNAKE | `DEPLOY_TOKEN`, `NPM_TOKEN` |
+| Type          | Convention      | Example                            |
+| ------------- | --------------- | ---------------------------------- |
+| Workflow file | `<purpose>.yml` | `ci.yml`, `release.yml`            |
+| Workflow name | Title Case      | `CI Pipeline`, `Release`           |
+| Job ID        | kebab-case      | `build-and-test`, `deploy-staging` |
+| Step name     | Sentence case   | `Install dependencies`             |
+| Secret        | SCREAMING_SNAKE | `DEPLOY_TOKEN`, `NPM_TOKEN`        |
 <!-- AGENTS-GENERATED:END code-style -->
 
 <!-- AGENTS-GENERATED:START patterns -->
 ## Common patterns
 
-### Basic CI workflow
+### Project-specific: Coverage deployment
+```yaml
+name: Deploy Test Coverage to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v5
+        with:
+          version: 10
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm biome:fix
+      - run: pnpm knip
+      - run: pnpm test --coverage
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./coverage
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/deploy-pages@v5
+```
+
+### Basic CI workflow (template for new workflows)
 ```yaml
 name: CI
 on:
@@ -79,41 +181,6 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm test
-```
-
-### Matrix builds
-```yaml
-jobs:
-  test:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-        node: ['18', '20', '22']
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
-        with:
-          node-version: ${{ matrix.node }}
-```
-
-### Reusable workflow
-```yaml
-# .github/workflows/reusable-test.yml
-on:
-  workflow_call:
-    inputs:
-      node-version:
-        type: string
-        default: '20'
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ inputs.node-version }}
 ```
 
 ### Conditional deployment
@@ -148,6 +215,8 @@ jobs:
 - [ ] Workflow syntax valid: `actionlint` or GitHub UI validation
 - [ ] Matrix strategy covers required versions/platforms
 - [ ] Caching configured for dependencies
+- [ ] Environment variables match project standards (Node 24, pnpm 10)
+- [ ] Coverage deployment uses correct artifact path (`./coverage`)
 <!-- AGENTS-GENERATED:END checklist -->
 
 <!-- AGENTS-GENERATED:START examples -->
@@ -163,4 +232,12 @@ jobs:
 - Action marketplace: https://github.com/marketplace?type=actions
 - Use `act` for local testing: https://github.com/nektos/act
 - Check existing workflows in this repo for patterns
+- GitHub Pages deployment: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
+
+## Project-specific notes
+- **Node version**: Always use Node 24 (per CI matrix in root AGENTS.md)
+- **Package manager**: pnpm (never npm or yarn)
+- **Coverage output**: `./coverage` directory (Vitest default)
+- **Pre-test commands**: Always run `pnpm biome:fix` and `pnpm knip` before tests
+- **Lockfile**: Use `--frozen-lockfile` flag for reproducible installs
 <!-- AGENTS-GENERATED:END help -->

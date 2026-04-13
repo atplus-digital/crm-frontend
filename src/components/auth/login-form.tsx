@@ -12,6 +12,7 @@ import {
 	Form,
 } from "#/components/ui/form";
 import { Input } from "#/components/ui/input";
+import { env } from "#/env";
 import { signIn } from "#/modules/auth";
 
 const loginSchema = z.object({
@@ -82,14 +83,16 @@ export function LoginForm() {
 			>
 				{form.formState.isSubmitting ? "Entrando..." : "Entrar"}
 			</Button>
-			<div className="text-center">
-				<Link
-					to="/reset-password"
-					className="text-sm text-muted-foreground hover:text-primary underline"
-				>
-					Esqueceu sua senha?
-				</Link>
-			</div>
+			{!env.VITE_DISABLE_FORGOT_PASSWORD && (
+				<div className="text-center">
+					<Link
+						to="/reset-password"
+						className="text-sm text-muted-foreground hover:text-primary underline"
+					>
+						Esqueceu sua senha?
+					</Link>
+				</div>
+			)}
 		</Form>
 	);
 }
