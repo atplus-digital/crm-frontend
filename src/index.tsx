@@ -7,6 +7,6 @@ import "./styles.css";
 // biome-ignore lint/style/noNonNullAssertion: We are sure that the element with id "root" exists in the HTML.
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<RouterProvider router={router} />,
+		<RouterProvider router={router} />
 	</StrictMode>,
 );

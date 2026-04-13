@@ -12,7 +12,9 @@ export const permissionsStore = createStore<PermissionState>({
 });
 
 export function setPermissionsFromRoles(roles: PermissionRole[]): void {
-	const actionsArrays = roles.map((r) => r.strategy?.actions ?? []);
+	const actionsArrays = roles.map(
+		(r) => r.strategy?.flatMap((s) => s.actions) ?? [],
+	);
 	const snippetsArrays = roles.map((r) => r.snippets ?? []);
 
 	permissionsStore.setState(() => ({

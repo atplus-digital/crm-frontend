@@ -8,6 +8,7 @@ export const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <App />,
+		hydrateFallbackElement: <App />,
 		loader: async () => {
 			const state = authStore.state;
 			if (state.token && !state.user) {
@@ -26,6 +27,26 @@ export const router = createBrowserRouter([
 					{
 						index: true,
 						lazy: () => import("./dashboard"),
+					},
+					{
+						path: "profile",
+						lazy: () => import("./profile"),
+					},
+					{
+						path: "cs/pessoas",
+						lazy: () => import("./cs"),
+					},
+					{
+						path: "cs/negociacoes",
+						lazy: () => import("./cs-negociacoes"),
+					},
+					{
+						path: "cs/contratos",
+						lazy: () => import("./cs-contratos"),
+					},
+					{
+						path: "cs/contratos/:id",
+						lazy: () => import("./cs-contrato-detail"),
 					},
 				],
 			},

@@ -2,18 +2,25 @@ import { redirect, useLoaderData } from "react-router";
 import { GuestLayout } from "#/components/auth/auth-layout";
 import ResetPasswordConfirmForm from "#/components/auth/reset-password-confirm-form";
 import { env } from "#/env";
+import { createLogger } from "#/lib/logger";
 import { requireGuest } from "#/modules/auth";
 
+const log = createLogger("auth");
+
 export function loader({ request }: { request: Request }) {
+	log.debug("Reset password confirm page loaded");
 	requireGuest();
 	if (env.VITE_DISABLE_FORGOT_PASSWORD) {
+		log.info("Password reset disabled, redirecting to login");
 		throw redirect("/login");
 	}
 	const url = new URL(request.url);
 	const token = url.searchParams.get("token");
 	if (!token) {
+		log.warn("No token in URL, redirecting to reset-password");
 		throw redirect("/reset-password");
 	}
+	log.debug("Token found, rendering password reset form");
 	return { token };
 }
 

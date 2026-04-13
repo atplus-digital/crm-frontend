@@ -1,5 +1,5 @@
 import { redirect } from "react-router";
-import { isDev } from "#/env";
+import { createLogger } from "#/lib/logger";
 import {
 	resetPermissions,
 	setPermissionsFromRoles,
@@ -7,13 +7,17 @@ import {
 import { checkAuth } from "./service";
 import { authStore, reset, setUser } from "./store";
 
+const log = createLogger("auth");
+
 /**
  * Require authentication — redirect to /login if not authenticated.
  * Includes returnTo parameter for post-login redirect.
  */
 export function requireAuth(pathname: string): Response {
+	log.debug("Route requires auth, checking state");
 	const state = authStore.state;
 	if (!state.isAuthenticated || !state.token) {
+		log.info("Redirecting unauthenticated user to login", { pathname });
 		throw redirect(`/login?returnTo=${encodeURIComponent(pathname)}`);
 	}
 	return new Response(null);
@@ -23,8 +27,10 @@ export function requireAuth(pathname: string): Response {
  * Require guest (not authenticated) — redirect to / if already authenticated.
  */
 export function requireGuest(): Response {
+	log.debug("Route requires guest, checking state");
 	const state = authStore.state;
 	if (state.isAuthenticated && state.token) {
+		log.info("Redirecting authenticated user to home");
 		throw redirect("/");
 	}
 	return new Response(null);
@@ -54,19 +60,18 @@ export async function validateTokenOnInit(): Promise<void> {
 	const state = authStore.state;
 	if (!state.token) return;
 
+	log.debug("Validating stored token on init");
 	try {
 		const user = await checkAuth();
 		setUser(user);
 		setPermissionsFromRoles(user.roles);
+		log.info("Token validated, user restored");
 	} catch (err) {
 		if (isNetworkError(err)) {
-			if (isDev) {
-				console.warn(
-					"[auth] Network error during token validation, preserving auth state",
-				);
-			}
+			log.warn("Network error during token validation, preserving auth state");
 			return;
 		}
+		log.error("Token invalid, clearing auth state", err);
 		reset();
 		resetPermissions();
 	}

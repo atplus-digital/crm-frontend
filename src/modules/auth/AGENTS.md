@@ -4,7 +4,7 @@
 
 <!-- AGENTS-GENERATED:START overview -->
 ## Overview
-Authentication module — NocoBase client, auth state (user + token), service methods, and route guards.
+Authentication module — NocoBase client, auth state (user + token), service methods, and route guards. Uses structured logging via `createLogger("auth")` from `#/lib/logger`.
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
@@ -14,7 +14,7 @@ Authentication module — NocoBase client, auth state (user + token), service me
 | `index.ts`   | Barrel export — `nocobaseClient`, guards, service methods, store + actions, types               |
 | `client.ts`  | NocoBase SDK client singleton with env-driven baseURL and localStorage                          |
 | `guard.ts`   | `requireAuth()`, `requireGuest()`, `validateTokenOnInit()` for route `loader`                   |
-| `service.ts` | Auth operations: `signIn`, `signOut`, `checkAuth`, password reset                               |
+| `service.ts` | Auth operations: `signIn`, `signOut`, `checkAuth`, password reset, profile update                 |
 | `store.ts`   | TanStack Store with `user`, `token`, `isAuthenticated` + actions `setUser`, `setToken`, `reset` |
 | `types.ts`   | `AuthUser`, `AuthState`, `AuthResponse`, `LoginCredentials`, password-reset types               |
 <!-- AGENTS-GENERATED:END filemap -->
@@ -25,6 +25,7 @@ Authentication module — NocoBase client, auth state (user + token), service me
 - `service.ts` is the only place that talks to the NocoBase client directly.
 - Guards must derive auth state from `authStore`, then redirect through React Router `redirect()`.
 - Form components manage local loading/error state; global store only tracks `user`, `token`, `isAuthenticated`.
+- All logging uses `createLogger("auth")` from `#/lib/logger` — never raw `console.*` calls.
 <!-- AGENTS-GENERATED:END patterns -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
@@ -53,6 +54,7 @@ Authentication module — NocoBase client, auth state (user + token), service me
 | `checkAuth()` | Verifica token válido via `auth:check` | `AuthUser` |
 | `requestPasswordReset(email)` | Envia email de reset de senha | `Promise<void>` |
 | `confirmPasswordReset(data)` | Confirma nova senha com token | `Promise<void>` |
+| `updateProfile(payload)` | Atualiza `email`, `nickname`, `phone` do usuário autenticado | `AuthUser` |
 
 ### Store (`store.ts`)
 | Action | Purpose |
@@ -83,7 +85,7 @@ Authentication module — NocoBase client, auth state (user + token), service me
 ### Error Handling
 - Erros de rede em `checkAuth()` preservam estado autenticado (evita logout em indisponibilidade do servidor)
 - `signOut()` swallowa erros da API para garantir limpeza local do estado
-- Modo dev (`isDev`) loga warnings para debugging sem expor detalhes em produção
+- Logging estruturado via `createLogger("auth")` — dev mode mostra todos os níveis, produção apenas `warn` e `error`
 
 ### Permissions Integration
 - `setPermissionsFromRoles(user.roles)` chamado após autenticação bem-sucedida

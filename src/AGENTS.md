@@ -15,7 +15,8 @@ Frontend application built with React 19, TypeScript, Vite, Tailwind CSS v4, sha
 | `src/app.tsx`                           | Root layout: ThemeProvider + QueryClientProvider + ErrorBoundary + Outlet   |
 | `src/env.ts`                            | Validação de variáveis de ambiente (client-only) via T3Env + Zod            |
 | `src/styles.css`                        | Tailwind CSS v4 imports e configurações globais                             |
-| `src/routes/index.tsx`                  | Rota protegida `/` — `loader` com `requireAuth()`                           |
+| `src/routes/dashboard.tsx`              | Rota protegida `/` — `loader` com `requireAuth()`                           |
+| `src/routes/profile.tsx`                | Rota protegida `/profile` — tela de edição de perfil                        |
 | `src/routes/login.tsx`                  | Rota pública `/login` — `loader` com `requireGuest()`                       |
 | `src/routes/reset-password.tsx`         | Rota pública `/reset-password`                                              |
 | `src/routes/reset-password-confirm.tsx` | Rota pública `/reset-password-confirm` com `loader` validando search params |
@@ -24,6 +25,7 @@ Frontend application built with React 19, TypeScript, Vite, Tailwind CSS v4, sha
 | `src/components/ui/`                    | Componentes shadcn/ui reutilizáveis (button, card, form, input, etc.)       |
 | `src/components/auth/`                  | Componentes de autenticação (login-form, logout-button, reset-password)     |
 | `src/components/dashboard/`             | Componentes de dashboard (user-dashboard, profile-details)                  |
+| `src/lib/logger.ts`                    | Logger estruturado com níveis (debug/info/warn/error) e `isDev` gating      |
 | `src/integrations/`                     | Integrações com serviços externos (TanStack Query)                          |
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -41,6 +43,8 @@ src/
 ├── integrations/       # Integrações com serviços externos
 │   └── tanstack/       # TanStack Query e Store setup
 ├── lib/                # Utilitários e funções de baixo nível
+│   ├── logger.ts      # Logger com níveis (debug/info/warn/error) e createLogger()
+│   └── utils.ts       # cn(), formatDateInPortuguese(), getInitials()
 ├── modules/            # Módulos de domínio (autenticação, permissões)
 │   ├── auth/           # Módulo de autenticação
 │   │   ├── client.ts   # NocoBase SDK client
@@ -51,9 +55,10 @@ src/
 │   │   └── index.ts    # Barrel export
 │   └── permissions/    # Módulo de permissões (RBAC)
 ├── routes/             # Route modules do React Router v7
-│   ├── index.tsx       # Rota raiz (/) - dashboard
+│   ├── dashboard.tsx   # Rota raiz (/) - dashboard
+│   ├── profile.tsx     # Rota de perfil (/profile)
 │   ├── login.tsx       # Rota de login (/login)
-│   └── __root.tsx      # Root layout (se existir)
+│   └── router.tsx      # Configuração principal de rotas
 ├── app.tsx             # App root (providers + Outlet)
 ├── env.ts              # Validação de environment variables
 ├── index.tsx           # Entry point (mount React)
@@ -72,7 +77,7 @@ src/
 ## Golden Samples (follow these patterns)
 | Pattern                         | Reference                                      |
 | ------------------------------- | ---------------------------------------------- |
-| Rota protegida (loader)         | `src/routes/index.tsx`                         |
+| Rota protegida (loader)         | `src/routes/dashboard.tsx`                     |
 | Rota pública (loader)           | `src/routes/login.tsx`                         |
 | Componente de auth              | `src/components/auth/login-form.tsx`           |
 | Módulo com barrel export        | `src/modules/auth/index.ts`                    |
@@ -301,6 +306,7 @@ export function useMyHook<T>(fetcher: () => Promise<T>) {
 - `./components/auth/AGENTS.md` — Componentes de autenticação (login, logout, reset de senha)
 - `./components/layout/AGENTS.md` — Componentes de layout autenticado (shell e header)
 - `./hooks/AGENTS.md` — Hooks reutilizáveis do frontend
+- `./lib/AGENTS.md` — Funções utilitárias puras (cn, logger, formatação)
 - `./modules/auth/AGENTS.md` — Módulo de autenticação (cliente NocoBase, store, service, guards)
 <!-- AGENTS-GENERATED:END scope-index -->
 

@@ -23,9 +23,18 @@ export class AuthValidationError extends Error {
 export const authUserSchema = z.object({
 	id: z.number(),
 	email: z.string(),
-	username: z.string(),
-	nickname: z.string(),
-	phone: z.string(),
+	username: z
+		.string()
+		.nullable()
+		.transform((v) => v ?? ""),
+	nickname: z
+		.string()
+		.nullable()
+		.transform((v) => v ?? ""),
+	phone: z
+		.string()
+		.nullable()
+		.transform((v) => v ?? ""),
 	roles: z.array(permissionRoleSchema).optional().default([]),
 });
 
@@ -53,4 +62,10 @@ export interface ResetPasswordConfirm {
 	token: string;
 	password: string;
 	confirmPassword: string;
+}
+
+export interface UpdateProfilePayload {
+	email: string;
+	nickname: string;
+	phone: string;
 }

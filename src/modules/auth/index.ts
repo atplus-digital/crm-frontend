@@ -6,6 +6,7 @@ export {
 	requestPasswordReset,
 	signIn,
 	signOut,
+	updateProfile,
 } from "./service";
 export {
 	authStore,
@@ -19,6 +20,7 @@ export type {
 	LoginCredentials,
 	ResetPasswordConfirm,
 	ResetPasswordRequest,
+	UpdateProfilePayload,
 } from "./types";
 export {
 	AuthValidationError,

@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "#/components/ui/button";
 import {
@@ -13,6 +13,7 @@ import {
 } from "#/components/ui/form";
 import { Input } from "#/components/ui/input";
 import { env } from "#/env";
+import { extractNocoBaseError } from "#/lib/api-errors";
 import { signIn } from "#/modules/auth";
 
 const loginSchema = z.object({
@@ -24,7 +25,6 @@ type LoginValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
 	const navigate = useNavigate();
-	const [serverError, setServerError] = useState<string | null>(null);
 
 	const form = useForm<LoginValues>({
 		resolver: zodResolver(loginSchema),
@@ -32,20 +32,13 @@ export function LoginForm() {
 	});
 
 	const onSubmit: SubmitHandler<LoginValues> = async (values) => {
-		setServerError(null);
 		try {
 			await signIn({ email: values.email, password: values.password });
 			const search = new URLSearchParams(window.location.search);
 			const returnTo = search.get("returnTo") || "/";
 			await navigate(returnTo);
 		} catch (err: unknown) {
-			const errData = (
-				err as {
-					response?: { data?: { errors?: Array<{ message?: string }> } };
-				}
-			)?.response?.data;
-			const msg = errData?.errors?.[0]?.message;
-			setServerError(msg || "E-mail ou senha inválidos");
+			toast.error(extractNocoBaseError(err, "E-mail ou senha inválidos"));
 		}
 	};
 
@@ -75,7 +68,6 @@ export function LoginForm() {
 				</FieldControl>
 				<FieldError />
 			</Field>
-			{serverError && <p className="text-sm text-destructive">{serverError}</p>}
 			<Button
 				type="submit"
 				className="w-full"

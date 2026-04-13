@@ -1,4 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { extractNocoBaseError } from "#/lib/api-errors";
 import { reset } from "#/modules/auth";
 
 function isUnauthorizedError(
@@ -42,6 +44,8 @@ export function getQueryContext() {
 				window.location.href = "/login";
 				isRedirecting = false;
 			}, 0);
+		} else {
+			toast.error(extractNocoBaseError(error));
 		}
 	};
 

@@ -2,11 +2,16 @@ import { redirect } from "react-router";
 import { GuestLayout } from "#/components/auth/auth-layout";
 import ResetPasswordForm from "#/components/auth/reset-password-form";
 import { env } from "#/env";
+import { createLogger } from "#/lib/logger";
 import { requireGuest } from "#/modules/auth";
 
+const log = createLogger("auth");
+
 export function loader() {
+	log.debug("Reset password page loaded");
 	requireGuest();
 	if (env.VITE_DISABLE_FORGOT_PASSWORD) {
+		log.info("Password reset disabled, redirecting to login");
 		throw redirect("/login");
 	}
 }

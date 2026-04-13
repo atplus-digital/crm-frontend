@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "#/components/ui/button";
 import {
@@ -22,7 +23,6 @@ type ResetPasswordValues = z.infer<typeof schema>;
 
 export default function ResetPasswordForm() {
 	const [isSuccess, setIsSuccess] = useState(false);
-	const [serverError, setServerError] = useState<string | null>(null);
 
 	const form = useForm<ResetPasswordValues>({
 		resolver: zodResolver(schema),
@@ -32,12 +32,11 @@ export default function ResetPasswordForm() {
 	const { isSubmitting } = form.formState;
 
 	async function onSubmit(values: ResetPasswordValues) {
-		setServerError(null);
 		try {
 			await requestPasswordReset(values.email);
 			setIsSuccess(true);
 		} catch {
-			setServerError("Erro ao enviar. Tente novamente.");
+			toast.error("Erro ao enviar. Tente novamente.");
 		}
 	}
 
@@ -69,7 +68,6 @@ export default function ResetPasswordForm() {
 				</FieldControl>
 				<FieldError />
 			</Field>
-			{serverError && <p className="text-sm text-destructive">{serverError}</p>}
 			<Button type="submit" className="w-full" disabled={isSubmitting}>
 				{isSubmitting ? "Enviando..." : "Enviar"}
 			</Button>

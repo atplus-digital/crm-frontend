@@ -4,13 +4,12 @@
 
 <!-- AGENTS-GENERATED:START overview -->
 ## Overview
-Authentication UI components — login, logout, password-reset flows, and shared auth page layout.
+Authentication UI components — login and password-reset flows, and shared auth page layout.
 
 **Component Architecture:**
 - **Layout layer**: `GuestLayout` provides centered card container with consistent styling
 - **Page layer**: Composes layout + form components (e.g., `LoginPage`)
 - **Form layer**: Self-contained forms with validation, submission, and error handling
-- **Action layer**: Single-purpose components (e.g., `LogoutButton`)
 
 **Auth Flows Implemented:**
 1. **Login**: Email/password → `signIn()` → redirect to `/` or `?returnTo` path
@@ -26,7 +25,7 @@ Authentication UI components — login, logout, password-reset flows, and shared
 | `auth-layout.tsx` | Shared centered-card layout for auth pages (login, reset password, etc.) |
 | `login-form.tsx` | React Hook Form + Zod login form that calls `signIn()` and handles redirect-after-login |
 | `login-page.tsx` | Composes AuthLayout + LoginForm |
-| `logout-button.tsx` | Logout action button that signs out and returns to `/login` |
+
 | `reset-password-form.tsx` | React Hook Form + Zod reset-password request with success state |
 | `reset-password-confirm-form.tsx` | React Hook Form + Zod new password submission with cross-field validation |
 <!-- AGENTS-GENERATED:END filemap -->

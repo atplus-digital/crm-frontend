@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "#/components/ui/button";
 import {
@@ -12,6 +12,7 @@ import {
 	Form,
 } from "#/components/ui/form";
 import { Input } from "#/components/ui/input";
+import { extractNocoBaseError } from "#/lib/api-errors";
 import { confirmPasswordReset } from "#/modules/auth";
 
 const schema = z
@@ -34,7 +35,6 @@ export default function ResetPasswordConfirmForm({
 	token,
 }: ResetPasswordConfirmFormProps) {
 	const navigate = useNavigate();
-	const [serverError, setServerError] = useState<string | null>(null);
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(schema),
@@ -42,7 +42,6 @@ export default function ResetPasswordConfirmForm({
 	});
 
 	const onSubmit = async (values: FormValues) => {
-		setServerError(null);
 		try {
 			await confirmPasswordReset({
 				token,
@@ -51,16 +50,17 @@ export default function ResetPasswordConfirmForm({
 			});
 			navigate("/login");
 		} catch (err: unknown) {
-			const errData = (
-				err as {
-					response?: { data?: { errors?: Array<{ message?: string }> } };
-				}
-			)?.response?.data;
-			const msg = errData?.errors?.[0]?.message || "";
-			if (msg.includes("expired") || msg.includes("expirad")) {
-				setServerError("Link expirado. Solicite um novo.");
+			const msg = extractNocoBaseError(
+				err,
+				"Erro ao redefinir. Tente novamente.",
+			);
+			if (
+				msg.toLowerCase().includes("expired") ||
+				msg.toLowerCase().includes("expirad")
+			) {
+				toast.error("Link expirado. Solicite um novo.");
 			} else {
-				setServerError("Erro ao redefinir. Tente novamente.");
+				toast.error(msg);
 			}
 		}
 	};
@@ -91,7 +91,6 @@ export default function ResetPasswordConfirmForm({
 				</FieldControl>
 				<FieldError />
 			</Field>
-			{serverError && <p className="text-sm text-destructive">{serverError}</p>}
 			<Button
 				type="submit"
 				className="w-full"

@@ -13,6 +13,7 @@ Dashboard UI components — user profile view, navigation, and main dashboard la
 |------|---------|
 | `user-dashboard.tsx` | Main dashboard entry point with loading states and layout |
 | `profile-details.tsx` | Presentational component for user information display |
+| `profile-settings.tsx` | Editable profile form (nickname, email, phone) with validation and submit states |
 | `detail-item.tsx` | Reusable label-value pair with icon for data grids |
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -101,6 +102,7 @@ interface InfoCardProps {
 - **Loading state:** Card with "Carregando perfil..." message
 - **Null safety:** Guard clause `if (!user)` before rendering
 - **Store subscription:** `useStore` from `@tanstack/react-store`
+- **Profile updates:** `updateProfile()` from `#/modules/auth` + feedback states (`serverError`/`successMessage`)
 
 ### Accessibility
 - **Semantic HTML:** `<header>`, `<main>`, `<section>` for structure
@@ -113,6 +115,7 @@ interface InfoCardProps {
 | Pattern | Reference file |
 |---------|---------------|
 | Separation of presentational logic | `src/components/dashboard/profile-details.tsx` |
+| Profile editing form | `src/components/dashboard/profile-settings.tsx` |
 | Loading state handling | `src/components/dashboard/user-dashboard.tsx` |
 | Reusable detail item | `src/components/dashboard/detail-item.tsx` |
 | Responsive grid layout | `src/components/dashboard/profile-details.tsx` (line 45-69) |
