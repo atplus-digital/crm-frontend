@@ -1,16 +1,19 @@
+import { config } from "@scripts/generate-types/config";
 import { describe, expect, it, vi } from "vitest";
+import type { GenerateTypesResult } from "../src/@types/script";
 import { printResult } from "../src/cli/report";
 
 describe("Debug report test", () => {
 	it("should debug printMultiFileDryRunResult with long diff", () => {
 		const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+		config.verbose = true;
 
 		const longDiff = Array.from(
 			{ length: 130 },
 			(_, i) => `Linha ${i + 1}`,
 		).join("\n");
 
-		const result = {
+		const result: GenerateTypesResult = {
 			mode: "dry-run",
 			files: [
 				{
@@ -40,6 +43,7 @@ describe("Debug report test", () => {
 		console.log("truncationMessage found:", truncationMessage);
 
 		consoleSpy.mockRestore();
+		config.verbose = false;
 
 		expect(truncationMessage).toBe(true);
 	});

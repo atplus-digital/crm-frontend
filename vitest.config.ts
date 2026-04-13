@@ -1,12 +1,18 @@
-import { defineConfig } from "vitest/config";
 import path from "node:path";
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
 	test: {
-		include: ["src/**/*.{test,spec}.{js,ts}", "scripts/**/*.{test,spec}.{js,ts}"],
+		include: [
+			"src/**/*.{test,spec}.{js,ts}",
+			"scripts/**/*.{test,spec}.{js,ts}",
+		],
 		environment: "node",
 		globalSetup: ["./src/_tests/global-setup.ts"],
-		setupFiles: ["./src/_tests/mock-env.ts"],
+		setupFiles: [
+			"./src/_tests/mock-env.ts",
+			"./scripts/generate-types/test/setup.ts",
+		],
 		coverage: {
 			provider: "v8",
 			reporter: ["text", "json-summary", "html-spa"],
@@ -17,7 +23,7 @@ export default defineConfig({
 				"scripts/generate-types/config.ts",
 				"scripts/generate-types/src/@types/**",
 				"src/_tests/global-setup.ts",
-				"src/_tests/mock-env.ts"
+				"src/_tests/mock-env.ts",
 			],
 		},
 	},
@@ -27,5 +33,5 @@ export default defineConfig({
 			"@": path.resolve(__dirname, "./src"),
 			"#": path.resolve(__dirname, "./src"),
 		},
-	}
+	},
 });

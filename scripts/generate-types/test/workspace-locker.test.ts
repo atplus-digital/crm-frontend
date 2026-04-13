@@ -3,10 +3,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mockRuntimeConfig } from "./setup";
 
 const mockFs = {
-	existsSync: vi.fn<[string], boolean>(),
-	readFileSync: vi.fn<[string, string], string>(),
-	writeFileSync: vi.fn<[string, string, string], void>(),
-	mkdirSync: vi.fn<[string, { recursive: boolean }], string | undefined>(),
+	existsSync: vi.fn<(path: string) => boolean>(),
+	readFileSync: vi.fn<(path: string, encoding: string) => string>(),
+	writeFileSync:
+		vi.fn<(path: string, data: string, encoding: string) => void>(),
+	mkdirSync:
+		vi.fn<
+			(path: string, options: { recursive: boolean }) => string | undefined
+		>(),
 };
 
 vi.mock("node:fs", () => ({
@@ -41,6 +45,7 @@ describe("workspace-locker", () => {
 		mockFs.writeFileSync.mockReset();
 		mockFs.mkdirSync.mockReset();
 		mockRuntimeConfig.lockWorkspace = false;
+		mockRuntimeConfig.verbose = false;
 		mockRuntimeConfig.outputDir = "src/@types/generated/crm";
 	});
 
@@ -292,7 +297,9 @@ describe("workspace-locker", () => {
 		});
 
 		it("deve registrar mensagem de sucesso no console após bloqueio", async () => {
+			vi.resetModules();
 			mockRuntimeConfig.lockWorkspace = true;
+			mockRuntimeConfig.verbose = true;
 			mockFs.existsSync.mockReturnValue(false);
 			const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 

@@ -1,4 +1,5 @@
 import { ScriptOnce } from "@tanstack/react-router";
+import { isDev } from "#/env";
 import { THEME_STORAGE_KEY, THEMES } from "#/lib/theme";
 
 const THEME_INIT_SCRIPT = `
@@ -14,7 +15,7 @@ const THEME_INIT_SCRIPT = `
     root.setAttribute("data-theme", mode);
     root.style.colorScheme = mode;
   } catch (err) {
-    if (import.meta.env.DEV) {
+    if (${JSON.stringify(isDev)}) {
       console.warn("[theme] initialization failed:", err instanceof Error ? err.message : String(err));
     }
   }

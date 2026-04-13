@@ -13,6 +13,7 @@ import { NocoBaseClient } from "./generation/client";
 import { buildCollectionTypes } from "./generation/collection-types";
 import { generateContent, generateSplitFiles } from "./generation/content";
 import { splitCollectionsByConfig } from "./utils/collection-splitter";
+import { logInfo, logVerbose } from "./utils/logger";
 import {
 	resolveBaseInterfaceNamingConfig,
 	toCollectionBaseTypeName,
@@ -228,18 +229,18 @@ export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 		config.baseInterfaceNaming,
 	);
 
-	console.log(`📡 Conectando a: ${client.baseUrl}`);
+	logVerbose(`📡 Conectando a: ${client.baseUrl}`);
 
 	const collections = await client.fetchCollections();
 
-	console.log(`📋 Encontradas ${collections.length} collections`);
+	logVerbose(`📋 Encontradas ${collections.length} collections`);
 
 	// Aplica o bloqueio de workspace se a configuração estiver ativada
 	applyWorkspaceLockIfNeeded();
 
 	const collectionTypes = await buildCollectionTypes(client, collections, {
 		onCollectionStart: ({ collectionName, index, total }) => {
-			console.log(`⏳ [${index}/${total}] Processando ${collectionName}...`);
+			logVerbose(`⏳ [${index}/${total}] Processando ${collectionName}...`);
 		},
 	});
 
@@ -289,11 +290,13 @@ export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 	const unusedFiles = getUnusedFiles(generatedFilePaths, config.outputDir);
 
 	if (unusedFiles.length > 0) {
-		console.log(
+		logInfo(
 			`\n⚠️  Encontrados ${unusedFiles.length} arquivo(s) não utilizado(s) em ${config.outputDir}/:`,
 		);
-		for (const file of unusedFiles) {
-			console.log(`   - ${path.basename(file)}`);
+		if (config.verbose) {
+			for (const file of unusedFiles) {
+				logVerbose(`   - ${path.basename(file)}`);
+			}
 		}
 
 		if (!config.write) {
@@ -309,13 +312,13 @@ export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 			rl.close();
 
 			if (answer.toLowerCase() !== "s") {
-				console.log("Operação cancelada pelo usuário.");
+				logInfo("Operação cancelada pelo usuário.");
 				process.exit(0);
 			}
 		}
 
 		const removed = cleanOutputDirectory(unusedFiles);
-		console.log(`🗑️  Removidos ${removed.length} arquivo(s) não utilizado(s).`);
+		logInfo(`🗑️  Removidos ${removed.length} arquivo(s) não utilizado(s).`);
 	}
 
 	if (config.dryRun) {

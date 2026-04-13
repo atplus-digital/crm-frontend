@@ -5,7 +5,7 @@ import { permissionRoleSchema } from "#/modules/permissions";
 
 export type AuthUser = Pick<
 	UsersBase,
-	"id" | "email" | "username" | "nickname" | "appLang" | "phone"
+	"id" | "email" | "username" | "nickname" | "phone"
 > & {
 	roles: PermissionRole[];
 };
@@ -25,16 +25,13 @@ export const authUserSchema = z.object({
 	email: z.string(),
 	username: z.string(),
 	nickname: z.string(),
-	appLang: z.string(),
 	phone: z.string(),
 	roles: z.array(permissionRoleSchema).optional().default([]),
 });
 
 export const authResponseSchema = z.object({
-	data: z.object({
-		token: z.string().min(1),
-		user: authUserSchema,
-	}),
+	token: z.string().min(1),
+	user: authUserSchema,
 });
 
 export interface AuthState {

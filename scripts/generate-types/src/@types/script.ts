@@ -65,6 +65,7 @@ export interface BaseInterfaceNamingConfig {
 export interface ScriptConfig {
 	outputDir: string; // Diretório de saída (ex: "src/@types/generated") — split usa esta pasta; não-split usa <outputDir>/index.ts
 	splitCollections: string[]; // Collections que serão salvas em arquivos individuais
+	verbose: boolean;
 	defaultEnvPath: string;
 	requestTimeoutMs: number;
 	requestConcurrency: number;

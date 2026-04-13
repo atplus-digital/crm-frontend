@@ -1,4 +1,4 @@
-import { Calendar, Globe, Mail, Phone, Shield, User } from "lucide-react";
+import { Calendar, Mail, Phone, Shield, User } from "lucide-react";
 import { Badge } from "#/components/ui/badge";
 import { Separator } from "#/components/ui/separator";
 import { formatDateInPortuguese } from "#/lib/utils";
@@ -65,16 +65,6 @@ export function ProfileDetails({ user }: ProfileDetailsProps) {
 							label="Telefone"
 							value={user.phone || "Não informado"}
 							icon={<Phone className="size-4 text-muted-foreground" />}
-						/>
-
-						<DetailItem
-							label="Idioma"
-							value={
-								<Badge variant="secondary">
-									{user.appLang?.toUpperCase() || "Não informado"}
-								</Badge>
-							}
-							icon={<Globe className="size-4 text-muted-foreground" />}
 						/>
 					</div>
 				</div>

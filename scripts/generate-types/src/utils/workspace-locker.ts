@@ -1,6 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
+import { logVerbose } from "./logger";
 
 interface VSCodeSettings {
 	[setting: string]: unknown;
@@ -84,7 +85,7 @@ function lockWorkspace(): void {
 		const updatedSettings = JSON.stringify(settings, null, "\t"); // Usando tabs como indentação
 		fs.writeFileSync(settingsPath, updatedSettings, "utf-8");
 
-		console.log(
+		logVerbose(
 			"🔒 Workspace bloqueado: os arquivos gerados agora são somente leitura",
 		);
 	} catch (error) {

@@ -32,12 +32,12 @@ export const permissionStateSchema = z.object({
 
 export type PermissionState = z.infer<typeof permissionStateSchema>;
 
-export class PermissionValidationError extends Error {
-	constructor(
-		message: string,
-		public readonly zodError?: z.ZodError,
-	) {
-		super(message);
-		this.name = "PermissionValidationError";
-	}
-}
+// export class PermissionValidationError extends Error {
+// 	constructor(
+// 		message: string,
+// 		public readonly zodError?: z.ZodError,
+// 	) {
+// 		super(message);
+// 		this.name = "PermissionValidationError";
+// 	}
+// }

@@ -27,7 +27,7 @@ export interface NavItem {
  * Navigation configuration — EMPTY for now.
  * Populate when building the sidebar/layout component.
  */
-export const NAV_CONFIG: NavItem[] = [];
+// export const NAV_CONFIG: NavItem[] = [];
 
 /**
  * Recursively filter nav items by the user's granted snippets and actions.

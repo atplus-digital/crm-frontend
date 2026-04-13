@@ -1,11 +1,13 @@
+import { config } from "@scripts/generate-types/config";
 import { describe, expect, it, vi } from "vitest";
+import type { GenerateTypesResult } from "../src/@types/script";
 import { printResult } from "../src/cli/report";
 
 describe("Report coverage gap tests", () => {
 	it("should cover printPersistResult with changed=true (line 39)", () => {
 		const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
-		const result = {
+		const result: GenerateTypesResult = {
 			mode: "write",
 			outputPath: "/tmp/test.ts",
 			changed: true,
@@ -20,13 +22,14 @@ describe("Report coverage gap tests", () => {
 
 	it("should cover printMultiFileDryRunResult with long diff (lines 78-82)", () => {
 		const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+		config.verbose = true;
 
 		const longDiff = Array.from(
 			{ length: 130 },
 			(_, i) => `Linha ${i + 1}`,
 		).join("\n");
 
-		const result = {
+		const result: GenerateTypesResult = {
 			mode: "dry-run",
 			files: [
 				{
@@ -55,5 +58,6 @@ describe("Report coverage gap tests", () => {
 		expect(hasTruncationCall || hasDiffTruncado).toBe(true);
 
 		consoleSpy.mockRestore();
+		config.verbose = false;
 	});
 });

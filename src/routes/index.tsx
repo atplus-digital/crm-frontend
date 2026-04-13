@@ -1,12 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { UserDashboard } from "#/components/dashboard/user-dashboard";
-import { requireAuth } from "#/modules/auth";
-import { requireSnippet } from "#/modules/permissions";
+import { authStore, requireAuth, validateTokenOnInit } from "#/modules/auth";
+// import { requireSnippet } from "#/modules/permissions";
 
 export const Route = createFileRoute("/")({
-	beforeLoad: ({ location }) => {
+	beforeLoad: async ({ location }) => {
+		const state = authStore.state;
+		if (state.token && !state.user) {
+			await validateTokenOnInit();
+		}
+
 		requireAuth(location.pathname);
-		requireSnippet("app");
+		//requireSnippet("app");
 	},
 	component: App,
 });

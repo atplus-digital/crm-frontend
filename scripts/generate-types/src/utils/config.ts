@@ -5,6 +5,7 @@ import { resolveEnvConfig } from "./load-config";
 const defaultConfig: ScriptConfig = {
 	outputDir: "./generated",
 	splitCollections: [],
+	verbose: false,
 	defaultEnvPath: ".env.local",
 	requestTimeoutMs: 15_000,
 	requestConcurrency: 5,

@@ -1,4 +1,5 @@
 import { HeadContent, Scripts } from "@tanstack/react-router";
+import { isDev } from "#/env";
 import { TanstackDevTools } from "#/integrations/tanstack/devtools";
 import { ErrorBoundary } from "../error-boundary";
 import { ThemeScript } from "./theme-script";
@@ -11,7 +12,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</head>
 			<body className="font-sans antialiased wrap-anywhere">
 				<ErrorBoundary>{children}</ErrorBoundary>
-				{import.meta.env.DEV && <TanstackDevTools />}
+				{isDev && <TanstackDevTools />}
 				<ThemeScript />
 				<Scripts />
 			</body>

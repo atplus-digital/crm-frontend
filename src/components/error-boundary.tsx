@@ -1,4 +1,5 @@
 import React from "react";
+import { isDev } from "#/env";
 
 interface Props {
 	children: React.ReactNode;
@@ -35,9 +36,9 @@ class ErrorBoundary extends React.Component<Props, State> {
 							Ocorreu um erro inesperado. Por favor, recarregue a página para
 							tentar novamente.
 						</p>
-						{import.meta.env.DEV && this.state.error && (
+						{isDev && this.state.error && (
 							<div className="mt-4 rounded bg-red-50 p-4 text-sm text-red-800">
-								<pre className="whitespace-pre-wrap break-words">
+								<pre className="whitespace-pre-wrap wrap-break-word">
 									{this.state.error.stack}
 								</pre>
 							</div>

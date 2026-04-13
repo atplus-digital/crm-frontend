@@ -6,11 +6,13 @@ export const env = createEnv({
 		SERVER_URL: z.url().optional(),
 		CRM_NOCOBASE_URL: z.url(),
 	},
+
 	clientPrefix: "VITE_",
 	client: {
 		VITE_LOCAL_STORAGE_BASE_KEY: z.string().optional().default("crm-atplus"),
 		VITE_NOCOBASE_URL: z.url(),
 	},
+
 	isServer: typeof window === "undefined",
 	runtimeEnvStrict: {
 		SERVER_URL: process.env.SERVER_URL,
@@ -20,3 +22,5 @@ export const env = createEnv({
 	},
 	emptyStringAsUndefined: true,
 });
+
+export const isDev = import.meta.env.DEV;

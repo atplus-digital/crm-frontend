@@ -9,14 +9,14 @@ Authentication module — NocoBase client, auth state (user + token), service me
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
-| File | Purpose |
-|------|---------|
-| `index.ts` | Barrel export — `nocobaseClient`, guards, service methods, store + actions, types |
-| `client.ts` | NocoBase SDK client singleton with env-driven baseURL and localStorage |
-| `guard.ts` | `requireAuth()`, `requireGuest()`, `validateTokenOnInit()` for route `beforeLoad` |
-| `service.ts` | Auth operations: `signIn`, `signOut`, `checkAuth`, password reset |
-| `store.ts` | TanStack Store with `user`, `token`, `isAuthenticated` + actions `setUser`, `setToken`, `reset` |
-| `types.ts` | `AuthUser`, `AuthState`, `AuthResponse`, `LoginCredentials`, password-reset types |
+| File         | Purpose                                                                                         |
+| ------------ | ----------------------------------------------------------------------------------------------- |
+| `index.ts`   | Barrel export — `nocobaseClient`, guards, service methods, store + actions, types               |
+| `client.ts`  | NocoBase SDK client singleton with env-driven baseURL and localStorage                          |
+| `guard.ts`   | `requireAuth()`, `requireGuest()`, `validateTokenOnInit()` for route `beforeLoad`               |
+| `service.ts` | Auth operations: `signIn`, `signOut`, `checkAuth`, password reset                               |
+| `store.ts`   | TanStack Store with `user`, `token`, `isAuthenticated` + actions `setUser`, `setToken`, `reset` |
+| `types.ts`   | `AuthUser`, `AuthState`, `AuthResponse`, `LoginCredentials`, password-reset types               |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START patterns -->
@@ -29,8 +29,8 @@ Authentication module — NocoBase client, auth state (user + token), service me
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples
-| Pattern | Reference file |
-|---------|---------------|
+| Pattern             | Reference file                       |
+| ------------------- | ------------------------------------ |
 | Barrel import usage | `src/components/auth/login-form.tsx` |
-| Route guard wiring | `src/routes/index.tsx` |
+| Route guard wiring  | `src/routes/index.tsx`               |
 <!-- AGENTS-GENERATED:END golden-samples -->

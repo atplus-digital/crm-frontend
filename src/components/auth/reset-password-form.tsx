@@ -1,30 +1,39 @@
 import { Link } from "@tanstack/react-router";
-import { type FormEvent, useState } from "react";
+import { useState } from "react";
+import { z } from "zod";
 import { Button } from "#/components/ui/button";
+import {
+	Field,
+	FieldControl,
+	FieldError,
+	FieldLabel,
+	Form,
+} from "#/components/ui/form";
 import { Input } from "#/components/ui/input";
-import { Label } from "#/components/ui/label";
+import { useAppForm } from "#/hooks/use-app-form";
 import { requestPasswordReset } from "#/modules/auth";
 
+const schema = z.object({
+	email: z.string().min(1, "Obrigatório").email("E-mail inválido"),
+});
+
 export default function ResetPasswordForm() {
-	const [email, setEmail] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
 	const [isSuccess, setIsSuccess] = useState(false);
-	const [error, setError] = useState<string | null>(null);
+	const [serverError, setServerError] = useState<string | null>(null);
 
-	async function handleSubmit(e: FormEvent) {
-		e.preventDefault();
-		setIsLoading(true);
-		setError(null);
-
-		try {
-			await requestPasswordReset(email);
-			setIsSuccess(true);
-		} catch {
-			setError("Erro ao enviar. Tente novamente.");
-		} finally {
-			setIsLoading(false);
-		}
-	}
+	const form = useAppForm({
+		defaultValues: { email: "" },
+		validators: { onChange: schema },
+		onSubmit: async ({ value }) => {
+			setServerError(null);
+			try {
+				await requestPasswordReset(value.email);
+				setIsSuccess(true);
+			} catch {
+				setServerError("Erro ao enviar. Tente novamente.");
+			}
+		},
+	});
 
 	if (isSuccess) {
 		return (
@@ -41,31 +50,47 @@ export default function ResetPasswordForm() {
 	}
 
 	return (
-		<form onSubmit={handleSubmit} className="space-y-4">
-			<div className="space-y-2">
-				<Label htmlFor="reset-email">E-mail</Label>
-				<Input
-					id="reset-email"
-					type="email"
-					placeholder="seu@email.com"
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-					required
-					autoComplete="email"
-				/>
-			</div>
-			{error && <p className="text-sm text-destructive">{error}</p>}
-			<Button type="submit" className="w-full" disabled={isLoading}>
-				{isLoading ? "Enviando..." : "Enviar"}
-			</Button>
-			<div className="text-center">
-				<Link
-					to="/login"
-					className="text-sm text-muted-foreground hover:text-primary underline"
+		<form.AppForm>
+			<Form className="space-y-4">
+				<form.AppField name="email">
+					{(field) => (
+						<Field>
+							<FieldLabel>E-mail</FieldLabel>
+							<FieldControl>
+								<Input
+									type="email"
+									placeholder="seu@email.com"
+									value={field.state.value}
+									onBlur={field.handleBlur}
+									onChange={(e) => field.handleChange(e.target.value)}
+									autoComplete="email"
+								/>
+							</FieldControl>
+							<FieldError />
+						</Field>
+					)}
+				</form.AppField>
+				{serverError && (
+					<p className="text-sm text-destructive">{serverError}</p>
+				)}
+				<form.Subscribe
+					selector={(state) => [state.canSubmit, state.isSubmitting]}
 				>
-					Voltar para o login
-				</Link>
-			</div>
-		</form>
+					{([canSubmit, isSubmitting]) => (
+						<Button type="submit" className="w-full" disabled={!canSubmit}>
+							{isSubmitting ? "Enviando..." : "Enviar"}
+						</Button>
+					)}
+				</form.Subscribe>
+				<div className="text-center">
+					<Link
+						to="/login"
+						className="text-sm text-muted-foreground hover:text-primary underline"
+					>
+						Voltar para o login
+					</Link>
+				</div>
+			</Form>
+		</form.AppForm>
 	);
 }

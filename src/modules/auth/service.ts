@@ -1,3 +1,4 @@
+import { isDev } from "#/env";
 import {
 	resetPermissions,
 	setPermissionsFromRoles,
@@ -20,15 +21,17 @@ export async function signIn(
 	credentials: LoginCredentials,
 ): Promise<{ token: string; user: AuthUser }> {
 	const rawResponse = await nocobaseClient.auth.signIn(credentials);
-	const responseData = rawResponse.data?.data ?? rawResponse.data;
-	const parsed = authResponseSchema.safeParse({ data: responseData });
+	const responseData = rawResponse.data?.data;
+	const parsed = authResponseSchema.safeParse(responseData);
+
 	if (!parsed.success) {
+		console.log({ rawResponse, responseData, parsed });
 		throw new AuthValidationError(
 			"Resposta de autenticação inválida",
 			parsed.error,
 		);
 	}
-	const { token, user } = parsed.data.data;
+	const { token, user } = parsed.data;
 
 	setToken(token);
 	setUser(user);
@@ -41,7 +44,7 @@ export async function signOut(): Promise<void> {
 	try {
 		await nocobaseClient.auth.signOut();
 	} catch (err) {
-		if (import.meta.env.DEV) {
+		if (isDev) {
 			console.warn(
 				"[auth] signOut API call failed:",
 				err instanceof Error ? err.message : String(err),

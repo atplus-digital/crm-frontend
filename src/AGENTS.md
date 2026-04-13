@@ -30,6 +30,7 @@ Frontend application (TypeScript/React/Vue)
 | Módulo com barrel export      | `src/modules/auth/index.ts`                    |
 | Error Boundary                | `src/components/error-boundary.tsx`            |
 | Dashboard component structure | `src/components/dashboard/profile-details.tsx` |
+| Formulário (shadcn + TanStack Form + Zod) | `src/components/auth/login-form.tsx`  |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->
@@ -58,6 +59,7 @@ Frontend application (TypeScript/React/Vue)
 - File naming: `kebab-case.tsx` (ex: `login-form.tsx`, `logout-button.tsx`)
 - CSS: Tailwind CSS v4 + shadcn/ui — adicionar componentes com `npx shadcn@latest add <component>`
 - Variáveis de ambiente: definir em `src/env.ts` com validação Zod via T3Env
+- **Formulários**: usar `useAppForm` (de `#/hooks/use-app-form`) + Zod schema + componentes `Form`/`Field`/`FieldLabel`/`FieldControl`/`FieldError` (de `#/components/ui/form`). Nunca usar `useState` para campo de formulário — usar TanStack Form.
 <!-- AGENTS-GENERATED:END code-style -->
 
 <!-- AGENTS-GENERATED:START security -->

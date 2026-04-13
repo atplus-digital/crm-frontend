@@ -200,7 +200,6 @@ describe("validateTokenOnInit", () => {
 			email: "test@example.com",
 			username: "testuser",
 			nickname: "Test",
-			appLang: "en",
 			phone: "1234567890",
 			roles: [],
 		};

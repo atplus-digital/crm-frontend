@@ -21,13 +21,9 @@ describe("Client coverage tests", () => {
 			baseUrl: "http://example.com",
 			token: "fake-token",
 			timeoutMs: 50,
-			write: false,
-			dryRun: false,
-			showHelp: false,
-			lockWorkspace: false,
 		});
 
-		await expect(client.fetchJson("/test")).rejects.toThrow("Timeout de 50ms");
+		await expect(client.fetchCollections()).rejects.toThrow("Timeout de 50ms");
 
 		global.fetch = originalFetch;
 	});

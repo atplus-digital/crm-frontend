@@ -17,6 +17,7 @@ Configuração:
   output: ${config.outputDir}/
   output principal: ${config.outputDir}/index.ts
   output split: ${config.outputDir}/
+  verbose: ${config.verbose ? "ativado" : "desativado"}
   interface base: ${formatBaseInterfacePattern(config.baseInterfaceNaming)}
 
 Estrutura de saída:

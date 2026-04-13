@@ -1,5 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "#/components/ui/button";
+import { isDev } from "#/env";
 import { signOut } from "#/modules/auth";
 
 export function LogoutButton() {
@@ -9,7 +10,7 @@ export function LogoutButton() {
 		try {
 			await signOut();
 		} catch (err) {
-			if (import.meta.env.DEV) {
+			if (isDev) {
 				console.warn(
 					"[auth] logout API call failed:",
 					err instanceof Error ? err.message : String(err),

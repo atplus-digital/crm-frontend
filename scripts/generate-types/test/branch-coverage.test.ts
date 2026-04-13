@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import type { GenerateTypesResult } from "../src/@types/script";
 import { printResult } from "../src/cli/report";
 
 describe("Branch coverage tests", () => {
@@ -6,10 +7,11 @@ describe("Branch coverage tests", () => {
 		it("should cover printDryRunResult with changed=false (branch on line 12)", () => {
 			const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
-			const result = {
+			const result: GenerateTypesResult = {
 				mode: "dry-run",
 				outputPath: "/tmp/test.ts",
 				changed: false,
+				diff: "",
 			};
 
 			printResult(result);
@@ -24,7 +26,7 @@ describe("Branch coverage tests", () => {
 		it("should cover printPersistResult with changed=false (branch on line 34)", () => {
 			const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
-			const result = {
+			const result: GenerateTypesResult = {
 				mode: "write",
 				outputPath: "/tmp/test.ts",
 				changed: false,
@@ -42,7 +44,7 @@ describe("Branch coverage tests", () => {
 		it("should cover printMultiFilePersistResult with no changed files (branch on line 50)", () => {
 			const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
-			const result = {
+			const result: GenerateTypesResult = {
 				mode: "write",
 				files: [
 					{ outputPath: "/tmp/test1.ts", changed: false },
@@ -71,11 +73,11 @@ describe("Branch coverage tests", () => {
 		it("should cover printMultiFileDryRunResult with no changed files (branch on line 66)", () => {
 			const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
-			const result = {
+			const result: GenerateTypesResult = {
 				mode: "dry-run",
 				files: [
-					{ outputPath: "/tmp/test1.ts", changed: false, diff: null },
-					{ outputPath: "/tmp/test2.ts", changed: false, diff: null },
+					{ outputPath: "/tmp/test1.ts", changed: false, diff: "" },
+					{ outputPath: "/tmp/test2.ts", changed: false, diff: "" },
 				],
 				totalFiles: 2,
 				totalChanged: 0,
@@ -100,7 +102,7 @@ describe("Branch coverage tests", () => {
 		it("should cover printMultiFileDryRunResult with empty diff (branch on line 74)", () => {
 			const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
-			const result = {
+			const result: GenerateTypesResult = {
 				mode: "dry-run",
 				files: [{ outputPath: "/tmp/test.ts", changed: true, diff: "" }],
 				totalFiles: 1,

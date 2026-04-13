@@ -1,3 +1,4 @@
+import { config } from "@scripts/generate-types/config";
 import type {
 	DryRunDiffResult,
 	GenerateTypesResult,
@@ -21,6 +22,10 @@ function printDryRunResult(result: DryRunDiffResult) {
 	console.log(
 		`🧪 Dry-run concluído: diferenças detectadas em ${result.outputPath} (${diffLines.length} linhas).`,
 	);
+	if (!config.verbose) {
+		return;
+	}
+
 	console.log(diffLines.slice(0, DRY_RUN_PREVIEW_LIMIT).join("\n"));
 
 	if (diffLines.length > DRY_RUN_PREVIEW_LIMIT) {
@@ -47,7 +52,7 @@ function printMultiFilePersistResult(result: MultiFilePersistResult) {
 		`✅ Arquivos gerados: ${result.totalFiles} (${result.totalChanged} alterados, ${unchangedCount} inalterados)`,
 	);
 
-	if (changedFiles.length > 0) {
+	if (config.verbose && changedFiles.length > 0) {
 		console.log("\nAlterados:");
 		for (const file of changedFiles) {
 			console.log(`  - ${file.outputPath}`);
@@ -63,7 +68,7 @@ function printMultiFileDryRunResult(result: MultiFileDryRunResult) {
 		`🧪 Dry-run concluído: ${result.totalFiles} arquivos (${result.totalChanged} com alterações, ${unchangedCount} inalterados)`,
 	);
 
-	if (changedFiles.length > 0) {
+	if (config.verbose && changedFiles.length > 0) {
 		console.log("\nArquivos com alterações:");
 		for (const file of changedFiles) {
 			const diffLines = file.diff ? file.diff.split("\n") : [];

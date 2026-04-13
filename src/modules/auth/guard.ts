@@ -1,4 +1,5 @@
 import { redirect } from "@tanstack/react-router";
+import { isDev } from "#/env";
 import {
 	resetPermissions,
 	setPermissionsFromRoles,
@@ -26,8 +27,8 @@ export function requireAuth(pathname: string): void {
  * Require guest (not authenticated) — redirect to / if already authenticated.
  */
 export function requireGuest(): void {
+	console.log("Checking guest access...");
 	if (typeof window === "undefined") return;
-
 	const state = authStore.state;
 	if (state.isAuthenticated && state.token) {
 		throw redirect({
@@ -69,7 +70,7 @@ export async function validateTokenOnInit(): Promise<void> {
 	} catch (err) {
 		if (isNetworkError(err)) {
 			// Don't log out user on network errors — preserve auth state
-			if (import.meta.env.DEV) {
+			if (isDev) {
 				console.warn(
 					"[auth] Network error during token validation, preserving auth state",
 				);

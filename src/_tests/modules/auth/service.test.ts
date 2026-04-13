@@ -51,7 +51,6 @@ const MOCK_USER: AuthUser = {
 	email: "test@example.com",
 	username: "testuser",
 	nickname: "Test",
-	appLang: "en",
 	phone: "1234567890",
 	roles: [],
 };
