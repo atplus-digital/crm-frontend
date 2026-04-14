@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Badge } from "#/components/ui/badge";
 import { cn } from "#/lib/utils";
-import type { Negociacao } from "#/modules/cs/negociacoes-types";
 
 const STATUS_CONFIG = [
 	{
@@ -44,10 +43,101 @@ const STATUS_CONFIG = [
 
 type StatusKey = (typeof STATUS_CONFIG)[number]["key"];
 
-interface NegociacoesKanbanProps {
-	negociacoes: Negociacao[];
-	isLoading?: boolean;
+// Mock data types
+interface KanbanCard {
+	id: number;
+	f_titulo?: string;
+	f_valor_mensal?: number;
+	f_substatus?: string;
+	f_vendedor?: {
+		nickname: string;
+	};
+	f_pessoa?: {
+		f_nome: string;
+	};
+	f_negociacao_pessoa_juridica?: {
+		f_razao_social: string;
+	};
 }
+
+type KanbanData = Record<StatusKey, KanbanCard[]>;
+
+// Placeholder data organized by status
+const mockKanbanData: KanbanData = {
+	Novo: [
+		{
+			id: 1,
+			f_titulo: "Negociação João Silva",
+			f_valor_mensal: 2500.0,
+			f_substatus: "Aguardando contato",
+			f_vendedor: { nickname: "vendedor1" },
+			f_pessoa: { f_nome: "João Silva" },
+		},
+		{
+			id: 2,
+			f_titulo: "Negociação Ana Costa",
+			f_valor_mensal: 1800.0,
+			f_substatus: "Novo lead",
+			f_vendedor: { nickname: "vendedor2" },
+			f_pessoa: { f_nome: "Ana Costa" },
+		},
+	],
+	Negociando: [
+		{
+			id: 3,
+			f_titulo: "Negociação Empresa ABC",
+			f_valor_mensal: 15000.5,
+			f_substatus: "Em análise de documentação",
+			f_vendedor: { nickname: "vendedor2" },
+			f_negociacao_pessoa_juridica: { f_razao_social: "ABC Ltda" },
+		},
+		{
+			id: 4,
+			f_valor_mensal: 3200.0,
+			f_substatus: "Proposta enviada",
+			f_vendedor: { nickname: "vendedor1" },
+			f_pessoa: { f_nome: "Carlos Ferreira" },
+		},
+		{
+			id: 5,
+			f_valor_mensal: 4500.0,
+			f_substatus: "Negociando valores",
+			f_vendedor: { nickname: "vendedor3" },
+			f_pessoa: { f_nome: "Mariana Silva" },
+		},
+	],
+	Assinatura: [
+		{
+			id: 6,
+			f_titulo: "Negociação Maria Santos",
+			f_valor_mensal: 3200.0,
+			f_substatus: "Aguardando assinatura digital",
+			f_vendedor: { nickname: "vendedor1" },
+			f_pessoa: { f_nome: "Maria Santos" },
+		},
+	],
+	Auditoria: [
+		{
+			id: 7,
+			f_titulo: "Negociação XYZ Corp",
+			f_valor_mensal: 50000.0,
+			f_substatus: "Verificação cadastral em andamento",
+			f_vendedor: { nickname: "vendedor3" },
+			f_negociacao_pessoa_juridica: { f_razao_social: "XYZ Corporation" },
+		},
+	],
+	Concluído: [
+		{
+			id: 8,
+			f_titulo: "Negociação Pedro Costa",
+			f_valor_mensal: 1800.75,
+			f_substatus: "Contrato assinado",
+			f_vendedor: { nickname: "vendedor1" },
+			f_pessoa: { f_nome: "Pedro Costa" },
+		},
+	],
+	Arquivado: [],
+};
 
 function formatCurrency(value: number | undefined): string {
 	if (value === undefined) return "-";
@@ -108,11 +198,10 @@ function KanbanCardComponent({ card }: KanbanCardProps) {
 
 interface KanbanColumnProps {
 	status: (typeof STATUS_CONFIG)[number];
-	cards: Negociacao[];
-	isLoading?: boolean;
+	cards: KanbanCard[];
 }
 
-function KanbanColumn({ status, cards, isLoading }: KanbanColumnProps) {
+function KanbanColumn({ status, cards }: KanbanColumnProps) {
 	return (
 		<div className="flex w-[280px] shrink-0 flex-col rounded-xl border border-border bg-muted/30">
 			{/* Column header */}
@@ -127,17 +216,13 @@ function KanbanColumn({ status, cards, isLoading }: KanbanColumnProps) {
 					<h3 className="text-sm font-semibold">{status.label}</h3>
 				</div>
 				<Badge variant="secondary" className="h-5 min-w-[24px] text-xs">
-					{isLoading ? "..." : cards.length}
+					{cards.length}
 				</Badge>
 			</div>
 
 			{/* Cards container */}
 			<div className="flex-1 space-y-2 overflow-y-auto p-2">
-				{isLoading ? (
-					<div className="flex h-24 items-center justify-center text-xs text-muted-foreground">
-						Carregando...
-					</div>
-				) : cards.length === 0 ? (
+				{cards.length === 0 ? (
 					<div className="flex h-24 items-center justify-center text-xs text-muted-foreground">
 						Sem itens
 					</div>
@@ -149,20 +234,8 @@ function KanbanColumn({ status, cards, isLoading }: KanbanColumnProps) {
 	);
 }
 
-export function NegociacoesKanban({
-	negociacoes,
-	isLoading = false,
-}: NegociacoesKanbanProps) {
-	const kanbanData = negociacoes.reduce(
-		(acc, negociacao) => {
-			const status = negociacao.f_status as StatusKey;
-			if (acc[status]) {
-				acc[status].push(negociacao);
-			}
-			return acc;
-		},
-		{} as Record<StatusKey, Negociacao[]>,
-	);
+export function NegociacoesKanban() {
+	const [kanbanData] = useState<KanbanData>(mockKanbanData);
 
 	return (
 		<div className="overflow-x-auto pb-2">
@@ -171,8 +244,7 @@ export function NegociacoesKanban({
 					<KanbanColumn
 						key={status.key}
 						status={status}
-						cards={kanbanData[status.key] || []}
-						isLoading={isLoading}
+						cards={kanbanData[status.key]}
 					/>
 				))}
 			</div>

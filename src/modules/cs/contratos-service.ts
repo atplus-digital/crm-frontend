@@ -1,10 +1,10 @@
+import { ixcRepository } from "#/modules/repositories";
 import type {
 	ContratoFilters,
 	ContratoListParams,
 	ContratoWithCliente,
 	PaginatedResponse,
 } from "./contratos-types";
-import { ixcRequest } from "./ixc-client";
 
 function buildContratoFilter(
 	filters?: ContratoFilters,
@@ -44,17 +44,16 @@ export async function fetchContratos(
 	const { page = 1, pageSize = 20, sort, filters } = params;
 	const filter = buildContratoFilter(filters);
 
-	const response = await ixcRequest<PaginatedResponse<ContratoWithCliente>>({
-		url: "cliente_contrato:list",
-		method: "GET",
-		params: {
+	const response = await ixcRepository.list<ContratoWithCliente>(
+		"cliente_contrato",
+		{
 			page,
 			pageSize,
 			appends: ["f_nc_cliente"],
 			...(sort && sort.length > 0 && { sort }),
-			...(filter && { filter: JSON.stringify(filter) }),
+			...(filter && { filter }),
 		},
-	});
+	);
 
 	return response;
 }
@@ -62,20 +61,5 @@ export async function fetchContratos(
 export async function fetchContratoById(
 	id: number,
 ): Promise<ContratoWithCliente> {
-	const response = await ixcRequest<PaginatedResponse<ContratoWithCliente>>({
-		url: "cliente_contrato:list",
-		method: "GET",
-		params: {
-			page: 1,
-			pageSize: 1,
-			appends: ["f_nc_cliente"],
-			filter: JSON.stringify({ id: { $eq: id } }),
-		},
-	});
-
-	if (!response.data || response.data.length === 0) {
-		throw new Error(`Contrato ${id} não encontrado`);
-	}
-
-	return response.data[0];
+	return ixcRepository.get<ContratoWithCliente>("cliente_contrato", id);
 }

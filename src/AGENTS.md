@@ -22,6 +22,7 @@ Frontend application built with React 19, TypeScript, Vite, Tailwind CSS v4, sha
 | `src/routes/reset-password-confirm.tsx` | Rota pública `/reset-password-confirm` com `loader` validando search params |
 | `src/modules/auth/index.ts`             | Barrel export do módulo de autenticação (client, store, service, guard)     |
 | `src/modules/permissions/index.ts`      | Barrel export do módulo de permissões (hooks, guards, store, types)         |
+| `src/modules/repositories/index.ts`     | Barrel export dos repositórios (NocoBase e IXC)                             |
 | `src/components/ui/`                    | Componentes shadcn/ui reutilizáveis (button, card, form, input, etc.)       |
 | `src/components/auth/`                  | Componentes de autenticação (login-form, logout-button, reset-password)     |
 | `src/components/dashboard/`             | Componentes de dashboard (user-dashboard, profile-details)                  |
@@ -45,7 +46,7 @@ src/
 ├── lib/                # Utilitários e funções de baixo nível
 │   ├── logger.ts      # Logger com níveis (debug/info/warn/error) e createLogger()
 │   └── utils.ts       # cn(), formatDateInPortuguese(), getInitials()
-├── modules/            # Módulos de domínio (autenticação, permissões)
+├── modules/            # Módulos de domínio (autenticação, permissões, repositórios)
 │   ├── auth/           # Módulo de autenticação
 │   │   ├── client.ts   # NocoBase SDK client
 │   │   ├── guard.ts    # Guards de rota (requireAuth, requireGuest)
@@ -53,7 +54,12 @@ src/
 │   │   ├── store.ts    # TanStack Store para estado global
 │   │   ├── types.ts    # Types e Zod schemas
 │   │   └── index.ts    # Barrel export
-│   └── permissions/    # Módulo de permissões (RBAC)
+│   ├── permissions/    # Módulo de permissões (RBAC)
+│   └── repositories/   # Repositórios de dados (NocoBase, IXC)
+│       ├── nocobase-repository.ts  # NocoBaseRepository com wrappers type-safe
+│       ├── ixc-repository.ts       # IxcRepository para integração IXCSoft
+│       ├── types.ts                # Tipos compartilhados
+│       └── index.ts                # Barrel export
 ├── routes/             # Route modules do React Router v7
 │   ├── dashboard.tsx   # Rota raiz (/) - dashboard
 │   ├── profile.tsx     # Rota de perfil (/profile)
@@ -69,6 +75,7 @@ src/
 - **`components/`**: Componentes UI puros ou com estado local. Podem ser reutilizados em múltiplos lugares.
 - **`hooks/`**: Hooks customizados que são usados em mais de um componente.
 - **`modules/`**: Domínios de negócio com estado global, serviços e guards. Usam barrel export (`index.ts`).
+- **`repositories/`**: Camada de acesso a dados externos (NocoBase, IXC). Serviços e components usam repositórios, não clients diretamente.
 - **`routes/`**: Route modules do React Router. Cada arquivo = uma rota. Exportam `loader` + `Component`.
 - **`integrations/`**: Setup de bibliotecas externas (TanStack, etc.).
 - **`lib/`**: Funções utilitárias puras, sem dependência de React.
@@ -308,6 +315,7 @@ export function useMyHook<T>(fetcher: () => Promise<T>) {
 - `./hooks/AGENTS.md` — Hooks reutilizáveis do frontend
 - `./lib/AGENTS.md` — Funções utilitárias puras (cn, logger, formatação)
 - `./modules/auth/AGENTS.md` — Módulo de autenticação (cliente NocoBase, store, service, guards)
+- `./modules/repositories/AGENTS.md` — Repositórios de dados (NocoBase, IXC)
 <!-- AGENTS-GENERATED:END scope-index -->
 
 > **Agents**: ao trabalhar em qualquer diretório listado acima, leia o AGENTS.md correspondente antes de modificar arquivos.

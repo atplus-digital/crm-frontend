@@ -3,7 +3,7 @@ import {
 	resetPermissions,
 	setPermissionsFromRoles,
 } from "#/modules/permissions";
-import { nocobaseClient } from "./client";
+import { nocobaseRepository } from "#/modules/repositories";
 import { authStore, reset, setToken, setUser } from "./store";
 import type {
 	AuthUser,
@@ -12,11 +12,7 @@ import type {
 	ResetPasswordRequest,
 	UpdateProfilePayload,
 } from "./types";
-import {
-	AuthValidationError,
-	authResponseSchema,
-	authUserSchema,
-} from "./types";
+import { AuthValidationError, authResponseSchema } from "./types";
 
 const log = createLogger("auth");
 
@@ -24,7 +20,7 @@ export async function signIn(
 	credentials: LoginCredentials,
 ): Promise<{ token: string; user: AuthUser }> {
 	log.info("Sign in attempt", { email: credentials.email });
-	const rawResponse = await nocobaseClient.auth.signIn(credentials);
+	const rawResponse = await nocobaseRepository.signIn(credentials);
 	const responseData = rawResponse.data?.data;
 	const parsed = authResponseSchema.safeParse(responseData);
 
@@ -48,13 +44,13 @@ export async function signIn(
 export async function signOut(): Promise<void> {
 	log.info("Signing out");
 	try {
-		await nocobaseClient.auth.signOut();
+		await nocobaseRepository.signOut();
 	} catch (err) {
 		log.warn("Sign out API call failed, continuing with local cleanup", {
 			error: err instanceof Error ? err.message : String(err),
 		});
 	} finally {
-		nocobaseClient.auth.token = "";
+		nocobaseRepository.clearToken();
 		reset();
 		resetPermissions();
 		log.info("Sign out complete");
@@ -63,32 +59,7 @@ export async function signOut(): Promise<void> {
 
 export async function checkAuth(): Promise<AuthUser> {
 	log.debug("Checking auth status");
-	const response = await nocobaseClient.request({
-		url: "auth:check",
-		method: "GET",
-		headers: {
-			"X-Authenticator": "basic",
-		},
-	});
-	const responseData = response.data?.data ?? response.data;
-	const parsed = authUserSchema.safeParse(responseData);
-	if (!parsed.success) {
-		log.error("Auth check response validation failed", {
-			zodErrors: parsed.error.issues.map((i) => ({
-				path: i.path.join("."),
-				message: i.message,
-			})),
-			responseKeys: responseData ? Object.keys(responseData) : null,
-			responseSample: responseData
-				? JSON.stringify(responseData).slice(0, 500)
-				: null,
-		});
-		throw new AuthValidationError(
-			"Resposta de verificação de autenticação inválida",
-			parsed.error,
-		);
-	}
-	const user = parsed.data;
+	const user = await nocobaseRepository.checkAuth<AuthUser>();
 	setUser(user);
 	setPermissionsFromRoles(user.roles);
 	log.debug("Auth check successful");
@@ -99,7 +70,7 @@ export async function requestPasswordReset(email: string): Promise<void> {
 	log.info("Password reset requested", { email });
 	const payload: ResetPasswordRequest = { email };
 
-	await nocobaseClient.request({
+	await nocobaseRepository.request({
 		url: "auth:lostPassword",
 		method: "POST",
 		data: {
@@ -117,7 +88,7 @@ export async function confirmPasswordReset(
 	data: ResetPasswordConfirm,
 ): Promise<void> {
 	log.info("Password reset confirmation attempt");
-	await nocobaseClient.request({
+	await nocobaseRepository.request({
 		url: "auth:resetPassword",
 		method: "POST",
 		data: {
@@ -141,7 +112,7 @@ export async function updateProfile(
 	}
 
 	log.info("Profile update attempt", { userId });
-	await nocobaseClient.request({
+	await nocobaseRepository.request({
 		url: "users:update",
 		method: "POST",
 		params: {
