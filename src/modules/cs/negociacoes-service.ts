@@ -1,3 +1,12 @@
+import {
+	buildFilter,
+	eq,
+	gte,
+	includes,
+	lte,
+	nestedField,
+	or,
+} from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/modules/repositories";
 import type {
 	Negociacao,
@@ -15,49 +24,42 @@ function buildNegociacaoFilter(
 	const conditions: Record<string, unknown>[] = [];
 
 	if (filters.titulo) {
-		conditions.push({ f_titulo: { $includes: filters.titulo } });
+		conditions.push(includes("f_titulo", filters.titulo));
 	}
 
 	if (filters.vendedorId) {
-		conditions.push({ f_vendedor: { id: { $eq: filters.vendedorId } } });
+		conditions.push(nestedField("f_vendedor", eq("id", filters.vendedorId)));
 	}
 
 	if (filters.status) {
-		conditions.push({ f_status: { $eq: filters.status } });
+		conditions.push(eq("f_status", filters.status));
 	}
 
 	if (filters.substatus) {
-		conditions.push({ f_substatus: { $eq: filters.substatus } });
+		conditions.push(eq("f_substatus", filters.substatus));
 	}
 
 	if (filters.cpfCnpj) {
-		conditions.push({
-			$or: [
-				{ f_pessoa: { f_cpf: { $includes: filters.cpfCnpj } } },
-				{
-					f_negociacao_pessoa_juridica: {
-						f_cnpj: { $includes: filters.cpfCnpj },
-					},
-				},
-			],
-		});
+		conditions.push(
+			or(
+				nestedField("f_pessoa", includes("f_cpf", filters.cpfCnpj)),
+				nestedField(
+					"f_negociacao_pessoa_juridica",
+					includes("f_cnpj", filters.cpfCnpj),
+				),
+			),
+		);
 	}
 
 	if (filters.criadoEmInicio) {
-		conditions.push({
-			createdAt: { $gte: filters.criadoEmInicio },
-		});
+		conditions.push(gte("createdAt", filters.criadoEmInicio));
 	}
 
 	if (filters.criadoEmFim) {
-		conditions.push({
-			createdAt: { $lte: filters.criadoEmFim },
-		});
+		conditions.push(lte("createdAt", filters.criadoEmFim));
 	}
 
-	if (conditions.length === 0) return undefined;
-	if (conditions.length === 1) return conditions[0];
-	return { $and: conditions };
+	return buildFilter(conditions);
 }
 
 export async function fetchNegociacoes(

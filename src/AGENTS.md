@@ -119,6 +119,9 @@ src/
 | Service layer (IXC integration) | `src/modules/cs/contratos-service.ts`          |
 | Página CS com filtros           | `src/components/cs/contratos-page.tsx`         |
 | Kanban board                    | `src/components/cs/negociacoes-kanban.tsx`     |
+| Table with pagination           | `src/components/ui/data-table-with-pagination.tsx` |
+| Filter builder usage            | `src/modules/cs/pessoas-service.ts`            |
+| Pagination hook                 | `src/hooks/use-pagination.ts`                  |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->
@@ -199,6 +202,81 @@ src/
 - **Encapsulamento**: Componentes externos importam de `#/modules/auth`, não de sub-arquivos
 - **Services**: Funções que chamam APIs externas ficam em `service.ts` dentro do módulo
 - **Guards**: Funções de proteção de rota em `guard.ts` — usam estado do store + `redirect()`
+
+### Table & Pagination Patterns
+
+**Use the generic table component** to avoid duplication:
+
+```tsx
+import { DataTableWithPagination } from "#/components/ui/data-table-with-pagination";
+
+// Server-side pagination
+<DataTableWithPagination
+  columns={columns}
+  data={data}
+  total={meta.total}
+  totalPages={meta.totalPage}
+  isLoading={isFetching}
+  onPageChange={(page) => refetch({ page })}
+  onPageSizeChange={(pageSize) => refetch({ page: 1, pageSize })}
+  emptyMessage="Nenhum registro encontrado"
+/>
+
+// Client-side pagination (no callbacks needed)
+<DataTableWithPagination
+  columns={columns}
+  data={allData}
+  emptyMessage="Nenhum registro encontrado"
+/>
+```
+
+**For custom pagination logic**, use the `usePagination` hook:
+
+```tsx
+import { usePagination } from "#/hooks/use-pagination";
+
+const { pagination, onPaginationChange } = usePagination({
+  initialPage: 1,
+  initialPageSize: 20,
+  onPageChange: (page) => refetch({ page }),
+  onPageSizeChange: (pageSize) => refetch({ page: 1, pageSize }),
+});
+```
+
+**Never**:
+- ❌ Create custom pagination state logic (use `usePagination`)
+- ❌ Duplicate table + pagination combinations (use `DataTableWithPagination`)
+- ❌ Implement manual page size handlers (use hook callbacks)
+
+### Filter Builder Pattern
+
+**Always use `filter-builder.ts`** for NocoBase/IXC query filters:
+
+```tsx
+import { buildFilter, eq, includes, or, nestedField } from "#/lib/filter-builder";
+
+// In your service:
+function buildMyFilter(filters?: MyFilters) {
+  if (!filters) return undefined;
+
+  const conditions: Record<string, unknown>[] = [];
+
+  if (filters.name) {
+    conditions.push(includes("f_nome", filters.name));
+  }
+
+  if (filters.status) {
+    conditions.push(eq("status", filters.status));
+  }
+
+  return buildFilter(conditions);
+}
+```
+
+**Never**:
+- ❌ Create custom filter builder functions with manual `$and` logic
+- ❌ Duplicate filter building patterns across services
+- ❌ Use inline filter objects — extract to helper functions
 
 ### Barrel Exports — Quando NÃO usar
 

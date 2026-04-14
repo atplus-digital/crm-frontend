@@ -62,6 +62,11 @@ docs/            → documentation
 | Unsure about pattern | Check Golden Samples above or `src/AGENTS.md` |
 | File naming | Use `kebab-case.tsx` for components/routes |
 | Import paths | Prefer `#/` alias over relative paths |
+| Table with pagination | Use `DataTableWithPagination` component |
+| Filter for NocoBase/IXC | Use `filter-builder.ts` helpers |
+| Pagination state | Use `usePagination` hook |
+| Date formatting | Use `formatDatePtBR()` from utils |
+| Currency formatting | Use `formatCurrency()` from utils |
 <!-- AGENTS-GENERATED:END heuristics -->
 
 ## Repository Settings

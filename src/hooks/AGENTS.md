@@ -43,6 +43,7 @@ Keep hooks in modules when:
 | File | Purpose |
 |------|---------|
 | `use-mobile.ts` | `useIsMobile()` — media query hook for responsive UI (mobile breakpoint at 768px) |
+| `use-pagination.ts` | `usePagination()` — standardized pagination state management for TanStack Table with server-side support |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START naming-conventions -->
@@ -136,6 +137,36 @@ export function useIsMobile(): boolean {
 - Responsive UI that adapts to screen size
 - Mobile-first design patterns
 - Conditional rendering based on viewport
+
+### Pagination hooks
+Use `use-pagination.ts` for standardized pagination state with TanStack Table:
+
+```typescript
+import { usePagination } from "#/hooks/use-pagination";
+
+export function MyTable({ onPageChange, onPageSizeChange }) {
+  const { pagination, onPaginationChange } = usePagination({
+    initialPage: 1,
+    initialPageSize: 20,
+    onPageChange,
+    onPageSizeChange,
+  });
+
+  const table = useDataTable({
+    columns,
+    data,
+    pagination,
+    onPaginationChange: onPaginationChange,
+  });
+
+  return <DataTable table={table} />;
+}
+```
+
+**When to use:**
+- Any table with pagination (client or server-side)
+- Standardize pagination behavior across components
+- Avoid duplicating pagination state logic
 <!-- AGENTS-GENERATED:END usage-patterns -->
 
 <!-- AGENTS-GENERATED:START best-practices -->

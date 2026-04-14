@@ -1,16 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import {
-	getCoreRowModel,
-	getPaginationRowModel,
-	useReactTable,
-} from "@tanstack/react-table";
 import { Download, ExternalLink, RefreshCw } from "lucide-react";
-import { useState } from "react";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
-import { DataTable } from "#/components/ui/data-table";
-import { DataTablePagination } from "#/components/ui/data-table-pagination";
-import { cn } from "#/lib/utils";
+import { DataTableWithPagination } from "#/components/ui/data-table-with-pagination";
+import { cn, formatCurrency, formatDatePtBR } from "#/lib/utils";
 import type { NegociacaoWithRelations } from "#/modules/cs/negociacoes-types";
 
 const statusBadgeStyles: Record<string, string> = {
@@ -28,25 +21,6 @@ const statusBadgeStyles: Record<string, string> = {
 };
 
 type NegociacaoItem = NegociacaoWithRelations;
-
-function formatDate(dateStr: string): string {
-	const date = new Date(dateStr);
-	return date.toLocaleDateString("pt-BR", {
-		day: "2-digit",
-		month: "2-digit",
-		year: "numeric",
-		hour: "2-digit",
-		minute: "2-digit",
-	});
-}
-
-function formatCurrency(value: number | null | undefined): string {
-	if (!value) return "-";
-	return value.toLocaleString("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	});
-}
 
 function StatusBadge({ status }: { status: string }) {
 	// Normalizar status para chave do objeto
@@ -79,12 +53,12 @@ const columns: ColumnDef<NegociacaoItem>[] = [
 	{
 		accessorKey: "createdAt",
 		header: "Criado em",
-		cell: ({ row }) => formatDate(row.original.createdAt),
+		cell: ({ row }) => formatDatePtBR(row.original.createdAt),
 	},
 	{
 		accessorKey: "updatedAt",
 		header: "Última atualização",
-		cell: ({ row }) => formatDate(row.original.updatedAt),
+		cell: ({ row }) => formatDatePtBR(row.original.updatedAt),
 	},
 	{
 		id: "f_pessoa",
@@ -137,39 +111,14 @@ export function NegociacoesList({
 	onRefresh,
 	onExport,
 }: NegociacoesListProps) {
-	const [pagination, setPagination] = useState({
-		pageIndex: 0,
-		pageSize: 20,
-	});
-
-	const data = negociacoes;
-
-	const handleRefresh = () => {
-		onRefresh?.();
-	};
-
-	const handleExport = () => {
-		onExport?.();
-	};
-
-	const table = useReactTable({
-		data,
-		columns,
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		onPaginationChange: setPagination,
-		state: { pagination },
-	});
-
 	return (
 		<div className="space-y-4">
-			{/* Actions bar */}
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<Button
 						variant="outline"
 						size="sm"
-						onClick={handleRefresh}
+						onClick={onRefresh}
 						title="Atualizar"
 					>
 						<RefreshCw className="size-4" />
@@ -178,7 +127,7 @@ export function NegociacoesList({
 					<Button
 						variant="outline"
 						size="sm"
-						onClick={handleExport}
+						onClick={onExport}
 						title="Exportar"
 					>
 						<Download className="size-4" />
@@ -190,11 +139,12 @@ export function NegociacoesList({
 				</span>
 			</div>
 
-			{/* Table */}
-			<DataTable table={table} emptyMessage="Nenhuma negociação encontrada" />
-
-			{/* Pagination */}
-			<DataTablePagination table={table} />
+			<DataTableWithPagination
+				columns={columns}
+				data={negociacoes}
+				total={totalCount}
+				emptyMessage="Nenhuma negociação encontrada"
+			/>
 		</div>
 	);
 }

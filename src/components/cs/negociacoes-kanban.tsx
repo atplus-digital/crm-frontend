@@ -1,5 +1,5 @@
 import { Badge } from "#/components/ui/badge";
-import { cn } from "#/lib/utils";
+import { cn, formatCurrency } from "#/lib/utils";
 import type { NegociacaoWithRelations } from "#/modules/cs/negociacoes-types";
 
 const STATUS_CONFIG = [
@@ -46,14 +46,6 @@ type StatusKey = (typeof STATUS_CONFIG)[number]["key"];
 type KanbanCard = NegociacaoWithRelations;
 
 type KanbanData = Record<StatusKey, KanbanCard[]>;
-
-function formatCurrency(value: number | null | undefined): string {
-	if (!value) return "-";
-	return value.toLocaleString("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	});
-}
 
 function getCardTitle(card: KanbanCard): string {
 	if (card.f_titulo) return card.f_titulo;

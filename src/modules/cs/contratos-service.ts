@@ -1,3 +1,4 @@
+import { buildFilter, eq } from "#/lib/filter-builder";
 import { ixcRepository } from "#/modules/repositories";
 import type {
 	ContratoFilters,
@@ -26,16 +27,14 @@ function buildContratoFilter(
 	}
 
 	if (filters.status) {
-		conditions.push({ status: { $eq: filters.status } });
+		conditions.push(eq("status", filters.status));
 	}
 
 	if (filters.contratoId) {
-		conditions.push({ id: { $eq: filters.contratoId } });
+		conditions.push(eq("id", filters.contratoId));
 	}
 
-	if (conditions.length === 0) return undefined;
-	if (conditions.length === 1) return conditions[0];
-	return { $and: conditions };
+	return buildFilter(conditions);
 }
 
 export async function fetchContratos(

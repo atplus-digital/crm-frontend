@@ -1,10 +1,5 @@
-import type {
-	ColumnDef,
-	OnChangeFn,
-	PaginationState,
-} from "@tanstack/react-table";
-import { DataTable, useDataTable } from "#/components/ui/data-table";
-import { DataTablePagination } from "#/components/ui/data-table-pagination";
+import type { ColumnDef } from "@tanstack/react-table";
+import { DataTableWithPagination } from "#/components/ui/data-table-with-pagination";
 
 interface PaginationInfo {
 	page: number;
@@ -23,6 +18,10 @@ interface PessoasTableProps<T extends { id: number | string }> {
 	emptyMessage?: string;
 }
 
+/**
+ * @deprecated Use DataTableWithPagination directly instead.
+ * This wrapper is kept for backwards compatibility and will be removed in a future version.
+ */
 export function PessoasTable<T extends { id: number | string }>({
 	columns,
 	data,
@@ -30,36 +29,18 @@ export function PessoasTable<T extends { id: number | string }>({
 	pagination,
 	onPageChange,
 	onPageSizeChange,
-	emptyMessage = "Nenhum registro encontrado",
+	emptyMessage,
 }: PessoasTableProps<T>) {
-	const paginationState: PaginationState = {
-		pageIndex: pagination.page - 1,
-		pageSize: pagination.pageSize,
-	};
-
-	const handlePaginationChange: OnChangeFn<PaginationState> = (updater) => {
-		const newPagination =
-			typeof updater === "function" ? updater(paginationState) : updater;
-		onPageChange(newPagination.pageIndex + 1);
-		onPageSizeChange(newPagination.pageSize);
-	};
-
-	const table = useDataTable({
-		columns,
-		data,
-		pageCount: pagination.totalPages,
-		pagination: paginationState,
-		onPaginationChange: handlePaginationChange,
-	});
-
 	return (
-		<div className="flex flex-col gap-4">
-			<DataTable
-				table={table}
-				isLoading={isLoading}
-				emptyMessage={emptyMessage}
-			/>
-			<DataTablePagination table={table} total={pagination.total} />
-		</div>
+		<DataTableWithPagination
+			columns={columns}
+			data={data}
+			isLoading={isLoading}
+			total={pagination.total}
+			totalPages={pagination.totalPages}
+			emptyMessage={emptyMessage}
+			onPageChange={onPageChange}
+			onPageSizeChange={onPageSizeChange}
+		/>
 	);
 }

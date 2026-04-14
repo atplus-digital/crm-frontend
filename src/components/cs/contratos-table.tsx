@@ -1,20 +1,15 @@
-import type {
-	ColumnDef,
-	OnChangeFn,
-	PaginationState,
-	SortingState,
-} from "@tanstack/react-table";
+import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { ExternalLink } from "lucide-react";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 
 import {
 	ContratoStatusBadge,
 	InternetStatusBadge,
 } from "#/components/cs/contrato-status-badge";
 import { Button } from "#/components/ui/button";
-import { DataTable, useDataTable } from "#/components/ui/data-table";
 import { DataTableColumnHeader } from "#/components/ui/data-table-column-header";
-import { DataTablePagination } from "#/components/ui/data-table-pagination";
+import { DataTableWithPagination } from "#/components/ui/data-table-with-pagination";
+import { formatDatePtBR } from "#/lib/utils";
 import type { ContratoWithCliente } from "#/modules/cs/contratos-types";
 
 interface PaginationInfo {
@@ -34,21 +29,6 @@ interface ContratosTableProps {
 	onPageSizeChange: (pageSize: number) => void;
 }
 
-function formatDatePtBR(dateStr: string): string {
-	if (!dateStr || dateStr.startsWith("0000")) return "—";
-	return new Intl.DateTimeFormat("pt-BR", {
-		day: "2-digit",
-		month: "2-digit",
-		year: "numeric",
-		hour: "2-digit",
-		minute: "2-digit",
-	}).format(new Date(dateStr));
-}
-
-function getContractDetailUrl(id: number): string {
-	return `/cs/contratos/${id}`;
-}
-
 function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 	return [
 		{
@@ -57,7 +37,7 @@ function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 			cell: ({ row }) => (
 				<Button variant="ghost" size="sm" asChild>
 					<a
-						href={getContractDetailUrl(row.original.id)}
+						href={`/cs/contratos/${row.original.id}`}
 						target="_blank"
 						rel="noreferrer"
 						onClick={(e) => e.stopPropagation()}
@@ -139,51 +119,32 @@ export function ContratosTable({
 		return [{ id, desc: isDesc }];
 	}, [sort]);
 
-	const onSortingChange = useCallback(
-		(updater: SortingState | ((old: SortingState) => SortingState)) => {
-			const next = typeof updater === "function" ? updater(sorting) : updater;
-			const first = next[0];
-			if (!first) {
-				onSort("");
-				return;
-			}
-			onSort(first.desc ? `-${first.id}` : first.id);
-		},
-		[sorting, onSort],
-	);
-
-	const paginationState: PaginationState = {
-		pageIndex: pagination.page - 1,
-		pageSize: pagination.pageSize,
-	};
-
-	const handlePaginationChange: OnChangeFn<PaginationState> = (updater) => {
-		const newPagination =
-			typeof updater === "function" ? updater(paginationState) : updater;
-		onPageChange(newPagination.pageIndex + 1);
-		onPageSizeChange(newPagination.pageSize);
+	const onSortingChange = (
+		updater: SortingState | ((old: SortingState) => SortingState),
+	) => {
+		const next = typeof updater === "function" ? updater(sorting) : updater;
+		const first = next[0];
+		if (!first) {
+			onSort("");
+			return;
+		}
+		onSort(first.desc ? `-${first.id}` : first.id);
 	};
 
 	const columns = useMemo(() => getColumns(), []);
 
-	const table = useDataTable({
-		columns,
-		data: contratos,
-		pageCount: pagination.totalPages,
-		pagination: paginationState,
-		onPaginationChange: handlePaginationChange,
-		sorting,
-		onSortingChange,
-	});
-
 	return (
-		<div className="flex flex-col gap-4">
-			<DataTable
-				table={table}
-				isLoading={isLoading}
-				emptyMessage="Nenhum contrato encontrado"
-			/>
-			<DataTablePagination table={table} total={pagination.total} />
-		</div>
+		<DataTableWithPagination
+			columns={columns}
+			data={contratos}
+			isLoading={isLoading}
+			total={pagination.total}
+			totalPages={pagination.totalPages}
+			emptyMessage="Nenhum contrato encontrado"
+			onPageChange={onPageChange}
+			onPageSizeChange={onPageSizeChange}
+			sorting={sorting.length > 0 ? sorting : undefined}
+			onSortingChange={onSortingChange}
+		/>
 	);
 }

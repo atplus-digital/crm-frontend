@@ -1,4 +1,5 @@
 import type { CollectionRelationsMap } from "#/@types/generated/crm/collections";
+import { buildFilter, eq, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/modules/repositories";
 import type {
 	PessoaFisica,
@@ -19,20 +20,18 @@ function buildPessoaFisicaFilter(
 	const conditions: Record<string, unknown>[] = [];
 
 	if (filters.nome) {
-		conditions.push({ f_nome: { $includes: filters.nome } });
+		conditions.push(includes("f_nome", filters.nome));
 	}
 
 	if (filters.cpf) {
-		conditions.push({ f_cpf: { $includes: filters.cpf } });
+		conditions.push(includes("f_cpf", filters.cpf));
 	}
 
 	if (filters.analiseIxc && filters.analiseIxc !== "all") {
-		conditions.push({ f_analise_ixc: { $eq: filters.analiseIxc } });
+		conditions.push(eq("f_analise_ixc", filters.analiseIxc));
 	}
 
-	if (conditions.length === 0) return undefined;
-	if (conditions.length === 1) return conditions[0];
-	return { $and: conditions };
+	return buildFilter(conditions);
 }
 
 function buildPessoaJuridicaFilter(
@@ -43,16 +42,14 @@ function buildPessoaJuridicaFilter(
 	const conditions: Record<string, unknown>[] = [];
 
 	if (filters.razaoSocial) {
-		conditions.push({ f_razao_social: { $includes: filters.razaoSocial } });
+		conditions.push(includes("f_razao_social", filters.razaoSocial));
 	}
 
 	if (filters.cnpj) {
-		conditions.push({ f_cnpj: { $includes: filters.cnpj } });
+		conditions.push(includes("f_cnpj", filters.cnpj));
 	}
 
-	if (conditions.length === 0) return undefined;
-	if (conditions.length === 1) return conditions[0];
-	return { $and: conditions };
+	return buildFilter(conditions);
 }
 
 export async function fetchPessoasFisicas(
