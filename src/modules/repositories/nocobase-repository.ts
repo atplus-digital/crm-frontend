@@ -31,7 +31,8 @@ class TypedNocoBaseClient {
 			appends?: Array<keyof CollectionRelationsMap[T]>;
 		},
 	): Promise<PaginatedResponse<CollectionMap[T]>> {
-		const response = await this.client.request({
+		// biome-ignore lint/suspicious/noExplicitAny: NocoBase API returns unpredictable response structure, must use any
+		const axiosResponse = await this.client.request<any>({
 			url: `${collection}:list`,
 			method: "GET",
 			params: {
@@ -43,7 +44,37 @@ class TypedNocoBaseClient {
 			},
 		});
 
-		return response.data as PaginatedResponse<CollectionMap[T]>;
+		const rawResponse = axiosResponse.data;
+
+		const response: PaginatedResponse<CollectionMap[T]> = {
+			data: rawResponse.data ?? rawResponse ?? [],
+			meta: {
+				total:
+					rawResponse.meta?.total ??
+					rawResponse.meta?.count ??
+					rawResponse.count ??
+					rawResponse.data?.length ??
+					0,
+				totalPage:
+					rawResponse.meta?.totalPage ??
+					rawResponse.meta?.pageCount ??
+					(Math.ceil(
+						(rawResponse.meta?.total ?? rawResponse.data?.length ?? 0) /
+							(params?.pageSize || 20),
+					) ||
+						1),
+				page: rawResponse.meta?.page ?? params?.page ?? 1,
+				pageSize:
+					rawResponse.meta?.pageSize ??
+					rawResponse.pageSize ??
+					params?.pageSize ??
+					20,
+				filterCount: rawResponse.meta?.filterCount,
+				print: rawResponse.meta?.print,
+			},
+		};
+
+		return response;
 	}
 
 	async get<T extends CollectionName>(
