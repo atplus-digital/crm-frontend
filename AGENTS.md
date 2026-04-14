@@ -99,6 +99,10 @@ docs/            → documentation
 - Delete migration files or schema changes
 - Commit package-lock.json without package.json changes
 - Use any type without justification
+- Use barrel exports (`index.ts`) when:
+  - Directory exports only **1 item** used outside the folder
+  - Components are **sub-components** (internal implementation details)
+  - Hooks/utils are used **only internally** within the directory
 
 ## Contributing (for AI agents)
 - **Comprehension**: Understand the problem before submitting code. Read the linked issue, understand *why* the change is needed, not just *what* to change.

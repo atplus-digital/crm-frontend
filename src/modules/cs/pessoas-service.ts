@@ -67,27 +67,23 @@ export async function fetchPessoasFisicas(
 
 	const filter = buildPessoaFisicaFilter(filters);
 
-	const response = await nocobaseRepository.list<PessoaFisica>(
-		"t_pessoas",
-		{
-			page,
-			pageSize,
-			appends,
-			...(sort.length > 0 && { sort }),
-			...(filter && { filter }),
-		},
-	);
+	const response = await nocobaseRepository.list("t_pessoas", {
+		page,
+		pageSize,
+		appends: appends as unknown as Array<
+			keyof import("#/@types/generated/crm/index").PessoasRelations
+		>,
+		...(sort.length > 0 && { sort }),
+		...(filter && { filter }),
+	});
 
-	return response;
+	return response as unknown as PessoaFisicaResponse;
 }
 
 export async function fetchPessoaFisicaById(id: number): Promise<PessoaFisica> {
-	const response = await nocobaseRepository.get<PessoaFisica>(
-		"t_pessoas",
-		id,
-	);
+	const response = await nocobaseRepository.get("t_pessoas", id);
 
-	return response;
+	return response as unknown as PessoaFisica;
 }
 
 export async function fetchPessoasJuridicas(
@@ -103,42 +99,40 @@ export async function fetchPessoasJuridicas(
 
 	const filter = buildPessoaJuridicaFilter(filters);
 
-	const response = await nocobaseRepository.list<PessoaJuridica>(
-		"t_empresas",
-		{
-			page,
-			pageSize,
-			appends,
-			...(sort.length > 0 && { sort }),
-			...(filter && { filter }),
-		},
-	);
+	const response = await nocobaseRepository.list("t_empresas", {
+		page,
+		pageSize,
+		appends: appends as unknown as Array<
+			keyof import("#/@types/generated/crm/index").EmpresasRelations
+		>,
+		...(sort.length > 0 && { sort }),
+		...(filter && { filter }),
+	});
 
-	return response;
+	return response as unknown as PessoaJuridicaResponse;
 }
 
 export async function fetchPessoaJuridicaById(
 	id: number,
 ): Promise<PessoaJuridica> {
-	const response = await nocobaseRepository.get<PessoaJuridica>(
-		"t_empresas",
-		id,
-	);
+	const response = await nocobaseRepository.get("t_empresas", id);
 
-	return response;
+	return response as unknown as PessoaJuridica;
 }
 
 export async function createPessoaFisica(
 	data: Partial<PessoaFisica>,
 ): Promise<PessoaFisica> {
-	return nocobaseRepository.create<PessoaFisica>("t_pessoas", data);
+	const result = await nocobaseRepository.create("t_pessoas", data as any);
+	return result as unknown as PessoaFisica;
 }
 
 export async function updatePessoaFisica(
 	id: number,
 	data: Partial<PessoaFisica>,
 ): Promise<PessoaFisica> {
-	return nocobaseRepository.update<PessoaFisica>("t_pessoas", id, data);
+	const result = await nocobaseRepository.update("t_pessoas", id, data as any);
+	return result as unknown as PessoaFisica;
 }
 
 export async function deletePessoaFisica(id: number): Promise<void> {
@@ -148,18 +142,16 @@ export async function deletePessoaFisica(id: number): Promise<void> {
 export async function createPessoaJuridica(
 	data: Partial<PessoaJuridica>,
 ): Promise<PessoaJuridica> {
-	return nocobaseRepository.create<PessoaJuridica>("t_empresas", data);
+	const result = await nocobaseRepository.create("t_empresas", data as any);
+	return result as unknown as PessoaJuridica;
 }
 
 export async function updatePessoaJuridica(
 	id: number,
 	data: Partial<PessoaJuridica>,
 ): Promise<PessoaJuridica> {
-	return nocobaseRepository.update<PessoaJuridica>(
-		"t_empresas",
-		id,
-		data,
-	);
+	const result = await nocobaseRepository.update("t_empresas", id, data as any);
+	return result as unknown as PessoaJuridica;
 }
 
 export async function deletePessoaJuridica(id: number): Promise<void> {

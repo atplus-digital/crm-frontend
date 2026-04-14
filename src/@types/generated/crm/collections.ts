@@ -4,21 +4,40 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
-import type { Negociacoes, NegociacoesRelations, NegociacoesRelationKey } from "./negociacoes";
-import type { Users, UsersRelations, UsersRelationKey } from "./users";
+import type { Negociacoes, NegociacoesRelations } from "./negociacoes";
+import type { Users, UsersRelations } from "./users";
+import type {
+	Pessoas,
+	PessoasRelations,
+	Empresas,
+	EmpresasRelations,
+} from "./index";
 
 // Tipo union com todas as collections disponíveis
-export type CollectionName = "t_negociacoes" | "users";
+export type CollectionName =
+	| "t_negociacoes"
+	| "users"
+	| "t_pessoas"
+	| "t_empresas";
 
 export interface CollectionMap {
-	"t_negociacoes": Negociacoes;
-	"users": Users;
+	t_negociacoes: Negociacoes;
+	users: Users;
+	t_pessoas: Pessoas;
+	t_empresas: Empresas;
 }
 
 export interface CollectionRelationsMap {
-	"t_negociacoes": NegociacoesRelations;
-	"users": UsersRelations;
+	t_negociacoes: NegociacoesRelations;
+	users: UsersRelations;
+	t_pessoas: PessoasRelations;
+	t_empresas: EmpresasRelations;
 }
 
 // Lista de todas as collections (para uso em runtime)
-export const COLLECTIONS = ["t_negociacoes", "users"] as const;
+export const COLLECTIONS = [
+	"t_negociacoes",
+	"users",
+	"t_pessoas",
+	"t_empresas",
+] as const;

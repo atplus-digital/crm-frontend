@@ -1,12 +1,12 @@
-import type { User } from "#/modules/auth/types";
+import type { AuthUser } from "#/modules/auth/types";
 
-export function useUserInitials(user: User | null): string {
+export function useUserInitials(user: AuthUser | null): string {
 	if (!user) return "U";
 
 	if (user.nickname) {
 		const initials = user.nickname
 			.split(" ")
-			.map((n) => n[0])
+			.map((n: string) => n[0])
 			.join("")
 			.toUpperCase()
 			.slice(0, 2);

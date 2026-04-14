@@ -198,9 +198,7 @@ describe("content", () => {
 			const types = createMockGeneratedTypes({ id: "number" });
 			const result = generateCollectionTypes("users", types, undefined, true);
 
-			expect(result).toContain(
-				'export const USERS_TABLE_NAME = "users";',
-			);
+			expect(result).toContain('export const USERS_TABLE_NAME = "users";');
 		});
 	});
 

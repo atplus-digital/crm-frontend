@@ -10,7 +10,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
-import { SidebarMenuButton, SidebarMenuItem } from "#/components/ui/sidebar";
+import { SidebarMenuButton } from "#/components/ui/sidebar";
 
 interface SidebarUserMenuProps {
 	userInitials: string;

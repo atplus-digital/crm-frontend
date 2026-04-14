@@ -8,7 +8,6 @@ import {
 	formatKey,
 	toCollectionBaseTypeName,
 	toCollectionTypeName,
-	toFileName,
 	toValidIdentifier,
 } from "@scripts/generate-types/src/utils/naming";
 import { getRelationCardinality, renderRelationValueType } from "./relations";
@@ -282,33 +281,6 @@ export function generateSplitFiles(
 	}
 
 	return result;
-}
-
-/**
- * Gera linha de export para um arquivo split.
- * Ex: export type { Users, UsersRelations, UsersRelationKey } from "./users";
- */
-export function generateSplitExports(
-	splitCollections: string[],
-	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
-): string {
-	const lines: string[] = [];
-
-	for (const collectionName of splitCollections.sort((a, b) =>
-		a.localeCompare(b),
-	)) {
-		const baseTypeName = toCollectionBaseTypeName(
-			collectionName,
-			baseInterfaceNaming,
-		);
-		const typeName = baseTypeName.replace(/Base$/, "");
-		const fileName = toFileName(collectionName);
-		lines.push(
-			`export type { ${typeName}, ${typeName}Relations, ${typeName}RelationKey } from "./${fileName}";`,
-		);
-	}
-
-	return lines.join("\n");
 }
 
 /**

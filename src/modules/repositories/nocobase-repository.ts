@@ -1,5 +1,11 @@
+import type {
+	CollectionMap,
+	CollectionName,
+	CollectionRelationsMap,
+} from "#/@types/generated/crm/collections";
 import { createLogger } from "#/lib/logger";
 import { nocobaseClient } from "#/modules/auth/client";
+import { TypedNocoBaseClient } from "./nocobase-client-typed";
 import type {
 	ApiRequestConfig,
 	ListParams,
@@ -11,9 +17,11 @@ const log = createLogger("repositories:nocobase");
 
 export class NocoBaseRepository {
 	private client: NocoBaseClient;
+	private typedClient: TypedNocoBaseClient;
 
 	constructor(client: NocoBaseClient = nocobaseClient) {
 		this.client = client;
+		this.typedClient = new TypedNocoBaseClient(client);
 	}
 
 	async request<T>(config: ApiRequestConfig): Promise<T> {
@@ -34,23 +42,15 @@ export class NocoBaseRepository {
 		}
 	}
 
-	async list<T>(
-		collection: string,
-		params?: ListParams,
-	): Promise<PaginatedResponse<T>> {
+	async list<T extends CollectionName>(
+		collection: T,
+		params?: ListParams & {
+			appends?: Array<keyof CollectionRelationsMap[T]>;
+		},
+	): Promise<PaginatedResponse<CollectionMap[T]>> {
 		log.info("Listing from collection", { collection, params });
 
-		const response = await this.request<PaginatedResponse<T>>({
-			url: `${collection}:list`,
-			method: "GET",
-			params: {
-				page: params?.page || 1,
-				pageSize: params?.pageSize || 20,
-				...(params?.sort && params.sort.length > 0 && { sort: params.sort }),
-				...(params?.filter && { filter: JSON.stringify(params.filter) }),
-				...(params?.appends && { appends: params.appends }),
-			},
-		});
+		const response = await this.typedClient.list(collection, params);
 
 		log.debug("List response", {
 			collection,
@@ -61,64 +61,46 @@ export class NocoBaseRepository {
 		return response;
 	}
 
-	async get<T>(collection: string, id: number): Promise<T> {
+	async get<T extends CollectionName>(
+		collection: T,
+		id: number,
+		options?: {
+			appends?: Array<keyof CollectionRelationsMap[T]>;
+			fields?: string[];
+			except?: string[];
+		},
+	): Promise<CollectionMap[T]> {
 		log.info("Getting from collection", { collection, id });
 
-		const response = await this.request<{ data: T }>({
-			url: `${collection}:get`,
-			method: "GET",
-			params: {
-				filterByTk: id,
-			},
-		});
-
-		return response.data;
+		return await this.typedClient.get(collection, id, options);
 	}
 
-	async create<T, CreateDto = Partial<T>>(
-		collection: string,
-		data: CreateDto,
-	): Promise<T> {
+	async create<T extends CollectionName>(
+		collection: T,
+		data: Partial<CollectionMap[T]>,
+	): Promise<CollectionMap[T]> {
 		log.info("Creating in collection", { collection });
 
-		const response = await this.request<{ data: T }>({
-			url: `${collection}:create`,
-			method: "POST",
-			data,
-		});
-
-		return response.data;
+		return await this.typedClient.create(collection, data);
 	}
 
-	async update<T, UpdateDto = Partial<T>>(
-		collection: string,
+	async update<T extends CollectionName>(
+		collection: T,
 		id: number,
-		data: UpdateDto,
-	): Promise<T> {
+		data: Partial<CollectionMap[T]>,
+	): Promise<CollectionMap[T]> {
 		log.info("Updating in collection", { collection, id });
 
-		const response = await this.request<{ data: T }>({
-			url: `${collection}:update`,
-			method: "POST",
-			params: {
-				filterByTk: id,
-			},
-			data,
-		});
-
-		return response.data;
+		return await this.typedClient.update(collection, id, data);
 	}
 
-	async delete(collection: string, id: number): Promise<void> {
+	async delete<T extends CollectionName>(
+		collection: T,
+		id: number,
+	): Promise<void> {
 		log.info("Deleting from collection", { collection, id });
 
-		await this.request({
-			url: `${collection}:destroy`,
-			method: "POST",
-			params: {
-				filterByTk: id,
-			},
-		});
+		await this.typedClient.delete(collection, id);
 	}
 
 	async signIn(credentials: {
@@ -148,6 +130,15 @@ export class NocoBaseRepository {
 
 	clearToken(): void {
 		this.client.auth.token = "";
+	}
+
+	async count<T extends CollectionName>(
+		collection: T,
+		params?: { filter?: Record<string, unknown> },
+	): Promise<{ count: number }> {
+		log.info("Counting in collection", { collection });
+
+		return await this.typedClient.count(collection, params);
 	}
 }
 

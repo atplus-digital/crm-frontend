@@ -172,6 +172,45 @@ src/
 - **Services**: Funções que chamam APIs externas ficam em `service.ts` dentro do módulo
 - **Guards**: Funções de proteção de rota em `guard.ts` — usam estado do store + `redirect()`
 
+### Barrel Exports — Quando NÃO usar
+
+Não utilize barrel exports (`index.ts`) em:
+
+#### 1. Componentes com baixo acoplamento externo
+- Componentes que exportam **apenas 1 item** que é importado fora do diretório
+- Componentes cujos exports são usados **apenas internamente** (detalhes de implementação)
+
+**Exemplo — EVITE:**
+```
+src/components/layout/app-sidebar/
+├── index.ts              // ❌ Apenas re-exporta AppSidebar
+├── app-sidebar.tsx       //    Único componente usado externamente
+├── sidebar-header.tsx    //    Usado apenas internamente
+└── sidebar-navigation.tsx//    Usado apenas internamente
+```
+
+**Exemplo — PERMITIDO:**
+```
+src/modules/auth/
+├── index.ts              // ✅ Exporta múltiplas APIs públicas
+├── client.ts             //    nocobaseClient
+├── guard.ts              //    requireAuth, requireGuest
+├── service.ts            //    signIn, signOut, checkAuth
+├── store.ts              //    authStore, setUser, setToken
+└── types.ts              //    AuthUser, AuthState, etc.
+```
+
+#### 2. Sub-componentes e detalhes de implementação
+- Componentes aninhados dentro de outro componente (ex: `app-sidebar/sidebar-header.tsx`)
+- Hooks utilitários usados apenas internamente (ex: `useUserInitials`)
+- Tipos auxiliares que não são parte da API pública do módulo
+
+#### 3. Regra prática
+**Pergunte:** "Este barrel export expõe uma API pública coesa ou apenas adiciona um arquivo intermediário?"
+
+- Se o diretório representa um **módulo de domínio** com múltiplas responsabilidades (auth, permissions, repositories) → **USE barrel export**
+- Se o diretório é um **componente UI** com um export principal e detalhes internos → **NÃO USE barrel export**
+
 ### Testing (Vitest)
 - **Test files**: Nomear como `*.test.ts` ou `*.test.tsx`
 - **Location**: Colocar testes junto com o código testado (`src/modules/auth/auth.test.ts`) ou em `src/_tests/modules/`

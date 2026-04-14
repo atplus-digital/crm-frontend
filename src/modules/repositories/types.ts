@@ -21,18 +21,6 @@ export interface PaginatedResponse<T> {
 	};
 }
 
-export interface IRepository<
-	T,
-	CreateDto = Partial<T>,
-	UpdateDto = Partial<T>,
-> {
-	findAll(params?: ListParams): Promise<PaginatedResponse<T>>;
-	findById(id: number): Promise<T>;
-	create(data: CreateDto): Promise<T>;
-	update(id: number, data: UpdateDto): Promise<T>;
-	delete(id: number): Promise<void>;
-}
-
 export interface ListParams {
 	page?: number;
 	pageSize?: number;

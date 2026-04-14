@@ -3,6 +3,8 @@ import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
+	SidebarMenu,
+	SidebarMenuItem,
 	SidebarRail,
 } from "#/components/ui/sidebar";
 import { authStore, signOut } from "#/modules/auth";

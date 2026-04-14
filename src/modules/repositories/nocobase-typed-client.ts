@@ -1,7 +1,7 @@
 import type { APIClient } from "@nocobase/sdk";
 import type {
-	CollectionName,
 	CollectionMap,
+	CollectionName,
 	CollectionRelationsMap,
 } from "#/@types/generated/crm/collections";
 

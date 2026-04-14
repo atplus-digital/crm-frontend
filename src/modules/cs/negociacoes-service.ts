@@ -31,7 +31,6 @@ function buildNegociacaoFilter(
 	}
 
 	if (filters.cpfCnpj) {
-		// Busca em pessoa física e jurídica
 		conditions.push({
 			$or: [
 				{ f_pessoa: { f_cpf: { $includes: filters.cpfCnpj } } },
@@ -74,42 +73,40 @@ export async function fetchNegociacoes(
 
 	const filter = buildNegociacaoFilter(filters);
 
-	const response = await nocobaseRepository.list<NegociacaoWithRelations>(
-		"t_negociacoes",
-		{
-			page,
-			pageSize,
-			appends,
-			...(sort.length > 0 && { sort }),
-			...(filter && { filter }),
-		},
-	);
+	const response = await nocobaseRepository.list("t_negociacoes", {
+		page,
+		pageSize,
+		appends: appends as unknown as Array<
+			keyof import("#/@types/generated/crm/negociacoes").NegociacoesRelations
+		>,
+		...(sort.length > 0 && { sort }),
+		...(filter && { filter }),
+	});
 
-	return response;
+	return response as unknown as PaginatedResponse<NegociacaoWithRelations>;
 }
 
 export async function fetchNegociacaoById(
 	id: number,
 ): Promise<NegociacaoWithRelations> {
-	const response = await nocobaseRepository.get<NegociacaoWithRelations>(
-		"t_negociacoes",
-		id,
-	);
+	const response = await nocobaseRepository.get("t_negociacoes", id);
 
-	return response;
+	return response as unknown as NegociacaoWithRelations;
 }
 
 export async function createNegociacao(
 	data: Partial<Negociacao>,
 ): Promise<Negociacao> {
-	return nocobaseRepository.create<Negociacao>("t_negociacoes", data);
+	const result = await nocobaseRepository.create("t_negociacoes", data);
+	return result as unknown as Negociacao;
 }
 
 export async function updateNegociacao(
 	id: number,
 	data: Partial<Negociacao>,
 ): Promise<Negociacao> {
-	return nocobaseRepository.update<Negociacao>("t_negociacoes", id, data);
+	const result = await nocobaseRepository.update("t_negociacoes", id, data);
+	return result as unknown as Negociacao;
 }
 
 export async function deleteNegociacao(id: number): Promise<void> {

@@ -7,8 +7,8 @@ import type {
 } from "./@types/script";
 import { NocoBaseClient } from "./generation/client";
 import { buildCollectionTypes } from "./generation/collection-types";
-import { generateContent, generateSplitFiles } from "./generation/content";
 import { generateCollectionsFile } from "./generation/collections-index";
+import { generateContent, generateSplitFiles } from "./generation/content";
 import { splitCollectionsByConfig } from "./utils/collection-splitter";
 import { logInfo, logVerbose } from "./utils/logger";
 import {

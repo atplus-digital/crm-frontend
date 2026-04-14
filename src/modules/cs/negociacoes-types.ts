@@ -11,15 +11,6 @@ export const NegociacaoStatus = {
 export type NegociacaoStatus =
 	(typeof NegociacaoStatus)[keyof typeof NegociacaoStatus];
 
-export const NEGOCIACAO_STATUS_LABELS: Record<NegociacaoStatus, string> = {
-	[NegociacaoStatus.Novo]: "Novo",
-	[NegociacaoStatus.Negociando]: "Negociando",
-	[NegociacaoStatus.Assinatura]: "Assinatura",
-	[NegociacaoStatus.Auditoria]: "Auditoria",
-	[NegociacaoStatus.Concluido]: "Concluído",
-	[NegociacaoStatus.Arquivado]: "Arquivado",
-};
-
 // Substatus comuns
 export const NegociacaoSubstatus = {
 	AguardandoContato: "Aguardando contato",

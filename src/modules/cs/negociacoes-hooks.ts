@@ -30,10 +30,6 @@ export function useNegociacao(id: number) {
 	return useQuery(negociacaoQueryOptions(id));
 }
 
-export function useNegociacaoById(id: number) {
-	return useNegociacao(id);
-}
-
 // Hooks para mutações (criar, atualizar, deletar)
 // Nota: Estes hooks são simplificados - em produção, considere usar useMutation do TanStack Query
 export { createNegociacao, deleteNegociacao, updateNegociacao };

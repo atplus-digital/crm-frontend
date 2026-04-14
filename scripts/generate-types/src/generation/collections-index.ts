@@ -1,7 +1,7 @@
 import type { CollectionTypesMap } from "@scripts/generate-types/src/@types/generation";
 import type { BaseInterfaceNamingConfig } from "@scripts/generate-types/src/@types/script";
-import { generateFileHeader } from "./content";
 import { toCollectionBaseTypeName, toFileName } from "../utils/naming";
+import { generateFileHeader } from "./content";
 
 /**
  * Gera o tipo union com todas as collections disponíveis.
