@@ -27,14 +27,14 @@ import { PessoasTable } from "./pessoas-table";
 const pfColumns: ColumnDef<
 	{
 		id: number | string;
-		createdAt?: string;
-		f_nome?: string;
-		f_cpf?: string;
-		f_data_nascimento?: string;
+		createdAt?: string | null;
+		f_nome?: string | null;
+		f_cpf?: string | null;
+		f_data_nascimento?: string | null;
 		f_credito?: string | null;
 		f_analise_ixc?: string | null;
-		f_sexo?: "MASCULINO" | "FEMININO" | "INDEFINIDO";
-		createdBy?: { nickname: string };
+		f_sexo?: "MASCULINO" | "FEMININO" | "INDEFINIDO" | null;
+		createdBy?: { nickname: string; email?: string | null } | null;
 	},
 	unknown
 >[] = [
@@ -127,12 +127,12 @@ const pfColumns: ColumnDef<
 const pjColumns: ColumnDef<
 	{
 		id: number | string;
-		f_razao_social?: string;
-		f_nome_fantasia?: string;
-		f_cnpj?: string;
-		f_ie?: string;
-		f_responsavel?: string;
-		f_email_responsavel?: string;
+		f_razao_social?: string | null;
+		f_nome_fantasia?: string | null;
+		f_cnpj?: string | null;
+		f_ie?: string | null;
+		f_responsavel?: string | null;
+		f_email_responsavel?: string | null;
 	},
 	unknown
 >[] = [

@@ -12,8 +12,7 @@ Repositórios de dados — camada de acesso a dados externos (NocoBase, IXCSoft)
 | File                        | Purpose                                                                 |
 | --------------------------- | ----------------------------------------------------------------------- |
 | `index.ts`                  | Barrel export — repositórios (`nocobaseRepository`, `ixcRepository`) e tipos |
-| `nocobase-repository.ts`    | `NocoBaseRepository` — wrappers de alto nível para operações NocoBase com collections tipadas |
-| `nocobase-client-typed.ts`  | `TypedNocoBaseClient` — client type-safe interno que restringe operações às collections do schema gerado |
+| `nocobase-repository.ts`    | `NocoBaseRepository` + `TypedNocoBaseClient` (interno) — wrappers de alto nível para operações NocoBase com collections tipadas |
 | `ixc-repository.ts`         | `IxcRepository` — operações IXCSoft via NocoBase com header `X-Data-Source: d_db_ixcsoft` |
 | `types.ts`                  | Tipos compartilhados: `ApiRequestConfig`, `ListParams`, `PaginatedResponse`, `NocoBaseClient` |
 <!-- AGENTS-GENERATED:END filemap -->
@@ -284,18 +283,6 @@ describe("contratos-service", () => {
 });
 ```
 
-### Mock de TypedNocoBaseClient
-```typescript
-// Para testes unitários do próprio repositório
-import { TypedNocoBaseClient } from "./nocobase-client-typed";
-import { nocobaseClient } from "#/modules/auth/client";
-
-const mockClient = new TypedNocoBaseClient(nocobaseClient);
-vi.spyOn(mockClient, "list").mockResolvedValue({
-  data: [],
-  meta: { total: 0 },
-});
-```
 <!-- AGENTS-GENERATED:END testing -->
 
 <!-- AGENTS-GENERATED:START help -->

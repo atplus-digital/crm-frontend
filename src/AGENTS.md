@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-13 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-14 -->
 
 # AGENTS.md — src
 
@@ -9,34 +9,34 @@ Frontend application built with React 19, TypeScript, Vite, Tailwind CSS v4, sha
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
-| File                                    | Purpose                                                                     |
-| --------------------------------------- | --------------------------------------------------------------------------- |
-| `src/index.tsx`                         | SPA entry point — monta React no DOM                                        |
-| `src/app.tsx`                           | Root layout: ThemeProvider + QueryClientProvider + ErrorBoundary + Outlet   |
-| `src/env.ts`                            | Validação de variáveis de ambiente (client-only) via T3Env + Zod            |
-| `src/styles.css`                        | Tailwind CSS v4 imports e configurações globais                             |
-| `src/routes/dashboard.tsx`              | Rota protegida `/` — `loader` com `requireAuth()`                           |
-| `src/routes/profile.tsx`                | Rota protegida `/profile` — tela de edição de perfil                        |
-| `src/routes/login.tsx`                  | Rota pública `/login` — `loader` com `requireGuest()`                       |
-| `src/routes/reset-password.tsx`         | Rota pública `/reset-password`                                              |
-| `src/routes/reset-password-confirm.tsx` | Rota pública `/reset-password-confirm` com `loader` validando search params |
-| `src/routes/cs.tsx`                     | Rota protegida `/cs` — Customer Success (visão geral)                       |
-| `src/routes/cs-contratos.tsx`           | Rota protegida `/cs/contratos` — lista de contratos                         |
-| `src/routes/cs-contrato-detail.tsx`     | Rota protegida `/cs/contratos/:id` — detalhe de contrato                    |
-| `src/routes/cs-negociacoes.tsx`         | Rota protegida `/cs/negociacoes` — kanban de negociações                    |
-| `src/routes/forbidden.tsx`              | Rota pública `/forbidden` — página de acesso negado                         |
-| `src/modules/auth/index.ts`             | Barrel export do módulo de autenticação (client, store, service, guard)     |
-| `src/modules/permissions/index.ts`      | Barrel export do módulo de permissões (hooks, guards, store, types)         |
-| `src/modules/repositories/index.ts`     | Barrel export dos repositórios (NocoBase e IXC)                             |
+| File                                    | Purpose                                                                            |
+| --------------------------------------- | ---------------------------------------------------------------------------------- |
+| `src/index.tsx`                         | SPA entry point — monta React no DOM                                               |
+| `src/app.tsx`                           | Root layout: ThemeProvider + QueryClientProvider + ErrorBoundary + Outlet          |
+| `src/env.ts`                            | Validação de variáveis de ambiente (client-only) via T3Env + Zod                   |
+| `src/styles.css`                        | Tailwind CSS v4 imports e configurações globais                                    |
+| `src/routes/dashboard.tsx`              | Rota protegida `/` — `loader` com `requireAuth()`                                  |
+| `src/routes/profile.tsx`                | Rota protegida `/profile` — tela de edição de perfil                               |
+| `src/routes/login.tsx`                  | Rota pública `/login` — `loader` com `requireGuest()`                              |
+| `src/routes/reset-password.tsx`         | Rota pública `/reset-password`                                                     |
+| `src/routes/reset-password-confirm.tsx` | Rota pública `/reset-password-confirm` com `loader` validando search params        |
+| `src/routes/cs.tsx`                     | Rota protegida `/cs` — Customer Success (visão geral)                              |
+| `src/routes/cs-contratos.tsx`           | Rota protegida `/cs/contratos` — lista de contratos                                |
+| `src/routes/cs-contrato-detail.tsx`     | Rota protegida `/cs/contratos/:id` — detalhe de contrato                           |
+| `src/routes/cs-negociacoes.tsx`         | Rota protegida `/cs/negociacoes` — kanban de negociações                           |
+| `src/routes/forbidden.tsx`              | Rota pública `/forbidden` — página de acesso negado                                |
+| `src/modules/auth/index.ts`             | Barrel export do módulo de autenticação (client, store, service, guard)            |
+| `src/modules/permissions/index.ts`      | Barrel export do módulo de permissões (hooks, guards, store, types)                |
+| `src/modules/repositories/index.ts`     | Barrel export dos repositórios (NocoBase e IXC)                                    |
 | `src/modules/cs/`                       | Módulo Customer Success (contratos, negociações, pessoas) — services, hooks, types |
-| `src/components/ui/`                    | Componentes shadcn/ui reutilizáveis (button, card, form, input, etc.)       |
-| `src/components/auth/`                  | Componentes de autenticação (login-form, reset-password)                    |
-| `src/components/dashboard/`             | Componentes de dashboard (user-dashboard, profile-details)                  |
-| `src/components/cs/`                    | Componentes CS (páginas, tabelas, kanban, filtros, badges)                  |
-| `src/lib/logger.ts`                    | Logger estruturado com níveis (debug/info/warn/error) e `isDev` gating      |
-| `src/lib/api-errors.ts`                | Mapeamento de códigos HTTP para mensagens de erro                           |
-| `src/integrations/`                     | Integrações com serviços externos (TanStack Query)                          |
-| `src/_tests/`                           | Infraestrutura de testes (global-setup, mock-env, test-utils)               |
+| `src/components/ui/`                    | Componentes shadcn/ui reutilizáveis (button, card, form, input, etc.)              |
+| `src/components/auth/`                  | Componentes de autenticação (login-form, reset-password)                           |
+| `src/components/dashboard/`             | Componentes de dashboard (user-dashboard, profile-details)                         |
+| `src/components/cs/`                    | Componentes CS (páginas, tabelas, kanban, filtros, badges)                         |
+| `src/lib/logger.ts`                     | Logger estruturado com níveis (debug/info/warn/error) e `isDev` gating             |
+| `src/lib/api-errors.ts`                 | Mapeamento de códigos HTTP para mensagens de erro                                  |
+| `src/integrations/`                     | Integrações com serviços externos (TanStack Query)                                 |
+| `src/_tests/`                           | Infraestrutura de testes (global-setup, mock-env, test-utils)                      |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START structure -->
@@ -46,6 +46,7 @@ Frontend application built with React 19, TypeScript, Vite, Tailwind CSS v4, sha
 src/
 ├── components/          # Componentes React reutilizáveis
 │   ├── auth/           # Componentes de autenticação (login, logout, reset)
+│   ├── cs/             # Componentes CS (páginas, tabelas, kanban, filtros)
 │   ├── dashboard/      # Componentes de dashboard e home
 │   ├── layout/         # Componentes de layout (headers, sidebars)
 │   └── ui/             # Componentes shadcn/ui (button, card, form, etc.)
@@ -53,9 +54,10 @@ src/
 ├── integrations/       # Integrações com serviços externos
 │   └── tanstack/       # TanStack Query e Store setup
 ├── lib/                # Utilitários e funções de baixo nível
+│   ├── api-errors.ts  # Mapeamento HTTP status → mensagens de erro
 │   ├── logger.ts      # Logger com níveis (debug/info/warn/error) e createLogger()
 │   └── utils.ts       # cn(), formatDateInPortuguese(), getInitials()
-├── modules/            # Módulos de domínio (autenticação, permissões, repositórios)
+├── modules/            # Módulos de domínio (autenticação, permissões, repositórios, CS)
 │   ├── auth/           # Módulo de autenticação
 │   │   ├── client.ts   # NocoBase SDK client
 │   │   ├── guard.ts    # Guards de rota (requireAuth, requireGuest)
@@ -63,31 +65,44 @@ src/
 │   │   ├── store.ts    # TanStack Store para estado global
 │   │   ├── types.ts    # Types e Zod schemas
 │   │   └── index.ts    # Barrel export
+│   ├── cs/             # Módulo Customer Success
+│   │   ├── contratos-*.ts  # Contratos (service, hooks, types)
+│   │   ├── negociacoes-*.ts# Negociações (service, hooks, types)
+│   │   └── pessoas-*.ts    # Pessoas (service, hooks, types)
 │   ├── permissions/    # Módulo de permissões (RBAC)
 │   └── repositories/   # Repositórios de dados (NocoBase, IXC)
-│       ├── nocobase-repository.ts  # NocoBaseRepository com wrappers type-safe
 │       ├── ixc-repository.ts       # IxcRepository para integração IXCSoft
+│       ├── nocobase-client-typed.ts# NocoBase client type-safe wrapper
+│       ├── nocobase-repository.ts  # NocoBaseRepository com wrappers type-safe
 │       ├── types.ts                # Tipos compartilhados
 │       └── index.ts                # Barrel export
 ├── routes/             # Route modules do React Router v7
+│   ├── cs*.tsx         # Rotas CS (contratos, negociações, pessoas)
 │   ├── dashboard.tsx   # Rota raiz (/) - dashboard
+│   ├── forbidden.tsx   # Rota de acesso negado
 │   ├── profile.tsx     # Rota de perfil (/profile)
 │   ├── login.tsx       # Rota de login (/login)
+│   ├── reset-password*.tsx # Rotas de reset de senha
 │   └── router.tsx      # Configuração principal de rotas
 ├── app.tsx             # App root (providers + Outlet)
 ├── env.ts              # Validação de environment variables
 ├── index.tsx           # Entry point (mount React)
-└── styles.css          # Tailwind CSS v4 + custom styles
+├── styles.css          # Tailwind CSS v4 + custom styles
+└── _tests/             # Infraestrutura de testes
+    ├── global-setup.ts # Setup global do Vitest
+    └── mock-env.ts     # Mocks de environment variables
 ```
 
 ### Directory Rules
 - **`components/`**: Componentes UI puros ou com estado local. Podem ser reutilizados em múltiplos lugares.
 - **`hooks/`**: Hooks customizados que são usados em mais de um componente.
 - **`modules/`**: Domínios de negócio com estado global, serviços e guards. Usam barrel export (`index.ts`).
+- **`modules/cs/`**: Módulo Customer Success — serviços, hooks e types para contratos, negociações e pessoas. **Sem barrel export** (cada domínio é independente).
 - **`repositories/`**: Camada de acesso a dados externos (NocoBase, IXC). Serviços e components usam repositórios, não clients diretamente.
 - **`routes/`**: Route modules do React Router. Cada arquivo = uma rota. Exportam `loader` + `Component`.
 - **`integrations/`**: Setup de bibliotecas externas (TanStack, etc.).
 - **`lib/`**: Funções utilitárias puras, sem dependência de React.
+- **`_tests/`**: Setup de testes (global setup, mocks, utils).
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples (follow these patterns)
@@ -100,6 +115,10 @@ src/
 | Error Boundary                  | `src/components/error-boundary.tsx`            |
 | Dashboard component structure   | `src/components/dashboard/profile-details.tsx` |
 | Formulário (shadcn + RHF + Zod) | `src/components/auth/login-form.tsx`           |
+| TanStack Query hooks            | `src/modules/cs/contratos-hooks.ts`            |
+| Service layer (IXC integration) | `src/modules/cs/contratos-service.ts`          |
+| Página CS com filtros           | `src/components/cs/contratos-page.tsx`         |
+| Kanban board                    | `src/components/cs/negociacoes-kanban.tsx`     |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->
@@ -360,6 +379,7 @@ export function useMyHook<T>(fetcher: () => Promise<T>) {
 ## Scoped AGENTS.md (MUST read when working in these directories)
 - `./components/auth/AGENTS.md` — Componentes de autenticação (login, logout, reset de senha)
 - `./components/layout/AGENTS.md` — Componentes de layout autenticado (shell e header)
+- `./components/dashboard/AGENTS.md` — Componentes de dashboard e perfil
 - `./hooks/AGENTS.md` — Hooks reutilizáveis do frontend
 - `./lib/AGENTS.md` — Funções utilitárias puras (cn, logger, formatação)
 - `./modules/auth/AGENTS.md` — Módulo de autenticação (cliente NocoBase, store, service, guards)
@@ -367,3 +387,6 @@ export function useMyHook<T>(fetcher: () => Promise<T>) {
 <!-- AGENTS-GENERATED:END scope-index -->
 
 > **Agents**: ao trabalhar em qualquer diretório listado acima, leia o AGENTS.md correspondente antes de modificar arquivos.
+
+<!-- TODO: Add AGENTS.md for ./modules/cs/ (Customer Success module) -->
+<!-- TODO: Add AGENTS.md for ./components/cs/ (CS components) -->

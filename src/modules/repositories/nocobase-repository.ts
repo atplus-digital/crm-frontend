@@ -1,3 +1,5 @@
+import type { APIClient } from "@nocobase/sdk";
+
 import type {
 	CollectionMap,
 	CollectionName,
@@ -5,7 +7,6 @@ import type {
 } from "#/@types/generated/crm/collections";
 import { createLogger } from "#/lib/logger";
 import { nocobaseClient } from "#/modules/auth/client";
-import { TypedNocoBaseClient } from "./nocobase-client-typed";
 import type {
 	ApiRequestConfig,
 	ListParams,
@@ -14,6 +15,120 @@ import type {
 } from "./types";
 
 const log = createLogger("repositories:nocobase");
+
+/**
+ * Wrapper type-safe para o APIClient do NocoBase.
+ *
+ * Restringe operações apenas às collections que existem no schema gerado,
+ * proporcionando type safety completo e auto-complete na IDE.
+ */
+class TypedNocoBaseClient {
+	constructor(private client: APIClient) {}
+
+	async list<T extends CollectionName>(
+		collection: T,
+		params?: ListParams & {
+			appends?: Array<keyof CollectionRelationsMap[T]>;
+		},
+	): Promise<PaginatedResponse<CollectionMap[T]>> {
+		const response = await this.client.request({
+			url: `${collection}:list`,
+			method: "GET",
+			params: {
+				page: params?.page || 1,
+				pageSize: params?.pageSize || 20,
+				...(params?.sort && params.sort.length > 0 && { sort: params.sort }),
+				...(params?.filter && { filter: JSON.stringify(params.filter) }),
+				...(params?.appends && { appends: params.appends }),
+			},
+		});
+
+		return response.data as PaginatedResponse<CollectionMap[T]>;
+	}
+
+	async get<T extends CollectionName>(
+		collection: T,
+		id: number,
+		options?: {
+			appends?: Array<keyof CollectionRelationsMap[T]>;
+			fields?: string[];
+			except?: string[];
+		},
+	): Promise<CollectionMap[T]> {
+		const response = await this.client.request<{ data: CollectionMap[T] }>({
+			url: `${collection}:get`,
+			method: "POST",
+			data: {
+				filterByTk: id,
+				...(options?.appends && { appends: options.appends }),
+				...(options?.fields && { fields: options.fields }),
+				...(options?.except && { except: options.except }),
+			},
+		});
+
+		return response.data.data;
+	}
+
+	async create<T extends CollectionName>(
+		collection: T,
+		data: Partial<CollectionMap[T]>,
+	): Promise<CollectionMap[T]> {
+		const response = await this.client.request<{ data: CollectionMap[T] }>({
+			url: `${collection}:create`,
+			method: "POST",
+			data,
+		});
+
+		return response.data.data;
+	}
+
+	async update<T extends CollectionName>(
+		collection: T,
+		id: number,
+		data: Partial<CollectionMap[T]>,
+	): Promise<CollectionMap[T]> {
+		const response = await this.client.request<{ data: CollectionMap[T] }>({
+			url: `${collection}:update`,
+			method: "POST",
+			params: {
+				filterByTk: id,
+			},
+			data,
+		});
+
+		return response.data.data;
+	}
+
+	async delete<T extends CollectionName>(
+		collection: T,
+		id: number,
+	): Promise<void> {
+		await this.client.request({
+			url: `${collection}:destroy`,
+			method: "POST",
+			params: {
+				filterByTk: id,
+			},
+		});
+	}
+
+	async count<T extends CollectionName>(
+		collection: T,
+		params?: {
+			filter?: Record<string, unknown>;
+		},
+	): Promise<{ count: number }> {
+		const response = await this.client.request<{ count: number }>({
+			url: `${collection}:count`,
+			method: "GET",
+			params: {
+				...(params?.filter && { filter: JSON.stringify(params.filter) }),
+			},
+		});
+
+		return response.data;
+	}
+}
 
 export class NocoBaseRepository {
 	private client: NocoBaseClient;

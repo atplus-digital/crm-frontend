@@ -11,17 +11,17 @@ export interface PessoaFisica {
 	createdAt: string;
 	updatedAt: string;
 	f_nome: string;
-	f_cpf?: string;
-	f_data_nascimento?: string;
+	f_cpf?: string | null;
+	f_data_nascimento?: string | null;
 	f_credito?: "Aprovado" | "Aprovado com Atenção" | "Negado" | null;
 	f_analise_ixc?: "Sem Pendências" | "Com Pendências" | null;
-	f_sexo?: "MASCULINO" | "FEMININO" | "INDEFINIDO";
-	f_email?: string;
-	f_telefone?: string;
+	f_sexo?: "MASCULINO" | "FEMININO" | "INDEFINIDO" | null;
+	f_email?: string | null;
+	f_telefone?: string | null;
 	createdBy?: {
 		id: number;
 		nickname: string;
-		email?: string;
+		email?: string | null;
 	};
 }
 
@@ -34,17 +34,17 @@ export interface PessoaJuridica {
 	createdAt: string;
 	updatedAt: string;
 	f_razao_social: string;
-	f_nome_fantasia?: string;
-	f_cnpj?: string;
-	f_ie?: string;
-	f_responsavel?: string;
-	f_email_responsavel?: string;
-	f_email?: string;
-	f_telefone?: string;
+	f_nome_fantasia?: string | null;
+	f_cnpj?: string | null;
+	f_ie?: string | null;
+	f_responsavel?: string | null;
+	f_email_responsavel?: string | null;
+	f_email?: string | null;
+	f_telefone?: string | null;
 	createdBy?: {
 		id: number;
 		nickname: string;
-		email?: string;
+		email?: string | null;
 	};
 }
 
