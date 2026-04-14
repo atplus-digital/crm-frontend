@@ -79,7 +79,7 @@ export async function fetchNegociacoes(
 		page,
 		pageSize,
 		appends: appends as unknown as Array<
-			keyof import("#/@types/generated/crm/negociacoes").NegociacoesRelations
+			keyof import("#/generated/nocobase/negociacoes").NegociacoesRelations
 		>,
 		...(sort.length > 0 && { sort }),
 		...(filter && { filter }),

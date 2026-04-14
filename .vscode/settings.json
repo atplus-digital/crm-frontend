@@ -9,8 +9,7 @@
 		"**/.husky/**": true,
 		"**/routeTree.gen.ts": true,
 		".husky/**": true,
-		"src/@types/generated/**": true,
-		"src/@types/generated/crm/index.ts": true
+		"src/generated/**": true
 	},
 	"[javascript]": {
 		"editor.defaultFormatter": "biomejs.biome"

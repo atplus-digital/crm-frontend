@@ -1,4 +1,4 @@
-import type { CollectionRelationsMap } from "#/@types/generated/crm/collections";
+import type { CollectionRelationsMap } from "#/generated/nocobase/collections";
 import { buildFilter, eq, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/modules/repositories";
 import type {
@@ -123,7 +123,7 @@ export async function createPessoaFisica(
 ): Promise<PessoaFisica> {
 	const result = await nocobaseRepository.create<"t_pessoas">(
 		"t_pessoas",
-		data as Partial<import("#/@types/generated/crm/index").Pessoas>,
+		data as Partial<import("#/generated/nocobase/index").Pessoas>,
 	);
 	return result as unknown as PessoaFisica;
 }
@@ -135,7 +135,7 @@ export async function updatePessoaFisica(
 	const result = await nocobaseRepository.update<"t_pessoas">(
 		"t_pessoas",
 		id,
-		data as Partial<import("#/@types/generated/crm/index").Pessoas>,
+		data as Partial<import("#/generated/nocobase/index").Pessoas>,
 	);
 	return result as unknown as PessoaFisica;
 }
@@ -149,7 +149,7 @@ export async function createPessoaJuridica(
 ): Promise<PessoaJuridica> {
 	const result = await nocobaseRepository.create<"t_empresas">(
 		"t_empresas",
-		data as Partial<import("#/@types/generated/crm/index").Empresas>,
+		data as Partial<import("#/generated/nocobase/index").Empresas>,
 	);
 	return result as unknown as PessoaJuridica;
 }
@@ -161,7 +161,7 @@ export async function updatePessoaJuridica(
 	const result = await nocobaseRepository.update<"t_empresas">(
 		"t_empresas",
 		id,
-		data as Partial<import("#/@types/generated/crm/index").Empresas>,
+		data as Partial<import("#/generated/nocobase/index").Empresas>,
 	);
 	return result as unknown as PessoaJuridica;
 }

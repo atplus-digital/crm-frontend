@@ -18,7 +18,7 @@ export default defineConfig({
 			reporter: ["text", "json-summary", "html-spa"],
 			include: ["src/**/*.ts", "scripts/**/*.ts"],
 			exclude: [
-				"src/@types/generated/**",
+				"src/generated/**",
 				"scripts/generate-types/config.ts",
 				"scripts/generate-types/src/@types/**",
 				"src/_tests/global-setup.ts",

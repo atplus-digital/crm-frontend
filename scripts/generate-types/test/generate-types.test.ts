@@ -218,12 +218,12 @@ describe("runGenerateTypes", () => {
 		});
 		const writeGeneratedFile = vi
 			.fn()
-			.mockImplementation((content, outputPath) => {
-				const isCollectionsFile = outputPath?.includes("collections.ts");
+			.mockImplementation((_content, outputPath) => {
+				const _isCollectionsFile = outputPath?.includes("collections.ts");
 				return {
 					mode: "write" as const,
 					outputPath: outputPath || "/tmp/index.ts",
-					changed: isCollectionsFile ? true : true,
+					changed: true,
 				};
 			});
 		const writeMultipleFiles = vi.fn().mockReturnValue({

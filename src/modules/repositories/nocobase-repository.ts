@@ -4,7 +4,7 @@ import type {
 	CollectionMap,
 	CollectionName,
 	CollectionRelationsMap,
-} from "#/@types/generated/crm/collections";
+} from "#/generated/nocobase/collections";
 import { createLogger } from "#/lib/logger";
 import { nocobaseClient } from "#/modules/auth/client";
 import type {

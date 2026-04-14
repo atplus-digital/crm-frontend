@@ -25,7 +25,7 @@ export function isWorkspaceLocked(): boolean {
 		// Verifica se há configurações para tornar os arquivos gerados somente leitura
 		const readonlyInclude = settings["files.readonlyInclude"];
 		if (readonlyInclude && typeof readonlyInclude === "object") {
-			const generatedPattern = "src/@types/generated/**";
+			const generatedPattern = "src/generated/**";
 			return generatedPattern in readonlyInclude;
 		}
 
@@ -69,8 +69,7 @@ function lockWorkspace(): void {
 		// Adiciona o padrão para os arquivos gerados
 		const readonlyInclude = settings["files.readonlyInclude"];
 		if (typeof readonlyInclude === "object" && readonlyInclude !== null) {
-			(readonlyInclude as Record<string, boolean>)["src/@types/generated/**"] =
-				true;
+			(readonlyInclude as Record<string, boolean>)["src/generated/**"] = true;
 
 			// Adiciona também o arquivo principal se não estiver incluído
 			const mainOutputPattern = path
