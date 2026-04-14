@@ -47,11 +47,11 @@ function log(
 	}
 }
 
-export function createLogger(module: string): Logger {
+export function createLogger(module_: string): Logger {
 	return {
-		debug: (message, ...data) => log("debug", module, message, data),
-		info: (message, ...data) => log("info", module, message, data),
-		warn: (message, ...data) => log("warn", module, message, data),
-		error: (message, ...data) => log("error", module, message, data),
+		debug: (message, ...data) => log("debug", module_, message, data),
+		info: (message, ...data) => log("info", module_, message, data),
+		warn: (message, ...data) => log("warn", module_, message, data),
+		error: (message, ...data) => log("error", module_, message, data),
 	};
 }
