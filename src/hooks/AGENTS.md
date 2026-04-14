@@ -1,17 +1,48 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-13 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-14 -->
 
 # AGENTS.md — hooks
 
 <!-- AGENTS-GENERATED:START overview -->
 ## Overview
-Reusable frontend hooks shared across routes and components.
+Reusable frontend hooks shared across routes and components. Currently implements responsive design patterns with media query hooks.
 <!-- AGENTS-GENERATED:END overview -->
+
+<!-- AGENTS-GENERATED:START state-patterns -->
+## State Patterns
+
+### Current Hook Inventory
+
+| Hook | Type | Returns | Dependencies | Used By |
+|------|------|---------|--------------|---------|
+| `useIsMobile` | Media query | `boolean` | `usehooks-ts` | Layout components, responsive UI |
+
+### State Management Integration
+
+Hooks in this folder integrate with:
+
+- **TanStack Store**: Permission and auth state (see `src/modules/permissions/hooks.ts`, `src/modules/auth/`)
+- **TanStack Query**: Server state and data fetching (see `src/integrations/tanstack/query/`)
+- **usehooks-ts**: Common patterns like media queries, debounce, localStorage
+
+### When to Add Hooks Here
+
+Add a hook to this folder when:
+- Logic is reused across 2+ components or modules
+- Hook is generic (not tied to specific business logic)
+- Hook wraps external libraries (e.g., `usehooks-ts`)
+- Hook provides cross-cutting concerns (responsive, theme, etc.)
+
+Keep hooks in modules when:
+- Tightly coupled to module state (auth, permissions)
+- Business logic specific to one domain
+- Used only within one module's components
+<!-- AGENTS-GENERATED:END state-patterns -->
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
-| File        | Purpose                             |
-| ----------- | ----------------------------------- |
-| `AGENTS.md` | Scoped instructions for this folder |
+| File | Purpose |
+|------|---------|
+| `use-mobile.ts` | `useIsMobile()` — media query hook for responsive UI (mobile breakpoint at 768px) |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START naming-conventions -->
@@ -79,9 +110,6 @@ Follow the established permission hook structure:
 export function useCan(action: string): boolean;
 
 // Check snippet permission with wildcard support
-export function useHasSnippet(snippet: string): boolean;
-
-// Convenience wrapper for edit permissions
 export function useCanEdit(action?: string): boolean;
 
 // Expose user role information
@@ -90,6 +118,24 @@ export function useRoleNames(): string[];
 // Check admin/configuration access
 export function useIsAdmin(): boolean;
 ```
+
+### Media query hooks
+Use `usehooks-ts` for responsive breakpoints:
+
+```typescript
+import { useMediaQuery } from "usehooks-ts";
+
+const MOBILE_BREAKPOINT = 768;
+
+export function useIsMobile(): boolean {
+	return useMediaQuery(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+}
+```
+
+**When to use:**
+- Responsive UI that adapts to screen size
+- Mobile-first design patterns
+- Conditional rendering based on viewport
 <!-- AGENTS-GENERATED:END usage-patterns -->
 
 <!-- AGENTS-GENERATED:START best-practices -->
@@ -103,6 +149,8 @@ export function useIsAdmin(): boolean;
 - ✅ Handle `:own` suffix variants in permission hooks
 - ✅ Support wildcard matching for snippet permissions
 - ✅ Throw descriptive errors when context is missing
+- ✅ Use `usehooks-ts` library for common patterns (media queries, debounce, localStorage)
+- ✅ Clean up effects and subscriptions on unmount
 
 ### Don't
 - ❌ Mix UI logic with business logic in hooks
@@ -111,22 +159,33 @@ export function useIsAdmin(): boolean;
 - ❌ Return `any` or `unknown` without proper type guards
 - ❌ Access stores directly — always use `useStore` for reactivity
 - ❌ Forget to handle denial prefixes (`!`) in permission checks
+- ❌ Use `useEffect` for derived state — compute during render instead
+- ❌ Create custom hooks when `usehooks-ts` already provides the pattern
 
 ### Performance
 - Use selector functions with `useStore` to subscribe to minimal state
 - Memoize expensive computations inside hooks with `useMemo`
 - Avoid creating new objects/arrays in hook return values
+- React 19 compiler handles automatic memoization — don't over-optimize prematurely
 
 ### Testing
 - Mock store state when testing store-based hooks
 - Test edge cases: empty state, denied permissions, wildcard matches
 - Verify context error messages are descriptive
+- Test responsive hooks at different viewport sizes using matchMedia mocks
+
+### React 19 Patterns
+- Leverage automatic memoization from React 19 compiler
+- Use `useActionState` for form submission state instead of manual `useState`
+- Use `useOptimistic` for optimistic UI updates when appropriate
+- Focus on pure component logic — let compiler handle optimizations
 <!-- AGENTS-GENERATED:END best-practices -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples
 | Pattern              | Reference file                                      |
 | -------------------- | --------------------------------------------------- |
+| Media query hook     | `src/hooks/use-mobile.ts`                           |
 | Auth bootstrap usage | `src/routes/__root.tsx`                             |
 | Shared query context | `src/integrations/tanstack/query/root-provider.tsx` |
 | Permission hooks     | `src/modules/permissions/hooks.ts`                  |

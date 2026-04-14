@@ -20,14 +20,23 @@ Frontend application built with React 19, TypeScript, Vite, Tailwind CSS v4, sha
 | `src/routes/login.tsx`                  | Rota pública `/login` — `loader` com `requireGuest()`                       |
 | `src/routes/reset-password.tsx`         | Rota pública `/reset-password`                                              |
 | `src/routes/reset-password-confirm.tsx` | Rota pública `/reset-password-confirm` com `loader` validando search params |
+| `src/routes/cs.tsx`                     | Rota protegida `/cs` — Customer Success (visão geral)                       |
+| `src/routes/cs-contratos.tsx`           | Rota protegida `/cs/contratos` — lista de contratos                         |
+| `src/routes/cs-contrato-detail.tsx`     | Rota protegida `/cs/contratos/:id` — detalhe de contrato                    |
+| `src/routes/cs-negociacoes.tsx`         | Rota protegida `/cs/negociacoes` — kanban de negociações                    |
+| `src/routes/forbidden.tsx`              | Rota pública `/forbidden` — página de acesso negado                         |
 | `src/modules/auth/index.ts`             | Barrel export do módulo de autenticação (client, store, service, guard)     |
 | `src/modules/permissions/index.ts`      | Barrel export do módulo de permissões (hooks, guards, store, types)         |
 | `src/modules/repositories/index.ts`     | Barrel export dos repositórios (NocoBase e IXC)                             |
+| `src/modules/cs/`                       | Módulo Customer Success (contratos, negociações, pessoas) — services, hooks, types |
 | `src/components/ui/`                    | Componentes shadcn/ui reutilizáveis (button, card, form, input, etc.)       |
-| `src/components/auth/`                  | Componentes de autenticação (login-form, logout-button, reset-password)     |
+| `src/components/auth/`                  | Componentes de autenticação (login-form, reset-password)                    |
 | `src/components/dashboard/`             | Componentes de dashboard (user-dashboard, profile-details)                  |
+| `src/components/cs/`                    | Componentes CS (páginas, tabelas, kanban, filtros, badges)                  |
 | `src/lib/logger.ts`                    | Logger estruturado com níveis (debug/info/warn/error) e `isDev` gating      |
+| `src/lib/api-errors.ts`                | Mapeamento de códigos HTTP para mensagens de erro                           |
 | `src/integrations/`                     | Integrações com serviços externos (TanStack Query)                          |
+| `src/_tests/`                           | Infraestrutura de testes (global-setup, mock-env, test-utils)               |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START structure -->

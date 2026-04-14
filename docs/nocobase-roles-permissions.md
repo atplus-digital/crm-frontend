@@ -1,6 +1,6 @@
 # NocoBase Roles, Routes e Permissões - CRM AT+
 
-**Última atualização:** 2026-04-14  
+**Última atualização:** 2026-04-14
 **Fonte:** API NocoBase (crm.atplus.cloud/api)
 
 ---
@@ -13,29 +13,29 @@ Este documento descreve todas as roles configuradas no NocoBase, suas permissõe
 
 ## 🎯 Resumo das Roles
 
-| Nome da Role | Título | Ações Padrão | Snippets | Menu Mobile | Menu Admin | Default | Descrição |
-|--------------|--------|--------------|----------|-------------|------------|---------|-----------|
-| `admin` | {{t("Admin")}} | create, view, update, destroy, export, importXlsx, templatePrint | app, pm, pm.*, ui.* | ✅ | ✅ | ❌ | Administrador do sistema |
-| `member` | {{t("Member")}} | view | !pm, !pm.*, !ui.* | ✅ | ✅ | ❌ | Membro básico |
-| `root` | {{t("Root")}} | (null) | pm, pm.*, ui.* | ❌ | ✅ | ❌ | Root (oculta) |
-| `r_0xplxuwrlo8` | CRM - Customer Success | view, export, create, update, templatePrint | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Customer Success |
-| `r_9k6j17miadb` | CRM - Contas a Receber | view | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Contas a Receber |
-| `r_aegis` | CRM - SN1 Aegis | view, update, create, destroy | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Aegis |
-| `r_aihjjoy63as` | Gerente Comercial - Elaine | view, create, export, update, templatePrint, destroy | !pm, !pm.*, !ui.* | ✅ | ❌ | ❌ | Gerente Comercial |
-| `r_c_externo` | Comercial Externo | create, view, update, templatePrint:own, export | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Comercial Externo |
-| `r_compras_admin` | Processos - admin - Compras/Viagem | create, view, update, export | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Admin Compras |
-| `r_compras_solicitante` | Processos - user - Compras/Viagem | create, view, update:own | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Solicitante Compras |
-| `r_compras_solicitante_fernanda` | Processos - Fernanda - Compras/Viagem | update:own, view, create | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Fernanda Compras |
-| `r_divulgador` | Divulgador - user | create, view, update | !pm, !pm.*, !ui.* | ❌ | ❌ | ✅ | Divulgador (default) |
-| `r_fhortec_vendas` | Fhortec Vendas | create, view, update, templatePrint, export:own | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Fhortec Vendas |
-| `r_indicador` | CRM - Indicador | (null) | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Indicador |
-| `r_jader` | Gerente de Operações - Jader | create, view, update, destroy, export, importXlsx, templatePrint | !app, !pm, !pm.*, ui.* | ❌ | ❌ | ❌ | Gerente Operações |
-| `r_marketing` | Marketing | view, create, update, export | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Marketing |
-| `r_ppd0hci8y15` | CRM - Vendedor | create, view, update, templatePrint, export | !app, !pm, !pm.*, !ui.* | ✅ | ❌ | ❌ | Vendedor |
-| `r_projetos_user` | Projetos - User | create, view, update:own, templatePrint | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Projetos User |
-| `r_rh_roberta` | RH - Roberta | create, view, update, export, templatePrint, importXlsx, destroy | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | RH |
-| `r_telecom` | CRM \| Telecom - SN2 | view | !pm, !pm.*, !ui.* | ❌ | ❌ | ❌ | Telecom SN2 |
-| `r_telecom_natan` | CRM \| Telecom - SN2 - Admin | create, view, update, export, destroy | !app, !pm, pm.*, ui.* | ❌ | ❌ | ❌ | Telecom Admin |
+| Nome da Role                     | Título                                | Ações Padrão                                                     | Snippets                | Menu Mobile | Menu Admin | Default | Descrição                |
+| -------------------------------- | ------------------------------------- | ---------------------------------------------------------------- | ----------------------- | ----------- | ---------- | ------- | ------------------------ |
+| `admin`                          | {{t("Admin")}}                        | create, view, update, destroy, export, importXlsx, templatePrint | app, pm, pm.*, ui.*     | ✅           | ✅          | ❌       | Administrador do sistema |
+| `member`                         | {{t("Member")}}                       | view                                                             | !pm, !pm.*, !ui.*       | ✅           | ✅          | ❌       | Membro básico            |
+| `root`                           | {{t("Root")}}                         | (null)                                                           | pm, pm.*, ui.*          | ❌           | ✅          | ❌       | Root (oculta)            |
+| `r_0xplxuwrlo8`                  | CRM - Customer Success                | view, export, create, update, templatePrint                      | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Customer Success         |
+| `r_9k6j17miadb`                  | CRM - Contas a Receber                | view                                                             | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Contas a Receber         |
+| `r_aegis`                        | CRM - SN1 Aegis                       | view, update, create, destroy                                    | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Aegis                    |
+| `r_aihjjoy63as`                  | Gerente Comercial - Elaine            | view, create, export, update, templatePrint, destroy             | !pm, !pm.*, !ui.*       | ✅           | ❌          | ❌       | Gerente Comercial        |
+| `r_c_externo`                    | Comercial Externo                     | create, view, update, templatePrint:own, export                  | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Comercial Externo        |
+| `r_compras_admin`                | Processos - admin - Compras/Viagem    | create, view, update, export                                     | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Admin Compras            |
+| `r_compras_solicitante`          | Processos - user - Compras/Viagem     | create, view, update:own                                         | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Solicitante Compras      |
+| `r_compras_solicitante_fernanda` | Processos - Fernanda - Compras/Viagem | update:own, view, create                                         | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Fernanda Compras         |
+| `r_divulgador`                   | Divulgador - user                     | create, view, update                                             | !pm, !pm.*, !ui.*       | ❌           | ❌          | ✅       | Divulgador (default)     |
+| `r_fhortec_vendas`               | Fhortec Vendas                        | create, view, update, templatePrint, export:own                  | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Fhortec Vendas           |
+| `r_indicador`                    | CRM - Indicador                       | (null)                                                           | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Indicador                |
+| `r_jader`                        | Gerente de Operações - Jader          | create, view, update, destroy, export, importXlsx, templatePrint | !app, !pm, !pm.*, ui.*  | ❌           | ❌          | ❌       | Gerente Operações        |
+| `r_marketing`                    | Marketing                             | view, create, update, export                                     | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Marketing                |
+| `r_ppd0hci8y15`                  | CRM - Vendedor                        | create, view, update, templatePrint, export                      | !app, !pm, !pm.*, !ui.* | ✅           | ❌          | ❌       | Vendedor                 |
+| `r_projetos_user`                | Projetos - User                       | create, view, update:own, templatePrint                          | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Projetos User            |
+| `r_rh_roberta`                   | RH - Roberta                          | create, view, update, export, templatePrint, importXlsx, destroy | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | RH                       |
+| `r_telecom`                      | CRM \| Telecom - SN2                  | view                                                             | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Telecom SN2              |
+| `r_telecom_natan`                | CRM \| Telecom - SN2 - Admin          | create, view, update, export, destroy                            | !app, !pm, pm.*, ui.*   | ❌           | ❌          | ❌       | Telecom Admin            |
 
 ---
 
@@ -125,39 +125,39 @@ Mesmas rotas mobile:
 
 ### Ações
 
-| Ação | Descrição |
-|------|-----------|
-| `create` | Criar registros |
-| `view` | Visualizar registros |
-| `update` | Atualizar registros |
-| `update:own` | Atualizar apenas registros próprios |
-| `destroy` | Excluir registros |
-| `export` | Exportar dados |
-| `export:own` | Exportar apenas dados próprios |
-| `importXlsx` | Importar planilhas Excel |
-| `templatePrint` | Imprimir templates |
+| Ação            | Descrição                           |
+| --------------- | ----------------------------------- |
+| `create`        | Criar registros                     |
+| `view`          | Visualizar registros                |
+| `update`        | Atualizar registros                 |
+| `update:own`    | Atualizar apenas registros próprios |
+| `destroy`       | Excluir registros                   |
+| `export`        | Exportar dados                      |
+| `export:own`    | Exportar apenas dados próprios      |
+| `importXlsx`    | Importar planilhas Excel            |
+| `templatePrint` | Imprimir templates                  |
 
 ### Snippets
 
-| Snippet | Descrição |
-|---------|-----------|
-| `app` | Acesso ao aplicativo principal |
-| `pm` | Plugin Manager |
-| `pm.*` | Todos os sub-itens do Plugin Manager |
-| `ui.*` | Configurações de UI |
-| `!pm` | Nega acesso ao Plugin Manager |
+| Snippet | Descrição                                   |
+| ------- | ------------------------------------------- |
+| `app`   | Acesso ao aplicativo principal              |
+| `pm`    | Plugin Manager                              |
+| `pm.*`  | Todos os sub-itens do Plugin Manager        |
+| `ui.*`  | Configurações de UI                         |
+| `!pm`   | Nega acesso ao Plugin Manager               |
 | `!pm.*` | Nega acesso aos sub-itens do Plugin Manager |
-| `!ui.*` | Nega acesso às configurações de UI |
-| `!app` | Nega acesso ao aplicativo principal |
+| `!ui.*` | Nega acesso às configurações de UI          |
+| `!app`  | Nega acesso ao aplicativo principal         |
 
 ### Flags de Menu
 
-| Flag | Descrição |
-|------|-----------|
-| `allowNewMenu` | Permite criar novos itens de menu desktop |
-| `allowNewMobileMenu` | Permite criar novos itens de menu mobile |
-| `allowConfigure` | Permite configurar ACL/permissões (admin-like) |
-| `default` | Role atribuída por padrão a novos usuários |
+| Flag                 | Descrição                                      |
+| -------------------- | ---------------------------------------------- |
+| `allowNewMenu`       | Permite criar novos itens de menu desktop      |
+| `allowNewMobileMenu` | Permite criar novos itens de menu mobile       |
+| `allowConfigure`     | Permite configurar ACL/permissões (admin-like) |
+| `default`            | Role atribuída por padrão a novos usuários     |
 
 ---
 
@@ -238,14 +238,14 @@ curl -X POST "https://crm.atplus.cloud/api/roles:get?filterByTk=admin&appends=me
 
 ### Endpoints relacionados
 
-| Endpoint | Método | Descrição |
-|----------|--------|-----------|
-| `roles:list` | GET | Lista todas as roles |
-| `roles:get` | POST | Obtém detalhes de uma role (suporta appends) |
-| `roles/resources` | GET | Resources/collections de uma role (requer autenticação) |
-| `roles/desktop:list` | GET | Desktop routes (retorna null) |
-| `roles/mobileRoutes:list` | GET | Mobile routes (retorna null) |
-| `roles/menuUiSchemas:list` | GET | Menu UI schemas (retorna null) |
+| Endpoint                   | Método | Descrição                                               |
+| -------------------------- | ------ | ------------------------------------------------------- |
+| `roles:list`               | GET    | Lista todas as roles                                    |
+| `roles:get`                | POST   | Obtém detalhes de uma role (suporta appends)            |
+| `roles/resources`          | GET    | Resources/collections de uma role (requer autenticação) |
+| `roles/desktop:list`       | GET    | Desktop routes (retorna null)                           |
+| `roles/mobileRoutes:list`  | GET    | Mobile routes (retorna null)                            |
+| `roles/menuUiSchemas:list` | GET    | Menu UI schemas (retorna null)                          |
 
 ---
 
@@ -257,13 +257,13 @@ curl -X POST "https://crm.atplus.cloud/api/roles:get?filterByTk=admin&appends=me
 
 2. **Snippets de Negação**: A maioria das roles usa `!pm`, `!pm.*`, `!ui.*` para negar acesso ao Plugin Manager e configurações UI
 
-3. **Vendedor (`r_ppd0hci8y15`)**: 
+3. **Vendedor (`r_ppd0hci8y15`)**:
    - Tem `!app` nos snippets (nega acesso ao app principal)
    - Mas ainda assim tem menu limitado: Negociações, Comercial, Pessoas
 
 4. **Roles sem menu**: Comercial Externo e Telecom não têm nenhum menu configurado - acesso provavelmente apenas via links diretos ou API
 
-5. **Estrutura Hierárquica**: 
+5. **Estrutura Hierárquica**:
    - **Desktop**: Menu.SubMenu (pais) → Menu.Item (filhos)
    - **Mobile**: page (topo) → tabs (sub-itens)
 
@@ -287,14 +287,14 @@ import { useHasSnippet, useCan } from '#/modules/permissions';
 function MyComponent() {
   const canViewReports = useHasSnippet('ui.reports');
   const canEdit = useCan('update');
-  
+
   if (!canViewReports) return null;
-  
+
   return <ReportsDashboard canEdit={canEdit} />;
 }
 ```
 
 ---
 
-**Documento gerado automaticamente a partir da API do NocoBase.**  
+**Documento gerado automaticamente a partir da API do NocoBase.**
 Para atualizar, execute as chamadas API listadas acima e atualize este arquivo.

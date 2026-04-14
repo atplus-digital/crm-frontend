@@ -1,6 +1,6 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-04-13 | Last verified: 2026-04-13 -->
+<!-- Last updated: 2026-04-14 | Last verified: 2026-04-14 -->
 
 # AGENTS.md — CRM AT+
 
@@ -44,8 +44,9 @@ docs/            → documentation
 <!-- AGENTS-GENERATED:START golden-samples -->
 | For | Reference | Key patterns |
 |-----|-----------|--------------|
-| Route (protected) | `src/routes/index.tsx` | `requireAuth` in `loader`, `Component` export |
+| Route (protected) | `src/routes/dashboard.tsx` | `requireAuth` in `loader`, `Component` export |
 | Route (public auth) | `src/routes/login.tsx` | `requireGuest` in `loader`, `Component` export |
+| Router config | `src/routes/router.tsx` | `createBrowserRouter`, lazy route imports, nested routes |
 | Auth module | `src/modules/auth/index.ts` | barrel export pattern |
 | Error handling | `src/components/error-boundary.tsx` | React Error Boundary pattern with user-friendly UI |
 | Component structure | `src/components/dashboard/profile-details.tsx` | Separate business logic from presentation in dashboard |
@@ -55,10 +56,12 @@ docs/            → documentation
 <!-- AGENTS-GENERATED:START heuristics -->
 | When | Do |
 |------|-----|
-| Adding env var | Add to `.env.example` first |
+| Adding env var | Add to `.env.example` first, then validate in `src/env.ts` |
 | Merging PRs | Squash and merge |
 | Adding dependency | Ask first - we minimize deps |
-| Unsure about pattern | Check Golden Samples above |
+| Unsure about pattern | Check Golden Samples above or `src/AGENTS.md` |
+| File naming | Use `kebab-case.tsx` for components/routes |
+| Import paths | Prefer `#/` alias over relative paths |
 <!-- AGENTS-GENERATED:END heuristics -->
 
 ## Repository Settings

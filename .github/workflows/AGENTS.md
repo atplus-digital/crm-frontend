@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-13 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-14 -->
 
 # AGENTS.md — workflows
 
@@ -195,6 +195,15 @@ jobs:
         run: ./deploy.sh
 ```
 <!-- AGENTS-GENERATED:END patterns -->
+
+<!-- AGENTS-GENERATED:START issues -->
+## Common issues
+| Issue                  | Status    | Notes                                                                                                                                 |
+| ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Action version pinning | ⚠️ Warning | Current workflow uses tags (`@v6`, `@v5`) instead of full SHA pins. Security section recommends SHA pinning for production workflows. |
+| No PR validation       | ℹ️ Info    | Workflow only runs on `main` push, not on pull requests. Consider adding `pull_request` trigger for early feedback.                   |
+| No matrix testing      | ℹ️ Info    | Single Node version (24) tested. Add matrix strategy if multi-version support needed.                                                 |
+<!-- AGENTS-GENERATED:END issues -->
 
 <!-- AGENTS-GENERATED:START security -->
 ## Security & safety

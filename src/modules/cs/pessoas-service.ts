@@ -123,7 +123,10 @@ export async function fetchPessoaJuridicaById(
 export async function createPessoaFisica(
 	data: Partial<PessoaFisica>,
 ): Promise<PessoaFisica> {
-	const result = await nocobaseRepository.create("t_pessoas", data as any);
+	const result = await nocobaseRepository.create<"t_pessoas">(
+		"t_pessoas",
+		data,
+	);
 	return result as unknown as PessoaFisica;
 }
 
@@ -131,7 +134,11 @@ export async function updatePessoaFisica(
 	id: number,
 	data: Partial<PessoaFisica>,
 ): Promise<PessoaFisica> {
-	const result = await nocobaseRepository.update("t_pessoas", id, data as any);
+	const result = await nocobaseRepository.update<"t_pessoas">(
+		"t_pessoas",
+		id,
+		data,
+	);
 	return result as unknown as PessoaFisica;
 }
 
@@ -142,7 +149,10 @@ export async function deletePessoaFisica(id: number): Promise<void> {
 export async function createPessoaJuridica(
 	data: Partial<PessoaJuridica>,
 ): Promise<PessoaJuridica> {
-	const result = await nocobaseRepository.create("t_empresas", data as any);
+	const result = await nocobaseRepository.create<"t_empresas">(
+		"t_empresas",
+		data,
+	);
 	return result as unknown as PessoaJuridica;
 }
 
@@ -150,7 +160,11 @@ export async function updatePessoaJuridica(
 	id: number,
 	data: Partial<PessoaJuridica>,
 ): Promise<PessoaJuridica> {
-	const result = await nocobaseRepository.update("t_empresas", id, data as any);
+	const result = await nocobaseRepository.update<"t_empresas">(
+		"t_empresas",
+		id,
+		data,
+	);
 	return result as unknown as PessoaJuridica;
 }
 

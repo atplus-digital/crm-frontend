@@ -4,14 +4,14 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
-import type { Negociacoes, NegociacoesRelations } from "./negociacoes";
-import type { Users, UsersRelations } from "./users";
 import type {
-	Pessoas,
-	PessoasRelations,
 	Empresas,
 	EmpresasRelations,
+	Pessoas,
+	PessoasRelations,
 } from "./index";
+import type { Negociacoes, NegociacoesRelations } from "./negociacoes";
+import type { Users, UsersRelations } from "./users";
 
 // Tipo union com todas as collections disponíveis
 export type CollectionName =
