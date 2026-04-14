@@ -10,6 +10,8 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
+import { useNegociacoes } from "#/modules/cs/negociacoes-hooks";
+import type { NegociacaoFilters } from "#/modules/cs/negociacoes-types";
 import { NegociacoesKanban } from "./negociacoes-kanban";
 import { NegociacoesList } from "./negociacoes-list";
 
@@ -335,6 +337,19 @@ function ListaFilters() {
 
 export function NegociacoesPage() {
 	const [activeTab, setActiveTab] = useState<string>("kanban");
+	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(20);
+	const [filters, setFilters] = useState<NegociacaoFilters>({});
+
+	const { data, isLoading, error } = useNegociacoes({
+		page,
+		pageSize,
+		filters,
+		appends: ["f_pessoa", "f_pessoa_juridica", "f_vendedor"],
+	});
+
+	const negociacoes = data?.data || [];
+	const total = data?.meta?.total || 0;
 
 	return (
 		<div className="flex flex-1 flex-col overflow-auto">
@@ -346,7 +361,8 @@ export function NegociacoesPage() {
 								Renegociações
 							</h1>
 							<p className="text-sm text-muted-foreground">
-								Gerencie suas negociações de renegociação
+								Gerencie suas negociações de renegociação{" "}
+								{total > 0 && `(${total} itens)`}
 							</p>
 						</div>
 
@@ -360,14 +376,37 @@ export function NegociacoesPage() {
 								<TabsContent value="kanban" className="mt-0">
 									<div className="space-y-4">
 										<KanbanFilters />
-										<NegociacoesKanban />
+										{error && (
+											<div className="rounded-md bg-destructive/10 p-4 text-destructive">
+												Erro ao carregar negociações:{" "}
+												{error instanceof Error
+													? error.message
+													: "Erro desconhecido"}
+											</div>
+										)}
+										<NegociacoesKanban
+											negociacoes={negociacoes}
+											isLoading={isLoading}
+										/>
 									</div>
 								</TabsContent>
 
 								<TabsContent value="lista" className="mt-0">
 									<div className="space-y-4">
 										<ListaFilters />
-										<NegociacoesList />
+										{error && (
+											<div className="rounded-md bg-destructive/10 p-4 text-destructive">
+												Erro ao carregar negociações:{" "}
+												{error instanceof Error
+													? error.message
+													: "Erro desconhecido"}
+											</div>
+										)}
+										<NegociacoesList
+											negociacoes={negociacoes}
+											isLoading={isLoading}
+											total={total}
+										/>
 									</div>
 								</TabsContent>
 							</div>
