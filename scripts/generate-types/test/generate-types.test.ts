@@ -141,12 +141,16 @@ describe("runGenerateTypes", () => {
 
 		const previewGeneratedFile = vi
 			.fn()
-			.mockImplementation((content: string) => ({
-				mode: "dry-run" as const,
-				outputPath: "/tmp/index.ts",
-				changed: true,
-				diff: content,
-			}));
+			.mockImplementation((content: string, outputPath?: string) => {
+				const isCollectionsFile = outputPath?.includes("collections.ts");
+				return {
+					mode: "dry-run" as const,
+					outputPath: outputPath || "/tmp/index.ts",
+					changed: true,
+					diff: content,
+					...(isCollectionsFile ? { isCollectionsFile: true } : {}),
+				};
+			});
 		const previewMultipleFiles = vi
 			.fn()
 			.mockImplementation((files: Map<string, string>) => ({
@@ -191,9 +195,10 @@ describe("runGenerateTypes", () => {
 
 		expect(result).toMatchObject({
 			mode: "dry-run",
-			totalFiles: 3,
-			totalChanged: 3,
+			totalFiles: 4,
+			totalChanged: 4,
 		});
+		expect(previewGeneratedFile).toHaveBeenCalledTimes(2);
 		expect(previewGeneratedFile.mock.calls[0][0]).toContain(
 			'import type { UsersBase } from "./users";',
 		);
@@ -211,11 +216,16 @@ describe("runGenerateTypes", () => {
 			departments: { scalars: { id: "number" } },
 			users: { scalars: { id: "number" } },
 		});
-		const writeGeneratedFile = vi.fn().mockReturnValue({
-			mode: "write" as const,
-			outputPath: "/tmp/index.ts",
-			changed: true,
-		});
+		const writeGeneratedFile = vi
+			.fn()
+			.mockImplementation((content, outputPath) => {
+				const isCollectionsFile = outputPath?.includes("collections.ts");
+				return {
+					mode: "write" as const,
+					outputPath: outputPath || "/tmp/index.ts",
+					changed: isCollectionsFile ? true : true,
+				};
+			});
 		const writeMultipleFiles = vi.fn().mockReturnValue({
 			mode: "write" as const,
 			files: [{ outputPath: "/tmp/generated/users.ts", changed: false }],
@@ -251,11 +261,12 @@ describe("runGenerateTypes", () => {
 		expect(result).toEqual({
 			mode: "write",
 			files: [
+				{ outputPath: "/tmp/generated/collections.ts", changed: true },
 				{ outputPath: "/tmp/index.ts", changed: true },
 				{ outputPath: "/tmp/generated/users.ts", changed: false },
 			],
-			totalFiles: 2,
-			totalChanged: 1,
+			totalFiles: 3,
+			totalChanged: 2,
 		});
 	});
 
@@ -350,9 +361,9 @@ describe("runGenerateTypes", () => {
 
 		const previewGeneratedFile = vi
 			.fn()
-			.mockImplementation((content: string) => ({
+			.mockImplementation((content: string, outputPath?: string) => ({
 				mode: "dry-run" as const,
-				outputPath: "/tmp/index.ts",
+				outputPath: outputPath || "/tmp/index.ts",
 				changed: true,
 				diff: content,
 			}));
@@ -394,10 +405,10 @@ describe("runGenerateTypes", () => {
 
 		expect(result).toMatchObject({
 			mode: "dry-run",
-			totalFiles: 2,
-			totalChanged: 2,
+			totalFiles: 3,
+			totalChanged: 3,
 		});
-		expect(previewGeneratedFile).toHaveBeenCalledTimes(1);
+		expect(previewGeneratedFile).toHaveBeenCalledTimes(2);
 		expect(previewMultipleFiles).toHaveBeenCalledTimes(1);
 	});
 });

@@ -4,14 +4,17 @@ import { Outlet } from "react-router";
 import { ErrorBoundary } from "./components/error-boundary";
 import { ThemeProvider } from "./components/theme-provider";
 import { Toaster } from "./components/ui/sonner";
-import { isDev } from "./env";
+import { env, isDev } from "./env";
 import { getQueryContext } from "./integrations/tanstack/query/root-provider";
 
 const { queryClient } = getQueryContext();
 
 export function App() {
 	return (
-		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+		<ThemeProvider
+			defaultTheme="dark"
+			storageKey={`${env.VITE_LOCAL_STORAGE_BASE_KEY}-ui-theme`}
+		>
 			<QueryClientProvider client={queryClient}>
 				<ErrorBoundary>
 					<Outlet />
