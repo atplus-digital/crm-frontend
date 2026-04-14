@@ -3,15 +3,12 @@ import { config } from "@scripts/generate-types/config";
 import type { CollectionTypesMap } from "./@types/generation";
 import type {
 	BaseInterfaceNamingConfig,
-	DryRunDiffResult,
 	GenerateTypesResult,
-	MultiFileDryRunResult,
-	MultiFilePersistResult,
-	PersistResult,
 } from "./@types/script";
 import { NocoBaseClient } from "./generation/client";
 import { buildCollectionTypes } from "./generation/collection-types";
 import { generateContent, generateSplitFiles } from "./generation/content";
+import { generateCollectionsFile } from "./generation/collections-index";
 import { splitCollectionsByConfig } from "./utils/collection-splitter";
 import { logInfo, logVerbose } from "./utils/logger";
 import {
@@ -30,40 +27,6 @@ import {
 } from "./utils/writer";
 
 const IDENTIFIER_REFERENCE_REGEX = /[$A-Z_a-z][$0-9A-Z_a-z]*/g;
-
-function combineWriteResults(
-	mainResult: PersistResult,
-	splitResult: MultiFilePersistResult,
-): MultiFilePersistResult {
-	return {
-		mode: "write",
-		files: [
-			{ outputPath: mainResult.outputPath, changed: mainResult.changed },
-			...splitResult.files,
-		],
-		totalFiles: splitResult.totalFiles + 1,
-		totalChanged: splitResult.totalChanged + (mainResult.changed ? 1 : 0),
-	};
-}
-
-function combineDryRunResults(
-	mainResult: DryRunDiffResult,
-	splitResult: MultiFileDryRunResult,
-): MultiFileDryRunResult {
-	return {
-		mode: "dry-run",
-		files: [
-			{
-				outputPath: mainResult.outputPath,
-				changed: mainResult.changed,
-				diff: mainResult.diff,
-			},
-			...splitResult.files,
-		],
-		totalFiles: splitResult.totalFiles + 1,
-		totalChanged: splitResult.totalChanged + (mainResult.changed ? 1 : 0),
-	};
-}
 
 function buildCollectionBaseTypeIndex(
 	collectionTypes: CollectionTypesMap,
@@ -321,16 +284,65 @@ export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 		logInfo(`🗑️  Removidos ${removed.length} arquivo(s) não utilizado(s).`);
 	}
 
+	const collectionsContent = generateCollectionsFile(
+		Object.fromEntries(splitCollections) as unknown as CollectionTypesMap,
+		baseInterfaceNaming,
+		[...splitCollections.keys()],
+	);
+
 	if (config.dryRun) {
 		const mainResult = previewGeneratedFile(mainContent);
 		const splitResult = previewMultipleFiles(
 			splitFilesContent,
 			config.outputDir,
 		);
-		return combineDryRunResults(mainResult, splitResult);
+		const collectionsResult = previewGeneratedFile(
+			collectionsContent,
+			path.join(config.outputDir, "collections.ts"),
+		);
+		return {
+			mode: "dry-run" as const,
+			files: [
+				{
+					outputPath: collectionsResult.outputPath,
+					changed: collectionsResult.changed,
+					diff: collectionsResult.diff,
+				},
+				{
+					outputPath: mainResult.outputPath,
+					changed: mainResult.changed,
+					diff: mainResult.diff,
+				},
+				...splitResult.files,
+			],
+			totalFiles: splitResult.totalFiles + 2,
+			totalChanged:
+				splitResult.totalChanged +
+				(collectionsResult.changed ? 1 : 0) +
+				(mainResult.changed ? 1 : 0),
+		};
 	}
 
+	const collectionsResult = writeGeneratedFile(
+		collectionsContent,
+		path.join(config.outputDir, "collections.ts"),
+	);
 	const mainResult = writeGeneratedFile(mainContent);
 	const splitResult = writeMultipleFiles(splitFilesContent, config.outputDir);
-	return combineWriteResults(mainResult, splitResult);
+	return {
+		mode: "write" as const,
+		files: [
+			{
+				outputPath: collectionsResult.outputPath,
+				changed: collectionsResult.changed,
+			},
+			{ outputPath: mainResult.outputPath, changed: mainResult.changed },
+			...splitResult.files,
+		],
+		totalFiles: splitResult.totalFiles + 2,
+		totalChanged:
+			splitResult.totalChanged +
+			(collectionsResult.changed ? 1 : 0) +
+			(mainResult.changed ? 1 : 0),
+	};
 }

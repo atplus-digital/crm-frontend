@@ -8,6 +8,8 @@ import {
 	formatKey,
 	toCollectionBaseTypeName,
 	toCollectionTypeName,
+	toFileName,
+	toValidIdentifier,
 } from "@scripts/generate-types/src/utils/naming";
 import { getRelationCardinality, renderRelationValueType } from "./relations";
 
@@ -94,6 +96,16 @@ function _renderRelationFieldType(
 		getRelationCardinality(relation.type),
 		baseInterfaceNaming,
 	);
+}
+
+function _toCollectionSourceConstName(collectionName: string): string {
+	const normalized = collectionName
+		.trim()
+		.toUpperCase()
+		.replace(/[^A-Z0-9_$]+/g, "_")
+		.replace(/^_+|_+$/g, "");
+	const identifier = toValidIdentifier(normalized || "UNKNOWN");
+	return `${identifier}_TABLE_NAME`;
 }
 
 /**
@@ -186,8 +198,16 @@ export function generateCollectionTypes(
 	collectionName: string,
 	types: GeneratedTypes,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
+	includeSourceTableConst = false,
 ): string {
 	const lines: string[] = [];
+
+	if (includeSourceTableConst) {
+		lines.push(
+			`export const ${_toCollectionSourceConstName(collectionName)} = "${collectionName}";`,
+		);
+		lines.push("");
+	}
 
 	lines.push(
 		generateCollectionBaseInterface(collectionName, types, baseInterfaceNaming),
@@ -214,6 +234,7 @@ export function generateContentForCollections(
 	collections: CollectionTypesMap,
 	includeHeader = true,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
+	includeSourceTableConst = false,
 ): string {
 	const lines: string[] = [];
 
@@ -227,7 +248,12 @@ export function generateContentForCollections(
 
 	for (const [collectionName, types] of sortedCollections) {
 		lines.push(
-			generateCollectionTypes(collectionName, types, baseInterfaceNaming),
+			generateCollectionTypes(
+				collectionName,
+				types,
+				baseInterfaceNaming,
+				includeSourceTableConst,
+			),
 		);
 		lines.push("");
 	}
@@ -250,11 +276,39 @@ export function generateSplitFiles(
 			collections,
 			true,
 			baseInterfaceNaming,
+			true,
 		);
 		result.set(fileName, content);
 	}
 
 	return result;
+}
+
+/**
+ * Gera linha de export para um arquivo split.
+ * Ex: export type { Users, UsersRelations, UsersRelationKey } from "./users";
+ */
+export function generateSplitExports(
+	splitCollections: string[],
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
+): string {
+	const lines: string[] = [];
+
+	for (const collectionName of splitCollections.sort((a, b) =>
+		a.localeCompare(b),
+	)) {
+		const baseTypeName = toCollectionBaseTypeName(
+			collectionName,
+			baseInterfaceNaming,
+		);
+		const typeName = baseTypeName.replace(/Base$/, "");
+		const fileName = toFileName(collectionName);
+		lines.push(
+			`export type { ${typeName}, ${typeName}Relations, ${typeName}RelationKey } from "./${fileName}";`,
+		);
+	}
+
+	return lines.join("\n");
 }
 
 /**

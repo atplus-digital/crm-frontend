@@ -193,6 +193,15 @@ describe("content", () => {
 			expect(result).toContain("export interface ContactRelations {");
 			expect(result).toContain("export type ContactRelationKey =");
 		});
+
+		it("deve incluir const com nome da tabela quando configurado", () => {
+			const types = createMockGeneratedTypes({ id: "number" });
+			const result = generateCollectionTypes("users", types, undefined, true);
+
+			expect(result).toContain(
+				'export const USERS_TABLE_NAME = "users";',
+			);
+		});
 	});
 
 	describe("generateContentForCollections", () => {
@@ -274,6 +283,9 @@ describe("content", () => {
 
 			const usersContent = result.get("users");
 			expect(usersContent).toContain("Arquivo gerado automaticamente");
+			expect(usersContent).toContain(
+				'export const USERS_TABLE_NAME = "users";',
+			);
 			expect(usersContent).toContain("export interface UsersBase {");
 
 			const companiesContent = result.get("companies");

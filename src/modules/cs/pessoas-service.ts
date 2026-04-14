@@ -68,7 +68,7 @@ export async function fetchPessoasFisicas(
 	const filter = buildPessoaFisicaFilter(filters);
 
 	const response = await nocobaseRepository.list<PessoaFisica>(
-		"t_pessoas_fisicas",
+		"t_pessoas",
 		{
 			page,
 			pageSize,
@@ -83,7 +83,7 @@ export async function fetchPessoasFisicas(
 
 export async function fetchPessoaFisicaById(id: number): Promise<PessoaFisica> {
 	const response = await nocobaseRepository.get<PessoaFisica>(
-		"t_pessoas_fisicas",
+		"t_pessoas",
 		id,
 	);
 
@@ -104,7 +104,7 @@ export async function fetchPessoasJuridicas(
 	const filter = buildPessoaJuridicaFilter(filters);
 
 	const response = await nocobaseRepository.list<PessoaJuridica>(
-		"t_pessoas_juridicas",
+		"t_empresas",
 		{
 			page,
 			pageSize,
@@ -121,7 +121,7 @@ export async function fetchPessoaJuridicaById(
 	id: number,
 ): Promise<PessoaJuridica> {
 	const response = await nocobaseRepository.get<PessoaJuridica>(
-		"t_pessoas_juridicas",
+		"t_empresas",
 		id,
 	);
 
@@ -131,24 +131,24 @@ export async function fetchPessoaJuridicaById(
 export async function createPessoaFisica(
 	data: Partial<PessoaFisica>,
 ): Promise<PessoaFisica> {
-	return nocobaseRepository.create<PessoaFisica>("t_pessoas_fisicas", data);
+	return nocobaseRepository.create<PessoaFisica>("t_pessoas", data);
 }
 
 export async function updatePessoaFisica(
 	id: number,
 	data: Partial<PessoaFisica>,
 ): Promise<PessoaFisica> {
-	return nocobaseRepository.update<PessoaFisica>("t_pessoas_fisicas", id, data);
+	return nocobaseRepository.update<PessoaFisica>("t_pessoas", id, data);
 }
 
 export async function deletePessoaFisica(id: number): Promise<void> {
-	await nocobaseRepository.delete("t_pessoas_fisicas", id);
+	await nocobaseRepository.delete("t_pessoas", id);
 }
 
 export async function createPessoaJuridica(
 	data: Partial<PessoaJuridica>,
 ): Promise<PessoaJuridica> {
-	return nocobaseRepository.create<PessoaJuridica>("t_pessoas_juridicas", data);
+	return nocobaseRepository.create<PessoaJuridica>("t_empresas", data);
 }
 
 export async function updatePessoaJuridica(
@@ -156,12 +156,12 @@ export async function updatePessoaJuridica(
 	data: Partial<PessoaJuridica>,
 ): Promise<PessoaJuridica> {
 	return nocobaseRepository.update<PessoaJuridica>(
-		"t_pessoas_juridicas",
+		"t_empresas",
 		id,
 		data,
 	);
 }
 
 export async function deletePessoaJuridica(id: number): Promise<void> {
-	await nocobaseRepository.delete("t_pessoas_juridicas", id);
+	await nocobaseRepository.delete("t_empresas", id);
 }

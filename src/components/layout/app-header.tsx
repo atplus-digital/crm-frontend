@@ -2,9 +2,9 @@ import { SidebarSeparator, SidebarTrigger } from "#/components/ui/sidebar";
 
 export function AppHeader() {
 	return (
-		<header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-			<SidebarTrigger className="-ml-1" />
-			<SidebarSeparator orientation="vertical" className="mr-2 h-4" />
+		<header className="flex flex-row h-12 shrink-0 items-center border-b px-2">
+			<SidebarTrigger size="icon-lg" />
+			<SidebarSeparator orientation="vertical" className="h-full" />
 		</header>
 	);
 }

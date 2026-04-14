@@ -3,7 +3,7 @@ import { parseConfig } from "./src/utils/config";
 
 const scriptConfig: Partial<ScriptConfig> = {
 	outputDir: "src/@types/generated/crm",
-	splitCollections: ["users"],
+	splitCollections: ["users", "t_negociacoes"],
 	verbose: false,
 	lockWorkspaceFolder: true,
 	baseInterfaceNaming: {

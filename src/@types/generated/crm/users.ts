@@ -5,6 +5,8 @@
  */
 import type { Departments, Roles } from "./index";
 
+export const USERS_TABLE_NAME = "users";
+
 export interface Users {
 	id: number;
 	sort: number;
