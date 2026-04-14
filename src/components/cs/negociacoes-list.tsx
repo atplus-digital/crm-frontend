@@ -11,6 +11,7 @@ import { Button } from "#/components/ui/button";
 import { DataTable } from "#/components/ui/data-table";
 import { DataTablePagination } from "#/components/ui/data-table-pagination";
 import { cn } from "#/lib/utils";
+import type { NegociacaoWithRelations } from "#/modules/cs/negociacoes-types";
 
 const statusBadgeStyles: Record<string, string> = {
 	Novo: "bg-blue-500/10 text-blue-600 border-blue-500/20 hover:bg-blue-500/20",
@@ -20,90 +21,13 @@ const statusBadgeStyles: Record<string, string> = {
 		"bg-purple-500/10 text-purple-600 border-purple-500/20 hover:bg-purple-500/20",
 	Auditoria:
 		"bg-orange-500/10 text-orange-600 border-orange-500/20 hover:bg-orange-500/20",
-	Concluído:
+	Concluido:
 		"bg-green-500/10 text-green-600 border-green-500/20 hover:bg-green-500/20",
 	Arquivado:
 		"bg-gray-500/10 text-gray-600 border-gray-500/20 hover:bg-gray-500/20",
 };
 
-// Mock data types
-interface NegociacaoItem {
-	id: number;
-	createdAt: string;
-	updatedAt: string;
-	f_titulo?: string;
-	f_valor_mensal?: number;
-	f_status: string;
-	f_substatus?: string;
-	f_vendedor?: {
-		nickname: string;
-	};
-	f_pessoa?: {
-		f_nome: string;
-	};
-	f_negociacao_pessoa_juridica?: {
-		f_razao_social: string;
-	};
-}
-
-// Placeholder data
-const mockData: NegociacaoItem[] = [
-	{
-		id: 1,
-		createdAt: "2024-01-15T10:30:00Z",
-		updatedAt: "2024-01-15T14:20:00Z",
-		f_titulo: "Negociação João Silva",
-		f_valor_mensal: 2500.0,
-		f_status: "Novo",
-		f_substatus: "Aguardando contato",
-		f_vendedor: { nickname: "vendedor1" },
-		f_pessoa: { f_nome: "João Silva" },
-	},
-	{
-		id: 2,
-		createdAt: "2024-01-14T09:00:00Z",
-		updatedAt: "2024-01-15T11:00:00Z",
-		f_titulo: "Negociação Empresa ABC",
-		f_valor_mensal: 15000.5,
-		f_status: "Negociando",
-		f_substatus: "Em análise de documentação",
-		f_vendedor: { nickname: "vendedor2" },
-		f_negociacao_pessoa_juridica: { f_razao_social: "ABC Ltda" },
-	},
-	{
-		id: 3,
-		createdAt: "2024-01-13T14:30:00Z",
-		updatedAt: "2024-01-14T16:45:00Z",
-		f_titulo: "Negociação Maria Santos",
-		f_valor_mensal: 3200.0,
-		f_status: "Assinatura",
-		f_substatus: "Aguardando assinatura digital",
-		f_vendedor: { nickname: "vendedor1" },
-		f_pessoa: { f_nome: "Maria Santos" },
-	},
-	{
-		id: 4,
-		createdAt: "2024-01-12T08:00:00Z",
-		updatedAt: "2024-01-13T10:30:00Z",
-		f_titulo: "Negociação XYZ Corp",
-		f_valor_mensal: 50000.0,
-		f_status: "Auditoria",
-		f_substatus: "Verificação cadastral em andamento",
-		f_vendedor: { nickname: "vendedor3" },
-		f_negociacao_pessoa_juridica: { f_razao_social: "XYZ Corporation" },
-	},
-	{
-		id: 5,
-		createdAt: "2024-01-10T11:00:00Z",
-		updatedAt: "2024-01-12T09:00:00Z",
-		f_titulo: "Negociação Pedro Costa",
-		f_valor_mensal: 1800.75,
-		f_status: "Concluído",
-		f_substatus: "Contrato assinado",
-		f_vendedor: { nickname: "vendedor1" },
-		f_pessoa: { f_nome: "Pedro Costa" },
-	},
-];
+type NegociacaoItem = NegociacaoWithRelations;
 
 function formatDate(dateStr: string): string {
 	const date = new Date(dateStr);
@@ -116,8 +40,8 @@ function formatDate(dateStr: string): string {
 	});
 }
 
-function formatCurrency(value: number | undefined): string {
-	if (value === undefined) return "-";
+function formatCurrency(value: number | null | undefined): string {
+	if (!value) return "-";
 	return value.toLocaleString("pt-BR", {
 		style: "currency",
 		currency: "BRL",
@@ -125,7 +49,10 @@ function formatCurrency(value: number | undefined): string {
 }
 
 function StatusBadge({ status }: { status: string }) {
-	const style = statusBadgeStyles[status] || statusBadgeStyles.Arquivado;
+	// Normalizar status para chave do objeto
+	const normalizedStatus = status === "Concluído" ? "Concluido" : status;
+	const style =
+		statusBadgeStyles[normalizedStatus] || statusBadgeStyles.Arquivado;
 	return (
 		<Badge variant="outline" className={cn(style, "font-medium")}>
 			{status}
@@ -196,21 +123,33 @@ const columns: ColumnDef<NegociacaoItem>[] = [
 	},
 ];
 
-export function NegociacoesList() {
+interface NegociacoesListProps {
+	negociacoes?: NegociacaoItem[];
+	totalCount?: number;
+	isLoading?: boolean;
+	onRefresh?: () => void;
+	onExport?: () => void;
+}
+
+export function NegociacoesList({
+	negociacoes = [],
+	totalCount = 0,
+	onRefresh,
+	onExport,
+}: NegociacoesListProps) {
 	const [pagination, setPagination] = useState({
 		pageIndex: 0,
 		pageSize: 20,
 	});
 
-	const data = mockData;
-	const totalCount = mockData.length;
+	const data = negociacoes;
 
 	const handleRefresh = () => {
-		// Refresh action stub
+		onRefresh?.();
 	};
 
 	const handleExport = () => {
-		// Export action stub
+		onExport?.();
 	};
 
 	const table = useReactTable({

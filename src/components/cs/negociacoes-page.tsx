@@ -1,4 +1,4 @@
-import { Calendar, Search, User, X } from "lucide-react";
+import { Calendar, Search, X } from "lucide-react";
 import { useId, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
@@ -10,15 +10,20 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
+import { useNegociacoes } from "#/modules/cs/negociacoes-hooks";
+import type {
+	NegociacaoFilters,
+	NegociacaoStatus,
+} from "#/modules/cs/negociacoes-types";
 import { NegociacoesKanban } from "./negociacoes-kanban";
 import { NegociacoesList } from "./negociacoes-list";
 
-const STATUS_OPTIONS = [
+const STATUS_OPTIONS: { value: NegociacaoStatus; label: string }[] = [
 	{ value: "Novo", label: "Novo" },
 	{ value: "Negociando", label: "Negociando" },
 	{ value: "Assinatura", label: "Assinatura" },
 	{ value: "Auditoria", label: "Auditoria" },
-	{ value: "Concluído", label: "Concluído" },
+	{ value: "Concluido", label: "Concluído" },
 	{ value: "Arquivado", label: "Arquivado" },
 ];
 
@@ -31,24 +36,37 @@ const SUBSTATUS_OPTIONS = [
 	{ value: "Contrato assinado", label: "Contrato assinado" },
 ];
 
-function KanbanFilters() {
-	const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
-	const [substatus, setSubstatus] = useState<string>("all");
+interface KanbanFiltersProps {
+	filters: NegociacaoFilters;
+	onFilter: (filters: NegociacaoFilters) => void;
+}
+
+function KanbanFilters({ filters, onFilter }: KanbanFiltersProps) {
+	const [selectedStatuses, setSelectedStatuses] = useState<string[]>(
+		filters.status ? [filters.status] : [],
+	);
+	const [substatus, setSubstatus] = useState<string>(
+		filters.substatus || "all",
+	);
 
 	const toggleStatus = (status: string) => {
-		setSelectedStatuses((prev) =>
-			prev.includes(status)
-				? prev.filter((s) => s !== status)
-				: [...prev, status],
-		);
+		const newStatuses = selectedStatuses.includes(status)
+			? selectedStatuses.filter((s) => s !== status)
+			: [status];
+		setSelectedStatuses(newStatuses);
+		onFilter({ ...filters, status: newStatuses[0] as NegociacaoStatus });
 	};
 
 	const clearFilters = () => {
 		setSelectedStatuses([]);
 		setSubstatus("all");
+		onFilter({});
 	};
 
-	const hasFilters = selectedStatuses.length > 0 || substatus !== "all";
+	const hasFilters =
+		selectedStatuses.length > 0 ||
+		substatus !== "all" ||
+		filters.criadoEmInicio;
 	const substatusId = useId();
 
 	return (
@@ -59,7 +77,14 @@ function KanbanFilters() {
 						<Calendar className="size-3.5" aria-hidden="true" />
 						<span>Criado depois de</span>
 					</div>
-					<Input type="date" className="h-8 w-full sm:w-40" />
+					<Input
+						type="date"
+						className="h-8 w-full sm:w-40"
+						value={filters.criadoEmInicio || ""}
+						onChange={(e) =>
+							onFilter({ ...filters, criadoEmInicio: e.target.value })
+						}
+					/>
 				</div>
 
 				<div className="flex-1 space-y-2">
@@ -92,7 +117,16 @@ function KanbanFilters() {
 					>
 						Substatus
 					</label>
-					<Select value={substatus} onValueChange={setSubstatus}>
+					<Select
+						value={substatus}
+						onValueChange={(value) => {
+							setSubstatus(value);
+							onFilter({
+								...filters,
+								substatus: value === "all" ? undefined : value,
+							});
+						}}
+					>
 						<SelectTrigger id={substatusId} className="h-8">
 							<SelectValue placeholder="Selecione o substatus" />
 						</SelectTrigger>
@@ -128,67 +162,34 @@ function KanbanFilters() {
 	);
 }
 
-function ListaFilters() {
-	const [vendedor, setVendedor] = useState<string>("all");
-	const [status, setStatus] = useState<string>("all");
-	const [substatus, setSubstatus] = useState<string>("all");
-	const [titulo, setTitulo] = useState<string>("");
-	const [cpf, setCpf] = useState<string>("");
-	const [cnpj, setCnpj] = useState<string>("");
-	const [pacote, setPacote] = useState<string>("all");
+interface ListaFiltersProps {
+	filters: NegociacaoFilters;
+	onFilter: (filters: NegociacaoFilters) => void;
+}
 
+function ListaFilters({ filters, onFilter }: ListaFiltersProps) {
 	const hasFilters =
-		vendedor !== "all" ||
-		status !== "all" ||
-		substatus !== "all" ||
-		titulo ||
-		cpf ||
-		cnpj ||
-		pacote !== "all";
+		filters.status ||
+		filters.substatus ||
+		filters.titulo ||
+		filters.cpfCnpj ||
+		filters.criadoEmInicio ||
+		filters.criadoEmFim;
 
 	const clearFilters = () => {
-		setVendedor("all");
-		setStatus("all");
-		setSubstatus("all");
-		setTitulo("");
-		setCpf("");
-		setCnpj("");
-		setPacote("all");
+		onFilter({});
 	};
 
-	const vendedorId = useId();
 	const statusId = useId();
 	const substatusId = useId();
-	const pacoteId = useId();
 	const tituloId = useId();
-	const cpfId = useId();
-	const cnpjId = useId();
-	const criadoEmId = useId();
+	const cpfCnpjId = useId();
+	const criadoEmInicioId = useId();
+	const criadoEmFimId = useId();
 
 	return (
 		<div className="space-y-4">
-			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-				<div className="space-y-2">
-					<label
-						htmlFor={vendedorId}
-						className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"
-					>
-						<User className="size-3.5" aria-hidden="true" />
-						<span>Vendedor</span>
-					</label>
-					<Select value={vendedor} onValueChange={setVendedor}>
-						<SelectTrigger id={vendedorId} className="h-8">
-							<SelectValue placeholder="Selecione o vendedor" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="all">Todos</SelectItem>
-							<SelectItem value="vendedor1">Vendedor 1</SelectItem>
-							<SelectItem value="vendedor2">Vendedor 2</SelectItem>
-							<SelectItem value="vendedor3">Vendedor 3</SelectItem>
-						</SelectContent>
-					</Select>
-				</div>
-
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				<div className="space-y-2">
 					<label
 						htmlFor={statusId}
@@ -196,7 +197,16 @@ function ListaFilters() {
 					>
 						Status
 					</label>
-					<Select value={status} onValueChange={setStatus}>
+					<Select
+						value={filters.status || "all"}
+						onValueChange={(value) => {
+							onFilter({
+								...filters,
+								status:
+									value === "all" ? undefined : (value as NegociacaoStatus),
+							});
+						}}
+					>
 						<SelectTrigger id={statusId} className="h-8">
 							<SelectValue placeholder="Selecione o status" />
 						</SelectTrigger>
@@ -218,7 +228,15 @@ function ListaFilters() {
 					>
 						Substatus
 					</label>
-					<Select value={substatus} onValueChange={setSubstatus}>
+					<Select
+						value={filters.substatus || "all"}
+						onValueChange={(value) => {
+							onFilter({
+								...filters,
+								substatus: value === "all" ? undefined : value,
+							});
+						}}
+					>
 						<SelectTrigger id={substatusId} className="h-8">
 							<SelectValue placeholder="Selecione o substatus" />
 						</SelectTrigger>
@@ -235,26 +253,6 @@ function ListaFilters() {
 
 				<div className="space-y-2">
 					<label
-						htmlFor={pacoteId}
-						className="text-xs font-medium text-muted-foreground"
-					>
-						Pacote
-					</label>
-					<Select value={pacote} onValueChange={setPacote}>
-						<SelectTrigger id={pacoteId} className="h-8">
-							<SelectValue placeholder="Selecione o pacote" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="all">Todos</SelectItem>
-							<SelectItem value="basico">Básico</SelectItem>
-							<SelectItem value="premium">Premium</SelectItem>
-							<SelectItem value="enterprise">Enterprise</SelectItem>
-						</SelectContent>
-					</Select>
-				</div>
-
-				<div className="space-y-2">
-					<label
 						htmlFor={tituloId}
 						className="text-xs font-medium text-muted-foreground"
 					>
@@ -263,53 +261,64 @@ function ListaFilters() {
 					<Input
 						id={tituloId}
 						placeholder="Buscar por título"
-						value={titulo}
-						onChange={(e) => setTitulo(e.target.value)}
+						value={filters.titulo || ""}
+						onChange={(e) => onFilter({ ...filters, titulo: e.target.value })}
 						className="h-8"
 					/>
 				</div>
 
 				<div className="space-y-2">
 					<label
-						htmlFor={cpfId}
+						htmlFor={cpfCnpjId}
 						className="text-xs font-medium text-muted-foreground"
 					>
-						CPF
+						CPF/CNPJ
 					</label>
 					<Input
-						id={cpfId}
-						placeholder="000.000.000-00"
-						value={cpf}
-						onChange={(e) => setCpf(e.target.value)}
+						id={cpfCnpjId}
+						placeholder="000.000.000-00 ou 00.000.000/0000-00"
+						value={filters.cpfCnpj || ""}
+						onChange={(e) => onFilter({ ...filters, cpfCnpj: e.target.value })}
 						className="h-8"
 					/>
 				</div>
 
 				<div className="space-y-2">
 					<label
-						htmlFor={cnpjId}
-						className="text-xs font-medium text-muted-foreground"
-					>
-						CNPJ
-					</label>
-					<Input
-						id={cnpjId}
-						placeholder="00.000.000/0000-00"
-						value={cnpj}
-						onChange={(e) => setCnpj(e.target.value)}
-						className="h-8"
-					/>
-				</div>
-
-				<div className="space-y-2">
-					<label
-						htmlFor={criadoEmId}
+						htmlFor={criadoEmInicioId}
 						className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"
 					>
 						<Calendar className="size-3.5" aria-hidden="true" />
-						<span>Criado em</span>
+						<span>Criado em início</span>
 					</label>
-					<Input id={criadoEmId} type="date" className="h-8" />
+					<Input
+						id={criadoEmInicioId}
+						type="date"
+						value={filters.criadoEmInicio || ""}
+						onChange={(e) =>
+							onFilter({ ...filters, criadoEmInicio: e.target.value })
+						}
+						className="h-8"
+					/>
+				</div>
+
+				<div className="space-y-2">
+					<label
+						htmlFor={criadoEmFimId}
+						className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"
+					>
+						<Calendar className="size-3.5" aria-hidden="true" />
+						<span>Criado em fim</span>
+					</label>
+					<Input
+						id={criadoEmFimId}
+						type="date"
+						value={filters.criadoEmFim || ""}
+						onChange={(e) =>
+							onFilter({ ...filters, criadoEmFim: e.target.value })
+						}
+						className="h-8"
+					/>
 				</div>
 			</div>
 
@@ -335,6 +344,22 @@ function ListaFilters() {
 
 export function NegociacoesPage() {
 	const [activeTab, setActiveTab] = useState<string>("kanban");
+	const [kanbanFilters, setKanbanFilters] = useState<NegociacaoFilters>({});
+	const [listaFilters, setListaFilters] = useState<NegociacaoFilters>({});
+
+	const {
+		data: negociacoesData,
+		isLoading,
+		error,
+		refetch,
+	} = useNegociacoes({
+		page: 1,
+		pageSize: 100,
+		filters: activeTab === "kanban" ? kanbanFilters : listaFilters,
+	});
+
+	const negociacoes = negociacoesData?.data ?? [];
+	const totalCount = negociacoesData?.meta?.total ?? 0;
 
 	return (
 		<div className="flex flex-1 flex-col overflow-auto">
@@ -359,15 +384,41 @@ export function NegociacoesPage() {
 							<div className="rounded-lg border bg-card p-4">
 								<TabsContent value="kanban" className="mt-0">
 									<div className="space-y-4">
-										<KanbanFilters />
-										<NegociacoesKanban />
+										<KanbanFilters
+											filters={kanbanFilters}
+											onFilter={setKanbanFilters}
+										/>
+										{error ? (
+											<div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+												Erro ao carregar negociações: {(error as Error).message}
+											</div>
+										) : (
+											<NegociacoesKanban
+												negociacoes={negociacoes}
+												isLoading={isLoading}
+											/>
+										)}
 									</div>
 								</TabsContent>
 
 								<TabsContent value="lista" className="mt-0">
 									<div className="space-y-4">
-										<ListaFilters />
-										<NegociacoesList />
+										<ListaFilters
+											filters={listaFilters}
+											onFilter={setListaFilters}
+										/>
+										{error ? (
+											<div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+												Erro ao carregar negociações: {(error as Error).message}
+											</div>
+										) : (
+											<NegociacoesList
+												negociacoes={negociacoes}
+												totalCount={totalCount}
+												isLoading={isLoading}
+												onRefresh={() => refetch()}
+											/>
+										)}
 									</div>
 								</TabsContent>
 							</div>

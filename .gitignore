@@ -9,3 +9,4 @@ __unconfig*
 todos.json
 /coverage
 .sisyphus
+.playwright-mcp

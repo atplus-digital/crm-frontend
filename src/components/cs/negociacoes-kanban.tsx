@@ -1,146 +1,54 @@
-import { useState } from "react";
 import { Badge } from "#/components/ui/badge";
 import { cn } from "#/lib/utils";
+import type { NegociacaoWithRelations } from "#/modules/cs/negociacoes-types";
 
 const STATUS_CONFIG = [
 	{
 		key: "Novo",
 		label: "Novo",
-		colorClass: "bg-blue-500",
-		bgClass: "bg-blue-50",
+		colorClass: "bg-blue-500 dark:bg-blue-600",
+		bgClass: "bg-blue-100/70 dark:bg-blue-950/40 dark:text-blue-300",
 	},
 	{
 		key: "Negociando",
 		label: "Negociando",
-		colorClass: "bg-amber-500",
-		bgClass: "bg-amber-50",
+		colorClass: "bg-amber-500 dark:bg-amber-600",
+		bgClass: "bg-amber-100/70 dark:bg-amber-950/40 dark:text-amber-300",
 	},
 	{
 		key: "Assinatura",
 		label: "Assinatura",
-		colorClass: "bg-purple-500",
-		bgClass: "bg-purple-50",
+		colorClass: "bg-purple-500 dark:bg-purple-600",
+		bgClass: "bg-purple-100/70 dark:bg-purple-950/40 dark:text-purple-300",
 	},
 	{
 		key: "Auditoria",
 		label: "Auditoria",
-		colorClass: "bg-orange-500",
-		bgClass: "bg-orange-50",
+		colorClass: "bg-orange-500 dark:bg-orange-600",
+		bgClass: "bg-orange-100/70 dark:bg-orange-950/40 dark:text-orange-300",
 	},
 	{
-		key: "Concluído",
+		key: "Concluido",
 		label: "Concluído",
-		colorClass: "bg-green-500",
-		bgClass: "bg-green-50",
+		colorClass: "bg-green-500 dark:bg-green-600",
+		bgClass: "bg-green-100/70 dark:bg-green-950/40 dark:text-green-300",
 	},
 	{
 		key: "Arquivado",
 		label: "Arquivado",
-		colorClass: "bg-gray-500",
-		bgClass: "bg-gray-50",
+		colorClass: "bg-gray-500 dark:bg-gray-600",
+		bgClass: "bg-gray-100/70 dark:bg-gray-800/40 dark:text-gray-300",
 	},
 ] as const;
 
 type StatusKey = (typeof STATUS_CONFIG)[number]["key"];
 
-// Mock data types
-interface KanbanCard {
-	id: number;
-	f_titulo?: string;
-	f_valor_mensal?: number;
-	f_substatus?: string;
-	f_vendedor?: {
-		nickname: string;
-	};
-	f_pessoa?: {
-		f_nome: string;
-	};
-	f_negociacao_pessoa_juridica?: {
-		f_razao_social: string;
-	};
-}
+type KanbanCard = NegociacaoWithRelations;
 
 type KanbanData = Record<StatusKey, KanbanCard[]>;
 
-// Placeholder data organized by status
-const mockKanbanData: KanbanData = {
-	Novo: [
-		{
-			id: 1,
-			f_titulo: "Negociação João Silva",
-			f_valor_mensal: 2500.0,
-			f_substatus: "Aguardando contato",
-			f_vendedor: { nickname: "vendedor1" },
-			f_pessoa: { f_nome: "João Silva" },
-		},
-		{
-			id: 2,
-			f_titulo: "Negociação Ana Costa",
-			f_valor_mensal: 1800.0,
-			f_substatus: "Novo lead",
-			f_vendedor: { nickname: "vendedor2" },
-			f_pessoa: { f_nome: "Ana Costa" },
-		},
-	],
-	Negociando: [
-		{
-			id: 3,
-			f_titulo: "Negociação Empresa ABC",
-			f_valor_mensal: 15000.5,
-			f_substatus: "Em análise de documentação",
-			f_vendedor: { nickname: "vendedor2" },
-			f_negociacao_pessoa_juridica: { f_razao_social: "ABC Ltda" },
-		},
-		{
-			id: 4,
-			f_valor_mensal: 3200.0,
-			f_substatus: "Proposta enviada",
-			f_vendedor: { nickname: "vendedor1" },
-			f_pessoa: { f_nome: "Carlos Ferreira" },
-		},
-		{
-			id: 5,
-			f_valor_mensal: 4500.0,
-			f_substatus: "Negociando valores",
-			f_vendedor: { nickname: "vendedor3" },
-			f_pessoa: { f_nome: "Mariana Silva" },
-		},
-	],
-	Assinatura: [
-		{
-			id: 6,
-			f_titulo: "Negociação Maria Santos",
-			f_valor_mensal: 3200.0,
-			f_substatus: "Aguardando assinatura digital",
-			f_vendedor: { nickname: "vendedor1" },
-			f_pessoa: { f_nome: "Maria Santos" },
-		},
-	],
-	Auditoria: [
-		{
-			id: 7,
-			f_titulo: "Negociação XYZ Corp",
-			f_valor_mensal: 50000.0,
-			f_substatus: "Verificação cadastral em andamento",
-			f_vendedor: { nickname: "vendedor3" },
-			f_negociacao_pessoa_juridica: { f_razao_social: "XYZ Corporation" },
-		},
-	],
-	Concluído: [
-		{
-			id: 8,
-			f_titulo: "Negociação Pedro Costa",
-			f_valor_mensal: 1800.75,
-			f_substatus: "Contrato assinado",
-			f_vendedor: { nickname: "vendedor1" },
-			f_pessoa: { f_nome: "Pedro Costa" },
-		},
-	],
-	Arquivado: [],
-};
-
-function formatCurrency(value: number | undefined): string {
-	if (value === undefined) return "-";
+function formatCurrency(value: number | null | undefined): string {
+	if (!value) return "-";
 	return value.toLocaleString("pt-BR", {
 		style: "currency",
 		currency: "BRL",
@@ -163,7 +71,7 @@ function KanbanCardComponent({ card }: KanbanCardProps) {
 	return (
 		<div
 			className={cn(
-				"cursor-pointer rounded-lg bg-white p-3 shadow-sm transition-shadow",
+				"cursor-pointer rounded-lg bg-card p-3 shadow-sm transition-shadow",
 				"hover:shadow-md",
 				"border border-border/50",
 			)}
@@ -234,8 +142,40 @@ function KanbanColumn({ status, cards }: KanbanColumnProps) {
 	);
 }
 
-export function NegociacoesKanban() {
-	const [kanbanData] = useState<KanbanData>(mockKanbanData);
+interface NegociacoesKanbanProps {
+	negociacoes?: KanbanCard[];
+	isLoading?: boolean;
+}
+
+export function NegociacoesKanban({
+	negociacoes = [],
+	isLoading = false,
+}: NegociacoesKanbanProps) {
+	const kanbanData: KanbanData = negociacoes.reduce(
+		(acc, negociacao) => {
+			const status = negociacao.f_status as StatusKey;
+			if (acc[status]) {
+				acc[status].push(negociacao);
+			}
+			return acc;
+		},
+		{
+			Novo: [],
+			Negociando: [],
+			Assinatura: [],
+			Auditoria: [],
+			Concluido: [],
+			Arquivado: [],
+		} as KanbanData,
+	);
+
+	if (isLoading) {
+		return (
+			<div className="flex items-center justify-center py-12">
+				<div className="text-sm text-muted-foreground">Carregando...</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="overflow-x-auto pb-2">

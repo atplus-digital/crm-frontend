@@ -85,7 +85,7 @@ const pfColumns: ColumnDef<PessoaFisica, unknown>[] = [
 			};
 			const config = variants[value] || {
 				variant: "secondary",
-				className: "bg-gray-100 text-gray-600",
+				className: "",
 				label: value,
 			};
 			return (
@@ -101,11 +101,7 @@ const pfColumns: ColumnDef<PessoaFisica, unknown>[] = [
 		cell: ({ row }) => {
 			const value = row.original.f_analise_ixc;
 			if (!value) {
-				return (
-					<Badge variant="secondary" className="bg-gray-100 text-gray-600">
-						Não analisado
-					</Badge>
-				);
+				return <Badge variant="secondary">Não analisado</Badge>;
 			}
 			const isSemPendencias = value === "Sem Pendências";
 			return (
