@@ -22,7 +22,11 @@
 		"files": "warn",
 		"unlisted": "warn"
 	},
-	"ignore": ["src/generated/**", "src/components/ui/**"],
+	"ignore": [
+		"src/generated/**",
+		"src/components/ui/**",
+		"src/modules/custom-requests/**"
+	],
 	"ignoreDependencies": [],
 	"ignoreExportsUsedInFile": true
 }

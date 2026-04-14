@@ -4,10 +4,10 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
 	test: {
 		include: [
-			"src/**/*.{test,spec}.{js,ts}",
+			"src/**/*.{test,spec}.{js,ts,tsx}",
 			"scripts/**/*.{test,spec}.{js,ts}",
 		],
-		environment: "node",
+		environment: "jsdom",
 		globalSetup: ["./src/_tests/global-setup.ts"],
 		setupFiles: [
 			"./src/_tests/mock-env.ts",
