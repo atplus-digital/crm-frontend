@@ -37,7 +37,8 @@ export class IxcRepository {
 	): Promise<PaginatedResponse<T>> {
 		log.info("Listing from IXC", { endpoint, params });
 
-		const response = await this.request<PaginatedResponse<T>>({
+		// biome-ignore lint/suspicious/noExplicitAny: IXC API returns unpredictable response structure, must use any
+		const rawResponse = await this.request<any>({
 			url: `${endpoint}:list`,
 			method: "GET",
 			params: {
@@ -49,10 +50,33 @@ export class IxcRepository {
 			},
 		});
 
+		// Normalize IXC response to PaginatedResponse format
+		// IXC may return meta.count instead of meta.total, or count at root level
+		const response: PaginatedResponse<T> = {
+			data: rawResponse.data ?? [],
+			meta: {
+				total:
+					rawResponse.meta?.total ??
+					rawResponse.meta?.count ??
+					rawResponse.count ??
+					0,
+				totalPage:
+					rawResponse.meta?.totalPage ?? rawResponse.meta?.pageCount ?? 1,
+				page: rawResponse.meta?.page ?? params?.page ?? 1,
+				pageSize:
+					rawResponse.meta?.pageSize ??
+					rawResponse.pageSize ??
+					params?.pageSize ??
+					20,
+				filterCount: rawResponse.meta?.filterCount,
+				print: rawResponse.meta?.print,
+			},
+		};
+
 		log.debug("IXC list response", {
 			endpoint,
-			total: response.meta?.total,
-			page: response.meta?.page,
+			total: response.meta.total,
+			page: response.meta.page,
 		});
 
 		return response;
