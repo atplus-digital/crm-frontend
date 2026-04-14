@@ -39,7 +39,7 @@ export function ContratosPage() {
 
 	return (
 		<div className="flex-1 overflow-auto bg-background">
-			<div className="mx-auto max-w-[1600px] space-y-6 p-4 md:p-6 lg:p-8">
+			<div className="mx-auto max-w-[1600px] space-y-6 p-4">
 				<div>
 					<h1 className="text-2xl font-bold tracking-tight">Contratos</h1>
 					<p className="text-muted-foreground">Contratos encontrados no IXC</p>

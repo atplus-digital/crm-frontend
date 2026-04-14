@@ -14,39 +14,38 @@ import {
 } from "#/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { cn } from "#/lib/utils";
+import {
+	usePessoasFisicas,
+	usePessoasJuridicas,
+} from "#/modules/cs/pessoas-hooks";
+import type {
+	PessoaFisicaFilters,
+	PessoaJuridicaFilters,
+} from "#/modules/cs/pessoas-types";
 import { PessoasTable } from "./pessoas-table";
 
-interface PessoaFisica {
-	id: number;
-	createdAt: string;
-	f_nome: string;
-	f_cpf: string;
-	f_data_nascimento: string;
-	f_credito: string | null;
-	f_analise_ixc: string | null;
-	f_sexo: "MASCULINO" | "FEMININO" | "INDEFINIDO";
-	createdBy?: {
-		nickname: string;
-	};
-}
-
-interface PessoaJuridica {
-	id: number;
-	f_razao_social: string;
-	f_nome_fantasia: string;
-	f_cnpj: string;
-	f_ie: string;
-	f_responsavel: string;
-	f_email_responsavel: string;
-}
-
-const pfColumns: ColumnDef<PessoaFisica, unknown>[] = [
+const pfColumns: ColumnDef<
+	{
+		id: number | string;
+		createdAt?: string;
+		f_nome?: string;
+		f_cpf?: string;
+		f_data_nascimento?: string;
+		f_credito?: string | null;
+		f_analise_ixc?: string | null;
+		f_sexo?: "MASCULINO" | "FEMININO" | "INDEFINIDO";
+		createdBy?: { nickname: string };
+	},
+	unknown
+>[] = [
 	{ accessorKey: "id", header: "ID" },
 	{
 		accessorKey: "createdAt",
 		header: "Criado em",
 		cell: ({ row }) =>
-			new Date(row.original.createdAt).toLocaleDateString("pt-BR"),
+			row.original.createdAt
+				? new Date(row.original.createdAt).toLocaleDateString("pt-BR")
+				: "-",
 	},
 	{ accessorKey: "f_nome", header: "Nome Completo" },
 	{ accessorKey: "f_cpf", header: "CPF" },
@@ -125,7 +124,18 @@ const pfColumns: ColumnDef<PessoaFisica, unknown>[] = [
 	},
 ];
 
-const pjColumns: ColumnDef<PessoaJuridica, unknown>[] = [
+const pjColumns: ColumnDef<
+	{
+		id: number | string;
+		f_razao_social?: string;
+		f_nome_fantasia?: string;
+		f_cnpj?: string;
+		f_ie?: string;
+		f_responsavel?: string;
+		f_email_responsavel?: string;
+	},
+	unknown
+>[] = [
 	{ accessorKey: "id", header: "ID" },
 	{ accessorKey: "f_razao_social", header: "Razão Social" },
 	{ accessorKey: "f_nome_fantasia", header: "Nome Fantasia" },
@@ -135,53 +145,16 @@ const pjColumns: ColumnDef<PessoaJuridica, unknown>[] = [
 	{ accessorKey: "f_email_responsavel", header: "Email" },
 ];
 
-const mockPFData: PessoaFisica[] = [
-	{
-		id: 1,
-		createdAt: "2024-01-15T10:30:00Z",
-		f_nome: "João Silva",
-		f_cpf: "123.456.789-00",
-		f_data_nascimento: "15/03/1990",
-		f_credito: "Aprovado",
-		f_analise_ixc: "Sem Pendências",
-		f_sexo: "MASCULINO",
-		createdBy: { nickname: "admin" },
-	},
-	{
-		id: 2,
-		createdAt: "2024-02-20T14:45:00Z",
-		f_nome: "Maria Santos",
-		f_cpf: "987.654.321-00",
-		f_data_nascimento: "22/07/1985",
-		f_credito: "Aprovado com Atenção",
-		f_analise_ixc: "Com Pendências",
-		f_sexo: "FEMININO",
-		createdBy: { nickname: "admin" },
-	},
-];
-
-const mockPJData: PessoaJuridica[] = [
-	{
-		id: 1,
-		f_razao_social: "Empresa ABC Ltda",
-		f_nome_fantasia: "ABC Tecnologia",
-		f_cnpj: "12.345.678/0001-90",
-		f_ie: "123.456.789.012",
-		f_responsavel: "Carlos Oliveira",
-		f_email_responsavel: "carlos@abc.com",
-	},
-];
-
 export function CSPessoasPage() {
 	const [activeTab, setActiveTab] = useState<"pf" | "pj">("pf");
 
-	const [pfFilters, setPFFilters] = useState({
+	const [pfFilters, setPFFilters] = useState<PessoaFisicaFilters>({
 		nome: "",
 		cpf: "",
 		analiseIxc: "all",
 	});
 
-	const [pjFilters, setPJFilters] = useState({
+	const [pjFilters, setPJFilters] = useState<PessoaJuridicaFilters>({
 		razaoSocial: "",
 		cnpj: "",
 	});
@@ -189,8 +162,6 @@ export function CSPessoasPage() {
 	const [pagination, setPagination] = useState({
 		page: 1,
 		pageSize: 20,
-		total: 2,
-		totalPages: 1,
 	});
 
 	const handlePageChange = (page: number) => {
@@ -209,10 +180,31 @@ export function CSPessoasPage() {
 		}
 	};
 
-	const isLoading = false;
+	const {
+		data: pfData,
+		isLoading: isPFLoding,
+		error: pfError,
+	} = usePessoasFisicas({
+		page: pagination.page,
+		pageSize: pagination.pageSize,
+		filters: pfFilters,
+	});
+
+	const {
+		data: pjData,
+		isLoading: isPJLoding,
+		error: pjError,
+	} = usePessoasJuridicas({
+		page: pagination.page,
+		pageSize: pagination.pageSize,
+		filters: pjFilters,
+	});
+
+	const isLoading = activeTab === "pf" ? isPFLoding : isPJLoding;
+	const error = activeTab === "pf" ? pfError : pjError;
 
 	return (
-		<div className="flex min-h-screen flex-col gap-6 bg-background p-4 md:p-6 lg:p-8">
+		<div className="flex min-h-screen flex-col gap-6 bg-background p-4">
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 				<h1 className="font-heading text-2xl font-bold">Pessoas</h1>
 				<Button size="sm">
@@ -220,6 +212,19 @@ export function CSPessoasPage() {
 					Nova Pessoa
 				</Button>
 			</div>
+
+			{error && (
+				<Card className="border-destructive">
+					<CardHeader>
+						<CardTitle className="text-destructive">Erro ao carregar</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<p className="text-sm text-muted-foreground">
+							Não foi possível carregar os dados. Tente novamente.
+						</p>
+					</CardContent>
+				</Card>
+			)}
 
 			<Tabs
 				value={activeTab}
@@ -263,7 +268,13 @@ export function CSPessoasPage() {
 									<Select
 										value={pfFilters.analiseIxc}
 										onValueChange={(value) =>
-											setPFFilters((prev) => ({ ...prev, analiseIxc: value }))
+											setPFFilters((prev) => ({
+												...prev,
+												analiseIxc: value as
+													| "all"
+													| "Sem Pendências"
+													| "Com Pendências",
+											}))
 										}
 									>
 										<SelectTrigger>
@@ -292,9 +303,13 @@ export function CSPessoasPage() {
 
 							<PessoasTable
 								columns={pfColumns}
-								data={mockPFData}
+								data={pfData?.data ?? []}
 								isLoading={isLoading}
-								pagination={pagination}
+								pagination={{
+									...pagination,
+									total: pfData?.meta?.total ?? 0,
+									totalPages: pfData?.meta?.totalPage ?? 0,
+								}}
 								onPageChange={handlePageChange}
 								onPageSizeChange={handlePageSizeChange}
 							/>
@@ -345,9 +360,13 @@ export function CSPessoasPage() {
 
 							<PessoasTable
 								columns={pjColumns}
-								data={mockPJData}
+								data={pjData?.data ?? []}
 								isLoading={isLoading}
-								pagination={pagination}
+								pagination={{
+									...pagination,
+									total: pjData?.meta?.total ?? 0,
+									totalPages: pjData?.meta?.totalPage ?? 0,
+								}}
 								onPageChange={handlePageChange}
 								onPageSizeChange={handlePageSizeChange}
 							/>

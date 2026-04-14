@@ -131,7 +131,7 @@ export function ContratoDetailPage() {
 	if (error) {
 		return (
 			<div className="flex-1 overflow-auto bg-background">
-				<div className="mx-auto max-w-[1600px] p-4 md:p-6 lg:p-8">
+				<div className="mx-auto max-w-[1600px] p-4">
 					<div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
 						Erro ao carregar contrato: {(error as Error).message}
 					</div>
@@ -142,7 +142,7 @@ export function ContratoDetailPage() {
 
 	return (
 		<div className="flex-1 overflow-auto bg-background">
-			<div className="mx-auto max-w-[1600px] p-4 md:p-6 lg:p-8">
+			<div className="mx-auto max-w-[1600px] p-4">
 				{/* Header */}
 				<div className="flex items-center gap-4 mb-6">
 					<Button variant="ghost" size="icon" asChild>

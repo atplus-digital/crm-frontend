@@ -364,7 +364,7 @@ export function NegociacoesPage() {
 	return (
 		<div className="flex flex-1 flex-col overflow-auto">
 			<main className="flex-1">
-				<div className="p-4 md:p-6 lg:p-8">
+				<div className="p-4">
 					<div className="space-y-6">
 						<div>
 							<h1 className="text-2xl font-semibold tracking-tight">

@@ -8,7 +8,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 			<AppSidebar />
 			<SidebarInset>
 				<AppHeader />
-				<main className="flex-1 overflow-auto p-2 md:p-4">{children}</main>
+				<main className="flex-1 overflow-auto p-2">{children}</main>
 			</SidebarInset>
 		</SidebarProvider>
 	);

@@ -39,7 +39,6 @@ const navigation = [
 	{ name: "Pessoas", href: "/cs/pessoas", icon: Users },
 	{ name: "Negociações", href: "/cs/negociacoes", icon: Handshake },
 	{ name: "Contratos", href: "/cs/contratos", icon: FileText },
-	{ name: "Perfil", href: "/profile", icon: User },
 ];
 
 export function AppSidebar() {
