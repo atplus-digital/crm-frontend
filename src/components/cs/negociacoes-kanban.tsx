@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Badge } from "#/components/ui/badge";
 import { cn, formatCurrency } from "#/lib/utils";
 import type { NegociacaoWithRelations } from "#/modules/cs/negociacoes-types";
@@ -143,6 +144,28 @@ export function NegociacoesKanban({
 	negociacoes = [],
 	isLoading = false,
 }: NegociacoesKanbanProps) {
+	const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		const container = scrollContainerRef.current;
+		if (!container) return;
+
+		const handleWheel = (e: WheelEvent) => {
+			const canScrollLeft = container.scrollLeft > 0;
+			const canScrollRight =
+				container.scrollLeft < container.scrollWidth - container.clientWidth;
+
+			const isHorizontalScroll = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+			if (isHorizontalScroll || canScrollLeft || canScrollRight) {
+				e.preventDefault();
+				container.scrollLeft += e.deltaY + e.deltaX;
+			}
+		};
+
+		container.addEventListener("wheel", handleWheel, { passive: false });
+		return () => container.removeEventListener("wheel", handleWheel);
+	}, []);
+
 	const kanbanData: KanbanData = negociacoes.reduce(
 		(acc, negociacao) => {
 			const status = negociacao.f_status as StatusKey;
@@ -170,7 +193,7 @@ export function NegociacoesKanban({
 	}
 
 	return (
-		<div className="overflow-x-auto pb-2">
+		<div ref={scrollContainerRef} className="overflow-x-auto pb-2">
 			<div className="flex gap-4">
 				{STATUS_CONFIG.map((status) => (
 					<KanbanColumn
