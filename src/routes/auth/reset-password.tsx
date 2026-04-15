@@ -1,7 +1,7 @@
 import { redirect } from "react-router";
-import { GuestLayout } from "#/components/auth/auth-layout";
 import { env } from "#/env";
 import { requireGuest } from "#/features/auth";
+import { GuestLayout } from "#/features/auth/components/auth-layout";
 import { createLogger } from "#/lib/logger";
 import ResetPasswordForm from "#/pages/auth/reset-password-page";
 

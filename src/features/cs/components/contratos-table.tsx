@@ -1,14 +1,13 @@
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { ExternalLink } from "lucide-react";
 import { useMemo } from "react";
-
-import {
-	ContratoStatusBadge,
-	InternetStatusBadge,
-} from "#/components/cs/contrato-status-badge";
 import { DataTableColumnHeader } from "#/components/tables/data-table-column-header";
 import { DataTableWithPagination } from "#/components/tables/data-table-with-pagination";
 import { Button } from "#/components/ui/button";
+import {
+	ContratoStatusBadge,
+	InternetStatusBadge,
+} from "#/features/cs/components/contrato-status-badge";
 import type { ContratoWithCliente } from "#/features/cs/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";
 

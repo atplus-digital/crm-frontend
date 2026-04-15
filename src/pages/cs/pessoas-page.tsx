@@ -1,7 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Filter, Plus, RotateCw } from "lucide-react";
 import { useState } from "react";
-import { PessoasTable } from "#/components/cs/pessoas-table";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
@@ -14,6 +13,7 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
+import { PessoasTable } from "#/features/cs/components/pessoas-table";
 import {
 	usePessoasFisicas,
 	usePessoasJuridicas,

@@ -1,9 +1,9 @@
 import { Mail, Phone, Shield, User } from "lucide-react";
+import { DetailItem } from "#/components/dashboard/detail-item";
+import { InfoCard } from "#/components/dashboard/info-card";
 import { Badge } from "#/components/ui/badge";
 import { Separator } from "#/components/ui/separator";
 import type { AuthUser } from "#/features/auth";
-import { DetailItem } from "./detail-item";
-import { InfoCard } from "./info-card";
 
 interface ProfileDetailsProps {
 	user: AuthUser;

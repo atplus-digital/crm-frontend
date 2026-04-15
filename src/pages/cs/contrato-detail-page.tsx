@@ -7,10 +7,6 @@ import {
 	Smartphone,
 } from "lucide-react";
 import { Link, useParams } from "react-router";
-import {
-	ContratoStatusBadge,
-	InternetStatusBadge,
-} from "#/components/cs/contrato-status-badge";
 import { Button } from "#/components/ui/button";
 import {
 	Card,
@@ -30,6 +26,10 @@ import {
 	TableRow,
 } from "#/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
+import {
+	ContratoStatusBadge,
+	InternetStatusBadge,
+} from "#/features/cs/components/contrato-status-badge";
 import { useContratoById } from "#/features/cs/contratos-hooks";
 
 function formatDatePtBR(dateStr: string | null | undefined): string {

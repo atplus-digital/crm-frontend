@@ -1,7 +1,5 @@
 import { Calendar, Search, X } from "lucide-react";
 import { useId, useState } from "react";
-import { NegociacoesKanban } from "#/components/cs/negociacoes-kanban";
-import { NegociacoesList } from "#/components/cs/negociacoes-list";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import {
@@ -12,6 +10,8 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
+import { NegociacoesKanban } from "#/features/cs/components/negociacoes-kanban";
+import { NegociacoesList } from "#/features/cs/components/negociacoes-list";
 import { useNegociacoes } from "#/features/cs/negociacoes-hooks";
 import type {
 	NegociacaoFilters,

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ContratosFilters } from "#/components/cs/contratos-filters";
-import { ContratosTable } from "#/components/cs/contratos-table";
+import { ContratosFilters } from "#/features/cs/components/contratos-filters";
+import { ContratosTable } from "#/features/cs/components/contratos-table";
 import { useContratos } from "#/features/cs/contratos-hooks";
 import type { ContratoFilters } from "#/features/cs/contratos-types";
 

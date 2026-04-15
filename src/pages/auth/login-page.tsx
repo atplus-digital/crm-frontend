@@ -1,5 +1,5 @@
-import { GuestLayout } from "#/components/auth/auth-layout";
-import { LoginForm } from "#/components/auth/login-form";
+import { GuestLayout } from "#/features/auth/components/auth-layout";
+import { LoginForm } from "#/features/auth/components/login-form";
 
 export function LoginPage() {
 	return (
