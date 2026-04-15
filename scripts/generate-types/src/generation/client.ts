@@ -6,6 +6,26 @@ import type {
 	NocoBaseField,
 } from "@scripts/generate-types/src/@types/nocobase";
 
+interface ListSampleResponse {
+	data?: Array<Record<string, unknown>>;
+}
+
+class HttpResponseError extends Error {
+	public constructor(
+		public readonly status: number,
+		public readonly statusText: string,
+		public readonly requestUrl: string,
+		bodySuffix: string,
+	) {
+		super(`HTTP ${status} ${statusText} em ${requestUrl}${bodySuffix}`);
+	}
+}
+
+interface NocoBaseClientOptions {
+	requestHeaders?: Record<string, string>;
+	enableSampleFieldFallback?: boolean;
+}
+
 /**
  * Ordena array de objetos por propriedade 'name' (ordem alfabética).
  */
@@ -38,8 +58,18 @@ function getErrorBodyPreview(rawBody: string): string {
 export class NocoBaseClient {
 	public readonly baseUrl: string;
 
-	public constructor(private readonly credentials: NocoBaseCredentials) {
+	private readonly requestHeaders?: Record<string, string>;
+	private readonly enableSampleFieldFallback: boolean;
+
+	public constructor(
+		private readonly credentials: NocoBaseCredentials,
+		options?: NocoBaseClientOptions,
+	) {
 		this.baseUrl = credentials.baseUrl;
+		this.requestHeaders = options?.requestHeaders;
+		this.enableSampleFieldFallback = Boolean(
+			options?.enableSampleFieldFallback,
+		);
 	}
 
 	/**
@@ -66,6 +96,10 @@ export class NocoBaseClient {
 	public async fetchCollectionFields(
 		collectionName: string,
 	): Promise<NocoBaseField[]> {
+		if (this.enableSampleFieldFallback) {
+			return this.fetchCollectionFieldsWithFallback(collectionName);
+		}
+
 		const params = new URLSearchParams({
 			appends: "fields",
 			filterByTk: collectionName,
@@ -76,6 +110,69 @@ export class NocoBaseClient {
 		);
 
 		return sortByName(response.data.fields);
+	}
+
+	private async fetchCollectionFieldsWithFallback(
+		collectionName: string,
+	): Promise<NocoBaseField[]> {
+		try {
+			const params = new URLSearchParams({
+				appends: "fields",
+				filterByTk: collectionName,
+			});
+
+			const response = await this.fetchJson<NocoBaseCollectionResponse>(
+				`collections:get?${params}`,
+			);
+
+			return sortByName(response.data.fields);
+		} catch (error) {
+			if (!(error instanceof HttpResponseError) || error.status !== 404) {
+				throw error;
+			}
+
+			const sampleResponse = await this.fetchJson<ListSampleResponse>(
+				`${collectionName}:list?pageSize=1&page=1`,
+			);
+			const sampleRecord = sampleResponse.data?.[0] ?? null;
+			if (!sampleRecord) {
+				return [];
+			}
+
+			const inferredFields = Object.entries(sampleRecord).map(([name, value]) =>
+				this.inferFieldFromSample(name, value),
+			);
+
+			return sortByName(inferredFields);
+		}
+	}
+
+	private inferFieldFromSample(name: string, value: unknown): NocoBaseField {
+		if (typeof value === "number") {
+			return { name, type: "double", interface: "number" };
+		}
+
+		if (typeof value === "boolean") {
+			return { name, type: "boolean", interface: "checkbox" };
+		}
+
+		if (Array.isArray(value)) {
+			return { name, type: "array", interface: "multipleSelect" };
+		}
+
+		if (value === null || value === undefined) {
+			return { name, type: "string", interface: "input" };
+		}
+
+		if (typeof value === "object") {
+			return { name, type: "json", interface: "json" };
+		}
+
+		if (/^\d{4}-\d{2}-\d{2}/.test(String(value))) {
+			return { name, type: "date", interface: "date" };
+		}
+
+		return { name, type: "string", interface: "input" };
 	}
 
 	private async fetchJson<T>(resourcePath: string): Promise<T> {
@@ -90,6 +187,7 @@ export class NocoBaseClient {
 			const response = await fetch(url, {
 				headers: {
 					Authorization: `Bearer ${this.credentials.token}`,
+					...(this.requestHeaders ?? {}),
 				},
 				signal: controller.signal,
 			});
@@ -100,8 +198,11 @@ export class NocoBaseClient {
 					? ` - resposta: ${getErrorBodyPreview(body)}`
 					: "";
 
-				throw new Error(
-					`HTTP ${response.status} ${response.statusText} em ${url}${bodySuffix}`,
+				throw new HttpResponseError(
+					response.status,
+					response.statusText,
+					url,
+					bodySuffix,
 				);
 			}
 

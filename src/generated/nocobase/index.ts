@@ -454,7 +454,7 @@ export type AtendimentosIxcRelationKey = keyof AtendimentosIxcRelations;
 export interface AuditoriaAutomatica {
 	id: number;
 	f_conferencia: boolean;
-	f_id_negociacao: string;
+	f_id_negociacao: number;
 	f_titulo_negociacao: string;
 	f_valor_mensal: number;
 	updatedAt: string;
@@ -463,6 +463,7 @@ export interface AuditoriaAutomatica {
 
 export interface AuditoriaAutomaticaRelations {
 	createdBy?: Users | null;
+	f_negociacoes?: Negociacoes | null;
 	updatedBy?: Users | null;
 }
 

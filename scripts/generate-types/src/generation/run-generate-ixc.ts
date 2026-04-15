@@ -1,42 +1,90 @@
-import * as fs from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type { GenerateTypesResult } from "../@types/script";
 import { logInfo, logVerbose } from "../utils/logger";
-import { toFileName } from "../utils/naming";
+import {
+	resolveBaseInterfaceNamingConfig,
+	toCollectionBaseTypeName,
+	toCollectionTypeName,
+	toFileName,
+} from "../utils/naming";
 import { previewGeneratedFile, writeGeneratedFile } from "../utils/writer";
-import { IxcClient } from "./ixc-client";
-import { buildIxcCollectionTypes } from "./ixc-collection-types";
+import { NocoBaseClient } from "./client";
+import { buildCollectionTypes } from "./collection-types";
+import { generateCollectionTypes, generateFileHeader } from "./content";
 
 export async function runGenerateIxc(): Promise<GenerateTypesResult> {
 	const ixcOutputDir = config.ixcOutputDir ?? "src/@types/generated/ixc";
-
-	const resolvedOutputDir = path.resolve(ixcOutputDir);
-	if (!fs.existsSync(resolvedOutputDir)) {
-		fs.mkdirSync(resolvedOutputDir, { recursive: true });
-		logVerbose(`📁 Diretório criado: ${resolvedOutputDir}`);
-	}
+	const baseInterfaceNaming = resolveBaseInterfaceNamingConfig(
+		config.baseInterfaceNaming,
+	);
 
 	logInfo(`🔧 Gerando tipos IXC no diretório: ${ixcOutputDir}`);
 
-	const client = new IxcClient({
-		baseUrl: config.baseUrl,
-		token: config.token,
-		timeoutMs: config.requestTimeoutMs,
+	const client = new NocoBaseClient(
+		{
+			baseUrl: config.baseUrl,
+			token: config.token,
+			timeoutMs: config.requestTimeoutMs,
+		},
+		{
+			requestHeaders: {
+				"X-Data-Source": "d_db_ixcsoft",
+			},
+			enableSampleFieldFallback: true,
+		},
+	);
+
+	logVerbose(`📡 Conectando a: ${client.baseUrl} (IXC datasource)`);
+
+	const configuredCollectionNames = [...new Set(config.ixcCollections ?? [])]
+		.map((collectionName) => collectionName.trim())
+		.filter((collectionName) => collectionName.length > 0);
+
+	if (configuredCollectionNames.length === 0) {
+		throw new Error(
+			"Nenhuma collection IXC configurada em config.ixcCollections. Defina ao menos uma collection para gerar os tipos.",
+		);
+	}
+
+	const collections = configuredCollectionNames.map((name) => ({ name }));
+
+	logVerbose(
+		`📋 Collections IXC selecionadas: ${collections.map((collection) => collection.name).join(", ")}`,
+	);
+
+	const collectionTypes = await buildCollectionTypes(client, collections, {
+		onCollectionStart: ({ collectionName, index, total }) => {
+			logVerbose(`⏳ [${index}/${total}] Processando ${collectionName}...`);
+		},
 	});
 
-	const collectionNames = config.ixcCollections ?? [];
-	logVerbose(`📋 Collections IXC: ${collectionNames.join(", ")}`);
+	const filesContent = new Map<string, string>();
 
-	const types = await buildIxcCollectionTypes(client, collectionNames);
+	for (const [collectionName, types] of Object.entries(collectionTypes).sort(
+		([a], [b]) => a.localeCompare(b),
+	)) {
+		const content = [
+			generateFileHeader().trimEnd(),
+			"",
+			generateCollectionTypes(collectionName, types, baseInterfaceNaming),
+			"",
+		].join("\n");
 
-	const exports = Object.keys(types).map((name) => {
-		const pascal = name
-			.split("_")
-			.map((p) => p.charAt(0).toUpperCase() + p.slice(1))
-			.join("");
-		return `export type { ${pascal}, ${pascal}Relations, ${pascal}RelationKey } from "./${toFileName(name)}";`;
-	});
+		filesContent.set(`${toFileName(collectionName)}.ts`, content);
+	}
+
+	const exports = Object.keys(collectionTypes)
+		.sort((a, b) => a.localeCompare(b))
+		.map((collectionName) => {
+			const typeName = toCollectionTypeName(collectionName);
+			const baseTypeName = toCollectionBaseTypeName(
+				collectionName,
+				baseInterfaceNaming,
+			);
+
+			return `export type { ${baseTypeName}, ${typeName}Relations, ${typeName}RelationKey } from "./${toFileName(collectionName)}";`;
+		});
 
 	const indexContent = [
 		"/**",
@@ -64,10 +112,10 @@ export async function runGenerateIxc(): Promise<GenerateTypesResult> {
 			diff: indexResult.diff,
 		});
 
-		for (const [name] of Object.entries(types)) {
+		for (const [fileName, content] of filesContent) {
 			const preview = previewGeneratedFile(
-				"// placeholder",
-				path.join(ixcOutputDir, `${toFileName(name)}.ts`),
+				content,
+				path.join(ixcOutputDir, fileName),
 			);
 			results.push({
 				outputPath: preview.outputPath,
@@ -97,24 +145,10 @@ export async function runGenerateIxc(): Promise<GenerateTypesResult> {
 		changed: indexResult.changed,
 	});
 
-	for (const [name, t] of Object.entries(types)) {
-		const content = [
-			"/**",
-			" * Arquivo gerado automaticamente — NÃO EDITAR MANUALMENTE",
-			` * Collection: ${name}`,
-			" */",
-			"",
-			t.base,
-			"",
-			t.relations,
-			"",
-			t.relationKey,
-			"",
-		].join("\n");
-
+	for (const [fileName, content] of filesContent) {
 		const result = writeGeneratedFile(
 			content,
-			path.join(ixcOutputDir, `${toFileName(name)}.ts`),
+			path.join(ixcOutputDir, fileName),
 		);
 		results.push({ outputPath: result.outputPath, changed: result.changed });
 	}

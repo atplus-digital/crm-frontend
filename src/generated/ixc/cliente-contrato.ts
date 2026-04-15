@@ -1,6 +1,7 @@
 /**
- * Arquivo gerado automaticamente — NÃO EDITAR MANUALMENTE
- * Collection: cliente_contrato
+ * Arquivo gerado automaticamente
+ * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
+ * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
 export interface ClienteContrato {

@@ -21,6 +21,7 @@ export const T_NEGOCIACOES_TABLE_NAME = "t_negociacoes";
 
 export interface Negociacoes {
 	id: number;
+	f_fk_auditoria_automatica: number;
 	f_fk_contrato_ixc: number;
 	f_fk_cupom_desconto: number;
 	f_fk_negociacao_indicador: number;
