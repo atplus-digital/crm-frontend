@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { reset } from "#/features/auth";
 import { extractNocoBaseError } from "#/lib/api-errors";
-import { reset } from "#/modules/auth";
 
 function isUnauthorizedError(
 	error: unknown,

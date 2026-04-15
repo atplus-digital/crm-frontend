@@ -14,15 +14,15 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { cn } from "#/lib/utils";
 import {
 	usePessoasFisicas,
 	usePessoasJuridicas,
-} from "#/modules/cs/pessoas-hooks";
+} from "#/features/cs/pessoas-hooks";
 import type {
 	PessoaFisicaFilters,
 	PessoaJuridicaFilters,
-} from "#/modules/cs/pessoas-types";
+} from "#/features/cs/pessoas-types";
+import { cn } from "#/lib/utils";
 
 const pfColumns: ColumnDef<
 	{
@@ -243,7 +243,7 @@ export function CSPessoasPage() {
 						</CardHeader>
 						<CardContent className="space-y-4">
 							<div className="flex flex-wrap items-end gap-3">
-								<div className="flex-1 min-w-[200px]">
+								<div className="flex-1 min-w-50">
 									<Input
 										placeholder="Filtrar por nome..."
 										value={pfFilters.nome}
@@ -255,7 +255,7 @@ export function CSPessoasPage() {
 										}
 									/>
 								</div>
-								<div className="w-[200px]">
+								<div className="w-50">
 									<Input
 										placeholder="Filtrar por CPF..."
 										value={pfFilters.cpf}
@@ -264,7 +264,7 @@ export function CSPessoasPage() {
 										}
 									/>
 								</div>
-								<div className="w-[200px]">
+								<div className="w-50">
 									<Select
 										value={pfFilters.analiseIxc}
 										onValueChange={(value) =>
@@ -324,7 +324,7 @@ export function CSPessoasPage() {
 						</CardHeader>
 						<CardContent className="space-y-4">
 							<div className="flex flex-wrap items-end gap-3">
-								<div className="flex-1 min-w-[200px]">
+								<div className="flex-1 min-w-50">
 									<Input
 										placeholder="Filtrar por razão social..."
 										value={pjFilters.razaoSocial}
@@ -336,7 +336,7 @@ export function CSPessoasPage() {
 										}
 									/>
 								</div>
-								<div className="w-[200px]">
+								<div className="w-50">
 									<Input
 										placeholder="Filtrar por CNPJ..."
 										value={pjFilters.cnpj}

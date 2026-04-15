@@ -1,19 +1,9 @@
 {
 	"$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
-	"tags": [
-		"-lintignore"
-	],
+	"tags": ["-lintignore"],
 
-	"entry": [
-		"src/routes/router.tsx",
-		"scripts/**/index.ts"
-	],
-	"project": [
-		"src/**/*.ts",
-		"src/**/*.tsx",
-		"scripts/**/*.ts",
-		"src/**/*.css"
-	],
+	"entry": ["src/routes/router.tsx", "scripts/**/index.ts"],
+	"project": ["src/**/*.ts", "src/**/*.tsx", "scripts/**/*.ts", "src/**/*.css"],
 	"rules": {
 		"exports": "warn",
 		"types": "warn",
@@ -25,7 +15,7 @@
 	"ignore": [
 		"src/generated/**",
 		"src/components/ui/**",
-		"src/modules/custom-requests/**"
+		"src/features/custom-requests/**"
 	],
 	"ignoreDependencies": [],
 	"ignoreExportsUsedInFile": true

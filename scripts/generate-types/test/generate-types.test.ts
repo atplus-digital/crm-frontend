@@ -219,7 +219,6 @@ describe("runGenerateTypes", () => {
 		const writeGeneratedFile = vi
 			.fn()
 			.mockImplementation((_content, outputPath) => {
-				const _isCollectionsFile = outputPath?.includes("collections.ts");
 				return {
 					mode: "write" as const,
 					outputPath: outputPath || "/tmp/index.ts",

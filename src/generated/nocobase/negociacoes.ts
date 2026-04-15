@@ -3,18 +3,18 @@
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
+import type { Empresas } from "./empresas";
 import type {
 	AnexosNegociacoes,
 	Contratos,
 	CuponsDesconto,
-	Empresas,
 	NegociacoesComentarios,
 	NegociacoesItens,
 	OeQualirun,
 	Pacotes,
-	Pessoas,
 	QualirunAssinaturaGov,
 } from "./index";
+import type { Pessoas } from "./pessoas";
 import type { Users } from "./users";
 
 export const T_NEGOCIACOES_TABLE_NAME = "t_negociacoes";

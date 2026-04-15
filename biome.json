@@ -5,16 +5,15 @@
 		"clientKind": "git",
 		"useIgnoreFile": true
 	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"files": {
 		"ignoreUnknown": false,
 		"includes": [
+			"**",
 			"**/src/**/*",
-			"**/.vscode/**/*",
 			"**/vite.config.ts",
 			"**/vitest.config.ts",
 			"**/scripts/**/*",
-			"!**/.agents",
-			"!**/src/styles.css",
 			"!**/coverage/**/*",
 			"!**/dist/**/*",
 			"!**/.sisyphus/**/*"
@@ -24,7 +23,6 @@
 		"enabled": true,
 		"indentStyle": "tab"
 	},
-	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
@@ -34,6 +32,11 @@
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "double"
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
 		}
 	}
 }

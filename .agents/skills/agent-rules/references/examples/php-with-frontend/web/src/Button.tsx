@@ -1,10 +1,12 @@
-import React from "react";
-
 export interface ButtonProps {
 	label: string;
 	onClick: () => void;
 }
 
 export function Button({ label, onClick }: ButtonProps) {
-	return <button onClick={onClick}>{label}</button>;
+	return (
+		<button type="button" onClick={onClick}>
+			{label}
+		</button>
+	);
 }

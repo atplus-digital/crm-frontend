@@ -1,5 +1,5 @@
+import { authStore, requireAuth, validateTokenOnInit } from "#/features/auth";
 import { createLogger } from "#/lib/logger";
-import { authStore, requireAuth, validateTokenOnInit } from "#/modules/auth";
 import { UserDashboard } from "#/pages/dashboard/dashboard-page";
 
 const log = createLogger("auth");

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Badge } from "#/components/ui/badge";
+import type { NegociacaoWithRelations } from "#/features/cs/negociacoes-types";
 import { cn, formatCurrency } from "#/lib/utils";
-import type { NegociacaoWithRelations } from "#/modules/cs/negociacoes-types";
 
 const STATUS_CONFIG = [
 	{
@@ -104,7 +104,7 @@ interface KanbanColumnProps {
 
 function KanbanColumn({ status, cards }: KanbanColumnProps) {
 	return (
-		<div className="flex w-[280px] shrink-0 flex-col rounded-xl border border-border bg-muted/30">
+		<div className="flex w-70 shrink-0 flex-col rounded-xl border border-border bg-muted/30">
 			{/* Column header */}
 			<div
 				className={cn(
@@ -116,7 +116,7 @@ function KanbanColumn({ status, cards }: KanbanColumnProps) {
 					<div className={cn("size-2.5 rounded-full", status.colorClass)} />
 					<h3 className="text-sm font-semibold">{status.label}</h3>
 				</div>
-				<Badge variant="secondary" className="h-5 min-w-[24px] text-xs">
+				<Badge variant="secondary" className="h-5 min-w-6 text-xs">
 					{cards.length}
 				</Badge>
 			</div>

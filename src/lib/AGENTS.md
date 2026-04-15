@@ -9,11 +9,11 @@ Pure utility functions with no React dependency — shared helpers used across t
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
-| File        | Purpose                                                                             |
-| ----------- | ----------------------------------------------------------------------------------- |
-| `utils.ts`  | General utilities: `cn()` (clsx + tailwind-merge), `formatDateInPortuguese()`, `formatDatePtBR()`, `formatCurrency()`, `getInitials()` |
-| `logger.ts` | Structured logger: `createLogger(module)` factory. Dev mode → all levels; production → warn + error only |
-| `filter-builder.ts` | Generic NocoBase/IXC filter builder: `buildFilter()`, `eq()`, `includes()`, `gt()`, `gte()`, `lt()`, `lte()`, `or()`, `nestedField()` |
+| File                | Purpose                                                                                                                                |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `utils.ts`          | General utilities: `cn()` (clsx + tailwind-merge), `formatDateInPortuguese()`, `formatDatePtBR()`, `formatCurrency()`, `getInitials()` |
+| `logger.ts`         | Structured logger: `createLogger(module)` factory. Dev mode → all levels; production → warn + error only                               |
+| `filter-builder.ts` | Generic NocoBase/IXC filter builder: `buildFilter()`, `eq()`, `includes()`, `gt()`, `gte()`, `lt()`, `lte()`, `or()`, `nestedField()`  |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START patterns -->
@@ -66,11 +66,11 @@ const filter = buildFilter([
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples
-| Pattern           | Reference file              |
-| ----------------- | --------------------------- |
-| Logger usage      | `src/modules/auth/guard.ts`  |
-| Utility function  | `src/lib/utils.ts`           |
-| Filter builder    | `src/modules/cs/pessoas-service.ts` |
+| Pattern          | Reference file                       |
+| ---------------- | ------------------------------------ |
+| Logger usage     | `src/features/auth/guard.ts`         |
+| Utility function | `src/lib/utils.ts`                   |
+| Filter builder   | `src/features/cs/pessoas-service.ts` |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START formatting -->

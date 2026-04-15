@@ -9,17 +9,17 @@ Repositórios de dados — camada de acesso a dados externos (NocoBase, IXCSoft)
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
-| File                        | Purpose                                                                 |
-| --------------------------- | ----------------------------------------------------------------------- |
-| `index.ts`                  | Barrel export — repositórios (`nocobaseRepository`, `ixcRepository`) e tipos |
-| `nocobase-repository.ts`    | `NocoBaseRepository` + `TypedNocoBaseClient` (interno) — wrappers de alto nível para operações NocoBase com collections tipadas |
-| `ixc-repository.ts`         | `IxcRepository` — operações IXCSoft via NocoBase com header `X-Data-Source: d_db_ixcsoft` |
-| `types.ts`                  | Tipos compartilhados: `ApiRequestConfig`, `ListParams`, `PaginatedResponse`, `NocoBaseClient` |
+| File                     | Purpose                                                                                                                         |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| `index.ts`               | Barrel export — repositórios (`nocobaseRepository`, `ixcRepository`) e tipos                                                    |
+| `nocobase-repository.ts` | `NocoBaseRepository` + `TypedNocoBaseClient` (interno) — wrappers de alto nível para operações NocoBase com collections tipadas |
+| `ixc-repository.ts`      | `IxcRepository` — operações IXCSoft via NocoBase com header `X-Data-Source: d_db_ixcsoft`                                       |
+| `types.ts`               | Tipos compartilhados: `ApiRequestConfig`, `ListParams`, `PaginatedResponse`, `NocoBaseClient`                                   |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START patterns -->
 ## Patterns
-- Import de `#/modules/repositories` — não importar de sub-arquivos diretamente
+- Import de `#/features/repositories` — não importar de sub-arquivos diretamente
 - Repositórios são singletons exportados: `nocobaseRepository`, `ixcRepository`
 - Serviços de domínio usam repositórios, não clients diretamente
 - Logging estruturado via `createLogger("repositories:...")`
@@ -32,30 +32,30 @@ Repositórios de dados — camada de acesso a dados externos (NocoBase, IXCSoft)
 
 ### NocoBaseRepository
 
-| Method | Purpose | Example |
-|--------|---------|---------|
-| `request<T>(config)` | Requisição direta ao NocoBase | `nocobaseRepository.request<{data: T}>({url: "users:list", method: "GET"})` |
-| `list<T>(collection, params)` | Listar registros com paginação e relações tipadas | `nocobaseRepository.list<Users>("users", {page: 1, pageSize: 20, appends: ["roles"]})` |
-| `get<T>(collection, id, options)` | Buscar por ID com relações opcionais | `nocobaseRepository.get<Users>("users", 123, {appends: ["departments"]})` |
-| `create<T>(collection, data)` | Criar registro | `nocobaseRepository.create<Users>("users", {email: "..."})` |
-| `update<T>(collection, id, data)` | Atualizar registro | `nocobaseRepository.update("users", 123, {phone: "..."})` |
-| `delete(collection, id)` | Remover registro | `nocobaseRepository.delete("users", 123)` |
-| `count(collection, params)` | Contar registros com filtro opcional | `nocobaseRepository.count("users", {filter: {status: "active"}})` |
-| `signIn(credentials)` | Autenticação | `nocobaseRepository.signIn({email, password})` |
-| `signOut()` | Logout | `nocobaseRepository.signOut()` |
-| `checkAuth<T>()` | Verificar token via `auth:check` | `nocobaseRepository.checkAuth<AuthUser>()` |
-| `clearToken()` | Limpar token do client | `nocobaseRepository.clearToken()` |
+| Method                            | Purpose                                           | Example                                                                                |
+| --------------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `request<T>(config)`              | Requisição direta ao NocoBase                     | `nocobaseRepository.request<{data: T}>({url: "users:list", method: "GET"})`            |
+| `list<T>(collection, params)`     | Listar registros com paginação e relações tipadas | `nocobaseRepository.list<Users>("users", {page: 1, pageSize: 20, appends: ["roles"]})` |
+| `get<T>(collection, id, options)` | Buscar por ID com relações opcionais              | `nocobaseRepository.get<Users>("users", 123, {appends: ["departments"]})`              |
+| `create<T>(collection, data)`     | Criar registro                                    | `nocobaseRepository.create<Users>("users", {email: "..."})`                            |
+| `update<T>(collection, id, data)` | Atualizar registro                                | `nocobaseRepository.update("users", 123, {phone: "..."})`                              |
+| `delete(collection, id)`          | Remover registro                                  | `nocobaseRepository.delete("users", 123)`                                              |
+| `count(collection, params)`       | Contar registros com filtro opcional              | `nocobaseRepository.count("users", {filter: {status: "active"}})`                      |
+| `signIn(credentials)`             | Autenticação                                      | `nocobaseRepository.signIn({email, password})`                                         |
+| `signOut()`                       | Logout                                            | `nocobaseRepository.signOut()`                                                         |
+| `checkAuth<T>()`                  | Verificar token via `auth:check`                  | `nocobaseRepository.checkAuth<AuthUser>()`                                             |
+| `clearToken()`                    | Limpar token do client                            | `nocobaseRepository.clearToken()`                                                      |
 
 **Type safety:** Os métodos `list`, `get`, `create`, `update`, `delete` e `count` usam `CollectionMap[T]` e `CollectionRelationsMap[T]` — apenas collections e relações que existem no schema gerado são permitidas.
 
 ### IxcRepository
 
-| Method | Purpose | Example |
-|--------|---------|---------|
-| `request<T>(config)` | Requisição ao IXC (header `X-Data-Source` aplicado automaticamente) | `ixcRepository.request({url: "cliente_contrato:list", method: "GET"})` |
-| `list<T>(endpoint, params)` | Listar do IXC com paginação | `ixcRepository.list<Contrato>("cliente_contrato", {page: 1})` |
-| `get<T>(endpoint, id)` | Buscar por ID (retorna primeiro resultado) | `ixcRepository.get<Contrato>("cliente_contrato", 123)` |
-| `getContratos<T>(params)` | Listar contratos com filtros pré-buildados | `ixcRepository.getContratos({filters: {cpfCnpj: "123...", status: "A"}})` |
+| Method                      | Purpose                                                             | Example                                                                   |
+| --------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request<T>(config)`        | Requisição ao IXC (header `X-Data-Source` aplicado automaticamente) | `ixcRepository.request({url: "cliente_contrato:list", method: "GET"})`    |
+| `list<T>(endpoint, params)` | Listar do IXC com paginação                                         | `ixcRepository.list<Contrato>("cliente_contrato", {page: 1})`             |
+| `get<T>(endpoint, id)`      | Buscar por ID (retorna primeiro resultado)                          | `ixcRepository.get<Contrato>("cliente_contrato", 123)`                    |
+| `getContratos<T>(params)`   | Listar contratos com filtros pré-buildados                          | `ixcRepository.getContratos({filters: {cpfCnpj: "123...", status: "A"}})` |
 
 **Filtros do `getContratos`:**
 - `cpfCnpj`: Busca parcial em `f_nc_cliente.cnpj_cpf`
@@ -105,7 +105,7 @@ type NocoBaseClient = APIClient;
 
 ### Listar dados com paginação e relações
 ```typescript
-import { nocobaseRepository } from "#/modules/repositories";
+import { nocobaseRepository } from "#/features/repositories";
 import type { Users } from "#/@types/generated/crm/collections";
 
 const response = await nocobaseRepository.list<Users>("users", {
@@ -121,7 +121,7 @@ const response = await nocobaseRepository.list<Users>("users", {
 
 ### Criar/atualizar registro
 ```typescript
-import { nocobaseRepository } from "#/modules/repositories";
+import { nocobaseRepository } from "#/features/repositories";
 import type { Users } from "#/@types/generated/crm/collections";
 
 const user = await nocobaseRepository.create<Users>("users", {
@@ -134,7 +134,7 @@ await nocobaseRepository.update("users", user.id, { phone: "123456789" });
 
 ### Buscar com relações incluídas
 ```typescript
-import { nocobaseRepository } from "#/modules/repositories";
+import { nocobaseRepository } from "#/features/repositories";
 
 const user = await nocobaseRepository.get<Users>("users", 123, {
   appends: ["departments", "roles"],
@@ -144,7 +144,7 @@ const user = await nocobaseRepository.get<Users>("users", 123, {
 
 ### Contar registros com filtro
 ```typescript
-import { nocobaseRepository } from "#/modules/repositories";
+import { nocobaseRepository } from "#/features/repositories";
 
 const { count } = await nocobaseRepository.count("users", {
   filter: { status: { $eq: "active" } },
@@ -153,7 +153,7 @@ const { count } = await nocobaseRepository.count("users", {
 
 ### IXC com filtros complexos
 ```typescript
-import { ixcRepository } from "#/modules/repositories";
+import { ixcRepository } from "#/features/repositories";
 
 const contratos = await ixcRepository.getContratos<ContratoWithCliente>({
   page: 1,
@@ -167,7 +167,7 @@ const contratos = await ixcRepository.getContratos<ContratoWithCliente>({
 
 ### Requisição direta com config customizada
 ```typescript
-import { ixcRepository } from "#/modules/repositories";
+import { ixcRepository } from "#/features/repositories";
 
 const data = await ixcRepository.request<MyType>({
   url: "custom:endpoint",
@@ -233,10 +233,10 @@ const data = await ixcRepository.request<MyType>({
 ### Mock de repositórios (module-level)
 ```typescript
 import { vi } from "vitest";
-import { nocobaseRepository } from "#/modules/repositories";
+import { nocobaseRepository } from "#/features/repositories";
 import type { Users } from "#/@types/generated/crm/collections";
 
-vi.mock("#/modules/repositories", () => ({
+vi.mock("#/features/repositories", () => ({
   nocobaseRepository: {
     list: vi.fn().mockResolvedValue({
       data: [{ id: 1, email: "test@example.com" }] as Users[],
@@ -254,7 +254,7 @@ vi.mock("#/modules/repositories", () => ({
 ### Mock com `vi.spyOn()` (recomendado)
 ```typescript
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { ixcRepository } from "#/modules/repositories";
+import { ixcRepository } from "#/features/repositories";
 import { fetchContratos } from "./contratos-service";
 
 describe("contratos-service", () => {

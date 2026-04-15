@@ -104,11 +104,11 @@ describe("workspace-locker", () => {
 			expect(isWorkspaceLocked()).toBe(false);
 		});
 
-		it("deve retornar true quando readonlyInclude contém o padrão src/@types/generated/**", async () => {
+		it("deve retornar true quando readonlyInclude contém o padrão src/generated/**", async () => {
 			mockFs.existsSync.mockReturnValue(true);
 			mockFs.readFileSync.mockReturnValue(
 				JSON.stringify({
-					"files.readonlyInclude": { "src/@types/generated/**": true },
+					"files.readonlyInclude": { "src/generated/**": true },
 				}),
 			);
 			const { isWorkspaceLocked } = await import(
@@ -150,7 +150,7 @@ describe("workspace-locker", () => {
 			mockFs.existsSync.mockReturnValue(true);
 			mockFs.readFileSync.mockReturnValue(
 				JSON.stringify({
-					"files.readonlyInclude": { "src/@types/generated/**": true },
+					"files.readonlyInclude": { "src/generated/**": true },
 				}),
 			);
 
@@ -184,9 +184,7 @@ describe("workspace-locker", () => {
 
 			const writtenContent = mockFs.writeFileSync.mock.calls[0][1];
 			const parsed = JSON.parse(writtenContent);
-			expect(parsed["files.readonlyInclude"]["src/@types/generated/**"]).toBe(
-				true,
-			);
+			expect(parsed["files.readonlyInclude"]["src/generated/**"]).toBe(true);
 		});
 
 		it("deve criar novo readonlyInclude em settings.json existente sem readonlyInclude", async () => {
@@ -214,9 +212,7 @@ describe("workspace-locker", () => {
 			const writtenContent = mockFs.writeFileSync.mock.calls[0][1];
 			const parsed = JSON.parse(writtenContent);
 			expect(parsed["editor.fontSize"]).toBe(14);
-			expect(parsed["files.readonlyInclude"]["src/@types/generated/**"]).toBe(
-				true,
-			);
+			expect(parsed["files.readonlyInclude"]["src/generated/**"]).toBe(true);
 		});
 
 		it("deve adicionar padrão a readonlyInclude existente em settings.json", async () => {
@@ -238,9 +234,7 @@ describe("workspace-locker", () => {
 			const writtenContent = mockFs.writeFileSync.mock.calls[0][1];
 			const parsed = JSON.parse(writtenContent);
 			expect(parsed["files.readonlyInclude"]["src/other/**"]).toBe(true);
-			expect(parsed["files.readonlyInclude"]["src/@types/generated/**"]).toBe(
-				true,
-			);
+			expect(parsed["files.readonlyInclude"]["src/generated/**"]).toBe(true);
 		});
 
 		it("deve adicionar mainOutputPattern ao readonlyInclude quando não estiver presente", async () => {
@@ -264,9 +258,7 @@ describe("workspace-locker", () => {
 			expect(
 				parsed["files.readonlyInclude"]["src/@types/generated/crm/index.ts"],
 			).toBe(true);
-			expect(parsed["files.readonlyInclude"]["src/@types/generated/**"]).toBe(
-				true,
-			);
+			expect(parsed["files.readonlyInclude"]["src/generated/**"]).toBe(true);
 		});
 
 		it("não deve adicionar mainOutputPattern duplicado quando já estiver em readonlyInclude", async () => {
@@ -291,9 +283,7 @@ describe("workspace-locker", () => {
 			expect(
 				parsed["files.readonlyInclude"]["src/@types/generated/crm/index.ts"],
 			).toBe(true);
-			expect(parsed["files.readonlyInclude"]["src/@types/generated/**"]).toBe(
-				true,
-			);
+			expect(parsed["files.readonlyInclude"]["src/generated/**"]).toBe(true);
 		});
 
 		it("deve registrar mensagem de sucesso no console após bloqueio", async () => {

@@ -12,15 +12,15 @@ Reusable frontend hooks shared across routes and components. Currently implement
 
 ### Current Hook Inventory
 
-| Hook | Type | Returns | Dependencies | Used By |
-|------|------|---------|--------------|---------|
+| Hook          | Type        | Returns   | Dependencies  | Used By                          |
+| ------------- | ----------- | --------- | ------------- | -------------------------------- |
 | `useIsMobile` | Media query | `boolean` | `usehooks-ts` | Layout components, responsive UI |
 
 ### State Management Integration
 
 Hooks in this folder integrate with:
 
-- **TanStack Store**: Permission and auth state (see `src/modules/permissions/hooks.ts`, `src/modules/auth/`)
+- **TanStack Store**: Permission and auth state (see `src/features/permissions/hooks.ts`, `src/features/auth/`)
 - **TanStack Query**: Server state and data fetching (see `src/integrations/tanstack/query/`)
 - **usehooks-ts**: Common patterns like media queries, debounce, localStorage
 
@@ -40,21 +40,21 @@ Keep hooks in modules when:
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
-| File | Purpose |
-|------|---------|
-| `use-mobile.ts` | `useIsMobile()` — media query hook for responsive UI (mobile breakpoint at 768px) |
+| File                | Purpose                                                                                                  |
+| ------------------- | -------------------------------------------------------------------------------------------------------- |
+| `use-mobile.ts`     | `useIsMobile()` — media query hook for responsive UI (mobile breakpoint at 768px)                        |
 | `use-pagination.ts` | `usePagination()` — standardized pagination state management for TanStack Table with server-side support |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START naming-conventions -->
 ## Naming Conventions
-| Pattern | Example | When to Use |
-| ------- | ------- | ----------- |
-| `use` prefix | `useCan`, `useTheme` | All custom hooks must start with `use` |
-| PascalCase after prefix | `useHasSnippet`, `useIsAdmin` | Descriptive name following React conventions |
-| Action-oriented | `useCan`, `useCanEdit` | Hooks that check permissions or capabilities |
-| State-oriented | `useRoleNames` | Hooks that expose state or data |
-| Boolean returns | `useIsAdmin`, `useCan` | Hooks returning boolean should use `is` or `can` prefix |
+| Pattern                 | Example                       | When to Use                                             |
+| ----------------------- | ----------------------------- | ------------------------------------------------------- |
+| `use` prefix            | `useCan`, `useTheme`          | All custom hooks must start with `use`                  |
+| PascalCase after prefix | `useHasSnippet`, `useIsAdmin` | Descriptive name following React conventions            |
+| Action-oriented         | `useCan`, `useCanEdit`        | Hooks that check permissions or capabilities            |
+| State-oriented          | `useRoleNames`                | Hooks that expose state or data                         |
+| Boolean returns         | `useIsAdmin`, `useCan`        | Hooks returning boolean should use `is` or `can` prefix |
 
 **Rules:**
 - Always export hooks with `export function` or `export const` for tree-shaking
@@ -219,6 +219,6 @@ export function MyTable({ onPageChange, onPageSizeChange }) {
 | Media query hook     | `src/hooks/use-mobile.ts`                           |
 | Auth bootstrap usage | `src/routes/__root.tsx`                             |
 | Shared query context | `src/integrations/tanstack/query/root-provider.tsx` |
-| Permission hooks     | `src/modules/permissions/hooks.ts`                  |
+| Permission hooks     | `src/features/permissions/hooks.ts`                 |
 | Theme hook           | `src/components/theme-provider.tsx`                 |
 <!-- AGENTS-GENERATED:END golden-samples -->

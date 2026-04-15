@@ -9,14 +9,14 @@ Custom Requests module — dynamic request configuration, validation schemas, an
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
-| File | Purpose |
-|------|---------|
-| `index.ts` | Barrel export — registry, schemas, service, hooks, types |
-| `registry.ts` | Registry pattern for custom request configurations |
-| `schemas.ts` | Zod schemas for custom request validation |
-| `types.ts` | TypeScript interfaces and error classes |
-| `service.ts` | Service layer for CRUD operations on custom requests |
-| `hooks.ts` | React hooks for custom requests functionality |
+| File          | Purpose                                                  |
+| ------------- | -------------------------------------------------------- |
+| `index.ts`    | Barrel export — registry, schemas, service, hooks, types |
+| `registry.ts` | Registry pattern for custom request configurations       |
+| `schemas.ts`  | Zod schemas for custom request validation                |
+| `types.ts`    | TypeScript interfaces and error classes                  |
+| `service.ts`  | Service layer for CRUD operations on custom requests     |
+| `hooks.ts`    | React hooks for custom requests functionality            |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START patterns -->
@@ -29,9 +29,9 @@ Custom Requests module — dynamic request configuration, validation schemas, an
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples
-| Pattern | Reference file |
-|---------|---------------|
-| Barrel import usage | `src/modules/auth/index.ts` |
-| Service layer pattern | `src/modules/auth/service.ts` |
-| Zod schema pattern | `src/modules/auth/types.ts` |
+| Pattern               | Reference file                 |
+| --------------------- | ------------------------------ |
+| Barrel import usage   | `src/features/auth/index.ts`   |
+| Service layer pattern | `src/features/auth/service.ts` |
+| Zod schema pattern    | `src/features/auth/types.ts`   |
 <!-- AGENTS-GENERATED:END golden-samples -->

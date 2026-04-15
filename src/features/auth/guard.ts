@@ -1,9 +1,9 @@
 import { redirect } from "react-router";
-import { createLogger } from "#/lib/logger";
 import {
 	resetPermissions,
 	setPermissionsFromRoles,
-} from "#/modules/permissions";
+} from "#/features/permissions";
+import { createLogger } from "#/lib/logger";
 import { checkAuth } from "./service";
 import { authStore, reset, setUser } from "./store";
 

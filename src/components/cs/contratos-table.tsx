@@ -9,8 +9,8 @@ import {
 import { DataTableColumnHeader } from "#/components/tables/data-table-column-header";
 import { DataTableWithPagination } from "#/components/tables/data-table-with-pagination";
 import { Button } from "#/components/ui/button";
+import type { ContratoWithCliente } from "#/features/cs/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";
-import type { ContratoWithCliente } from "#/modules/cs/contratos-types";
 
 interface PaginationInfo {
 	page: number;

@@ -3,7 +3,9 @@
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
+import type { Empresas } from "./empresas";
 import type { Negociacoes } from "./negociacoes";
+import type { Pessoas } from "./pessoas";
 import type { Users } from "./users";
 
 export interface ColaboradoresDoSetor {
@@ -866,27 +868,6 @@ export interface DiscosRelations {
 
 export type DiscosRelationKey = keyof DiscosRelations;
 
-export interface Empresas {
-	id: number;
-	f_cnpj: string;
-	f_cpf_responsavel: string;
-	f_email_responsavel: string;
-	f_fundacao: string;
-	f_ie: string;
-	f_nome_fantasia: string;
-	f_razao_social: string;
-	f_responsavel: string;
-	updatedAt: string;
-	createdAt: string;
-}
-
-export interface EmpresasRelations {
-	createdBy?: Users | null;
-	updatedBy?: Users | null;
-}
-
-export type EmpresasRelationKey = keyof EmpresasRelations;
-
 export interface Equipamentos {
 	id: number;
 	f_fk_ativo_rack: number;
@@ -1448,26 +1429,6 @@ export interface PeriodosFeriasRelations {
 }
 
 export type PeriodosFeriasRelationKey = keyof PeriodosFeriasRelations;
-
-export interface Pessoas {
-	id: number;
-	f_analise_ixc: string;
-	f_cpf: string;
-	f_credito: string;
-	f_data_nascimento: string;
-	f_nome: string;
-	f_sexo: string;
-	f_vky78cvjtdw: number;
-	updatedAt: string;
-	createdAt: string;
-}
-
-export interface PessoasRelations {
-	createdBy?: Users | null;
-	updatedBy?: Users | null;
-}
-
-export type PessoasRelationKey = keyof PessoasRelations;
 
 export interface Produtos {
 	id: number;

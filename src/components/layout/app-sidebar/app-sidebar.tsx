@@ -7,7 +7,7 @@ import {
 	SidebarMenuItem,
 	SidebarRail,
 } from "#/components/ui/sidebar";
-import { authStore, signOut } from "#/modules/auth";
+import { authStore, signOut } from "#/features/auth";
 import { SidebarHeaderComponent } from "./sidebar-header";
 import { SidebarNavigation } from "./sidebar-navigation";
 import { SidebarUserMenu } from "./sidebar-user-menu";

@@ -3,8 +3,8 @@ import { Download, ExternalLink, RefreshCw } from "lucide-react";
 import { DataTableWithPagination } from "#/components/tables/data-table-with-pagination";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
+import type { NegociacaoWithRelations } from "#/features/cs/negociacoes-types";
 import { cn, formatCurrency, formatDatePtBR } from "#/lib/utils";
-import type { NegociacaoWithRelations } from "#/modules/cs/negociacoes-types";
 
 const statusBadgeStyles: Record<string, string> = {
 	Novo: "bg-blue-500/10 text-blue-600 border-blue-500/20 hover:bg-blue-500/20",
@@ -85,7 +85,7 @@ const columns: ColumnDef<NegociacaoItem>[] = [
 		accessorKey: "f_substatus",
 		header: "Substatus",
 		cell: ({ row }) => (
-			<span className="max-w-[250px] truncate block">
+			<span className="max-w-62.5 truncate block">
 				{row.original.f_substatus || "-"}
 			</span>
 		),

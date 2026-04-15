@@ -12,8 +12,8 @@ import {
 	Form,
 } from "#/components/ui/form";
 import { Input } from "#/components/ui/input";
+import { confirmPasswordReset } from "#/features/auth";
 import { extractNocoBaseError } from "#/lib/api-errors";
-import { confirmPasswordReset } from "#/modules/auth";
 
 const schema = z
 	.object({

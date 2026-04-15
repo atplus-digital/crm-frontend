@@ -20,8 +20,8 @@ import {
 	Form,
 } from "#/components/ui/form";
 import { Input } from "#/components/ui/input";
+import { authStore, updateProfile } from "#/features/auth";
 import { extractNocoBaseError } from "#/lib/api-errors";
-import { authStore, updateProfile } from "#/modules/auth";
 
 const profileSchema = z.object({
 	email: z.email("E-mail inválido"),

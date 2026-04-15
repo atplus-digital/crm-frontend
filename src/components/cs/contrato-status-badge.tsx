@@ -2,7 +2,7 @@ import { Badge } from "#/components/ui/badge";
 import {
 	CONTRATO_STATUS_LABELS,
 	INTERNET_STATUS_LABELS,
-} from "#/modules/cs/contratos-types";
+} from "#/features/cs/contratos-types";
 
 const contratoStatusClasses: Record<string, string> = {
 	A: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400",

@@ -1,12 +1,11 @@
 import type { APIClient } from "@nocobase/sdk";
-
+import { nocobaseClient } from "#/features/auth/client";
 import type {
 	CollectionMap,
 	CollectionName,
 	CollectionRelationsMap,
 } from "#/generated/nocobase/collections";
 import { createLogger } from "#/lib/logger";
-import { nocobaseClient } from "#/modules/auth/client";
 import type {
 	ApiRequestConfig,
 	ListParams,

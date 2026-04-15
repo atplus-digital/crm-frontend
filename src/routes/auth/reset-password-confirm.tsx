@@ -1,8 +1,8 @@
 import { redirect, useLoaderData } from "react-router";
 import { GuestLayout } from "#/components/auth/auth-layout";
 import { env } from "#/env";
+import { requireGuest } from "#/features/auth";
 import { createLogger } from "#/lib/logger";
-import { requireGuest } from "#/modules/auth";
 import ResetPasswordConfirmForm from "#/pages/auth/reset-password-confirm-page";
 
 const log = createLogger("auth");

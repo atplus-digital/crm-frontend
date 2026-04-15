@@ -12,11 +12,11 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { useNegociacoes } from "#/modules/cs/negociacoes-hooks";
+import { useNegociacoes } from "#/features/cs/negociacoes-hooks";
 import type {
 	NegociacaoFilters,
 	NegociacaoStatus,
-} from "#/modules/cs/negociacoes-types";
+} from "#/features/cs/negociacoes-types";
 
 const STATUS_OPTIONS: { value: NegociacaoStatus; label: string }[] = [
 	{ value: "Novo", label: "Novo" },

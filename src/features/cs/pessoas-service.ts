@@ -1,6 +1,8 @@
 import type { CollectionRelationsMap } from "#/generated/nocobase/collections";
+import type { Empresas } from "#/generated/nocobase/empresas";
+import type { Pessoas } from "#/generated/nocobase/pessoas";
 import { buildFilter, eq, includes } from "#/lib/filter-builder";
-import { nocobaseRepository } from "#/modules/repositories";
+import { nocobaseRepository } from "#/repositories";
 import type {
 	PessoaFisica,
 	PessoaFisicaFilters,
@@ -123,7 +125,7 @@ export async function createPessoaFisica(
 ): Promise<PessoaFisica> {
 	const result = await nocobaseRepository.create<"t_pessoas">(
 		"t_pessoas",
-		data as Partial<import("#/generated/nocobase/index").Pessoas>,
+		data as Partial<Pessoas>,
 	);
 	return result as unknown as PessoaFisica;
 }
@@ -135,7 +137,7 @@ export async function updatePessoaFisica(
 	const result = await nocobaseRepository.update<"t_pessoas">(
 		"t_pessoas",
 		id,
-		data as Partial<import("#/generated/nocobase/index").Pessoas>,
+		data as Partial<Pessoas>,
 	);
 	return result as unknown as PessoaFisica;
 }
@@ -149,7 +151,7 @@ export async function createPessoaJuridica(
 ): Promise<PessoaJuridica> {
 	const result = await nocobaseRepository.create<"t_empresas">(
 		"t_empresas",
-		data as Partial<import("#/generated/nocobase/index").Empresas>,
+		data as Partial<Empresas>,
 	);
 	return result as unknown as PessoaJuridica;
 }
@@ -161,7 +163,7 @@ export async function updatePessoaJuridica(
 	const result = await nocobaseRepository.update<"t_empresas">(
 		"t_empresas",
 		id,
-		data as Partial<import("#/generated/nocobase/index").Empresas>,
+		data as Partial<Empresas>,
 	);
 	return result as unknown as PessoaJuridica;
 }

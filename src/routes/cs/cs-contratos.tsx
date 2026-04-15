@@ -1,4 +1,4 @@
-import { requireAuth } from "#/modules/auth";
+import { requireAuth } from "#/features/auth";
 import { ContratosPage } from "#/pages/cs/contratos-page";
 
 export async function loader() {

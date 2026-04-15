@@ -1,5 +1,5 @@
 import { createLogger } from "#/lib/logger";
-import { nocobaseRepository } from "#/modules/repositories";
+import { nocobaseRepository } from "#/repositories";
 import {
 	CustomRequestErrorCode,
 	CustomRequestNetworkError,

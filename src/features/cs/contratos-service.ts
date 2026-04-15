@@ -1,5 +1,5 @@
 import { buildFilter, eq } from "#/lib/filter-builder";
-import { ixcRepository } from "#/modules/repositories";
+import { ixcRepository } from "#/repositories";
 import type {
 	ContratoFilters,
 	ContratoListParams,

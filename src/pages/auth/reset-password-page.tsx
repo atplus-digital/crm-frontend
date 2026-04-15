@@ -13,7 +13,7 @@ import {
 	Form,
 } from "#/components/ui/form";
 import { Input } from "#/components/ui/input";
-import { requestPasswordReset } from "#/modules/auth";
+import { requestPasswordReset } from "#/features/auth";
 
 const schema = z.object({
 	email: z.string().min(1, "Obrigatório").email("E-mail inválido"),

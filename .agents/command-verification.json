@@ -1,13 +1,15 @@
 {
-  "verified_at": "2026-04-10T19:18:27Z",
-  "smoke_tested": false,
-  "commands": {
-    "pnpm dlx tsc --noEmit": {"exists": false},
-    "pnpm dlx vitest run": {"exists": false},
-    ".agents/skills/agent-rules/references/examples/go-with-internal-web-tsx/internal/web/src/Button.tsx": {"exists": false},
-    "pnpm test": {"exists": true},
-    "pnpm build": {"exists": true},
-    "pnpm dlx eslint .": {"exists": false},
-    "pnpm dlx prettier --write .": {"exists": false}
-  }
+	"verified_at": "2026-04-10T19:18:27Z",
+	"smoke_tested": false,
+	"commands": {
+		"pnpm dlx tsc --noEmit": { "exists": false },
+		"pnpm dlx vitest run": { "exists": false },
+		".agents/skills/agent-rules/references/examples/go-with-internal-web-tsx/internal/web/src/Button.tsx": {
+			"exists": false
+		},
+		"pnpm test": { "exists": true },
+		"pnpm build": { "exists": true },
+		"pnpm dlx eslint .": { "exists": false },
+		"pnpm dlx prettier --write .": { "exists": false }
+	}
 }

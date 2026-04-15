@@ -19,18 +19,18 @@ Authentication UI components — login and password-reset flows, and shared auth
 
 <!-- AGENTS-GENERATED:START filemap -->
 ## Key Files
-| File | Purpose |
-|------|---------|
-| `auth-layout.tsx` | `GuestLayout` component — centered card layout for auth pages with title/description props |
-| `login-form.tsx` | `LoginForm` — React Hook Form + Zod login form, calls `signIn()`, handles `?returnTo` redirect, uses `toast` for errors |
-| `login-page.tsx` | `LoginPage` — Composes `GuestLayout` + `LoginForm` with CRM ATPlus branding |
-| `reset-password-form.tsx` | `ResetPasswordForm` (default export) — React Hook Form + Zod email form with success state toggle |
+| File                              | Purpose                                                                                                                                  |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth-layout.tsx`                 | `GuestLayout` component — centered card layout for auth pages with title/description props                                               |
+| `login-form.tsx`                  | `LoginForm` — React Hook Form + Zod login form, calls `signIn()`, handles `?returnTo` redirect, uses `toast` for errors                  |
+| `login-page.tsx`                  | `LoginPage` — Composes `GuestLayout` + `LoginForm` with CRM ATPlus branding                                                              |
+| `reset-password-form.tsx`         | `ResetPasswordForm` (default export) — React Hook Form + Zod email form with success state toggle                                        |
 | `reset-password-confirm-form.tsx` | `ResetPasswordConfirmForm` (default export) — React Hook Form + Zod new password form with cross-field validation, receives `token` prop |
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START patterns -->
 ## Patterns
-- Components call auth functions through `#/modules/auth`; they do not import client or store sub-files directly.
+- Components call auth functions through `#/features/auth`; they do not import client or store sub-files directly.
 - **All forms use React Hook Form + Zod** — `useForm` from `react-hook-form`, `zodResolver` from `@hookform/resolvers`, `Form`/`Field`/`FieldLabel`/`FieldControl`/`FieldError` from `#/components/ui/form`.
 - **Error notifications use `toast` from `sonner`** — server errors displayed via `toast.error()` with `extractNocoBaseError()` helper for parsing.
 - `form.formState.isSubmitting` for button state — never manual `isLoading` state.
@@ -74,12 +74,12 @@ Authentication UI components — login and password-reset flows, and shared auth
 - No spinner icons — text change provides sufficient feedback
 
 ### shadcn Components Used
-| Component | Source | Usage |
-|-----------|--------|-------|
-| `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent` | `#/components/ui/card` | Layout wrapper in `GuestLayout` |
-| `Button` | `#/components/ui/button` | Submit buttons with full-width styling |
-| `Input` | `#/components/ui/input` | Email and password fields |
-| `Form`, `Field`, `FieldLabel`, `FieldControl`, `FieldError` | `#/components/ui/form` | RHF form structure with validation |
+| Component                                                           | Source                   | Usage                                  |
+| ------------------------------------------------------------------- | ------------------------ | -------------------------------------- |
+| `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent` | `#/components/ui/card`   | Layout wrapper in `GuestLayout`        |
+| `Button`                                                            | `#/components/ui/button` | Submit buttons with full-width styling |
+| `Input`                                                             | `#/components/ui/input`  | Email and password fields              |
+| `Form`, `Field`, `FieldLabel`, `FieldControl`, `FieldError`         | `#/components/ui/form`   | RHF form structure with validation     |
 <!-- AGENTS-GENERATED:END ui-conventions -->
 
 <!-- AGENTS-GENERATED:START security -->
@@ -155,10 +155,10 @@ try {
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 ## Golden Samples
-| Pattern | Reference file | Key features |
-|---------|---------------|--------------|
-| Auth page layout | `src/components/auth/auth-layout.tsx` | `GuestLayout` with `title`/`description` props, centered card, `w-full max-w-md` |
-| React Hook Form + Zod (simple) | `src/components/auth/login-form.tsx` | Basic email/password validation, `?returnTo` redirect, `toast.error()` with `extractNocoBaseError()` |
+| Pattern                                    | Reference file                                        | Key features                                                                                         |
+| ------------------------------------------ | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Auth page layout                           | `src/components/auth/auth-layout.tsx`                 | `GuestLayout` with `title`/`description` props, centered card, `w-full max-w-md`                     |
+| React Hook Form + Zod (simple)             | `src/components/auth/login-form.tsx`                  | Basic email/password validation, `?returnTo` redirect, `toast.error()` with `extractNocoBaseError()` |
 | React Hook Form + Zod (cross-field refine) | `src/components/auth/reset-password-confirm-form.tsx` | `.refine()` for password match, `token` prop, expired token detection, `autoComplete="new-password"` |
-| React Hook Form + conditional view | `src/components/auth/reset-password-form.tsx` | `useState<boolean>` success state toggle, two-step flow (form → confirmation message) |
+| React Hook Form + conditional view         | `src/components/auth/reset-password-form.tsx`         | `useState<boolean>` success state toggle, two-step flow (form → confirmation message)                |
 <!-- AGENTS-GENERATED:END golden-samples -->

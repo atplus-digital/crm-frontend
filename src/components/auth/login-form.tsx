@@ -13,8 +13,8 @@ import {
 } from "#/components/ui/form";
 import { Input } from "#/components/ui/input";
 import { env } from "#/env";
+import { signIn } from "#/features/auth";
 import { extractNocoBaseError } from "#/lib/api-errors";
-import { signIn } from "#/modules/auth";
 
 const loginSchema = z.object({
 	email: z.email("E-mail inválido"),

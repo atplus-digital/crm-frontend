@@ -30,7 +30,7 @@ import {
 	TableRow,
 } from "#/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { useContratoById } from "#/modules/cs/contratos-hooks";
+import { useContratoById } from "#/features/cs/contratos-hooks";
 
 function formatDatePtBR(dateStr: string | null | undefined): string {
 	if (!dateStr || dateStr.startsWith("0000")) return "—";

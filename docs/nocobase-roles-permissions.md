@@ -273,7 +273,7 @@ curl -X POST "https://crm.atplus.cloud/api/roles:get?filterByTk=admin&appends=me
 
 ## 🛠️ Integração no Frontend
 
-O frontend usa o módulo de permissões em `src/modules/permissions/` para:
+O frontend usa o módulo de permissões em `src/features/permissions/` para:
 
 - Armazenar roles do usuário no `permissionsStore` (TanStack Store)
 - Filtrar navegação por snippets e ações via `filterNavByPermissions()`
@@ -282,7 +282,7 @@ O frontend usa o módulo de permissões em `src/modules/permissions/` para:
 ### Exemplo de uso no código:
 
 ```typescript
-import { useHasSnippet, useCan } from '#/modules/permissions';
+import { useHasSnippet, useCan } from '#/features/permissions';
 
 function MyComponent() {
   const canViewReports = useHasSnippet('ui.reports');

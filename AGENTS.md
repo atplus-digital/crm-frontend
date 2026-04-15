@@ -4,22 +4,22 @@
 
 # AGENTS.md — CRM AT+
 
-**Project:** CRM AT+ — Customer Relationship Management system powered by NocoBase  
-**Stack:** React 19, TypeScript, Vite, Tailwind CSS v4, shadcn/ui, React Router v7, NocoBase SDK  
+**Project:** CRM AT+ — Customer Relationship Management system powered by NocoBase
+**Stack:** React 19, TypeScript, Vite, Tailwind CSS v4, shadcn/ui, React Router v7, NocoBase SDK
 **Precedence:** the **closest `AGENTS.md`** to the files you're changing wins. Root holds global defaults only.
 
 ## Commands
 <!-- AGENTS-GENERATED:START commands -->
-| Task | Command | ~Time |
-|------|---------|-------|
-| Dev server | `pnpm dev` | — |
-| Typecheck | `pnpm typecheck` ou `pnpm dlx tsc --noEmit` | ~15s |
-| Lint + Format | `pnpm biome:fix` | ~5s |
-| Test | `pnpm test` | ~30s |
-| Build | `pnpm build` | ~30s |
-| Preview build | `pnpm preview` | — |
-| Generate types | `pnpm generate-types` | ~10s |
-| Check unused code | `pnpm knip` | ~10s |
+| Task              | Command                                     | ~Time |
+| ----------------- | ------------------------------------------- | ----- |
+| Dev server        | `pnpm dev`                                  | —     |
+| Typecheck         | `pnpm typecheck` ou `pnpm dlx tsc --noEmit` | ~15s  |
+| Lint + Format     | `pnpm biome:fix`                            | ~5s   |
+| Test              | `pnpm test`                                 | ~30s  |
+| Build             | `pnpm build`                                | ~30s  |
+| Preview build     | `pnpm preview`                              | —     |
+| Generate types    | `pnpm generate-types`                       | ~10s  |
+| Check unused code | `pnpm knip`                                 | ~10s  |
 <!-- AGENTS-GENERATED:END commands -->
 
 > If commands fail, verify against Makefile/package.json/composer.json or ask user to update.
@@ -42,31 +42,31 @@ docs/            → documentation
 
 ## Golden Samples (follow these patterns)
 <!-- AGENTS-GENERATED:START golden-samples -->
-| For | Reference | Key patterns |
-|-----|-----------|--------------|
-| Route (protected) | `src/routes/dashboard.tsx` | `requireAuth` in `loader`, `Component` export |
-| Route (public auth) | `src/routes/login.tsx` | `requireGuest` in `loader`, `Component` export |
-| Router config | `src/routes/router.tsx` | `createBrowserRouter`, lazy route imports, nested routes |
-| Auth module | `src/modules/auth/index.ts` | barrel export pattern |
-| Error handling | `src/components/error-boundary.tsx` | React Error Boundary pattern with user-friendly UI |
-| Component structure | `src/components/dashboard/profile-details.tsx` | Separate business logic from presentation in dashboard |
+| For                 | Reference                                      | Key patterns                                             |
+| ------------------- | ---------------------------------------------- | -------------------------------------------------------- |
+| Route (protected)   | `src/routes/dashboard.tsx`                     | `requireAuth` in `loader`, `Component` export            |
+| Route (public auth) | `src/routes/login.tsx`                         | `requireGuest` in `loader`, `Component` export           |
+| Router config       | `src/routes/router.tsx`                        | `createBrowserRouter`, lazy route imports, nested routes |
+| Auth module         | `src/features/auth/index.ts`                   | barrel export pattern                                    |
+| Error handling      | `src/components/error-boundary.tsx`            | React Error Boundary pattern with user-friendly UI       |
+| Component structure | `src/components/dashboard/profile-details.tsx` | Separate business logic from presentation in dashboard   |
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 ## Heuristics (quick decisions)
 <!-- AGENTS-GENERATED:START heuristics -->
-| When | Do |
-|------|-----|
-| Adding env var | Add to `.env.example` first, then validate in `src/env.ts` |
-| Merging PRs | Squash and merge |
-| Adding dependency | Ask first - we minimize deps |
-| Unsure about pattern | Check Golden Samples above or `src/AGENTS.md` |
-| File naming | Use `kebab-case.tsx` for components/routes |
-| Import paths | Prefer `#/` alias over relative paths |
-| Table with pagination | Use `DataTableWithPagination` component |
-| Filter for NocoBase/IXC | Use `filter-builder.ts` helpers |
-| Pagination state | Use `usePagination` hook |
-| Date formatting | Use `formatDatePtBR()` from utils |
-| Currency formatting | Use `formatCurrency()` from utils |
+| When                    | Do                                                         |
+| ----------------------- | ---------------------------------------------------------- |
+| Adding env var          | Add to `.env.example` first, then validate in `src/env.ts` |
+| Merging PRs             | Squash and merge                                           |
+| Adding dependency       | Ask first - we minimize deps                               |
+| Unsure about pattern    | Check Golden Samples above or `src/AGENTS.md`              |
+| File naming             | Use `kebab-case.tsx` for components/routes                 |
+| Import paths            | Prefer `#/` alias over relative paths                      |
+| Table with pagination   | Use `DataTableWithPagination` component                    |
+| Filter for NocoBase/IXC | Use `filter-builder.ts` helpers                            |
+| Pagination state        | Use `usePagination` hook                                   |
+| Date formatting         | Use `formatDatePtBR()` from utils                          |
+| Currency formatting     | Use `formatCurrency()` from utils                          |
 <!-- AGENTS-GENERATED:END heuristics -->
 
 ## Repository Settings

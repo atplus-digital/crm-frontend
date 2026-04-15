@@ -1,5 +1,5 @@
+import { nocobaseClient } from "#/features/auth/client";
 import { createLogger } from "#/lib/logger";
-import { nocobaseClient } from "#/modules/auth/client";
 import type { ApiRequestConfig, ListParams, PaginatedResponse } from "./types";
 
 const log = createLogger("repositories:ixc");

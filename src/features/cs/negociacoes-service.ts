@@ -7,7 +7,7 @@ import {
 	nestedField,
 	or,
 } from "#/lib/filter-builder";
-import { nocobaseRepository } from "#/modules/repositories";
+import { nocobaseRepository } from "#/repositories";
 import type {
 	Negociacao,
 	NegociacaoFilters,

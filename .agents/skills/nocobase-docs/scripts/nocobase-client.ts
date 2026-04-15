@@ -28,7 +28,7 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { URLSearchParams, fileURLToPath } from "node:url";
+import { fileURLToPath, URLSearchParams } from "node:url";
 
 // ---------------------------------------------------------------------------
 // Environment configuration
@@ -329,21 +329,13 @@ async function cmdList(
 		else if (arg.startsWith("--pageSize="))
 			queryParams.pageSize = arg.slice(11);
 		else if (arg.startsWith("--sort=")) queryParams.sort = arg.slice(7);
-		else if (arg.startsWith("--fields="))
-			queryParams.fields = arg.slice(9);
-		else if (arg.startsWith("--appends="))
-			queryParams.appends = arg.slice(10);
-		else if (arg.startsWith("--filter="))
-			queryParams.filter = arg.slice(9);
-		else if (arg.startsWith("--except="))
-			queryParams.except = arg.slice(9);
+		else if (arg.startsWith("--fields=")) queryParams.fields = arg.slice(9);
+		else if (arg.startsWith("--appends=")) queryParams.appends = arg.slice(10);
+		else if (arg.startsWith("--filter=")) queryParams.filter = arg.slice(9);
+		else if (arg.startsWith("--except=")) queryParams.except = arg.slice(9);
 	}
 
-	const data = await fetchReadOnly(
-		config,
-		`${collection}:list`,
-		queryParams,
-	);
+	const data = await fetchReadOnly(config, `${collection}:list`, queryParams);
 	console.log(JSON.stringify(data, null, 2));
 }
 
@@ -359,8 +351,7 @@ async function cmdGet(
 		if (arg.startsWith("--fields=")) body.fields = arg.slice(9).split(",");
 		else if (arg.startsWith("--appends="))
 			body.appends = arg.slice(10).split(",");
-		else if (arg.startsWith("--except="))
-			body.except = arg.slice(9).split(",");
+		else if (arg.startsWith("--except=")) body.except = arg.slice(9).split(",");
 	}
 
 	const data = await fetchReadOnly(
@@ -383,18 +374,11 @@ async function cmdCount(
 		if (arg.startsWith("--filter=")) queryParams.filter = arg.slice(9);
 	}
 
-	const data = await fetchReadOnly(
-		config,
-		`${collection}:count`,
-		queryParams,
-	);
+	const data = await fetchReadOnly(config, `${collection}:count`, queryParams);
 	console.log(JSON.stringify(data, null, 2));
 }
 
-async function cmdRaw(
-	config: EnvConfig,
-	endpoint: string,
-): Promise<void> {
+async function cmdRaw(config: EnvConfig, endpoint: string): Promise<void> {
 	const data = await fetchReadOnly(config, endpoint);
 	console.log(JSON.stringify(data, null, 2));
 }
@@ -481,9 +465,7 @@ async function main(): Promise<void> {
 			const collection = rest[0];
 			const id = rest[1];
 			if (!collection || !id) {
-				console.error(
-					"ERROR: 'get' requires collection name and record ID.",
-				);
+				console.error("ERROR: 'get' requires collection name and record ID.");
 				console.error(
 					"Usage: nocobase-client.ts get <collection> <id> [options]",
 				);
@@ -496,7 +478,9 @@ async function main(): Promise<void> {
 			const collection = rest[0];
 			if (!collection) {
 				console.error("ERROR: 'count' requires a collection name.");
-				console.error("Usage: nocobase-client.ts count <collection> [--filter=<json>]");
+				console.error(
+					"Usage: nocobase-client.ts count <collection> [--filter=<json>]",
+				);
 				process.exit(1);
 			}
 			await cmdCount(config, collection, rest.slice(1));

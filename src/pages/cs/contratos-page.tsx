@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ContratosFilters } from "#/components/cs/contratos-filters";
 import { ContratosTable } from "#/components/cs/contratos-table";
-import { useContratos } from "#/modules/cs/contratos-hooks";
-import type { ContratoFilters } from "#/modules/cs/contratos-types";
+import { useContratos } from "#/features/cs/contratos-hooks";
+import type { ContratoFilters } from "#/features/cs/contratos-types";
 
 export function ContratosPage() {
 	const [page, setPage] = useState(1);
@@ -39,7 +39,7 @@ export function ContratosPage() {
 
 	return (
 		<div className="flex-1 overflow-auto bg-background">
-			<div className="mx-auto max-w-[1600px] space-y-6 p-4">
+			<div className="mx-auto max-w-400 space-y-6 p-4">
 				<div>
 					<h1 className="text-2xl font-bold tracking-tight">Contratos</h1>
 					<p className="text-muted-foreground">Contratos encontrados no IXC</p>

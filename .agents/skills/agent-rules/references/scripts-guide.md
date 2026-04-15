@@ -163,13 +163,13 @@ scripts/verify-commands.sh /path/to/project
 
 **Validation criteria:**
 
-| Check | Pass Criteria | Common Issues |
-|-------|---------------|---------------|
-| **Thin root** | Root AGENTS.md <= 80 lines | Duplicated scope content in root |
-| **All scopes covered** | Every major directory has AGENTS.md | Missing `Tests/`, `Configuration/` |
-| **No duplication** | Content appears in ONE location | Commands duplicated in root + scope |
-| **Commands verified** | All documented commands execute | Typos, renamed targets |
-| **Files exist** | All referenced files are real | Hallucinated paths |
-| **Links valid** | All cross-references resolve | Broken relative paths |
+| Check                  | Pass Criteria                       | Common Issues                       |
+| ---------------------- | ----------------------------------- | ----------------------------------- |
+| **Thin root**          | Root AGENTS.md <= 80 lines          | Duplicated scope content in root    |
+| **All scopes covered** | Every major directory has AGENTS.md | Missing `Tests/`, `Configuration/`  |
+| **No duplication**     | Content appears in ONE location     | Commands duplicated in root + scope |
+| **Commands verified**  | All documented commands execute     | Typos, renamed targets              |
+| **Files exist**        | All referenced files are real       | Hallucinated paths                  |
+| **Links valid**        | All cross-references resolve        | Broken relative paths               |
 
 **Never consider generation complete until all checks pass.**
