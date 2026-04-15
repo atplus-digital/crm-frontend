@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import { DataTablePagination } from "#/components/table/data-table-pagination";
-import { usePagination } from "#/hooks/use-pagination";
+import { useSearchParamsPagination } from "#/hooks/use-search-params-pagination";
 
 interface DataTableWithPaginationProps<TData> {
 	/** Table column definitions */
@@ -96,9 +96,9 @@ export function DataTableWithPagination<TData>({
 		onPaginationChange,
 		isPageChanging,
 		markPageChangeComplete,
-	} = usePagination({
-		initialPage,
-		initialPageSize,
+	} = useSearchParamsPagination({
+		defaultPage: initialPage,
+		defaultPageSize: initialPageSize,
 		onPageChange,
 		onPageSizeChange,
 		onPageChangeComplete,
