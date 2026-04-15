@@ -19,8 +19,10 @@ export function UserDashboard() {
 	}
 
 	return (
-		<main className="flex min-h-screen flex-col gap-6 bg-background p-6">
-			<ProfileDetails user={user} />
-		</main>
+		<div className="flex flex-1 flex-col overflow-auto">
+			<main className="flex-1 space-y-6 p-6">
+				<ProfileDetails user={user} />
+			</main>
+		</div>
 	);
 }
