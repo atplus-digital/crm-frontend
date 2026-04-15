@@ -76,8 +76,8 @@ export function SidebarUserMenu({
 					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuItem onClick={toggleTheme} className="cursor-pointer">
-					{isDark ? <Sun /> : <Moon />}
-					{isDark ? "Tema claro" : "Tema escuro"}
+					{!isDark ? <Sun /> : <Moon />}
+					{!isDark ? "Tema claro" : "Tema escuro"}
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
