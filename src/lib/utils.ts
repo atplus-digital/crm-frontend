@@ -44,6 +44,35 @@ export function getInitials(name: string): string {
 }
 
 /**
+ * Format a phone number to Brazilian format.
+ * Handles 10-digit (landline) and 11-digit (mobile) numbers.
+ *
+ * @param phone - Raw phone number (digits only)
+ * @returns Formatted phone number or original if invalid
+ *
+ * @example
+ * formatPhone("11999999999") // Returns: "(11) 99999-9999"
+ * formatPhone("1199999999")  // Returns: "(11) 9999-9999"
+ * formatPhone("invalid")     // Returns: "invalid"
+ */
+export function formatPhone(phone: string): string {
+	const digits = phone.replace(/\D/g, "");
+
+	if (digits.length === 10) {
+		// Landline: (XX) XXXX-XXXX
+		return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+	}
+
+	if (digits.length === 11) {
+		// Mobile: (XX) XXXXX-XXXX
+		return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+	}
+
+	// Return original if invalid length
+	return phone;
+}
+
+/**
  * Format a date string to Portuguese (Brazil) format.
  * Handles invalid dates and dates starting with "0000".
  *
