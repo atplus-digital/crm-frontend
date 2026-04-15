@@ -1,6 +1,6 @@
-import { UserDashboard } from "#/components/dashboard/user-dashboard";
 import { createLogger } from "#/lib/logger";
 import { authStore, requireAuth, validateTokenOnInit } from "#/modules/auth";
+import { UserDashboard } from "#/pages/dashboard/dashboard-page";
 
 const log = createLogger("auth");
 

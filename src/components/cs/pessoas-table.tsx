@@ -1,5 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { DataTableWithPagination } from "#/components/ui/data-table-with-pagination";
+import { DataTableWithPagination } from "#/components/tables/data-table-with-pagination";
 
 interface PaginationInfo {
 	page: number;

@@ -1,8 +1,8 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Download, ExternalLink, RefreshCw } from "lucide-react";
+import { DataTableWithPagination } from "#/components/tables/data-table-with-pagination";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
-import { DataTableWithPagination } from "#/components/ui/data-table-with-pagination";
 import { cn, formatCurrency, formatDatePtBR } from "#/lib/utils";
 import type { NegociacaoWithRelations } from "#/modules/cs/negociacoes-types";
 

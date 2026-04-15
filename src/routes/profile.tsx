@@ -1,6 +1,6 @@
-import { ProfileSettings } from "#/components/dashboard/profile-settings";
 import { createLogger } from "#/lib/logger";
 import { authStore, requireAuth, validateTokenOnInit } from "#/modules/auth";
+import { ProfileSettings } from "#/pages/dashboard/profile-settings-page";
 
 const log = createLogger("auth");
 

@@ -1,5 +1,7 @@
 import { Calendar, Search, X } from "lucide-react";
 import { useId, useState } from "react";
+import { NegociacoesKanban } from "#/components/cs/negociacoes-kanban";
+import { NegociacoesList } from "#/components/cs/negociacoes-list";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import {
@@ -15,8 +17,6 @@ import type {
 	NegociacaoFilters,
 	NegociacaoStatus,
 } from "#/modules/cs/negociacoes-types";
-import { NegociacoesKanban } from "./negociacoes-kanban";
-import { NegociacoesList } from "./negociacoes-list";
 
 const STATUS_OPTIONS: { value: NegociacaoStatus; label: string }[] = [
 	{ value: "Novo", label: "Novo" },

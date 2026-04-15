@@ -152,5 +152,9 @@
     }
   html {
     @apply font-sans;
+    overflow: hidden;
+    }
+  body {
+    overflow: hidden;
     }
 }

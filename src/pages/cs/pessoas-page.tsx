@@ -1,6 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Filter, Plus, RotateCw } from "lucide-react";
 import { useState } from "react";
+import { PessoasTable } from "#/components/cs/pessoas-table";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
@@ -22,7 +23,6 @@ import type {
 	PessoaFisicaFilters,
 	PessoaJuridicaFilters,
 } from "#/modules/cs/pessoas-types";
-import { PessoasTable } from "./pessoas-table";
 
 const pfColumns: ColumnDef<
 	{

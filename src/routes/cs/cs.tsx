@@ -1,5 +1,5 @@
-import { CSPessoasPage } from "#/components/cs/pessoas-page";
 import { requireAuth } from "#/modules/auth";
+import { CSPessoasPage } from "#/pages/cs/pessoas-page";
 
 export async function loader() {
 	requireAuth("/");

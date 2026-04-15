@@ -4,8 +4,8 @@ import type {
 	SortingState,
 } from "@tanstack/react-table";
 
-import { DataTable, useDataTable } from "#/components/ui/data-table";
-import { DataTablePagination } from "#/components/ui/data-table-pagination";
+import { DataTable, useDataTable } from "#/components/tables/data-table";
+import { DataTablePagination } from "#/components/tables/data-table-pagination";
 import { usePagination } from "#/hooks/use-pagination";
 
 interface DataTableWithPaginationProps<TData> {

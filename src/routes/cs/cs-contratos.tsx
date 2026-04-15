@@ -1,5 +1,5 @@
-import { ContratosPage } from "#/components/cs/contratos-page";
 import { requireAuth } from "#/modules/auth";
+import { ContratosPage } from "#/pages/cs/contratos-page";
 
 export async function loader() {
 	requireAuth("/");

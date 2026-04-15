@@ -1,8 +1,8 @@
 import { createBrowserRouter, Outlet } from "react-router";
 import { App } from "#/app";
 import { DashboardLayout } from "#/components/layout/dashboard-layout";
-import { NotFoundPage } from "#/components/not-found-page";
 import { authStore, validateTokenOnInit } from "#/modules/auth";
+import { NotFoundPage } from "#/pages/not-found-page";
 
 export const router = createBrowserRouter([
 	{

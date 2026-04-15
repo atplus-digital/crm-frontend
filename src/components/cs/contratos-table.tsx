@@ -6,9 +6,9 @@ import {
 	ContratoStatusBadge,
 	InternetStatusBadge,
 } from "#/components/cs/contrato-status-badge";
+import { DataTableColumnHeader } from "#/components/tables/data-table-column-header";
+import { DataTableWithPagination } from "#/components/tables/data-table-with-pagination";
 import { Button } from "#/components/ui/button";
-import { DataTableColumnHeader } from "#/components/ui/data-table-column-header";
-import { DataTableWithPagination } from "#/components/ui/data-table-with-pagination";
 import { formatDatePtBR } from "#/lib/utils";
 import type { ContratoWithCliente } from "#/modules/cs/contratos-types";
 

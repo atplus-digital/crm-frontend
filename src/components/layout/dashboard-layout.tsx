@@ -6,7 +6,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<SidebarProvider className="h-svh w-svw">
 			<AppSidebar />
-			<SidebarInset className="min-w-0">
+			<SidebarInset className="flex flex-col min-w-0 overflow-hidden">
 				<AppHeader />
 				<main className="flex-1 overflow-auto min-w-0">{children}</main>
 			</SidebarInset>

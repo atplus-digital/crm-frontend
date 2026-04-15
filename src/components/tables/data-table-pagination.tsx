@@ -1,7 +1,14 @@
 import type { Table } from "@tanstack/react-table";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { Button } from "#/components/ui/button";
+import {
+	Pagination,
+	PaginationContent,
+	PaginationEllipsis,
+	PaginationItem,
+	PaginationLink,
+	PaginationNext,
+	PaginationPrevious,
+} from "#/components/ui/pagination";
 import {
 	Select,
 	SelectContent,
@@ -65,46 +72,62 @@ export function DataTablePagination<TData>({
 				{startItem}-{endItem} de {itemCount}
 			</span>
 
-			<div className="flex items-center gap-1">
-				<Button
-					variant="outline"
-					size="sm"
-					onClick={() => table.previousPage()}
-					disabled={!table.getCanPreviousPage()}
-				>
-					<ChevronLeft />
-				</Button>
+			<Pagination>
+				<PaginationContent>
+					<PaginationItem>
+						<PaginationPrevious
+							href="#"
+							onClick={(e) => {
+								e.preventDefault();
+								table.previousPage();
+							}}
+							className={
+								!table.getCanPreviousPage()
+									? "pointer-events-none opacity-50"
+									: ""
+							}
+						/>
+					</PaginationItem>
 
-				{pageNumbers.map((p) => {
-					if (p === "ellipsis-start" || p === "ellipsis-end") {
+					{pageNumbers.map((p) => {
+						if (p === "ellipsis-start" || p === "ellipsis-end") {
+							return (
+								<PaginationItem key={p}>
+									<PaginationEllipsis />
+								</PaginationItem>
+							);
+						}
+
 						return (
-							<span key={p} className="px-2 text-sm text-muted-foreground">
-								...
-							</span>
+							<PaginationItem key={p}>
+								<PaginationLink
+									href="#"
+									isActive={p === currentPage}
+									onClick={(e) => {
+										e.preventDefault();
+										table.setPageIndex(p - 1);
+									}}
+								>
+									{p}
+								</PaginationLink>
+							</PaginationItem>
 						);
-					}
+					})}
 
-					return (
-						<Button
-							key={p}
-							variant={p === currentPage ? "default" : "outline"}
-							size="sm"
-							onClick={() => table.setPageIndex(p - 1)}
-						>
-							{p}
-						</Button>
-					);
-				})}
-
-				<Button
-					variant="outline"
-					size="sm"
-					onClick={() => table.nextPage()}
-					disabled={!table.getCanNextPage()}
-				>
-					<ChevronRight />
-				</Button>
-			</div>
+					<PaginationItem>
+						<PaginationNext
+							href="#"
+							onClick={(e) => {
+								e.preventDefault();
+								table.nextPage();
+							}}
+							className={
+								!table.getCanNextPage() ? "pointer-events-none opacity-50" : ""
+							}
+						/>
+					</PaginationItem>
+				</PaginationContent>
+			</Pagination>
 
 			<div className="flex items-center gap-2">
 				<span className="text-sm text-muted-foreground">Itens por página:</span>

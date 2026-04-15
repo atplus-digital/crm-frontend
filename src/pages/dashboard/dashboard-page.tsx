@@ -1,7 +1,7 @@
 import { useStore } from "@tanstack/react-store";
+import { ProfileDetails } from "#/components/dashboard/profile-details";
 import { Card, CardContent } from "#/components/ui/card";
 import { authStore } from "#/modules/auth";
-import { ProfileDetails } from "./profile-details";
 
 export function UserDashboard() {
 	const user = useStore(authStore, (state) => state.user);
