@@ -1,11 +1,13 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import { Outlet } from "react-router";
+
 import { ErrorBoundary } from "./components/error-boundary";
+import { getQueryContext } from "./components/query-provider";
 import { ThemeProvider } from "./components/theme-provider";
 import { Toaster } from "./components/ui/sonner";
 import { env, isDev } from "./env";
-import { getQueryContext } from "./integrations/tanstack/query/root-provider";
 
 const { queryClient } = getQueryContext();
 
