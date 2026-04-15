@@ -14,7 +14,7 @@ As tabelas agora suportam o padrão **stale-while-loading** durante mudanças de
 
 ```tsx
 import { useQuery } from "@tanstack/react-query";
-import { DataTableWithPagination } from "#/components/tables/data-table-with-pagination";
+import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { usePrevious } from "#/hooks/use-previous";
 
 function MyTable() {
@@ -46,7 +46,7 @@ Se você precisa de controle mais fino sobre quando o loading começa/termina:
 
 ```tsx
 import { useQuery } from "@tanstack/react-query";
-import { DataTableWithPagination } from "#/components/tables/data-table-with-pagination";
+import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { usePrevious } from "#/hooks/use-previous";
 import { useState } from "react";
 
@@ -139,7 +139,7 @@ A implementação é **100% backward compatible**:
 ```tsx
 // routes/my-page.tsx
 import { useQuery } from "@tanstack/react-query";
-import { DataTableWithPagination } from "#/components/tables/data-table-with-pagination";
+import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { usePrevious } from "#/hooks/use-previous";
 import { columns } from "./columns";
 

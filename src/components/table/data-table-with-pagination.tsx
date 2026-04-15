@@ -3,6 +3,7 @@ import type {
 	OnChangeFn,
 	SortingState,
 } from "@tanstack/react-table";
+import { useEffect, useRef } from "react";
 
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import { DataTablePagination } from "#/components/table/data-table-pagination";
@@ -116,10 +117,15 @@ export function DataTableWithPagination<TData>({
 		...(sorting && { sorting, onSortingChange }),
 	});
 
-	// Mark page change as complete when loading finishes
-	if (isLoading && isPageChanging && !data) {
-		markPageChangeComplete();
-	}
+	// Mark page change as complete when isLoading transitions from true to false
+	const previousLoadingRef = useRef(isLoading);
+
+	useEffect(() => {
+		if (previousLoadingRef.current && !isLoading && isPageChanging) {
+			markPageChangeComplete();
+		}
+		previousLoadingRef.current = isLoading;
+	}, [isLoading, isPageChanging, markPageChangeComplete]);
 
 	return (
 		<div className="flex flex-col gap-4">
