@@ -11,7 +11,6 @@ interface PaginationInfo {
 interface PessoasTableProps<T extends { id: number | string }> {
 	columns: ColumnDef<T, unknown>[];
 	data: T[];
-	isLoading?: boolean;
 	pagination: PaginationInfo;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
@@ -25,7 +24,6 @@ interface PessoasTableProps<T extends { id: number | string }> {
 export function PessoasTable<T extends { id: number | string }>({
 	columns,
 	data,
-	isLoading = false,
 	pagination,
 	onPageChange,
 	onPageSizeChange,
@@ -35,7 +33,6 @@ export function PessoasTable<T extends { id: number | string }>({
 		<DataTableWithPagination
 			columns={columns}
 			data={data}
-			isLoading={isLoading}
 			total={pagination.total}
 			totalPages={pagination.totalPages}
 			emptyMessage={emptyMessage}

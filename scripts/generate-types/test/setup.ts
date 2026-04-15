@@ -37,6 +37,7 @@ const mockRuntimeConfig: RuntimeConfig = {
 	showHelp: false,
 	write: false,
 	lockWorkspace: false,
+	ixc: false,
 	baseUrl: "https://example.com/api",
 	token: "fake-token",
 	timeoutMs: 30_000,

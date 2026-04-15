@@ -14,11 +14,13 @@
 		"preview": "vite preview",
 		"prepare": "husky",
 		"biome:fix": "biome check --write",
+		"format:md": "pnpm dlx prettier --write \"**/*.{md,mdx}\"",
 		"knip": "knip",
 		"knip:silent": "knip --exclude dependencies --no-config-hints",
 		"lint-staged": "lint-staged",
 		"typecheck": "tsc --noEmit",
-		"generate-types": "tsx scripts/generate-types/index.ts"
+		"generate-types": "tsx scripts/generate-types/index.ts",
+		"generate-types-ixc": "tsx scripts/generate-types/index.ts --ixc"
 	},
 	"dependencies": {
 		"@fontsource-variable/geist": "^5.2.8",
@@ -34,6 +36,7 @@
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"lucide-react": "^1.8.0",
+		"nuqs": "^2.8.9",
 		"radix-ui": "^1.4.3",
 		"react": "^19.2.5",
 		"react-dom": "^19.2.5",

@@ -7,6 +7,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
 	const options: CliArgs = {
 		dryRun: false,
 		write: false,
+		ixc: false,
 	};
 
 	let showHelp = false;
@@ -35,6 +36,11 @@ export function parseArgs(argv: string[]): ParsedArgs {
 
 		if (arg === "--lock-workspace") {
 			options.lockWorkspace = true;
+			continue;
+		}
+
+		if (arg === "--ixc") {
+			options.ixc = true;
 			continue;
 		}
 

@@ -100,7 +100,6 @@ const columns: ColumnDef<NegociacaoItem>[] = [
 interface NegociacoesListProps {
 	negociacoes?: NegociacaoItem[];
 	totalCount?: number;
-	isLoading?: boolean;
 	onRefresh?: () => void;
 	onExport?: () => void;
 }

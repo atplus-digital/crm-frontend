@@ -415,7 +415,6 @@ export function NegociacoesPage() {
 											<NegociacoesList
 												negociacoes={negociacoes}
 												totalCount={totalCount}
-												isLoading={isLoading}
 												onRefresh={() => refetch()}
 											/>
 										)}

@@ -10,11 +10,13 @@ Uso:
 Opções:
   --dry-run           Executa sem escrever arquivos (preview de alterações)
   --write             Bypass na confirmação de remoção de arquivos não utilizados
+  --ixc               Gera tipos para collections do IXC (Integração)
   -h, --help          Exibe esta ajuda
 
 Configuração:
   env: ${config.defaultEnvPath}
   output: ${config.outputDir}/
+  ixc output: ${config.ixcOutputDir ?? "src/@types/generated/ixc"}/
   output principal: ${config.outputDir}/index.ts
   output split: ${config.outputDir}/
   verbose: ${config.verbose ? "ativado" : "desativado"}

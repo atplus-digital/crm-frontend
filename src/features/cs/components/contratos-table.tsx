@@ -22,7 +22,6 @@ interface ContratosTableProps {
 	contratos: ContratoWithCliente[];
 	sort: string[];
 	onSort: (field: string) => void;
-	isLoading: boolean;
 	pagination: PaginationInfo;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
@@ -105,7 +104,6 @@ export function ContratosTable({
 	contratos,
 	sort,
 	onSort,
-	isLoading,
 	pagination,
 	onPageChange,
 	onPageSizeChange,
@@ -136,7 +134,6 @@ export function ContratosTable({
 		<DataTableWithPagination
 			columns={columns}
 			data={contratos}
-			isLoading={isLoading}
 			total={pagination.total}
 			totalPages={pagination.totalPages}
 			emptyMessage="Nenhum contrato encontrado"

@@ -1,6 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Filter, Plus, RotateCw } from "lucide-react";
 import { useState } from "react";
+import { useSearchParams } from "react-router";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
@@ -159,17 +160,31 @@ export function CSPessoasPage() {
 		cnpj: "",
 	});
 
-	const [pagination, setPagination] = useState({
-		page: 1,
-		pageSize: 20,
-	});
+	const [searchParams, setSearchParams] = useSearchParams();
 
-	const handlePageChange = (page: number) => {
-		setPagination((prev) => ({ ...prev, page }));
+	// Read pagination from URL, defaulting to page 1 and pageSize 20
+	const page = Number(searchParams.get("page")) || 1;
+	const pageSize = Number(searchParams.get("pageSize")) || 20;
+
+	const handlePageChange = (newPage: number) => {
+		setSearchParams(
+			(prev) => {
+				prev.set("page", String(newPage));
+				return prev;
+			},
+			{ replace: true },
+		);
 	};
 
-	const handlePageSizeChange = (pageSize: number) => {
-		setPagination((prev) => ({ ...prev, pageSize, page: 1 }));
+	const handlePageSizeChange = (newPageSize: number) => {
+		setSearchParams(
+			(prev) => {
+				prev.set("pageSize", String(newPageSize));
+				prev.set("page", "1"); // Reset to page 1 when changing page size
+				return prev;
+			},
+			{ replace: true },
+		);
 	};
 
 	const handleClearFilters = () => {
@@ -180,27 +195,18 @@ export function CSPessoasPage() {
 		}
 	};
 
-	const {
-		data: pfData,
-		isLoading: isPFLoding,
-		error: pfError,
-	} = usePessoasFisicas({
-		page: pagination.page,
-		pageSize: pagination.pageSize,
+	const { data: pfData, error: pfError } = usePessoasFisicas({
+		page,
+		pageSize,
 		filters: pfFilters,
 	});
 
-	const {
-		data: pjData,
-		isLoading: isPJLoding,
-		error: pjError,
-	} = usePessoasJuridicas({
-		page: pagination.page,
-		pageSize: pagination.pageSize,
+	const { data: pjData, error: pjError } = usePessoasJuridicas({
+		page,
+		pageSize,
 		filters: pjFilters,
 	});
 
-	const isLoading = activeTab === "pf" ? isPFLoding : isPJLoding;
 	const error = activeTab === "pf" ? pfError : pjError;
 
 	return (
@@ -304,9 +310,9 @@ export function CSPessoasPage() {
 							<PessoasTable
 								columns={pfColumns}
 								data={pfData?.data ?? []}
-								isLoading={isLoading}
 								pagination={{
-									...pagination,
+									page,
+									pageSize,
 									total: pfData?.meta?.total ?? 0,
 									totalPages: pfData?.meta?.totalPage ?? 0,
 								}}
@@ -361,9 +367,9 @@ export function CSPessoasPage() {
 							<PessoasTable
 								columns={pjColumns}
 								data={pjData?.data ?? []}
-								isLoading={isLoading}
 								pagination={{
-									...pagination,
+									page,
+									pageSize,
 									total: pjData?.meta?.total ?? 0,
 									totalPages: pjData?.meta?.totalPage ?? 0,
 								}}

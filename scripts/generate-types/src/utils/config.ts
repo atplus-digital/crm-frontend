@@ -14,6 +14,7 @@ const defaultConfig: ScriptConfig = {
 		prefix: "",
 		suffix: "Base",
 	},
+	ixcOutputDir: "src/@types/generated/ixc",
 } as const;
 
 export function parseConfig(
@@ -43,6 +44,7 @@ export function parseConfig(
 		lockWorkspace: Boolean(
 			parsedArgs.options.lockWorkspace || mergedConfig.lockWorkspaceFolder,
 		),
+		ixc: Boolean(parsedArgs.options.ixc),
 		...getEnvConfig(),
 	};
 

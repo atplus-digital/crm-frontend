@@ -4,6 +4,7 @@ export interface CliArgs {
 	dryRun: boolean;
 	write: boolean;
 	lockWorkspace?: boolean;
+	ixc?: boolean;
 }
 
 export interface ParsedArgs {
@@ -71,6 +72,9 @@ export interface ScriptConfig {
 	requestConcurrency: number;
 	lockWorkspaceFolder?: boolean; // Quando ativado, verifica .vscode/settings.json e bloqueia acesso de escrita à pasta de interfaces
 	baseInterfaceNaming: BaseInterfaceNamingConfig;
+	ixcCollections?: string[]; // Collections do IXC para geração de tipos
+	ixcOutputDir?: string; // Diretório de saída para tipos IXC
+	generateIxcTypes?: boolean; // Flag para ativar geração de tipos IXC
 }
 
 export type EnvConfig = NocoBaseCredentials;
@@ -80,4 +84,5 @@ export interface RuntimeConfig extends ScriptConfig, NocoBaseCredentials {
 	showHelp: boolean;
 	write: boolean;
 	lockWorkspace: boolean;
+	ixc: boolean;
 }

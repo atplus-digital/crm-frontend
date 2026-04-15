@@ -1,16 +1,40 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router";
 import { ContratosFilters } from "#/features/cs/components/contratos-filters";
 import { ContratosTable } from "#/features/cs/components/contratos-table";
 import { useContratos } from "#/features/cs/contratos-hooks";
 import type { ContratoFilters } from "#/features/cs/contratos-types";
 
 export function ContratosPage() {
-	const [page, setPage] = useState(1);
-	const [pageSize, setPageSize] = useState(20);
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [filters, setFilters] = useState<ContratoFilters>({});
 	const [sort, setSort] = useState<string[]>([]);
 
-	const { data, isLoading, error } = useContratos({
+	const page = Number(searchParams.get("page")) || 1;
+	const pageSize = Number(searchParams.get("pageSize")) || 20;
+
+	const setPage = (newPage: number) => {
+		setSearchParams(
+			(prev) => {
+				prev.set("page", String(newPage));
+				return prev;
+			},
+			{ replace: true },
+		);
+	};
+
+	const handlePageSizeChange = (size: number) => {
+		setSearchParams(
+			(prev) => {
+				prev.set("pageSize", String(size));
+				prev.set("page", "1");
+				return prev;
+			},
+			{ replace: true },
+		);
+	};
+
+	const { data, error } = useContratos({
 		page,
 		pageSize,
 		filters,
@@ -32,11 +56,6 @@ export function ContratosPage() {
 		setPage(1);
 	}
 
-	function handlePageSizeChange(size: number) {
-		setPageSize(size);
-		setPage(1);
-	}
-
 	return (
 		<div className="flex-1 overflow-auto bg-background">
 			<div className="mx-auto max-w-400 space-y-6 p-4">
@@ -54,7 +73,6 @@ export function ContratosPage() {
 						contratos={data?.data ?? []}
 						sort={sort}
 						onSort={handleSort}
-						isLoading={isLoading}
 						pagination={{
 							page,
 							pageSize,

@@ -24,3 +24,11 @@ export interface GeneratedTypes {
 }
 
 export type CollectionTypesMap = Record<string, GeneratedTypes>;
+
+export interface IxcCollectionTypesResult {
+	[collectionName: string]: {
+		base: string;
+		relations: string;
+		relationKey: string;
+	};
+}

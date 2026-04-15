@@ -20,11 +20,11 @@ describe("cli", () => {
 			const { parseArgs } = await import("../src/cli/args");
 			expect(parseArgs(["--help", "--dry-run"])).toEqual({
 				showHelp: true,
-				options: { dryRun: true, write: false },
+				options: { dryRun: true, write: false, ixc: false },
 			});
 			expect(parseArgs(["-h", "--"])).toEqual({
 				showHelp: true,
-				options: { dryRun: false, write: false },
+				options: { dryRun: false, write: false, ixc: false },
 			});
 		});
 
