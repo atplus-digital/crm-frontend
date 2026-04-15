@@ -1,8 +1,8 @@
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { ExternalLink } from "lucide-react";
 import { useMemo } from "react";
-import { DataTableColumnHeader } from "#/components/tables/data-table-column-header";
-import { DataTableWithPagination } from "#/components/tables/data-table-with-pagination";
+import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
+import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Button } from "#/components/ui/button";
 import {
 	ContratoStatusBadge,

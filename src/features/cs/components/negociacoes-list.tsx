@@ -1,6 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Download, ExternalLink, RefreshCw } from "lucide-react";
-import { DataTableWithPagination } from "#/components/tables/data-table-with-pagination";
+import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes-types";
