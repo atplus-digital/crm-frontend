@@ -10,6 +10,8 @@ interface UsePaginationOptions {
 	onPageChange?: (page: number) => void;
 	/** Callback when page size changes */
 	onPageSizeChange?: (pageSize: number) => void;
+	/** Callback when page change loading completes (to reset isPageChanging state) */
+	onPageChangeComplete?: () => void;
 }
 
 interface UsePaginationReturn {
@@ -25,6 +27,10 @@ interface UsePaginationReturn {
 	pageSize: number;
 	/** Pagination change handler for TanStack Table */
 	onPaginationChange: OnChangeFn<PaginationState>;
+	/** Whether a page change is in progress (useful for stale-while-loading UI) */
+	isPageChanging: boolean;
+	/** Mark page change as complete (call after data refetch completes) */
+	markPageChangeComplete: () => void;
 }
 
 /**
@@ -33,11 +39,12 @@ interface UsePaginationReturn {
  *
  * @example
  * ```tsx
- * const { pagination, handlePaginationChange } = usePagination({
+ * const { pagination, handlePaginationChange, isPageChanging, markPageChangeComplete } = usePagination({
  *   initialPage: 1,
  *   initialPageSize: 20,
  *   onPageChange: (page) => refetch({ page }),
  *   onPageSizeChange: (pageSize) => refetch({ page: 1, pageSize }),
+ *   onPageChangeComplete: () => setIsFetching(false),
  * });
  *
  * const table = useDataTable({
@@ -56,6 +63,7 @@ export function usePagination(
 		initialPageSize = 20,
 		onPageChange,
 		onPageSizeChange,
+		onPageChangeComplete,
 	} = options;
 
 	const [pagination, setPagination] = useState<PaginationState>({
@@ -63,12 +71,28 @@ export function usePagination(
 		pageSize: initialPageSize,
 	});
 
+	const [isPageChanging, setIsPageChanging] = useState(false);
+
 	const page = pagination.pageIndex + 1;
 	const pageSize = pagination.pageSize;
+
+	const markPageChangeComplete = () => {
+		setIsPageChanging(false);
+		onPageChangeComplete?.();
+	};
 
 	const onPaginationChange: OnChangeFn<PaginationState> = (updater) => {
 		const newPagination =
 			typeof updater === "function" ? updater(pagination) : updater;
+
+		// Mark page change as in progress if page or page size changed
+		if (
+			(newPagination.pageIndex !== pagination.pageIndex ||
+				newPagination.pageSize !== pagination.pageSize) &&
+			(onPageChange || onPageSizeChange)
+		) {
+			setIsPageChanging(true);
+		}
 
 		// Call callbacks if page changed
 		if (newPagination.pageIndex !== pagination.pageIndex && onPageChange) {
@@ -88,5 +112,7 @@ export function usePagination(
 		page,
 		pageSize,
 		onPaginationChange,
+		isPageChanging,
+		markPageChangeComplete,
 	};
 }

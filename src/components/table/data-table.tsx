@@ -25,18 +25,29 @@ import {
 interface DataTableProps<TData> {
 	table: Table<TData>;
 	isLoading?: boolean;
+	/** Whether a page change is in progress (shows stale data indicator) */
+	isPageChanging?: boolean;
 	emptyMessage?: string;
 }
 
 export function DataTable<TData>({
 	table,
 	isLoading = false,
+	isPageChanging = false,
 	emptyMessage = "Nenhum registro encontrado",
 }: DataTableProps<TData>) {
 	const columnCount = table.getVisibleLeafColumns().length;
 
 	return (
 		<div className="relative overflow-x-auto rounded-lg border">
+			{isPageChanging && (
+				<div className="absolute inset-0 z-10 flex items-center justify-center bg-background/60 backdrop-blur-[1px]">
+					<div className="flex items-center gap-2 rounded-lg border bg-popover px-4 py-2 shadow-lg">
+						<div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+						<span className="text-sm text-muted-foreground">Carregando...</span>
+					</div>
+				</div>
+			)}
 			<TablePrimitive>
 				<TableHeader>
 					{table.getHeaderGroups().map((headerGroup) => (
@@ -55,7 +66,7 @@ export function DataTable<TData>({
 					))}
 				</TableHeader>
 				<TableBody>
-					{isLoading ? (
+					{isLoading && !isPageChanging ? (
 						Array.from({ length: 10 }, (_, i) => `skeleton-${i}`).map((key) => (
 							<TableRow key={key}>
 								{table.getVisibleLeafColumns().map((col) => (
