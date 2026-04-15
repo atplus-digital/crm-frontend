@@ -34,25 +34,25 @@ export const router = createBrowserRouter([
 					},
 					{
 						path: "cs/pessoas",
-						lazy: () => import("./cs"),
+						lazy: () => import("./cs/cs"),
 					},
 					{
 						path: "cs/negociacoes",
-						lazy: () => import("./cs-negociacoes"),
+						lazy: () => import("./cs/cs-negociacoes"),
 					},
 					{
 						path: "cs/contratos",
-						lazy: () => import("./cs-contratos"),
+						lazy: () => import("./cs/cs-contratos"),
 					},
 					{
 						path: "cs/contratos/:id",
-						lazy: () => import("./cs-contrato-detail"),
+						lazy: () => import("./cs/cs-contrato-detail"),
 					},
 				],
 			},
 			{
 				path: "login",
-				lazy: () => import("./login"),
+				lazy: () => import("./auth/login"),
 			},
 			{
 				path: "forbidden",
@@ -60,11 +60,11 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "reset-password",
-				lazy: () => import("./reset-password"),
+				lazy: () => import("./auth/reset-password"),
 			},
 			{
 				path: "reset-password-confirm",
-				lazy: () => import("./reset-password-confirm"),
+				lazy: () => import("./auth/reset-password-confirm"),
 			},
 			{
 				path: "*",
