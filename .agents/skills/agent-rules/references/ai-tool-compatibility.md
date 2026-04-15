@@ -4,24 +4,24 @@ How AGENTS.md integrates with different AI coding tools, and what mitigations ar
 
 ## Compatibility Matrix (March 2026)
 
-| Agent | Native AGENTS.md | Subdirectory Auto-Load | Own Format | Mitigation |
-|-------|:-:|:-:|---|---|
-| **Codex CLI** | Yes (creator) | Yes (best-in-class) | `AGENTS.md` | None |
-| **GitHub Copilot** | Yes | Yes | `.github/copilot-instructions.md` | None |
-| **Cursor** | Yes | Yes | `.cursor/rules/*.mdc` | None |
-| **Windsurf** | Yes | Yes (auto-scoped) | `.windsurf/rules/` | None |
-| **Devin** | Yes | Yes | AGENTS.md primary | None |
-| **Augment Code** | Yes | Yes (hierarchical) | `.augment/rules/` | None |
-| **Roo Code** | Yes | Partial (recursive) | `.roo/rules/` | None |
-| **JetBrains Junie** | Yes | Needs config path | `.junie/guidelines.md` | Set Guidelines path for monorepos |
-| **Gemini CLI** | Via config | Yes (excellent) | `GEMINI.md` | Symlink or settings.json config |
-| **Aider** | Via config | No auto-discovery | `CONVENTIONS.md` | `.aider.conf.yml` config |
-| **Claude Code** | **No** | On-demand (CLAUDE.md only) | `CLAUDE.md` | **Auto-created when `.claude/` detected** |
-| **Continue.dev** | **No** | No | `.continue/rules/` | Copy/link into rules dir |
-| **Amazon Q** | **No** | No | `.amazonq/rules/` | Copy into rules dir |
-| **Cline** | **No** | No | `.clinerules/` | Copy/link into dir |
-| **Sourcegraph Cody** | **No** | No | `.sourcegraph/*.rule.md` | Copy content |
-| **Tabnine** | **No** | No | `.tabnine/guidelines/` | Copy content |
+| Agent                | Native AGENTS.md |   Subdirectory Auto-Load   | Own Format                        | Mitigation                                |
+| -------------------- | :--------------: | :------------------------: | --------------------------------- | ----------------------------------------- |
+| **Codex CLI**        |  Yes (creator)   |    Yes (best-in-class)     | `AGENTS.md`                       | None                                      |
+| **GitHub Copilot**   |       Yes        |            Yes             | `.github/copilot-instructions.md` | None                                      |
+| **Cursor**           |       Yes        |            Yes             | `.cursor/rules/*.mdc`             | None                                      |
+| **Windsurf**         |       Yes        |     Yes (auto-scoped)      | `.windsurf/rules/`                | None                                      |
+| **Devin**            |       Yes        |            Yes             | AGENTS.md primary                 | None                                      |
+| **Augment Code**     |       Yes        |     Yes (hierarchical)     | `.augment/rules/`                 | None                                      |
+| **Roo Code**         |       Yes        |    Partial (recursive)     | `.roo/rules/`                     | None                                      |
+| **JetBrains Junie**  |       Yes        |     Needs config path      | `.junie/guidelines.md`            | Set Guidelines path for monorepos         |
+| **Gemini CLI**       |    Via config    |      Yes (excellent)       | `GEMINI.md`                       | Symlink or settings.json config           |
+| **Aider**            |    Via config    |     No auto-discovery      | `CONVENTIONS.md`                  | `.aider.conf.yml` config                  |
+| **Claude Code**      |      **No**      | On-demand (CLAUDE.md only) | `CLAUDE.md`                       | **Auto-created when `.claude/` detected** |
+| **Continue.dev**     |      **No**      |             No             | `.continue/rules/`                | Copy/link into rules dir                  |
+| **Amazon Q**         |      **No**      |             No             | `.amazonq/rules/`                 | Copy into rules dir                       |
+| **Cline**            |      **No**      |             No             | `.clinerules/`                    | Copy/link into dir                        |
+| **Sourcegraph Cody** |      **No**      |             No             | `.sourcegraph/*.rule.md`          | Copy content                              |
+| **Tabnine**          |      **No**      |             No             | `.tabnine/guidelines/`            | Copy content                              |
 
 ## Symlink Strategy (Recommended)
 
@@ -46,11 +46,11 @@ the root AGENTS.md explicitly links to them and says "read nearest AGENTS.md."
 
 **Tested scenarios (March 2026):**
 
-| Setup | Result |
-|-------|--------|
+| Setup                                                 | Result                                                                                       |
+| ----------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | Root CLAUDE.md symlink only, no subdirectory symlinks | Subdirectory AGENTS.md NOT loaded. Agent sees root links but does not proactively read them. |
-| Root + subdirectory CLAUDE.md symlinks | Subdirectory AGENTS.md auto-loaded when agent works in that directory. |
-| Root instructions say "read nearest AGENTS.md" | Agent acknowledges instruction but does NOT act on it without explicit prompting. |
+| Root + subdirectory CLAUDE.md symlinks                | Subdirectory AGENTS.md auto-loaded when agent works in that directory.                       |
+| Root instructions say "read nearest AGENTS.md"        | Agent acknowledges instruction but does NOT act on it without explicit prompting.            |
 
 ### Commit symlinks to git
 
@@ -103,6 +103,7 @@ If you need Claude-specific overrides on top of AGENTS.md:
 
 ```markdown
 <!-- CLAUDE.md -->
+
 @AGENTS.md
 
 <!-- Claude-specific overrides below -->
@@ -117,14 +118,18 @@ For skill users only — auto-create symlinks at session start:
 ```json
 {
   "hooks": {
-    "SessionStart": [{
-      "matcher": "",
-      "hooks": [{
-        "type": "command",
-        "command": "find . -name AGENTS.md -not -path './.git/*' | while read f; do dir=$(dirname \"$f\"); [ ! -e \"$dir/CLAUDE.md\" ] && ln -s AGENTS.md \"$dir/CLAUDE.md\"; done",
-        "timeout": 5
-      }]
-    }]
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "find . -name AGENTS.md -not -path './.git/*' | while read f; do dir=$(dirname \"$f\"); [ ! -e \"$dir/CLAUDE.md\" ] && ln -s AGENTS.md \"$dir/CLAUDE.md\"; done",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
   }
 }
 ```
@@ -138,11 +143,13 @@ Gemini CLI reads `GEMINI.md` natively with excellent hierarchical support (globa
 ### Mitigation options
 
 **Option A: Symlink** (recommended)
+
 ```bash
 ln -s AGENTS.md GEMINI.md    # At every level
 ```
 
 **Option B: settings.json config**
+
 ```json
 {
   "context": {
@@ -161,6 +168,7 @@ Codex is the creator of the AGENTS.md standard and has the best support.
 - **Fallback filenames**: Configurable via `~/.codex/config.toml`
 
 **Best practices:**
+
 - Keep root AGENTS.md under 4 KiB (leaves room for 7+ nested files)
 - Use `--style=thin` template for optimal Codex compatibility
 - Use AGENTS.override.md for directory-specific behavior changes
@@ -175,7 +183,7 @@ Aider reads `CONVENTIONS.md` by default. AGENTS.md requires explicit configurati
 # .aider.conf.yml
 read:
   - AGENTS.md
-  - internal/AGENTS.md        # No auto-discovery — list each file explicitly
+  - internal/AGENTS.md # No auto-discovery — list each file explicitly
   - internal/web/AGENTS.md
 ```
 
@@ -187,6 +195,7 @@ Full native support for AGENTS.md including subdirectories (announced August 202
 Also reads CLAUDE.md and GEMINI.md as fallbacks.
 
 Additionally supports its own format:
+
 - `.github/copilot-instructions.md` — repository-wide instructions
 - `.github/instructions/*.instructions.md` — path-scoped via YAML frontmatter `applyTo` globs
 
@@ -197,13 +206,13 @@ For **Continue.dev**, **Amazon Q**, **Cline**, **Sourcegraph Cody**, and **Tabni
 These agents use proprietary directory formats. The only mitigation is to copy or symlink
 AGENTS.md content into their respective directories:
 
-| Agent | Target |
-|-------|--------|
-| Continue.dev | `.continue/rules/agents.md` |
-| Amazon Q | `.amazonq/rules/agents.md` |
-| Cline | `.clinerules/agents.md` |
-| Sourcegraph Cody | `.sourcegraph/agents.rule.md` |
-| Tabnine | `.tabnine/guidelines/agents.md` |
+| Agent            | Target                          |
+| ---------------- | ------------------------------- |
+| Continue.dev     | `.continue/rules/agents.md`     |
+| Amazon Q         | `.amazonq/rules/agents.md`      |
+| Cline            | `.clinerules/agents.md`         |
+| Sourcegraph Cody | `.sourcegraph/agents.rule.md`   |
+| Tabnine          | `.tabnine/guidelines/agents.md` |
 
 Feature requests are open for most of these tools.
 

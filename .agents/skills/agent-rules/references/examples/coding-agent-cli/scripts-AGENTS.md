@@ -7,12 +7,14 @@
 ## Overview
 
 13+ Bash scripts for installing developer tools with multiple actions:
+
 - **install**: Fresh installation (default action)
 - **update**: Upgrade to latest version
 - **uninstall**: Remove installation
 - **reconcile**: Switch to preferred installation method (e.g., system → user)
 
 **Key scripts:**
+
 - `install_core.sh`: Core tools (fd, fzf, ripgrep, jq, yq, bat, delta, just)
 - `install_python.sh`: Python toolchain via uv
 - `install_node.sh`: Node.js via nvm
@@ -26,12 +28,14 @@
 ## Setup
 
 **Requirements:**
+
 - Bash 4.0+
 - `curl` or `wget` for downloads
 - Internet access for fresh installs
 - Appropriate permissions (user for `~/.local/bin`, sudo for system)
 
 **Environment variables:**
+
 ```bash
 INSTALL_PREFIX=${INSTALL_PREFIX:-~/.local}  # Default: user-level
 FORCE_INSTALL=1                              # Skip confirmation prompts
@@ -39,6 +43,7 @@ DEBUG=1                                      # Verbose output
 ```
 
 **Permissions:**
+
 ```bash
 make scripts-perms  # Ensure all scripts are executable
 ```
@@ -46,6 +51,7 @@ make scripts-perms  # Ensure all scripts are executable
 ## Build & Tests
 
 **Run individual script:**
+
 ```bash
 # Install action (default)
 ./scripts/install_python.sh
@@ -61,6 +67,7 @@ make scripts-perms  # Ensure all scripts are executable
 ```
 
 **Via Make:**
+
 ```bash
 make install-python              # Install Python toolchain
 make update-python               # Update Python toolchain
@@ -69,11 +76,13 @@ make reconcile-node              # Switch Node.js to nvm-managed
 ```
 
 **Smoke test:**
+
 ```bash
 ./scripts/test_smoke.sh          # Verify audit output format
 ```
 
 **Debug mode:**
+
 ```bash
 DEBUG=1 ./scripts/install_python.sh
 bash -x ./scripts/install_python.sh  # Trace execution
@@ -82,6 +91,7 @@ bash -x ./scripts/install_python.sh  # Trace execution
 ## Code Style
 
 **Shell standards:**
+
 - Bash 4.0+ features allowed
 - Shebang: `#!/usr/bin/env bash` or `#!/bin/bash`
 - Set strict mode: `set -euo pipefail`
@@ -90,12 +100,14 @@ bash -x ./scripts/install_python.sh  # Trace execution
   - `-o pipefail`: Fail on pipe errors
 
 **Formatting:**
+
 - 4-space indentation (matches EditorConfig)
 - Function names: lowercase_with_underscores
 - Constants: UPPER_CASE
 - Local variables: lowercase
 
 **Structure:**
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -138,6 +150,7 @@ esac
 ```
 
 **Error handling:**
+
 ```bash
 # Good: Check command exists before using
 if ! command -v curl >/dev/null 2>&1; then
@@ -156,6 +169,7 @@ trap 'rm -rf "$TMPDIR"' EXIT ERR
 ```
 
 **Confirmation prompts:**
+
 ```bash
 # Good: Skip prompt if FORCE_INSTALL=1
 if [[ "${FORCE_INSTALL:-0}" != "1" ]]; then
@@ -168,6 +182,7 @@ fi
 ## Security
 
 **Download verification:**
+
 ```bash
 # Always use HTTPS
 URL="https://github.com/owner/repo/releases/download/..."
@@ -182,6 +197,7 @@ fi
 ```
 
 **Path safety:**
+
 ```bash
 # Good: Quote variables, use absolute paths
 INSTALL_DIR="${HOME}/.local/bin"
@@ -194,6 +210,7 @@ mv tool bin/
 ```
 
 **Sudo usage:**
+
 ```bash
 # Good: Prompt for sudo only when needed
 if [[ "$INSTALL_PREFIX" == "/usr/local" ]]; then
@@ -209,6 +226,7 @@ fi
 ```
 
 **No secrets in scripts:**
+
 - No API keys, tokens, passwords in scripts
 - Use environment variables: `${GITHUB_TOKEN:-}`
 - Document required env vars in script comments
@@ -216,6 +234,7 @@ fi
 ## PR/Commit Checklist
 
 **Before commit:**
+
 - [ ] Run `shellcheck <script>` (if available)
 - [ ] Test install action: `./scripts/install_<tool>.sh`
 - [ ] Test update action: `./scripts/install_<tool>.sh update`
@@ -224,6 +243,7 @@ fi
 - [ ] Verify script permissions: `make scripts-perms`
 
 **Script checklist:**
+
 - [ ] Shebang: `#!/usr/bin/env bash`
 - [ ] Strict mode: `set -euo pipefail`
 - [ ] Source shared lib: `source "${SCRIPT_DIR}/lib/colors.sh"`
@@ -233,6 +253,7 @@ fi
 - [ ] PATH updates (add to ~/.bashrc or ~/.zshrc if needed)
 
 **Commit messages:**
+
 - `feat(scripts): add install_terraform.sh`
 - `fix(install-python): handle uv bootstrap failure`
 - `docs(scripts): update README with reconcile action`
@@ -240,6 +261,7 @@ fi
 ## Good vs Bad Examples
 
 **Good: Robust download with fallback**
+
 ```bash
 download_file() {
     local url="$1"
@@ -257,6 +279,7 @@ download_file() {
 ```
 
 **Bad: Assumes curl exists**
+
 ```bash
 download_file() {
     curl -fsSL "$1" -o "$2"  # Fails if curl not installed
@@ -264,6 +287,7 @@ download_file() {
 ```
 
 **Good: Version comparison**
+
 ```bash
 version_gt() {
     test "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1"
@@ -278,6 +302,7 @@ fi
 ```
 
 **Bad: String comparison for versions**
+
 ```bash
 if [[ "$LATEST_VERSION" > "$CURRENT_VERSION" ]]; then
     # Wrong: "1.10.0" < "1.9.0" (string comparison)
@@ -286,6 +311,7 @@ fi
 ```
 
 **Good: Cleanup on exit**
+
 ```bash
 TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT ERR
@@ -297,6 +323,7 @@ download_file "$URL" "$TMPDIR/file"
 ```
 
 **Bad: Manual cleanup (error-prone)**
+
 ```bash
 TMPDIR=$(mktemp -d)
 download_file "$URL" "$TMPDIR/file"
@@ -305,6 +332,7 @@ rm -rf "$TMPDIR"  # Skipped if earlier command fails
 ```
 
 **Good: Action-specific logic**
+
 ```bash
 install_rust() {
     if command -v rustup >/dev/null 2>&1; then
@@ -329,31 +357,37 @@ update_rust() {
 ## When Stuck
 
 **Script fails silently:**
+
 1. Add debug: `bash -x ./scripts/install_<tool>.sh`
 2. Check logs: `./scripts/install_<tool>.sh 2>&1 | tee install.log`
 3. Verify permissions: `ls -la scripts/`
 
 **Download fails:**
+
 1. Check network: `curl -I https://github.com`
 2. Check URL: `echo "$URL"` (verify it's correct)
 3. Try manual download: `curl -fsSL "$URL"`
 
 **Installation fails:**
+
 1. Check prerequisites (e.g., Python for uv, curl for rustup)
 2. Check disk space: `df -h`
 3. Check permissions: `ls -ld "$INSTALL_PREFIX"`
 
 **PATH not updated:**
+
 1. Source shell config: `source ~/.bashrc` or `source ~/.zshrc`
 2. Check PATH: `echo $PATH | tr ':' '\n' | grep local`
 3. Verify binary location: `ls -la ~/.local/bin/<tool>`
 
 **Reconcile fails:**
+
 1. Check current installation: `which <tool>`
 2. Check installation method: `cli_audit.py --only <tool>`
 3. Manually remove old version first: `apt remove <tool>` or `cargo uninstall <tool>`
 
 **Documentation:**
+
 - Script-specific docs: [README.md](README.md) (this directory)
 - Troubleshooting: [../docs/TROUBLESHOOTING.md](../docs/TROUBLESHOOTING.md)
 - Architecture: [../docs/DEPLOYMENT.md](../docs/DEPLOYMENT.md#installation-scripts)
@@ -361,22 +395,26 @@ update_rust() {
 ## House Rules
 
 **Installation preferences** (Phase 2 planning):
+
 - User-level preferred: `~/.local/bin` (workstations)
 - System-level for servers: `/usr/local/bin`
 - Vendor tools first: rustup, nvm, uv over system packages
 - See [../docs/adr/ADR-002-package-manager-hierarchy.md](../docs/adr/ADR-002-package-manager-hierarchy.md)
 
 **Reconciliation strategy:**
+
 - Parallel approach: Keep both installations, prefer user via PATH
 - No automatic removal (user chooses)
 - See [../docs/adr/ADR-003-parallel-installation-approach.md](../docs/adr/ADR-003-parallel-installation-approach.md)
 
 **Version policy:**
+
 - Always latest by default
 - Warn on major version upgrades
 - See [../docs/adr/ADR-004-always-latest-version-policy.md](../docs/adr/ADR-004-always-latest-version-policy.md)
 
 **Script structure:**
+
 - Multi-action support: install, update, uninstall, reconcile
 - Shared utilities in `lib/`
 - Consistent error handling and logging

@@ -3,29 +3,42 @@
 # AGENTS.md — {{SCOPE_NAME}}
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 {{SCOPE_DESCRIPTION}}
+
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
+
 {{SCOPE_FILE_MAP}}
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 ## Golden Samples (follow these patterns)
+
 {{SCOPE_GOLDEN_SAMPLES}}
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->
+
 ## Setup & environment
+
 - Resources are typically consumed by other parts of the application
 - Some resources may need preprocessing or compilation
 - Check build scripts for resource handling
 <!-- AGENTS-GENERATED:END setup -->
 
 <!-- AGENTS-GENERATED:START types -->
+
 ## Resource types
+
 - **Templates**: HTML, email, or text templates
 - **Static assets**: Images, fonts, icons, stylesheets
 - **Configuration**: Default configs, schema files, fixtures
@@ -34,7 +47,9 @@
 <!-- AGENTS-GENERATED:END types -->
 
 <!-- AGENTS-GENERATED:START organization -->
+
 ## Organization conventions
+
 - Group resources by type: `templates/`, `images/`, `locales/`
 - Use consistent naming: lowercase, hyphens for spaces
 - Keep related resources together
@@ -42,7 +57,9 @@
 <!-- AGENTS-GENERATED:END organization -->
 
 <!-- AGENTS-GENERATED:START code-style -->
+
 ## Code style & conventions
+
 - Use descriptive file names: `user-profile-template.html` not `template1.html`
 - Keep templates simple - logic belongs in code, not templates
 - Use consistent indentation in structured files (JSON, YAML, XML)
@@ -51,7 +68,9 @@
 <!-- AGENTS-GENERATED:END code-style -->
 
 <!-- AGENTS-GENERATED:START templates -->
+
 ## Template best practices
+
 - Use clear placeholder syntax: `{{variable}}` or `${variable}`
 - Document all required variables in comments or README
 - Keep templates focused - one purpose per template
@@ -59,7 +78,9 @@
 <!-- AGENTS-GENERATED:END templates -->
 
 <!-- AGENTS-GENERATED:START security -->
+
 ## Security & safety
+
 - Never store secrets in resource files
 - Validate all resource files that accept user input
 - Sanitize template variables to prevent injection
@@ -68,7 +89,9 @@
 <!-- AGENTS-GENERATED:END security -->
 
 <!-- AGENTS-GENERATED:START checklist -->
+
 ## PR/commit checklist
+
 - [ ] File names are descriptive and consistent
 - [ ] Images are optimized (compressed, correct size)
 - [ ] Templates have documented variables
@@ -78,13 +101,18 @@
 <!-- AGENTS-GENERATED:END checklist -->
 
 <!-- AGENTS-GENERATED:START examples -->
+
 ## Patterns to Follow
+
 > **Prefer looking at real code in this repo over generic examples.**
 > See **Golden Samples** section above for files that demonstrate correct patterns.
+
 <!-- AGENTS-GENERATED:END examples -->
 
 <!-- AGENTS-GENERATED:START help -->
+
 ## When stuck
+
 - Check how resources are consumed in the codebase
 - Look for build/preprocessing scripts
 - Review existing resources for patterns
@@ -92,5 +120,7 @@
 <!-- AGENTS-GENERATED:END help -->
 
 ## House Rules (project-specific)
+
 <!-- This section is NOT auto-generated - add your project-specific rules here -->
+
 {{HOUSE_RULES}}

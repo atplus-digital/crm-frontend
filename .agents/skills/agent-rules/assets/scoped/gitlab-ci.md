@@ -3,28 +3,42 @@
 # AGENTS.md — {{SCOPE_NAME}}
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 {{SCOPE_DESCRIPTION}}
+
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
+
 {{SCOPE_FILE_MAP}}
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 ## Golden Samples (follow these patterns)
+
 {{SCOPE_GOLDEN_SAMPLES}}
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->
+
 ## Pipeline configuration
+
 {{JOB_COUNT_LINE}}
 {{INCLUDES_LINE}}
+
 <!-- AGENTS-GENERATED:END setup -->
 
 <!-- AGENTS-GENERATED:START structure -->
+
 ## File structure
+
 ```
 .gitlab-ci.yml          → Main pipeline configuration
 .gitlab/
@@ -33,10 +47,13 @@
     jobs/               → Job definitions (included)
   CODEOWNERS            → Code ownership
 ```
+
 <!-- AGENTS-GENERATED:END structure -->
 
 <!-- AGENTS-GENERATED:START code-style -->
+
 ## Pipeline conventions
+
 - Use **stages** to organize job execution order
 - **Extend templates** with `extends:` for DRY jobs
 - Use **rules:** instead of `only:/except:` (deprecated)
@@ -44,18 +61,22 @@
 - Use **artifacts** to pass files between stages
 
 ### Naming conventions
-| Type | Convention | Example |
-|------|------------|---------|
-| Stage | lowercase | `build`, `test`, `deploy` |
-| Job | kebab-case with stage prefix | `build-app`, `test-unit` |
-| Variable | SCREAMING_SNAKE | `DEPLOY_ENV`, `CI_TOKEN` |
-| Template | `.template-name` (dot prefix) | `.build-template` |
+
+| Type     | Convention                    | Example                   |
+| -------- | ----------------------------- | ------------------------- |
+| Stage    | lowercase                     | `build`, `test`, `deploy` |
+| Job      | kebab-case with stage prefix  | `build-app`, `test-unit`  |
+| Variable | SCREAMING_SNAKE               | `DEPLOY_ENV`, `CI_TOKEN`  |
+| Template | `.template-name` (dot prefix) | `.build-template`         |
+
 <!-- AGENTS-GENERATED:END code-style -->
 
 <!-- AGENTS-GENERATED:START patterns -->
+
 ## Common patterns
 
 ### Basic pipeline structure
+
 ```yaml
 stages:
   - build
@@ -84,6 +105,7 @@ test-unit:
 ```
 
 ### Reusable job template
+
 ```yaml
 .deploy-template:
   stage: deploy
@@ -110,6 +132,7 @@ deploy-production:
 ```
 
 ### Matrix builds (parallel)
+
 ```yaml
 test:
   stage: test
@@ -123,18 +146,22 @@ test:
 ```
 
 ### Include external files
+
 ```yaml
 include:
-  - local: '.gitlab/ci/templates.yml'
-  - project: 'company/ci-templates'
+  - local: ".gitlab/ci/templates.yml"
+  - project: "company/ci-templates"
     ref: main
-    file: '/templates/docker.yml'
+    file: "/templates/docker.yml"
   - template: Security/SAST.gitlab-ci.yml
 ```
+
 <!-- AGENTS-GENERATED:END patterns -->
 
 <!-- AGENTS-GENERATED:START security -->
+
 ## Security & safety
+
 - Use **protected variables** for secrets (Settings > CI/CD > Variables)
 - **Mask variables** to prevent log exposure
 - Use **protected branches** for deployment jobs
@@ -145,7 +172,9 @@ include:
 <!-- AGENTS-GENERATED:END security -->
 
 <!-- AGENTS-GENERATED:START checklist -->
+
 ## PR/commit checklist
+
 - [ ] Pipeline syntax valid: use CI/CD > Editor > Validate
 - [ ] Jobs use appropriate stages
 - [ ] Sensitive variables are masked and protected
@@ -155,13 +184,18 @@ include:
 <!-- AGENTS-GENERATED:END checklist -->
 
 <!-- AGENTS-GENERATED:START examples -->
+
 ## Patterns to Follow
+
 > **Prefer looking at real code in this repo over generic examples.**
 > See **Golden Samples** section above for files that demonstrate correct patterns.
+
 <!-- AGENTS-GENERATED:END examples -->
 
 <!-- AGENTS-GENERATED:START help -->
+
 ## When stuck
+
 - GitLab CI docs: https://docs.gitlab.com/ee/ci/
 - CI/CD YAML syntax: https://docs.gitlab.com/ee/ci/yaml/
 - Predefined variables: https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
@@ -170,5 +204,7 @@ include:
 <!-- AGENTS-GENERATED:END help -->
 
 ## House Rules (project-specific)
+
 <!-- This section is NOT auto-generated - add your project-specific rules here -->
+
 {{HOUSE_RULES}}

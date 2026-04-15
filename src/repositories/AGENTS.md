@@ -3,22 +3,30 @@
 # AGENTS.md — repositories
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 Repositórios de dados — camada de acesso a dados externos (NocoBase, IXCSoft) com type safety baseado em collections geradas, logging estruturado e tratamento de erros padronizado.
+
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
+
 | File                     | Purpose                                                                                                                         |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
 | `index.ts`               | Barrel export — repositórios (`nocobaseRepository`, `ixcRepository`) e tipos                                                    |
 | `nocobase-repository.ts` | `NocoBaseRepository` + `TypedNocoBaseClient` (interno) — wrappers de alto nível para operações NocoBase com collections tipadas |
 | `ixc-repository.ts`      | `IxcRepository` — operações IXCSoft via NocoBase com header `X-Data-Source: d_db_ixcsoft`                                       |
 | `types.ts`               | Tipos compartilhados: `ApiRequestConfig`, `ListParams`, `PaginatedResponse`, `NocoBaseClient`                                   |
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START patterns -->
+
 ## Patterns
+
 - Import de `#/features/repositories` — não importar de sub-arquivos diretamente
 - Repositórios são singletons exportados: `nocobaseRepository`, `ixcRepository`
 - Serviços de domínio usam repositórios, não clients diretamente
@@ -28,6 +36,7 @@ Repositórios de dados — camada de acesso a dados externos (NocoBase, IXCSoft)
 <!-- AGENTS-GENERATED:END patterns -->
 
 <!-- AGENTS-GENERATED:START api-reference -->
+
 ## Main Functions & API
 
 ### NocoBaseRepository
@@ -58,6 +67,7 @@ Repositórios de dados — camada de acesso a dados externos (NocoBase, IXCSoft)
 | `getContratos<T>(params)`   | Listar contratos com filtros pré-buildados                          | `ixcRepository.getContratos({filters: {cpfCnpj: "123...", status: "A"}})` |
 
 **Filtros do `getContratos`:**
+
 - `cpfCnpj`: Busca parcial em `f_nc_cliente.cnpj_cpf`
 - `nome`: Busca parcial em `f_nc_cliente.razao`
 - `status`: Filtro exato em `status`
@@ -98,12 +108,15 @@ interface PaginatedResponse<T> {
 // NocoBaseClient é um type alias para APIClient do SDK
 type NocoBaseClient = APIClient;
 ```
+
 <!-- AGENTS-GENERATED:END api-reference -->
 
 <!-- AGENTS-GENERATED:START usage-examples -->
+
 ## Usage Examples
 
 ### Listar dados com paginação e relações
+
 ```typescript
 import { nocobaseRepository } from "#/features/repositories";
 import type { Users } from "#/@types/generated/crm/collections";
@@ -120,6 +133,7 @@ const response = await nocobaseRepository.list<Users>("users", {
 ```
 
 ### Criar/atualizar registro
+
 ```typescript
 import { nocobaseRepository } from "#/features/repositories";
 import type { Users } from "#/@types/generated/crm/collections";
@@ -133,6 +147,7 @@ await nocobaseRepository.update("users", user.id, { phone: "123456789" });
 ```
 
 ### Buscar com relações incluídas
+
 ```typescript
 import { nocobaseRepository } from "#/features/repositories";
 
@@ -143,6 +158,7 @@ const user = await nocobaseRepository.get<Users>("users", 123, {
 ```
 
 ### Contar registros com filtro
+
 ```typescript
 import { nocobaseRepository } from "#/features/repositories";
 
@@ -152,6 +168,7 @@ const { count } = await nocobaseRepository.count("users", {
 ```
 
 ### IXC com filtros complexos
+
 ```typescript
 import { ixcRepository } from "#/features/repositories";
 
@@ -166,6 +183,7 @@ const contratos = await ixcRepository.getContratos<ContratoWithCliente>({
 ```
 
 ### Requisição direta com config customizada
+
 ```typescript
 import { ixcRepository } from "#/features/repositories";
 
@@ -176,12 +194,15 @@ const data = await ixcRepository.request<MyType>({
   headers: { "X-Custom-Header": "value" },
 });
 ```
+
 <!-- AGENTS-GENERATED:END usage-examples -->
 
 <!-- AGENTS-GENERATED:START architecture -->
+
 ## Architecture Notes
 
 ### Por que repositórios?
+
 - **Separação de responsabilidades**: Serviços não dependem de clients diretamente
 - **Type safety com collections geradas**: `CollectionMap[T]` e `CollectionRelationsMap[T]` previnem erro de digitação em nomes de collections e relações
 - **Logging centralizado**: Todas as requisições são logadas automaticamente via `createLogger("repositories:...")`
@@ -219,6 +240,7 @@ const data = await ixcRepository.request<MyType>({
 ```
 
 ### Quando usar
+
 - ✅ Acessar dados do NocoBase ou IXCSoft
 - ✅ Operações CRUD em collections
 - ✅ Requisições customizadas com headers específicos
@@ -228,9 +250,11 @@ const data = await ixcRepository.request<MyType>({
 <!-- AGENTS-GENERATED:END architecture -->
 
 <!-- AGENTS-GENERATED:START testing -->
+
 ## Testing
 
 ### Mock de repositórios (module-level)
+
 ```typescript
 import { vi } from "vitest";
 import { nocobaseRepository } from "#/features/repositories";
@@ -242,7 +266,9 @@ vi.mock("#/features/repositories", () => ({
       data: [{ id: 1, email: "test@example.com" }] as Users[],
       meta: { total: 1, page: 1, pageSize: 20 },
     }),
-    get: vi.fn().mockResolvedValue({ id: 1, email: "test@example.com" } as Users),
+    get: vi
+      .fn()
+      .mockResolvedValue({ id: 1, email: "test@example.com" } as Users),
     create: vi.fn().mockResolvedValue({ id: 1 } as Users),
     update: vi.fn().mockResolvedValue({ id: 1 } as Users),
     delete: vi.fn().mockResolvedValue(undefined),
@@ -252,6 +278,7 @@ vi.mock("#/features/repositories", () => ({
 ```
 
 ### Mock com `vi.spyOn()` (recomendado)
+
 ```typescript
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { ixcRepository } from "#/features/repositories";
@@ -286,7 +313,9 @@ describe("contratos-service", () => {
 <!-- AGENTS-GENERATED:END testing -->
 
 <!-- AGENTS-GENERATED:START help -->
+
 ## When stuck
+
 - **Type errors com collections**: Verificar `src/@types/generated/crm/collections.ts` para collections e relações disponíveis
 - **Tipos de retorno**: Usar `CollectionMap[CollectionName]` para obter o tipo correto da collection
 - **Logging**: Rodar `pnpm dev` e inspecione console com filtro `repositories:` para debug de requisições

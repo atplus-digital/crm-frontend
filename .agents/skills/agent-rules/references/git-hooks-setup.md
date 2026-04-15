@@ -8,12 +8,12 @@ Git hooks catch formatting errors, lint violations, and test failures **before c
 
 Check for these files in the repository root:
 
-| File | Framework | Language ecosystem |
-|------|-----------|-------------------|
-| `lefthook.yml` or `.lefthook.yml` | [Lefthook](https://github.com/evilmartians/lefthook) | Any (Go binary) |
-| `captainhook.json` | [CaptainHook](https://github.com/captainhookphp/captainhook) | PHP / Composer |
-| `.husky/` directory | [Husky](https://github.com/typicode/husky) | Node.js / npm |
-| `.pre-commit-config.yaml` | [pre-commit](https://pre-commit.com/) | Python / Any |
+| File                              | Framework                                                    | Language ecosystem |
+| --------------------------------- | ------------------------------------------------------------ | ------------------ |
+| `lefthook.yml` or `.lefthook.yml` | [Lefthook](https://github.com/evilmartians/lefthook)         | Any (Go binary)    |
+| `captainhook.json`                | [CaptainHook](https://github.com/captainhookphp/captainhook) | PHP / Composer     |
+| `.husky/` directory               | [Husky](https://github.com/typicode/husky)                   | Node.js / npm      |
+| `.pre-commit-config.yaml`         | [pre-commit](https://pre-commit.com/)                        | Python / Any       |
 
 ## Setup Commands
 

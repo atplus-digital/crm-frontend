@@ -24,30 +24,30 @@ A coleção `customRequests` armazena **webhooks customizados** que permitem env
 ```typescript
 // Fonte: nocobase/packages/plugins/@nocobase/plugin-action-custom-request/src/server/collections/customRequest.ts
 defineCollection({
-  dumpRules: 'required',
-  name: 'customRequests',
+  dumpRules: "required",
+  name: "customRequests",
   autoGenId: false,
-  migrationRules: ['overwrite', 'schema-only'],
+  migrationRules: ["overwrite", "schema-only"],
   fields: [
     {
-      type: 'uid',
-      name: 'key',           // UUID como primaryKey (ex: "37yaihkravc")
+      type: "uid",
+      name: "key", // UUID como primaryKey (ex: "37yaihkravc")
       primaryKey: true,
     },
     {
-      type: 'belongsToMany',
-      name: 'roles',         // Relacionamento N:N com roles
-      onDelete: 'CASCADE',
-      through: 'customRequestsRoles',
-      target: 'roles',
-      foreignKey: 'customRequestKey',
-      otherKey: 'roleName',
-      sourceKey: 'key',
-      targetKey: 'name',
+      type: "belongsToMany",
+      name: "roles", // Relacionamento N:N com roles
+      onDelete: "CASCADE",
+      through: "customRequestsRoles",
+      target: "roles",
+      foreignKey: "customRequestKey",
+      otherKey: "roleName",
+      sourceKey: "key",
+      targetKey: "name",
     },
     {
-      type: 'json',
-      name: 'options',       // Toda a configuração do request vai aqui
+      type: "json",
+      name: "options", // Toda a configuração do request vai aqui
     },
   ],
 });
@@ -55,13 +55,13 @@ defineCollection({
 
 ### Campos
 
-| Campo      | Tipo          | Descrição                                      |
-| ---------- | ------------- | ---------------------------------------------- |
-| `key`      | `uid`         | Identificador único (primaryKey, ex: `37yaihkravc`) |
-| `roles`    | `belongsToMany` | Relacionamento N:N com roles (tabela `customRequestsRoles`) |
-| `options`  | `json`        | Configuração completa do webhook                |
-| `createdAt` | `datetime`   | Data de criação                                |
-| `updatedAt` | `datetime`   | Data de atualização                            |
+| Campo       | Tipo            | Descrição                                                   |
+| ----------- | --------------- | ----------------------------------------------------------- |
+| `key`       | `uid`           | Identificador único (primaryKey, ex: `37yaihkravc`)         |
+| `roles`     | `belongsToMany` | Relacionamento N:N com roles (tabela `customRequestsRoles`) |
+| `options`   | `json`          | Configuração completa do webhook                            |
+| `createdAt` | `datetime`      | Data de criação                                             |
+| `updatedAt` | `datetime`      | Data de atualização                                         |
 
 ---
 
@@ -69,17 +69,17 @@ defineCollection({
 
 O campo `options` é um JSON que contém toda a configuração do webhook.
 
-| Campo          | Tipo                    | Descrição                                              |
-| -------------- | ----------------------- | ------------------------------------------------------ |
-| `method`       | `string`                | Método HTTP: `GET`, `POST`, `PUT`, `DELETE`            |
-| `url`          | `string`                | URL do webhook (pode usar templates `{{variable}}`)   |
-| `headers`      | `array<{name, value}>` | Headers HTTP customizados                               |
-| `params`       | `array<{name, value}>` | Query parameters (para GET)                             |
-| `data`         | `any`                   | Body do request (POST/PUT). Objeto ou string JSON com templates |
-| `timeout`      | `number`                | Timeout em milissegundos                               |
-| `collectionName` | `string`              | Nome da coleção que "dispara" o request               |
-| `dataSourceKey` | `string`              | Fonte de dados (`main`, `d_db_ixcsoft`, etc.)         |
-| `responseType` | `string`                | `json` ou `stream`                                     |
+| Campo            | Tipo                   | Descrição                                                       |
+| ---------------- | ---------------------- | --------------------------------------------------------------- |
+| `method`         | `string`               | Método HTTP: `GET`, `POST`, `PUT`, `DELETE`                     |
+| `url`            | `string`               | URL do webhook (pode usar templates `{{variable}}`)             |
+| `headers`        | `array<{name, value}>` | Headers HTTP customizados                                       |
+| `params`         | `array<{name, value}>` | Query parameters (para GET)                                     |
+| `data`           | `any`                  | Body do request (POST/PUT). Objeto ou string JSON com templates |
+| `timeout`        | `number`               | Timeout em milissegundos                                        |
+| `collectionName` | `string`               | Nome da coleção que "dispara" o request                         |
+| `dataSourceKey`  | `string`               | Fonte de dados (`main`, `d_db_ixcsoft`, etc.)                   |
+| `responseType`   | `string`               | `json` ou `stream`                                              |
 
 ---
 
@@ -87,10 +87,10 @@ O campo `options` é um JSON que contém toda a configuração do webhook.
 
 A tabela intermediária `customRequestsRoles` faz o link N:N entre `customRequests` e `roles`.
 
-| Campo               | Tipo     | Descrição                         |
-| ------------------- | -------- | --------------------------------- |
-| `customRequestKey`  | `string` | FK para `customRequests.key`       |
-| `roleName`          | `string` | FK para `roles.name`               |
+| Campo              | Tipo     | Descrição                    |
+| ------------------ | -------- | ---------------------------- |
+| `customRequestKey` | `string` | FK para `customRequests.key` |
+| `roleName`         | `string` | FK para `roles.name`         |
 
 Isso permite controlar **qual role pode disparar** cada custom request.
 
@@ -100,16 +100,16 @@ Isso permite controlar **qual role pode disparar** cada custom request.
 
 O NocoBase suporta **template substitution** com `{{}}` nos campos `url`, `headers`, `params` e `data`. As variáveis disponíveis são:
 
-| Variável              | Descrição                                           |
-| --------------------- | --------------------------------------------------- |
-| `currentRecord`       | Registro atual (com todos os campos da coleção)      |
-| `currentUser`         | Usuário logado (id, nome, email, etc.)              |
-| `currentTime`         | Timestamp ISO atual                                 |
-| `$nToken`             | Bearer token de autenticação                        |
-| `$nForm`              | Dados do formulário                                 |
-| `$nSelectedRecord`    | Registros selecionados na tabela                    |
-| `$env`                | Variáveis de ambiente configuradas no NocoBase      |
-| `$nSelectedRecord`     | Registros selecionados na tabela                    |
+| Variável           | Descrição                                       |
+| ------------------ | ----------------------------------------------- |
+| `currentRecord`    | Registro atual (com todos os campos da coleção) |
+| `currentUser`      | Usuário logado (id, nome, email, etc.)          |
+| `currentTime`      | Timestamp ISO atual                             |
+| `$nToken`          | Bearer token de autenticação                    |
+| `$nForm`           | Dados do formulário                             |
+| `$nSelectedRecord` | Registros selecionados na tabela                |
+| `$env`             | Variáveis de ambiente configuradas no NocoBase  |
+| `$nSelectedRecord` | Registros selecionados na tabela                |
 
 ### Exemplo de template
 
@@ -126,14 +126,14 @@ O NocoBase suporta **template substitution** com `{{}}` nos campos `url`, `heade
 
 ## Endpoints da API
 
-| Método | Endpoint                        | Descrição                              |
-| ------- | ------------------------------- | -------------------------------------- |
-| `GET`  | `/customRequests:list`           | Lista todos os custom requests (paginado) |
-| `GET`  | `/customRequests:get`            | Retorna um registro pelo `filterByTk`  |
-| `POST` | `/customRequests:create`         | Cria novo custom request               |
-| `POST` | `/customRequests:update`         | Atualiza custom request existente       |
-| `POST` | `/customRequests:destroy`        | Remove custom request                  |
-| `POST` | `/customRequests:send/{key}`     | **Dispara** o custom request           |
+| Método | Endpoint                     | Descrição                                 |
+| ------ | ---------------------------- | ----------------------------------------- |
+| `GET`  | `/customRequests:list`       | Lista todos os custom requests (paginado) |
+| `GET`  | `/customRequests:get`        | Retorna um registro pelo `filterByTk`     |
+| `POST` | `/customRequests:create`     | Cria novo custom request                  |
+| `POST` | `/customRequests:update`     | Atualiza custom request existente         |
+| `POST` | `/customRequests:destroy`    | Remove custom request                     |
+| `POST` | `/customRequests:send/{key}` | **Dispara** o custom request              |
 
 ---
 
@@ -154,12 +154,14 @@ O `send` verifica se o usuário tem permissão:
 
 ```typescript
 // Root role tem todas as permissões
-if (ctx.state.currentRole !== 'root') {
-  const crRepo = ctx.db.getRepository('uiButtonSchemasRoles');
+if (ctx.state.currentRole !== "root") {
+  const crRepo = ctx.db.getRepository("uiButtonSchemasRoles");
   const hasRoles = await crRepo.find({ filter: { uid: filterByTk } });
   if (hasRoles.length) {
-    if (!hasRoles.some((item) => ctx.state.currentRoles.includes(item.roleName))) {
-      return ctx.throw(403, 'custom request no permission');
+    if (
+      !hasRoles.some((item) => ctx.state.currentRoles.includes(item.roleName))
+    ) {
+      return ctx.throw(403, "custom request no permission");
     }
   }
 }
@@ -169,22 +171,20 @@ if (ctx.state.currentRole !== 'root') {
 
 ## Exemplos de Registros Ativos
 
-| Key           | Collection            | URL do Webhook                                  | Método |
-| ------------- | --------------------- | ----------------------------------------------- | ------ |
-| `37yaihkravc` | `cliente_contrato`    | `n8n.atplus.cloud/webhook/0860593c-...`         | POST   |
+| Key           | Collection                   | URL do Webhook                               | Método |
+| ------------- | ---------------------------- | -------------------------------------------- | ------ |
+| `37yaihkravc` | `cliente_contrato`           | `n8n.atplus.cloud/webhook/0860593c-...`      | POST   |
 | `0j7f9fuzuo7` | `t_qualirun_info_adicionais` | `atplus-rh-n8n-rh.tvs9na.easypanel.host/...` | POST   |
-| `23btjo9ohrr` | `cliente_contrato`    | `n8n.atplus.cloud/webhook/5d9eccc3-...`         | POST   |
-| `h32vk2yid08` | `t_negociacoes`       | `n8n.atplus.cloud/webhook/b2b40644-...`         | POST   |
-| `yep1cjhq0zp` | `f_funcionarios`      | `atplus-rh-n8n-rh.tvs9na.easypanel.host/...`   | POST   |
+| `23btjo9ohrr` | `cliente_contrato`           | `n8n.atplus.cloud/webhook/5d9eccc3-...`      | POST   |
+| `h32vk2yid08` | `t_negociacoes`              | `n8n.atplus.cloud/webhook/b2b40644-...`      | POST   |
+| `yep1cjhq0zp` | `f_funcionarios`             | `atplus-rh-n8n-rh.tvs9na.easypanel.host/...` | POST   |
 
 ### Exemplo completo de `options`
 
 ```json
 {
   "method": "POST",
-  "headers": [
-    { "name": "Content-Type", "value": "application/json" }
-  ],
+  "headers": [{ "name": "Content-Type", "value": "application/json" }],
   "params": [],
   "responseType": "json",
   "data": {

@@ -3,11 +3,15 @@
 # AGENTS.md — hooks
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 Reusable frontend hooks shared across routes and components. Currently implements responsive design patterns with media query hooks.
+
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START state-patterns -->
+
 ## State Patterns
 
 ### Current Hook Inventory
@@ -27,27 +31,34 @@ Hooks in this folder integrate with:
 ### When to Add Hooks Here
 
 Add a hook to this folder when:
+
 - Logic is reused across 2+ components or modules
 - Hook is generic (not tied to specific business logic)
 - Hook wraps external libraries (e.g., `usehooks-ts`)
 - Hook provides cross-cutting concerns (responsive, theme, etc.)
 
 Keep hooks in modules when:
+
 - Tightly coupled to module state (auth, permissions)
 - Business logic specific to one domain
 - Used only within one module's components
 <!-- AGENTS-GENERATED:END state-patterns -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
+
 | File                | Purpose                                                                                                  |
 | ------------------- | -------------------------------------------------------------------------------------------------------- |
 | `use-mobile.ts`     | `useIsMobile()` — media query hook for responsive UI (mobile breakpoint at 768px)                        |
 | `use-pagination.ts` | `usePagination()` — standardized pagination state management for TanStack Table with server-side support |
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START naming-conventions -->
+
 ## Naming Conventions
+
 | Pattern                 | Example                       | When to Use                                             |
 | ----------------------- | ----------------------------- | ------------------------------------------------------- |
 | `use` prefix            | `useCan`, `useTheme`          | All custom hooks must start with `use`                  |
@@ -57,15 +68,18 @@ Keep hooks in modules when:
 | Boolean returns         | `useIsAdmin`, `useCan`        | Hooks returning boolean should use `is` or `can` prefix |
 
 **Rules:**
+
 - Always export hooks with `export function` or `export const` for tree-shaking
 - Never use default exports for hooks
 - Hook file names should match the primary hook: `useCan.ts` for `useCan` hook
 <!-- AGENTS-GENERATED:END naming-conventions -->
 
 <!-- AGENTS-GENERATED:START usage-patterns -->
+
 ## Usage Patterns
 
 ### Store-based hooks (TanStack Store)
+
 Use `useStore` for reactive state that changes frequently:
 
 ```typescript
@@ -82,11 +96,13 @@ export function useCan(action: string): boolean {
 ```
 
 **When to use:**
+
 - Reading from TanStack Store instances
 - State needs fine-grained reactivity
 - Avoiding unnecessary re-renders
 
 ### Context-based hooks
+
 Use `useContext` with proper error handling:
 
 ```typescript
@@ -99,11 +115,13 @@ export const useTheme = () => {
 ```
 
 **When to use:**
+
 - Provider-consumer patterns
 - Theme, auth, or configuration context
 - Always validate context exists
 
 ### Permission hooks pattern
+
 Follow the established permission hook structure:
 
 ```typescript
@@ -121,6 +139,7 @@ export function useIsAdmin(): boolean;
 ```
 
 ### Media query hooks
+
 Use `usehooks-ts` for responsive breakpoints:
 
 ```typescript
@@ -129,16 +148,18 @@ import { useMediaQuery } from "usehooks-ts";
 const MOBILE_BREAKPOINT = 768;
 
 export function useIsMobile(): boolean {
-	return useMediaQuery(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+  return useMediaQuery(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
 }
 ```
 
 **When to use:**
+
 - Responsive UI that adapts to screen size
 - Mobile-first design patterns
 - Conditional rendering based on viewport
 
 ### Pagination hooks
+
 Use `use-pagination.ts` for standardized pagination state with TanStack Table:
 
 ```typescript
@@ -164,15 +185,18 @@ export function MyTable({ onPageChange, onPageSizeChange }) {
 ```
 
 **When to use:**
+
 - Any table with pagination (client or server-side)
 - Standardize pagination behavior across components
 - Avoid duplicating pagination state logic
 <!-- AGENTS-GENERATED:END usage-patterns -->
 
 <!-- AGENTS-GENERATED:START best-practices -->
+
 ## Best Practices
 
 ### Do
+
 - ✅ Keep hooks focused on single responsibility
 - ✅ Return typed values (TypeScript interfaces/types)
 - ✅ Use selectors with `useStore` to avoid unnecessary re-renders
@@ -184,6 +208,7 @@ export function MyTable({ onPageChange, onPageSizeChange }) {
 - ✅ Clean up effects and subscriptions on unmount
 
 ### Don't
+
 - ❌ Mix UI logic with business logic in hooks
 - ❌ Call hooks conditionally or in loops
 - ❌ Create hooks for one-time use — keep logic in components
@@ -194,18 +219,21 @@ export function MyTable({ onPageChange, onPageSizeChange }) {
 - ❌ Create custom hooks when `usehooks-ts` already provides the pattern
 
 ### Performance
+
 - Use selector functions with `useStore` to subscribe to minimal state
 - Memoize expensive computations inside hooks with `useMemo`
 - Avoid creating new objects/arrays in hook return values
 - React 19 compiler handles automatic memoization — don't over-optimize prematurely
 
 ### Testing
+
 - Mock store state when testing store-based hooks
 - Test edge cases: empty state, denied permissions, wildcard matches
 - Verify context error messages are descriptive
 - Test responsive hooks at different viewport sizes using matchMedia mocks
 
 ### React 19 Patterns
+
 - Leverage automatic memoization from React 19 compiler
 - Use `useActionState` for form submission state instead of manual `useState`
 - Use `useOptimistic` for optimistic UI updates when appropriate
@@ -213,7 +241,9 @@ export function MyTable({ onPageChange, onPageSizeChange }) {
 <!-- AGENTS-GENERATED:END best-practices -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 ## Golden Samples
+
 | Pattern              | Reference file                                      |
 | -------------------- | --------------------------------------------------- |
 | Media query hook     | `src/hooks/use-mobile.ts`                           |
@@ -221,4 +251,5 @@ export function MyTable({ onPageChange, onPageSizeChange }) {
 | Shared query context | `src/integrations/tanstack/query/root-provider.tsx` |
 | Permission hooks     | `src/features/permissions/hooks.ts`                 |
 | Theme hook           | `src/components/theme-provider.tsx`                 |
+
 <!-- AGENTS-GENERATED:END golden-samples -->

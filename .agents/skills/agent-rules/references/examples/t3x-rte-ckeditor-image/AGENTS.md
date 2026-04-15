@@ -9,56 +9,71 @@
 **Precedence:** the **closest `AGENTS.md`** to the files you're changing wins. Root holds global defaults only.
 
 ## Commands (unverified)
+
 > Source: composer.json — CI-sourced commands are most reliable
 
 <!-- AGENTS-GENERATED:START commands -->
-| Task | Command | ~Time |
-|------|---------|-------|
-| Lint | vendor/bin/php-cs-fixer fix --dry-run | ~10s |
-| Format | vendor/bin/php-cs-fixer fix | ~5s |
-| Test (single) | vendor/bin/phpunit | ~2s |
-| Test (all) | vendor/bin/phpunit | ~30s |
+
+| Task          | Command                               | ~Time |
+| ------------- | ------------------------------------- | ----- |
+| Lint          | vendor/bin/php-cs-fixer fix --dry-run | ~10s  |
+| Format        | vendor/bin/php-cs-fixer fix           | ~5s   |
+| Test (single) | vendor/bin/phpunit                    | ~2s   |
+| Test (all)    | vendor/bin/phpunit                    | ~30s  |
+
 <!-- AGENTS-GENERATED:END commands -->
 
 > If commands fail, verify against Makefile/package.json/composer.json or ask user to update.
 
 ## Workflow
+
 1. **Before coding**: Read nearest `AGENTS.md` + check Golden Samples for the area you're touching
 2. **After each change**: Run the smallest relevant check (lint → typecheck → single test)
 3. **Before committing**: Run full test suite if changes affect >2 files or touch shared code
 4. **Before claiming done**: Run verification and **show output as evidence** — never say "try again" or "should work now" without proof
 
 ## File Map
+
 <!-- AGENTS-GENERATED:START filemap -->
+
 ```
 Classes/           → PHP backend classes
 Configuration/     → TYPO3 configuration
 Resources/         → Static assets, templates
 JavaScript/        → CKEditor plugin code
 ```
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 ## Golden Samples (follow these patterns)
+
 <!-- AGENTS-GENERATED:START golden-samples -->
-| For | Reference | Key patterns |
-|-----|-----------|--------------|
-| CKEditor Plugin | `JavaScript/ImagePlugin.js` | Plugin registration, button definition |
-| TYPO3 Backend | `Classes/Controller/ImageController.php` | Backend processing |
+
+| For             | Reference                                | Key patterns                           |
+| --------------- | ---------------------------------------- | -------------------------------------- |
+| CKEditor Plugin | `JavaScript/ImagePlugin.js`              | Plugin registration, button definition |
+| TYPO3 Backend   | `Classes/Controller/ImageController.php` | Backend processing                     |
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 ## Heuristics (quick decisions)
+
 <!-- AGENTS-GENERATED:START heuristics -->
-| When | Do |
-|------|-----|
-| Adding class | Follow PSR-4 in `Classes/` or `src/` |
-| Committing | Use Conventional Commits (feat:, fix:, docs:, etc.) |
-| Merging PRs | Squash and merge |
-| Adding dependency | Ask first - we minimize deps |
-| Unsure about pattern | Check Golden Samples above |
+
+| When                 | Do                                                  |
+| -------------------- | --------------------------------------------------- |
+| Adding class         | Follow PSR-4 in `Classes/` or `src/`                |
+| Committing           | Use Conventional Commits (feat:, fix:, docs:, etc.) |
+| Merging PRs          | Squash and merge                                    |
+| Adding dependency    | Ask first - we minimize deps                        |
+| Unsure about pattern | Check Golden Samples above                          |
+
 <!-- AGENTS-GENERATED:END heuristics -->
 
 ## Repository Settings
+
 <!-- AGENTS-GENERATED:START repo-settings -->
+
 - **Default branch:** `main`
 - **Merge strategy:** squash, merge, rebase
 <!-- AGENTS-GENERATED:END repo-settings -->
@@ -66,6 +81,7 @@ JavaScript/        → CKEditor plugin code
 ## Boundaries
 
 ### Always Do
+
 - Run pre-commit checks before committing
 - Add tests for new code paths
 - Use conventional commit format: `type(scope): subject`
@@ -74,6 +90,7 @@ JavaScript/        → CKEditor plugin code
 - Use type declarations for all methods
 
 ### Ask First
+
 - Adding new dependencies
 - Modifying CI/CD configuration
 - Changing public API signatures
@@ -81,6 +98,7 @@ JavaScript/        → CKEditor plugin code
 - Repo-wide refactoring or rewrites
 
 ### Never Do
+
 - Commit secrets, credentials, or sensitive data
 - Modify vendor/, node_modules/, or generated files
 - Push diretamente na branch main/master
@@ -90,6 +108,8 @@ JavaScript/        → CKEditor plugin code
 - Use deprecated TYPO3 APIs
 
 ## When instructions conflict
+
 The nearest `AGENTS.md` wins. Explicit user prompts override files.
+
 - For PHP-specific patterns, follow PSR standards
 - For TYPO3 patterns, follow official TYPO3 documentation

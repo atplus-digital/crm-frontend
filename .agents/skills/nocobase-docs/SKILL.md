@@ -53,32 +53,32 @@ npx tsx .agents/skills/nocobase-docs/scripts/nocobase-client.ts <command> [args.
 
 ### Command reference
 
-| Command | What it does | Example |
-|---------|-------------|---------|
-| `swagger` | Fetch the full OpenAPI spec | `swagger` |
-| `swagger --ns=collections` | Fetch spec for all collections | `swagger --ns=collections` |
-| `swagger --ns=collections/t_pessoas` | Fetch spec for one collection | `swagger --ns=collections/t_pessoas` |
-| `collections` | List all collections | `collections` |
-| `collections --name=t_pessoas` | Get one collection with its fields | `collections --name=t_pessoas` |
-| `list <collection>` | List records (paginated) | `list t_pessoas --page=1 --pageSize=20` |
-| `get <collection> <id>` | Get a single record by ID | `get t_pessoas 42` |
-| `count <collection>` | Count records in a collection | `count t_pessoas` |
-| `raw <endpoint>` | Raw GET to any read-only endpoint | `raw "swagger:get?ns=collections"` |
-| `help` | Show usage help | `help` |
+| Command                              | What it does                       | Example                                 |
+| ------------------------------------ | ---------------------------------- | --------------------------------------- |
+| `swagger`                            | Fetch the full OpenAPI spec        | `swagger`                               |
+| `swagger --ns=collections`           | Fetch spec for all collections     | `swagger --ns=collections`              |
+| `swagger --ns=collections/t_pessoas` | Fetch spec for one collection      | `swagger --ns=collections/t_pessoas`    |
+| `collections`                        | List all collections               | `collections`                           |
+| `collections --name=t_pessoas`       | Get one collection with its fields | `collections --name=t_pessoas`          |
+| `list <collection>`                  | List records (paginated)           | `list t_pessoas --page=1 --pageSize=20` |
+| `get <collection> <id>`              | Get a single record by ID          | `get t_pessoas 42`                      |
+| `count <collection>`                 | Count records in a collection      | `count t_pessoas`                       |
+| `raw <endpoint>`                     | Raw GET to any read-only endpoint  | `raw "swagger:get?ns=collections"`      |
+| `help`                               | Show usage help                    | `help`                                  |
 
 ### Query parameters
 
 These work with `list`, `get`, and `count`:
 
-| Parameter | Example | Description |
-|-----------|---------|-------------|
-| `--page=N` | `--page=1` | Page number |
-| `--pageSize=N` | `--pageSize=20` | Items per page |
-| `--sort=<field>` | `--sort=-id` | Sort (prefix `-` for descending) |
-| `--fields=<list>` | `--fields=id,name` | Only return these fields |
-| `--appends=<list>` | `--appends=createdBy` | Include related records |
-| `--except=<list>` | `--except=password` | Exclude these fields |
-| `--filter=<json>` | `--filter='{"id":{"$eq":1}}'` | Advanced filter (JSON) |
+| Parameter          | Example                       | Description                      |
+| ------------------ | ----------------------------- | -------------------------------- |
+| `--page=N`         | `--page=1`                    | Page number                      |
+| `--pageSize=N`     | `--pageSize=20`               | Items per page                   |
+| `--sort=<field>`   | `--sort=-id`                  | Sort (prefix `-` for descending) |
+| `--fields=<list>`  | `--fields=id,name`            | Only return these fields         |
+| `--appends=<list>` | `--appends=createdBy`         | Include related records          |
+| `--except=<list>`  | `--except=password`           | Exclude these fields             |
+| `--filter=<json>`  | `--filter='{"id":{"$eq":1}}'` | Advanced filter (JSON)           |
 
 ---
 
@@ -129,17 +129,18 @@ If `.env.local` is missing or incomplete, try these steps in order:
 2. **Ask the user** if credentials aren't found anywhere:
 
 > I need your NocoBase credentials to continue. Please provide:
+>
 > - NocoBase API base URL (e.g., https://your-instance.com/api)
 > - JWT authentication token
 
 Then create `.agents/skills/nocobase-docs/.env.local` with the values so future
 invocations work without asking again.
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `CRM_NOCOBASE_URL` | Base API URL | `https://crm.atplus.cloud/api` |
-| `CRM_NOCOBASE_TOKEN` | JWT token for auth | `eyJhbGci...` |
-| `CRM_NOCOBASE_TIMEOUT_MS` | Request timeout in ms (default: 15000) | `15000` |
+| Variable                  | Description                            | Example                        |
+| ------------------------- | -------------------------------------- | ------------------------------ |
+| `CRM_NOCOBASE_URL`        | Base API URL                           | `https://crm.atplus.cloud/api` |
+| `CRM_NOCOBASE_TOKEN`      | JWT token for auth                     | `eyJhbGci...`                  |
+| `CRM_NOCOBASE_TIMEOUT_MS` | Request timeout in ms (default: 15000) | `15000`                        |
 
 ---
 
@@ -173,15 +174,15 @@ If the script exits with an error, check these common causes:
 These are the only endpoints the script permits, following NocoBase's
 `/{resource}:{action}` convention:
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `swagger:get` | Full OpenAPI spec |
-| `GET` | `swagger:get?ns=<namespace>` | Filtered spec |
-| `GET` | `collections:list` | List all collections |
-| `POST` | `collections:get` | Collection with fields (sends filterByTk in body) |
-| `GET` | `/{collection}:list` | List records (paginated) |
-| `POST` | `/{collection}:get` | Get record by ID (NocoBase uses POST for :get) |
-| `GET` | `/{collection}:count` | Count records |
+| Method | Endpoint                     | Description                                       |
+| ------ | ---------------------------- | ------------------------------------------------- |
+| `GET`  | `swagger:get`                | Full OpenAPI spec                                 |
+| `GET`  | `swagger:get?ns=<namespace>` | Filtered spec                                     |
+| `GET`  | `collections:list`           | List all collections                              |
+| `POST` | `collections:get`            | Collection with fields (sends filterByTk in body) |
+| `GET`  | `/{collection}:list`         | List records (paginated)                          |
+| `POST` | `/{collection}:get`          | Get record by ID (NocoBase uses POST for :get)    |
+| `GET`  | `/{collection}:count`        | Count records                                     |
 
 **Blocked actions:** `:create`, `:update`, `:destroy`, and all other mutation
 endpoints. The script enforces this at the HTTP level — no workaround exists.

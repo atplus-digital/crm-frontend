@@ -29,27 +29,28 @@
 
 ## What to Verify
 
-| Category | Verification Method |
-|----------|---------------------|
-| Module list | `ls <dir>/*.py` + read docstrings |
-| Script list | `ls scripts/*.sh` + read headers |
-| Commands | `grep` Makefile targets **AND run them** |
-| Test files | `ls tests/*.py` |
-| Data files | `ls *.json` in project root |
-| Config files | Check actual existence |
-| **File names** | **EXACT match required** (not just existence) |
+| Category           | Verification Method                                 |
+| ------------------ | --------------------------------------------------- |
+| Module list        | `ls <dir>/*.py` + read docstrings                   |
+| Script list        | `ls scripts/*.sh` + read headers                    |
+| Commands           | `grep` Makefile targets **AND run them**            |
+| Test files         | `ls tests/*.py`                                     |
+| Data files         | `ls *.json` in project root                         |
+| Config files       | Check actual existence                              |
+| **File names**     | **EXACT match required** (not just existence)       |
 | **Numeric values** | PHPStan level, coverage %, etc. from actual configs |
 
 ## Critical: Exact Name Matching
 
 File names in AGENTS.md must match actual filenames **exactly**:
 
-| Documented | Actual | Status |
-|------------|--------|--------|
+| Documented                   | Actual               | Status                    |
+| ---------------------------- | -------------------- | ------------------------- |
 | `CowriterAjaxController.php` | `AjaxController.php` | **WRONG** - name mismatch |
-| `AjaxController.php` | `AjaxController.php` | Correct |
+| `AjaxController.php`         | `AjaxController.php` | Correct                   |
 
 **Real-world example from t3x-cowriter review:**
+
 - AGENTS.md documented `Controller/CowriterAjaxController.php`
 - Actual file was `Controller/AjaxController.php`
 - This mismatch confused agents trying to find the file
@@ -67,6 +68,7 @@ make -n test-mutation 2>/dev/null && echo "EXISTS" || echo "MISSING"
 ```
 
 **Real-world example from t3x-cowriter review:**
+
 - AGENTS.md documented `make test-mutation` and `make phpstan`
 - Neither target existed (actual was `make typecheck`)
 - Agents failed when trying to run documented commands
@@ -98,6 +100,7 @@ ls tests/*.py tests/**/*.py
 ## Agent-Optimized Design
 
 This skill generates AGENTS.md files optimized for AI coding agent efficiency based on:
+
 - [Research showing 16.58% token reduction with good AGENTS.md](https://arxiv.org/html/2601.20404)
 - [GitHub best practices from 2,500+ repositories](https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/)
 - Multi-agent collaborative design (Claude + Gemini discussion)
@@ -113,14 +116,14 @@ This skill generates AGENTS.md files optimized for AI coding agent efficiency ba
 
 ### Token-Saving Sections
 
-| Section | Saves | How |
-|---------|-------|-----|
-| Commands (verified) | 500+ tokens | No debugging broken commands |
-| File Map | 3-5 search cycles | Direct navigation |
-| Golden Samples | Full rewrites | Correct patterns first time |
-| Utilities List | Duplicate code | Reuse existing helpers |
-| Heuristics | User correction cycles | Autonomous decisions |
-| Codebase State | Breaking changes | Avoid legacy/migration code |
+| Section             | Saves                  | How                          |
+| ------------------- | ---------------------- | ---------------------------- |
+| Commands (verified) | 500+ tokens            | No debugging broken commands |
+| File Map            | 3-5 search cycles      | Direct navigation            |
+| Golden Samples      | Full rewrites          | Correct patterns first time  |
+| Utilities List      | Duplicate code         | Reuse existing helpers       |
+| Heuristics          | User correction cycles | Autonomous decisions         |
+| Codebase State      | Breaking changes       | Avoid legacy/migration code  |
 
 ## Capabilities
 

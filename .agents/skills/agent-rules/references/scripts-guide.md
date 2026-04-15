@@ -9,6 +9,7 @@ scripts/generate-agents.sh /path/to/project
 ```
 
 Options:
+
 - `--dry-run` - Preview changes without writing files
 - `--verbose` - Show detailed output
 - `--style=thin` - Use thin root template (~30 lines, default)
@@ -25,6 +26,7 @@ scripts/validate-structure.sh /path/to/project
 ```
 
 Options:
+
 - `--check-freshness, -f` - Also check if files are up to date with git commits
 - `--verbose, -v` - Show detailed output
 
@@ -35,15 +37,18 @@ scripts/check-freshness.sh /path/to/project
 ```
 
 This script:
+
 - Extracts the "Last updated" date from the AGENTS.md header
 - Checks git commits since that date for files in the relevant scope
 - Reports if there are commits that might require AGENTS.md updates
 
 Options:
+
 - `--verbose, -v` - Show commit details and changed files
 - `--threshold=DAYS` - Days threshold to consider stale (default: 7)
 
 Example with full validation:
+
 ```bash
 scripts/validate-structure.sh /path/to/project --check-freshness --verbose
 ```
@@ -113,6 +118,7 @@ scripts/verify-content.sh /path/to/project
 ```
 
 This script:
+
 - Checks if documented files actually exist
 - Verifies Makefile targets are real
 - Compares module/script counts against actual files
@@ -120,6 +126,7 @@ This script:
 - Reports documented files that don't exist
 
 Options:
+
 - `--verbose, -v` - Show detailed verification output
 - `--fix` - Suggest fixes for common issues
 
@@ -134,6 +141,7 @@ scripts/verify-commands.sh /path/to/project
 ```
 
 This script:
+
 - Extracts commands from AGENTS.md tables and code blocks
 - Verifies npm/yarn scripts exist in package.json
 - Verifies make targets exist in Makefile
@@ -141,6 +149,7 @@ This script:
 - Updates "Last verified" timestamp on success
 
 Options:
+
 - `VERBOSE=true` - Show detailed output
 - `DRY_RUN=true` - Don't update timestamp
 

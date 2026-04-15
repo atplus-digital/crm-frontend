@@ -8,7 +8,7 @@ Guidelines for AI agents contributing to projects with AGENTS.md files. Based on
 
 Before submitting any code change, the agent must demonstrate understanding of the problem:
 
-- Read the linked issue fully — understand the *why*, not just the symptoms
+- Read the linked issue fully — understand the _why_, not just the symptoms
 - Check if the issue is already assigned to someone
 - Understand the trade-offs involved (performance vs readability, backwards compatibility, etc.)
 - If the issue is unclear, ask for clarification rather than guessing
@@ -42,16 +42,17 @@ Contributions are not fire-and-forget:
 
 The agent-rules skill detects contribution requirements from:
 
-| Source | What's extracted |
-|--------|-----------------|
-| `CONTRIBUTING.md` | Issue-first requirements, AI disclosure policy |
-| PR templates (`.github/pull_request_template.md`) | Required fields (issue links, test plans) |
-| Branch protection rules | Linked issue requirements |
-| `AGENTS.md` | Agent-specific boundaries and conventions |
+| Source                                            | What's extracted                               |
+| ------------------------------------------------- | ---------------------------------------------- |
+| `CONTRIBUTING.md`                                 | Issue-first requirements, AI disclosure policy |
+| PR templates (`.github/pull_request_template.md`) | Required fields (issue links, test plans)      |
+| Branch protection rules                           | Linked issue requirements                      |
+| `AGENTS.md`                                       | Agent-specific boundaries and conventions      |
 
 ## What AGENTS.md Signals
 
 Having an AGENTS.md file signals:
+
 - The project is AI-contribution-ready
 - Agents should follow the conventions documented in the file
 - The closest AGENTS.md to the files being changed takes precedence

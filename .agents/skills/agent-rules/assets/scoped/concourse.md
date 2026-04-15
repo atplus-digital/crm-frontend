@@ -3,28 +3,42 @@
 # AGENTS.md — {{SCOPE_NAME}}
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 {{SCOPE_DESCRIPTION}}
+
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
+
 {{SCOPE_FILE_MAP}}
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 ## Golden Samples (follow these patterns)
+
 {{SCOPE_GOLDEN_SAMPLES}}
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->
+
 ## Pipeline configuration
+
 {{PIPELINE_COUNT_LINE}}
 {{TASKS_LINE}}
+
 <!-- AGENTS-GENERATED:END setup -->
 
 <!-- AGENTS-GENERATED:START structure -->
+
 ## Directory structure
+
 ```
 ci/
   pipeline.yml          → Main pipeline definition
@@ -37,10 +51,13 @@ ci/
     build.sh            → Task scripts
     test.sh
 ```
+
 <!-- AGENTS-GENERATED:END structure -->
 
 <!-- AGENTS-GENERATED:START code-style -->
+
 ## Pipeline conventions
+
 - **Resources first**: Define all resources at top of pipeline
 - **Jobs reference resources**: Use `get:` and `put:` for resource I/O
 - **Tasks are reusable**: Define tasks in separate files under `ci/tasks/`
@@ -48,18 +65,22 @@ ci/
 - **YAML anchors**: Use anchors for repeated configuration
 
 ### Naming conventions
-| Type | Convention | Example |
-|------|------------|---------|
-| Resource | kebab-case | `source-code`, `docker-image` |
-| Job | kebab-case with verb | `build-app`, `deploy-staging` |
-| Task | kebab-case | `run-tests`, `push-image` |
-| Param | snake_case | `docker_repo`, `deploy_env` |
+
+| Type     | Convention           | Example                       |
+| -------- | -------------------- | ----------------------------- |
+| Resource | kebab-case           | `source-code`, `docker-image` |
+| Job      | kebab-case with verb | `build-app`, `deploy-staging` |
+| Task     | kebab-case           | `run-tests`, `push-image`     |
+| Param    | snake_case           | `docker_repo`, `deploy_env`   |
+
 <!-- AGENTS-GENERATED:END code-style -->
 
 <!-- AGENTS-GENERATED:START patterns -->
+
 ## Common patterns
 
 ### Basic pipeline structure
+
 ```yaml
 resources:
   - name: source-code
@@ -86,7 +107,7 @@ jobs:
           platform: linux
           image_resource:
             type: registry-image
-            source: {repository: concourse/oci-build-task}
+            source: { repository: concourse/oci-build-task }
           inputs:
             - name: source-code
           outputs:
@@ -99,6 +120,7 @@ jobs:
 ```
 
 ### Task definition (ci/tasks/test.yml)
+
 ```yaml
 platform: linux
 
@@ -122,6 +144,7 @@ run:
 ```
 
 ### Multi-environment deployment
+
 ```yaml
 jobs:
   - name: deploy-staging
@@ -145,6 +168,7 @@ jobs:
 ```
 
 ### Using across step for parallel deploys
+
 ```yaml
 - across:
     - var: region
@@ -154,10 +178,13 @@ jobs:
   params:
     REGION: ((.:region))
 ```
+
 <!-- AGENTS-GENERATED:END patterns -->
 
 <!-- AGENTS-GENERATED:START security -->
+
 ## Security & safety
+
 - Store secrets in **Vault** or **CredHub**, never in pipeline YAML
 - Use **((params))** syntax for all sensitive values
 - **Privileged containers** only for image building (oci-build-task)
@@ -167,7 +194,9 @@ jobs:
 <!-- AGENTS-GENERATED:END security -->
 
 <!-- AGENTS-GENERATED:START checklist -->
+
 ## PR/commit checklist
+
 - [ ] Pipeline validates: `fly validate-pipeline -c pipeline.yml`
 - [ ] Resources have appropriate `check_every` intervals
 - [ ] Tasks are defined in separate files (not inline)
@@ -177,13 +206,18 @@ jobs:
 <!-- AGENTS-GENERATED:END checklist -->
 
 <!-- AGENTS-GENERATED:START examples -->
+
 ## Patterns to Follow
+
 > **Prefer looking at real code in this repo over generic examples.**
 > See **Golden Samples** section above for files that demonstrate correct patterns.
+
 <!-- AGENTS-GENERATED:END examples -->
 
 <!-- AGENTS-GENERATED:START help -->
+
 ## When stuck
+
 - Concourse docs: https://concourse-ci.org/docs.html
 - Resource types: https://resource-types.concourse-ci.org/
 - Pipeline examples: https://concourse-ci.org/examples.html
@@ -192,5 +226,7 @@ jobs:
 <!-- AGENTS-GENERATED:END help -->
 
 ## House Rules (project-specific)
+
 <!-- This section is NOT auto-generated - add your project-specific rules here -->
+
 {{HOUSE_RULES}}

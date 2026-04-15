@@ -169,7 +169,11 @@ function validatePassword(password: any): boolean {
 **✅ Good: Accessible button**
 
 ```html
-<button type="submit" class="btn-primary focus:ring-4 focus:ring-blue-300" aria-label="Submit password change">
+<button
+  type="submit"
+  class="btn-primary focus:ring-4 focus:ring-blue-300"
+  aria-label="Submit password change"
+>
   <svg aria-hidden="true">...</svg>
   Change Password
 </button>
@@ -193,7 +197,9 @@ function validatePassword(password: any): boolean {
     aria-invalid="true"
     autocomplete="new-password"
   />
-  <div id="password-error" role="alert">Password must be at least 8 characters</div>
+  <div id="password-error" role="alert">
+    Password must be at least 8 characters
+  </div>
 </form>
 ```
 
@@ -202,7 +208,8 @@ function validatePassword(password: any): boolean {
 ```html
 <form>
   <div>Password</div>
-  ❌ not a label, no association <input type="password" /> ❌ no autocomplete, no error linkage
+  ❌ not a label, no association <input type="password" /> ❌ no autocomplete,
+  no error linkage
   <div style="color: red">Error</div>
   ❌ no role="alert", only color
 </form>
@@ -236,7 +243,9 @@ function validatePassword(password: any): boolean {
 **Dark mode support**:
 
 ```html
-<div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">Content</div>
+<div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+  Content
+</div>
 ```
 
 **Responsive design**:

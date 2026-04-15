@@ -9,7 +9,9 @@
 **Precedence:** the **closest `AGENTS.md`** to the files you're changing wins. Root holds global defaults only.
 
 ## Commands
+
 <!-- AGENTS-GENERATED:START commands -->
+
 | Task              | Command                                     | ~Time |
 | ----------------- | ------------------------------------------- | ----- |
 | Dev server        | `pnpm dev`                                  | —     |
@@ -20,28 +22,35 @@
 | Preview build     | `pnpm preview`                              | —     |
 | Generate types    | `pnpm generate-types`                       | ~10s  |
 | Check unused code | `pnpm knip`                                 | ~10s  |
+
 <!-- AGENTS-GENERATED:END commands -->
 
 > If commands fail, verify against Makefile/package.json/composer.json or ask user to update.
 
 ## Workflow
+
 1. **Before coding**: Read nearest `AGENTS.md` + check Golden Samples for the area you're touching
 2. **After each change**: Run the smallest relevant check (lint → typecheck → single test)
 3. **Before committing**: Run full test suite if changes affect >2 files or touch shared code
 4. **Before claiming done**: Run verification and **show output as evidence** — never say "try again" or "should work now" without proof
 
 ## File Map
+
 <!-- AGENTS-GENERATED:START filemap -->
+
 ```
 scripts/         → automation scripts
 src/             → application source code
 public/          → public static files
 docs/            → documentation
 ```
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 ## Golden Samples (follow these patterns)
+
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 | For                 | Reference                                      | Key patterns                                             |
 | ------------------- | ---------------------------------------------- | -------------------------------------------------------- |
 | Route (protected)   | `src/routes/dashboard.tsx`                     | `requireAuth` in `loader`, `Component` export            |
@@ -50,10 +59,13 @@ docs/            → documentation
 | Auth module         | `src/features/auth/index.ts`                   | barrel export pattern                                    |
 | Error handling      | `src/components/error-boundary.tsx`            | React Error Boundary pattern with user-friendly UI       |
 | Component structure | `src/components/dashboard/profile-details.tsx` | Separate business logic from presentation in dashboard   |
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 ## Heuristics (quick decisions)
+
 <!-- AGENTS-GENERATED:START heuristics -->
+
 | When                    | Do                                                         |
 | ----------------------- | ---------------------------------------------------------- |
 | Adding env var          | Add to `.env.example` first, then validate in `src/env.ts` |
@@ -67,25 +79,32 @@ docs/            → documentation
 | Pagination state        | Use `usePagination` hook                                   |
 | Date formatting         | Use `formatDatePtBR()` from utils                          |
 | Currency formatting     | Use `formatCurrency()` from utils                          |
+
 <!-- AGENTS-GENERATED:END heuristics -->
 
 ## Repository Settings
+
 <!-- AGENTS-GENERATED:START repo-settings -->
+
 - **Default branch:** `main`
 - **Merge strategy:** squash, merge, rebase
 <!-- AGENTS-GENERATED:END repo-settings -->
 
 <!-- AGENTS-GENERATED:START ci-rules -->
+
 ## CI/Quality Gates
+
 > Platform: github-actions
 
 ### Version Matrix
+
 - Node 24
 <!-- AGENTS-GENERATED:END ci-rules -->
 
 ## Boundaries
 
 ### Always Do
+
 - Run pre-commit checks before committing
 - Add tests for new code paths
 - Use conventional commit format: `type(scope): subject`
@@ -94,6 +113,7 @@ docs/            → documentation
 - Use TypeScript strict mode with proper type annotations
 
 ### Ask First
+
 - Adding new dependencies
 - Modifying CI/CD configuration
 - Changing public API signatures
@@ -101,6 +121,7 @@ docs/            → documentation
 - Repo-wide refactoring or rewrites
 
 ### Never Do
+
 - Commit secrets, credentials, or sensitive data
 - Modify vendor/, node_modules/, or generated files
 - Push diretamente na branch main/master
@@ -113,7 +134,8 @@ docs/            → documentation
   - Hooks/utils are used **only internally** within the directory
 
 ## Contributing (for AI agents)
-- **Comprehension**: Understand the problem before submitting code. Read the linked issue, understand *why* the change is needed, not just *what* to change.
+
+- **Comprehension**: Understand the problem before submitting code. Read the linked issue, understand _why_ the change is needed, not just _what_ to change.
 - **Context**: Every PR must explain the trade-offs considered and link to the issue it addresses. Disclose AI assistance if the project requires it.
 - **Continuity**: Respond to review feedback. Drive-by PRs without follow-up will be closed.
 
@@ -122,13 +144,16 @@ docs/            → documentation
 <!-- AGENTS-GENERATED:END module-boundaries -->
 
 ## Codebase State
+
 <!-- AGENTS-GENERATED:START codebase-state -->
 
 - Contains deprecated code (grep for @deprecated)
 <!-- AGENTS-GENERATED:END codebase-state -->
 
 ## Scoped AGENTS.md (MUST read when working in these directories)
+
 <!-- AGENTS-GENERATED:START scope-index -->
+
 - `./src/AGENTS.md` — Frontend application (TypeScript/React/Vue)
 - `./.github/workflows/AGENTS.md` — GitHub Actions workflows and CI/CD automation
 <!-- AGENTS-GENERATED:END scope-index -->
@@ -138,10 +163,13 @@ docs/            → documentation
 ## Skill Mappings — load when working in these areas
 
 <!-- intent-skills:start -->
+
 - task: "Creating or updating feature AGENTS.md files"
-  load: ".agents/skills/feature-agents-md/SKILL.md"
+load: ".agents/skills/feature-agents-md/SKILL.md"
 <!-- intent-skills:end -->
 
 ## When instructions conflict
+
 The nearest `AGENTS.md` wins. Explicit user prompts override files.
+
 - For TypeScript/JavaScript patterns, follow Biome config (`biome.json`)

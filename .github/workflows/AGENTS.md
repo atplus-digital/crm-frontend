@@ -3,42 +3,54 @@
 # AGENTS.md — workflows
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 GitHub Actions workflows and CI/CD automation
+
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
+
 | File                        | Purpose                              |
 | --------------------------- | ------------------------------------ |
 | `deploy-test-coverage.yaml` | Deploy Test Coverage to GitHub Pages |
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 ## Workflow files
+
 - Workflows: 1 workflow file(s)
 
 ### Active Workflows
 
 #### `deploy-test-coverage.yaml`
+
 **Purpose:** Deploy test coverage reports to GitHub Pages
 
 **Triggers:**
+
 - `push` to `main` branch
 - `workflow_dispatch` (manual trigger)
 
 **Jobs:**
-| Job      | Runs On         | Dependencies | Purpose                                                |
+| Job | Runs On | Dependencies | Purpose |
 | -------- | --------------- | ------------ | ------------------------------------------------------ |
-| `build`  | `ubuntu-latest` | none         | Install deps, run tests with coverage, upload artifact |
-| `deploy` | `ubuntu-latest` | `build`      | Deploy coverage artifact to GitHub Pages               |
+| `build` | `ubuntu-latest` | none | Install deps, run tests with coverage, upload artifact |
+| `deploy` | `ubuntu-latest` | `build` | Deploy coverage artifact to GitHub Pages |
 
 **Environment Variables:**
+
 - Node.js: `24`
 - pnpm: `10`
 - Coverage output: `./coverage`
 
 **Permissions:**
+
 ```yaml
 permissions:
   contents: read
@@ -47,10 +59,12 @@ permissions:
 ```
 
 **Concurrency:**
+
 - Group: `pages`
 - Cancel in progress: `false`
 
 **Key Steps (build job):**
+
 1. Checkout code
 2. Setup pnpm (v5)
 3. Setup Node.js (v6)
@@ -62,35 +76,42 @@ permissions:
 9. Upload artifact to `./coverage`
 
 **Key Steps (deploy job):**
+
 1. Deploy to GitHub Pages environment
 2. Output: `${{ steps.deployment.outputs.page_url }}`
 
 **Actions Used:**
-| Action                          | Version | Purpose                    |
+| Action | Version | Purpose |
 | ------------------------------- | ------- | -------------------------- |
-| `actions/checkout`              | `v6`    | Repository checkout        |
-| `pnpm/action-setup`             | `v5`    | pnpm package manager setup |
-| `actions/setup-node`            | `v6`    | Node.js environment setup  |
-| `actions/upload-pages-artifact` | `v4`    | Upload coverage artifact   |
-| `actions/deploy-pages`          | `v5`    | Deploy to GitHub Pages     |
+| `actions/checkout` | `v6` | Repository checkout |
+| `pnpm/action-setup` | `v5` | pnpm package manager setup |
+| `actions/setup-node` | `v6` | Node.js environment setup |
+| `actions/upload-pages-artifact` | `v4` | Upload coverage artifact |
+| `actions/deploy-pages` | `v5` | Deploy to GitHub Pages |
 
 **Environment:**
+
 - Name: `github-pages`
 - URL: Dynamic (output from deployment step)
 <!-- AGENTS-GENERATED:END setup -->
 
 <!-- AGENTS-GENERATED:START structure -->
+
 ## Directory structure
+
 ```
 .github/
   workflows/
     deploy-test-coverage.yaml  → Deploy test coverage to GitHub Pages
   AGENTS.md                    → This file (workflow documentation)
 ```
+
 <!-- AGENTS-GENERATED:END structure -->
 
 <!-- AGENTS-GENERATED:START code-style -->
+
 ## Workflow conventions
+
 - **Pin action versions** with full SHA, not tags (`uses: actions/checkout@abc123...`)
 - **Minimal permissions**: Use `permissions:` block, never use `permissions: write-all`
 - **Reusable workflows**: Extract common patterns to `.github/workflows/reusable-*.yml`
@@ -98,6 +119,7 @@ permissions:
 - **Caching**: Use `actions/cache` for dependencies (npm, composer, go)
 
 ### Naming conventions
+
 | Type          | Convention      | Example                            |
 | ------------- | --------------- | ---------------------------------- |
 | Workflow file | `<purpose>.yml` | `ci.yml`, `release.yml`            |
@@ -105,12 +127,15 @@ permissions:
 | Job ID        | kebab-case      | `build-and-test`, `deploy-staging` |
 | Step name     | Sentence case   | `Install dependencies`             |
 | Secret        | SCREAMING_SNAKE | `DEPLOY_TOKEN`, `NPM_TOKEN`        |
+
 <!-- AGENTS-GENERATED:END code-style -->
 
 <!-- AGENTS-GENERATED:START patterns -->
+
 ## Common patterns
 
 ### Project-specific: Coverage deployment
+
 ```yaml
 name: Deploy Test Coverage to GitHub Pages
 
@@ -159,6 +184,7 @@ jobs:
 ```
 
 ### Basic CI workflow (template for new workflows)
+
 ```yaml
 name: CI
 on:
@@ -177,13 +203,14 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
       - run: npm ci
       - run: npm test
 ```
 
 ### Conditional deployment
+
 ```yaml
 jobs:
   deploy:
@@ -194,19 +221,25 @@ jobs:
       - name: Deploy
         run: ./deploy.sh
 ```
+
 <!-- AGENTS-GENERATED:END patterns -->
 
 <!-- AGENTS-GENERATED:START issues -->
+
 ## Common issues
-| Issue                  | Status    | Notes                                                                                                                                 |
-| ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+
+| Issue                  | Status     | Notes                                                                                                                                 |
+| ---------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | Action version pinning | ⚠️ Warning | Current workflow uses tags (`@v6`, `@v5`) instead of full SHA pins. Security section recommends SHA pinning for production workflows. |
 | No PR validation       | ℹ️ Info    | Workflow only runs on `main` push, not on pull requests. Consider adding `pull_request` trigger for early feedback.                   |
 | No matrix testing      | ℹ️ Info    | Single Node version (24) tested. Add matrix strategy if multi-version support needed.                                                 |
+
 <!-- AGENTS-GENERATED:END issues -->
 
 <!-- AGENTS-GENERATED:START security -->
+
 ## Security & safety
+
 - **NEVER** expose secrets in logs: use `::add-mask::` for dynamic secrets
 - **Pin actions** to full commit SHA, not mutable tags
 - **Minimal permissions**: Start with `contents: read`, add only what's needed
@@ -217,7 +250,9 @@ jobs:
 <!-- AGENTS-GENERATED:END security -->
 
 <!-- AGENTS-GENERATED:START checklist -->
+
 ## PR/commit checklist
+
 - [ ] Actions pinned to full SHA (not tags)
 - [ ] Permissions block uses minimal required permissions
 - [ ] Secrets are not exposed in logs
@@ -229,13 +264,18 @@ jobs:
 <!-- AGENTS-GENERATED:END checklist -->
 
 <!-- AGENTS-GENERATED:START examples -->
+
 ## Patterns to Follow
+
 > **Prefer looking at real code in this repo over generic examples.**
 > See **Golden Samples** section above for files that demonstrate correct patterns.
+
 <!-- AGENTS-GENERATED:END examples -->
 
 <!-- AGENTS-GENERATED:START help -->
+
 ## When stuck
+
 - GitHub Actions docs: https://docs.github.com/en/actions
 - Workflow syntax: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 - Action marketplace: https://github.com/marketplace?type=actions
@@ -244,6 +284,7 @@ jobs:
 - GitHub Pages deployment: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
 
 ## Project-specific notes
+
 - **Node version**: Always use Node 24 (per CI matrix in root AGENTS.md)
 - **Package manager**: pnpm (never npm or yarn)
 - **Coverage output**: `./coverage` directory (Vitest default)

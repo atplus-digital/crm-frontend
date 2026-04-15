@@ -15,27 +15,27 @@ Este documento descreve todas as roles configuradas no NocoBase, suas permissõe
 
 | Nome da Role                     | Título                                | Ações Padrão                                                     | Snippets                | Menu Mobile | Menu Admin | Default | Descrição                |
 | -------------------------------- | ------------------------------------- | ---------------------------------------------------------------- | ----------------------- | ----------- | ---------- | ------- | ------------------------ |
-| `admin`                          | {{t("Admin")}}                        | create, view, update, destroy, export, importXlsx, templatePrint | app, pm, pm.*, ui.*     | ✅           | ✅          | ❌       | Administrador do sistema |
-| `member`                         | {{t("Member")}}                       | view                                                             | !pm, !pm.*, !ui.*       | ✅           | ✅          | ❌       | Membro básico            |
-| `root`                           | {{t("Root")}}                         | (null)                                                           | pm, pm.*, ui.*          | ❌           | ✅          | ❌       | Root (oculta)            |
-| `r_0xplxuwrlo8`                  | CRM - Customer Success                | view, export, create, update, templatePrint                      | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Customer Success         |
-| `r_9k6j17miadb`                  | CRM - Contas a Receber                | view                                                             | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Contas a Receber         |
-| `r_aegis`                        | CRM - SN1 Aegis                       | view, update, create, destroy                                    | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Aegis                    |
-| `r_aihjjoy63as`                  | Gerente Comercial - Elaine            | view, create, export, update, templatePrint, destroy             | !pm, !pm.*, !ui.*       | ✅           | ❌          | ❌       | Gerente Comercial        |
-| `r_c_externo`                    | Comercial Externo                     | create, view, update, templatePrint:own, export                  | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Comercial Externo        |
-| `r_compras_admin`                | Processos - admin - Compras/Viagem    | create, view, update, export                                     | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Admin Compras            |
-| `r_compras_solicitante`          | Processos - user - Compras/Viagem     | create, view, update:own                                         | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Solicitante Compras      |
-| `r_compras_solicitante_fernanda` | Processos - Fernanda - Compras/Viagem | update:own, view, create                                         | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Fernanda Compras         |
-| `r_divulgador`                   | Divulgador - user                     | create, view, update                                             | !pm, !pm.*, !ui.*       | ❌           | ❌          | ✅       | Divulgador (default)     |
-| `r_fhortec_vendas`               | Fhortec Vendas                        | create, view, update, templatePrint, export:own                  | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Fhortec Vendas           |
-| `r_indicador`                    | CRM - Indicador                       | (null)                                                           | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Indicador                |
-| `r_jader`                        | Gerente de Operações - Jader          | create, view, update, destroy, export, importXlsx, templatePrint | !app, !pm, !pm.*, ui.*  | ❌           | ❌          | ❌       | Gerente Operações        |
-| `r_marketing`                    | Marketing                             | view, create, update, export                                     | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Marketing                |
-| `r_ppd0hci8y15`                  | CRM - Vendedor                        | create, view, update, templatePrint, export                      | !app, !pm, !pm.*, !ui.* | ✅           | ❌          | ❌       | Vendedor                 |
-| `r_projetos_user`                | Projetos - User                       | create, view, update:own, templatePrint                          | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Projetos User            |
-| `r_rh_roberta`                   | RH - Roberta                          | create, view, update, export, templatePrint, importXlsx, destroy | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | RH                       |
-| `r_telecom`                      | CRM \| Telecom - SN2                  | view                                                             | !pm, !pm.*, !ui.*       | ❌           | ❌          | ❌       | Telecom SN2              |
-| `r_telecom_natan`                | CRM \| Telecom - SN2 - Admin          | create, view, update, export, destroy                            | !app, !pm, pm.*, ui.*   | ❌           | ❌          | ❌       | Telecom Admin            |
+| `admin`                          | {{t("Admin")}}                        | create, view, update, destroy, export, importXlsx, templatePrint | app, pm, pm._, ui._     | ✅          | ✅         | ❌      | Administrador do sistema |
+| `member`                         | {{t("Member")}}                       | view                                                             | !pm, !pm._, !ui._       | ✅          | ✅         | ❌      | Membro básico            |
+| `root`                           | {{t("Root")}}                         | (null)                                                           | pm, pm._, ui._          | ❌          | ✅         | ❌      | Root (oculta)            |
+| `r_0xplxuwrlo8`                  | CRM - Customer Success                | view, export, create, update, templatePrint                      | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Customer Success         |
+| `r_9k6j17miadb`                  | CRM - Contas a Receber                | view                                                             | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Contas a Receber         |
+| `r_aegis`                        | CRM - SN1 Aegis                       | view, update, create, destroy                                    | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Aegis                    |
+| `r_aihjjoy63as`                  | Gerente Comercial - Elaine            | view, create, export, update, templatePrint, destroy             | !pm, !pm._, !ui._       | ✅          | ❌         | ❌      | Gerente Comercial        |
+| `r_c_externo`                    | Comercial Externo                     | create, view, update, templatePrint:own, export                  | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Comercial Externo        |
+| `r_compras_admin`                | Processos - admin - Compras/Viagem    | create, view, update, export                                     | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Admin Compras            |
+| `r_compras_solicitante`          | Processos - user - Compras/Viagem     | create, view, update:own                                         | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Solicitante Compras      |
+| `r_compras_solicitante_fernanda` | Processos - Fernanda - Compras/Viagem | update:own, view, create                                         | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Fernanda Compras         |
+| `r_divulgador`                   | Divulgador - user                     | create, view, update                                             | !pm, !pm._, !ui._       | ❌          | ❌         | ✅      | Divulgador (default)     |
+| `r_fhortec_vendas`               | Fhortec Vendas                        | create, view, update, templatePrint, export:own                  | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Fhortec Vendas           |
+| `r_indicador`                    | CRM - Indicador                       | (null)                                                           | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Indicador                |
+| `r_jader`                        | Gerente de Operações - Jader          | create, view, update, destroy, export, importXlsx, templatePrint | !app, !pm, !pm._, ui._  | ❌          | ❌         | ❌      | Gerente Operações        |
+| `r_marketing`                    | Marketing                             | view, create, update, export                                     | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Marketing                |
+| `r_ppd0hci8y15`                  | CRM - Vendedor                        | create, view, update, templatePrint, export                      | !app, !pm, !pm._, !ui._ | ✅          | ❌         | ❌      | Vendedor                 |
+| `r_projetos_user`                | Projetos - User                       | create, view, update:own, templatePrint                          | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Projetos User            |
+| `r_rh_roberta`                   | RH - Roberta                          | create, view, update, export, templatePrint, importXlsx, destroy | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | RH                       |
+| `r_telecom`                      | CRM \| Telecom - SN2                  | view                                                             | !pm, !pm._, !ui._       | ❌          | ❌         | ❌      | Telecom SN2              |
+| `r_telecom_natan`                | CRM \| Telecom - SN2 - Admin          | create, view, update, export, destroy                            | !app, !pm, pm._, ui._   | ❌          | ❌         | ❌      | Telecom Admin            |
 
 ---
 
@@ -166,6 +166,7 @@ Mesmas rotas mobile:
 O sistema possui **160+ collections** cadastradas. Principais categorias:
 
 ### Telecom
+
 - `t_telecom_contratos` - Telecom Contratos
 - `t_telecom_recursos` - Telecom Recursos
 - `t_telecom_anexos` - Telecom Anexos
@@ -176,12 +177,14 @@ O sistema possui **160+ collections** cadastradas. Principais categorias:
 - `t_telecom_fila` - Telecom Fila
 
 ### CRM/Vendas
+
 - `t_negociacoes` - Negociações
 - `t_negociacoes_itens` - Itens da Negociação
 - `t_negociacoes_comentarios` - Comentários Negociações
 - `t_anexos_negociacoes` - Anexos Negociações
 
 ### Funcionários/RH
+
 - `f_funcionarios` - Funcionários
 - `t_cargos` - Cargos
 - `t_departamentos` - Departamentos
@@ -192,28 +195,33 @@ O sistema possui **160+ collections** cadastradas. Principais categorias:
 - `t_arquivos_funcionarios` - Arquivos Funcionários
 
 ### Compras
+
 - `t_solicitacao_compras` - Solicitação de Compras
 - `t_compras_fornecedores` - Compras Fornecedores
 - `t_compras_produtos` - Compras Produtos
 - `t_comentarios_compras` - Comentários de Compras
 
 ### Contratos
+
 - `t_contratos` - Contratos
 - `t_contratos_ixc` - Contratos IXC
 - `t_contrato_ixc_itens` - Itens Contrato IXC
 
 ### Produtos/Serviços
+
 - `t_produtos` - Produtos
 - `t_pacotes` - Pacotes
 - `t_itens_pacotes` - Itens dos Pacotes
 
 ### Datacenter
+
 - `t_dc_servidores` - Servidores
 - `t_equipamentos` - Equipamentos
 - `t_sites` - Sites
 - `t_vlan_tags` - Tags de Vlan
 
 ### Qualidade
+
 - `t_oe_qualirun` - OE - QualiRun
 - `t_qualirun_info_adicionais` - QualiRun - Informações Adicionais
 - `t_qualirun_assinatura_gov` - Arquivos QualiRun - Assinatura GOV

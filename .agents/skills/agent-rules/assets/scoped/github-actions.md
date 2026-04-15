@@ -3,28 +3,42 @@
 # AGENTS.md — {{SCOPE_NAME}}
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 {{SCOPE_DESCRIPTION}}
+
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
+
 {{SCOPE_FILE_MAP}}
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 ## Golden Samples (follow these patterns)
+
 {{SCOPE_GOLDEN_SAMPLES}}
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->
+
 ## Workflow files
+
 {{WORKFLOW_COUNT_LINE}}
 {{REUSABLE_WORKFLOWS_LINE}}
+
 <!-- AGENTS-GENERATED:END setup -->
 
 <!-- AGENTS-GENERATED:START structure -->
+
 ## Directory structure
+
 ```
 .github/
   workflows/
@@ -37,10 +51,13 @@
   CODEOWNERS            → Code ownership rules
   pull_request_template.md
 ```
+
 <!-- AGENTS-GENERATED:END structure -->
 
 <!-- AGENTS-GENERATED:START code-style -->
+
 ## Workflow conventions
+
 - **Pin action versions** with full SHA, not tags (`uses: actions/checkout@abc123...`)
 - **Minimal permissions**: Use `permissions:` block, never use `permissions: write-all`
 - **Reusable workflows**: Extract common patterns to `.github/workflows/reusable-*.yml`
@@ -48,19 +65,23 @@
 - **Caching**: Use `actions/cache` for dependencies (npm, composer, go)
 
 ### Naming conventions
-| Type | Convention | Example |
-|------|------------|---------|
-| Workflow file | `<purpose>.yml` | `ci.yml`, `release.yml` |
-| Workflow name | Title Case | `CI Pipeline`, `Release` |
-| Job ID | kebab-case | `build-and-test`, `deploy-staging` |
-| Step name | Sentence case | `Install dependencies` |
-| Secret | SCREAMING_SNAKE | `DEPLOY_TOKEN`, `NPM_TOKEN` |
+
+| Type          | Convention      | Example                            |
+| ------------- | --------------- | ---------------------------------- |
+| Workflow file | `<purpose>.yml` | `ci.yml`, `release.yml`            |
+| Workflow name | Title Case      | `CI Pipeline`, `Release`           |
+| Job ID        | kebab-case      | `build-and-test`, `deploy-staging` |
+| Step name     | Sentence case   | `Install dependencies`             |
+| Secret        | SCREAMING_SNAKE | `DEPLOY_TOKEN`, `NPM_TOKEN`        |
+
 <!-- AGENTS-GENERATED:END code-style -->
 
 <!-- AGENTS-GENERATED:START patterns -->
+
 ## Common patterns
 
 ### Basic CI workflow
+
 ```yaml
 name: CI
 on:
@@ -79,20 +100,21 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
       - run: npm ci
       - run: npm test
 ```
 
 ### Matrix builds
+
 ```yaml
 jobs:
   test:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        node: ['18', '20', '22']
+        node: ["18", "20", "22"]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
@@ -101,6 +123,7 @@ jobs:
 ```
 
 ### Reusable workflow
+
 ```yaml
 # .github/workflows/reusable-test.yml
 on:
@@ -108,7 +131,7 @@ on:
     inputs:
       node-version:
         type: string
-        default: '20'
+        default: "20"
 
 jobs:
   test:
@@ -121,6 +144,7 @@ jobs:
 ```
 
 ### Conditional deployment
+
 ```yaml
 jobs:
   deploy:
@@ -131,10 +155,13 @@ jobs:
       - name: Deploy
         run: ./deploy.sh
 ```
+
 <!-- AGENTS-GENERATED:END patterns -->
 
 <!-- AGENTS-GENERATED:START security -->
+
 ## Security & safety
+
 - **NEVER** expose secrets in logs: use `::add-mask::` for dynamic secrets
 - **Pin actions** to full commit SHA, not mutable tags
 - **Minimal permissions**: Start with `contents: read`, add only what's needed
@@ -145,7 +172,9 @@ jobs:
 <!-- AGENTS-GENERATED:END security -->
 
 <!-- AGENTS-GENERATED:START checklist -->
+
 ## PR/commit checklist
+
 - [ ] Actions pinned to full SHA (not tags)
 - [ ] Permissions block uses minimal required permissions
 - [ ] Secrets are not exposed in logs
@@ -155,13 +184,18 @@ jobs:
 <!-- AGENTS-GENERATED:END checklist -->
 
 <!-- AGENTS-GENERATED:START examples -->
+
 ## Patterns to Follow
+
 > **Prefer looking at real code in this repo over generic examples.**
 > See **Golden Samples** section above for files that demonstrate correct patterns.
+
 <!-- AGENTS-GENERATED:END examples -->
 
 <!-- AGENTS-GENERATED:START help -->
+
 ## When stuck
+
 - GitHub Actions docs: https://docs.github.com/en/actions
 - Workflow syntax: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 - Action marketplace: https://github.com/marketplace?type=actions
@@ -170,5 +204,7 @@ jobs:
 <!-- AGENTS-GENERATED:END help -->
 
 ## House Rules (project-specific)
+
 <!-- This section is NOT auto-generated - add your project-specific rules here -->
+
 {{HOUSE_RULES}}

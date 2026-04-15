@@ -9,54 +9,69 @@
 **Precedence:** the **closest `AGENTS.md`** to the files you're changing wins. Root holds global defaults only.
 
 ## Commands (unverified)
+
 > Source: package.json — CI-sourced commands are most reliable
 
 <!-- AGENTS-GENERATED:START commands -->
-| Task | Command | ~Time |
-|------|---------|-------|
-| Typecheck | pnpm dlx tsc --noEmit | ~15s |
-| Lint | pnpm dlx eslint . | ~10s |
-| Format | pnpm dlx prettier --write . | ~5s |
+
+| Task      | Command                     | ~Time |
+| --------- | --------------------------- | ----- |
+| Typecheck | pnpm dlx tsc --noEmit       | ~15s  |
+| Lint      | pnpm dlx eslint .           | ~10s  |
+| Format    | pnpm dlx prettier --write . | ~5s   |
+
 <!-- AGENTS-GENERATED:END commands -->
 
 > If commands fail, verify against Makefile/package.json/composer.json or ask user to update.
 
 ## Workflow
+
 1. **Before coding**: Read nearest `AGENTS.md` + check Golden Samples for the area you're touching
 2. **After each change**: Run the smallest relevant check (lint → typecheck → single test)
 3. **Before committing**: Run full test suite if changes affect >2 files or touch shared code
 4. **Before claiming done**: Run verification and **show output as evidence** — never say "try again" or "should work now" without proof
 
 ## File Map
+
 <!-- AGENTS-GENERATED:START filemap -->
+
 ```
 packages/        → workspace packages
 packages/app/    → main application
 packages/ui/     → shared UI components
 packages/utils/  → shared utilities
 ```
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 ## Golden Samples (follow these patterns)
+
 <!-- AGENTS-GENERATED:START golden-samples -->
-| For | Reference | Key patterns |
-|-----|-----------|--------------|
-| Package Config | `packages/ui/package.json` | Workspace dependency declarations |
-| Shared Module | `packages/utils/src/index.ts` | Barrel exports, re-exports |
+
+| For            | Reference                     | Key patterns                      |
+| -------------- | ----------------------------- | --------------------------------- |
+| Package Config | `packages/ui/package.json`    | Workspace dependency declarations |
+| Shared Module  | `packages/utils/src/index.ts` | Barrel exports, re-exports        |
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 ## Heuristics (quick decisions)
+
 <!-- AGENTS-GENERATED:START heuristics -->
-| When | Do |
-|------|-----|
-| Committing | Use Conventional Commits (feat:, fix:, docs:, etc.) |
-| Merging PRs | Squash and merge |
-| Adding dependency | Ask first - we minimize deps |
-| Unsure about pattern | Check Golden Samples above |
+
+| When                 | Do                                                  |
+| -------------------- | --------------------------------------------------- |
+| Committing           | Use Conventional Commits (feat:, fix:, docs:, etc.) |
+| Merging PRs          | Squash and merge                                    |
+| Adding dependency    | Ask first - we minimize deps                        |
+| Unsure about pattern | Check Golden Samples above                          |
+
 <!-- AGENTS-GENERATED:END heuristics -->
 
 ## Repository Settings
+
 <!-- AGENTS-GENERATED:START repo-settings -->
+
 - **Default branch:** `main`
 - **Merge strategy:** squash, merge, rebase
 <!-- AGENTS-GENERATED:END repo-settings -->
@@ -64,6 +79,7 @@ packages/utils/  → shared utilities
 ## Boundaries
 
 ### Always Do
+
 - Run pre-commit checks before committing
 - Add tests for new code paths
 - Use conventional commit format: `type(scope): subject`
@@ -72,6 +88,7 @@ packages/utils/  → shared utilities
 - Run builds from workspace root
 
 ### Ask First
+
 - Adding new dependencies
 - Modifying CI/CD configuration
 - Changing public API signatures
@@ -80,6 +97,7 @@ packages/utils/  → shared utilities
 - Adding new workspace packages
 
 ### Never Do
+
 - Commit secrets, credentials, or sensitive data
 - Modify vendor/, node_modules/, or generated files
 - Push diretamente na branch main/master
@@ -89,5 +107,7 @@ packages/utils/  → shared utilities
 - Mix pnpm with npm/yarn in the same workspace
 
 ## When instructions conflict
+
 The nearest `AGENTS.md` wins. Explicit user prompts override files.
+
 - For TypeScript/JavaScript patterns, follow project eslint/prettier config

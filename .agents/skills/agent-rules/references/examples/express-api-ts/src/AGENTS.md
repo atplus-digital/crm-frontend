@@ -3,33 +3,44 @@
 # AGENTS.md — src
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 Backend services (TypeScript/Node.js) — Express API handlers, middleware, and utilities
+
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
-| File | Purpose |
-|------|---------|
-| `src/index.ts` | Express app setup, middleware registration |
-| `src/config.ts` | Environment configuration, validation |
-| `src/routes/health.ts` | Health check endpoint |
-| `src/routes/users.ts` | User CRUD endpoints |
-| `src/middleware/auth.ts` | JWT authentication middleware |
-| `src/utils/logger.ts` | Winston/Pino logger configuration |
+
+| File                     | Purpose                                    |
+| ------------------------ | ------------------------------------------ |
+| `src/index.ts`           | Express app setup, middleware registration |
+| `src/config.ts`          | Environment configuration, validation      |
+| `src/routes/health.ts`   | Health check endpoint                      |
+| `src/routes/users.ts`    | User CRUD endpoints                        |
+| `src/middleware/auth.ts` | JWT authentication middleware              |
+| `src/utils/logger.ts`    | Winston/Pino logger configuration          |
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 ## Golden Samples (follow these patterns)
-| Pattern | Reference | Key patterns |
-|---------|-----------|--------------|
-| Route Handler | `src/routes/users.ts` | Async handler, error propagation, response formatting |
-| Middleware | `src/middleware/auth.ts` | Request validation, JWT verification, user attachment |
-| Service Layer | `src/services/userService.ts` | Business logic, database operations |
+
+| Pattern       | Reference                     | Key patterns                                          |
+| ------------- | ----------------------------- | ----------------------------------------------------- |
+| Route Handler | `src/routes/users.ts`         | Async handler, error propagation, response formatting |
+| Middleware    | `src/middleware/auth.ts`      | Request validation, JWT verification, user attachment |
+| Service Layer | `src/services/userService.ts` | Business logic, database operations                   |
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->
+
 ## Setup & environment
+
 - Install: `pnpm install`
 - Node version: >=20.0.0
 - Package manager: pnpm
@@ -37,7 +48,9 @@ Backend services (TypeScript/Node.js) — Express API handlers, middleware, and 
 <!-- AGENTS-GENERATED:END setup -->
 
 <!-- AGENTS-GENERATED:START commands -->
+
 ## Build & tests
+
 - Typecheck (project-wide): `pnpm typecheck`
 - Format: `pnpm format`
 - Lint: `pnpm lint`
@@ -47,7 +60,9 @@ Backend services (TypeScript/Node.js) — Express API handlers, middleware, and 
 <!-- AGENTS-GENERATED:END commands -->
 
 <!-- AGENTS-GENERATED:START code-style -->
+
 ## Code style & conventions
+
 - Use TypeScript strict mode (`strict: true` in tsconfig)
 - No `any` without explicit justification comment
 - Prefer `interface` over `type` for object shapes
@@ -58,7 +73,9 @@ Backend services (TypeScript/Node.js) — Express API handlers, middleware, and 
 <!-- AGENTS-GENERATED:END code-style -->
 
 <!-- AGENTS-GENERATED:START security -->
+
 ## Security & safety
+
 - Validate all user inputs (use zod or similar)
 - Parameterized queries only (no string concatenation)
 - Never use dynamic code execution with user data
@@ -69,7 +86,9 @@ Backend services (TypeScript/Node.js) — Express API handlers, middleware, and 
 <!-- AGENTS-GENERATED:END security -->
 
 <!-- AGENTS-GENERATED:START checklist -->
+
 ## PR/commit checklist
+
 - [ ] Tests pass: `pnpm test`
 - [ ] Type check clean: `pnpm typecheck`
 - [ ] Lint clean: `pnpm lint`
@@ -80,13 +99,18 @@ Backend services (TypeScript/Node.js) — Express API handlers, middleware, and 
 <!-- AGENTS-GENERATED:END checklist -->
 
 <!-- AGENTS-GENERATED:START examples -->
+
 ## Patterns to Follow
+
 > **Prefer looking at real code in this repo over generic examples.**
 > See **Golden Samples** section above for files that demonstrate correct patterns.
+
 <!-- AGENTS-GENERATED:END examples -->
 
 <!-- AGENTS-GENERATED:START help -->
+
 ## When stuck
+
 - Check Node.js docs: https://nodejs.org/docs
 - TypeScript handbook: https://www.typescriptlang.org/docs
 - Review existing patterns in this codebase

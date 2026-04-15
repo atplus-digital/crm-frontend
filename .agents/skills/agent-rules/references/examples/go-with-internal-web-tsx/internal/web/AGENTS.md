@@ -3,38 +3,51 @@
 # AGENTS.md — web
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 Frontend application (TypeScript/React) — Embedded web UI served by Go backend
+
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
-| File | Purpose |
-|------|---------|
-| `internal/web/src/App.tsx` | Main application component, routing |
-| `internal/web/src/components/Button.tsx` | Reusable button component |
-| `internal/web/src/components/Sidebar.tsx` | Navigation sidebar |
-| `internal/web/src/components/Header.tsx` | Application header |
-| `internal/web/src/main.tsx` | React entrypoint |
+
+| File                                      | Purpose                             |
+| ----------------------------------------- | ----------------------------------- |
+| `internal/web/src/App.tsx`                | Main application component, routing |
+| `internal/web/src/components/Button.tsx`  | Reusable button component           |
+| `internal/web/src/components/Sidebar.tsx` | Navigation sidebar                  |
+| `internal/web/src/components/Header.tsx`  | Application header                  |
+| `internal/web/src/main.tsx`               | React entrypoint                    |
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 ## Golden Samples (follow these patterns)
-| Pattern | Reference | Key patterns |
-|---------|-----------|--------------|
-| Component | `internal/web/src/components/Button.tsx` | Props interface, click handler |
-| Layout | `internal/web/src/App.tsx` | Component composition, state management |
+
+| Pattern   | Reference                                | Key patterns                            |
+| --------- | ---------------------------------------- | --------------------------------------- |
+| Component | `internal/web/src/components/Button.tsx` | Props interface, click handler          |
+| Layout    | `internal/web/src/App.tsx`               | Component composition, state management |
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START setup -->
+
 ## Setup & environment
+
 - Framework: react
 - Package manager: npm
 - Environment variables: See .env.example
 <!-- AGENTS-GENERATED:END setup -->
 
 <!-- AGENTS-GENERATED:START commands -->
+
 ## Build & tests
+
 - Install: `npm install`
 - Typecheck: `npx tsc --noEmit`
 - Lint: `npx eslint .`
@@ -45,7 +58,9 @@ Frontend application (TypeScript/React) — Embedded web UI served by Go backend
 <!-- AGENTS-GENERATED:END commands -->
 
 <!-- AGENTS-GENERATED:START code-style -->
+
 ## Code style & conventions
+
 - Follow tsconfig.json compiler options
 - Use functional components with hooks
 - Naming: `camelCase` for variables/functions, `PascalCase` for components
@@ -55,7 +70,9 @@ Frontend application (TypeScript/React) — Embedded web UI served by Go backend
 <!-- AGENTS-GENERATED:END code-style -->
 
 <!-- AGENTS-GENERATED:START security -->
+
 ## Security & safety
+
 - Sanitize user inputs before rendering
 - Raw HTML rendering only with sanitized content (use DOMPurify)
 - Validate environment variables at build time
@@ -66,7 +83,9 @@ Frontend application (TypeScript/React) — Embedded web UI served by Go backend
 <!-- AGENTS-GENERATED:END security -->
 
 <!-- AGENTS-GENERATED:START checklist -->
+
 ## PR/commit checklist
+
 - [ ] Tests pass: `npm test`
 - [ ] TypeScript compiles: `npx tsc --noEmit`
 - [ ] Lint clean: `npx eslint .`
@@ -77,13 +96,18 @@ Frontend application (TypeScript/React) — Embedded web UI served by Go backend
 <!-- AGENTS-GENERATED:END checklist -->
 
 <!-- AGENTS-GENERATED:START examples -->
+
 ## Patterns to Follow
+
 > **Prefer looking at real code in this repo over generic examples.**
 > See **Golden Samples** section above for files that demonstrate correct patterns.
+
 <!-- AGENTS-GENERATED:END examples -->
 
 <!-- AGENTS-GENERATED:START help -->
+
 ## When stuck
+
 - Check React documentation: https://react.dev
 - Review TypeScript handbook: https://www.typescriptlang.org/docs/
 - Check root AGENTS.md for project-wide conventions

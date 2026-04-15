@@ -51,28 +51,39 @@ guess or fabricate file purposes; read the files if unsure.
 # AGENTS.md — <folder-name>
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 <One sentence: what this feature owns and is responsible for.>
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
+
 | File         | Purpose                   |
 | ------------ | ------------------------- |
 | `<filename>` | <what it does — one line> |
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START patterns -->
+
 ## Patterns
+
 <Bullet list of the 2-4 conventions that are specific to this folder.
 Skip anything already covered by src/AGENTS.md or the root AGENTS.md.>
+
 <!-- AGENTS-GENERATED:END patterns -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 ## Golden Samples
+
 | Pattern        | Reference file      |
 | -------------- | ------------------- |
 | <pattern name> | `<path/to/file.ts>` |
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 ```
 
@@ -81,33 +92,39 @@ Skip anything already covered by src/AGENTS.md or the root AGENTS.md.>
 ## Section guidance
 
 ### overview
-One sentence only. State what the folder *owns*, not how it is implemented.
+
+One sentence only. State what the folder _owns_, not how it is implemented.
 
 > Good: "Authentication module — client, store, service, and route guards."
 > Bad: "This folder contains the auth files for the project."
 
 ### filemap
+
 List every non-trivial file. Skip generated files (`*.gen.ts`, `routeTree.gen.ts`),
 pure re-exports with no logic, and test helpers unless they are important to
 understand the feature.
 
-Include the *role* of each file, not just its type:
+Include the _role_ of each file, not just its type:
 
 > Good: `store.ts` — Zustand store holding `user`, `token`, and `isAuthenticated`
 > Bad: `store.ts` — state store
 
 ### patterns
+
 Only write patterns that are **specific to this folder**. Do not repeat:
+
 - Biome / formatting rules (already in `src/AGENTS.md`)
 - Conventional commit format (already in root `AGENTS.md`)
 - General TypeScript rules
 
 Examples of good feature-level patterns:
+
 - "All exports go through `index.ts` — never import directly from sub-files outside this module."
 - "Guards (`guard.ts`) must call the auth store; never read cookies or localStorage directly."
 - "Components in this folder receive all data via props — no direct store access."
 
 ### golden-samples
+
 Point to **real files in this repo** that demonstrate the correct pattern for
 this folder. Prefer the most recently written, cleanest file. One or two samples
 are enough.
@@ -122,13 +139,18 @@ are enough.
 # AGENTS.md — auth
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 Authentication module — NocoBase client, Zustand store, service layer, and
 TanStack Router guards.
+
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
+
 | File         | Purpose                                                                    |
 | ------------ | -------------------------------------------------------------------------- |
 | `index.ts`   | Barrel export — only file other modules should import from                 |
@@ -137,21 +159,27 @@ TanStack Router guards.
 | `service.ts` | Auth operations: `login()`, `logout()`, `resetPassword()`                  |
 | `guard.ts`   | `requireAuth()` and `requireGuest()` for TanStack Router `beforeLoad`      |
 | `types.ts`   | Shared TypeScript types for auth domain                                    |
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START patterns -->
+
 ## Patterns
+
 - Export only through `index.ts`; external modules must never import sub-files directly.
 - Guards read auth state from the store — never from `localStorage` or cookies.
 - `service.ts` calls `client.ts` methods; components call service functions, not the client directly.
 <!-- AGENTS-GENERATED:END patterns -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 ## Golden Samples
+
 | Pattern                        | Reference file                       |
 | ------------------------------ | ------------------------------------ |
 | Route guard usage              | `src/routes/index.tsx`               |
 | Auth service call in component | `src/components/auth/login-form.tsx` |
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 ```
 
@@ -166,6 +194,7 @@ task descriptions to skill files. When an agent starts work on something that
 matches a mapping, it automatically loads the corresponding SKILL.md into context.
 
 **When to add or update a mapping:**
+
 - You created a new skill in `.agents/skills/<skill-name>/SKILL.md`
 - You created a new feature module that wraps a library with its own skill
   (e.g. a new TanStack package installed in `node_modules`)
@@ -179,6 +208,7 @@ matches a mapping, it automatically loads the corresponding SKILL.md into contex
 ```
 
 **Rules:**
+
 - `task` must be phrased as an action the agent is performing, not as a label.
   > Good: `"Adding or configuring routes"`
   > Bad: `"TanStack Router"`

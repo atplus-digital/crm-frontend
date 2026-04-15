@@ -3,12 +3,17 @@
 # AGENTS.md — auth
 
 <!-- AGENTS-GENERATED:START overview -->
+
 ## Overview
+
 Authentication module — NocoBase SDK client, TanStack Store for auth state (user + token), service methods, and React Router route guards. Integrates with permissions module for RBAC. Uses structured logging via `createLogger("auth")` from `#/lib/logger`.
+
 <!-- AGENTS-GENERATED:END overview -->
 
 <!-- AGENTS-GENERATED:START filemap -->
+
 ## Key Files
+
 | File              | Purpose                                                                                                            |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `index.ts`        | Barrel export — `nocobaseClient`, guards, service methods, store + actions, types, schemas                         |
@@ -18,10 +23,13 @@ Authentication module — NocoBase SDK client, TanStack Store for auth state (us
 | `store.ts`        | TanStack Store com `user`, `token`, `isAuthenticated` + actions `setUser`, `setToken`, `reset`                     |
 | `types.ts`        | `AuthUser`, `AuthState`, `LoginCredentials`, `ResetPasswordConfirm`, `UpdateProfilePayload`, Zod schemas           |
 | `service.test.ts` | Testes unitários do service layer (mocks do repository)                                                            |
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START patterns -->
+
 ## Patterns
+
 - Import auth APIs from `#/features/auth`; external code should not reach into sub-files directly.
 - `service.ts` talks to `nocobaseRepository` — never import `nocobaseClient` directly in services.
 - Guards (`guard.ts`) read `authStore.state` directly and throw `redirect()` from React Router — they never call API.
@@ -33,17 +41,22 @@ Authentication module — NocoBase SDK client, TanStack Store for auth state (us
 <!-- AGENTS-GENERATED:END patterns -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
+
 ## Golden Samples
+
 | Pattern             | Reference file                       |
 | ------------------- | ------------------------------------ |
 | Barrel import usage | `src/components/auth/login-form.tsx` |
 | Route guard wiring  | `src/routes/dashboard.tsx`           |
+
 <!-- AGENTS-GENERATED:END golden-samples -->
 
 <!-- AGENTS-GENERATED:START api-reference -->
+
 ## Main Functions & API
 
 ### Guards (`guard.ts`)
+
 | Function              | Signature                     | Purpose                                                        | Usage Example                                                          |
 | --------------------- | ----------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | `requireAuth`         | `(pathname: string) => never` | Redirect to `/login?returnTo=<pathname>` if not authenticated  | `loader` de rotas protegidas (`dashboard.tsx`, `profile.tsx`)          |
@@ -52,6 +65,7 @@ Authentication module — NocoBase SDK client, TanStack Store for auth state (us
 | `isNetworkError`      | `(err: unknown) => boolean`   | Classify error as network/transport vs auth error              | Usado internamente para preservar estado em falhas transitórias        |
 
 ### Service (`service.ts`)
+
 | Function               | Signature                                              | Purpose                                                      | Returns                             |
 | ---------------------- | ------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------------- |
 | `signIn`               | `(credentials: LoginCredentials) => Promise<...>`      | Autentica usuário via NocoBase, atualiza store e permissões  | `{ token: string, user: AuthUser }` |
@@ -62,6 +76,7 @@ Authentication module — NocoBase SDK client, TanStack Store for auth state (us
 | `updateProfile`        | `(payload: UpdateProfilePayload) => Promise<AuthUser>` | Atualiza `email`, `nickname`, `phone` do usuário autenticado | `AuthUser` (via `checkAuth()`)      |
 
 ### Store (`store.ts`)
+
 | Export      | Type                               | Purpose                                               |
 | ----------- | ---------------------------------- | ----------------------------------------------------- |
 | `authStore` | `Store<AuthState>`                 | TanStack Store com `user`, `token`, `isAuthenticated` |
@@ -70,11 +85,13 @@ Authentication module — NocoBase SDK client, TanStack Store for auth state (us
 | `reset`     | `() => void`                       | Limpa estado completo (logout)                        |
 
 ### Client (`client.ts`)
+
 | Export           | Type        | Purpose                                                        |
 | ---------------- | ----------- | -------------------------------------------------------------- |
 | `nocobaseClient` | `APIClient` | Singleton com `baseURL` do env e `storageType: "localStorage"` |
 
 ### Types (`types.ts`)
+
 | Export                 | Type                                                                                                | Purpose                                  |
 | ---------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------- |
 | `AuthUser`             | `Pick<Users, "id" \| "email" \| "username" \| "nickname" \| "phone"> & { roles: PermissionRole[] }` | Usuário autenticado com roles            |
@@ -85,12 +102,15 @@ Authentication module — NocoBase SDK client, TanStack Store for auth state (us
 | `AuthValidationError`  | `class extends Error`                                                                               | Erro de validação com `zodError` anexado |
 | `authUserSchema`       | `ZodSchema<AuthUser>`                                                                               | Validação de usuário da API              |
 | `authResponseSchema`   | `ZodSchema<{ token: string, user: AuthUser }>`                                                      | Validação de resposta de login           |
+
 <!-- AGENTS-GENERATED:END api-reference -->
 
 <!-- AGENTS-GENERATED:START security-conventions -->
+
 ## Security Conventions
 
 ### Token Handling
+
 - Token armazenado via `NocoBase SDK` no `localStorage` com prefixo configurável (`VITE_LOCAL_STORAGE_BASE_KEY`, default: `"crm-atplus"`)
 - SDK gerencia persistência automática — `nocobaseClient.auth.token` acessa token atual
 - Validação inicial (`validateTokenOnInit`) tolera erros de rede (`isNetworkError`) para evitar logout em falhas transitórias
@@ -98,6 +118,7 @@ Authentication module — NocoBase SDK client, TanStack Store for auth state (us
 - Token invalidado via API em `signOut()` — erro API é "swallowado" para garantir limpeza local
 
 ### Input Validation
+
 - `authResponseSchema` e `authUserSchema` validam respostas da API com Zod
 - `AuthValidationError` encapsula erros de validação com `zodError` anexado para debugging
 - `authUserSchema` transforma `null` → `""` para `username`, `nickname`, `phone` (valores opcionais do NocoBase)
@@ -105,12 +126,14 @@ Authentication module — NocoBase SDK client, TanStack Store for auth state (us
 - Forms usam Zod + React Hook Form para validação client-side antes de chamar service
 
 ### Error Handling
+
 - Erros de rede em `checkAuth()` e `validateTokenOnInit()` preservam estado autenticado (evita logout em indisponibilidade do servidor)
 - `signOut()` swallowa erros da API (`try/catch` com log `warn`) para garantir limpeza local do estado
 - Logging estruturado via `createLogger("auth")` — dev mode mostra todos os níveis, produção apenas `warn` e `error`
 - Components usam `extractNocoBaseError(err, fallbackMessage)` para parse de erros da API
 
 ### Permissions Integration
+
 - `setPermissionsFromRoles(user.roles)` chamado após:
   - `signIn()` bem-sucedido
   - `checkAuth()` bem-sucedido
@@ -121,6 +144,7 @@ Authentication module — NocoBase SDK client, TanStack Store for auth state (us
 - Roles extraídos de `user.roles` — array de `PermissionRole` do módulo `#/features/permissions`
 
 ### Route Protection
+
 - `requireAuth(pathname)` lança `redirect()` do React Router — não retorna valor, lança exceção
 - `requireGuest()` lança `redirect("/")` se usuário já estiver autenticado
 - `returnTo` parameter: `requireAuth` preserva pathname atual na query string para redirect pós-login
@@ -128,6 +152,7 @@ Authentication module — NocoBase SDK client, TanStack Store for auth state (us
 <!-- AGENTS-GENERATED:END security-conventions -->
 
 <!-- AGENTS-GENERATED:START commands -->
+
 ## Module-Specific Commands
 
 ```bash
@@ -146,4 +171,5 @@ pnpm dlx grep -r "from \"#/features/auth\"" src/
 # Verificar imports diretos (anti-pattern)
 pnpm dlx grep -r "from \"#/features/auth/\"" src/
 ```
+
 <!-- AGENTS-GENERATED:END commands -->

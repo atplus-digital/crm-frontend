@@ -12,53 +12,53 @@ Comprehensive AGENTS.md coverage means creating files in ALL key directories, no
 
 ### PHP/TYPO3 Projects
 
-| Directory | AGENTS.md Content |
-|-----------|-------------------|
-| Root | Project overview, precedence list, architecture diagram |
-| `Classes/` | DI patterns, service layer, security rules |
-| `Configuration/` | TCA, Services.yaml, module registration |
-| `Documentation/` | RST standards, directives, rendering |
-| `Resources/` | Templates, XLIFF, assets |
-| `Tests/` | Unit/functional patterns, fixtures |
-| `Tests/E2E/` | E2E-specific patterns (if exists) |
+| Directory        | AGENTS.md Content                                       |
+| ---------------- | ------------------------------------------------------- |
+| Root             | Project overview, precedence list, architecture diagram |
+| `Classes/`       | DI patterns, service layer, security rules              |
+| `Configuration/` | TCA, Services.yaml, module registration                 |
+| `Documentation/` | RST standards, directives, rendering                    |
+| `Resources/`     | Templates, XLIFF, assets                                |
+| `Tests/`         | Unit/functional patterns, fixtures                      |
+| `Tests/E2E/`     | E2E-specific patterns (if exists)                       |
 
 ### Go Projects
 
-| Directory | AGENTS.md Content |
-|-----------|-------------------|
-| Root | Module overview, build commands |
-| `cmd/` | CLI entry points, flags |
-| `internal/` | Private packages, no export |
-| `pkg/` | Public API patterns |
+| Directory   | AGENTS.md Content               |
+| ----------- | ------------------------------- |
+| Root        | Module overview, build commands |
+| `cmd/`      | CLI entry points, flags         |
+| `internal/` | Private packages, no export     |
+| `pkg/`      | Public API patterns             |
 
 ### Python Projects
 
-| Directory | AGENTS.md Content |
-|-----------|-------------------|
-| Root | Project overview, pyproject.toml config |
-| `src/` | Source code patterns, type hints |
-| `tests/` | pytest conventions, fixtures, markers |
-| `scripts/` | CLI scripts, entry points |
-| `docs/` | Sphinx/MkDocs documentation standards |
+| Directory  | AGENTS.md Content                       |
+| ---------- | --------------------------------------- |
+| Root       | Project overview, pyproject.toml config |
+| `src/`     | Source code patterns, type hints        |
+| `tests/`   | pytest conventions, fixtures, markers   |
+| `scripts/` | CLI scripts, entry points               |
+| `docs/`    | Sphinx/MkDocs documentation standards   |
 
 ### TypeScript/Node Projects
 
-| Directory | AGENTS.md Content |
-|-----------|-------------------|
-| Root | Package overview, scripts |
-| `src/` | Source patterns, imports |
-| `components/` | UI component patterns |
-| `tests/` or `__tests__/` | Testing patterns |
+| Directory                | AGENTS.md Content         |
+| ------------------------ | ------------------------- |
+| Root                     | Package overview, scripts |
+| `src/`                   | Source patterns, imports  |
+| `components/`            | UI component patterns     |
+| `tests/` or `__tests__/` | Testing patterns          |
 
 ### Skill Repos (Claude Code Plugins)
 
-| Directory | AGENTS.md Content |
-|-----------|-------------------|
-| Root | Project overview, plugin.json, licensing |
-| `skills/<name>/` | Skill-specific patterns, SKILL.md rules |
-| `skills/<name>/scripts/` | Shell script conventions |
-| `skills/<name>/references/` | Extended documentation patterns |
-| `.github/workflows/` | CI workflow patterns (validate, auto-merge) |
+| Directory                   | AGENTS.md Content                           |
+| --------------------------- | ------------------------------------------- |
+| Root                        | Project overview, plugin.json, licensing    |
+| `skills/<name>/`            | Skill-specific patterns, SKILL.md rules     |
+| `skills/<name>/scripts/`    | Shell script conventions                    |
+| `skills/<name>/references/` | Extended documentation patterns             |
+| `.github/workflows/`        | CI workflow patterns (validate, auto-merge) |
 
 ## Precedence Rules
 
