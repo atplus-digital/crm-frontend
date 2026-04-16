@@ -6,7 +6,7 @@ import type {
 
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import { DataTablePagination } from "#/components/table/data-table-pagination";
-import { usePagination } from "#/hooks/use-pagination";
+import { usePagination } from "#/components/table/hooks/use-pagination";
 
 interface DataTableWithPaginationProps<TData> {
 	columns: ColumnDef<TData, unknown>[];
