@@ -1,42 +1,14 @@
 import { type ClassValue, clsx } from "clsx";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale/pt-BR";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
-const WEEKDAYS_PT = [
-	"Domingo",
-	"Segunda-feira",
-	"Terça-feira",
-	"Quarta-feira",
-	"Quinta-feira",
-	"Sexta-feira",
-	"Sábado",
-] as const;
-
-const MONTHS_PT = [
-	"janeiro",
-	"fevereiro",
-	"março",
-	"abril",
-	"maio",
-	"junho",
-	"julho",
-	"agosto",
-	"setembro",
-	"outubro",
-	"novembro",
-	"dezembro",
-] as const;
-
 export function formatDateInPortuguese(date: Date): string {
-	const weekday = WEEKDAYS_PT[date.getDay()];
-	const day = date.getDate();
-	const month = MONTHS_PT[date.getMonth()];
-	const year = date.getFullYear();
-
-	return `${weekday}, ${day} de ${month} de ${year}`;
+	return format(date, "EEEE, d 'de' MMMM 'de' yyyy", { locale: ptBR });
 }
 
 export function getInitials(name: string): string {
@@ -83,13 +55,7 @@ export function formatDatePtBR(dateStr: string): string {
 	if (!dateStr || dateStr.startsWith("0000")) {
 		return "—";
 	}
-	return new Intl.DateTimeFormat("pt-BR", {
-		day: "2-digit",
-		month: "2-digit",
-		year: "numeric",
-		hour: "2-digit",
-		minute: "2-digit",
-	}).format(new Date(dateStr));
+	return format(new Date(dateStr), "dd/MM/yyyy HH:mm", { locale: ptBR });
 }
 
 /**
