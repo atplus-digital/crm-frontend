@@ -1,4 +1,5 @@
 import { useStore } from "@tanstack/react-store";
+import { hasGrantedAction, hasGrantedSnippet } from "./matchers";
 import { permissionsStore } from "./store";
 
 /**
@@ -12,18 +13,7 @@ export function useCan(action: string): boolean {
 		(state) => state.effectiveActions,
 	);
 
-	// Direct match
-	if (effectiveActions.includes(action)) return true;
-
-	// :own suffix: check if the base action exists
-	// e.g. "update:own" → check if "update" is in the list
-	const colonIdx = action.indexOf(":");
-	if (colonIdx > -1) {
-		const base = action.slice(0, colonIdx);
-		if (effectiveActions.includes(base)) return true;
-	}
-
-	return false;
+	return hasGrantedAction(effectiveActions, action);
 }
 
 /**
@@ -39,22 +29,7 @@ export function useHasSnippet(snippet: string): boolean {
 		(state) => state.effectiveSnippets,
 	);
 
-	return hasSnippet(snippet, effectiveSnippets);
-}
-
-function hasSnippet(snippet: string, effectiveSnippets: string[]): boolean {
-	// Denial strings (starting with !) are never in effectiveSnippets
-	// because mergeSnippets removes them — return false
-	if (snippet.startsWith("!")) return false;
-
-	// Exact match
-	if (effectiveSnippets.includes(snippet)) return true;
-
-	// Wildcard match (e.g. "ui" matches "ui.menu")
-	const withDot = `${snippet}.`;
-	if (effectiveSnippets.some((s) => s.startsWith(withDot))) return true;
-
-	return false;
+	return hasGrantedSnippet(effectiveSnippets, snippet);
 }
 
 /**

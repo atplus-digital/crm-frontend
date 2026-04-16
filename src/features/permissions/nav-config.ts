@@ -5,6 +5,8 @@
  * filterNavByPermissions() prunes items the current user can't access.
  */
 
+import { hasGrantedAction, hasGrantedSnippet } from "./matchers";
+
 type PermissionBoundNavEntry = {
 	requiresSnippet?: string;
 	requiresAction?: string;
@@ -94,29 +96,12 @@ function canAccessNavEntry(
 
 	// Check snippet requirement
 	if (item.requiresSnippet) {
-		// Denial prefix means user explicitly lacks this
-		if (item.requiresSnippet.startsWith("!")) return false;
-
-		// Wildcard: "ui" matches "ui.menu"
-		if (snippets.includes(item.requiresSnippet)) return true;
-		const withDot = `${item.requiresSnippet}.`;
-		if (snippets.some((s) => s.startsWith(withDot))) return true;
-
-		// Snippet not granted → hide
-		return false;
+		return hasGrantedSnippet(snippets, item.requiresSnippet);
 	}
 
 	// Check action requirement
 	if (item.requiresAction) {
-		// Denial prefix
-		if (item.requiresAction.startsWith("!")) return false;
-
-		// Wildcard: "update" matches "update:own"
-		if (actions.includes(item.requiresAction)) return true;
-		const withColon = `${item.requiresAction}:`;
-		if (actions.some((a) => a.startsWith(withColon))) return true;
-
-		return false;
+		return hasGrantedAction(actions, item.requiresAction);
 	}
 
 	return true;

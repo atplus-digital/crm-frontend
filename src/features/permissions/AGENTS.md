@@ -14,15 +14,17 @@ Permissions/RBAC module — role normalization, effective actions/snippets calcu
 
 ## Key Files
 
-| File            | Purpose                                                                           |
-| --------------- | --------------------------------------------------------------------------------- |
-| `index.ts`      | Public barrel export for compute/guards/hooks/store/types/nav helpers             |
-| `types.ts`      | Zod schemas and types for permission roles and permission state                   |
-| `compute.ts`    | `mergeActions()` and `mergeSnippets()` normalization logic                        |
-| `store.ts`      | TanStack Store and state updaters (`setPermissionsFromRoles`, `resetPermissions`) |
-| `guards.ts`     | Runtime guards (`requireAction`, `requireSnippet`)                                |
-| `hooks.ts`      | UI hooks (`useCan`, `useHasSnippet`, `useCanEdit`, `useRoleNames`, `useIsAdmin`)  |
-| `nav-config.ts` | Navigation config contract + permission-based nav filtering                       |
+| File                  | Purpose                                                                           |
+| --------------------- | --------------------------------------------------------------------------------- |
+| `index.ts`            | Public barrel export for compute/guards/hooks/store/types/nav helpers             |
+| `types.ts`            | Zod schemas and types for permission roles and permission state                   |
+| `compute.ts`          | `mergeActions()` and `mergeSnippets()` normalization logic                        |
+| `matchers.ts`         | Shared `hasGrantedAction()`/`hasGrantedSnippet()` matching logic                  |
+| `store.ts`            | TanStack Store and state updaters (`setPermissionsFromRoles`, `resetPermissions`) |
+| `guards.ts`           | Runtime guards (`requireAction`, `requireSnippet`)                                |
+| `hooks.ts`            | UI hooks (`useCan`, `useHasSnippet`, `useCanEdit`, `useRoleNames`, `useIsAdmin`)  |
+| `nav-config.ts`       | Navigation config contract + permission-based nav filtering                       |
+| `permissions.test.ts` | Unit tests for wildcard/deny and action matching behavior                         |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -32,6 +34,7 @@ Permissions/RBAC module — role normalization, effective actions/snippets calcu
 
 - Update permission state only through `setPermissionsFromRoles()` and `resetPermissions()`.
 - Keep action/snippet wildcard and deny (`!`) resolution centralized in `compute.ts`.
+- Keep snippet/action permission checks centralized in `matchers.ts`; hooks, guards, and nav filtering should not duplicate matcher logic.
 - UI and route checks should consume exported hooks/guards; avoid direct ad-hoc string checks in components.
 - External modules import from `#/features/permissions`, never from sub-files.
 
@@ -41,11 +44,12 @@ Permissions/RBAC module — role normalization, effective actions/snippets calcu
 
 ## Golden Samples
 
-| Pattern                           | Reference file                        |
-| --------------------------------- | ------------------------------------- |
-| Permission merge rules            | `src/features/permissions/compute.ts` |
-| Hook-based permission checks      | `src/features/permissions/hooks.ts`   |
-| Guard-based enforcement           | `src/features/permissions/guards.ts`  |
-| Auth integration with permissions | `src/features/auth/service.ts`        |
+| Pattern                           | Reference file                         |
+| --------------------------------- | -------------------------------------- |
+| Permission merge rules            | `src/features/permissions/compute.ts`  |
+| Shared permission matchers        | `src/features/permissions/matchers.ts` |
+| Hook-based permission checks      | `src/features/permissions/hooks.ts`    |
+| Guard-based enforcement           | `src/features/permissions/guards.ts`   |
+| Auth integration with permissions | `src/features/auth/service.ts`         |
 
 <!-- AGENTS-GENERATED:END golden-samples -->

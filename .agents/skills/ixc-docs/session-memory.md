@@ -45,3 +45,35 @@
 - **Exemplo:** `GET /clientes-fibra`. Campos: `status_onu` (A=autorizada, D=desautorizada), `status_potencia` (Regular/Irregular/Indefinido)
 
 ---
+
+## Cliente Contrato (Contratos) | Score: 1 | Última: 2026-04-16
+
+- **URL:** `https://wikiapiprovedor.ixcsoft.com.br/formulario.php?form=cliente_contrato`
+- **O que contém:** Documentação do recurso de contratos com exemplos para `POST /webservice/v1/cliente_contrato`
+- **Exemplo:** Postman e payload de criação/edição de contrato (campos como `id_cliente`, `status`, `status_internet`, `fidelidade`, `data_expiracao`)
+
+---
+
+## Contas a Receber (fn_areceber) | Score: 1 | Última: 2026-04-16
+
+- **URL:** `https://wikiapiprovedor.ixcsoft.com.br/formulario.php?form=fn_areceber`
+- **O que contém:** Documentação do recurso financeiro de contas a receber com exemplos para `POST /webservice/v1/fn_areceber`
+- **Exemplo:** Operações list/get/create/update/delete via endpoint `fn_areceber`
+
+---
+
+## Atendimentos (su_ticket) | Score: 1 | Última: 2026-04-16
+
+- **URL:** `https://wikiapiprovedor.ixcsoft.com.br/formulario.php?form=su_ticket`
+- **O que contém:** Documentação de atendimentos/tickets com exemplos para `POST /webservice/v1/su_ticket`
+- **Exemplo:** Operações CRUD e consulta por filtros no endpoint `su_ticket`
+
+---
+
+## Linhas MVNO (linha_mvno) | Score: 1 | Última: 2026-04-16
+
+- **URL:** `https://wikiapiprovedor.ixcsoft.com.br/formulario.php?form=linha_mvno`
+- **O que contém:** Documentação das linhas móveis MVNO com exemplos para `POST /webservice/v1/linha_mvno`
+- **Exemplo:** Operações CRUD para linhas móveis vinculadas a contrato
+
+---

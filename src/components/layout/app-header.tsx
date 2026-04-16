@@ -1,30 +1,11 @@
-import { useStore } from "@tanstack/react-store";
 import { Link, useLocation } from "react-router";
 import { SidebarSeparator, SidebarTrigger } from "#/components/ui/sidebar";
-import {
-	APP_NAV_SECTIONS,
-	filterNavSectionsByPermissions,
-	getActiveNavSection,
-	permissionsStore,
-} from "#/features/permissions";
+import { APP_NAV_SECTIONS, getActiveNavSection } from "#/features/permissions";
 import { cn } from "#/lib/utils";
 
 export function AppHeader() {
 	const location = useLocation();
-	const effectiveActions = useStore(
-		permissionsStore,
-		(state) => state.effectiveActions,
-	);
-	const effectiveSnippets = useStore(
-		permissionsStore,
-		(state) => state.effectiveSnippets,
-	);
-
-	const sections = filterNavSectionsByPermissions(
-		APP_NAV_SECTIONS,
-		effectiveActions,
-		effectiveSnippets,
-	);
+	const sections = APP_NAV_SECTIONS;
 	const activeSection = getActiveNavSection(sections, location.pathname);
 
 	return (

@@ -1,4 +1,3 @@
-import { useStore } from "@tanstack/react-store";
 import { FileText, Handshake, Home, UserRound, Users } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import {
@@ -11,10 +10,8 @@ import {
 } from "#/components/ui/sidebar";
 import {
 	APP_NAV_SECTIONS,
-	filterNavSectionsByPermissions,
 	getActiveNavSection,
 	isNavPathActive,
-	permissionsStore,
 } from "#/features/permissions";
 
 const iconByName = {
@@ -27,20 +24,7 @@ const iconByName = {
 
 export function SidebarNavigation() {
 	const location = useLocation();
-	const effectiveActions = useStore(
-		permissionsStore,
-		(state) => state.effectiveActions,
-	);
-	const effectiveSnippets = useStore(
-		permissionsStore,
-		(state) => state.effectiveSnippets,
-	);
-
-	const sections = filterNavSectionsByPermissions(
-		APP_NAV_SECTIONS,
-		effectiveActions,
-		effectiveSnippets,
-	);
+	const sections = APP_NAV_SECTIONS;
 	const activeSection = getActiveNavSection(sections, location.pathname);
 
 	if (!activeSection) {

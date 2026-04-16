@@ -48,17 +48,25 @@ export function mergeSnippets(snippetsFromAllRoles: string[][]): string[] {
 
 	// Collect denials
 	const exactDenials = new Set<string>();
-	const wildcardDenials = new Set<string>();
+	const wildcardDenials: string[] = [];
 
 	for (const s of snippets) {
 		if (s.startsWith("!")) {
 			const target = s.slice(1);
 			if (target.endsWith(".*")) {
-				wildcardDenials.add(target.slice(0, -2));
+				wildcardDenials.push(target.slice(0, -2));
 			} else {
 				exactDenials.add(target);
 			}
 		}
+	}
+
+	function isDenied(grantedSnippet: string): boolean {
+		if (exactDenials.has(grantedSnippet)) return true;
+
+		return wildcardDenials.some((base) => {
+			return grantedSnippet === base || grantedSnippet.startsWith(`${base}.`);
+		});
 	}
 
 	// Apply denials: denial wins over grant
@@ -66,15 +74,7 @@ export function mergeSnippets(snippetsFromAllRoles: string[][]): string[] {
 	for (const s of snippets) {
 		if (s.startsWith("!")) continue; // don't include denials in result
 
-		if (exactDenials.has(s)) continue; // denied by !X
-		if (wildcardDenials.has(s)) continue; // denied by !X.* (X was exact-granted, not wildcard)
-
-		// Check if this wildcard snippet is denied by !X.*
-		const isWildcard = s.endsWith(".*");
-		if (isWildcard) {
-			const base = s.slice(0, -2);
-			if (wildcardDenials.has(base)) continue;
-		}
+		if (isDenied(s)) continue;
 
 		result.push(s);
 	}

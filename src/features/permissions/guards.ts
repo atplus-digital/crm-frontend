@@ -1,4 +1,5 @@
 import { redirect } from "react-router";
+import { hasGrantedAction, hasGrantedSnippet } from "./matchers";
 import { permissionsStore } from "./store";
 
 /**
@@ -11,14 +12,7 @@ import { permissionsStore } from "./store";
 export function requireSnippet(snippet: string): void {
 	const { effectiveSnippets } = permissionsStore.state;
 
-	if (snippet.startsWith("!")) {
-		throw redirect("/forbidden");
-	}
-
-	if (effectiveSnippets.includes(snippet)) return;
-
-	const withDot = `${snippet}.`;
-	if (effectiveSnippets.some((s) => s.startsWith(withDot))) return;
+	if (hasGrantedSnippet(effectiveSnippets, snippet)) return;
 
 	throw redirect("/forbidden");
 }
@@ -30,13 +24,7 @@ export function requireSnippet(snippet: string): void {
 export function requireAction(action: string): void {
 	const { effectiveActions } = permissionsStore.state;
 
-	if (effectiveActions.includes(action)) return;
-
-	const colonIdx = action.indexOf(":");
-	if (colonIdx > -1) {
-		const base = action.slice(0, colonIdx);
-		if (effectiveActions.includes(base)) return;
-	}
+	if (hasGrantedAction(effectiveActions, action)) return;
 
 	throw redirect("/forbidden");
 }
