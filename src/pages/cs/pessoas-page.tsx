@@ -16,30 +16,16 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import {
-	usePessoasFisicas,
-	usePessoasJuridicas,
-} from "#/features/cs/pessoas-hooks";
+import { usePessoasFisicas, usePessoasJuridicas } from "#/features/cs";
 import type {
 	PessoaFisicaFilters,
+	PessoaFisicaListItem,
 	PessoaJuridicaFilters,
+	PessoaJuridicaListItem,
 } from "#/features/cs/pessoas-types";
 import { cn } from "#/lib/utils";
 
-const pfColumns: ColumnDef<
-	{
-		id: number | string;
-		createdAt?: string | null;
-		f_nome?: string | null;
-		f_cpf?: string | null;
-		f_data_nascimento?: string | null;
-		f_credito?: string | null;
-		f_analise_ixc?: string | null;
-		f_sexo?: "MASCULINO" | "FEMININO" | "INDEFINIDO" | null;
-		createdBy?: { nickname: string; email?: string | null } | null;
-	},
-	unknown
->[] = [
+const pfColumns: ColumnDef<PessoaFisicaListItem, unknown>[] = [
 	{ accessorKey: "id", header: "ID" },
 	{
 		accessorKey: "createdAt",
@@ -126,18 +112,7 @@ const pfColumns: ColumnDef<
 	},
 ];
 
-const pjColumns: ColumnDef<
-	{
-		id: number | string;
-		f_razao_social?: string | null;
-		f_nome_fantasia?: string | null;
-		f_cnpj?: string | null;
-		f_ie?: string | null;
-		f_responsavel?: string | null;
-		f_email_responsavel?: string | null;
-	},
-	unknown
->[] = [
+const pjColumns: ColumnDef<PessoaJuridicaListItem, unknown>[] = [
 	{ accessorKey: "id", header: "ID" },
 	{ accessorKey: "f_razao_social", header: "Razão Social" },
 	{ accessorKey: "f_nome_fantasia", header: "Nome Fantasia" },
@@ -314,7 +289,7 @@ export function CSPessoasPage() {
 
 							<DataTableWithPagination
 								columns={pfColumns}
-								data={pfData?.data ?? []}
+								data={(pfData?.data as unknown as PessoaFisicaListItem[]) ?? []}
 								total={pfData?.meta?.total ?? 0}
 								totalPages={pfData?.meta?.totalPage ?? 0}
 								onPageChange={handlePageChange}
@@ -366,7 +341,9 @@ export function CSPessoasPage() {
 
 							<DataTableWithPagination
 								columns={pjColumns}
-								data={pjData?.data ?? []}
+								data={
+									(pjData?.data as unknown as PessoaJuridicaListItem[]) ?? []
+								}
 								total={pjData?.meta?.total ?? 0}
 								totalPages={pjData?.meta?.totalPage ?? 0}
 								onPageChange={handlePageChange}

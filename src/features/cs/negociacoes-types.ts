@@ -1,4 +1,22 @@
-// Status da negociação
+// Tipos para Negociações
+// ⚠️ Usando tipos gerados automaticamente como fonte de verdade
+
+import type { Empresas } from "#/generated/nocobase/empresas";
+import type {
+	Negociacoes,
+	NegociacoesRelations,
+} from "#/generated/nocobase/negociacoes";
+import type { Pessoas } from "#/generated/nocobase/pessoas";
+import type { Users } from "#/generated/nocobase/users";
+import type { PaginatedResponse } from "#/lib/api-types";
+
+// Re-export PaginatedResponse para compatibilidade
+export type { PaginatedResponse };
+
+// ---------------------------------------------------------------------------
+// Status (enumerações de domínio - não geradas)
+// ---------------------------------------------------------------------------
+
 export const NegociacaoStatus = {
 	Novo: "Novo",
 	Negociando: "Negociando",
@@ -11,7 +29,6 @@ export const NegociacaoStatus = {
 export type NegociacaoStatus =
 	(typeof NegociacaoStatus)[keyof typeof NegociacaoStatus];
 
-// Substatus comuns
 export const NegociacaoSubstatus = {
 	AguardandoContato: "Aguardando contato",
 	EmAnalise: "Em análise",
@@ -26,61 +43,28 @@ export const NegociacaoSubstatus = {
 export type NegociacaoSubstatus =
 	(typeof NegociacaoSubstatus)[keyof typeof NegociacaoSubstatus];
 
-// Pessoa Física
-export interface NegociacaoPessoaFisica {
-	id: number;
-	f_nome: string;
-	f_cpf?: string;
-	f_email?: string;
-	f_telefone?: string;
-}
+// ---------------------------------------------------------------------------
+// Tipos derivados dos gerados
+// ---------------------------------------------------------------------------
 
-// Pessoa Jurídica
-export interface NegociacaoPessoaJuridica {
-	id: number;
-	f_razao_social: string;
-	f_cnpj?: string;
-	f_email?: string;
-	f_telefone?: string;
-}
+export type NegociacaoVendedor = Pick<Users, "id" | "nickname" | "email">;
 
-// Vendedor
-export interface NegociacaoVendedor {
-	id: number;
-	nickname: string;
-	email?: string;
-}
+export type Negociacao = Negociacoes;
 
-// Negociação completa
-export interface Negociacao {
-	id: number;
-	createdAt: string;
-	updatedAt: string;
-	f_titulo?: string;
-	f_valor_mensal?: number;
-	f_status: NegociacaoStatus;
-	f_substatus?: string;
-	f_descricao?: string;
-	f_vendedor?: NegociacaoVendedor | null;
-	f_pessoa?: NegociacaoPessoaFisica | null;
-	f_negociacao_pessoa_juridica?: NegociacaoPessoaJuridica | null;
-	f_data_criacao?: string;
-	f_data_atualizacao?: string;
-}
+export type NegociacaoRelations = NegociacoesRelations;
 
-// Negociação com todos os relacionamentos
-export type NegociacaoWithRelations = Negociacao & {
-	f_vendedor: NegociacaoVendedor;
-} & (
-		| {
-				f_pessoa: NegociacaoPessoaFisica;
-				f_negociacao_pessoa_juridica?: null;
-		  }
-		| {
-				f_pessoa?: null;
-				f_negociacao_pessoa_juridica: NegociacaoPessoaJuridica;
-		  }
-	);
+export type NegociacaoWithRelations = Negociacoes & {
+	f_vendedor: Users;
+	f_pessoa?: Pessoas | null;
+	f_negociacao_pessoa_juridica?: Empresas | null;
+};
+
+// ---------------------------------------------------------------------------
+// Legacy aliases (para compatibilidade com código existente)
+// ---------------------------------------------------------------------------
+
+export type NegociacaoPessoaFisica = Pessoas;
+export type NegociacaoPessoaJuridica = Empresas;
 
 // ---------------------------------------------------------------------------
 // Filters
@@ -102,21 +86,5 @@ export interface NegociacaoListParams {
 	pageSize?: number;
 	sort?: string[];
 	filters?: NegociacaoFilters;
-	appends?: string[];
-}
-
-// ---------------------------------------------------------------------------
-// Shared types
-// ---------------------------------------------------------------------------
-
-export interface PaginatedResponse<T> {
-	data: T[];
-	meta: {
-		total?: number;
-		totalPage?: number;
-		page?: number;
-		pageSize?: number;
-		filterCount?: number;
-		[key: string]: unknown;
-	};
+	appends?: Array<keyof NegociacoesRelations>;
 }

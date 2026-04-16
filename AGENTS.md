@@ -47,7 +47,41 @@ docs/            → documentation
 
 <!-- AGENTS-GENERATED:END filemap -->
 
-## Golden Samples (follow these patterns)
+## Generated Types (Single Source of Truth)
+
+> **⚠️ CRITICAL:** All TypeScript types for NocoBase/IXC collections MUST come from `src/generated/`
+
+| Collection               | Generated Type    | Import Path                        |
+| ------------------------ | ----------------- | ---------------------------------- |
+| NocoBase `t_pessoas`     | `Pessoas`         | `#/generated/nocobase/pessoas`     |
+| NocoBase `t_empresas`    | `Empresas`        | `#/generated/nocobase/empresas`    |
+| NocoBase `t_negociacoes` | `Negociacoes`     | `#/generated/nocobase/negociacoes` |
+| IXC `cliente_contrato`   | `ClienteContrato` | `#/generated/ixc/cliente-contrato` |
+
+**Rules:**
+
+1. **NEVER** manually redefine interfaces that exist in `src/generated/`
+2. **ALWAYS** use `type X = GeneratedType` or `Pick<GeneratedType, ...>` instead
+3. Run `pnpm generate-types` after any schema change in NocoBase/IXC
+4. Domain-specific enums (status, substatus) CAN be manual
+5. UI-specific types (e.g., `PessoaFisicaListItem`) CAN be custom
+
+**Example:**
+
+```typescript
+// ✅ CORRECT - use generated type
+import type { Pessoas } from "#/generated/nocobase/pessoas";
+export type PessoaFisica = Pessoas;
+
+// ❌ WRONG - manual duplication
+export interface PessoaFisica {
+  id: number;
+  f_nome: string;
+  // ...
+}
+```
+
+<!-- AGENTS-GENERATED:START golden-samples -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 
@@ -79,6 +113,7 @@ docs/            → documentation
 | Pagination state        | Use `usePagination` hook                                   |
 | Date formatting         | Use `formatDatePtBR()` from utils                          |
 | Currency formatting     | Use `formatCurrency()` from utils                          |
+| **Type definitions**    | **ALWAYS import from `src/generated/` - NEVER redefine**   |
 
 <!-- AGENTS-GENERATED:END heuristics -->
 
@@ -127,6 +162,7 @@ docs/            → documentation
 - Push diretamente na branch main/master
 - Delete migration files or schema changes
 - Commit package-lock.json without package.json changes
+- **Manually redefine types that exist in `src/generated/`**
 - Use any type without justification
 - Use barrel exports (`index.ts`) when:
   - Directory exports only **1 item** used outside the folder

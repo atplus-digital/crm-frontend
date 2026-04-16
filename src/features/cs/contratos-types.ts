@@ -1,3 +1,16 @@
+// Tipos para Contratos IXC
+// ⚠️ Usando tipos gerados automaticamente como fonte de verdade
+
+import type { ClienteContrato } from "#/generated/ixc/cliente-contrato";
+import type { PaginatedResponse } from "#/lib/api-types";
+
+// Re-export PaginatedResponse para compatibilidade
+export type { PaginatedResponse };
+
+// ---------------------------------------------------------------------------
+// Status (enumerações de domínio - não geradas pelo IXC)
+// ---------------------------------------------------------------------------
+
 export const ContratoStatus = {
 	Ativo: "A",
 	Inativo: "I",
@@ -30,32 +43,44 @@ export const INTERNET_STATUS_LABELS: Record<InternetStatus, string> = {
 	[InternetStatus.FinanceiroAtraso]: "Financeiro Atraso",
 };
 
-export interface Contrato {
-	id: number;
-	id_cliente: number;
-	id_vd_contrato: number;
-	contrato: string;
-	status: ContratoStatus;
-	status_internet: InternetStatus;
-	ultima_atualizacao: string;
-	data: string;
-	data_ativacao: string;
-	data_cancelamento: string;
-	data_validade: string | null;
-	pago_ate_data: string | null;
-	email_cobranca: string | null;
-	valor_unitario: string | null;
-	fidelidade: number;
-	tipo_cobranca: string;
-	tipo: string;
-	cidade: number | string;
-	bairro: string | null;
-	cep: string | null;
-	endereco: string | null;
-	numero: string | null;
-	complemento: string | null;
-}
+// ---------------------------------------------------------------------------
+// Tipos derivados dos gerados
+// ---------------------------------------------------------------------------
 
+/**
+ * Contrato - baseado no tipo gerado ClienteContrato do IXC
+ * Pick dos campos mais utilizados na UI
+ */
+export type Contrato = Pick<
+	ClienteContrato,
+	| "id"
+	| "id_cliente"
+	| "id_vd_contrato"
+	| "contrato"
+	| "status"
+	| "status_internet"
+	| "ultima_atualizacao"
+	| "data"
+	| "data_ativacao"
+	| "data_cancelamento"
+	| "data_validade"
+	| "pago_ate_data"
+	| "email_cobranca"
+	| "valor_unitario"
+	| "fidelidade"
+	| "tipo_cobranca"
+	| "tipo"
+	| "cidade"
+	| "bairro"
+	| "cep"
+	| "endereco"
+	| "numero"
+	| "complemento"
+>;
+
+/**
+ * Cliente do contrato - tipo manual (não existe no gerado do IXC)
+ */
 export interface ContratoCliente {
 	id: number;
 	razao: string;
@@ -66,6 +91,9 @@ export interface ContratoCliente {
 	tipo_pessoa: string;
 }
 
+/**
+ * Contrato com dados do cliente
+ */
 export type ContratoWithCliente = Contrato & {
 	f_nc_cliente?: ContratoCliente | null;
 };
@@ -86,21 +114,4 @@ export interface ContratoListParams {
 	pageSize?: number;
 	sort?: string[];
 	filters?: ContratoFilters;
-}
-
-// ---------------------------------------------------------------------------
-// Shared types
-// ---------------------------------------------------------------------------
-
-export interface PaginatedResponse<T> {
-	data: T[];
-	meta: {
-		total?: number;
-		totalPage?: number;
-		page?: number;
-		pageSize?: number;
-		filterCount?: number;
-		print?: number;
-		[key: string]: unknown;
-	};
 }
