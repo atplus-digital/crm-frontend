@@ -12,18 +12,18 @@ export function printHelp() {
 	console.log(
 		`
 Uso:
-  pnpm generate-types [opções]
+	 pnpm generate-types [opções]
 
 Opções:
-  --write             Bypass na confirmação de remoção de arquivos não utilizados
-  --ixc               Gera tipos para collections do IXC (Integração)
-  -h, --help          Exibe esta ajuda
+	 --write             Bypass na confirmação de remoção de arquivos não utilizados
+	 --datasource <id>   Gera apenas os datasource(s) informado(s) por nome ou chave
+	 -h, --help          Exibe esta ajuda
 
 Configuração:
-  env: ${config.defaultEnvPath}
-  output padrão: ${config.outputDir}/
-  verbose: ${config.verbose ? "ativado" : "desativado"}
-  interface base: ${formatBaseInterfacePattern(config.baseInterfaceNaming)}
+	 env: ${config.defaultEnvPath}
+	 output padrão utilitário: ${config.outputDir}/
+	 verbose: ${config.verbose ? "ativado" : "desativado"}
+	 interface base: ${formatBaseInterfacePattern(config.baseInterfaceNaming)}
 
 Datasources configurados:
 ${datasourceSummary || "- nenhum datasource configurado"}

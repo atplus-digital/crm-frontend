@@ -4,7 +4,10 @@ import type {
 	RelationInfo,
 } from "@scripts/generate-types/src/@types/generation";
 import type { NocoBaseField } from "@scripts/generate-types/src/@types/nocobase";
-import type { RuntimeConfig } from "@scripts/generate-types/src/@types/script";
+import {
+	defineDatasource,
+	type RuntimeConfig,
+} from "@scripts/generate-types/src/@types/script";
 import { beforeEach, vi } from "vitest";
 
 const mockScriptConfig = {
@@ -30,7 +33,7 @@ const mockScriptConfig = {
 		suffix: "Base",
 	},
 	datasources: [
-		{
+		defineDatasource({
 			name: "nocobase",
 			datasource: "main",
 			outputDir: "/tmp/test-generated",
@@ -46,18 +49,16 @@ const mockScriptConfig = {
 				"t_equipamentos",
 				"t_telecom_recursos",
 			],
-		},
-		{
+		}),
+		defineDatasource({
 			name: "ixc",
 			datasource: "d_db_ixcsoft",
 			outputDir: "/tmp/test-generated-ixc",
 			splitCollections: ["cliente_contrato"],
 			collections: ["cliente_contrato"],
 			enableSampleFieldFallback: true,
-		},
+		}),
 	],
-	ixcCollections: ["cliente_contrato"],
-	ixcOutputDir: "/tmp/test-generated-ixc",
 };
 
 const mockRuntimeConfig: RuntimeConfig = {
@@ -65,7 +66,7 @@ const mockRuntimeConfig: RuntimeConfig = {
 	showHelp: false,
 	write: false,
 	lockWorkspace: false,
-	ixc: false,
+	selectedDatasources: [],
 	baseUrl: "https://example.com/api",
 	token: "fake-token",
 	timeoutMs: 30_000,
@@ -78,7 +79,7 @@ function createMockRuntimeConfig(): RuntimeConfig {
 		showHelp: false,
 		write: false,
 		lockWorkspace: false,
-		ixc: false,
+		selectedDatasources: [],
 		baseUrl: "https://example.com/api",
 		token: "fake-token",
 		timeoutMs: 30_000,

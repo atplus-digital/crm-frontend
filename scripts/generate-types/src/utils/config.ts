@@ -22,7 +22,6 @@ const defaultConfig: ScriptConfig = {
 		prefix: "",
 		suffix: "Base",
 	},
-	ixcOutputDir: "src/@types/generated/ixc",
 } as const;
 
 /**
@@ -60,12 +59,35 @@ function validateMergedConfig(mergedConfig: Partial<ScriptConfig>): void {
 		errors.push("outputDir não pode ser vazio");
 	}
 
-	// Validar ixcOutputDir se fornecido
-	if (
-		mergedConfig.ixcOutputDir !== undefined &&
-		mergedConfig.ixcOutputDir.trim() === ""
-	) {
-		errors.push("ixcOutputDir não pode ser vazio");
+	if (!mergedConfig.datasources || mergedConfig.datasources.length === 0) {
+		errors.push("datasources deve conter ao menos um datasource configurado");
+	}
+
+	for (const datasource of mergedConfig.datasources ?? []) {
+		if (datasource.name.trim() === "") {
+			errors.push("datasource.name não pode ser vazio");
+		}
+
+		if (datasource.datasource.trim() === "") {
+			errors.push(
+				`datasource '${datasource.name}' deve definir a chave do datasource`,
+			);
+		}
+
+		if (datasource.outputDir.trim() === "") {
+			errors.push(
+				`datasource '${datasource.name}' deve definir outputDir não vazio`,
+			);
+		}
+
+		if (
+			datasource.datasource !== "main" &&
+			(!datasource.collections || datasource.collections.length === 0)
+		) {
+			errors.push(
+				`datasource '${datasource.name}' (${datasource.datasource}) deve definir collections explicitamente`,
+			);
+		}
 	}
 
 	if (errors.length > 0) {
@@ -86,6 +108,25 @@ export function parseConfig(
 	validateMergedConfig(mergedConfig);
 
 	const parsedArgs = parseArgs(process.argv.slice(2));
+	const selectedDatasources = [...new Set(parsedArgs.options.datasources)];
+	if (selectedDatasources.length > 0) {
+		const availableDatasources = new Set(
+			(mergedConfig.datasources ?? []).flatMap((datasource) => [
+				datasource.name,
+				datasource.datasource,
+			]),
+		);
+
+		const unknownDatasources = selectedDatasources.filter(
+			(datasourceName) => !availableDatasources.has(datasourceName),
+		);
+
+		if (unknownDatasources.length > 0) {
+			throw new Error(
+				`Datasource(s) desconhecido(s): ${unknownDatasources.join(", ")}`,
+			);
+		}
+	}
 
 	let cachedEnvConfig: Awaited<ReturnType<typeof resolveEnvConfig>> | undefined;
 
@@ -104,7 +145,7 @@ export function parseConfig(
 		lockWorkspace: Boolean(
 			parsedArgs.options.lockWorkspace || mergedConfig.lockWorkspaceFolder,
 		),
-		ixc: Boolean(parsedArgs.options.ixc),
+		selectedDatasources,
 		...getEnvConfig(),
 	};
 

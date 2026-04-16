@@ -6,7 +6,7 @@ import type {
 export function parseArgs(argv: string[]): ParsedArgs {
 	const options: CliArgs = {
 		write: false,
-		ixc: false,
+		datasources: [],
 	};
 
 	let showHelp = false;
@@ -28,13 +28,39 @@ export function parseArgs(argv: string[]): ParsedArgs {
 			continue;
 		}
 
-		if (arg === "--lock-workspace") {
-			options.lockWorkspace = true;
+		if (arg === "--datasource") {
+			const value = argv[index + 1];
+			if (!value || value.startsWith("-")) {
+				throw new Error("O argumento --datasource exige um valor");
+			}
+
+			options.datasources.push(
+				...value
+					.split(",")
+					.map((item) => item.trim())
+					.filter((item) => item.length > 0),
+			);
+			index++;
 			continue;
 		}
 
-		if (arg === "--ixc") {
-			options.ixc = true;
+		if (arg.startsWith("--datasource=")) {
+			const value = arg.slice("--datasource=".length);
+			if (!value) {
+				throw new Error("O argumento --datasource exige um valor");
+			}
+
+			options.datasources.push(
+				...value
+					.split(",")
+					.map((item) => item.trim())
+					.filter((item) => item.length > 0),
+			);
+			continue;
+		}
+
+		if (arg === "--lock-workspace") {
+			options.lockWorkspace = true;
 			continue;
 		}
 

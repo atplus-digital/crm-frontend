@@ -1,6 +1,8 @@
 import { config } from "@scripts/generate-types/config";
-import { runGenerateTypes } from "@scripts/generate-types/src/generate-types";
-import { runGenerateIxc } from "@scripts/generate-types/src/generation/run-generate-ixc";
+import {
+	runGenerateTypes,
+	runGenerateTypesForDatasources,
+} from "@scripts/generate-types/src/generate-types";
 import { printHelp } from "./help";
 import { printResult } from "./report";
 
@@ -10,7 +12,10 @@ export async function runCli() {
 		return;
 	}
 
-	const result = config.ixc ? await runGenerateIxc() : await runGenerateTypes();
+	const result =
+		config.selectedDatasources.length > 0
+			? await runGenerateTypesForDatasources(config.selectedDatasources)
+			: await runGenerateTypes();
 
 	printResult(result);
 }

@@ -1,3 +1,4 @@
+import { execFile } from "node:child_process";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type { CollectionTypesMap } from "./@types/generation";
@@ -25,8 +26,35 @@ import {
 	writeMultipleFiles,
 } from "./utils/writer";
 
+async function runBiomeFix(dirs: string[]): Promise<void> {
+	if (dirs.length === 0) return;
+
+	const biomeCmd = "biome";
+	const biomeArgs = ["check", "--write", ...dirs];
+
+	logInfo(`🔧 Rodando biome nos diretórios gerados: ${dirs.join(", ")}`);
+
+	return new Promise((resolve) => {
+		execFile(biomeCmd, biomeArgs, (error, stdout, stderr) => {
+			if (stdout) {
+				logVerbose(stdout);
+			}
+			if (stderr) {
+				logVerbose(stderr);
+			}
+			if (error) {
+				logInfo(
+					`⚠️  Biome retornou erro (pode ser apenas warnings): ${error.message}`,
+				);
+			} else {
+				logInfo(`✅ Biome aplicado com sucesso em ${dirs.length} diretório(s)`);
+			}
+			resolve();
+		});
+	});
+}
+
 const IDENTIFIER_REFERENCE_REGEX = /[$A-Z_a-z][$0-9A-Z_a-z]*/g;
-const IXC_DATASOURCE_NAME = "d_db_ixcsoft";
 const MAIN_DATASOURCE_NAME = "main";
 
 interface GeneratedFileWrite {
@@ -257,56 +285,7 @@ function generateIndexFileWithReexports(
 }
 
 function resolveDatasourceConfigs(): DatasourceGenerationConfig[] {
-	const configuredDatasources = config.datasources ?? [];
-	const legacyMainDatasource: DatasourceGenerationConfig = {
-		name: "nocobase",
-		datasource: MAIN_DATASOURCE_NAME,
-		outputDir: config.outputDir,
-		splitCollections: config.splitCollections,
-	};
-	const legacyIxcDatasource: DatasourceGenerationConfig = {
-		name: "ixc",
-		datasource: IXC_DATASOURCE_NAME,
-		outputDir: config.ixcOutputDir ?? "src/generated/ixc",
-		splitCollections: config.ixcCollections ?? [],
-		collections: config.ixcCollections,
-		enableSampleFieldFallback: true,
-	};
-
-	const sourceDatasources =
-		configuredDatasources.length > 0
-			? configuredDatasources
-			: [legacyMainDatasource, legacyIxcDatasource];
-
-	const resolved = sourceDatasources.map((datasource) => {
-		if (datasource.datasource === MAIN_DATASOURCE_NAME) {
-			return {
-				...datasource,
-				outputDir: config.outputDir,
-				splitCollections: config.splitCollections,
-			};
-		}
-
-		if (datasource.datasource === IXC_DATASOURCE_NAME) {
-			return {
-				...datasource,
-				outputDir: config.ixcOutputDir ?? datasource.outputDir,
-				splitCollections:
-					datasource.splitCollections.length > 0
-						? datasource.splitCollections
-						: normalizeCollectionNames(config.ixcCollections),
-				collections:
-					normalizeCollectionNames(config.ixcCollections).length > 0
-						? normalizeCollectionNames(config.ixcCollections)
-						: datasource.collections,
-				enableSampleFieldFallback: datasource.enableSampleFieldFallback ?? true,
-			};
-		}
-
-		return datasource;
-	});
-
-	return resolved.filter(
+	return (config.datasources ?? []).filter(
 		(datasource) => datasource.outputDir.trim().length > 0,
 	);
 }
@@ -321,6 +300,12 @@ async function resolveCollectionsForDatasource(
 
 	if (configuredCollectionNames.length > 0) {
 		return configuredCollectionNames.map((name) => ({ name }));
+	}
+
+	if (datasource.datasource !== MAIN_DATASOURCE_NAME) {
+		throw new Error(
+			`Datasource '${datasource.name}' (${datasource.datasource}) exige collections explícitas em scripts/generate-types/datasources.config.ts`,
+		);
 	}
 
 	return client.fetchCollections();
@@ -516,6 +501,9 @@ export async function runGenerateTypesForDatasources(
 		const result = await runGenerateTypesForDatasource(datasource);
 		writeFiles.push(...result.writeFiles);
 	}
+
+	const outputDirs = datasourceConfigs.map((d) => d.outputDir);
+	await runBiomeFix(outputDirs);
 
 	if (writeFiles.length === 1) {
 		return {

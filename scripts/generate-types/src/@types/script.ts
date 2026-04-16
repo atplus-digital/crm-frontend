@@ -3,7 +3,7 @@ import type { NocoBaseCredentials } from "./nocobase";
 export interface CliArgs {
 	write: boolean;
 	lockWorkspace?: boolean;
-	ixc?: boolean;
+	datasources: string[];
 }
 
 export interface ParsedArgs {
@@ -34,14 +34,40 @@ export interface BaseInterfaceNamingConfig {
 	suffix: string;
 }
 
-export interface DatasourceGenerationConfig {
+interface BaseDatasourceGenerationConfig {
 	name: string;
 	datasource: string;
 	outputDir: string;
 	splitCollections: string[];
-	collections?: string[];
 	enableSampleFieldFallback?: boolean;
 	baseInterfaceNaming?: BaseInterfaceNamingConfig;
+}
+
+export interface MainDatasourceGenerationConfig
+	extends BaseDatasourceGenerationConfig {
+	datasource: "main";
+	collections?: string[];
+}
+
+export interface ExternalDatasourceGenerationConfig
+	extends BaseDatasourceGenerationConfig {
+	collections: string[];
+}
+
+export type DatasourceGenerationConfig =
+	| MainDatasourceGenerationConfig
+	| ExternalDatasourceGenerationConfig;
+
+export function defineDatasource(
+	config: MainDatasourceGenerationConfig,
+): MainDatasourceGenerationConfig;
+export function defineDatasource(
+	config: ExternalDatasourceGenerationConfig,
+): ExternalDatasourceGenerationConfig;
+export function defineDatasource(
+	config: DatasourceGenerationConfig,
+): DatasourceGenerationConfig {
+	return config;
 }
 
 export interface ScriptConfig {
@@ -54,9 +80,6 @@ export interface ScriptConfig {
 	requestConcurrency: number;
 	lockWorkspaceFolder?: boolean; // Quando ativado, verifica .vscode/settings.json e bloqueia acesso de escrita à pasta de interfaces
 	baseInterfaceNaming: BaseInterfaceNamingConfig;
-	ixcCollections?: string[]; // Collections do IXC para geração de tipos
-	ixcOutputDir?: string; // Diretório de saída para tipos IXC
-	generateIxcTypes?: boolean; // Flag para ativar geração de tipos IXC
 }
 
 export type EnvConfig = NocoBaseCredentials;
@@ -65,5 +88,5 @@ export interface RuntimeConfig extends ScriptConfig, NocoBaseCredentials {
 	showHelp: boolean;
 	write: boolean;
 	lockWorkspace: boolean;
-	ixc: boolean;
+	selectedDatasources: string[];
 }
