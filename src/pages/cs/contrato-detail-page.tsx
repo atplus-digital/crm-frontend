@@ -7,6 +7,8 @@ import {
 	Smartphone,
 } from "lucide-react";
 import { Link, useParams } from "react-router";
+import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { EmptyTable } from "#/components/table/empty-table";
 import { Button } from "#/components/ui/button";
 import {
 	Card,
@@ -17,14 +19,6 @@ import {
 } from "#/components/ui/card";
 import { Separator } from "#/components/ui/separator";
 import { Skeleton } from "#/components/ui/skeleton";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "#/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import {
 	ContratoStatusBadge,
@@ -53,36 +47,6 @@ function DetailField({
 			<span className="text-sm font-medium text-muted-foreground">{label}</span>
 			<span className="text-sm">{children}</span>
 		</div>
-	);
-}
-
-function EmptyTable({
-	columns,
-	message = "Nenhum dado disponível",
-}: {
-	columns: string[];
-	message?: string;
-}) {
-	return (
-		<Table>
-			<TableHeader>
-				<TableRow>
-					{columns.map((col) => (
-						<TableHead key={col}>{col}</TableHead>
-					))}
-				</TableRow>
-			</TableHeader>
-			<TableBody>
-				<TableRow>
-					<TableCell
-						colSpan={columns.length}
-						className="h-24 text-center text-muted-foreground"
-					>
-						{message}
-					</TableCell>
-				</TableRow>
-			</TableBody>
-		</Table>
 	);
 }
 
@@ -132,9 +96,9 @@ export function ContratoDetailPage() {
 		return (
 			<div className="flex-1 overflow-auto bg-background">
 				<div className="mx-auto max-w-400 p-4">
-					<div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+					<InlineErrorAlert>
 						Erro ao carregar contrato: {(error as Error).message}
-					</div>
+					</InlineErrorAlert>
 				</div>
 			</div>
 		);
@@ -343,9 +307,7 @@ export function ContratoDetailPage() {
 								</Card>
 							</div>
 						) : (
-							<div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
-								Contrato não encontrado
-							</div>
+							<InlineErrorAlert>Contrato não encontrado</InlineErrorAlert>
 						)}
 					</TabsContent>
 

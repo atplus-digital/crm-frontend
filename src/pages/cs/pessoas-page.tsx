@@ -1,7 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { Filter, Plus, RotateCw } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useSearchParams } from "react-router";
+import { FilterActions } from "#/components/filters/filter-actions";
+import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
@@ -14,7 +16,6 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { PessoasTable } from "#/features/cs/components/pessoas-table";
 import {
 	usePessoasFisicas,
 	usePessoasJuridicas,
@@ -193,6 +194,7 @@ export function CSPessoasPage() {
 		} else {
 			setPJFilters({ razaoSocial: "", cnpj: "" });
 		}
+		handlePageChange(1);
 	};
 
 	const { data: pfData, error: pfError } = usePessoasFisicas({
@@ -297,25 +299,24 @@ export function CSPessoasPage() {
 										</SelectContent>
 									</Select>
 								</div>
-								<Button variant="outline" size="sm">
-									<Filter className="mr-2 size-4" />
-									Filtrar
-								</Button>
-								<Button variant="ghost" size="sm" onClick={handleClearFilters}>
-									<RotateCw className="mr-2 size-4" />
-									Limpar
-								</Button>
+								<FilterActions
+									onApply={() => handlePageChange(1)}
+									onClear={handleClearFilters}
+									canClear={
+										Boolean(pfFilters.nome) ||
+										Boolean(pfFilters.cpf) ||
+										pfFilters.analiseIxc !== "all"
+									}
+									applyVariant="outline"
+									clearVariant="ghost"
+								/>
 							</div>
 
-							<PessoasTable
+							<DataTableWithPagination
 								columns={pfColumns}
 								data={pfData?.data ?? []}
-								pagination={{
-									page,
-									pageSize,
-									total: pfData?.meta?.total ?? 0,
-									totalPages: pfData?.meta?.totalPage ?? 0,
-								}}
+								total={pfData?.meta?.total ?? 0}
+								totalPages={pfData?.meta?.totalPage ?? 0}
 								onPageChange={handlePageChange}
 								onPageSizeChange={handlePageSizeChange}
 							/>
@@ -354,25 +355,20 @@ export function CSPessoasPage() {
 										}
 									/>
 								</div>
-								<Button variant="outline" size="sm">
-									<Filter className="mr-2 size-4" />
-									Filtrar
-								</Button>
-								<Button variant="ghost" size="sm" onClick={handleClearFilters}>
-									<RotateCw className="mr-2 size-4" />
-									Limpar
-								</Button>
+								<FilterActions
+									onApply={() => handlePageChange(1)}
+									onClear={handleClearFilters}
+									canClear={Boolean(pjFilters.razaoSocial || pjFilters.cnpj)}
+									applyVariant="outline"
+									clearVariant="ghost"
+								/>
 							</div>
 
-							<PessoasTable
+							<DataTableWithPagination
 								columns={pjColumns}
 								data={pjData?.data ?? []}
-								pagination={{
-									page,
-									pageSize,
-									total: pjData?.meta?.total ?? 0,
-									totalPages: pjData?.meta?.totalPage ?? 0,
-								}}
+								total={pjData?.meta?.total ?? 0}
+								totalPages={pjData?.meta?.totalPage ?? 0}
 								onPageChange={handlePageChange}
 								onPageSizeChange={handlePageSizeChange}
 							/>

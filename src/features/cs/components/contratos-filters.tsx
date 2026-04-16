@@ -1,6 +1,5 @@
-import { Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "#/components/ui/button";
+import { FilterActions } from "#/components/filters/filter-actions";
 import { Input } from "#/components/ui/input";
 import {
 	Select,
@@ -89,20 +88,12 @@ export function ContratosFilters({
 					onChange={(e) => setContratoId(e.target.value)}
 				/>
 			</div>
-			<div className="mt-4 flex gap-2">
-				<Button onClick={handleFilter}>
-					<Search className="size-4" />
-					Filtrar
-				</Button>
-				<Button
-					variant="outline"
-					onClick={handleClear}
-					disabled={allFieldsEmpty}
-				>
-					<X className="size-4" />
-					Limpar
-				</Button>
-			</div>
+			<FilterActions
+				className="mt-4"
+				onApply={handleFilter}
+				onClear={handleClear}
+				canClear={!allFieldsEmpty}
+			/>
 		</div>
 	);
 }

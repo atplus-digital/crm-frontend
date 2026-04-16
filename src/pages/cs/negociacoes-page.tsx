@@ -1,5 +1,7 @@
-import { Calendar, Search, X } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { useId, useState } from "react";
+import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { FilterActions } from "#/components/filters/filter-actions";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import {
@@ -142,22 +144,12 @@ function KanbanFilters({ filters, onFilter }: KanbanFiltersProps) {
 				</div>
 			</div>
 
-			<div className="flex items-center gap-2">
-				<Button size="sm" className="gap-1.5">
-					<Search className="size-4" aria-hidden="true" />
-					Filtrar
-				</Button>
-				<Button
-					variant="ghost"
-					size="sm"
-					onClick={clearFilters}
-					disabled={!hasFilters}
-					className="gap-1.5"
-				>
-					<X className="size-4" aria-hidden="true" />
-					Limpar
-				</Button>
-			</div>
+			<FilterActions
+				onApply={() => onFilter(filters)}
+				onClear={clearFilters}
+				canClear={Boolean(hasFilters)}
+				clearVariant="ghost"
+			/>
 		</div>
 	);
 }
@@ -322,22 +314,12 @@ function ListaFilters({ filters, onFilter }: ListaFiltersProps) {
 				</div>
 			</div>
 
-			<div className="flex items-center gap-2">
-				<Button size="sm" className="gap-1.5">
-					<Search className="size-4" aria-hidden="true" />
-					Filtrar
-				</Button>
-				<Button
-					variant="ghost"
-					size="sm"
-					onClick={clearFilters}
-					disabled={!hasFilters}
-					className="gap-1.5"
-				>
-					<X className="size-4" aria-hidden="true" />
-					Limpar
-				</Button>
-			</div>
+			<FilterActions
+				onApply={() => onFilter(filters)}
+				onClear={clearFilters}
+				canClear={Boolean(hasFilters)}
+				clearVariant="ghost"
+			/>
 		</div>
 	);
 }
@@ -389,9 +371,9 @@ export function NegociacoesPage() {
 											onFilter={setKanbanFilters}
 										/>
 										{error ? (
-											<div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+											<InlineErrorAlert>
 												Erro ao carregar negociações: {(error as Error).message}
-											</div>
+											</InlineErrorAlert>
 										) : (
 											<NegociacoesKanban
 												negociacoes={negociacoes}
@@ -408,9 +390,9 @@ export function NegociacoesPage() {
 											onFilter={setListaFilters}
 										/>
 										{error ? (
-											<div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+											<InlineErrorAlert>
 												Erro ao carregar negociações: {(error as Error).message}
-											</div>
+											</InlineErrorAlert>
 										) : (
 											<NegociacoesList
 												negociacoes={negociacoes}

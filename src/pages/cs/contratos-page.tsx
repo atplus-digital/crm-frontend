@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router";
+import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { ContratosFilters } from "#/features/cs/components/contratos-filters";
 import { ContratosTable } from "#/features/cs/components/contratos-table";
 import { useContratos } from "#/features/cs/contratos-hooks";
@@ -65,9 +66,9 @@ export function ContratosPage() {
 				</div>
 				<ContratosFilters onFilter={handleFilter} currentFilters={filters} />
 				{error ? (
-					<div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+					<InlineErrorAlert>
 						Erro ao carregar contratos: {(error as Error).message}
-					</div>
+					</InlineErrorAlert>
 				) : (
 					<ContratosTable
 						contratos={data?.data ?? []}

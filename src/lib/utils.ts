@@ -7,10 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
-export function formatDateInPortuguese(date: Date): string {
-	return format(date, "EEEE, d 'de' MMMM 'de' yyyy", { locale: ptBR });
-}
-
 export function getInitials(name: string): string {
 	return name.charAt(0).toUpperCase();
 }
