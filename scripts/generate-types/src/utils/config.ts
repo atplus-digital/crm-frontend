@@ -19,7 +19,7 @@ const defaultConfig: ScriptConfig = {
 	lockWorkspaceFolder: true,
 	baseInterfaceNaming: {
 		prefix: "",
-		suffix: "Base",
+		suffix: "",
 	},
 } as const;
 
