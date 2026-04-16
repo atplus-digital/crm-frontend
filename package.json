@@ -19,8 +19,7 @@
 		"knip:silent": "knip --exclude dependencies --no-config-hints",
 		"lint-staged": "lint-staged",
 		"typecheck": "tsc --noEmit",
-		"generate-types": "tsx scripts/generate-types/index.ts",
-		"generate-types-ixc": "tsx scripts/generate-types/index.ts --ixc"
+		"generate-types": "tsx scripts/generate-types/index.ts ; pnpm biome:fix src/generated"
 	},
 	"dependencies": {
 		"@fontsource-variable/geist": "^5.2.8",

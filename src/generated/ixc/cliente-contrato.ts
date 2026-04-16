@@ -4,6 +4,8 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+export const CLIENTE_CONTRATO_TABLE_NAME = "cliente_contrato";
+
 export interface ClienteContrato {
 	id: number;
 	agrupar_financeiro_contrato: string;

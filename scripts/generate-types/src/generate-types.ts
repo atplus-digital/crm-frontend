@@ -3,6 +3,7 @@ import { config } from "@scripts/generate-types/config";
 import type { CollectionTypesMap } from "./@types/generation";
 import type {
 	BaseInterfaceNamingConfig,
+	DatasourceGenerationConfig,
 	GenerateTypesResult,
 } from "./@types/script";
 import { NocoBaseClient } from "./generation/client";
@@ -20,13 +21,22 @@ import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 import {
 	cleanOutputDirectory,
 	getUnusedFiles,
-	previewGeneratedFile,
-	previewMultipleFiles,
 	writeGeneratedFile,
 	writeMultipleFiles,
 } from "./utils/writer";
 
 const IDENTIFIER_REFERENCE_REGEX = /[$A-Z_a-z][$0-9A-Z_a-z]*/g;
+const IXC_DATASOURCE_NAME = "d_db_ixcsoft";
+const MAIN_DATASOURCE_NAME = "main";
+
+interface GeneratedFileWrite {
+	outputPath: string;
+	changed: boolean;
+}
+
+interface DatasourceFilesResult {
+	writeFiles: GeneratedFileWrite[];
+}
 
 function buildCollectionBaseTypeIndex(
 	collectionTypes: CollectionTypesMap,
@@ -186,20 +196,166 @@ function withSplitFileImports(
 	return result;
 }
 
-export async function runGenerateTypes(): Promise<GenerateTypesResult> {
-	const client = new NocoBaseClient(config);
-	const baseInterfaceNaming = resolveBaseInterfaceNamingConfig(
-		config.baseInterfaceNaming,
+function normalizeCollectionNames(
+	collectionNames: string[] | undefined,
+): string[] {
+	if (!collectionNames) {
+		return [];
+	}
+
+	return [...new Set(collectionNames)]
+		.map((collectionName) => collectionName.trim())
+		.filter((collectionName) => collectionName.length > 0);
+}
+
+function deriveExportedTypeName(
+	baseTypeName: string,
+	baseInterfaceNaming: BaseInterfaceNamingConfig,
+): string {
+	const { prefix, suffix } = baseInterfaceNaming;
+	let typeName = baseTypeName;
+	if (prefix && typeName.startsWith(prefix)) {
+		typeName = typeName.slice(prefix.length);
+	}
+	if (suffix && typeName.endsWith(suffix)) {
+		typeName = typeName.slice(0, -suffix.length);
+	}
+	return typeName;
+}
+
+function generateIndexFileWithReexports(
+	splitCollectionNames: readonly string[],
+	baseInterfaceNaming: BaseInterfaceNamingConfig,
+): string {
+	const header = `/**
+ * Arquivo gerado automaticamente
+ * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
+ * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
+ */
+`;
+
+	if (splitCollectionNames.length === 0) {
+		return header;
+	}
+
+	const exports: string[] = [];
+
+	for (const collectionName of splitCollectionNames) {
+		const baseTypeName = toCollectionBaseTypeName(
+			collectionName,
+			baseInterfaceNaming,
+		);
+		const typeName = deriveExportedTypeName(baseTypeName, baseInterfaceNaming);
+		const fileName = toFileName(collectionName);
+
+		exports.push(
+			`export type { ${typeName}, ${typeName}Relations, ${typeName}RelationKey } from "./${fileName}";`,
+		);
+	}
+
+	return `${[header, ...exports.sort()].join("\n")}\n`;
+}
+
+function resolveDatasourceConfigs(): DatasourceGenerationConfig[] {
+	const configuredDatasources = config.datasources ?? [];
+	const legacyMainDatasource: DatasourceGenerationConfig = {
+		name: "nocobase",
+		datasource: MAIN_DATASOURCE_NAME,
+		outputDir: config.outputDir,
+		splitCollections: config.splitCollections,
+	};
+	const legacyIxcDatasource: DatasourceGenerationConfig = {
+		name: "ixc",
+		datasource: IXC_DATASOURCE_NAME,
+		outputDir: config.ixcOutputDir ?? "src/generated/ixc",
+		splitCollections: config.ixcCollections ?? [],
+		collections: config.ixcCollections,
+		enableSampleFieldFallback: true,
+	};
+
+	const sourceDatasources =
+		configuredDatasources.length > 0
+			? configuredDatasources
+			: [legacyMainDatasource, legacyIxcDatasource];
+
+	const resolved = sourceDatasources.map((datasource) => {
+		if (datasource.datasource === MAIN_DATASOURCE_NAME) {
+			return {
+				...datasource,
+				outputDir: config.outputDir,
+				splitCollections: config.splitCollections,
+			};
+		}
+
+		if (datasource.datasource === IXC_DATASOURCE_NAME) {
+			return {
+				...datasource,
+				outputDir: config.ixcOutputDir ?? datasource.outputDir,
+				splitCollections:
+					datasource.splitCollections.length > 0
+						? datasource.splitCollections
+						: normalizeCollectionNames(config.ixcCollections),
+				collections:
+					normalizeCollectionNames(config.ixcCollections).length > 0
+						? normalizeCollectionNames(config.ixcCollections)
+						: datasource.collections,
+				enableSampleFieldFallback: datasource.enableSampleFieldFallback ?? true,
+			};
+		}
+
+		return datasource;
+	});
+
+	return resolved.filter(
+		(datasource) => datasource.outputDir.trim().length > 0,
+	);
+}
+
+async function resolveCollectionsForDatasource(
+	client: NocoBaseClient,
+	datasource: DatasourceGenerationConfig,
+): Promise<Array<{ name: string }>> {
+	const configuredCollectionNames = normalizeCollectionNames(
+		datasource.collections,
 	);
 
+	if (configuredCollectionNames.length > 0) {
+		return configuredCollectionNames.map((name) => ({ name }));
+	}
+
+	return client.fetchCollections();
+}
+
+async function runGenerateTypesForDatasource(
+	datasource: DatasourceGenerationConfig,
+): Promise<DatasourceFilesResult> {
+	const client = new NocoBaseClient(
+		{
+			baseUrl: config.baseUrl,
+			token: config.token,
+			timeoutMs: config.requestTimeoutMs,
+		},
+		{
+			requestHeaders: {
+				"X-Data-Source": datasource.datasource,
+			},
+			enableSampleFieldFallback: datasource.enableSampleFieldFallback,
+		},
+	);
+	const baseInterfaceNaming = resolveBaseInterfaceNamingConfig(
+		datasource.baseInterfaceNaming ?? config.baseInterfaceNaming,
+	);
+
+	logInfo(
+		`🔧 Gerando tipos para datasource '${datasource.datasource}' em ${datasource.outputDir}`,
+	);
 	logVerbose(`📡 Conectando a: ${client.baseUrl}`);
 
-	const collections = await client.fetchCollections();
+	const collections = await resolveCollectionsForDatasource(client, datasource);
 
-	logVerbose(`📋 Encontradas ${collections.length} collections`);
-
-	// Aplica o bloqueio de workspace se a configuração estiver ativada
-	applyWorkspaceLockIfNeeded();
+	logVerbose(
+		`📋 Encontradas ${collections.length} collections para ${datasource.datasource}`,
+	);
 
 	const collectionTypes = await buildCollectionTypes(client, collections, {
 		onCollectionStart: ({ collectionName, index, total }) => {
@@ -209,52 +365,60 @@ export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 
 	const { mainCollections, splitCollections } = splitCollectionsByConfig(
 		collectionTypes,
-		config.splitCollections,
+		datasource.splitCollections,
 	);
-	const splitCollectionNames = new Set(splitCollections.keys());
+	const splitCollectionNamesSet = new Set(splitCollections.keys());
 	const baseTypeIndex = buildCollectionBaseTypeIndex(
 		collectionTypes,
 		baseInterfaceNaming,
 	);
 
+	const hasMainCollections = Object.keys(mainCollections).length > 0;
 	const mainContent = withMainFileImports(
 		generateContent(mainCollections, baseInterfaceNaming),
 		mainCollections,
-		splitCollectionNames,
+		splitCollectionNamesSet,
 		baseTypeIndex,
 		baseInterfaceNaming,
 	);
+	const mainOutputPath = hasMainCollections
+		? path.join(datasource.outputDir, "index.ts")
+		: path.join(datasource.outputDir, "_main.ts");
 
 	if (splitCollections.size === 0) {
-		if (config.dryRun) {
-			return previewGeneratedFile(mainContent);
-		}
-
-		return writeGeneratedFile(mainContent);
+		const mainWrite = writeGeneratedFile(mainContent, mainOutputPath);
+		return {
+			writeFiles: [
+				{ outputPath: mainWrite.outputPath, changed: mainWrite.changed },
+			],
+		};
 	}
 
 	const splitFilesContent = withSplitFileImports(
 		generateSplitFiles(splitCollections, baseInterfaceNaming),
 		splitCollections,
-		splitCollectionNames,
+		splitCollectionNamesSet,
 		baseTypeIndex,
 		baseInterfaceNaming,
 	);
 
-	// Coleta todos os arquivos que serão gerados para identificar os não utilizados
 	const generatedFilePaths = [
-		path.resolve(process.cwd(), config.outputDir, "index.ts"),
-		...[...splitFilesContent.keys()].map((fileName) =>
-			path.resolve(process.cwd(), config.outputDir, fileName),
+		path.resolve(process.cwd(), datasource.outputDir, "index.ts"),
+		path.resolve(process.cwd(), datasource.outputDir, "collections.ts"),
+		...[...splitFilesContent.keys()].map((collectionName) =>
+			path.resolve(
+				process.cwd(),
+				datasource.outputDir,
+				`${toFileName(collectionName)}.ts`,
+			),
 		),
 	];
 
-	// Identifica arquivos não utilizados na pasta de destino
-	const unusedFiles = getUnusedFiles(generatedFilePaths, config.outputDir);
+	const unusedFiles = getUnusedFiles(generatedFilePaths, datasource.outputDir);
 
 	if (unusedFiles.length > 0) {
 		logInfo(
-			`\n⚠️  Encontrados ${unusedFiles.length} arquivo(s) não utilizado(s) em ${config.outputDir}/:`,
+			`\n⚠️  Encontrados ${unusedFiles.length} arquivo(s) não utilizado(s) em ${datasource.outputDir}/:`,
 		);
 		if (config.verbose) {
 			for (const file of unusedFiles) {
@@ -290,59 +454,85 @@ export async function runGenerateTypes(): Promise<GenerateTypesResult> {
 		[...splitCollections.keys()],
 	);
 
-	if (config.dryRun) {
-		const mainResult = previewGeneratedFile(mainContent);
-		const splitResult = previewMultipleFiles(
-			splitFilesContent,
-			config.outputDir,
-		);
-		const collectionsResult = previewGeneratedFile(
-			collectionsContent,
-			path.join(config.outputDir, "collections.ts"),
-		);
-		return {
-			mode: "dry-run" as const,
-			files: [
-				{
-					outputPath: collectionsResult.outputPath,
-					changed: collectionsResult.changed,
-					diff: collectionsResult.diff,
-				},
-				{
-					outputPath: mainResult.outputPath,
-					changed: mainResult.changed,
-					diff: mainResult.diff,
-				},
-				...splitResult.files,
-			],
-			totalFiles: splitResult.totalFiles + 2,
-			totalChanged:
-				splitResult.totalChanged +
-				(collectionsResult.changed ? 1 : 0) +
-				(mainResult.changed ? 1 : 0),
-		};
-	}
+	const indexContent = generateIndexFileWithReexports(
+		[...splitCollections.keys()],
+		baseInterfaceNaming,
+	);
 
 	const collectionsResult = writeGeneratedFile(
 		collectionsContent,
-		path.join(config.outputDir, "collections.ts"),
+		path.join(datasource.outputDir, "collections.ts"),
 	);
-	const mainResult = writeGeneratedFile(mainContent);
-	const splitResult = writeMultipleFiles(splitFilesContent, config.outputDir);
+	// hasMainCollections → inline types go to index.ts (same as main flow)
+	// !hasMainCollections → re-exports go to index.ts, no _main.ts generated
+	const primaryIndexContent = hasMainCollections ? mainContent : indexContent;
+	const indexResult = writeGeneratedFile(
+		primaryIndexContent,
+		path.join(datasource.outputDir, "index.ts"),
+	);
+	const splitResult = writeMultipleFiles(
+		splitFilesContent,
+		datasource.outputDir,
+	);
+
 	return {
-		mode: "write" as const,
-		files: [
+		writeFiles: [
 			{
 				outputPath: collectionsResult.outputPath,
 				changed: collectionsResult.changed,
 			},
-			{ outputPath: mainResult.outputPath, changed: mainResult.changed },
-			...splitResult.files,
+			{ outputPath: indexResult.outputPath, changed: indexResult.changed },
+			...(splitResult?.files ?? []),
 		],
-		totalFiles: splitResult.totalFiles + 2,
-		totalChanged:
-			splitResult.totalChanged +
-			(collectionsResult.changed ? 1 : 0) +
-			(mainResult.changed ? 1 : 0),
 	};
+}
+
+export async function runGenerateTypesForDatasources(
+	onlyDatasourceNames?: readonly string[],
+): Promise<GenerateTypesResult> {
+	const onlyDatasourceSet = new Set(onlyDatasourceNames ?? []);
+	const datasourceConfigs = resolveDatasourceConfigs().filter((datasource) => {
+		if (onlyDatasourceSet.size === 0) {
+			return true;
+		}
+
+		return (
+			onlyDatasourceSet.has(datasource.datasource) ||
+			onlyDatasourceSet.has(datasource.name)
+		);
+	});
+
+	if (datasourceConfigs.length === 0) {
+		throw new Error(
+			"Nenhum datasource configurado para geração de tipos. Verifique datasources.config.ts.",
+		);
+	}
+
+	applyWorkspaceLockIfNeeded();
+
+	const writeFiles: GeneratedFileWrite[] = [];
+
+	for (const datasource of datasourceConfigs) {
+		const result = await runGenerateTypesForDatasource(datasource);
+		writeFiles.push(...result.writeFiles);
+	}
+
+	if (writeFiles.length === 1) {
+		return {
+			resultType: "single",
+			outputPath: writeFiles[0]?.outputPath,
+			changed: writeFiles[0]?.changed,
+		};
+	}
+
+	return {
+		resultType: "multi",
+		files: writeFiles,
+		totalFiles: writeFiles.length,
+		totalChanged: writeFiles.filter((file) => file.changed).length,
+	};
+}
+
+export async function runGenerateTypes(): Promise<GenerateTypesResult> {
+	return runGenerateTypesForDatasources();
 }

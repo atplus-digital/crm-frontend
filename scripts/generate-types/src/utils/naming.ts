@@ -2,6 +2,12 @@ import type { BaseInterfaceNamingConfig } from "@scripts/generate-types/src/@typ
 
 const VALID_IDENTIFIER = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
 
+/**
+ * Nome usado quando uma collection chega sem identificador válido.
+ * Usa um sentinel improvável de colidir com nomes reais.
+ */
+export const UNNAMED_COLLECTION_TYPE_NAME = "__UnnamedCollection__";
+
 export const DEFAULT_BASE_INTERFACE_NAMING: BaseInterfaceNamingConfig = {
 	prefix: "",
 	suffix: "Base",
@@ -124,7 +130,7 @@ export function toCollectionTypeName(collectionName: string): string {
  * toCollectionBaseTypeName("users")         // "Users"
  * toCollectionBaseTypeName("t_negociacoes") // "NegociacoesBase"
  * toCollectionBaseTypeName("users", { prefix: "I" }) // "IUsers"
- * toCollectionBaseTypeName("")              // "unknown"
+ * toCollectionBaseTypeName("")              // "__UnnamedCollection__"
  * ```
  */
 export function toCollectionBaseTypeName(
@@ -133,7 +139,7 @@ export function toCollectionBaseTypeName(
 ): string {
 	const normalizedName = collectionName.trim();
 	if (!normalizedName) {
-		return "unknown";
+		return UNNAMED_COLLECTION_TYPE_NAME;
 	}
 
 	return formatBaseInterfaceName(

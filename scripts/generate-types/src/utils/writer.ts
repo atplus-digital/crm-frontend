@@ -2,12 +2,9 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type {
-	DryRunDiffResult,
-	MultiFileDryRunResult,
-	MultiFilePersistResult,
-	PersistResult,
+	MultiFileResult,
+	SingleFileResult,
 } from "@scripts/generate-types/src/@types/script";
-import { buildDiffOnly } from "./diff";
 import { toFileName } from "./naming";
 
 const MAIN_OUTPUT_FILE = "index.ts";
@@ -15,13 +12,13 @@ const MAIN_OUTPUT_FILE = "index.ts";
 export function writeGeneratedFile(
 	content: string,
 	outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE),
-): PersistResult {
+): SingleFileResult {
 	const resolvedOutputPath = resolveOutputPath(outputPath);
 	const currentContent = readExistingContent(resolvedOutputPath);
 
 	if (currentContent === content) {
 		return {
-			mode: "write",
+			resultType: "single",
 			outputPath: resolvedOutputPath,
 			changed: false,
 		};
@@ -31,33 +28,9 @@ export function writeGeneratedFile(
 	fs.writeFileSync(resolvedOutputPath, content, "utf-8");
 
 	return {
-		mode: "write",
+		resultType: "single",
 		outputPath: resolvedOutputPath,
 		changed: true,
-	};
-}
-
-export function previewGeneratedFile(
-	content: string,
-	outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE),
-): DryRunDiffResult {
-	const resolvedOutputPath = resolveOutputPath(outputPath);
-	const currentContent = readExistingContent(resolvedOutputPath);
-
-	if (currentContent === content) {
-		return {
-			mode: "dry-run",
-			outputPath: resolvedOutputPath,
-			changed: false,
-			diff: "",
-		};
-	}
-
-	return {
-		mode: "dry-run",
-		outputPath: resolvedOutputPath,
-		changed: true,
-		diff: buildDiffOnly(currentContent, content),
 	};
 }
 
@@ -91,7 +64,7 @@ function readExistingContent(filePath: string): string {
 export function writeMultipleFiles(
 	filesMap: Map<string, string>,
 	outputDir: string = config.outputDir,
-): MultiFilePersistResult {
+): MultiFileResult {
 	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
 	const files: Array<{ outputPath: string; changed: boolean }> = [];
 	let totalChanged = 0;
@@ -117,50 +90,7 @@ export function writeMultipleFiles(
 	}
 
 	return {
-		mode: "write",
-		files,
-		totalFiles: filesMap.size,
-		totalChanged,
-	};
-}
-
-/**
- * Preview de múltiplos arquivos em dry-run mode.
- * @param filesMap - Map<collectionName, content>
- * @param outputDir - Diretório base
- * @returns Resultado com diffs de todos os arquivos
- */
-export function previewMultipleFiles(
-	filesMap: Map<string, string>,
-	outputDir: string = config.outputDir,
-): MultiFileDryRunResult {
-	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
-	const files: Array<{
-		outputPath: string;
-		changed: boolean;
-		diff: string;
-	}> = [];
-	let totalChanged = 0;
-
-	for (const [collectionName, content] of filesMap) {
-		const fileName = `${toFileName(collectionName)}.ts`;
-		const outputPath = path.join(resolvedOutputDir, fileName);
-		const currentContent = readExistingContent(outputPath);
-
-		let changed = false;
-		let diff = "";
-
-		if (currentContent !== content) {
-			changed = true;
-			diff = buildDiffOnly(currentContent, content);
-			totalChanged++;
-		}
-
-		files.push({ outputPath, changed, diff });
-	}
-
-	return {
-		mode: "dry-run",
+		resultType: "multi",
 		files,
 		totalFiles: filesMap.size,
 		totalChanged,

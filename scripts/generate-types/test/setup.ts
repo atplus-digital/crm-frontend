@@ -5,7 +5,7 @@ import type {
 } from "@scripts/generate-types/src/@types/generation";
 import type { NocoBaseField } from "@scripts/generate-types/src/@types/nocobase";
 import type { RuntimeConfig } from "@scripts/generate-types/src/@types/script";
-import { vi } from "vitest";
+import { beforeEach, vi } from "vitest";
 
 const mockScriptConfig = {
 	outputDir: "/tmp/test-generated",
@@ -29,11 +29,39 @@ const mockScriptConfig = {
 		prefix: "",
 		suffix: "Base",
 	},
+	datasources: [
+		{
+			name: "nocobase",
+			datasource: "main",
+			outputDir: "/tmp/test-generated",
+			splitCollections: [
+				"users",
+				"f_funcionarios",
+				"t_negociacoes",
+				"t_pessoas",
+				"t_empresas",
+				"t_contratos",
+				"t_servicos",
+				"t_sites",
+				"t_equipamentos",
+				"t_telecom_recursos",
+			],
+		},
+		{
+			name: "ixc",
+			datasource: "d_db_ixcsoft",
+			outputDir: "/tmp/test-generated-ixc",
+			splitCollections: ["cliente_contrato"],
+			collections: ["cliente_contrato"],
+			enableSampleFieldFallback: true,
+		},
+	],
+	ixcCollections: ["cliente_contrato"],
+	ixcOutputDir: "/tmp/test-generated-ixc",
 };
 
 const mockRuntimeConfig: RuntimeConfig = {
 	...mockScriptConfig,
-	dryRun: false,
 	showHelp: false,
 	write: false,
 	lockWorkspace: false,
@@ -43,9 +71,35 @@ const mockRuntimeConfig: RuntimeConfig = {
 	timeoutMs: 30_000,
 };
 
+// Mock factory function - cria novo objeto para cada teste
+function createMockRuntimeConfig(): RuntimeConfig {
+	return {
+		...mockScriptConfig,
+		showHelp: false,
+		write: false,
+		lockWorkspace: false,
+		ixc: false,
+		baseUrl: "https://example.com/api",
+		token: "fake-token",
+		timeoutMs: 30_000,
+	};
+}
+
+let currentMockConfig = createMockRuntimeConfig();
+
 vi.mock("@scripts/generate-types/config", () => ({
-	config: mockRuntimeConfig,
+	get config() {
+		// Retorna referência atualizada via getter
+		return currentMockConfig;
+	},
 }));
+
+// Reset do mock entre testes para evitar contaminação
+if (typeof beforeEach !== "undefined") {
+	beforeEach(() => {
+		currentMockConfig = createMockRuntimeConfig();
+	});
+}
 
 // ── Helpers de fábrica para testes ────────────────────────────────────────────
 

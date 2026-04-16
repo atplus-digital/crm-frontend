@@ -137,7 +137,7 @@ export function generateCollectionsFile(
 				);
 				const typeName = baseTypeName.replace(/Base$/, "");
 				const fileName = toFileName(collectionName);
-				return `import type { ${typeName}, ${typeName}Relations, ${typeName}RelationKey } from "./${fileName}";`;
+				return `import type { ${typeName}, ${typeName}Relations } from "./${fileName}";`;
 			});
 		lines.push(importLines.join("\n"));
 		lines.push("");

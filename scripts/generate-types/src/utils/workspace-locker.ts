@@ -7,6 +7,36 @@ interface VSCodeSettings {
 	[setting: string]: unknown;
 }
 
+const GENERATED_PATTERN = "src/generated/**";
+
+/**
+ * Converte um outputDir em um pattern relativo ao workspace usado em
+ * `files.readonlyInclude`. Aceita paths absolutos, `./relativos` e
+ * `relativos`, sempre devolvendo um caminho relativo POSIX.
+ */
+function toReadonlyPattern(outputDir: string): string {
+	const cwd = process.cwd();
+	const absolute = path.isAbsolute(outputDir)
+		? outputDir
+		: path.resolve(cwd, outputDir);
+
+	const relative = path.relative(cwd, absolute) || ".";
+	const posix = relative.split(path.sep).join("/");
+	return `${posix}/index.ts`;
+}
+
+function getDatasourceReadonlyPatterns(): string[] {
+	const datasources = config.datasources ?? [];
+	return datasources.map((datasource) =>
+		toReadonlyPattern(datasource.outputDir),
+	);
+}
+
+function readSettings(settingsPath: string): VSCodeSettings {
+	const content = fs.readFileSync(settingsPath, "utf-8");
+	return JSON.parse(content) as VSCodeSettings;
+}
+
 /**
  * Verifica se o workspace está configurado para bloquear a edição dos arquivos gerados
  * @returns Verdadeiro se os arquivos gerados estiverem protegidos contra escrita
@@ -19,17 +49,19 @@ export function isWorkspaceLocked(): boolean {
 			return false;
 		}
 
-		const settingsContent = fs.readFileSync(settingsPath, "utf-8");
-		const settings: VSCodeSettings = JSON.parse(settingsContent);
-
-		// Verifica se há configurações para tornar os arquivos gerados somente leitura
+		const settings = readSettings(settingsPath);
 		const readonlyInclude = settings["files.readonlyInclude"];
-		if (readonlyInclude && typeof readonlyInclude === "object") {
-			const generatedPattern = "src/generated/**";
-			return generatedPattern in readonlyInclude;
+		if (!readonlyInclude || typeof readonlyInclude !== "object") {
+			return false;
 		}
 
-		return false;
+		if (GENERATED_PATTERN in readonlyInclude) {
+			return true;
+		}
+
+		return getDatasourceReadonlyPatterns().some(
+			(pattern) => pattern in readonlyInclude,
+		);
 	} catch (error) {
 		console.warn(
 			"⚠️ Não foi possível verificar as configurações do workspace:",
@@ -48,41 +80,41 @@ function lockWorkspace(): void {
 		const vscodeDir = path.join(process.cwd(), ".vscode");
 		const settingsPath = path.join(vscodeDir, "settings.json");
 
-		// Cria o diretório .vscode se não existir
 		if (!fs.existsSync(vscodeDir)) {
 			fs.mkdirSync(vscodeDir, { recursive: true });
 		}
 
-		let settings: VSCodeSettings = {};
+		const settings: VSCodeSettings = fs.existsSync(settingsPath)
+			? readSettings(settingsPath)
+			: {};
 
-		// Lê as configurações existentes, se o arquivo existir
-		if (fs.existsSync(settingsPath)) {
-			const settingsContent = fs.readFileSync(settingsPath, "utf-8");
-			settings = JSON.parse(settingsContent);
-		}
+		const existing = settings["files.readonlyInclude"];
+		const readonlyInclude: Record<string, boolean> =
+			existing && typeof existing === "object"
+				? (existing as Record<string, boolean>)
+				: {};
 
-		// Garante que a configuração de readonlyInclude esteja presente
-		if (!settings["files.readonlyInclude"]) {
-			settings["files.readonlyInclude"] = {};
-		}
+		readonlyInclude[GENERATED_PATTERN] = true;
 
-		// Adiciona o padrão para os arquivos gerados
-		const readonlyInclude = settings["files.readonlyInclude"];
-		if (typeof readonlyInclude === "object" && readonlyInclude !== null) {
-			(readonlyInclude as Record<string, boolean>)["src/generated/**"] = true;
+		const outputDirs = new Set<string>([
+			config.outputDir,
+			...(config.datasources ?? []).map((datasource) => datasource.outputDir),
+		]);
 
-			// Adiciona também o arquivo principal se não estiver incluído
-			const mainOutputPattern = path
-				.join(config.outputDir, "index.ts")
-				.replace(/^\.\//, "**/");
-			if (!(mainOutputPattern in readonlyInclude)) {
-				(readonlyInclude as Record<string, boolean>)[mainOutputPattern] = true;
+		for (const outputDir of outputDirs) {
+			const pattern = toReadonlyPattern(outputDir);
+			if (!(pattern in readonlyInclude)) {
+				readonlyInclude[pattern] = true;
 			}
 		}
 
-		// Grava as configurações atualizadas
-		const updatedSettings = JSON.stringify(settings, null, "\t"); // Usando tabs como indentação
-		fs.writeFileSync(settingsPath, updatedSettings, "utf-8");
+		settings["files.readonlyInclude"] = readonlyInclude;
+
+		fs.writeFileSync(
+			settingsPath,
+			JSON.stringify(settings, null, "\t"),
+			"utf-8",
+		);
 
 		logVerbose(
 			"🔒 Workspace bloqueado: os arquivos gerados agora são somente leitura",

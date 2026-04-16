@@ -1,7 +1,6 @@
 import type { NocoBaseCredentials } from "./nocobase";
 
 export interface CliArgs {
-	dryRun: boolean;
 	write: boolean;
 	lockWorkspace?: boolean;
 	ixc?: boolean;
@@ -12,24 +11,14 @@ export interface ParsedArgs {
 	options: CliArgs;
 }
 
-export interface PersistResult {
-	mode: "write";
+export interface SingleFileResult {
+	resultType: "single";
 	outputPath: string;
 	changed: boolean;
 }
 
-export interface DryRunDiffResult {
-	mode: "dry-run";
-	outputPath: string;
-	changed: boolean;
-	diff: string;
-}
-
-/**
- * Resultado de escrita de múltiplos arquivos (write mode).
- */
-export interface MultiFilePersistResult {
-	mode: "write";
+export interface MultiFileResult {
+	resultType: "multi";
 	files: Array<{
 		outputPath: string;
 		changed: boolean;
@@ -38,34 +27,27 @@ export interface MultiFilePersistResult {
 	totalChanged: number;
 }
 
-/**
- * Resultado de dry-run de múltiplos arquivos.
- */
-export interface MultiFileDryRunResult {
-	mode: "dry-run";
-	files: Array<{
-		outputPath: string;
-		changed: boolean;
-		diff: string;
-	}>;
-	totalFiles: number;
-	totalChanged: number;
-}
-
-export type GenerateTypesResult =
-	| PersistResult
-	| DryRunDiffResult
-	| MultiFilePersistResult
-	| MultiFileDryRunResult;
+export type GenerateTypesResult = SingleFileResult | MultiFileResult;
 
 export interface BaseInterfaceNamingConfig {
 	prefix: string;
 	suffix: string;
 }
 
+export interface DatasourceGenerationConfig {
+	name: string;
+	datasource: string;
+	outputDir: string;
+	splitCollections: string[];
+	collections?: string[];
+	enableSampleFieldFallback?: boolean;
+	baseInterfaceNaming?: BaseInterfaceNamingConfig;
+}
+
 export interface ScriptConfig {
 	outputDir: string; // Diretório de saída (ex: "src/@types/generated") — split usa esta pasta; não-split usa <outputDir>/index.ts
 	splitCollections: string[]; // Collections que serão salvas em arquivos individuais
+	datasources?: DatasourceGenerationConfig[];
 	verbose: boolean;
 	defaultEnvPath: string;
 	requestTimeoutMs: number;
@@ -80,7 +62,6 @@ export interface ScriptConfig {
 export type EnvConfig = NocoBaseCredentials;
 
 export interface RuntimeConfig extends ScriptConfig, NocoBaseCredentials {
-	dryRun: boolean;
 	showHelp: boolean;
 	write: boolean;
 	lockWorkspace: boolean;

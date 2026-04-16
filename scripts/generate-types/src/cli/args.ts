@@ -5,7 +5,6 @@ import type {
 
 export function parseArgs(argv: string[]): ParsedArgs {
 	const options: CliArgs = {
-		dryRun: false,
 		write: false,
 		ixc: false,
 	};
@@ -21,11 +20,6 @@ export function parseArgs(argv: string[]): ParsedArgs {
 		}
 
 		if (arg === "--") {
-			continue;
-		}
-
-		if (arg === "--dry-run") {
-			options.dryRun = true;
 			continue;
 		}
 
