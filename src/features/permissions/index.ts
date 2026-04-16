@@ -9,10 +9,13 @@ export {
 	useIsAdmin,
 	useRoleNames,
 } from "./hooks";
-export type { NavItem } from "./nav-config";
+export type { NavIconName, NavItem, NavSection } from "./nav-config";
 export {
+	APP_NAV_SECTIONS,
 	filterNavByPermissions,
-	//  NAV_CONFIG
+	filterNavSectionsByPermissions,
+	getActiveNavSection,
+	isNavPathActive,
 } from "./nav-config";
 
 export {

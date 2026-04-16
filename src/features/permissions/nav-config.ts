@@ -1,9 +1,16 @@
 /**
  * Declarative navigation configuration with permission-based filtering.
  *
- * NAV_CONFIG is the source of truth for sidebar/main nav items.
+ * APP_NAV_SECTIONS is the source of truth for top-level and sidebar nav items.
  * filterNavByPermissions() prunes items the current user can't access.
  */
+
+type PermissionBoundNavEntry = {
+	requiresSnippet?: string;
+	requiresAction?: string;
+};
+
+export type NavIconName = "fileText" | "handshake" | "home" | "user" | "users";
 
 /**
  * A single navigation item in the app shell.
@@ -11,8 +18,8 @@
  */
 export interface NavItem {
 	label: string;
-	/** Icon name (e.g. "home", "settings"). Optional. */
-	icon?: string;
+	/** Icon name rendered by the app shell. Optional. */
+	icon?: NavIconName;
 	/** TanStack Router `to` path. */
 	to: string;
 	/** Snippet required to see this item. If omitted, item is always visible. */
@@ -24,10 +31,132 @@ export interface NavItem {
 }
 
 /**
- * Navigation configuration — EMPTY for now.
- * Populate when building the sidebar/layout component.
+ * A top-level app section rendered in the header.
+ * Each section owns the sidebar items rendered while it is active.
  */
-// export const NAV_CONFIG: NavItem[] = [];
+export interface NavSection extends PermissionBoundNavEntry {
+	label: string;
+	to: string;
+	/** Additional path prefixes used to mark the section as active. */
+	matches?: string[];
+	items: NavItem[];
+}
+
+export const APP_NAV_SECTIONS: NavSection[] = [
+	{
+		label: "Geral",
+		to: "/",
+		matches: ["/", "/profile"],
+		items: [
+			{
+				label: "Dashboard",
+				icon: "home",
+				to: "/",
+			},
+			{
+				label: "Perfil",
+				icon: "user",
+				to: "/profile",
+			},
+		],
+	},
+	{
+		label: "Customer Success",
+		to: "/cs/pessoas",
+		matches: ["/cs"],
+		items: [
+			{
+				label: "Pessoas",
+				icon: "users",
+				to: "/cs/pessoas",
+			},
+			{
+				label: "Negociações",
+				icon: "handshake",
+				to: "/cs/negociacoes",
+			},
+			{
+				label: "Contratos",
+				icon: "fileText",
+				to: "/cs/contratos",
+			},
+		],
+	},
+];
+
+function canAccessNavEntry(
+	item: PermissionBoundNavEntry,
+	actions: string[],
+	snippets: string[],
+): boolean {
+	// No permission requirement → always visible
+	if (!item.requiresSnippet && !item.requiresAction) return true;
+
+	// Check snippet requirement
+	if (item.requiresSnippet) {
+		// Denial prefix means user explicitly lacks this
+		if (item.requiresSnippet.startsWith("!")) return false;
+
+		// Wildcard: "ui" matches "ui.menu"
+		if (snippets.includes(item.requiresSnippet)) return true;
+		const withDot = `${item.requiresSnippet}.`;
+		if (snippets.some((s) => s.startsWith(withDot))) return true;
+
+		// Snippet not granted → hide
+		return false;
+	}
+
+	// Check action requirement
+	if (item.requiresAction) {
+		// Denial prefix
+		if (item.requiresAction.startsWith("!")) return false;
+
+		// Wildcard: "update" matches "update:own"
+		if (actions.includes(item.requiresAction)) return true;
+		const withColon = `${item.requiresAction}:`;
+		if (actions.some((a) => a.startsWith(withColon))) return true;
+
+		return false;
+	}
+
+	return true;
+}
+
+export function isNavPathActive(pathname: string, to: string): boolean {
+	if (to === "/") return pathname === "/";
+	return pathname === to || pathname.startsWith(`${to}/`);
+}
+
+export function filterNavSectionsByPermissions(
+	sections: NavSection[],
+	actions: string[],
+	snippets: string[],
+): NavSection[] {
+	return sections.flatMap((section) => {
+		if (!canAccessNavEntry(section, actions, snippets)) {
+			return [];
+		}
+
+		const items = filterNavByPermissions(section.items, actions, snippets);
+		if (items.length === 0) {
+			return [];
+		}
+
+		return [{ ...section, items }];
+	});
+}
+
+export function getActiveNavSection(
+	sections: NavSection[],
+	pathname: string,
+): NavSection | undefined {
+	return (
+		sections.find((section) => {
+			const matchers = section.matches?.length ? section.matches : [section.to];
+			return matchers.some((matcher) => isNavPathActive(pathname, matcher));
+		}) ?? sections[0]
+	);
+}
 
 /**
  * Recursively filter nav items by the user's granted snippets and actions.
@@ -45,39 +174,7 @@ export function filterNavByPermissions(
 	snippets: string[],
 ): NavItem[] {
 	return items
-		.filter((item) => {
-			// No permission requirement → always visible
-			if (!item.requiresSnippet && !item.requiresAction) return true;
-
-			// Check snippet requirement
-			if (item.requiresSnippet) {
-				// Denial prefix means user explicitly lacks this
-				if (item.requiresSnippet.startsWith("!")) return false;
-
-				// Wildcard: "ui" matches "ui.menu"
-				if (snippets.includes(item.requiresSnippet)) return true;
-				const withDot = `${item.requiresSnippet}.`;
-				if (snippets.some((s) => s.startsWith(withDot))) return true;
-
-				// Snippet not granted → hide
-				return false;
-			}
-
-			// Check action requirement
-			if (item.requiresAction) {
-				// Denial prefix
-				if (item.requiresAction.startsWith("!")) return false;
-
-				// Wildcard: "update" matches "update:own"
-				if (actions.includes(item.requiresAction)) return true;
-				const withColon = `${item.requiresAction}:`;
-				if (actions.some((a) => a.startsWith(withColon))) return true;
-
-				return false;
-			}
-
-			return true;
-		})
+		.filter((item) => canAccessNavEntry(item, actions, snippets))
 		.map((item) => ({
 			...item,
 			// Recursively filter children
