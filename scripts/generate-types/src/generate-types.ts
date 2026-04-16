@@ -1,9 +1,7 @@
-import { execFile } from "node:child_process";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type { CollectionTypesMap } from "./@types/generation";
 import type {
-	BaseInterfaceNamingConfig,
 	DatasourceGenerationConfig,
 	GenerateTypesResult,
 } from "./@types/script";
@@ -11,13 +9,16 @@ import { NocoBaseClient } from "./generation/client";
 import { buildCollectionTypes } from "./generation/collection-types";
 import { generateCollectionsFile } from "./generation/collections-index";
 import { generateContent, generateSplitFiles } from "./generation/content";
+import {
+	createBaseTypeIndex,
+	withMainFileImports,
+	withSplitFileImports,
+} from "./generation/import-injector";
+import { generateIndexFileWithReexports } from "./generation/split-index";
+import { runBiomeFix } from "./utils/biome-runner";
 import { splitCollectionsByConfig } from "./utils/collection-splitter";
 import { logInfo, logVerbose } from "./utils/logger";
-import {
-	resolveBaseInterfaceNamingConfig,
-	toCollectionBaseTypeName,
-	toFileName,
-} from "./utils/naming";
+import { resolveBaseInterfaceNamingConfig, toFileName } from "./utils/naming";
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 import {
 	cleanOutputDirectory,
@@ -26,35 +27,6 @@ import {
 	writeMultipleFiles,
 } from "./utils/writer";
 
-async function runBiomeFix(dirs: string[]): Promise<void> {
-	if (dirs.length === 0) return;
-
-	const biomeCmd = "biome";
-	const biomeArgs = ["check", "--write", ...dirs];
-
-	logInfo(`🔧 Rodando biome nos diretórios gerados: ${dirs.join(", ")}`);
-
-	return new Promise((resolve) => {
-		execFile(biomeCmd, biomeArgs, (error, stdout, stderr) => {
-			if (stdout) {
-				logVerbose(stdout);
-			}
-			if (stderr) {
-				logVerbose(stderr);
-			}
-			if (error) {
-				logInfo(
-					`⚠️  Biome retornou erro (pode ser apenas warnings): ${error.message}`,
-				);
-			} else {
-				logInfo(`✅ Biome aplicado com sucesso em ${dirs.length} diretório(s)`);
-			}
-			resolve();
-		});
-	});
-}
-
-const IDENTIFIER_REFERENCE_REGEX = /[$A-Z_a-z][$0-9A-Z_a-z]*/g;
 const MAIN_DATASOURCE_NAME = "main";
 
 interface GeneratedFileWrite {
@@ -64,164 +36,6 @@ interface GeneratedFileWrite {
 
 interface DatasourceFilesResult {
 	writeFiles: GeneratedFileWrite[];
-}
-
-function buildCollectionBaseTypeIndex(
-	collectionTypes: CollectionTypesMap,
-	baseInterfaceNaming: BaseInterfaceNamingConfig,
-): Map<string, string> {
-	const index = new Map<string, string>();
-
-	for (const collectionName of Object.keys(collectionTypes)) {
-		index.set(
-			toCollectionBaseTypeName(collectionName, baseInterfaceNaming),
-			collectionName,
-		);
-	}
-
-	return index;
-}
-
-function collectBaseTypeReferences(
-	content: string,
-	baseTypeIndex: ReadonlyMap<string, string>,
-): Set<string> {
-	const references = new Set<string>();
-
-	for (const match of content.matchAll(IDENTIFIER_REFERENCE_REGEX)) {
-		const [typeName] = match;
-		if (baseTypeIndex.has(typeName)) {
-			references.add(typeName);
-		}
-	}
-
-	return references;
-}
-
-function addImport(
-	importsBySource: Map<string, Set<string>>,
-	source: string,
-	typeName: string,
-) {
-	const existing = importsBySource.get(source);
-	if (existing) {
-		existing.add(typeName);
-		return;
-	}
-
-	importsBySource.set(source, new Set([typeName]));
-}
-
-function injectImports(
-	content: string,
-	importsBySource: Map<string, Set<string>>,
-): string {
-	if (importsBySource.size === 0) {
-		return content;
-	}
-
-	const importLines = [...importsBySource.entries()]
-		.sort(([a], [b]) => a.localeCompare(b))
-		.map(([source, typeNames]) => {
-			const sortedTypeNames = [...typeNames].sort((a, b) => a.localeCompare(b));
-			const singleLineImport = `import type { ${sortedTypeNames.join(", ")} } from "${source}";`;
-			if (singleLineImport.length <= 80) {
-				return singleLineImport;
-			}
-
-			return [
-				"import type {",
-				...sortedTypeNames.map((typeName) => `\t${typeName},`),
-				`} from "${source}";`,
-			].join("\n");
-		});
-
-	const importBlock = importLines.join("\n");
-	const headerEndIndex = content.indexOf("*/");
-
-	if (headerEndIndex === -1) {
-		return `${importBlock}\n\n${content}`;
-	}
-
-	const afterHeader = headerEndIndex + 2;
-	const body = content.slice(afterHeader).replace(/^\n+/, "\n");
-	return `${content.slice(0, afterHeader)}\n${importBlock}\n${body}`;
-}
-
-function withMainFileImports(
-	content: string,
-	mainCollections: CollectionTypesMap,
-	splitCollectionNames: ReadonlySet<string>,
-	baseTypeIndex: Map<string, string>,
-	baseInterfaceNaming: BaseInterfaceNamingConfig,
-): string {
-	const localBaseTypes = new Set(
-		Object.keys(mainCollections).map((collectionName) =>
-			toCollectionBaseTypeName(collectionName, baseInterfaceNaming),
-		),
-	);
-	const importsBySource = new Map<string, Set<string>>();
-
-	for (const typeName of collectBaseTypeReferences(content, baseTypeIndex)) {
-		if (localBaseTypes.has(typeName)) {
-			continue;
-		}
-
-		const sourceCollection = baseTypeIndex.get(typeName);
-		if (!sourceCollection || !splitCollectionNames.has(sourceCollection)) {
-			continue;
-		}
-
-		addImport(importsBySource, `./${toFileName(sourceCollection)}`, typeName);
-	}
-
-	return injectImports(content, importsBySource);
-}
-
-function withSplitFileImports(
-	filesContent: Map<string, string>,
-	splitCollections: Map<string, CollectionTypesMap>,
-	splitCollectionNames: ReadonlySet<string>,
-	baseTypeIndex: Map<string, string>,
-	baseInterfaceNaming: BaseInterfaceNamingConfig,
-): Map<string, string> {
-	const result = new Map<string, string>();
-
-	for (const [fileName, content] of filesContent) {
-		const fileCollections = splitCollections.get(fileName);
-		const localBaseTypes = new Set(
-			Object.keys(fileCollections ?? {}).map((collectionName) =>
-				toCollectionBaseTypeName(collectionName, baseInterfaceNaming),
-			),
-		);
-		const importsBySource = new Map<string, Set<string>>();
-
-		for (const typeName of collectBaseTypeReferences(content, baseTypeIndex)) {
-			if (localBaseTypes.has(typeName)) {
-				continue;
-			}
-
-			const sourceCollection = baseTypeIndex.get(typeName);
-			if (!sourceCollection) {
-				continue;
-			}
-
-			if (splitCollectionNames.has(sourceCollection)) {
-				addImport(
-					importsBySource,
-					`./${toFileName(sourceCollection)}`,
-					typeName,
-				);
-				continue;
-			}
-
-			addImport(importsBySource, "./index", typeName);
-		}
-
-		result.set(fileName, injectImports(content, importsBySource));
-	}
-
-	return result;
 }
 
 function normalizeCollectionNames(
@@ -236,58 +50,20 @@ function normalizeCollectionNames(
 		.filter((collectionName) => collectionName.length > 0);
 }
 
-function deriveExportedTypeName(
-	baseTypeName: string,
-	baseInterfaceNaming: BaseInterfaceNamingConfig,
-): string {
-	const { prefix, suffix } = baseInterfaceNaming;
-	let typeName = baseTypeName;
-	if (prefix && typeName.startsWith(prefix)) {
-		typeName = typeName.slice(prefix.length);
-	}
-	if (suffix && typeName.endsWith(suffix)) {
-		typeName = typeName.slice(0, -suffix.length);
-	}
-	return typeName;
-}
-
-function generateIndexFileWithReexports(
-	splitCollectionNames: readonly string[],
-	baseInterfaceNaming: BaseInterfaceNamingConfig,
-): string {
-	const header = `/**
- * Arquivo gerado automaticamente
- * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
- * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
- */
-`;
-
-	if (splitCollectionNames.length === 0) {
-		return header;
-	}
-
-	const exports: string[] = [];
-
-	for (const collectionName of splitCollectionNames) {
-		const baseTypeName = toCollectionBaseTypeName(
-			collectionName,
-			baseInterfaceNaming,
-		);
-		const typeName = deriveExportedTypeName(baseTypeName, baseInterfaceNaming);
-		const fileName = toFileName(collectionName);
-
-		exports.push(
-			`export type { ${typeName}, ${typeName}Relations, ${typeName}RelationKey } from "./${fileName}";`,
-		);
-	}
-
-	return `${[header, ...exports.sort()].join("\n")}\n`;
-}
-
 function resolveDatasourceConfigs(): DatasourceGenerationConfig[] {
 	return (config.datasources ?? []).filter(
 		(datasource) => datasource.outputDir.trim().length > 0,
 	);
+}
+
+function mergeCollectionTypeMaps(
+	collectionMaps: Iterable<CollectionTypesMap>,
+): CollectionTypesMap {
+	const merged: CollectionTypesMap = {};
+	for (const collectionMap of collectionMaps) {
+		Object.assign(merged, collectionMap);
+	}
+	return merged;
 }
 
 async function resolveCollectionsForDatasource(
@@ -353,7 +129,7 @@ async function runGenerateTypesForDatasource(
 		datasource.splitCollections,
 	);
 	const splitCollectionNamesSet = new Set(splitCollections.keys());
-	const baseTypeIndex = buildCollectionBaseTypeIndex(
+	const baseTypeIndex = createBaseTypeIndex(
 		collectionTypes,
 		baseInterfaceNaming,
 	);
@@ -416,7 +192,7 @@ async function runGenerateTypesForDatasource(
 	}
 
 	const collectionsContent = generateCollectionsFile(
-		Object.fromEntries(splitCollections) as unknown as CollectionTypesMap,
+		mergeCollectionTypeMaps(splitCollections.values()),
 		baseInterfaceNaming,
 		[...splitCollections.keys()],
 	);
