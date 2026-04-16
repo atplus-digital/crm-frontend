@@ -57,6 +57,7 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 <!-- AGENTS-GENERATED:START scope-index -->
 
 - `./src/components/AGENTS.md` — Shared UI building blocks and app-level reusable components
+- `./src/features/AGENTS.md` — Cross-feature conventions and folder structure for domain modules
 - `./src/features/auth/AGENTS.md` — Authentication module
 - `./src/features/cs/AGENTS.md` — Customer Success domain (contratos, negociações, pessoas)
 - `./src/features/custom-requests/AGENTS.md` — Custom request registry/services/hooks
