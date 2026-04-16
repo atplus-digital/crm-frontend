@@ -114,9 +114,6 @@ importers:
       dotenv:
         specifier: ^17.4.1
         version: 17.4.1
-      expect-type:
-        specifier: ^1.3.0
-        version: 1.3.0
       husky:
         specifier: ^9.1.7
         version: 9.1.7
