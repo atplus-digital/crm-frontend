@@ -1,16 +1,5 @@
 import type { NocoBaseCredentials } from "./nocobase";
 
-export interface CliArgs {
-	write: boolean;
-	lockWorkspace?: boolean;
-	datasources: string[];
-}
-
-export interface ParsedArgs {
-	showHelp: boolean;
-	options: CliArgs;
-}
-
 export interface SingleFileResult {
 	resultType: "single";
 	outputPath: string;
@@ -84,9 +73,4 @@ export interface ScriptConfig {
 
 export type EnvConfig = NocoBaseCredentials;
 
-export interface RuntimeConfig extends ScriptConfig, NocoBaseCredentials {
-	showHelp: boolean;
-	write: boolean;
-	lockWorkspace: boolean;
-	selectedDatasources: string[];
-}
+export interface RuntimeConfig extends ScriptConfig, NocoBaseCredentials {}

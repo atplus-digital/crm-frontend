@@ -63,10 +63,6 @@ const mockScriptConfig = {
 
 const mockRuntimeConfig: RuntimeConfig = {
 	...mockScriptConfig,
-	showHelp: false,
-	write: false,
-	lockWorkspace: false,
-	selectedDatasources: [],
 	baseUrl: "https://example.com/api",
 	token: "fake-token",
 	timeoutMs: 30_000,
@@ -76,10 +72,6 @@ const mockRuntimeConfig: RuntimeConfig = {
 function createMockRuntimeConfig(): RuntimeConfig {
 	return {
 		...mockScriptConfig,
-		showHelp: false,
-		write: false,
-		lockWorkspace: false,
-		selectedDatasources: [],
 		baseUrl: "https://example.com/api",
 		token: "fake-token",
 		timeoutMs: 30_000,

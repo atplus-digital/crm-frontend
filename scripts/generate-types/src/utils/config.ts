@@ -1,5 +1,4 @@
 import type { RuntimeConfig, ScriptConfig } from "../@types/script";
-import { parseArgs } from "../cli/args";
 import { resolveEnvConfig } from "./load-config";
 
 const defaultConfig: ScriptConfig = {
@@ -107,46 +106,11 @@ export function parseConfig(
 
 	validateMergedConfig(mergedConfig);
 
-	const parsedArgs = parseArgs(process.argv.slice(2));
-	const selectedDatasources = [...new Set(parsedArgs.options.datasources)];
-	if (selectedDatasources.length > 0) {
-		const availableDatasources = new Set(
-			(mergedConfig.datasources ?? []).flatMap((datasource) => [
-				datasource.name,
-				datasource.datasource,
-			]),
-		);
-
-		const unknownDatasources = selectedDatasources.filter(
-			(datasourceName) => !availableDatasources.has(datasourceName),
-		);
-
-		if (unknownDatasources.length > 0) {
-			throw new Error(
-				`Datasource(s) desconhecido(s): ${unknownDatasources.join(", ")}`,
-			);
-		}
-	}
-
-	let cachedEnvConfig: Awaited<ReturnType<typeof resolveEnvConfig>> | undefined;
-
-	function getEnvConfig() {
-		if (!cachedEnvConfig) {
-			cachedEnvConfig = resolveEnvConfig(mergedConfig);
-		}
-
-		return cachedEnvConfig;
-	}
+	const envConfig = resolveEnvConfig(mergedConfig);
 
 	const config: RuntimeConfig = {
 		...mergedConfig,
-		write: parsedArgs.options.write,
-		showHelp: parsedArgs.showHelp,
-		lockWorkspace: Boolean(
-			parsedArgs.options.lockWorkspace || mergedConfig.lockWorkspaceFolder,
-		),
-		selectedDatasources,
-		...getEnvConfig(),
+		...envConfig,
 	};
 
 	return config;

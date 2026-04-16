@@ -411,24 +411,6 @@ async function runGenerateTypesForDatasource(
 			}
 		}
 
-		if (!config.write) {
-			const readline = await import("node:readline");
-			const rl = readline.createInterface({
-				input: process.stdin,
-				output: process.stdout,
-			});
-
-			const answer = await new Promise<string>((resolve) => {
-				rl.question("\n❓ Deseja remover estes arquivos? (s/N): ", resolve);
-			});
-			rl.close();
-
-			if (answer.toLowerCase() !== "s") {
-				logInfo("Operação cancelada pelo usuário.");
-				process.exit(0);
-			}
-		}
-
 		const removed = cleanOutputDirectory(unusedFiles);
 		logInfo(`🗑️  Removidos ${removed.length} arquivo(s) não utilizado(s).`);
 	}
@@ -472,20 +454,8 @@ async function runGenerateTypesForDatasource(
 	};
 }
 
-export async function runGenerateTypesForDatasources(
-	onlyDatasourceNames?: readonly string[],
-): Promise<GenerateTypesResult> {
-	const onlyDatasourceSet = new Set(onlyDatasourceNames ?? []);
-	const datasourceConfigs = resolveDatasourceConfigs().filter((datasource) => {
-		if (onlyDatasourceSet.size === 0) {
-			return true;
-		}
-
-		return (
-			onlyDatasourceSet.has(datasource.datasource) ||
-			onlyDatasourceSet.has(datasource.name)
-		);
-	});
+export async function runGenerateTypesForDatasources(): Promise<GenerateTypesResult> {
+	const datasourceConfigs = resolveDatasourceConfigs();
 
 	if (datasourceConfigs.length === 0) {
 		throw new Error(

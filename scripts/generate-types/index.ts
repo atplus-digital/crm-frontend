@@ -1,9 +1,9 @@
 import "./config";
-import { runCli } from "./src/cli/main";
+import { runGenerateTypes } from "./src/generate-types";
 
 export { config } from "./config";
 
-runCli().catch((error) => {
+runGenerateTypes().catch((error) => {
 	console.error("Erro fatal:", error);
 	process.exit(1);
 });

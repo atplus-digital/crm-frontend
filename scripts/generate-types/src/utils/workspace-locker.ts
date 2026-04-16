@@ -128,7 +128,7 @@ function lockWorkspace(): void {
  * Aplica o bloqueio de workspace se a configuração estiver ativada
  */
 export function applyWorkspaceLockIfNeeded(): void {
-	if (config.lockWorkspace && !isWorkspaceLocked()) {
+	if (config.lockWorkspaceFolder && !isWorkspaceLocked()) {
 		lockWorkspace();
 	}
 }
