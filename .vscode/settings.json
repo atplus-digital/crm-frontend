@@ -9,6 +9,7 @@
 		"**/.husky/**": true,
 		"**/routeTree.gen.ts": true,
 		".husky/**": true,
+		// Inserted by script
 		"src/generated/**": true,
 		"generated/index.ts": true,
 		"src/generated/nocobase/index.ts": true,
@@ -18,7 +19,7 @@
 		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[javascriptreact]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[typescript]": {
 		"editor.defaultFormatter": "biomejs.biome"
@@ -30,7 +31,7 @@
 		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[jsonc]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[css]": {
 		"editor.defaultFormatter": "biomejs.biome"
