@@ -88,6 +88,89 @@ export interface ContratoListParams {
 	filters?: ContratoFilters;
 }
 
+export interface LinhaMovel {
+	id: number;
+	id_contrato: number;
+	ddd_telefone: string;
+	numero_telefone: string;
+	dia_recorrencia: number;
+	portabilidade: string;
+	simcard: string;
+}
+
+export interface TrocaTitularidade {
+	id: number;
+	id_contrato: number;
+	cedente: string;
+	documento_cedente: string;
+	cessionario: string;
+	documento_cessionario: string;
+	status: string;
+}
+
+export interface Renegociacao {
+	id: number;
+	f_titulo?: string;
+	f_valor_mensal?: number;
+	f_data_criacao?: string;
+	f_vendedor?: {
+		id: number;
+		nickname: string;
+	};
+	f_status: string;
+	id_contrato?: number;
+}
+
+export interface ContratoAssociado {
+	id: number;
+	endereco: string;
+	numero: string;
+	data_criacao: string;
+	id_contrato: number;
+	status_negociacao: string;
+	motivo_negociacao: string;
+	valor_mensal: number;
+}
+
+export interface AtendimentoIXC {
+	id: number;
+	id_contrato: number;
+	status: string;
+	assunto: string;
+	descricao: string;
+	data_criacao: string;
+	data_ultima_alteracao: string;
+}
+
+export interface RegistroContato {
+	id: number;
+	id_contrato: number;
+	categoria: string;
+	motivo_contato: string;
+	nota_vendas: string;
+	nota_tecnico: string;
+	pendencia: string;
+	data_criacao: string;
+	criado_por: string;
+}
+
+export interface ProdutoContrato {
+	id: number;
+	id_contrato: number;
+	descricao: string;
+	valor_unit: number;
+	qtde: number;
+}
+
+export interface Fatura {
+	id: number;
+	id_contrato: number;
+	status: string;
+	valor: number;
+	data_vencimento: string;
+	data_pagamento: string | null;
+}
+
 // ---------------------------------------------------------------------------
 // Shared types
 // ---------------------------------------------------------------------------

@@ -20,6 +20,10 @@ import {
 import { Separator } from "#/components/ui/separator";
 import { Skeleton } from "#/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
+import { ContratoAtendimentosTab } from "#/features/cs/components/contrato-atendimentos-tab";
+import { ContratoMovelTab } from "#/features/cs/components/contrato-movel-tab";
+import { ContratoNegociacoesTab } from "#/features/cs/components/contrato-negociacoes-tab";
+import { ContratoRegistrosTab } from "#/features/cs/components/contrato-registros-tab";
 import {
 	ContratoStatusBadge,
 	InternetStatusBadge,
@@ -69,7 +73,7 @@ function DetailSkeleton() {
 						<Skeleton className="h-5 w-48" />
 					</CardHeader>
 					<CardContent>
-						<div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+						<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 							{fieldKeys.map((fieldKey) => (
 								<div
 									key={`${sectionKey}-${fieldKey}`}
@@ -135,28 +139,30 @@ export function ContratoDetailPage() {
 
 				{/* Tabs */}
 				<Tabs defaultValue="detalhes">
-					<TabsList variant="line">
-						<TabsTrigger value="detalhes">
-							<Database className="size-4" />
-							Detalhes
-						</TabsTrigger>
-						<TabsTrigger value="movel">
-							<Phone className="size-4" />
-							Móvel
-						</TabsTrigger>
-						<TabsTrigger value="negociacoes">
-							<FolderOpen className="size-4" />
-							Negociações
-						</TabsTrigger>
-						<TabsTrigger value="atendimentos">
-							<Smartphone className="size-4" />
-							Atendimentos IXC
-						</TabsTrigger>
-						<TabsTrigger value="registros">
-							<FilePlus className="size-4" />
-							Registros
-						</TabsTrigger>
-					</TabsList>
+					<div className="overflow-x-auto pb-2">
+						<TabsList variant="line" className="flex whitespace-nowrap">
+							<TabsTrigger value="detalhes">
+								<Database className="size-4" />
+								Detalhes
+							</TabsTrigger>
+							<TabsTrigger value="movel">
+								<Phone className="size-4" />
+								Móvel
+							</TabsTrigger>
+							<TabsTrigger value="negociacoes">
+								<FolderOpen className="size-4" />
+								Negociações
+							</TabsTrigger>
+							<TabsTrigger value="atendimentos">
+								<Smartphone className="size-4" />
+								Atendimentos IXC
+							</TabsTrigger>
+							<TabsTrigger value="registros">
+								<FilePlus className="size-4" />
+								Registros
+							</TabsTrigger>
+						</TabsList>
+					</div>
 
 					{/* Tab: Detalhes */}
 					<TabsContent value="detalhes" className="mt-6">
@@ -170,7 +176,7 @@ export function ContratoDetailPage() {
 										<CardTitle>Dados do Cliente</CardTitle>
 									</CardHeader>
 									<CardContent>
-										<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
 											<DetailField label="Nome/Razão Social">
 												{contrato.f_nc_cliente?.razao ?? "—"}
 											</DetailField>
@@ -195,7 +201,7 @@ export function ContratoDetailPage() {
 										<CardTitle>Dados do Contrato</CardTitle>
 									</CardHeader>
 									<CardContent>
-										<div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 											<DetailField label="ID Contrato IXC">
 												{contrato.id}
 											</DetailField>
@@ -239,7 +245,7 @@ export function ContratoDetailPage() {
 												<h4 className="text-sm font-semibold mb-3">
 													Endereço do Contrato
 												</h4>
-												<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+												<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
 													<DetailField label="Endereço">
 														{contrato.endereco ?? "—"}
 													</DetailField>
@@ -313,147 +319,22 @@ export function ContratoDetailPage() {
 
 					{/* Tab: Móvel */}
 					<TabsContent value="movel" className="mt-6">
-						<Card>
-							<CardHeader>
-								<CardTitle>Móvel</CardTitle>
-								<CardDescription>
-									Linhas móveis que este contrato possuí
-								</CardDescription>
-							</CardHeader>
-							<CardContent>
-								<EmptyTable
-									columns={[
-										"DDD",
-										"Número",
-										"ID Contrato",
-										"Dia Recorrência",
-										"Portabilidade",
-										"SIMCARD",
-									]}
-									message="Nenhuma linha móvel encontrada"
-								/>
-							</CardContent>
-						</Card>
+						<ContratoMovelTab contratoId={contratoId} />
 					</TabsContent>
 
 					{/* Tab: Negociações */}
 					<TabsContent value="negociacoes" className="mt-6">
-						<div className="flex flex-col gap-6">
-							<Card>
-								<CardHeader>
-									<CardTitle>Troca de Titularidade</CardTitle>
-									<CardDescription>
-										Trocas de titularidade para este contrato
-									</CardDescription>
-								</CardHeader>
-								<CardContent>
-									<EmptyTable
-										columns={[
-											"Cedente",
-											"Documento Cedente",
-											"Cessionário",
-											"Documento Cessionário",
-											"Status",
-											"Contrato",
-										]}
-									/>
-								</CardContent>
-							</Card>
-
-							<Card>
-								<CardHeader>
-									<CardTitle>Renovações</CardTitle>
-									<CardDescription>
-										Renovações para este contrato
-									</CardDescription>
-								</CardHeader>
-								<CardContent>
-									<EmptyTable
-										columns={[
-											"Título",
-											"Valor Mensal",
-											"Criado em",
-											"Vendedor",
-											"Status",
-											"Contrato",
-											"Itens Negociação",
-										]}
-									/>
-								</CardContent>
-							</Card>
-
-							<Card>
-								<CardHeader>
-									<CardTitle>Contratos</CardTitle>
-									<CardDescription>
-										Contratos associados a esse cliente
-									</CardDescription>
-								</CardHeader>
-								<CardContent>
-									<EmptyTable
-										columns={[
-											"ID",
-											"Endereço",
-											"Numero",
-											"Criado em",
-											"Contrato",
-											"Status Negociação",
-											"Motivo da Negociação",
-											"Valor Mensal",
-											"Itens Negociação",
-										]}
-									/>
-								</CardContent>
-							</Card>
-						</div>
+						<ContratoNegociacoesTab contratoId={contratoId} />
 					</TabsContent>
 
 					{/* Tab: Atendimentos IXC */}
 					<TabsContent value="atendimentos" className="mt-6">
-						<Card>
-							<CardHeader>
-								<CardTitle>Atendimentos</CardTitle>
-								<CardDescription>
-									Atendimentos associados a esse contrato
-								</CardDescription>
-							</CardHeader>
-							<CardContent>
-								<EmptyTable
-									columns={[
-										"ID",
-										"Status",
-										"Assunto",
-										"Descrição Atendimento",
-										"Criado em",
-										"Última Alteração",
-									]}
-									message="Nenhum atendimento encontrado"
-								/>
-							</CardContent>
-						</Card>
+						<ContratoAtendimentosTab contratoId={contratoId} />
 					</TabsContent>
 
 					{/* Tab: Registros */}
 					<TabsContent value="registros" className="mt-6">
-						<Card>
-							<CardHeader>
-								<CardTitle>Registros de Contato</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<EmptyTable
-									columns={[
-										"Categoria",
-										"Motivo do Contato",
-										"Nota Vendas",
-										"Nota Técnico",
-										"Há Pendência?",
-										"Criado em",
-										"Criado por",
-									]}
-									message="Nenhum registro encontrado"
-								/>
-							</CardContent>
-						</Card>
+						<ContratoRegistrosTab contratoId={contratoId} />
 					</TabsContent>
 				</Tabs>
 			</div>

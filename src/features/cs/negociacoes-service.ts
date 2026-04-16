@@ -59,6 +59,10 @@ function buildNegociacaoFilter(
 		conditions.push(lte("createdAt", filters.criadoEmFim));
 	}
 
+	if (filters.contratoId) {
+		conditions.push(eq("f_contrato_ixc", filters.contratoId));
+	}
+
 	return buildFilter(conditions);
 }
 
@@ -99,7 +103,16 @@ export async function fetchNegociacaoById(
 export async function createNegociacao(
 	data: Partial<Negociacao>,
 ): Promise<Negociacao> {
-	const result = await nocobaseRepository.create("t_negociacoes", data);
+	const { f_contrato_ixc, ...rest } = data;
+	const payload: Partial<
+		import("#/generated/nocobase/negociacoes").Negociacoes
+	> = {
+		...rest,
+		...(f_contrato_ixc != null && {
+			f_contrato_ixc: String(f_contrato_ixc),
+		}),
+	};
+	const result = await nocobaseRepository.create("t_negociacoes", payload);
 	return result as unknown as Negociacao;
 }
 
@@ -107,7 +120,16 @@ export async function updateNegociacao(
 	id: number,
 	data: Partial<Negociacao>,
 ): Promise<Negociacao> {
-	const result = await nocobaseRepository.update("t_negociacoes", id, data);
+	const { f_contrato_ixc, ...rest } = data;
+	const payload: Partial<
+		import("#/generated/nocobase/negociacoes").Negociacoes
+	> = {
+		...rest,
+		...(f_contrato_ixc != null && {
+			f_contrato_ixc: String(f_contrato_ixc),
+		}),
+	};
+	const result = await nocobaseRepository.update("t_negociacoes", id, payload);
 	return result as unknown as Negociacao;
 }
 

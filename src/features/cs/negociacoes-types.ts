@@ -66,6 +66,7 @@ export interface Negociacao {
 	f_negociacao_pessoa_juridica?: NegociacaoPessoaJuridica | null;
 	f_data_criacao?: string;
 	f_data_atualizacao?: string;
+	f_contrato_ixc?: number | null;
 }
 
 // Negociação com todos os relacionamentos
@@ -95,6 +96,7 @@ export interface NegociacaoFilters {
 	pacote?: string;
 	criadoEmInicio?: string;
 	criadoEmFim?: string;
+	contratoId?: number;
 }
 
 export interface NegociacaoListParams {
