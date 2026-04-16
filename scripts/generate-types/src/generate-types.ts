@@ -2,7 +2,7 @@ import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type { CollectionTypesMap } from "./@types/generation";
 import type {
-	DatasourceGenerationConfig,
+	DataSourceGenerationConfig,
 	GenerateTypesResult,
 } from "./@types/script";
 import { NocoBaseClient } from "./generation/client";
@@ -34,11 +34,11 @@ interface GeneratedFileWrite {
 	changed: boolean;
 }
 
-interface DatasourceFilesResult {
+interface DataSourceFilesResult {
 	writeFiles: GeneratedFileWrite[];
 }
 
-function normalizeCollectionNames(
+export function normalizeCollectionNames(
 	collectionNames: string[] | undefined,
 ): string[] {
 	if (!collectionNames) {
@@ -50,13 +50,13 @@ function normalizeCollectionNames(
 		.filter((collectionName) => collectionName.length > 0);
 }
 
-function resolveDatasourceConfigs(): DatasourceGenerationConfig[] {
+export function resolveDataSourceConfigs(): DataSourceGenerationConfig[] {
 	return (config.datasources ?? []).filter(
 		(datasource) => datasource.outputDir.trim().length > 0,
 	);
 }
 
-function mergeCollectionTypeMaps(
+export function mergeCollectionTypeMaps(
 	collectionMaps: Iterable<CollectionTypesMap>,
 ): CollectionTypesMap {
 	const merged: CollectionTypesMap = {};
@@ -66,30 +66,30 @@ function mergeCollectionTypeMaps(
 	return merged;
 }
 
-async function resolveCollectionsForDatasource(
+async function resolveCollectionsForDataSource(
 	client: NocoBaseClient,
-	datasource: DatasourceGenerationConfig,
+	dataSource: DataSourceGenerationConfig,
 ): Promise<Array<{ name: string }>> {
 	const configuredCollectionNames = normalizeCollectionNames(
-		datasource.collections,
+		dataSource.collections,
 	);
 
 	if (configuredCollectionNames.length > 0) {
 		return configuredCollectionNames.map((name) => ({ name }));
 	}
 
-	if (datasource.datasource !== MAIN_DATASOURCE_NAME) {
+	if (dataSource.dataSource !== MAIN_DATASOURCE_NAME) {
 		throw new Error(
-			`Datasource '${datasource.name}' (${datasource.datasource}) exige collections explícitas em scripts/generate-types/datasources.config.ts`,
+			`DataSource '${dataSource.name}' (${dataSource.dataSource}) exige collections explícitas em scripts/generate-types/datasources.config.ts`,
 		);
 	}
 
 	return client.fetchCollections();
 }
 
-async function runGenerateTypesForDatasource(
-	datasource: DatasourceGenerationConfig,
-): Promise<DatasourceFilesResult> {
+async function runGenerateTypesForDataSource(
+	dataSource: DataSourceGenerationConfig,
+): Promise<DataSourceFilesResult> {
 	const client = new NocoBaseClient(
 		{
 			baseUrl: config.baseUrl,
@@ -98,24 +98,24 @@ async function runGenerateTypesForDatasource(
 		},
 		{
 			requestHeaders: {
-				"X-Data-Source": datasource.datasource,
+				"X-Data-Source": dataSource.dataSource,
 			},
-			enableSampleFieldFallback: datasource.enableSampleFieldFallback,
+			enableSampleFieldFallback: dataSource.enableSampleFieldFallback,
 		},
 	);
 	const baseInterfaceNaming = resolveBaseInterfaceNamingConfig(
-		datasource.baseInterfaceNaming ?? config.baseInterfaceNaming,
+		dataSource.baseInterfaceNaming ?? config.baseInterfaceNaming,
 	);
 
 	logInfo(
-		`🔧 Gerando tipos para datasource '${datasource.datasource}' em ${datasource.outputDir}`,
+		`🔧 Gerando tipos para datasource '${dataSource.dataSource}' em ${dataSource.outputDir}`,
 	);
 	logVerbose(`📡 Conectando a: ${client.baseUrl}`);
 
-	const collections = await resolveCollectionsForDatasource(client, datasource);
+	const collections = await resolveCollectionsForDataSource(client, dataSource);
 
 	logVerbose(
-		`📋 Encontradas ${collections.length} collections para ${datasource.datasource}`,
+		`📋 Encontradas ${collections.length} collections para ${dataSource.dataSource}`,
 	);
 
 	const collectionTypes = await buildCollectionTypes(client, collections, {
@@ -126,7 +126,7 @@ async function runGenerateTypesForDatasource(
 
 	const { mainCollections, splitCollections } = splitCollectionsByConfig(
 		collectionTypes,
-		datasource.splitCollections,
+		dataSource.splitCollections,
 	);
 	const splitCollectionNamesSet = new Set(splitCollections.keys());
 	const baseTypeIndex = createBaseTypeIndex(
@@ -143,8 +143,8 @@ async function runGenerateTypesForDatasource(
 		baseInterfaceNaming,
 	);
 	const mainOutputPath = hasMainCollections
-		? path.join(datasource.outputDir, "index.ts")
-		: path.join(datasource.outputDir, "_main.ts");
+		? path.join(dataSource.outputDir, "index.ts")
+		: path.join(dataSource.outputDir, "_main.ts");
 
 	if (splitCollections.size === 0) {
 		const mainWrite = writeGeneratedFile(mainContent, mainOutputPath);
@@ -164,22 +164,22 @@ async function runGenerateTypesForDatasource(
 	);
 
 	const generatedFilePaths = [
-		path.resolve(process.cwd(), datasource.outputDir, "index.ts"),
-		path.resolve(process.cwd(), datasource.outputDir, "collections.ts"),
+		path.resolve(process.cwd(), dataSource.outputDir, "index.ts"),
+		path.resolve(process.cwd(), dataSource.outputDir, "collections.ts"),
 		...[...splitFilesContent.keys()].map((collectionName) =>
 			path.resolve(
 				process.cwd(),
-				datasource.outputDir,
+				dataSource.outputDir,
 				`${toFileName(collectionName)}.ts`,
 			),
 		),
 	];
 
-	const unusedFiles = getUnusedFiles(generatedFilePaths, datasource.outputDir);
+	const unusedFiles = getUnusedFiles(generatedFilePaths, dataSource.outputDir);
 
 	if (unusedFiles.length > 0) {
 		logInfo(
-			`\n⚠️  Encontrados ${unusedFiles.length} arquivo(s) não utilizado(s) em ${datasource.outputDir}/:`,
+			`\n⚠️  Encontrados ${unusedFiles.length} arquivo(s) não utilizado(s) em ${dataSource.outputDir}/:`,
 		);
 		if (config.verbose) {
 			for (const file of unusedFiles) {
@@ -204,18 +204,18 @@ async function runGenerateTypesForDatasource(
 
 	const collectionsResult = writeGeneratedFile(
 		collectionsContent,
-		path.join(datasource.outputDir, "collections.ts"),
+		path.join(dataSource.outputDir, "collections.ts"),
 	);
 	// hasMainCollections → inline types go to index.ts (same as main flow)
 	// !hasMainCollections → re-exports go to index.ts, no _main.ts generated
 	const primaryIndexContent = hasMainCollections ? mainContent : indexContent;
 	const indexResult = writeGeneratedFile(
 		primaryIndexContent,
-		path.join(datasource.outputDir, "index.ts"),
+		path.join(dataSource.outputDir, "index.ts"),
 	);
 	const splitResult = writeMultipleFiles(
 		splitFilesContent,
-		datasource.outputDir,
+		dataSource.outputDir,
 	);
 
 	return {
@@ -230,10 +230,10 @@ async function runGenerateTypesForDatasource(
 	};
 }
 
-export async function runGenerateTypesForDatasources(): Promise<GenerateTypesResult> {
-	const datasourceConfigs = resolveDatasourceConfigs();
+export async function runGenerateTypesForDataSources(): Promise<GenerateTypesResult> {
+	const dataSourceConfigs = resolveDataSourceConfigs();
 
-	if (datasourceConfigs.length === 0) {
+	if (dataSourceConfigs.length === 0) {
 		throw new Error(
 			"Nenhum datasource configurado para geração de tipos. Verifique datasources.config.ts.",
 		);
@@ -243,12 +243,12 @@ export async function runGenerateTypesForDatasources(): Promise<GenerateTypesRes
 
 	const writeFiles: GeneratedFileWrite[] = [];
 
-	for (const datasource of datasourceConfigs) {
-		const result = await runGenerateTypesForDatasource(datasource);
+	for (const dataSource of dataSourceConfigs) {
+		const result = await runGenerateTypesForDataSource(dataSource);
 		writeFiles.push(...result.writeFiles);
 	}
 
-	const outputDirs = datasourceConfigs.map((d) => d.outputDir);
+	const outputDirs = dataSourceConfigs.map((d) => d.outputDir);
 	await runBiomeFix(outputDirs);
 
 	if (writeFiles.length === 1) {
@@ -268,5 +268,5 @@ export async function runGenerateTypesForDatasources(): Promise<GenerateTypesRes
 }
 
 export async function runGenerateTypes(): Promise<GenerateTypesResult> {
-	return runGenerateTypesForDatasources();
+	return runGenerateTypesForDataSources();
 }

@@ -7,7 +7,7 @@ const defaultConfig: ScriptConfig = {
 	datasources: [
 		{
 			name: "nocobase",
-			datasource: "main",
+			dataSource: "main",
 			outputDir: "./generated",
 			splitCollections: [],
 		},
@@ -62,29 +62,29 @@ function validateMergedConfig(mergedConfig: Partial<ScriptConfig>): void {
 		errors.push("datasources deve conter ao menos um datasource configurado");
 	}
 
-	for (const datasource of mergedConfig.datasources ?? []) {
-		if (datasource.name.trim() === "") {
-			errors.push("datasource.name não pode ser vazio");
+	for (const dataSource of mergedConfig.datasources ?? []) {
+		if (dataSource.name.trim() === "") {
+			errors.push("dataSource.name não pode ser vazio");
 		}
 
-		if (datasource.datasource.trim() === "") {
+		if (dataSource.dataSource.trim() === "") {
 			errors.push(
-				`datasource '${datasource.name}' deve definir a chave do datasource`,
+				`dataSource '${dataSource.name}' deve definir a chave do dataSource`,
 			);
 		}
 
-		if (datasource.outputDir.trim() === "") {
+		if (dataSource.outputDir.trim() === "") {
 			errors.push(
-				`datasource '${datasource.name}' deve definir outputDir não vazio`,
+				`dataSource '${dataSource.name}' deve definir outputDir não vazio`,
 			);
 		}
 
 		if (
-			datasource.datasource !== "main" &&
-			(!datasource.collections || datasource.collections.length === 0)
+			dataSource.dataSource !== "main" &&
+			(!dataSource.collections || dataSource.collections.length === 0)
 		) {
 			errors.push(
-				`datasource '${datasource.name}' (${datasource.datasource}) deve definir collections explicitamente`,
+				`dataSource '${dataSource.name}' (${dataSource.dataSource}) deve definir collections explicitamente`,
 			);
 		}
 	}

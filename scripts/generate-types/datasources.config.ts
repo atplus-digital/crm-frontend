@@ -1,19 +1,19 @@
 import {
-	type DatasourceGenerationConfig,
-	defineDatasource,
+	type DataSourceGenerationConfig,
+	defineDataSource,
 } from "./src/@types/script";
 
-export const datasourceConfigs: DatasourceGenerationConfig[] = [
-	defineDatasource({
+export const dataSourceConfigs: DataSourceGenerationConfig[] = [
+	defineDataSource({
 		name: "nocobase",
-		datasource: "main",
+		dataSource: "main",
 		outputDir: "src/generated/nocobase",
 		splitCollections: ["users", "t_negociacoes", "t_empresas", "t_pessoas"],
 		baseInterfaceNaming: { prefix: "", suffix: "" },
 	}),
-	defineDatasource({
+	defineDataSource({
 		name: "ixc",
-		datasource: "d_db_ixcsoft",
+		dataSource: "d_db_ixcsoft",
 		outputDir: "src/generated/ixc",
 		collections: ["cliente_contrato"],
 		splitCollections: ["cliente_contrato"],

@@ -1,15 +1,6 @@
 import { nocobaseClient } from "#/features/auth/client";
-import type { ClienteContrato } from "#/generated/ixc";
 import { createLogger } from "#/lib/logger";
 import type { ApiRequestConfig, ListParams, PaginatedResponse } from "./types";
-
-/**
- * Tipo que representa um contrato com o cliente carregado via appends.
- * Usado para operações que retornam contratos com dados relacionados.
- */
-export type ContratoWithCliente = ClienteContrato & {
-	f_nc_cliente?: Record<string, unknown> | null;
-};
 
 const log = createLogger("repositories:ixc");
 

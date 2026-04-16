@@ -5,7 +5,7 @@ import type {
 } from "@scripts/generate-types/src/@types/generation";
 import type { NocoBaseField } from "@scripts/generate-types/src/@types/nocobase";
 import {
-	defineDatasource,
+	defineDataSource,
 	type RuntimeConfig,
 } from "@scripts/generate-types/src/@types/script";
 import { beforeEach, vi } from "vitest";
@@ -33,9 +33,9 @@ const mockScriptConfig = {
 		suffix: "Base",
 	},
 	datasources: [
-		defineDatasource({
+		defineDataSource({
 			name: "nocobase",
-			datasource: "main",
+			dataSource: "main",
 			outputDir: "/tmp/test-generated",
 			splitCollections: [
 				"users",
@@ -50,9 +50,9 @@ const mockScriptConfig = {
 				"t_telecom_recursos",
 			],
 		}),
-		defineDatasource({
+		defineDataSource({
 			name: "ixc",
-			datasource: "d_db_ixcsoft",
+			dataSource: "d_db_ixcsoft",
 			outputDir: "/tmp/test-generated-ixc",
 			splitCollections: ["cliente_contrato"],
 			collections: ["cliente_contrato"],

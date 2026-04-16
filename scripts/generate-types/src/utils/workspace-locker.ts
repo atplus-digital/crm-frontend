@@ -25,7 +25,7 @@ function toReadonlyPattern(outputDir: string): string {
 	return `${posix}/index.ts`;
 }
 
-function getDatasourceReadonlyPatterns(): string[] {
+function getDataSourceReadonlyPatterns(): string[] {
 	const datasources = config.datasources ?? [];
 	return datasources.map((datasource) =>
 		toReadonlyPattern(datasource.outputDir),
@@ -59,7 +59,7 @@ export function isWorkspaceLocked(): boolean {
 			return true;
 		}
 
-		return getDatasourceReadonlyPatterns().some(
+		return getDataSourceReadonlyPatterns().some(
 			(pattern) => pattern in readonlyInclude,
 		);
 	} catch (error) {

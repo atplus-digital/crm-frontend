@@ -23,46 +23,46 @@ export interface BaseInterfaceNamingConfig {
 	suffix: string;
 }
 
-interface BaseDatasourceGenerationConfig {
+interface BaseDataSourceGenerationConfig {
 	name: string;
-	datasource: string;
+	dataSource: string;
 	outputDir: string;
 	splitCollections: string[];
 	enableSampleFieldFallback?: boolean;
 	baseInterfaceNaming?: BaseInterfaceNamingConfig;
 }
 
-export interface MainDatasourceGenerationConfig
-	extends BaseDatasourceGenerationConfig {
-	datasource: "main";
+export interface MainDataSourceGenerationConfig
+	extends BaseDataSourceGenerationConfig {
+	dataSource: "main";
 	collections?: string[];
 }
 
-export interface ExternalDatasourceGenerationConfig
-	extends BaseDatasourceGenerationConfig {
+export interface ExternalDataSourceGenerationConfig
+	extends BaseDataSourceGenerationConfig {
 	collections: string[];
 }
 
-export type DatasourceGenerationConfig =
-	| MainDatasourceGenerationConfig
-	| ExternalDatasourceGenerationConfig;
+export type DataSourceGenerationConfig =
+	| MainDataSourceGenerationConfig
+	| ExternalDataSourceGenerationConfig;
 
-export function defineDatasource(
-	config: MainDatasourceGenerationConfig,
-): MainDatasourceGenerationConfig;
-export function defineDatasource(
-	config: ExternalDatasourceGenerationConfig,
-): ExternalDatasourceGenerationConfig;
-export function defineDatasource(
-	config: DatasourceGenerationConfig,
-): DatasourceGenerationConfig {
+export function defineDataSource(
+	config: MainDataSourceGenerationConfig,
+): MainDataSourceGenerationConfig;
+export function defineDataSource(
+	config: ExternalDataSourceGenerationConfig,
+): ExternalDataSourceGenerationConfig;
+export function defineDataSource(
+	config: DataSourceGenerationConfig,
+): DataSourceGenerationConfig {
 	return config;
 }
 
 export interface ScriptConfig {
 	outputDir: string; // Diretório de saída (ex: "src/@types/generated") — split usa esta pasta; não-split usa <outputDir>/index.ts
 	splitCollections: string[]; // Collections que serão salvas em arquivos individuais
-	datasources?: DatasourceGenerationConfig[];
+	datasources?: DataSourceGenerationConfig[];
 	verbose: boolean;
 	defaultEnvPath: string;
 	requestTimeoutMs: number;

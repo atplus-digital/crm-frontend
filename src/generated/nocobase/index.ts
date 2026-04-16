@@ -1417,6 +1417,8 @@ export interface PeriodosFerias {
 	f_dias_direito: number;
 	f_periodo_aquisitivo_fim: string;
 	f_periodo_aquisitivo_inicio: string;
+	f_periodo_concessivo_fim: string;
+	f_periodo_concessivo_inicio: string;
 	f_status_periodo: string;
 	updatedAt: string;
 	createdAt: string;
