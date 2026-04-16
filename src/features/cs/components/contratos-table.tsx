@@ -1,6 +1,7 @@
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
-import { ExternalLink } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useMemo } from "react";
+import { Link } from "react-router";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
 import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Button } from "#/components/ui/button";
@@ -34,15 +35,13 @@ function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 			header: "Ações",
 			cell: ({ row }) => (
 				<Button variant="ghost" size="sm" asChild>
-					<a
-						href={`/cs/contratos/${row.original.id}`}
-						target="_blank"
-						rel="noreferrer"
+					<Link
+						to={`/cs/contratos/${row.original.id}`}
 						onClick={(e) => e.stopPropagation()}
 					>
-						<ExternalLink className="size-4" />
+						<ArrowRight className="size-4" />
 						Ver
-					</a>
+					</Link>
 				</Button>
 			),
 		},

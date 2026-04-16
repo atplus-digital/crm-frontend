@@ -35,6 +35,7 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 - Keep business logic in `src/features/` services/hooks and keep UI composition in pages/components.
 - For paginated tables, use `DataTableWithPagination` and `usePagination` instead of custom pagination state.
 - Use `buildFilter()` helpers from `#/lib/filter-builder` for NocoBase/IXC filters.
+- **Always use `<Link to="...">` from `react-router` for internal navigation.** Never use `<a href="...">` for routes that exist in the app — it causes full-page reloads and breaks SPA behavior. Only use `<a>` for external links (off-site URLs).
 
 <!-- AGENTS-GENERATED:END patterns -->
 
