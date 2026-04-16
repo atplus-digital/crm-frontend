@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-14 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-16 -->
 
 # AGENTS.md — custom-requests
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-Custom Requests module — dynamic request configuration, validation schemas, and service layer for managing custom API requests.
+Custom Requests module — typed registry + Zod validation for dynamic `customRequests:send/<key>` calls, with service wrappers and React Query hooks.
 
 <!-- AGENTS-GENERATED:END overview -->
 
@@ -14,14 +14,16 @@ Custom Requests module — dynamic request configuration, validation schemas, an
 
 ## Key Files
 
-| File          | Purpose                                                  |
-| ------------- | -------------------------------------------------------- |
-| `index.ts`    | Barrel export — registry, schemas, service, hooks, types |
-| `registry.ts` | Registry pattern for custom request configurations       |
-| `schemas.ts`  | Zod schemas for custom request validation                |
-| `types.ts`    | TypeScript interfaces and error classes                  |
-| `service.ts`  | Service layer for CRUD operations on custom requests     |
-| `hooks.ts`    | React hooks for custom requests functionality            |
+| File                      | Purpose                                                                               |
+| ------------------------- | ------------------------------------------------------------------------------------- |
+| `index.ts`                | Barrel export for registry, schemas, service, hooks, errors, and types                |
+| `registry.ts`             | Canonical map of custom request keys/config/options                                   |
+| `schemas.ts`              | Payload schemas and inferred payload union for each request key                       |
+| `types.ts`                | Shared types for keys, collections, payload mapping, and service contracts            |
+| `errors.ts`               | Domain errors and Zod-to-Portuguese message mapping                                   |
+| `service.ts`              | `sendCustomRequest()` + helpers (`getRequestsByCollection`, `getCustomRequestConfig`) |
+| `hooks.ts`                | React Query hooks for listing requests and sending mutations                          |
+| `custom-requests.test.ts` | Baseline test scaffold for this module                                                |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -29,20 +31,24 @@ Custom Requests module — dynamic request configuration, validation schemas, an
 
 ## Patterns
 
-- Export only through `index.ts`; external modules should not import sub-files directly.
-- Service methods throw "Not implemented" errors until logic is added.
-- Use Zod schemas for all request validation — types inferred via `z.infer`.
-- Hooks follow React conventions — to be implemented with proper state management.
+- External modules import from `#/features/custom-requests`; avoid sub-file imports.
+- Request payload validation must happen via registry-bound Zod schemas before API calls.
+- API calls go through `nocobaseRepository.request()` with endpoint `customRequests:send/<key>`.
+- Error translation for UI messages should use `mapZodErrorToPortuguese()` and module error classes.
+- React Query hooks in `hooks.ts` are thin wrappers around service/registry logic.
+- `useCustomRequests()` is intentionally placeholder and currently throws `Not implemented`.
+
 <!-- AGENTS-GENERATED:END patterns -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 
 ## Golden Samples
 
-| Pattern               | Reference file                 |
-| --------------------- | ------------------------------ |
-| Barrel import usage   | `src/features/auth/index.ts`   |
-| Service layer pattern | `src/features/auth/service.ts` |
-| Zod schema pattern    | `src/features/auth/types.ts`   |
+| Pattern                     | Reference file                             |
+| --------------------------- | ------------------------------------------ |
+| Registry + schema binding   | `src/features/custom-requests/registry.ts` |
+| Typed request execution     | `src/features/custom-requests/service.ts`  |
+| Mutation/query hook wrapper | `src/features/custom-requests/hooks.ts`    |
+| Validation error mapping    | `src/features/custom-requests/errors.ts`   |
 
 <!-- AGENTS-GENERATED:END golden-samples -->

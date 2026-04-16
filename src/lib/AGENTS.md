@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-13 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-16 -->
 
 # AGENTS.md — lib
 
@@ -14,11 +14,12 @@ Pure utility functions with no React dependency — shared helpers used across t
 
 ## Key Files
 
-| File                | Purpose                                                                                                                                |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `utils.ts`          | General utilities: `cn()` (clsx + tailwind-merge), `formatDateInPortuguese()`, `formatDatePtBR()`, `formatCurrency()`, `getInitials()` |
-| `logger.ts`         | Structured logger: `createLogger(module)` factory. Dev mode → all levels; production → warn + error only                               |
-| `filter-builder.ts` | Generic NocoBase/IXC filter builder: `buildFilter()`, `eq()`, `includes()`, `gt()`, `gte()`, `lt()`, `lte()`, `or()`, `nestedField()`  |
+| File                | Purpose                                                                                                                               |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `utils.ts`          | General utilities: `cn()`, `formatDateInPortuguese()`, `formatDatePtBR()`, `formatPhone()`, `formatCurrency()`, `getInitials()`       |
+| `logger.ts`         | Structured logger factory `createLogger(module)` with env-based level gating                                                          |
+| `filter-builder.ts` | Generic NocoBase/IXC filter helpers: `buildFilter()`, `eq()`, `includes()`, `gt()`, `gte()`, `lt()`, `lte()`, `or()`, `nestedField()` |
+| `api-errors.ts`     | Helper to extract user-facing messages from NocoBase/HTTP error payloads                                                              |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

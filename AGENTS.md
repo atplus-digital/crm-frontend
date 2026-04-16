@@ -1,6 +1,6 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-04-14 | Last verified: 2026-04-14 -->
+<!-- Last updated: 2026-04-16 | Last verified: 2026-04-16 -->
 
 # AGENTS.md — CRM AT+
 
@@ -51,14 +51,14 @@ docs/            → documentation
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 
-| For                 | Reference                                      | Key patterns                                             |
-| ------------------- | ---------------------------------------------- | -------------------------------------------------------- |
-| Route (protected)   | `src/routes/dashboard.tsx`                     | `requireAuth` in `loader`, `Component` export            |
-| Route (public auth) | `src/routes/login.tsx`                         | `requireGuest` in `loader`, `Component` export           |
-| Router config       | `src/routes/router.tsx`                        | `createBrowserRouter`, lazy route imports, nested routes |
-| Auth module         | `src/features/auth/index.ts`                   | barrel export pattern                                    |
-| Error handling      | `src/components/error-boundary.tsx`            | React Error Boundary pattern with user-friendly UI       |
-| Component structure | `src/components/dashboard/profile-details.tsx` | Separate business logic from presentation in dashboard   |
+| For                 | Reference                                          | Key patterns                                             |
+| ------------------- | -------------------------------------------------- | -------------------------------------------------------- |
+| Route (protected)   | `src/routes/dashboard.tsx`                         | `requireAuth` in `loader`, `Component` export            |
+| Route (public auth) | `src/routes/auth/login.tsx`                        | `requireGuest` in `loader`, `Component` export           |
+| Router config       | `src/routes/router.tsx`                            | `createBrowserRouter`, lazy route imports, nested routes |
+| Auth module         | `src/features/auth/index.ts`                       | barrel export pattern                                    |
+| Error handling      | `src/components/error-boundary.tsx`                | React Error Boundary pattern with user-friendly UI       |
+| Component structure | `src/features/auth/components/profile-details.tsx` | Separate business logic from presentation in dashboard   |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
 
@@ -164,8 +164,7 @@ docs/            → documentation
 
 <!-- intent-skills:start -->
 
-- task: "Creating or updating feature AGENTS.md files"
-load: ".agents/skills/feature-agents-md/SKILL.md"
+- { task: "Creating or updating feature AGENTS.md files", load: ".agents/skills/feature-agents-md/SKILL.md" }
 <!-- intent-skills:end -->
 
 ## When instructions conflict
