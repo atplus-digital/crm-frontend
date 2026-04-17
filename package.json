@@ -7,16 +7,15 @@
 	},
 	"scripts": {
 		"dev": "vite dev",
-		"dev:wt": "bash scripts/worktree-dev.sh",
+		"prepare": "husky",
 		"test": "vitest run",
-		"test:types": "tsc --noEmit src/features/custom-requests/types.test-d.ts",
 		"build": "vite build",
 		"preview": "vite preview",
-		"prepare": "husky",
 		"biome:fix": "biome check --write",
 		"format:md": "pnpm dlx prettier --write \"**/*.{md,mdx}\"",
 		"knip": "knip",
 		"knip:silent": "knip --exclude dependencies --no-config-hints",
+		"lint:fix": "pnpm biome:fix && pnpm format:md",
 		"lint-staged": "lint-staged",
 		"typecheck": "tsc --noEmit",
 		"generate-types": "tsx scripts/generate-types/index.ts"
