@@ -1,4 +1,8 @@
-import type { RuntimeConfig, ScriptConfig } from "../@types/script";
+import {
+	defineDataSource,
+	type RuntimeConfig,
+	type ScriptConfig,
+} from "../@types/script";
 import { resolveEnvConfig } from "./load-config";
 
 const defaultConfig: ScriptConfig = {
@@ -104,12 +108,19 @@ export function parseConfig(
 		...scriptConfig,
 	};
 
-	validateMergedConfig(mergedConfig);
+	const normalizedConfig = {
+		...mergedConfig,
+		datasources: mergedConfig.datasources?.map((datasource) =>
+			defineDataSource(datasource),
+		),
+	};
 
-	const envConfig = resolveEnvConfig(mergedConfig);
+	validateMergedConfig(normalizedConfig);
+
+	const envConfig = resolveEnvConfig(normalizedConfig);
 
 	const config: RuntimeConfig = {
-		...mergedConfig,
+		...normalizedConfig,
 		...envConfig,
 	};
 

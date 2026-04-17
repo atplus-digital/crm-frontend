@@ -55,6 +55,9 @@ export function defineDataSource(
 ): ExternalDataSourceGenerationConfig;
 export function defineDataSource(
 	config: DataSourceGenerationConfig,
+): DataSourceGenerationConfig;
+export function defineDataSource(
+	config: DataSourceGenerationConfig,
 ): DataSourceGenerationConfig {
 	return config;
 }

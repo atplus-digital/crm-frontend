@@ -1,7 +1,19 @@
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router";
 import { Badge } from "#/components/ui/badge";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
+import type { NegociacoesStatus } from "#/generated/nocobase/negociacoes";
 import { cn, formatCurrency } from "#/lib/utils";
+
+// Map generated enum values to status keys
+const STATUS_ENUM_TO_KEY: Record<NegociacoesStatus, StatusKey | null> = {
+	"1": "Novo",
+	"2": "Negociando",
+	"3": "Assinatura",
+	"4": "Auditoria",
+	"5": "Concluido",
+	"6": "Arquivado",
+};
 
 const STATUS_CONFIG = [
 	{
@@ -61,13 +73,31 @@ interface KanbanCardProps {
 }
 
 function KanbanCardComponent({ card }: KanbanCardProps) {
+	const navigate = useNavigate();
+
+	const handleClick = () => {
+		navigate(`/cs/negociacoes/${card.id}`);
+	};
+
+	const handleKeyDown = (e: React.KeyboardEvent) => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			navigate(`/cs/negociacoes/${card.id}`);
+		}
+	};
+
 	return (
+		// biome-ignore lint/a11y/useSemanticElements: Card component needs to be a clickable container, not a button element
 		<div
 			className={cn(
 				"cursor-pointer rounded-lg bg-card p-3 shadow-sm transition-shadow",
 				"hover:shadow-md",
 				"border border-border/50",
 			)}
+			onClick={handleClick}
+			onKeyDown={handleKeyDown}
+			role="button"
+			tabIndex={0}
 		>
 			<h4 className="mb-2 text-sm font-medium text-foreground">
 				{getCardTitle(card)}
@@ -168,9 +198,9 @@ export function NegociacoesKanban({
 
 	const kanbanData: KanbanData = negociacoes.reduce(
 		(acc, negociacao) => {
-			const status = negociacao.f_status as StatusKey;
-			if (acc[status]) {
-				acc[status].push(negociacao);
+			const statusKey = STATUS_ENUM_TO_KEY[negociacao.f_status];
+			if (statusKey && acc[statusKey]) {
+				acc[statusKey].push(negociacao);
 			}
 			return acc;
 		},

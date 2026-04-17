@@ -1,10 +1,7 @@
-import {
-	type DataSourceGenerationConfig,
-	defineDataSource,
-} from "./src/@types/script";
+import type { DataSourceGenerationConfig } from "./src/@types/script";
 
-export const dataSourceConfigs: DataSourceGenerationConfig[] = [
-	defineDataSource({
+export const dataSourceConfigs = [
+	{
 		name: "nocobase",
 		dataSource: "main",
 		outputDir: "src/generated/nocobase",
@@ -16,9 +13,8 @@ export const dataSourceConfigs: DataSourceGenerationConfig[] = [
 			"t_crm_troca_titularidade",
 			"t_registros_de_contato",
 		],
-		baseInterfaceNaming: { prefix: "", suffix: "" },
-	}),
-	defineDataSource({
+	},
+	{
 		name: "ixc",
 		dataSource: "d_db_ixcsoft",
 		outputDir: "src/generated/ixc",
@@ -39,6 +35,5 @@ export const dataSourceConfigs: DataSourceGenerationConfig[] = [
 			"su_ticket",
 		],
 		enableSampleFieldFallback: true,
-		baseInterfaceNaming: { prefix: "", suffix: "" },
-	}),
-];
+	},
+] satisfies DataSourceGenerationConfig[];

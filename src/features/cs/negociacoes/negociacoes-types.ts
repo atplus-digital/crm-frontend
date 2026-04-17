@@ -169,6 +169,8 @@ export type NegociacaoWithRelations = Negociacoes & {
 	f_pacote?: Pacotes | null;
 	f_pacotes_adicionais?: Pacotes[];
 	f_cupom_desconto?: CuponsDesconto | null;
+	createdBy?: Users | null;
+	updatedBy?: Users | null;
 };
 
 // ---------------------------------------------------------------------------

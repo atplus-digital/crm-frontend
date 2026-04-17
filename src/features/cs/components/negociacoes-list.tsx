@@ -1,5 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Download, ExternalLink, RefreshCw } from "lucide-react";
+import { Link } from "react-router";
 import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
@@ -20,6 +21,29 @@ const statusBadgeStyles: Record<string, string> = {
 		"bg-gray-500/10 text-gray-600 border-gray-500/20 hover:bg-gray-500/20",
 };
 
+const motivoBadgeStyles: Record<string, string> = {
+	M: "bg-amber-500/10 text-amber-600 border-amber-500/20",
+	D: "bg-red-500/10 text-red-600 border-red-500/20",
+	U: "bg-blue-500/10 text-blue-600 border-blue-500/20",
+	N: "bg-yellow-500/10 text-yellow-600 border-yellow-500/20",
+	R: "bg-cyan-500/10 text-cyan-600 border-cyan-500/20",
+	T: "bg-lime-500/10 text-lime-600 border-lime-500/20",
+	L: "bg-lime-500/10 text-lime-600 border-lime-500/20",
+};
+
+const motivoLabels: Record<string, string> = {
+	M: "Mud.Endereço",
+	D: "Downgrade",
+	U: "Upgrade",
+	N: "Renegociação",
+	R: "Reativação",
+	T: "Mud.Tecnologia",
+	L: "Mud.Titularidade",
+	I: "Venda Nova",
+	S: "Segunda Contratação",
+	P: "Proposta",
+};
+
 type NegociacaoItem = NegociacaoWithRelations;
 
 function StatusBadge({ status }: { status: string }) {
@@ -34,19 +58,28 @@ function StatusBadge({ status }: { status: string }) {
 	);
 }
 
+function MotivoBadge({ motivo }: { motivo: string }) {
+	const style = motivoBadgeStyles[motivo] || motivoBadgeStyles.N;
+	const label = motivoLabels[motivo] || motivo;
+	return (
+		<Badge variant="outline" className={cn(style, "font-medium")}>
+			{label}
+		</Badge>
+	);
+}
+
 const columns: ColumnDef<NegociacaoItem>[] = [
 	{
 		id: "acessar",
 		header: "Acessar",
 		cell: ({ row }) => (
-			<Button
-				variant="ghost"
-				size="icon-xs"
-				className="size-6"
-				title="Acessar negociação"
-				onClick={() => row.original.id}
-			>
-				<ExternalLink className="size-4" />
+			<Button variant="ghost" size="icon-xs" className="size-6" asChild>
+				<Link
+					to={`/cs/negociacoes/${row.original.id}`}
+					title="Acessar negociação"
+				>
+					<ExternalLink className="size-4" />
+				</Link>
 			</Button>
 		),
 	},
@@ -56,9 +89,13 @@ const columns: ColumnDef<NegociacaoItem>[] = [
 		cell: ({ row }) => formatDatePtBR(row.original.createdAt),
 	},
 	{
-		accessorKey: "updatedAt",
-		header: "Última atualização",
-		cell: ({ row }) => formatDatePtBR(row.original.updatedAt),
+		accessorKey: "f_titulo",
+		header: "Título",
+		cell: ({ row }) => (
+			<span className="max-w-40 truncate block">
+				{row.original.f_titulo || "-"}
+			</span>
+		),
 	},
 	{
 		id: "f_pessoa",
@@ -72,9 +109,30 @@ const columns: ColumnDef<NegociacaoItem>[] = [
 			row.original.f_negociacao_pessoa_juridica?.f_razao_social || "-",
 	},
 	{
+		accessorKey: "f_telefone",
+		header: "Telefone",
+		cell: ({ row }) => row.original.f_telefone || "-",
+	},
+	{
+		accessorKey: "f_motivo",
+		header: "Motivo",
+		cell: ({ row }) => <MotivoBadge motivo={row.original.f_motivo || "N"} />,
+	},
+	{
 		accessorKey: "f_valor_mensal",
 		header: "Valor Mensal",
 		cell: ({ row }) => formatCurrency(row.original.f_valor_mensal),
+	},
+	{
+		accessorKey: "f_valor_devedor",
+		header: "Valor Devedor",
+		cell: ({ row }) => formatCurrency(row.original.f_valor_devedor || 0),
+	},
+	{
+		accessorKey: "f_valor_devedor_total",
+		header: "Total Devedor",
+		cell: ({ row }) =>
+			formatCurrency(Number(row.original.f_valor_devedor_total) || 0),
 	},
 	{
 		accessorKey: "f_status",
@@ -89,6 +147,11 @@ const columns: ColumnDef<NegociacaoItem>[] = [
 				{row.original.f_substatus || "-"}
 			</span>
 		),
+	},
+	{
+		accessorKey: "updatedAt",
+		header: "Atualizado em",
+		cell: ({ row }) => formatDatePtBR(row.original.updatedAt),
 	},
 	{
 		id: "f_vendedor",

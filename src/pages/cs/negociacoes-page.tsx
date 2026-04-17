@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { NegociacoesKanban } from "#/features/cs/components/negociacoes-kanban";
 import { NegociacoesList } from "#/features/cs/components/negociacoes-list";
 import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
+import { exportNegociacoesToCsv } from "#/features/cs/negociacoes/negociacoes-service";
 import type {
 	NegociacaoFilters,
 	NegociacaoStatus,
@@ -343,6 +344,17 @@ export function NegociacoesPage() {
 	const negociacoes = negociacoesData?.data ?? [];
 	const totalCount = negociacoesData?.meta?.total ?? 0;
 
+	const handleExport = () => {
+		const csv = exportNegociacoesToCsv(negociacoes);
+		const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+		const url = URL.createObjectURL(blob);
+		const link = document.createElement("a");
+		link.href = url;
+		link.download = `negociacoes-${new Date().toISOString().split("T")[0]}.csv`;
+		link.click();
+		URL.revokeObjectURL(url);
+	};
+
 	return (
 		<div className="flex flex-1 flex-col overflow-auto">
 			<main className="flex-1">
@@ -398,6 +410,7 @@ export function NegociacoesPage() {
 												negociacoes={negociacoes}
 												totalCount={totalCount}
 												onRefresh={() => refetch()}
+												onExport={handleExport}
 											/>
 										)}
 									</div>

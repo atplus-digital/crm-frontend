@@ -41,6 +41,10 @@ export const router = createBrowserRouter([
 						lazy: () => import("./cs/cs-negociacoes"),
 					},
 					{
+						path: "cs/negociacoes/:id",
+						lazy: () => import("./cs/cs-negociacao-detail"),
+					},
+					{
 						path: "cs/contratos",
 						lazy: () => import("./cs/cs-contratos"),
 					},

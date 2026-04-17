@@ -14,6 +14,7 @@ import {
 	or,
 } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
+import { exportNegociacoesToCsv } from "./export-csv";
 import type {
 	Negociacao,
 	NegociacaoFilters,
@@ -147,6 +148,8 @@ export async function fetchNegociacaoById(
 			"f_pacote",
 			"f_pacotes_adicionais",
 			"f_cupom_desconto",
+			"createdBy",
+			"updatedBy",
 		],
 	});
 
@@ -258,3 +261,5 @@ export async function updateNegociacao(
 export async function deleteNegociacao(id: number): Promise<void> {
 	await nocobaseRepository.delete("t_negociacoes", id);
 }
+
+export { exportNegociacoesToCsv };
