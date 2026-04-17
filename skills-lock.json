@@ -5,6 +5,21 @@
 			"source": "shadcn/ui",
 			"sourceType": "github",
 			"computedHash": "873c67922d80775a9fdf596db7964b579f0408c30ec6e3d11989f6055bbec89f"
+		},
+		"tailwind-best-practices": {
+			"source": "mastra-ai/mastra",
+			"sourceType": "github",
+			"computedHash": "7a94bb24f938aec684feaf5d93e862bc3c854d86d7d7d472293be793a2f4bda2"
+		},
+		"tailwind-css-patterns": {
+			"source": "giuseppe-trisciuoglio/developer-kit",
+			"sourceType": "github",
+			"computedHash": "6092620c3af955a46ea2b94ca8a40197ac8392e6bbdc8c7515659328b186c770"
+		},
+		"tailwind-v4-shadcn": {
+			"source": "secondsky/claude-skills",
+			"sourceType": "github",
+			"computedHash": "dedaff41ff3331cfe9734eee4203a1e85c6a013eec46df83d9c00e3d36e421f9"
 		}
 	}
 }

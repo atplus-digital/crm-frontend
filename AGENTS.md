@@ -109,20 +109,21 @@ export interface PessoaFisica {
 
 <!-- AGENTS-GENERATED:START heuristics -->
 
-| When                    | Do                                                         |
-| ----------------------- | ---------------------------------------------------------- |
-| Adding env var          | Add to `.env.example` first, then validate in `src/env.ts` |
-| Merging PRs             | Squash and merge                                           |
-| Adding dependency       | Ask first - we minimize deps                               |
-| Unsure about pattern    | Check Golden Samples above or `src/AGENTS.md`              |
-| File naming             | Use `kebab-case.tsx` for components/routes                 |
-| Import paths            | Prefer `#/` alias over relative paths                      |
-| Table with pagination   | Use `DataTableWithPagination` component                    |
-| Filter for NocoBase/IXC | Use `filter-builder.ts` helpers                            |
-| Pagination state        | Use `usePagination` hook                                   |
-| Date formatting         | Use `formatDatePtBR()` from utils                          |
-| Currency formatting     | Use `formatCurrency()` from utils                          |
-| **Type definitions**    | **ALWAYS import from `src/generated/` - NEVER redefine**   |
+| When                          | Do                                                                     |
+| ----------------------------- | ---------------------------------------------------------------------- |
+| Adding env var                | Add to `.env.example` first, then validate in `src/env.ts`             |
+| Merging PRs                   | Squash and merge                                                       |
+| Adding dependency             | Ask first - we minimize deps                                           |
+| Unsure about pattern          | Check Golden Samples above or `src/AGENTS.md`                          |
+| File naming                   | Use `kebab-case.tsx` for components/routes                             |
+| Import paths                  | Prefer `#/` alias over relative paths                                  |
+| Table with pagination         | Use `DataTableWithPagination` component                                |
+| Filter for NocoBase/IXC       | Use `filter-builder.ts` helpers                                        |
+| Pagination state              | Use `usePagination` hook                                               |
+| Date formatting               | Use `formatDatePtBR()` from utils                                      |
+| Currency formatting           | Use `formatCurrency()` from utils                                      |
+| **Type definitions**          | **ALWAYS import from `src/generated/` - NEVER redefine**               |
+| **Tailwind arbitrary values** | **ALWAYS use canonical classes** (e.g., `min-w-20` not `min-w-[80px]`) |
 
 <!-- AGENTS-GENERATED:END heuristics -->
 
