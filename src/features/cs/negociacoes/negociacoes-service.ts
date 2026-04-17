@@ -1,3 +1,9 @@
+import type {
+	AnexosNegociacoes,
+	NegociacoesComentarios,
+	NegociacoesItens,
+	Pacotes,
+} from "#/generated/nocobase/index";
 import type { Negociacoes } from "#/generated/nocobase/negociacoes";
 import {
 	buildFilter,
@@ -64,6 +70,38 @@ function buildNegociacaoFilter(
 		conditions.push(eq("f_contrato_ixc", filters.contratoId));
 	}
 
+	if (filters.motivo) {
+		conditions.push(eq("f_motivo", filters.motivo));
+	}
+
+	if (filters.fidelidade) {
+		conditions.push(eq("f_fidelidade", filters.fidelidade));
+	}
+
+	if (filters.valorDevedorGte) {
+		conditions.push(gte("f_valor_devedor", filters.valorDevedorGte));
+	}
+
+	if (filters.valorDevedorLte) {
+		conditions.push(lte("f_valor_devedor", filters.valorDevedorLte));
+	}
+
+	if (filters.parcelasMensais) {
+		conditions.push(eq("f_parcelas_mensais", filters.parcelasMensais));
+	}
+
+	if (filters.multaJurosGte) {
+		conditions.push(gte("f_multa_juros", filters.multaJurosGte));
+	}
+
+	if (filters.multaJurosLte) {
+		conditions.push(lte("f_multa_juros", filters.multaJurosLte));
+	}
+
+	if (filters.pacote) {
+		conditions.push(nestedField("f_pacote", eq("id", filters.pacote)));
+	}
+
 	return buildFilter(conditions);
 }
 
@@ -99,9 +137,90 @@ export async function fetchNegociacoes(
 export async function fetchNegociacaoById(
 	id: number,
 ): Promise<NegociacaoWithRelations> {
-	const response = await nocobaseRepository.get("t_negociacoes", id);
+	const response = await nocobaseRepository.get("t_negociacoes", id, {
+		appends: [
+			"f_vendedor",
+			"f_pessoa",
+			"f_negociacao_pessoa_juridica",
+			"f_itens_negociacao",
+			"f_anexos",
+			"f_comentarios",
+			"f_pacote",
+			"f_pacotes_adicionais",
+			"f_cupom_desconto",
+		],
+	});
 
 	return response as unknown as NegociacaoWithRelations;
+}
+
+export async function fetchNegociacaoItens(
+	negociacaoId: number,
+): Promise<PaginatedResponse<NegociacoesItens>> {
+	const response = await nocobaseRepository.list(
+		"t_negociacoes_itens" as never,
+		{
+			page: 1,
+			pageSize: 100,
+			filter: eq("f_fk_negociacao", negociacaoId),
+		},
+	);
+
+	return {
+		data: response.data as unknown as NegociacoesItens[],
+		meta: response.meta,
+	};
+}
+
+export async function fetchNegociacaoAnexos(
+	negociacaoId: number,
+): Promise<PaginatedResponse<AnexosNegociacoes>> {
+	const response = await nocobaseRepository.list(
+		"t_anexos_negociacoes" as never,
+		{
+			page: 1,
+			pageSize: 100,
+			filter: eq("f_anexos_fk", negociacaoId),
+		},
+	);
+
+	return {
+		data: response.data as unknown as AnexosNegociacoes[],
+		meta: response.meta,
+	};
+}
+
+export async function fetchNegociacaoComentarios(
+	negociacaoId: number,
+): Promise<PaginatedResponse<NegociacoesComentarios>> {
+	const response = await nocobaseRepository.list(
+		"t_negociacoes_comentarios" as never,
+		{
+			page: 1,
+			pageSize: 100,
+			filter: eq("f_fk_comentarios_negociacoes", negociacaoId),
+		},
+	);
+
+	return {
+		data: response.data as unknown as NegociacoesComentarios[],
+		meta: response.meta,
+	};
+}
+
+export async function fetchNegociacaoPacotes(
+	negociacaoId: number,
+): Promise<PaginatedResponse<Pacotes>> {
+	const response = await nocobaseRepository.list("t_pacotes" as never, {
+		page: 1,
+		pageSize: 100,
+		filter: { f_negociacao: negociacaoId },
+	});
+
+	return {
+		data: response.data as unknown as Pacotes[],
+		meta: response.meta,
+	};
 }
 
 export async function createNegociacao(
