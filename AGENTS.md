@@ -201,6 +201,18 @@ export interface PessoaFisica {
 <!-- AGENTS-GENERATED:START scope-index -->
 
 - `./src/AGENTS.md` — Frontend application (TypeScript/React/Vue)
+- `./src/components/AGENTS.md` — Shared UI building blocks and app-level reusable components
+- `./src/components/layout/AGENTS.md` — Authenticated app shell layout and navigation composition
+- `./src/features/AGENTS.md` — Cross-feature conventions and folder structure for domain modules
+- `./src/features/auth/AGENTS.md` — Authentication module
+- `./src/features/cs/AGENTS.md` — Customer Success domain (contratos, negociações, pessoas)
+- `./src/features/custom-requests/AGENTS.md` — Custom request registry/services/hooks
+- `./src/features/permissions/AGENTS.md` — Permissions, actions/snippets and navigation guards
+- `./src/generated/AGENTS.md` — Auto-generated TypeScript types from NocoBase/IXC schemas
+- `./src/hooks/AGENTS.md` — Shared cross-feature hooks
+- `./src/lib/AGENTS.md` — Pure utilities and formatting/filter/logging helpers
+- `./src/repositories/AGENTS.md` — NocoBase/IXC data access layer
+- `./scripts/AGENTS.md` — Automation scripts (type generation, build helpers)
 - `./.github/workflows/AGENTS.md` — GitHub Actions workflows and CI/CD automation
 <!-- AGENTS-GENERATED:END scope-index -->
 
