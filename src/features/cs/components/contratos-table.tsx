@@ -9,7 +9,7 @@ import {
 	ContratoStatusBadge,
 	InternetStatusBadge,
 } from "#/features/cs/components/contrato-status-badge";
-import type { ContratoWithCliente } from "#/features/cs/contratos-types";
+import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";
 
 interface PaginationInfo {

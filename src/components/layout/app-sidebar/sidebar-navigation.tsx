@@ -12,7 +12,7 @@ import {
 	APP_NAV_SECTIONS,
 	getActiveNavSection,
 	isNavPathActive,
-} from "#/features/permissions";
+} from "#/features/auth/permissions";
 
 const iconByName = {
 	fileText: FileText,

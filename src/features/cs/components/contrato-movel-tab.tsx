@@ -10,7 +10,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "#/components/ui/table";
-import { useContratoMovel } from "#/features/cs/contratos-hooks";
+import { useContratoMovel } from "#/features/cs/contratos/contratos-hooks";
 
 interface ContratoMovelTabProps {
 	contratoId: number;

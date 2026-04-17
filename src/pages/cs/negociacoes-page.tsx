@@ -14,11 +14,11 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { NegociacoesKanban } from "#/features/cs/components/negociacoes-kanban";
 import { NegociacoesList } from "#/features/cs/components/negociacoes-list";
-import { useNegociacoes } from "#/features/cs/negociacoes-hooks";
+import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
 import type {
 	NegociacaoFilters,
 	NegociacaoStatus,
-} from "#/features/cs/negociacoes-types";
+} from "#/features/cs/negociacoes/negociacoes-types";
 
 const STATUS_OPTIONS: { value: NegociacaoStatus; label: string }[] = [
 	{ value: "Novo", label: "Novo" },

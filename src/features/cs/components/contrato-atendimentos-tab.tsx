@@ -4,8 +4,8 @@ import { EmptyTable } from "#/components/table/empty-table";
 import { Button } from "#/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { Skeleton } from "#/components/ui/skeleton";
-import { useContratoAtendimentos } from "#/features/cs/contratos-hooks";
-import type { AtendimentoIXC } from "#/features/cs/contratos-types";
+import { useContratoAtendimentos } from "#/features/cs/contratos/contratos-hooks";
+import type { AtendimentoIXC } from "#/features/cs/contratos/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";
 
 interface ContratoAtendimentosTabProps {

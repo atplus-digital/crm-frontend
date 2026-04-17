@@ -6,7 +6,7 @@ export {
 	useContrato,
 	useContratoById,
 	useContratos,
-} from "./contratos-hooks";
+} from "./contratos/contratos-hooks";
 export type {
 	Contrato,
 	ContratoCliente,
@@ -16,11 +16,11 @@ export type {
 	ContratoWithCliente,
 	InternetStatus,
 	PaginatedResponse,
-} from "./contratos-types";
+} from "./contratos/contratos-types";
 export {
 	CONTRATO_STATUS_LABELS,
 	INTERNET_STATUS_LABELS,
-} from "./contratos-types";
+} from "./contratos/contratos-types";
 export {
 	createNegociacao,
 	deleteNegociacao,
@@ -29,7 +29,7 @@ export {
 	updateNegociacao,
 	useNegociacao,
 	useNegociacoes,
-} from "./negociacoes-hooks";
+} from "./negociacoes/negociacoes-hooks";
 // Negociacoes
 export type {
 	Negociacao,
@@ -42,7 +42,7 @@ export type {
 	NegociacaoVendedor,
 	NegociacaoWithRelations,
 	PaginatedResponse as NegociacaoPaginatedResponse,
-} from "./negociacoes-types";
+} from "./negociacoes/negociacoes-types";
 export {
 	createPessoaFisica,
 	createPessoaJuridica,
@@ -58,7 +58,7 @@ export {
 	usePessoaJuridica,
 	usePessoasFisicas,
 	usePessoasJuridicas,
-} from "./pessoas-hooks";
+} from "./pessoas/pessoas-hooks";
 // Pessoas
 export type {
 	PessoaFisica,
@@ -69,4 +69,4 @@ export type {
 	PessoaJuridicaFilters,
 	PessoaJuridicaListParams,
 	PessoaJuridicaResponse,
-} from "./pessoas-types";
+} from "./pessoas/pessoas-types";

@@ -9,8 +9,8 @@ import {
 	CardTitle,
 } from "#/components/ui/card";
 import { Skeleton } from "#/components/ui/skeleton";
-import { useContratoTrocasTitularidade } from "#/features/cs/contratos-hooks";
-import { useNegociacoes } from "#/features/cs/negociacoes-hooks";
+import { useContratoTrocasTitularidade } from "#/features/cs/contratos/contratos-hooks";
+import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 
 interface ContratoNegociacoesTabProps {

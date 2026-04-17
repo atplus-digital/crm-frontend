@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Badge } from "#/components/ui/badge";
-import type { NegociacaoWithRelations } from "#/features/cs/negociacoes-types";
+import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { cn, formatCurrency } from "#/lib/utils";
 
 const STATUS_CONFIG = [

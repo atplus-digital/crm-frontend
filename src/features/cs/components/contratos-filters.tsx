@@ -11,7 +11,7 @@ import {
 import {
 	CONTRATO_STATUS_LABELS,
 	type ContratoFilters,
-} from "#/features/cs/contratos-types";
+} from "#/features/cs/contratos/contratos-types";
 
 interface ContratosFiltersProps {
 	onFilter: (filters: ContratoFilters) => void;

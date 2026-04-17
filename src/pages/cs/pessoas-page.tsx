@@ -22,7 +22,7 @@ import type {
 	PessoaFisicaListItem,
 	PessoaJuridicaFilters,
 	PessoaJuridicaListItem,
-} from "#/features/cs/pessoas-types";
+} from "#/features/cs/pessoas/pessoas-types";
 import { cn } from "#/lib/utils";
 
 const pfColumns: ColumnDef<PessoaFisicaListItem, unknown>[] = [

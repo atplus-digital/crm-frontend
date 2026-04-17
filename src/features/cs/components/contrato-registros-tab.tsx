@@ -11,7 +11,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "#/components/ui/table";
-import { useContratoRegistros } from "#/features/cs/contratos-hooks";
+import { useContratoRegistros } from "#/features/cs/contratos/contratos-hooks";
 import { formatDatePtBR } from "#/lib/utils";
 
 interface ContratoRegistrosTabProps {

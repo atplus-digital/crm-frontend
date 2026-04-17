@@ -32,8 +32,11 @@ import {
 	useContratoById,
 	useContratoFaturas,
 	useContratoProdutos,
-} from "#/features/cs/contratos-hooks";
-import type { Fatura, ProdutoContrato } from "#/features/cs/contratos-types";
+} from "#/features/cs/contratos/contratos-hooks";
+import type {
+	Fatura,
+	ProdutoContrato,
+} from "#/features/cs/contratos/contratos-types";
 
 function formatDatePtBR(dateStr: string | null | undefined): string {
 	if (!dateStr || dateStr.startsWith("0000")) return "—";

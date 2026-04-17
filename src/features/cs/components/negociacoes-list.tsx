@@ -3,7 +3,7 @@ import { Download, ExternalLink, RefreshCw } from "lucide-react";
 import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
-import type { NegociacaoWithRelations } from "#/features/cs/negociacoes-types";
+import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { cn, formatCurrency, formatDatePtBR } from "#/lib/utils";
 
 const statusBadgeStyles: Record<string, string> = {

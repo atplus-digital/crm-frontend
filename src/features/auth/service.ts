@@ -1,7 +1,7 @@
 import {
 	resetPermissions,
 	setPermissionsFromRoles,
-} from "#/features/permissions";
+} from "#/features/auth/permissions";
 import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";
 import { authStore, reset, setToken, setUser } from "./store";

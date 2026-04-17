@@ -2,7 +2,7 @@ import { redirect } from "react-router";
 import {
 	resetPermissions,
 	setPermissionsFromRoles,
-} from "#/features/permissions";
+} from "#/features/auth/permissions";
 import { createLogger } from "#/lib/logger";
 import { checkAuth } from "./service";
 import { authStore, reset, setUser } from "./store";
