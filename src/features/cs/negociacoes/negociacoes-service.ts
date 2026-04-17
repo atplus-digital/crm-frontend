@@ -4,7 +4,6 @@ import type {
 	NegociacoesItens,
 	Pacotes,
 } from "#/generated/nocobase/index";
-import type { Negociacoes } from "#/generated/nocobase/negociacoes";
 import {
 	buildFilter,
 	eq,
@@ -224,30 +223,34 @@ export async function fetchNegociacaoPacotes(
 }
 
 export async function createNegociacao(
-	data: Partial<Negociacao>,
+	data: Omit<Negociacao, "f_contrato_ixc"> & {
+		f_contrato_ixc?: number | string | null;
+	},
 ): Promise<Negociacao> {
-	const { f_contrato_ixc, ...rest } = data;
-	const payload: Partial<Negociacoes> = {
-		...rest,
-		...(f_contrato_ixc != null && {
-			f_contrato_ixc: String(f_contrato_ixc),
-		}),
-	};
+	const payload: Record<string, unknown> = {};
+
+	Object.assign(payload, data);
+	if (data.f_contrato_ixc != null) {
+		payload.f_contrato_ixc = String(data.f_contrato_ixc);
+	}
+
 	const result = await nocobaseRepository.create("t_negociacoes", payload);
 	return result as unknown as Negociacao;
 }
 
 export async function updateNegociacao(
 	id: number,
-	data: Partial<Negociacao>,
+	data: Omit<Negociacao, "f_contrato_ixc"> & {
+		f_contrato_ixc?: number | string | null;
+	},
 ): Promise<Negociacao> {
-	const { f_contrato_ixc, ...rest } = data;
-	const payload: Partial<Negociacoes> = {
-		...rest,
-		...(f_contrato_ixc != null && {
-			f_contrato_ixc: String(f_contrato_ixc),
-		}),
-	};
+	const payload: Record<string, unknown> = {};
+
+	Object.assign(payload, data);
+	if (data.f_contrato_ixc != null) {
+		payload.f_contrato_ixc = String(data.f_contrato_ixc);
+	}
+
 	const result = await nocobaseRepository.update("t_negociacoes", id, payload);
 	return result as unknown as Negociacao;
 }
