@@ -606,6 +606,24 @@ export interface ConsultasPfRelations {
 
 export type ConsultasPfRelationKey = keyof ConsultasPfRelations;
 
+export interface ConsultasPj {
+	id: number;
+	f_id_pessoa_fk: number;
+	f_justificativa: string;
+	f_retorno_spc: string;
+	f_status_consulta: string;
+	updatedAt: string;
+	createdAt: string;
+}
+
+export interface ConsultasPjRelations {
+	createdBy?: Users | null;
+	f_id_pessoa?: Empresas | null;
+	updatedBy?: Users | null;
+}
+
+export type ConsultasPjRelationKey = keyof ConsultasPjRelations;
+
 export interface ContratoIxcItens {
 	id: number;
 	f_fk_itens_contrato_ixc: number;

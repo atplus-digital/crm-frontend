@@ -16,7 +16,10 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { usePessoasFisicas, usePessoasJuridicas } from "#/features/cs";
+import {
+	usePessoasFisicas,
+	usePessoasJuridicas,
+} from "#/features/cs/pessoas/pessoas-hooks";
 import type {
 	PessoaFisicaFilters,
 	PessoaFisicaListItem,
