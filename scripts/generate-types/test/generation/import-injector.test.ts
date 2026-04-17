@@ -15,6 +15,7 @@ function createEmptyCollectionTypesMap(
 		map[collectionName] = {
 			scalars: new Map(),
 			relations: new Map(),
+			enums: new Map(),
 		};
 	}
 

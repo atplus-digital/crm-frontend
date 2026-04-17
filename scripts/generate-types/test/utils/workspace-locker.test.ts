@@ -213,5 +213,19 @@ describe("workspace-locker", () => {
 
 			expect(() => applyWorkspaceLockIfNeeded()).not.toThrow();
 		});
+
+		it("throws error when writeFileSync fails", async () => {
+			const { applyWorkspaceLockIfNeeded } = await import(
+				"@scripts/generate-types/src/utils/workspace-locker"
+			);
+
+			vi.mocked(fs.writeFileSync).mockImplementation(() => {
+				throw new Error("Permission denied");
+			});
+
+			expect(() => applyWorkspaceLockIfNeeded()).toThrow(
+				"Falha ao bloquear o workspace",
+			);
+		});
 	});
 });

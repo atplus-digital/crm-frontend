@@ -100,16 +100,32 @@ export class NocoBaseClient {
 			return this.fetchCollectionFieldsWithFallback(collectionName);
 		}
 
-		const params = new URLSearchParams({
-			appends: "fields",
-			filterByTk: collectionName,
-		});
+		// Primeiro tenta collections.fields:list para pegar campos com uiSchema completo (contendo enums)
+		// Se falhar (como acontece com alguns datasources externos), reverte para o método original
+		try {
+			const params = new URLSearchParams({
+				[`filter[collectionName]`]: collectionName,
+			});
 
-		const response = await this.fetchJson<NocoBaseCollectionResponse>(
-			`collections:get?${params}`,
-		);
+			const response = await this.fetchJson<{
+				data: NocoBaseField[];
+			}>(`collections.fields:list?${params}`);
 
-		return sortByName(response.data.fields);
+			return sortByName(response.data);
+		} catch {
+			// Se collections.fields:list falhar, reverte para o método original
+			// Isso é importante para datasources que não suportam este endpoint
+			const params = new URLSearchParams({
+				appends: "fields",
+				filterByTk: collectionName,
+			});
+
+			const response = await this.fetchJson<NocoBaseCollectionResponse>(
+				`collections:get?${params}`,
+			);
+
+			return sortByName(response.data.fields);
+		}
 	}
 
 	/**

@@ -73,25 +73,23 @@ export function ContratoAtendimentosTab({
 					<table className="w-full text-sm">
 						<thead className="bg-muted/50">
 							<tr>
-								<th className="px-4 py-3 text-left font-medium min-w-[80px]">
-									ID
-								</th>
-								<th className="px-4 py-3 text-left font-medium min-w-[120px]">
+								<th className="px-4 py-3 text-left font-medium min-w-20">ID</th>
+								<th className="px-4 py-3 text-left font-medium min-w-30">
 									Ações
 								</th>
-								<th className="px-4 py-3 text-left font-medium min-w-[100px]">
+								<th className="px-4 py-3 text-left font-medium min-w-25">
 									Status
 								</th>
-								<th className="px-4 py-3 text-left font-medium min-w-[120px]">
+								<th className="px-4 py-3 text-left font-medium min-w-30">
 									Assunto
 								</th>
-								<th className="px-4 py-3 text-left font-medium min-w-[150px]">
+								<th className="px-4 py-3 text-left font-medium min-w-37.5">
 									Descrição
 								</th>
-								<th className="px-4 py-3 text-left font-medium min-w-[120px]">
+								<th className="px-4 py-3 text-left font-medium min-w-30">
 									Criado em
 								</th>
-								<th className="px-4 py-3 text-left font-medium min-w-[140px]">
+								<th className="px-4 py-3 text-left font-medium min-w-35">
 									Última Alteração
 								</th>
 							</tr>
@@ -104,7 +102,7 @@ export function ContratoAtendimentosTab({
 										<Button
 											variant="ghost"
 											size="sm"
-											className="min-h-[40px] min-w-[40px] px-2 py-1"
+											className="min-h-10 min-w-10 px-2 py-1"
 										>
 											<Eye className="size-4 mr-1" />
 											Visualizar O.S.

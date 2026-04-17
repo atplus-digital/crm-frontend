@@ -324,4 +324,156 @@ describe("content", () => {
 			expect(fields).toEqual(["f_fk_apple", "f_fk_mango", "f_fk_zebra"]);
 		});
 	});
+
+	describe("generateEnumDefinition", () => {
+		it("generates enum with string values", async () => {
+			const { generateEnumDefinition } = await import(
+				"@scripts/generate-types/src/generation/content"
+			);
+			const result = generateEnumDefinition("users", "f_status", [
+				{ value: "active", label: "Active" },
+				{ value: "inactive", label: "Inactive" },
+			]);
+			expect(result).toContain("export enum UsersStatus {");
+			expect(result).toContain('Active = "active"');
+			expect(result).toContain('Inactive = "inactive"');
+		});
+
+		it("generates enum with number values", async () => {
+			const { generateEnumDefinition } = await import(
+				"@scripts/generate-types/src/generation/content"
+			);
+			const result = generateEnumDefinition("users", "f_priority", [
+				{ value: 1, label: "Low" },
+				{ value: 2, label: "High" },
+			]);
+			expect(result).toContain("export enum UsersPriority {");
+			expect(result).toContain("Value1 = 1");
+			expect(result).toContain("Value2 = 2");
+		});
+
+		it("removes f_ prefix from enum name", async () => {
+			const { generateEnumDefinition } = await import(
+				"@scripts/generate-types/src/generation/content"
+			);
+			const result = generateEnumDefinition("t_pessoas", "f_status", [
+				{ value: "active", label: "Active" },
+			]);
+			expect(result).toContain("export enum PessoasStatus {");
+		});
+
+		it("removes t_ prefix from collection name", async () => {
+			const { generateEnumDefinition } = await import(
+				"@scripts/generate-types/src/generation/content"
+			);
+			const result = generateEnumDefinition("t_empresas", "status", [
+				{ value: "active", label: "Active" },
+			]);
+			expect(result).toContain("export enum EmpresasStatus {");
+		});
+	});
+
+	describe("generateCollectionEnumMaps", () => {
+		it("generates labels record for enum", async () => {
+			const { generateCollectionEnumMaps } = await import(
+				"@scripts/generate-types/src/generation/content"
+			);
+			const types = createMockGeneratedTypes({
+				f_status: "string",
+			});
+			types.enums.set("f_status", [
+				{ value: "active", label: "Active" },
+				{ value: "inactive", label: "Inactive" },
+			]);
+
+			const result = generateCollectionEnumMaps("users", types);
+			expect(result).toContain("USERS_STATUS_LABELS");
+			expect(result).toContain('[UsersStatus.Active]: "Active"');
+			expect(result).toContain('[UsersStatus.Inactive]: "Inactive"');
+		});
+
+		it("generates enum map with single entry", async () => {
+			const { generateCollectionEnumMaps } = await import(
+				"@scripts/generate-types/src/generation/content"
+			);
+			const types = createMockGeneratedTypes({
+				f_status: "string",
+			});
+			types.enums.set("f_status", [{ value: "active", label: "Active" }]);
+
+			const result = generateCollectionEnumMaps("users", types);
+			expect(result).toContain("USERS_STATUS_LABELS");
+			expect(result).toContain('[UsersStatus.Active]: "Active"');
+		});
+	});
+
+	describe("generateCollectionTypeWithEnum", () => {
+		it("includes enum definition when field has enum", async () => {
+			const { generateCollectionTypes } = await import(
+				"@scripts/generate-types/src/generation/content"
+			);
+			const types = createMockCollectionTypesMap({
+				users: {
+					scalars: { id: "number", f_status: "string" },
+					relations: {},
+				},
+			});
+			const userTypes = types.users!;
+			userTypes.enums = new Map([
+				[
+					"f_status",
+					[
+						{ value: "active", label: "Active" },
+						{ value: "inactive", label: "Inactive" },
+					],
+				],
+			]);
+
+			const result = generateCollectionTypes("users", userTypes);
+			expect(result).toContain("export enum UsersStatus {");
+			expect(result).toContain("USERS_STATUS_LABELS");
+		});
+
+		it("includes source table const when includeSourceTableConst is true", async () => {
+			const { generateCollectionTypes } = await import(
+				"@scripts/generate-types/src/generation/content"
+			);
+			const types = createMockCollectionTypesMap({
+				users: {
+					scalars: { id: "number" },
+					relations: {},
+				},
+			});
+			const userTypes = types.users!;
+
+			const result = generateCollectionTypes(
+				"users",
+				userTypes,
+				undefined,
+				true,
+			);
+			expect(result).toContain('export const USERS_TABLE_NAME = "users"');
+		});
+
+		it("excludes source table const when includeSourceTableConst is false", async () => {
+			const { generateCollectionTypes } = await import(
+				"@scripts/generate-types/src/generation/content"
+			);
+			const types = createMockCollectionTypesMap({
+				users: {
+					scalars: { id: "number" },
+					relations: {},
+				},
+			});
+			const userTypes = types.users!;
+
+			const result = generateCollectionTypes(
+				"users",
+				userTypes,
+				undefined,
+				false,
+			);
+			expect(result).not.toContain("USERS_SOURCE_TABLE");
+		});
+	});
 });

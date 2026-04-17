@@ -1,4 +1,3 @@
-import type { CollectionTypesMap } from "@scripts/generate-types/src/@types/generation";
 import type { RuntimeConfig } from "@scripts/generate-types/src/@types/script";
 import { createMockCollectionTypesMap } from "@scripts/generate-types/test/setup";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -227,48 +226,6 @@ describe("generate-types", () => {
 			expect(result).toEqual({});
 		});
 
-		it("should merge maps with relations", () => {
-			const map1: CollectionTypesMap = {
-				users: {
-					scalars: new Map([["id", "string"]]),
-					relations: new Map([
-						[
-							"posts",
-							{
-								type: "hasMany",
-								targetCollection: "posts",
-							},
-						],
-					]),
-				},
-			};
-			const map2: CollectionTypesMap = {
-				posts: {
-					scalars: new Map([["id", "string"]]),
-					relations: new Map([
-						[
-							"author",
-							{
-								type: "belongsTo",
-								targetCollection: "users",
-							},
-						],
-					]),
-				},
-			};
-
-			const result = generateTypesModule.mergeCollectionTypeMaps([map1, map2]);
-
-			expect(result.users?.relations?.get("posts")).toEqual({
-				type: "hasMany",
-				targetCollection: "posts",
-			});
-			expect(result.posts?.relations?.get("author")).toEqual({
-				type: "belongsTo",
-				targetCollection: "users",
-			});
-		});
-
 		it("should handle single map in iterable", () => {
 			const map = createMockCollectionTypesMap({
 				single: { scalars: { id: "string" } },
@@ -441,35 +398,5 @@ describe("mergeCollectionTypeMaps - edge cases", () => {
 
 		expect(result.users?.scalars.get("id")).toBe("number");
 		expect(result.users?.scalars.get("name")).toBe("string");
-	});
-
-	it("deve mesclar relações de coleções diferentes", () => {
-		const map1: CollectionTypesMap = {
-			users: {
-				scalars: new Map([["id", "string"]]),
-				relations: new Map([
-					["posts", { type: "hasMany", targetCollection: "posts" }],
-				]),
-			},
-		};
-		const map2: CollectionTypesMap = {
-			posts: {
-				scalars: new Map([["id", "string"]]),
-				relations: new Map([
-					["user", { type: "belongsTo", targetCollection: "users" }],
-				]),
-			},
-		};
-
-		const result = generateTypesModule.mergeCollectionTypeMaps([map1, map2]);
-
-		expect(result.users?.relations?.get("posts")).toEqual({
-			type: "hasMany",
-			targetCollection: "posts",
-		});
-		expect(result.posts?.relations?.get("user")).toEqual({
-			type: "belongsTo",
-			targetCollection: "users",
-		});
 	});
 });

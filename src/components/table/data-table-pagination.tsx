@@ -68,7 +68,7 @@ export function DataTablePagination<TData>({
 
 	return (
 		<div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-			<span className="text-sm text-muted-foreground">
+			<span className="text-sm text-muted-foreground text-nowrap">
 				{startItem}-{endItem} de {itemCount}
 			</span>
 
@@ -130,7 +130,9 @@ export function DataTablePagination<TData>({
 			</Pagination>
 
 			<div className="flex items-center gap-2">
-				<span className="text-sm text-muted-foreground">Itens por página:</span>
+				<span className="text-sm text-muted-foreground text-nowrap">
+					Itens por página:
+				</span>
 				<Select
 					value={pageSize.toString()}
 					onValueChange={(value) => table.setPageSize(Number(value))}
