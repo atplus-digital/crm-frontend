@@ -112,6 +112,28 @@ export class NocoBaseClient {
 		return sortByName(response.data.fields);
 	}
 
+	/**
+	 * Busca todos os campos de uma collection via recurso collections.fields.
+	 * Este endpoint retorna campos com uiSchema completo (incluindo enums).
+	 *
+	 * @param collectionName - Nome da collection
+	 * @returns Array de campos ordenados por nome
+	 * @throws {Error} Se timeout ou erro HTTP
+	 */
+	public async fetchFieldsWithUISchema(
+		collectionName: string,
+	): Promise<NocoBaseField[]> {
+		const params = new URLSearchParams({
+			filter: JSON.stringify({ collectionName }),
+		});
+
+		const response = await this.fetchJson<{
+			data: NocoBaseField[];
+		}>(`collections.fields:list?${params}`);
+
+		return sortByName(response.data);
+	}
+
 	private async fetchCollectionFieldsWithFallback(
 		collectionName: string,
 	): Promise<NocoBaseField[]> {

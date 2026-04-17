@@ -117,7 +117,7 @@ export function createMockField(
 }
 
 /**
- * Cria um GeneratedTypes (scalars + relations) para uma collection.
+ * Cria um GeneratedTypes (scalars + relations + enums) para uma collection.
  */
 export function createMockGeneratedTypes(
 	scalars: Record<string, string> = {},
@@ -126,6 +126,7 @@ export function createMockGeneratedTypes(
 	return {
 		scalars: new Map(Object.entries(scalars)),
 		relations: new Map(Object.entries(relations)),
+		enums: new Map(),
 	};
 }
 
@@ -146,6 +147,7 @@ export function createMockCollectionTypesMap(
 		map[name] = {
 			scalars: new Map(Object.entries(types.scalars ?? {})),
 			relations: new Map(Object.entries(types.relations ?? {})),
+			enums: new Map(),
 		};
 	}
 	return map;

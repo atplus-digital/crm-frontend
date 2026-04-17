@@ -19,6 +19,103 @@ import type { Users } from "./users";
 
 export const T_NEGOCIACOES_TABLE_NAME = "t_negociacoes";
 
+export enum NegociacoesConfissaoDivida {
+	Nao = "Nao",
+	Sim = "Sim",
+}
+
+export enum NegociacoesDataVencimento {
+	Value1 = "1",
+	Value5 = "5",
+	Value10 = "10",
+	Value15 = "15",
+	Value20 = "20",
+	Value25 = "25",
+}
+
+export enum NegociacoesEnderecoCobranca {
+	Value0 = "0",
+	Value1 = "1",
+}
+
+export enum NegociacoesEnderecoComplemento {
+	Casa = "Casa",
+	Apartamento = "Apartamento",
+	Condominio = "Condominio",
+	Comercial = "Comercial",
+}
+
+export enum NegociacoesFidelidade {
+	Value0 = "0",
+	Value12 = "12",
+	Value24 = "24",
+	Value36 = "36",
+	Value48 = "48",
+	Value60 = "60",
+}
+
+export enum NegociacoesMotivo {
+	I = "I",
+	M = "M",
+	D = "D",
+	U = "U",
+	N = "N",
+	R = "R",
+	T = "T",
+	L = "L",
+	S = "S",
+	P = "P",
+}
+
+export enum NegociacoesMotivoPontos {
+	Cep = "cep",
+	Endereco = "endereco",
+	Numero = "numero",
+	Telefone = "telefone",
+	TelefoneAdc = "telefone-adc",
+	Email = "email",
+}
+
+export enum NegociacoesPontosAtencao {
+	Value0 = "0",
+	Value1 = "1",
+	Value2 = "2",
+	Value3 = "3",
+	Value4 = "4",
+	Value5 = "5",
+	Value6 = "6",
+}
+
+export enum NegociacoesStatus {
+	Value1 = "1",
+	Value2 = "2",
+	Value3 = "3",
+	Value4 = "4",
+	Value5 = "5",
+	Value6 = "6",
+}
+
+export enum NegociacoesSubstatus {
+	Value1 = "1",
+	Value2 = "2",
+	Value3 = "3",
+	Value4 = "4",
+	Value5 = "5",
+	Value6 = "6",
+	Value7 = "7",
+	Value8 = "8",
+	Value9 = "9",
+	Value10 = "10",
+	Value11 = "11",
+	Value12 = "12",
+	Value13 = "13",
+}
+
+export enum NegociacoesTipoPessoa {
+	Pf = "PF",
+	Pj = "PJ",
+}
+
 export interface Negociacoes {
 	id: number;
 	f_fk_auditoria_automatica: number;
@@ -38,28 +135,28 @@ export interface Negociacoes {
 	f_cep_cobranca: string;
 	f_cidade_cobranca: string;
 	f_complemento_cobranca: string;
-	f_confissao_divida: string;
+	f_confissao_divida: NegociacoesConfissaoDivida;
 	f_contrato_ixc: string;
 	f_cpf_cnpj: string;
 	f_cpf_responsavel_assinatura: string;
-	f_data_vencimento: string;
+	f_data_vencimento: NegociacoesDataVencimento;
 	f_email_cobranca: string;
 	f_endereco: string;
 	f_endereco_cidade: string;
-	f_endereco_cobranca: string;
-	f_endereco_complemento: string;
+	f_endereco_cobranca: NegociacoesEnderecoCobranca;
+	f_endereco_complemento: NegociacoesEnderecoComplemento;
 	f_endereco_de_cobranca: string;
 	f_endereco_estado: string;
 	f_endereco_numero: string;
 	f_endereco_referencia: string;
 	f_entrada_saldo_devedor: number;
 	f_estado_cobranca: string;
-	f_fidelidade: string;
+	f_fidelidade: NegociacoesFidelidade;
 	f_Incremento: string;
 	f_ixc_tipo_cobranca: string;
 	f_link_assinatura: string;
-	f_motivo: string;
-	f_motivo_pontos: string[];
+	f_motivo: NegociacoesMotivo;
+	f_motivo_pontos: NegociacoesMotivoPontos;
 	f_multa_juros: number;
 	f_nome_edificio: string;
 	f_nome_fantasia: string;
@@ -68,18 +165,18 @@ export interface Negociacoes {
 	f_ordenacao: number;
 	f_parcelas_mensais: number;
 	f_periodo_final: string;
-	f_pontos_atencao: string;
+	f_pontos_atencao: NegociacoesPontosAtencao;
 	f_responsavel_assinatura: string;
 	f_rg_ie: string;
 	f_scm: number;
 	f_smp: number;
-	f_status: string;
+	f_status: NegociacoesStatus;
 	f_stfc: number;
-	f_substatus: string;
+	f_substatus: NegociacoesSubstatus;
 	f_sva: number;
 	f_telefone: string;
 	f_telefone_2: string;
-	f_tipo_pessoa: string;
+	f_tipo_pessoa: NegociacoesTipoPessoa;
 	f_titulo: string;
 	f_valor_beneficios: number;
 	f_valor_da_parcela: string;
@@ -113,3 +210,128 @@ export interface NegociacoesRelations {
 }
 
 export type NegociacoesRelationKey = keyof NegociacoesRelations;
+
+export const NEGOCIACOES_CONFISSAODIVIDA_LABELS: Record<
+	NegociacoesConfissaoDivida,
+	string
+> = {
+	[NegociacoesConfissaoDivida.Nao]: "Nao",
+	[NegociacoesConfissaoDivida.Sim]: "Sim",
+};
+
+export const NEGOCIACOES_DATAVENCIMENTO_LABELS: Record<
+	NegociacoesDataVencimento,
+	string
+> = {
+	[NegociacoesDataVencimento.Value1]: "Dia 01",
+	[NegociacoesDataVencimento.Value5]: "Dia 05",
+	[NegociacoesDataVencimento.Value10]: "Dia 10",
+	[NegociacoesDataVencimento.Value15]: "Dia 15",
+	[NegociacoesDataVencimento.Value20]: "Dia 20",
+	[NegociacoesDataVencimento.Value25]: "Dia 25",
+};
+
+export const NEGOCIACOES_ENDERECOCOBRANCA_LABELS: Record<
+	NegociacoesEnderecoCobranca,
+	string
+> = {
+	[NegociacoesEnderecoCobranca.Value0]: "Não",
+	[NegociacoesEnderecoCobranca.Value1]: "Sim",
+};
+
+export const NEGOCIACOES_ENDERECOCOMPLEMENTO_LABELS: Record<
+	NegociacoesEnderecoComplemento,
+	string
+> = {
+	[NegociacoesEnderecoComplemento.Casa]: "Casa",
+	[NegociacoesEnderecoComplemento.Apartamento]: "Apartamento",
+	[NegociacoesEnderecoComplemento.Condominio]: "Condominio",
+	[NegociacoesEnderecoComplemento.Comercial]: "Comercial",
+};
+
+export const NEGOCIACOES_FIDELIDADE_LABELS: Record<
+	NegociacoesFidelidade,
+	string
+> = {
+	[NegociacoesFidelidade.Value0]: "0 Meses",
+	[NegociacoesFidelidade.Value12]: "12 Meses",
+	[NegociacoesFidelidade.Value24]: "24 Meses",
+	[NegociacoesFidelidade.Value36]: "36 Meses",
+	[NegociacoesFidelidade.Value48]: "48 Meses",
+	[NegociacoesFidelidade.Value60]: "60 Meses",
+};
+
+export const NEGOCIACOES_MOTIVO_LABELS: Record<NegociacoesMotivo, string> = {
+	[NegociacoesMotivo.I]: "Venda Nova",
+	[NegociacoesMotivo.M]: "Mudança de Endereço",
+	[NegociacoesMotivo.D]: "Downgrade",
+	[NegociacoesMotivo.U]: "Upgrade",
+	[NegociacoesMotivo.N]: "Renegociação",
+	[NegociacoesMotivo.R]: "Reativação",
+	[NegociacoesMotivo.T]: "Mudança de Tecnologia",
+	[NegociacoesMotivo.L]: "Mudança de Titularidade",
+	[NegociacoesMotivo.S]: "Segunda Contratação",
+	[NegociacoesMotivo.P]: "Proposta",
+};
+
+export const NEGOCIACOES_MOTIVOPONTOS_LABELS: Record<
+	NegociacoesMotivoPontos,
+	string
+> = {
+	[NegociacoesMotivoPontos.Cep]: "CEP duplicado",
+	[NegociacoesMotivoPontos.Endereco]: "Endereço duplicado",
+	[NegociacoesMotivoPontos.Numero]: "Número duplicado",
+	[NegociacoesMotivoPontos.Telefone]: "Telefone duplicado",
+	[NegociacoesMotivoPontos.TelefoneAdc]: "Telefone adicional duplicado",
+	[NegociacoesMotivoPontos.Email]: "E-mail duplicado",
+};
+
+export const NEGOCIACOES_PONTOSATENCAO_LABELS: Record<
+	NegociacoesPontosAtencao,
+	string
+> = {
+	[NegociacoesPontosAtencao.Value0]: "0 Pontos",
+	[NegociacoesPontosAtencao.Value1]: "1 Ponto",
+	[NegociacoesPontosAtencao.Value2]: "2 Pontos",
+	[NegociacoesPontosAtencao.Value3]: "3 Pontos",
+	[NegociacoesPontosAtencao.Value4]: "4 Pontos",
+	[NegociacoesPontosAtencao.Value5]: "5 Pontos",
+	[NegociacoesPontosAtencao.Value6]: "6 Pontos",
+};
+
+export const NEGOCIACOES_STATUS_LABELS: Record<NegociacoesStatus, string> = {
+	[NegociacoesStatus.Value1]: "Novo",
+	[NegociacoesStatus.Value2]: "Negociando",
+	[NegociacoesStatus.Value3]: "Assinatura",
+	[NegociacoesStatus.Value4]: "Auditoria",
+	[NegociacoesStatus.Value5]: "Concluído",
+	[NegociacoesStatus.Value6]: "Arquivado",
+};
+
+export const NEGOCIACOES_SUBSTATUS_LABELS: Record<
+	NegociacoesSubstatus,
+	string
+> = {
+	[NegociacoesSubstatus.Value1]: "NA",
+	[NegociacoesSubstatus.Value2]:
+		"AGUARDANDO - Assinatura do contrato pelo cliente",
+	[NegociacoesSubstatus.Value3]: "AGUARDANDO - Auditoria",
+	[NegociacoesSubstatus.Value4]: "APROVADO - Aguardando inserção no IXC",
+	[NegociacoesSubstatus.Value5]: "REPROVADO - Divergência de Dados",
+	[NegociacoesSubstatus.Value6]: "REPROVADO - Fraude",
+	[NegociacoesSubstatus.Value7]: "REPROVADO - Análise de Crédito",
+	[NegociacoesSubstatus.Value8]: "APROVADO - Erro na integração com o IXC",
+	[NegociacoesSubstatus.Value9]: "APROVADO - Concluído",
+	[NegociacoesSubstatus.Value10]: "PERDIDO",
+	[NegociacoesSubstatus.Value11]: "APROVADO - Aguardando atualização no IXC",
+	[NegociacoesSubstatus.Value12]: "REPROVADO - Financeiro em Atraso",
+	[NegociacoesSubstatus.Value13]: "EM STANDBY",
+};
+
+export const NEGOCIACOES_TIPOPESSOA_LABELS: Record<
+	NegociacoesTipoPessoa,
+	string
+> = {
+	[NegociacoesTipoPessoa.Pf]: "Pessoa Física",
+	[NegociacoesTipoPessoa.Pj]: "Pessoa Jurídica",
+};

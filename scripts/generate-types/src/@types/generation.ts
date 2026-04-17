@@ -18,9 +18,15 @@ export interface RelationInfo {
 	targetCollection: string;
 }
 
+export interface EnumOption {
+	value: string | number;
+	label: string;
+}
+
 export interface GeneratedTypes {
 	scalars: Map<string, string>;
 	relations: Map<string, RelationInfo>;
+	enums: Map<string, EnumOption[]>;
 }
 
 export type CollectionTypesMap = Record<string, GeneratedTypes>;

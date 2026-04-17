@@ -7,6 +7,7 @@ export interface NocoBaseCollection {
  * Interface types suportados pelo NocoBase.
  * Define a cardinalidade e comportamento do campo.
  */
+
 export type NocoBaseFieldInterface =
 	| "m2o"
 	| "o2m"
@@ -250,6 +251,13 @@ export interface NocoBaseField {
 	type: string;
 	interface: NocoBaseFieldInterface | null;
 	target?: string | null;
+	uiSchema?: {
+		enum?: Array<{
+			value: string | number;
+			label: string;
+		}>;
+		title?: string;
+	};
 }
 
 export interface NocoBaseCollectionResponse {

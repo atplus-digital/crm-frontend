@@ -1,5 +1,6 @@
 import type {
 	CollectionTypesMap,
+	EnumOption,
 	GeneratedTypes,
 	RelationInfo,
 } from "@scripts/generate-types/src/@types/generation";
@@ -120,6 +121,143 @@ export function generateFileHeader(): string {
 }
 
 /**
+ * Converte valor de enum em nome válido para TypeScript enum member.
+ * Regras: deve começar com letra/underline, conter apenas letras, números e underline.
+ */
+function toEnumMemberName(value: string | number): string {
+	const raw = value.toString();
+	const sanitized = raw
+		.replace(/[^a-zA-Z0-9]/g, "_")
+		.replace(/_+/g, "_")
+		.replace(/^_|_$/g, "");
+
+	const pascal = sanitized
+		.split("_")
+		.filter((part) => part.length > 0)
+		.map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+		.join("");
+
+	if (/^\d/.test(pascal) || pascal.length === 0) {
+		return `Value${pascal || "Unknown"}`;
+	}
+
+	return pascal;
+}
+
+/**
+ * Gera enum TypeScript nomeado para um campo.
+ * Ex: export enum PessoasStatus { Ativo = "ativo", Inativo = "inativo" }
+ */
+export function generateEnumDefinition(
+	collectionName: string,
+	fieldName: string,
+	enumOptions: EnumOption[],
+): string {
+	const members = enumOptions
+		.map((opt) => {
+			const memberName = toEnumMemberName(opt.value);
+			const memberValue =
+				typeof opt.value === "string" ? `"${opt.value}"` : String(opt.value);
+			return `\t${memberName} = ${memberValue}`;
+		})
+		.join(",\n");
+
+	const fieldNameWithoutPrefix = fieldName.replace(/^[tf]_/, "");
+	const enumName = `${toCollectionTypeName(collectionName)}${toEnumMemberName(fieldNameWithoutPrefix)}`;
+
+	return `export enum ${enumName} {\n${members}\n}`;
+}
+
+/**
+ * Gera o mapa de labels tipado para um enum.
+ * Ex: export const STATUS_LABELS: Record<PessoasStatus, string> = { ... }
+ */
+export function generateEnumLabelMap(
+	collectionName: string,
+	fieldName: string,
+	enumOptions: EnumOption[],
+): string {
+	const fieldNameWithoutPrefix = fieldName.replace(/^[tf]_/, "");
+	const enumName = `${toCollectionTypeName(collectionName)}${toEnumMemberName(fieldNameWithoutPrefix)}`;
+
+	const entries = enumOptions
+		.map((opt) => {
+			const memberName = toEnumMemberName(opt.value);
+			const label = JSON.stringify(opt.label);
+			return `\t[${enumName}.${memberName}]: ${label}`;
+		})
+		.join(",\n");
+
+	const mapName = `${toCollectionTypeName(collectionName).toUpperCase()}_${toEnumMemberName(fieldNameWithoutPrefix).toUpperCase()}_LABELS`;
+
+	return `export const ${mapName}: Record<${enumName}, string> = {\n${entries}\n};`;
+}
+
+/**
+ * Gera todos os enums de uma collection.
+ */
+export function generateCollectionEnums(
+	collectionName: string,
+	types: GeneratedTypes,
+): string {
+	if (types.enums.size === 0) {
+		return "";
+	}
+
+	const lines: string[] = [];
+	const sortedEnums = Array.from(types.enums.entries()).sort(([a], [b]) =>
+		a.localeCompare(b),
+	);
+
+	for (const [fieldName, enumOptions] of sortedEnums) {
+		lines.push(generateEnumDefinition(collectionName, fieldName, enumOptions));
+	}
+
+	return lines.join("\n\n");
+}
+
+/**
+ * Gera todos os mapas de labels de enums de uma collection.
+ */
+export function generateCollectionEnumMaps(
+	collectionName: string,
+	types: GeneratedTypes,
+): string {
+	if (types.enums.size === 0) {
+		return "";
+	}
+
+	const lines: string[] = [];
+	const sortedEnums = Array.from(types.enums.entries()).sort(([a], [b]) =>
+		a.localeCompare(b),
+	);
+
+	for (const [fieldName, enumOptions] of sortedEnums) {
+		lines.push(generateEnumLabelMap(collectionName, fieldName, enumOptions));
+	}
+
+	return lines.join("\n\n");
+}
+
+/**
+ * Gera o tipo para um campo escalar, usando enum se disponível.
+ */
+function getScalarFieldType(
+	fieldName: string,
+	fieldType: string,
+	types: GeneratedTypes,
+	collectionName: string,
+): string {
+	if (types.enums.has(fieldName)) {
+		const fieldNameWithoutPrefix = fieldName.replace(/^[tf]_/, "");
+		const enumName = `${toCollectionTypeName(collectionName)}${toEnumMemberName(fieldNameWithoutPrefix)}`;
+		return enumName;
+	}
+
+	return fieldType;
+}
+
+/**
  * Gera a interface Base de uma collection (apenas campos escalares/FKs).
  */
 export function generateCollectionBaseInterface(
@@ -136,7 +274,13 @@ export function generateCollectionBaseInterface(
 
 	lines.push(`export interface ${typeName} {`);
 	for (const [fieldName, fieldType] of scalarEntries) {
-		lines.push(`\t${formatKey(fieldName)}: ${fieldType};`);
+		const actualType = getScalarFieldType(
+			fieldName,
+			fieldType,
+			types,
+			collectionName,
+		);
+		lines.push(`\t${formatKey(fieldName)}: ${actualType};`);
 	}
 	lines.push("}");
 
@@ -191,7 +335,7 @@ export function generateCollectionRelationKeyType(
 
 /**
  * Gera a definição completa de tipos para uma collection.
- * Inclui: Base interface + Relations interface + RelationKey type
+ * Inclui: Enums + Base interface + Relations interface + RelationKey type + Enum maps
  */
 export function generateCollectionTypes(
 	collectionName: string,
@@ -208,10 +352,19 @@ export function generateCollectionTypes(
 		lines.push("");
 	}
 
+	// 1. Enums primeiro (para serem usados nas interfaces)
+	if (types.enums.size > 0) {
+		lines.push(generateCollectionEnums(collectionName, types));
+		lines.push("");
+	}
+
+	// 2. Interface Base
 	lines.push(
 		generateCollectionBaseInterface(collectionName, types, baseInterfaceNaming),
 	);
 	lines.push("");
+
+	// 3. Relations
 	lines.push(
 		generateCollectionRelationsInterface(
 			collectionName,
@@ -220,7 +373,15 @@ export function generateCollectionTypes(
 		),
 	);
 	lines.push("");
+
+	// 4. RelationKey type
 	lines.push(generateCollectionRelationKeyType(collectionName));
+
+	// 5. Enum maps (labels)
+	if (types.enums.size > 0) {
+		lines.push("");
+		lines.push(generateCollectionEnumMaps(collectionName, types));
+	}
 
 	return lines.join("\n");
 }

@@ -45,6 +45,7 @@ function buildGeneratedTypes(
 	const generated: GeneratedTypes = {
 		scalars: new Map(),
 		relations: new Map(),
+		enums: new Map(),
 	};
 
 	for (const field of fields) {
@@ -60,6 +61,10 @@ function buildGeneratedTypes(
 		}
 
 		generated.scalars.set(field.name, mapFieldType(field));
+
+		if (field.uiSchema?.enum && field.uiSchema.enum.length > 0) {
+			generated.enums.set(field.name, field.uiSchema.enum);
+		}
 	}
 
 	return generated;
