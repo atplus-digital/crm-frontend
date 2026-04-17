@@ -4,6 +4,8 @@ import ts from "typescript";
 
 const cwd = process.cwd();
 
+const tsConfigFileName = "tsconfig.json";
+
 function getStagedTypeScriptFiles(): string[] {
 	const output = execSync(
 		"git diff --name-only --staged --diff-filter=ACMR -- '*.ts' '*.tsx'",
@@ -37,9 +39,14 @@ function getFilesFromArgsOrGit(args: string[]): string[] {
 }
 
 function loadTsConfig() {
-	const configPath = ts.findConfigFile(cwd, ts.sys.fileExists, "tsconfig.json");
+	const configPath = ts.findConfigFile(
+		cwd,
+		ts.sys.fileExists,
+		tsConfigFileName,
+	);
+
 	if (!configPath) {
-		throw new Error("Could not find tsconfig.json");
+		throw new Error(`Could not find ${tsConfigFileName}`);
 	}
 
 	const configFile = ts.readConfigFile(configPath, ts.sys.readFile);
@@ -86,6 +93,7 @@ function main() {
 		}
 
 		const { options, projectReferences } = loadTsConfig();
+
 		const program = ts.createProgram({
 			rootNames: files,
 			options,
@@ -93,6 +101,7 @@ function main() {
 		});
 
 		const diagnostics = ts.getPreEmitDiagnostics(program);
+
 		if (diagnostics.length > 0) {
 			console.error(formatDiagnostics(diagnostics));
 			process.exit(1);
