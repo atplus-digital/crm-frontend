@@ -68,6 +68,11 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 				icon: "fileText",
 				to: "/cs/contratos",
 			},
+			{
+				label: "Troca de Titularidade",
+				icon: "fileText",
+				to: "/cs/troca-de-titularidade",
+			},
 		],
 	},
 ];

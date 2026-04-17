@@ -36,7 +36,6 @@ Type generation pipeline — fetches NocoBase + IXC schemas via API, generates T
 
 - **Dual datasource**: NocoBase (main) + IXC (external `d_db_ixcsoft`) — both configured in `datasources.config.ts`.
 - **Split collections**: Large collections split into individual files (`pessoas.ts`, `empresas.ts`, etc.) — defined in config.
-- **Sample field fallback**: IXC datasource enables `enableSampleFieldFallback: true` — infers types from sample data when schema incomplete.
 - **Auto-cleanup**: Removes stale collection files when collections are deleted from NocoBase.
 - **Workspace locking**: `workspace-locker.ts` prevents concurrent generation (avoids race conditions).
 - **Biome auto-fix**: `runBiomeFix()` called after generation — generated code is pre-formatted.
@@ -112,7 +111,6 @@ pnpm test scripts/generate-types/test/generation/field-mapper.test.ts
     "fn_areceber",
     "su_ticket",
   ],
-  enableSampleFieldFallback: true,  // Infer from sample data if schema incomplete
 }
 ```
 

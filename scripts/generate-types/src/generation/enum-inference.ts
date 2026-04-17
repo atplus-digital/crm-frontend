@@ -19,15 +19,22 @@ export interface EnumInferenceConfig {
 	/**
 	 * Threshold de cardinalidade para considerar um campo como enum.
 	 * Campos com cardinalidade menor que este valor são candidatos a enum.
-	 * @default 20
+	 * @default 8
 	 */
 	cardinalityThreshold: number;
 
 	/**
 	 * Tamanho da amostra para calcular cardinalidade.
-	 * @default 10000
+	 * @default 5000
 	 */
 	sampleSize: number;
+
+	/**
+	 * Razão mínima de repetição para considerar como enum.
+	 * Ex: 0.8 significa que 80% dos registros devem ter valores repetidos.
+	 * @default 0.8
+	 */
+	minRepetitionRatio?: number;
 }
 
 /**
@@ -161,6 +168,7 @@ function isEnumCandidate(
 	distinctValues: string[],
 	totalRecords: number,
 	cardinalityThreshold: number,
+	minRepetitionRatio?: number,
 ): boolean {
 	// Cardinalidade baixa: menos valores distintos que o threshold
 	if (distinctValues.length >= cardinalityThreshold) {
@@ -179,6 +187,16 @@ function isEnumCandidate(
 	const cardinalityRatio = distinctValues.length / totalRecords;
 	if (cardinalityRatio > 0.5 && distinctValues.length > 5) {
 		return false;
+	}
+
+	// Nova regra: verificar razão de repetição mínima
+	// Se minRepetitionRatio = 0.8, então 80% dos registros devem ter valores repetidos
+	if (minRepetitionRatio !== undefined && minRepetitionRatio > 0) {
+		const uniqueRatio = distinctValues.length / totalRecords;
+		const repetitionRatio = 1 - uniqueRatio;
+		if (repetitionRatio < minRepetitionRatio) {
+			return false;
+		}
 	}
 
 	return true;
@@ -220,7 +238,8 @@ export function inferEnumsFromSample(
 	fieldNames: string[],
 	inferenceConfig?: Partial<EnumInferenceConfig>,
 ): InferredEnumsMap {
-	const threshold = inferenceConfig?.cardinalityThreshold ?? 20;
+	const threshold = inferenceConfig?.cardinalityThreshold ?? 8;
+	const minRepetitionRatio = inferenceConfig?.minRepetitionRatio;
 	const inferredEnums: InferredEnumsMap = {};
 
 	for (const fieldName of fieldNames) {
@@ -230,7 +249,14 @@ export function inferEnumsFromSample(
 			continue;
 		}
 
-		if (isEnumCandidate(distinctValues, records.length, threshold)) {
+		if (
+			isEnumCandidate(
+				distinctValues,
+				records.length,
+				threshold,
+				minRepetitionRatio,
+			)
+		) {
 			const enumInfo = processEnumValues(
 				distinctValues,
 				fieldName,

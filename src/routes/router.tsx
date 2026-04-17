@@ -52,6 +52,14 @@ export const router = createBrowserRouter([
 						path: "cs/contratos/:id",
 						lazy: () => import("./cs/cs-contrato-detail"),
 					},
+					{
+						path: "cs/troca-de-titularidade",
+						lazy: () => import("./cs/troca-de-titularidade"),
+					},
+					{
+						path: "cs/troca-de-titularidade/:id",
+						lazy: () => import("./cs/troca-de-titularidade/$id"),
+					},
 				],
 			},
 			{

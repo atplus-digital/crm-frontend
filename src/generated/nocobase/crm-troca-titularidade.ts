@@ -14,6 +14,15 @@ import type { Users } from "./users";
 
 export const T_CRM_TROCA_TITULARIDADE_TABLE_NAME = "t_crm_troca_titularidade";
 
+export enum CrmTrocaTitularidadeCidade {
+	CampoBeloDoSul = "Campo Belo do Sul",
+	CapOAlto = "Capão Alto",
+	CorreiaPinto = "CORREIA PINTO",
+	Curitibanos = "Curitibanos",
+	Lages = "lages",
+	Painel = "Painel",
+}
+
 export enum CrmTrocaTitularidadeComplemento {
 	Casa = "Casa",
 	Apartamento = "Apartamento",
@@ -23,6 +32,18 @@ export enum CrmTrocaTitularidadeComplemento {
 
 export enum CrmTrocaTitularidadeEstado {
 	Sc = "SC",
+}
+
+export enum CrmTrocaTitularidadeFkNegociacaoVendedor {
+	Value20 = "20",
+	Value27 = "27",
+	Value31 = "31",
+	Value32 = "32",
+	Value38 = "38",
+	Value39 = "39",
+	Value40 = "40",
+	Value43 = "43",
+	Value48 = "48",
 }
 
 export enum CrmTrocaTitularidadeStatus {
@@ -50,7 +71,7 @@ export enum CrmTrocaTitularidadeTipoPessoa {
 
 export interface CrmTrocaTitularidade {
 	id: number;
-	f_fk_negociacao_vendedor: number;
+	f_fk_negociacao_vendedor: CrmTrocaTitularidadeFkNegociacaoVendedor;
 	f_fk_pessoa_negociacao: number;
 	f_fk_pessoa_pj_negociacao: number;
 	f_bairro: string;
@@ -65,7 +86,7 @@ export interface CrmTrocaTitularidade {
 	f_cessionario_email: string;
 	f_cessionario_responsavel: string;
 	f_cessionario_telefone: string;
-	f_cidade: string;
+	f_cidade: CrmTrocaTitularidadeCidade;
 	f_complemento: CrmTrocaTitularidadeComplemento;
 	f_endereco: string;
 	f_estado: CrmTrocaTitularidadeEstado;
@@ -96,6 +117,18 @@ export interface CrmTrocaTitularidadeRelations {
 export type CrmTrocaTitularidadeRelationKey =
 	keyof CrmTrocaTitularidadeRelations;
 
+export const CRMTROCATITULARIDADE_CIDADE_LABELS: Record<
+	CrmTrocaTitularidadeCidade,
+	string
+> = {
+	[CrmTrocaTitularidadeCidade.CampoBeloDoSul]: "Campo Belo Do Sul",
+	[CrmTrocaTitularidadeCidade.CapOAlto]: "Capão Alto",
+	[CrmTrocaTitularidadeCidade.CorreiaPinto]: "Correia Pinto",
+	[CrmTrocaTitularidadeCidade.Curitibanos]: "Curitibanos",
+	[CrmTrocaTitularidadeCidade.Lages]: "Lages",
+	[CrmTrocaTitularidadeCidade.Painel]: "Painel",
+};
+
 export const CRMTROCATITULARIDADE_COMPLEMENTO_LABELS: Record<
 	CrmTrocaTitularidadeComplemento,
 	string
@@ -111,6 +144,21 @@ export const CRMTROCATITULARIDADE_ESTADO_LABELS: Record<
 	string
 > = {
 	[CrmTrocaTitularidadeEstado.Sc]: "SC",
+};
+
+export const CRMTROCATITULARIDADE_FKNEGOCIACAOVENDEDOR_LABELS: Record<
+	CrmTrocaTitularidadeFkNegociacaoVendedor,
+	string
+> = {
+	[CrmTrocaTitularidadeFkNegociacaoVendedor.Value20]: "Código 20",
+	[CrmTrocaTitularidadeFkNegociacaoVendedor.Value27]: "Código 27",
+	[CrmTrocaTitularidadeFkNegociacaoVendedor.Value31]: "Código 31",
+	[CrmTrocaTitularidadeFkNegociacaoVendedor.Value32]: "Código 32",
+	[CrmTrocaTitularidadeFkNegociacaoVendedor.Value38]: "Código 38",
+	[CrmTrocaTitularidadeFkNegociacaoVendedor.Value39]: "Código 39",
+	[CrmTrocaTitularidadeFkNegociacaoVendedor.Value40]: "Código 40",
+	[CrmTrocaTitularidadeFkNegociacaoVendedor.Value43]: "Código 43",
+	[CrmTrocaTitularidadeFkNegociacaoVendedor.Value48]: "Código 48",
 };
 
 export const CRMTROCATITULARIDADE_STATUS_LABELS: Record<
