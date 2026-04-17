@@ -1,7 +1,7 @@
+import { MovelTableSkeleton } from "#/components/detail/movel-table-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { EmptyTable } from "#/components/table/empty-table";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
-import { Skeleton } from "#/components/ui/skeleton";
 import {
 	Table,
 	TableBody,
@@ -14,17 +14,6 @@ import { useContratoMovel } from "#/features/cs/contratos/contratos-hooks";
 
 interface ContratoMovelTabProps {
 	contratoId: number;
-}
-
-function MovelTableSkeleton() {
-	return (
-		<div className="space-y-2">
-			<Skeleton className="h-10 w-full" />
-			<Skeleton className="h-10 w-full" />
-			<Skeleton className="h-10 w-full" />
-			<Skeleton className="h-10 w-full" />
-		</div>
-	);
 }
 
 export function ContratoMovelTab({ contratoId }: ContratoMovelTabProps) {

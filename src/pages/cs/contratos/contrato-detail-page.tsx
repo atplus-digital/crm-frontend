@@ -7,6 +7,8 @@ import {
 	Smartphone,
 } from "lucide-react";
 import { Link, useParams } from "react-router";
+import { DetailField } from "#/components/detail/detail-field";
+import { DetailSkeleton } from "#/components/detail/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { EmptyTable } from "#/components/table/empty-table";
 import { Button } from "#/components/ui/button";
@@ -37,67 +39,7 @@ import type {
 	Fatura,
 	ProdutoContrato,
 } from "#/features/cs/contratos/contratos-types";
-
-function formatDatePtBR(dateStr: string | null | undefined): string {
-	if (!dateStr || dateStr.startsWith("0000")) return "—";
-	return new Intl.DateTimeFormat("pt-BR", {
-		day: "2-digit",
-		month: "2-digit",
-		year: "numeric",
-	}).format(new Date(dateStr));
-}
-
-function DetailField({
-	label,
-	children,
-}: {
-	label: string;
-	children: React.ReactNode;
-}) {
-	return (
-		<div className="flex flex-col gap-1">
-			<span className="text-sm font-medium text-muted-foreground">{label}</span>
-			<span className="text-sm">{children}</span>
-		</div>
-	);
-}
-
-function DetailSkeleton() {
-	const sectionKeys = ["section-1", "section-2", "section-3"] as const;
-	const fieldKeys = [
-		"field-1",
-		"field-2",
-		"field-3",
-		"field-4",
-		"field-5",
-		"field-6",
-	] as const;
-
-	return (
-		<div className="flex flex-col gap-6">
-			{sectionKeys.map((sectionKey) => (
-				<Card key={sectionKey}>
-					<CardHeader>
-						<Skeleton className="h-5 w-48" />
-					</CardHeader>
-					<CardContent>
-						<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-							{fieldKeys.map((fieldKey) => (
-								<div
-									key={`${sectionKey}-${fieldKey}`}
-									className="flex flex-col gap-1"
-								>
-									<Skeleton className="h-3 w-24" />
-									<Skeleton className="h-4 w-32" />
-								</div>
-							))}
-						</div>
-					</CardContent>
-				</Card>
-			))}
-		</div>
-	);
-}
+import { formatDatePtBR } from "#/lib/utils";
 
 export function ContratoDetailPage() {
 	const { id } = useParams<{ id: string }>();
@@ -227,7 +169,7 @@ export function ContratoDetailPage() {
 												{contrato.id}
 											</DetailField>
 											<DetailField label="Data de Ativação">
-												{formatDatePtBR(contrato.data_ativacao)}
+												{formatDatePtBR(contrato.data_ativacao ?? "")}
 											</DetailField>
 											<DetailField label="Descrição Contrato IXC">
 												{contrato.contrato}
@@ -238,7 +180,7 @@ export function ContratoDetailPage() {
 													: "—"}
 											</DetailField>
 											<DetailField label="Data Expiração">
-												{formatDatePtBR(contrato.data_validade)}
+												{formatDatePtBR(contrato.data_validade ?? "")}
 											</DetailField>
 											<DetailField label="Valor Unitário">
 												{contrato.valor_unitario
@@ -425,10 +367,10 @@ export function ContratoDetailPage() {
 																		: "—"}
 																</td>
 																<td className="px-4 py-3">
-																	{formatDatePtBR(fatura.data_vencimento)}
+																	{formatDatePtBR(fatura.data_vencimento ?? "")}
 																</td>
 																<td className="px-4 py-3">
-																	{formatDatePtBR(fatura.data_pagamento)}
+																	{formatDatePtBR(fatura.data_pagamento ?? "")}
 																</td>
 															</tr>
 														))}

@@ -67,3 +67,31 @@ export function formatCurrency(value: number | null | undefined): string {
 		currency: "BRL",
 	});
 }
+
+export function formatCommentDate(dateString: string): string {
+	return new Intl.DateTimeFormat("pt-BR", {
+		day: "2-digit",
+		month: "2-digit",
+		year: "numeric",
+		hour: "2-digit",
+		minute: "2-digit",
+	}).format(new Date(dateString));
+}
+
+/**
+ * Format file size to human readable format.
+ *
+ * @param size - Size in bytes
+ * @returns Formatted size string (e.g., "1.23 KB", "2.45 MB", "3.67 GB")
+ */
+export function formatFileSize(size: number): string {
+	if (size === 0) return "0 B";
+
+	const units = ["B", "KB", "MB", "GB"];
+	const i = Math.floor(Math.log(size) / Math.log(1024));
+
+	if (i === 0) return `${size} ${units[i]}`;
+
+	const formattedSize = (size / 1024 ** i).toFixed(2);
+	return `${parseFloat(formattedSize)} ${units[i]}`;
+}

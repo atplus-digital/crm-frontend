@@ -51,6 +51,31 @@ export type NegociacaoSubstatus =
 	(typeof NegociacaoSubstatus)[keyof typeof NegociacaoSubstatus];
 
 // ---------------------------------------------------------------------------
+// Filter Options
+// ---------------------------------------------------------------------------
+
+export const NEGOCIACAO_STATUS_FILTER_OPTIONS: {
+	value: NegociacaoStatus;
+	label: string;
+}[] = [
+	{ value: "Novo", label: "Novo" },
+	{ value: "Negociando", label: "Negociando" },
+	{ value: "Assinatura", label: "Assinatura" },
+	{ value: "Auditoria", label: "Auditoria" },
+	{ value: "Concluido", label: "Concluído" },
+	{ value: "Arquivado", label: "Arquivado" },
+];
+
+export const NEGOCIACAO_SUBSTATUS_FILTER_OPTIONS = [
+	{ value: "Aguardando contato", label: "Aguardando contato" },
+	{ value: "Em análise", label: "Em análise" },
+	{ value: "Proposta enviada", label: "Proposta enviada" },
+	{ value: "Aguardando assinatura", label: "Aguardando assinatura" },
+	{ value: "Verificação cadastral", label: "Verificação cadastral" },
+	{ value: "Contrato assinado", label: "Contrato assinado" },
+];
+
+// ---------------------------------------------------------------------------
 // Enums de Domínio - Motivo Renegociação
 // ---------------------------------------------------------------------------
 
@@ -171,6 +196,124 @@ export type NegociacaoWithRelations = Negociacoes & {
 	f_cupom_desconto?: CuponsDesconto | null;
 	createdBy?: Users | null;
 	updatedBy?: Users | null;
+};
+
+// ---------------------------------------------------------------------------
+// Display Labels (internal code → UI text for badges/details)
+// ---------------------------------------------------------------------------
+
+export const MOTIVO_LABELS: Record<string, string> = {
+	I: "Inadimplência",
+	M: "Mudança Endereço",
+	D: "Downgrade",
+	U: "Upgrade",
+	N: "Renegociação",
+	R: "Reativação",
+	T: "Mudança Tecnologia",
+	L: "Mudança Titularidade",
+	S: "Suspensão",
+	P: "Outros",
+};
+
+export const NEGOCIACAO_STATUS_LABELS: Record<string, string> = {
+	"1": "Novo",
+	"2": "Negociando",
+	"3": "Assinatura",
+	"4": "Auditoria",
+	"5": "Concluído",
+	"6": "Arquivado",
+};
+
+export const NEGOCIACAO_STATUS_VARIANTS: Record<
+	string,
+	"default" | "secondary" | "destructive"
+> = {
+	"1": "default",
+	"2": "secondary",
+	"3": "secondary",
+	"4": "secondary",
+	"5": "default",
+	"6": "destructive",
+};
+
+export const NEGOCIACAO_SUBSTATUS_LABELS: Record<string, string> = {
+	"1": "NA",
+	"2": "AGUARDANDO Assinatura",
+	"3": "AGUARDANDO Auditoria",
+	"4": "APROVADO Aguardando IXC",
+	"5": "REPROVADO Divergência",
+	"6": "REPROVADO Fraude",
+	"7": "REPROVADO Crédito",
+	"8": "APROVADO Erro IXC",
+	"9": "APROVADO Concluído",
+	"10": "PERDIDO",
+	"11": "APROVADO Aguardando atualização",
+	"12": "REPROVADO Financeiro",
+	"13": "EM STANDBY",
+};
+
+export const NEGOCIACAO_SUBSTATUS_VARIANTS: Record<
+	string,
+	"default" | "secondary" | "destructive"
+> = {
+	"1": "secondary",
+	"2": "secondary",
+	"3": "secondary",
+	"4": "default",
+	"5": "destructive",
+	"6": "destructive",
+	"7": "destructive",
+	"8": "default",
+	"9": "default",
+	"10": "destructive",
+	"11": "default",
+	"12": "destructive",
+	"13": "secondary",
+};
+
+export const TIPO_PESSOA_LABELS: Record<string, string> = {
+	PF: "Pessoa Física",
+	PJ: "Pessoa Jurídica",
+};
+
+export const FIDELIDADE_LABELS: Record<string, string> = {
+	"0": "0 Meses",
+	"12": "12 Meses",
+	"24": "24 Meses",
+	"36": "36 Meses",
+	"48": "48 Meses",
+	"60": "60 Meses",
+};
+
+export const DATA_VENCIMENTO_LABELS: Record<string, string> = {
+	"1": "Dia 01",
+	"5": "Dia 05",
+	"10": "Dia 10",
+	"15": "Dia 15",
+	"20": "Dia 20",
+	"25": "Dia 25",
+};
+
+export const PONTOS_ATENCAO_LABELS: Record<string, string> = {
+	"0": "0 Pontos",
+	"1": "1 Ponto",
+	"2": "2 Pontos",
+	"3": "3 Pontos",
+	"4": "4 Pontos",
+	"5": "5 Pontos",
+	"6": "6 Pontos",
+};
+
+export const ENDERECO_COMPLEMENTO_LABELS: Record<string, string> = {
+	Casa: "Casa",
+	Apartamento: "Apartamento",
+	Condominio: "Condomínio",
+	Comercial: "Comercial",
+};
+
+export const CONFISAO_DIVIDA_LABELS: Record<string, string> = {
+	Sim: "Sim",
+	Nao: "Não",
 };
 
 // ---------------------------------------------------------------------------

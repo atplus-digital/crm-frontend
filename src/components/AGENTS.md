@@ -27,6 +27,11 @@ features.
 | `layout/dashboard-layout.tsx`          | App layout scaffold with sidebar + content area    |
 | `error-boundary.tsx`                   | Global render error boundary fallback UI           |
 
+**Scoped Docs:**
+
+- `ui/AGENTS.md` — shadcn/ui component reference and customization guide
+- `layout/AGENTS.md` — App shell composition and sidebar patterns
+
 <!-- AGENTS-GENERATED:END filemap -->
 
 <!-- AGENTS-GENERATED:START patterns -->
