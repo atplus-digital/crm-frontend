@@ -1,0 +1,384 @@
+import {
+	ArrowLeft,
+	Calendar,
+	DollarSign,
+	FileText,
+	MapPin,
+	User,
+} from "lucide-react";
+import { Link, useParams } from "react-router";
+import { DetailField } from "#/components/detail/detail-field";
+import { CardSectionSkeleton } from "#/components/detail/detail-skeleton";
+import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { Button } from "#/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "#/components/ui/card";
+import { Skeleton } from "#/components/ui/skeleton";
+import { useTrocaTitularidadeById } from "#/features/troca-titularidade/troca-titularidade-hooks";
+
+import { formatDatePtBR, formatPhone } from "#/lib/utils";
+
+function StatusBadge({ status }: { status: string }) {
+	const statusLabels: Record<string, string> = {
+		"0": "Novo",
+		"1": "Aguardando assinatura",
+		"2": "Aguardando Auditoria",
+		"3": "Concluído",
+		"9": "Cancelado",
+	};
+
+	return (
+		<span
+			className={`inline-flex h-6 w-fit shrink-0 items-center justify-center gap-1 rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap bg-secondary text-secondary-foreground`}
+		>
+			{statusLabels[status] || status}
+		</span>
+	);
+}
+
+function SubstatusBadge({ substatus }: { substatus: string }) {
+	const substatusLabels: Record<string, string> = {
+		"0": "NA",
+		"1": "APROVADO - Aguardando inserção no IXC",
+		"2": "APROVADO - Erro na integração com o IXC",
+		"3": "APROVADO - Concluído",
+		"4": "REPROVADO - Divergência de Dados",
+		"5": "REPROVADO - Financeiro em Atraso",
+		"6": "AGUARDANDO - Auditoria",
+	};
+
+	return (
+		<span
+			className={`inline-flex h-6 w-fit shrink-0 items-center justify-center gap-1 rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap bg-secondary text-secondary-foreground`}
+		>
+			{substatusLabels[substatus] || substatus}
+		</span>
+	);
+}
+
+export function TrocaTitularidadeDetailPage() {
+	const { id } = useParams<{ id: string }>();
+	const trocaTitularidadeId = Number(id);
+
+	const {
+		data: trocaTitularidade,
+		isLoading,
+		error,
+	} = useTrocaTitularidadeById(trocaTitularidadeId);
+
+	if (error) {
+		return (
+			<div className="flex-1 overflow-auto bg-background">
+				<div className="mx-auto max-w-400 p-4">
+					<InlineErrorAlert>
+						Erro ao carregar detalhes da transferência:{" "}
+						{(error as Error).message}
+					</InlineErrorAlert>
+				</div>
+			</div>
+		);
+	}
+
+	return (
+		<div className="flex-1 overflow-auto bg-background">
+			<div className="mx-auto max-w-400 p-4">
+				<div className="flex items-center gap-4 mb-6">
+					<Button variant="ghost" size="icon" asChild>
+						<Link to="/troca-titularidade">
+							<ArrowLeft className="size-4" />
+						</Link>
+					</Button>
+					<div>
+						{isLoading ? (
+							<>
+								<Skeleton className="h-7 w-64 mb-1" />
+								<Skeleton className="h-4 w-96" />
+							</>
+						) : (
+							<>
+								<h1 className="text-2xl font-bold tracking-tight">
+									Transferência de Titularidade #{trocaTitularidade?.id ?? id}
+								</h1>
+								{trocaTitularidade?.f_cedente && (
+									<p className="text-muted-foreground">
+										De: {trocaTitularidade.f_cedente} → Para:{" "}
+										{trocaTitularidade.f_cessionario}
+									</p>
+								)}
+							</>
+						)}
+					</div>
+				</div>
+
+				{isLoading ? (
+					<div className="flex flex-col gap-6">
+						<CardSectionSkeleton />
+						<CardSectionSkeleton />
+						<CardSectionSkeleton />
+						<CardSectionSkeleton />
+						<CardSectionSkeleton />
+						<CardSectionSkeleton />
+						<CardSectionSkeleton />
+					</div>
+				) : trocaTitularidade ? (
+					<div className="flex flex-col gap-6">
+						<Card>
+							<CardHeader>
+								<CardTitle className="flex items-center gap-2">
+									<FileText className="size-4" />
+									Dados da Transferência
+								</CardTitle>
+								<CardDescription>
+									Informações básicas sobre a transferência
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+									<DetailField label="ID">{trocaTitularidade.id}</DetailField>
+									<DetailField label="Status">
+										<StatusBadge status={trocaTitularidade.f_status} />
+									</DetailField>
+									<DetailField label="Substatus">
+										<SubstatusBadge substatus={trocaTitularidade.f_substatus} />
+									</DetailField>
+									<DetailField label="Data de Criação">
+										{formatDatePtBR(trocaTitularidade.createdAt)}
+									</DetailField>
+									<DetailField label="Data de Atualização">
+										{formatDatePtBR(trocaTitularidade.updatedAt)}
+									</DetailField>
+									<DetailField label="ID do Contrato">
+										{trocaTitularidade.f_id_contrato}
+									</DetailField>
+								</div>
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle className="flex items-center gap-2">
+									<User className="size-4" />
+									Cedente
+								</CardTitle>
+								<CardDescription>
+									Dados da pessoa que cede a titularidade
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+									<DetailField label="Nome">
+										{trocaTitularidade.f_cedente}
+									</DetailField>
+									<DetailField label="Documento">
+										{trocaTitularidade.f_cedente_documento}
+									</DetailField>
+									<DetailField label="Email">
+										{trocaTitularidade.f_cedente_email}
+									</DetailField>
+									<DetailField label="Telefone">
+										{trocaTitularidade.f_cedente_telefone
+											? formatPhone(trocaTitularidade.f_cedente_telefone)
+											: "—"}
+									</DetailField>
+									<DetailField label="Responsável Legal">
+										{trocaTitularidade.f_cedente_responsavel_legal}
+									</DetailField>
+									<DetailField label="Link de Assinatura">
+										{trocaTitularidade.f_link_assinatura_cedente ? (
+											<a
+												href={trocaTitularidade.f_link_assinatura_cedente}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="text-blue-600 hover:underline"
+											>
+												Abrir link
+											</a>
+										) : (
+											"—"
+										)}
+									</DetailField>
+								</div>
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle className="flex items-center gap-2">
+									<User className="size-4" />
+									Cessionário
+								</CardTitle>
+								<CardDescription>
+									Dados da pessoa que recebe a titularidade
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+									<DetailField label="Nome">
+										{trocaTitularidade.f_cessionario}
+									</DetailField>
+									<DetailField label="Documento">
+										{trocaTitularidade.f_cessionario_documento}
+									</DetailField>
+									<DetailField label="Email">
+										{trocaTitularidade.f_cessionario_email}
+									</DetailField>
+									<DetailField label="Telefone">
+										{trocaTitularidade.f_cessionario_telefone
+											? formatPhone(trocaTitularidade.f_cessionario_telefone)
+											: "—"}
+									</DetailField>
+									<DetailField label="Responsável">
+										{trocaTitularidade.f_cessionario_responsavel}
+									</DetailField>
+									<DetailField label="Link de Assinatura">
+										{trocaTitularidade.f_link_assinatura_cessionario ? (
+											<a
+												href={trocaTitularidade.f_link_assinatura_cessionario}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="text-blue-600 hover:underline"
+											>
+												Abrir link
+											</a>
+										) : (
+											"—"
+										)}
+									</DetailField>
+								</div>
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle className="flex items-center gap-2">
+									<MapPin className="size-4" />
+									Endereço
+								</CardTitle>
+								<CardDescription>
+									Localização associada à transferência
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+									<DetailField label="Logradouro">
+										{trocaTitularidade.f_endereco}
+									</DetailField>
+									<DetailField label="Número">
+										{trocaTitularidade.f_numero}
+									</DetailField>
+									<DetailField label="Complemento">
+										{trocaTitularidade.f_complemento}
+									</DetailField>
+									<DetailField label="Bairro">
+										{trocaTitularidade.f_bairro}
+									</DetailField>
+									<DetailField label="Cidade">
+										{trocaTitularidade.f_cidade}-{trocaTitularidade.f_estado}
+									</DetailField>
+									<DetailField label="CEP">
+										{trocaTitularidade.f_cep}
+									</DetailField>
+								</div>
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle className="flex items-center gap-2">
+									<DollarSign className="size-4" />
+									Contrato
+								</CardTitle>
+								<CardDescription>
+									Informações sobre o contrato associado
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+									<DetailField label="ID do Contrato">
+										{trocaTitularidade.f_id_contrato}
+									</DetailField>
+								</div>
+							</CardContent>
+						</Card>
+
+						{trocaTitularidade.f_anexos &&
+							trocaTitularidade.f_anexos.length > 0 && (
+								<Card>
+									<CardHeader>
+										<CardTitle className="flex items-center gap-2">
+											<FileText className="size-4" />
+											Anexos
+										</CardTitle>
+										<CardDescription>
+											Documentos anexados à transferência
+										</CardDescription>
+									</CardHeader>
+									<CardContent>
+										<div className="space-y-2">
+											{trocaTitularidade.f_anexos.map((anexo) => (
+												<div key={anexo.id} className="flex items-center gap-2">
+													<FileText className="size-4 text-muted-foreground" />
+													<a
+														href={anexo.url || "#"}
+														target="_blank"
+														rel="noopener noreferrer"
+														className="text-blue-600 hover:underline"
+													>
+														{anexo.title || `Anexo ${anexo.id}`}
+													</a>
+												</div>
+											))}
+										</div>
+									</CardContent>
+								</Card>
+							)}
+
+						{trocaTitularidade.f_comentarios &&
+							trocaTitularidade.f_comentarios.length > 0 && (
+								<Card>
+									<CardHeader>
+										<CardTitle className="flex items-center gap-2">
+											<Calendar className="size-4" />
+											Comentários
+										</CardTitle>
+										<CardDescription>
+											Observações registradas sobre a transferência
+										</CardDescription>
+									</CardHeader>
+									<CardContent>
+										<div className="space-y-4">
+											{trocaTitularidade.f_comentarios.map((comentario) => (
+												<div
+													key={comentario.id}
+													className="border-b pb-3 last:border-b-0"
+												>
+													<div className="flex justify-between items-start">
+														<p className="text-sm">{comentario.f_comentario}</p>
+														<span className="text-xs text-muted-foreground ml-2">
+															{formatDatePtBR(comentario.createdAt)}
+														</span>
+													</div>
+													<div className="text-xs text-muted-foreground mt-1">
+														Por: {"Usuário"}
+													</div>
+												</div>
+											))}
+										</div>
+									</CardContent>
+								</Card>
+							)}
+					</div>
+				) : (
+					<InlineErrorAlert>
+						Transferência de titularidade não encontrada
+					</InlineErrorAlert>
+				)}
+			</div>
+		</div>
+	);
+}
