@@ -12,7 +12,11 @@ import type {
 	ResetPasswordRequest,
 	UpdateProfilePayload,
 } from "./types";
-import { AuthValidationError, authResponseSchema } from "./types";
+import {
+	AuthValidationError,
+	authResponseSchema,
+	authUserSchema,
+} from "./types";
 
 const log = createLogger("auth");
 
@@ -59,7 +63,18 @@ export async function signOut(): Promise<void> {
 
 export async function checkAuth(): Promise<AuthUser> {
 	log.debug("Checking auth status");
-	const user = await nocobaseRepository.checkAuth<AuthUser>();
+	const rawUser = await nocobaseRepository.checkAuth<unknown>();
+
+	const parsed = authUserSchema.safeParse(rawUser);
+	if (!parsed.success) {
+		log.error("Auth check response validation failed", { error: parsed.error });
+		throw new AuthValidationError(
+			"Resposta de autenticação inválida",
+			parsed.error,
+		);
+	}
+
+	const user = parsed.data;
 	setUser(user);
 	setPermissionsFromRoles(user.roles);
 	log.debug("Auth check successful");
