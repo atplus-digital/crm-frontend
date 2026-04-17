@@ -1,10 +1,7 @@
 import { Link, useLocation } from "react-router";
 import { SidebarSeparator, SidebarTrigger } from "#/components/ui/sidebar";
-import {
-	APP_NAV_SECTIONS,
-	getActiveNavSection,
-} from "#/features/auth/permissions";
 import { cn } from "#/lib/utils";
+import { APP_NAV_SECTIONS, getActiveNavSection } from "./nav-config";
 
 export function AppHeader() {
 	const location = useLocation();
