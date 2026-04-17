@@ -21,7 +21,7 @@ const schema = z.object({
 
 type ResetPasswordValues = z.infer<typeof schema>;
 
-export default function ResetPasswordForm() {
+export function ResetPasswordPage() {
 	const [isSuccess, setIsSuccess] = useState(false);
 
 	const form = useForm<ResetPasswordValues>({

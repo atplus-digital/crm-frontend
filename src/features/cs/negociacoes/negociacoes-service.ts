@@ -1,3 +1,4 @@
+import type { Negociacoes } from "#/generated/nocobase/negociacoes";
 import {
 	buildFilter,
 	eq,
@@ -82,14 +83,17 @@ export async function fetchNegociacoes(
 	const response = await nocobaseRepository.list("t_negociacoes", {
 		page,
 		pageSize,
-		appends: appends as unknown as Array<
+		appends: appends as Array<
 			keyof import("#/generated/nocobase/negociacoes").NegociacoesRelations
 		>,
 		...(sort.length > 0 && { sort }),
 		...(filter && { filter }),
 	});
 
-	return response as unknown as PaginatedResponse<NegociacaoWithRelations>;
+	return {
+		data: response.data as unknown as NegociacaoWithRelations[],
+		meta: response.meta,
+	};
 }
 
 export async function fetchNegociacaoById(
@@ -104,9 +108,7 @@ export async function createNegociacao(
 	data: Partial<Negociacao>,
 ): Promise<Negociacao> {
 	const { f_contrato_ixc, ...rest } = data;
-	const payload: Partial<
-		import("#/generated/nocobase/negociacoes").Negociacoes
-	> = {
+	const payload: Partial<Negociacoes> = {
 		...rest,
 		...(f_contrato_ixc != null && {
 			f_contrato_ixc: String(f_contrato_ixc),
@@ -121,9 +123,7 @@ export async function updateNegociacao(
 	data: Partial<Negociacao>,
 ): Promise<Negociacao> {
 	const { f_contrato_ixc, ...rest } = data;
-	const payload: Partial<
-		import("#/generated/nocobase/negociacoes").Negociacoes
-	> = {
+	const payload: Partial<Negociacoes> = {
 		...rest,
 		...(f_contrato_ixc != null && {
 			f_contrato_ixc: String(f_contrato_ixc),

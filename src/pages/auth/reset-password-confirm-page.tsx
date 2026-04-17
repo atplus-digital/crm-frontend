@@ -31,7 +31,7 @@ interface ResetPasswordConfirmFormProps {
 	token: string;
 }
 
-export default function ResetPasswordConfirmForm({
+export function ResetPasswordConfirmPage({
 	token,
 }: ResetPasswordConfirmFormProps) {
 	const navigate = useNavigate();

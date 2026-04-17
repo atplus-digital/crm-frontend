@@ -70,20 +70,21 @@ export async function fetchPessoasFisicas(
 	const response = await nocobaseRepository.list("t_pessoas", {
 		page,
 		pageSize,
-		appends: appends as unknown as Array<
-			keyof CollectionRelationsMap["t_pessoas"]
-		>,
+		appends: appends as Array<keyof CollectionRelationsMap["t_pessoas"]>,
 		...(sort.length > 0 && { sort }),
 		...(filter && { filter }),
 	});
 
-	return response as unknown as PessoaFisicaResponse;
+	return {
+		data: response.data as unknown as PessoaFisica[],
+		meta: response.meta,
+	};
 }
 
 export async function fetchPessoaFisicaById(id: number): Promise<PessoaFisica> {
 	const response = await nocobaseRepository.get("t_pessoas", id);
 
-	return response as unknown as PessoaFisica;
+	return response as Pessoas;
 }
 
 export async function fetchPessoasJuridicas(
@@ -102,14 +103,15 @@ export async function fetchPessoasJuridicas(
 	const response = await nocobaseRepository.list("t_empresas", {
 		page,
 		pageSize,
-		appends: appends as unknown as Array<
-			keyof CollectionRelationsMap["t_empresas"]
-		>,
+		appends: appends as Array<keyof CollectionRelationsMap["t_empresas"]>,
 		...(sort.length > 0 && { sort }),
 		...(filter && { filter }),
 	});
 
-	return response as unknown as PessoaJuridicaResponse;
+	return {
+		data: response.data as unknown as Empresas[],
+		meta: response.meta,
+	};
 }
 
 export async function fetchPessoaJuridicaById(
@@ -117,7 +119,7 @@ export async function fetchPessoaJuridicaById(
 ): Promise<PessoaJuridica> {
 	const response = await nocobaseRepository.get("t_empresas", id);
 
-	return response as unknown as PessoaJuridica;
+	return response as Empresas;
 }
 
 export async function createPessoaFisica(
@@ -127,7 +129,7 @@ export async function createPessoaFisica(
 		"t_pessoas",
 		data as Partial<Pessoas>,
 	);
-	return result as unknown as PessoaFisica;
+	return result as Pessoas;
 }
 
 export async function updatePessoaFisica(
@@ -139,7 +141,7 @@ export async function updatePessoaFisica(
 		id,
 		data as Partial<Pessoas>,
 	);
-	return result as unknown as PessoaFisica;
+	return result as Pessoas;
 }
 
 export async function deletePessoaFisica(id: number): Promise<void> {
@@ -153,7 +155,7 @@ export async function createPessoaJuridica(
 		"t_empresas",
 		data as Partial<Empresas>,
 	);
-	return result as unknown as PessoaJuridica;
+	return result as Empresas;
 }
 
 export async function updatePessoaJuridica(
@@ -165,7 +167,7 @@ export async function updatePessoaJuridica(
 		id,
 		data as Partial<Empresas>,
 	);
-	return result as unknown as PessoaJuridica;
+	return result as Empresas;
 }
 
 export async function deletePessoaJuridica(id: number): Promise<void> {

@@ -3,7 +3,7 @@ import { env } from "#/env";
 import { requireGuest } from "#/features/auth";
 import { GuestLayout } from "#/features/auth/components/auth-layout";
 import { createLogger } from "#/lib/logger";
-import ResetPasswordConfirmForm from "#/pages/auth/reset-password-confirm-page";
+import { ResetPasswordConfirmPage } from "#/pages/auth/reset-password-confirm-page";
 
 const log = createLogger("auth");
 
@@ -28,7 +28,7 @@ export function Component() {
 	const { token } = useLoaderData<typeof loader>();
 	return (
 		<GuestLayout title="Nova Senha" description="Defina sua nova senha">
-			<ResetPasswordConfirmForm token={token} />
+			<ResetPasswordConfirmPage token={token} />
 		</GuestLayout>
 	);
 }

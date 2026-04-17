@@ -3,7 +3,7 @@ import { env } from "#/env";
 import { requireGuest } from "#/features/auth";
 import { GuestLayout } from "#/features/auth/components/auth-layout";
 import { createLogger } from "#/lib/logger";
-import ResetPasswordForm from "#/pages/auth/reset-password-page";
+import { ResetPasswordPage } from "#/pages/auth/reset-password-page";
 
 const log = createLogger("auth");
 
@@ -22,7 +22,7 @@ export function Component() {
 			title="Redefinir Senha"
 			description="Informe seu e-mail para receber as instruções"
 		>
-			<ResetPasswordForm />
+			<ResetPasswordPage />
 		</GuestLayout>
 	);
 }
