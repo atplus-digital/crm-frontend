@@ -28,7 +28,12 @@ import {
 	ContratoStatusBadge,
 	InternetStatusBadge,
 } from "#/features/cs/components/contrato-status-badge";
-import { useContratoById } from "#/features/cs/contratos-hooks";
+import {
+	useContratoById,
+	useContratoFaturas,
+	useContratoProdutos,
+} from "#/features/cs/contratos-hooks";
+import type { Fatura, ProdutoContrato } from "#/features/cs/contratos-types";
 
 function formatDatePtBR(dateStr: string | null | undefined): string {
 	if (!dateStr || dateStr.startsWith("0000")) return "—";
@@ -95,6 +100,19 @@ export function ContratoDetailPage() {
 	const { id } = useParams<{ id: string }>();
 	const contratoId = Number(id);
 	const { data: contrato, isLoading, error } = useContratoById(contratoId);
+	const {
+		data: produtosData,
+		isLoading: isLoadingProdutos,
+		error: produtosError,
+	} = useContratoProdutos(contratoId);
+	const {
+		data: faturasData,
+		isLoading: isLoadingFaturas,
+		error: faturasError,
+	} = useContratoFaturas(contratoId);
+
+	const produtos: ProdutoContrato[] = produtosData?.data ?? [];
+	const faturas: Fatura[] = faturasData?.data ?? [];
 
 	if (error) {
 		return (
@@ -284,10 +302,60 @@ export function ContratoDetailPage() {
 										</CardDescription>
 									</CardHeader>
 									<CardContent>
-										<EmptyTable
-											columns={["Descrição", "Valor", "Quantidade"]}
-											message="Nenhum produto encontrado"
-										/>
+										{isLoadingProdutos ? (
+											<Skeleton className="h-32 w-full" />
+										) : produtosError ? (
+											<InlineErrorAlert>
+												Erro ao carregar produtos:{" "}
+												{(produtosError as Error).message}
+											</InlineErrorAlert>
+										) : produtos.length === 0 ? (
+											<EmptyTable
+												columns={["Descrição", "Valor", "Quantidade"]}
+												message="Nenhum produto encontrado"
+											/>
+										) : (
+											<div className="overflow-x-auto">
+												<table className="w-full text-sm">
+													<thead className="bg-muted/50">
+														<tr>
+															<th className="px-4 py-3 text-left font-medium">
+																Descrição
+															</th>
+															<th className="px-4 py-3 text-left font-medium">
+																Valor
+															</th>
+															<th className="px-4 py-3 text-left font-medium">
+																Quantidade
+															</th>
+														</tr>
+													</thead>
+													<tbody className="divide-y divide-border">
+														{produtos.map((produto) => (
+															<tr key={produto.id}>
+																<td className="px-4 py-3">
+																	{produto.descricao || "—"}
+																</td>
+																<td className="px-4 py-3">
+																	{produto.valor_unit
+																		? Number(produto.valor_unit).toLocaleString(
+																				"pt-BR",
+																				{
+																					style: "currency",
+																					currency: "BRL",
+																				},
+																			)
+																		: "—"}
+																</td>
+																<td className="px-4 py-3">
+																	{produto.qtde ?? "—"}
+																</td>
+															</tr>
+														))}
+													</tbody>
+												</table>
+											</div>
+										)}
 									</CardContent>
 								</Card>
 
@@ -300,15 +368,71 @@ export function ContratoDetailPage() {
 										</CardDescription>
 									</CardHeader>
 									<CardContent>
-										<EmptyTable
-											columns={[
-												"Status",
-												"Valor",
-												"Data de Vencimento",
-												"Data de Pagamento",
-											]}
-											message="Nenhuma fatura encontrada"
-										/>
+										{isLoadingFaturas ? (
+											<Skeleton className="h-32 w-full" />
+										) : faturasError ? (
+											<InlineErrorAlert>
+												Erro ao carregar faturas:{" "}
+												{(faturasError as Error).message}
+											</InlineErrorAlert>
+										) : faturas.length === 0 ? (
+											<EmptyTable
+												columns={[
+													"Status",
+													"Valor",
+													"Data de Vencimento",
+													"Data de Pagamento",
+												]}
+												message="Nenhuma fatura encontrada"
+											/>
+										) : (
+											<div className="overflow-x-auto">
+												<table className="w-full text-sm">
+													<thead className="bg-muted/50">
+														<tr>
+															<th className="px-4 py-3 text-left font-medium">
+																Status
+															</th>
+															<th className="px-4 py-3 text-left font-medium">
+																Valor
+															</th>
+															<th className="px-4 py-3 text-left font-medium">
+																Data de Vencimento
+															</th>
+															<th className="px-4 py-3 text-left font-medium">
+																Data de Pagamento
+															</th>
+														</tr>
+													</thead>
+													<tbody className="divide-y divide-border">
+														{faturas.map((fatura) => (
+															<tr key={fatura.id}>
+																<td className="px-4 py-3">
+																	{fatura.status || "—"}
+																</td>
+																<td className="px-4 py-3">
+																	{fatura.valor
+																		? Number(fatura.valor).toLocaleString(
+																				"pt-BR",
+																				{
+																					style: "currency",
+																					currency: "BRL",
+																				},
+																			)
+																		: "—"}
+																</td>
+																<td className="px-4 py-3">
+																	{formatDatePtBR(fatura.data_vencimento)}
+																</td>
+																<td className="px-4 py-3">
+																	{formatDatePtBR(fatura.data_pagamento)}
+																</td>
+															</tr>
+														))}
+													</tbody>
+												</table>
+											</div>
+										)}
 									</CardContent>
 								</Card>
 							</div>

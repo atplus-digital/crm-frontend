@@ -667,54 +667,6 @@ export interface ContratosIxcRelations {
 
 export type ContratosIxcRelationKey = keyof ContratosIxcRelations;
 
-export interface CrmTrocaTitularidade {
-	id: number;
-	f_fk_negociacao_vendedor: number;
-	f_fk_pessoa_negociacao: number;
-	f_fk_pessoa_pj_negociacao: number;
-	f_bairro: string;
-	f_cedente: string;
-	f_cedente_documento: string;
-	f_cedente_email: string;
-	f_cedente_responsavel_legal: string;
-	f_cedente_telefone: string;
-	f_cep: string;
-	f_cessionario: string;
-	f_cessionario_documento: string;
-	f_cessionario_email: string;
-	f_cessionario_responsavel: string;
-	f_cessionario_telefone: string;
-	f_cidade: string;
-	f_complemento: string;
-	f_endereco: string;
-	f_estado: string;
-	f_id_contrato: string;
-	f_link_assinatura_cedente: string;
-	f_link_assinatura_cessionario: string;
-	f_numero: string;
-	f_ordenacao: number;
-	f_rw7rp8431ty: number;
-	f_status: string;
-	f_substatus: string;
-	f_tipo_pessoa: string;
-	updatedAt: string;
-	createdAt: string;
-}
-
-export interface CrmTrocaTitularidadeRelations {
-	createdBy?: Users | null;
-	f_anexos?: AnexosTrocaTitularidade[];
-	f_comentarios?: TrocasdetitularidadeComentarios[];
-	f_pessoa_pf?: Pessoas | null;
-	f_pessoa_pj?: Empresas | null;
-	f_trocadetitularidade_contrato?: Contratos[];
-	f_vendedor?: Users | null;
-	updatedBy?: Users | null;
-}
-
-export type CrmTrocaTitularidadeRelationKey =
-	keyof CrmTrocaTitularidadeRelations;
-
 export interface CuponsDesconto {
 	id: number;
 	f_fk_pacotes_desconto: number;
@@ -1548,28 +1500,6 @@ export interface RecursosViagemRelations {
 }
 
 export type RecursosViagemRelationKey = keyof RecursosViagemRelations;
-
-export interface RegistrosDeContato {
-	id: number;
-	f_fk_id_contrato: number;
-	f_categoria: string;
-	f_encaminhamento_pendencia: string;
-	f_feedback_observacao: string;
-	f_ha_pendencia: boolean;
-	f_nota_tecnico: string;
-	f_nota_vendas: string;
-	f_resumo_contato: string;
-	f_titulo: string;
-	updatedAt: string;
-	createdAt: string;
-}
-
-export interface RegistrosDeContatoRelations {
-	createdBy?: Users | null;
-	updatedBy?: Users | null;
-}
-
-export type RegistrosDeContatoRelationKey = keyof RegistrosDeContatoRelations;
 
 export interface Rguxtr9p91d {
 	f_fk_ponta_a_interface: number;

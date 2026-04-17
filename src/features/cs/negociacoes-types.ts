@@ -50,22 +50,13 @@ export type NegociacaoSubstatus =
 export type NegociacaoVendedor = Pick<Users, "id" | "nickname" | "email">;
 
 // Negociação completa
-export interface Negociacao {
-	id: number;
-	createdAt: string;
-	updatedAt: string;
-	f_titulo?: string;
-	f_valor_mensal?: number;
+export type Negociacao = Omit<Negociacoes, "f_contrato_ixc"> & {
 	f_status: NegociacaoStatus;
-	f_substatus?: string;
-	f_descricao?: string;
 	f_vendedor?: NegociacaoVendedor | null;
 	f_pessoa?: NegociacaoPessoaFisica | null;
 	f_negociacao_pessoa_juridica?: NegociacaoPessoaJuridica | null;
-	f_data_criacao?: string;
-	f_data_atualizacao?: string;
-	f_contrato_ixc?: number | null;
-}
+	f_contrato_ixc?: number | string | null;
+};
 
 export type NegociacaoWithRelations = Negociacoes & {
 	f_vendedor: Users;

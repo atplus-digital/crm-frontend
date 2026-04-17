@@ -51,12 +51,19 @@ docs/            → documentation
 
 > **⚠️ CRITICAL:** All TypeScript types for NocoBase/IXC collections MUST come from `src/generated/`
 
-| Collection               | Generated Type    | Import Path                        |
-| ------------------------ | ----------------- | ---------------------------------- |
-| NocoBase `t_pessoas`     | `Pessoas`         | `#/generated/nocobase/pessoas`     |
-| NocoBase `t_empresas`    | `Empresas`        | `#/generated/nocobase/empresas`    |
-| NocoBase `t_negociacoes` | `Negociacoes`     | `#/generated/nocobase/negociacoes` |
-| IXC `cliente_contrato`   | `ClienteContrato` | `#/generated/ixc/cliente-contrato` |
+| Collection                          | Generated Type         | Import Path                                   |
+| ----------------------------------- | ---------------------- | --------------------------------------------- |
+| NocoBase `t_pessoas`                | `Pessoas`              | `#/generated/nocobase/pessoas`                |
+| NocoBase `t_empresas`               | `Empresas`             | `#/generated/nocobase/empresas`               |
+| NocoBase `t_negociacoes`            | `Negociacoes`          | `#/generated/nocobase/negociacoes`            |
+| NocoBase `t_crm_troca_titularidade` | `CrmTrocaTitularidade` | `#/generated/nocobase/crm-troca-titularidade` |
+| NocoBase `t_registros_de_contato`   | `RegistrosDeContato`   | `#/generated/nocobase/registros-de-contato`   |
+| IXC `cliente`                       | `Cliente`              | `#/generated/ixc/cliente`                     |
+| IXC `cliente_contrato`              | `ClienteContrato`      | `#/generated/ixc/cliente-contrato`            |
+| IXC `linha_mvno`                    | `LinhaMvno`            | `#/generated/ixc/linha-mvno`                  |
+| IXC `vd_contratos_produtos`         | `VdContratosProdutos`  | `#/generated/ixc/vd-contratos-produtos`       |
+| IXC `fn_areceber`                   | `FnAreceber`           | `#/generated/ixc/fn-areceber`                 |
+| IXC `su_ticket`                     | `SuTicket`             | `#/generated/ixc/su-ticket`                   |
 
 **Rules:**
 
@@ -65,6 +72,8 @@ docs/            → documentation
 3. Run `pnpm generate-types` after any schema change in NocoBase/IXC
 4. Domain-specific enums (status, substatus) CAN be manual
 5. UI-specific types (e.g., `PessoaFisicaListItem`) CAN be custom
+6. Repository/service calls MUST use generated collection types as input/output boundaries; map to UI types only after repository response
+7. Relation/appends payloads (e.g., `f_nc_cliente`) MUST be typed from generated interfaces too (via `Pick<GeneratedType, ...>`), never hand-written interfaces
 
 **Example:**
 

@@ -32,6 +32,9 @@ Data-access layer for NocoBase and IXC — typed repository wrappers with centra
 - Use `createLogger("repositories:...")` in repository code paths.
 - IXC calls must include `X-Data-Source: d_db_ixcsoft` (handled in `IxcRepository`).
 - Typed collection methods in `NocoBaseRepository` should remain the default for CRUD on generated collections.
+- Repository call boundaries MUST be typed with `src/generated/**` interfaces; avoid manual collection interfaces in services.
+- If a needed collection type is missing, update `scripts/generate-types/datasources.config.ts` and run `pnpm generate-types` before creating any manual fallback.
+- Appended relation objects returned by repositories must also derive from generated types (`Pick`/`Omit`), not hand-written interfaces.
 
 <!-- AGENTS-GENERATED:END patterns -->
 

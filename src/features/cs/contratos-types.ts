@@ -1,7 +1,14 @@
 // Tipos para Contratos IXC
 // ⚠️ Usando tipos gerados automaticamente como fonte de verdade
 
+import type { Cliente } from "#/generated/ixc/cliente";
 import type { ClienteContrato } from "#/generated/ixc/cliente-contrato";
+import type { FnAreceber } from "#/generated/ixc/fn-areceber";
+import type { LinhaMvno } from "#/generated/ixc/linha-mvno";
+import type { SuTicket } from "#/generated/ixc/su-ticket";
+import type { VdContratosProdutos } from "#/generated/ixc/vd-contratos-produtos";
+import type { CrmTrocaTitularidade } from "#/generated/nocobase/crm-troca-titularidade";
+import type { RegistrosDeContato } from "#/generated/nocobase/registros-de-contato";
 import type { PaginatedResponse } from "#/lib/api-types";
 
 // Re-export PaginatedResponse para compatibilidade
@@ -79,17 +86,18 @@ export type Contrato = Pick<
 >;
 
 /**
- * Cliente do contrato - tipo manual (não existe no gerado do IXC)
+ * Cliente do contrato - derivado do tipo gerado de IXC (`cliente`)
  */
-export interface ContratoCliente {
-	id: number;
-	razao: string;
-	cnpj_cpf: string;
-	fantasia: string;
-	email: string;
-	telefone_celular: string;
-	tipo_pessoa: string;
-}
+export type ContratoCliente = Pick<
+	Cliente,
+	| "id"
+	| "razao"
+	| "cnpj_cpf"
+	| "fantasia"
+	| "email"
+	| "telefone_celular"
+	| "tipo_pessoa"
+>;
 
 /**
  * Contrato com dados do cliente
@@ -116,25 +124,26 @@ export interface ContratoListParams {
 	filters?: ContratoFilters;
 }
 
-export interface LinhaMovel {
-	id: number;
-	id_contrato: number;
-	ddd_telefone: string;
-	numero_telefone: string;
-	dia_recorrencia: number;
-	portabilidade: string;
-	simcard: string;
-}
+export type LinhaMovel = Pick<
+	LinhaMvno,
+	| "id"
+	| "id_contrato"
+	| "ddd_telefone"
+	| "numero_telefone"
+	| "dia_recorrencia"
+	| "portabilidade"
+	| "simcard"
+>;
 
-export interface TrocaTitularidade {
-	id: number;
-	id_contrato: number;
-	cedente: string;
-	documento_cedente: string;
-	cessionario: string;
-	documento_cessionario: string;
-	status: string;
-}
+export type TrocaTitularidade = {
+	id: CrmTrocaTitularidade["id"];
+	id_contrato: CrmTrocaTitularidade["f_id_contrato"];
+	cedente: CrmTrocaTitularidade["f_cedente"];
+	documento_cedente: CrmTrocaTitularidade["f_cedente_documento"];
+	cessionario: CrmTrocaTitularidade["f_cessionario"];
+	documento_cessionario: CrmTrocaTitularidade["f_cessionario_documento"];
+	status: CrmTrocaTitularidade["f_status"];
+};
 
 export interface Renegociacao {
 	id: number;
@@ -160,41 +169,36 @@ export interface ContratoAssociado {
 	valor_mensal: number;
 }
 
-export interface AtendimentoIXC {
-	id: number;
-	id_contrato: number;
-	status: string;
-	assunto: string;
-	descricao: string;
-	data_criacao: string;
-	data_ultima_alteracao: string;
-}
+export type AtendimentoIXC = {
+	id: SuTicket["id"];
+	id_contrato: SuTicket["id_contrato"];
+	status: SuTicket["status"];
+	assunto: SuTicket["titulo"];
+	descricao: SuTicket["menssagem"];
+	data_criacao: SuTicket["data_criacao"];
+	data_ultima_alteracao: SuTicket["data_ultima_alteracao"];
+};
 
-export interface RegistroContato {
-	id: number;
-	id_contrato: number;
-	categoria: string;
-	motivo_contato: string;
-	nota_vendas: string;
-	nota_tecnico: string;
-	pendencia: string;
-	data_criacao: string;
+export type RegistroContato = {
+	id: RegistrosDeContato["id"];
+	id_contrato: RegistrosDeContato["f_fk_id_contrato"];
+	categoria: RegistrosDeContato["f_categoria"];
+	motivo_contato: RegistrosDeContato["f_resumo_contato"];
+	nota_vendas: RegistrosDeContato["f_nota_vendas"];
+	nota_tecnico: RegistrosDeContato["f_nota_tecnico"];
+	pendencia: RegistrosDeContato["f_ha_pendencia"];
+	data_criacao: RegistrosDeContato["createdAt"];
 	criado_por: string;
-}
+};
 
-export interface ProdutoContrato {
-	id: number;
-	id_contrato: number;
-	descricao: string;
-	valor_unit: number;
-	qtde: number;
-}
+export type ProdutoContrato = Pick<
+	VdContratosProdutos,
+	"id" | "id_contrato" | "descricao" | "valor_unit" | "qtde"
+>;
 
-export interface Fatura {
-	id: number;
-	id_contrato: number;
-	status: string;
-	valor: number;
-	data_vencimento: string;
-	data_pagamento: string | null;
-}
+export type Fatura = Pick<
+	FnAreceber,
+	"id" | "id_contrato" | "status" | "valor" | "data_vencimento"
+> & {
+	data_pagamento: FnAreceber["pagamento_data"] | null;
+};

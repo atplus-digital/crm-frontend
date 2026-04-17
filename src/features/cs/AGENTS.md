@@ -39,6 +39,9 @@ Customer Success domain module — contracts, negotiations, and people flows (ty
 - Service-layer filtering should use `#/lib/filter-builder` helpers whenever possible.
 - IXC contract access lives in `contratos-service.ts` through `ixcRepository`; NocoBase collections for people/negotiations use `nocobaseRepository`.
 - External modules should import from `#/features/cs` instead of sub-files.
+- Services must call repositories with generated interfaces (`#/generated/**`) as source-of-truth; never redefine repository collection schemas manually.
+- If an interface is missing for a collection, prefer updating the type generator config and regenerating before introducing any manual type.
+- Relationship/appends typing (for example `f_nc_cliente`) must be derived from generated interfaces using `Pick`/`Omit`, never manually re-declared.
 
 <!-- AGENTS-GENERATED:END patterns -->
 

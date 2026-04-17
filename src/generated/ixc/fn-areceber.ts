@@ -1,0 +1,121 @@
+/**
+ * Arquivo gerado automaticamente
+ * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
+ * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
+ */
+
+export const FN_ARECEBER_TABLE_NAME = "fn_areceber";
+
+export interface FnAreceber {
+	id: number;
+	aguardando_confirmacao_pagamento: string;
+	arquivo_remessa_baixado: string;
+	baixa_automatica: string;
+	baixa_data: string;
+	baixa_id_operador: string;
+	bandeira_pagamento: string;
+	boleto: number;
+	caixa: number;
+	cancelamento_id_operador: string;
+	charge_id: string;
+	conta_recebimento: string;
+	credit_card_transaction_id: string;
+	credito_data: string;
+	data_cancelamento: string;
+	data_cotacao_diaria: string;
+	data_emissao: string;
+	data_fin_cdr_voip: string;
+	data_final: string;
+	data_final_ligacoes: string;
+	data_ini_cdr_voip: string;
+	data_inicial: string;
+	data_inicial_ligacoes: string;
+	data_vencimento: string;
+	desconto_condicional_valor: string;
+	descontos_adicionais: string;
+	documento: string;
+	duplicata: string;
+	em_processamento: string;
+	enviado_remessa_baixa: string;
+	estornado: string;
+	filial_id: number;
+	forma_recebimento: string;
+	gateway_link: string;
+	gerencianet_token: string;
+	id_assinatura_cliente: number;
+	id_carteira_cobranca: number;
+	id_cliente: number;
+	id_cobranca: string;
+	id_conta: number;
+	id_contrato: number;
+	id_contrato_avulso: string;
+	id_contrato_principal: string;
+	id_im_imovel: string;
+	id_lote_geracao_financeiro: string;
+	id_lote_geracao_financeiro_fatura: string;
+	id_mot_cancelamento: string;
+	id_nota_gerada: number;
+	id_nota_gerada_opc2: string;
+	id_nota_gerada_opc3: string;
+	id_nota_gerada_opc4: string;
+	id_remessa: number;
+	id_remessa_alteracao: string;
+	id_remessa_baixa: string;
+	id_renegociacao: string;
+	id_renegociacao_novo: string;
+	id_saida: number;
+	id_sip: string;
+	ids_contratos_origem: string;
+	ids_faturas_origem: string;
+	impresso: string;
+	libera_periodo: string;
+	liberado: string;
+	linha_digitavel: string;
+	lote: number;
+	moeda: string;
+	motivo_alteracao: string;
+	nn_boleto: string;
+	nparcela: number;
+	numero_parcela_recorrente: string;
+	obs: string;
+	origem_importacao: string;
+	pagamento_data: string;
+	pagamento_valor: string;
+	parcela_proporcional: string;
+	parcelado_cartao: string;
+	pix_id_carteira_cobranca: string;
+	pix_status: string;
+	pix_status_recorrente: string;
+	pix_txid: string;
+	pix_txid_recorrente: string;
+	previsao: string;
+	recebido_via_pix: string;
+	status: string;
+	status_cobranca: string;
+	status_remessa: string;
+	tarifa_gateway_lancada: string;
+	tipo_cobranca: string;
+	tipo_pagamento_cartao: string;
+	tipo_recebimento: string;
+	tipo_renegociacao: string;
+	titulo_importado: string;
+	titulo_negativacao_integracao: string;
+	titulo_protestado: string;
+	titulo_renegociado: string;
+	ultima_atualizacao: string;
+	validade_desconto_condicional: string;
+	valor: string;
+	valor_aberto: string;
+	valor_ate_vencimento: string;
+	valor_cancelado: string;
+	valor_cotacao_diaria: string;
+	valor_desconto_ate_vencimento: string;
+	valor_juros_multa: string;
+	valor_moeda_original: string;
+	valor_recebido: string;
+	valor_total_com_juros: string;
+}
+
+export type FnAreceberRelations = Record<string, never>;
+
+export type FnAreceberRelationKey = keyof FnAreceberRelations;
