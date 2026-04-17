@@ -20,13 +20,31 @@ function buildCollectionBaseTypeIndex(
 	return index;
 }
 
+/**
+ * Removes string literals and template literals from TypeScript source
+ * so that identifier matching doesn't pick up type names inside strings.
+ */
+function removeStringLiterals(content: string): string {
+	// Match single-quoted, double-quoted, and template literal strings
+	// Handles escaped quotes and basic escape sequences
+	return content
+		.replace(/'(?:[^'\\]|\\.)*'/g, '""')
+		.replace(/"(?:[^"\\]|\\.)*"/g, '""')
+		.replace(/`(?:[^`\\]|\\.)*`/g, "``");
+}
+
 function collectBaseTypeReferences(
 	content: string,
 	baseTypeIndex: ReadonlyMap<string, string>,
 ): Set<string> {
 	const references = new Set<string>();
+	// Strip string literals first to avoid false positives like
+	// "Cliente Vai Pagar..." being matched as the Cliente type reference
+	const contentWithoutStrings = removeStringLiterals(content);
 
-	for (const match of content.matchAll(IDENTIFIER_REFERENCE_REGEX)) {
+	for (const match of contentWithoutStrings.matchAll(
+		IDENTIFIER_REFERENCE_REGEX,
+	)) {
 		const [typeName] = match;
 		if (baseTypeIndex.has(typeName)) {
 			references.add(typeName);

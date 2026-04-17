@@ -9,6 +9,8 @@ import { NocoBaseClient } from "./generation/client";
 import { buildCollectionTypes } from "./generation/collection-types";
 import { generateCollectionsFile } from "./generation/collections-index";
 import { generateContent, generateSplitFiles } from "./generation/content";
+import { mergeEnums } from "./generation/enum-inference";
+import { generateMultiCollectionReport } from "./generation/enum-inference-report";
 import {
 	createBaseTypeIndex,
 	withMainFileImports,
@@ -28,6 +30,7 @@ import {
 } from "./utils/writer";
 
 const MAIN_DATASOURCE_NAME = "main";
+const IXC_DATASOURCE_NAME = "d_db_ixcsoft";
 
 interface GeneratedFileWrite {
 	outputPath: string;
@@ -118,11 +121,74 @@ async function runGenerateTypesForDataSource(
 		`📋 Encontradas ${collections.length} collections para ${dataSource.dataSource}`,
 	);
 
+	const isIXC = dataSource.dataSource === IXC_DATASOURCE_NAME;
+	const collectionReports: Array<{
+		collectionName: string;
+		enumFields: Map<
+			string,
+			{
+				values: string[];
+				labels: Record<string, string>;
+				cardinality: number;
+				totalRecords: number;
+			}
+		>;
+	}> = [];
+
 	const collectionTypes = await buildCollectionTypes(client, collections, {
 		onCollectionStart: ({ collectionName, index, total }) => {
 			logVerbose(`⏳ [${index}/${total}] Processando ${collectionName}...`);
 		},
 	});
+
+	if (isIXC && dataSource.enableSampleFieldFallback) {
+		for (const [collectionName, types] of Object.entries(collectionTypes)) {
+			const scalarFieldNames = Array.from(types.scalars.keys()).filter(
+				(name) => !types.relations.has(name),
+			);
+
+			if (scalarFieldNames.length > 0) {
+				try {
+					const inferredEnums = await client.inferEnumsFromData(
+						collectionName,
+						scalarFieldNames,
+					);
+
+					const existingEnums = new Map(types.enums);
+					const mergedEnums = mergeEnums(existingEnums, inferredEnums);
+
+					types.enums = mergedEnums;
+
+					const inferredCount = Object.keys(inferredEnums).length;
+					if (inferredCount > 0) {
+						const enumFieldsWithMeta = new Map<
+							string,
+							{
+								values: string[];
+								labels: Record<string, string>;
+								cardinality: number;
+								totalRecords: number;
+							}
+						>();
+						for (const [fieldName, enumInfo] of Object.entries(inferredEnums)) {
+							enumFieldsWithMeta.set(fieldName, {
+								values: enumInfo.values,
+								labels: enumInfo.labels,
+								cardinality: enumInfo.cardinality,
+								totalRecords: enumInfo.totalRecords,
+							});
+						}
+						collectionReports.push({
+							collectionName,
+							enumFields: enumFieldsWithMeta,
+						});
+					}
+				} catch {
+					// No-op
+				}
+			}
+		}
+	}
 
 	const { mainCollections, splitCollections } = splitCollectionsByConfig(
 		collectionTypes,
@@ -148,6 +214,15 @@ async function runGenerateTypesForDataSource(
 
 	if (splitCollections.size === 0) {
 		const mainWrite = writeGeneratedFile(mainContent, mainOutputPath);
+
+		if (isIXC && collectionReports.length > 0) {
+			const reportContent = generateMultiCollectionReport(collectionReports);
+			writeGeneratedFile(
+				reportContent,
+				path.join(dataSource.outputDir, "_ixc-enum-inference.md"),
+			);
+		}
+
 		return {
 			writeFiles: [
 				{ outputPath: mainWrite.outputPath, changed: mainWrite.changed },
@@ -206,8 +281,6 @@ async function runGenerateTypesForDataSource(
 		collectionsContent,
 		path.join(dataSource.outputDir, "collections.ts"),
 	);
-	// hasMainCollections → inline types go to index.ts (same as main flow)
-	// !hasMainCollections → re-exports go to index.ts, no _main.ts generated
 	const primaryIndexContent = hasMainCollections ? mainContent : indexContent;
 	const indexResult = writeGeneratedFile(
 		primaryIndexContent,
@@ -217,6 +290,14 @@ async function runGenerateTypesForDataSource(
 		splitFilesContent,
 		dataSource.outputDir,
 	);
+
+	if (isIXC && collectionReports.length > 0) {
+		const reportContent = generateMultiCollectionReport(collectionReports);
+		writeGeneratedFile(
+			reportContent,
+			path.join(dataSource.outputDir, "_ixc-enum-inference.md"),
+		);
+	}
 
 	return {
 		writeFiles: [

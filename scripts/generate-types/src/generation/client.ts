@@ -5,8 +5,14 @@ import type {
 	NocoBaseCredentials,
 	NocoBaseField,
 } from "@scripts/generate-types/src/@types/nocobase";
+import type { InferredEnumsMap } from "./enum-inference";
+import { inferEnumsFromSample } from "./enum-inference";
 
 interface ListSampleResponse {
+	data?: Array<Record<string, unknown>>;
+}
+
+interface AggregateResponse {
 	data?: Array<Record<string, unknown>>;
 }
 
@@ -104,7 +110,7 @@ export class NocoBaseClient {
 		// Se falhar (como acontece com alguns datasources externos), reverte para o método original
 		try {
 			const params = new URLSearchParams({
-				[`filter[collectionName]`]: collectionName,
+				filter: JSON.stringify({ collectionName }),
 			});
 
 			const response = await this.fetchJson<{
@@ -211,6 +217,78 @@ export class NocoBaseClient {
 		}
 
 		return { name, type: "string", interface: "input" };
+	}
+
+	/**
+	 * Inferir enums a partir dos dados reais de uma collection.
+	 * Busca uma amostra de registros e identifica campos com baixa cardinalidade.
+	 *
+	 * @param collectionName - Nome da collection
+	 * @param fieldNames - Nomes dos campos a analisar
+	 * @param sampleSize - Tamanho da amostra (padrão: 1000)
+	 * @returns Mapa de campos que são candidatos a enum
+	 */
+	public async inferEnumsFromData(
+		collectionName: string,
+		fieldNames: string[],
+		sampleSize = 1000,
+	): Promise<InferredEnumsMap> {
+		const records = await this.fetchCollectionSample(
+			collectionName,
+			sampleSize,
+		);
+
+		if (records.length === 0) {
+			return {};
+		}
+
+		return inferEnumsFromSample(records, fieldNames);
+	}
+
+	/**
+	 * Busca uma amostra de registros de uma collection para inferência de tipos.
+	 *
+	 * @param collectionName - Nome da collection
+	 * @param pageSize - Quantidade de registros a buscar (padrão: 100)
+	 * @returns Array de registros
+	 */
+	public async fetchCollectionSample(
+		collectionName: string,
+		pageSize = 100,
+	): Promise<Array<Record<string, unknown>>> {
+		const response = await this.fetchJson<ListSampleResponse>(
+			`${collectionName}:list?pageSize=${pageSize}&page=1`,
+		);
+
+		return response.data ?? [];
+	}
+
+	/**
+	 * Busca valores distintos de um campo usando agregação.
+	 * Funciona apenas para datasources que suportam operações de agregação.
+	 *
+	 * @param collectionName - Nome da collection
+	 * @param fieldName - Nome do campo
+	 * @returns Array de valores distintos ordenados
+	 */
+	public async fetchDistinctValues(
+		collectionName: string,
+		fieldName: string,
+	): Promise<string[]> {
+		try {
+			const response = await this.fetchJson<AggregateResponse>(
+				`${collectionName}:list?pageSize=0&fields=${fieldName}&distinct=${fieldName}`,
+			);
+
+			if (!response.data || response.data.length === 0) {
+				return [];
+			}
+
+			const values = response.data.map((record) => String(record[fieldName]));
+			return [...new Set(values)].sort((a, b) => a.localeCompare(b));
+		} catch {
+			return [];
+		}
 	}
 
 	private async fetchJson<T>(resourcePath: string): Promise<T> {

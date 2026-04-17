@@ -14,12 +14,12 @@ Auto-generated TypeScript types from NocoBase and IXC collection schemas — **s
 
 ## Key Files
 
-| File | Purpose |
-|------|---------|
-| `nocobase/` | Generated types from NocoBase collections (`t_pessoas`, `t_empresas`, etc.) |
-| `ixc/` | Generated types from IXC ERP collections (`cliente`, `cliente_contrato`, etc.) |
-| `nocobase/index.ts` | Barrel export for all NocoBase collection types |
-| `ixc/index.ts` | Barrel export for all IXC collection types |
+| File                | Purpose                                                                        |
+| ------------------- | ------------------------------------------------------------------------------ |
+| `nocobase/`         | Generated types from NocoBase collections (`t_pessoas`, `t_empresas`, etc.)    |
+| `ixc/`              | Generated types from IXC ERP collections (`cliente`, `cliente_contrato`, etc.) |
+| `nocobase/index.ts` | Barrel export for all NocoBase collection types                                |
+| `ixc/index.ts`      | Barrel export for all IXC collection types                                     |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -56,24 +56,24 @@ pnpm typecheck
 
 ### NocoBase Collections
 
-| Collection | Generated Type | Import Path |
-|------------|---------------|-------------|
-| `t_pessoas` | `Pessoas` | `#/generated/nocobase/pessoas` |
-| `t_empresas` | `Empresas` | `#/generated/nocobase/empresas` |
-| `t_negociacoes` | `Negociacoes` | `#/generated/nocobase/negociacoes` |
+| Collection                 | Generated Type         | Import Path                                   |
+| -------------------------- | ---------------------- | --------------------------------------------- |
+| `t_pessoas`                | `Pessoas`              | `#/generated/nocobase/pessoas`                |
+| `t_empresas`               | `Empresas`             | `#/generated/nocobase/empresas`               |
+| `t_negociacoes`            | `Negociacoes`          | `#/generated/nocobase/negociacoes`            |
 | `t_crm_troca_titularidade` | `CrmTrocaTitularidade` | `#/generated/nocobase/crm-troca-titularidade` |
-| `t_registros_de_contato` | `RegistrosDeContato` | `#/generated/nocobase/registros-de-contato` |
+| `t_registros_de_contato`   | `RegistrosDeContato`   | `#/generated/nocobase/registros-de-contato`   |
 
 ### IXC Collections
 
-| Collection | Generated Type | Import Path |
-|------------|---------------|-------------|
-| `cliente` | `Cliente` | `#/generated/ixc/cliente` |
-| `cliente_contrato` | `ClienteContrato` | `#/generated/ixc/cliente-contrato` |
-| `linha_mvno` | `LinhaMvno` | `#/generated/ixc/linha-mvno` |
+| Collection              | Generated Type        | Import Path                             |
+| ----------------------- | --------------------- | --------------------------------------- |
+| `cliente`               | `Cliente`             | `#/generated/ixc/cliente`               |
+| `cliente_contrato`      | `ClienteContrato`     | `#/generated/ixc/cliente-contrato`      |
+| `linha_mvno`            | `LinhaMvno`           | `#/generated/ixc/linha-mvno`            |
 | `vd_contratos_produtos` | `VdContratosProdutos` | `#/generated/ixc/vd-contratos-produtos` |
-| `fn_areceber` | `FnAreceber` | `#/generated/ixc/fn-areceber` |
-| `su_ticket` | `SuTicket` | `#/generated/ixc/su-ticket` |
+| `fn_areceber`           | `FnAreceber`          | `#/generated/ixc/fn-areceber`           |
+| `su_ticket`             | `SuTicket`            | `#/generated/ixc/su-ticket`             |
 
 <!-- AGENTS-GENERATED:END collection-reference -->
 
@@ -94,7 +94,7 @@ export type PessoaFisica = Pessoas;
 ```typescript
 import type { Pessoas } from "#/generated/nocobase/pessoas";
 
-export type PessoaListItem = Pick<Pessoas, 'id' | 'f_nome' | 'f_email'>;
+export type PessoaListItem = Pick<Pessoas, "id" | "f_nome" | "f_email">;
 ```
 
 ### ❌ WRONG - Manual duplication
@@ -117,6 +117,7 @@ export interface Pessoas {
 **Config file:** `scripts/generate-types/datasources.config.ts`
 
 **Steps:**
+
 1. Script fetches collection schemas from NocoBase/IXC APIs
 2. Extracts field definitions, types, enums, and relations
 3. Generates TypeScript interfaces with proper typing
@@ -124,6 +125,7 @@ export interface Pessoas {
 5. Updates barrel exports in `index.ts` files
 
 **When to regenerate:**
+
 - After adding/modifying collections in NocoBase
 - After schema changes (new fields, type changes)
 - When TypeScript errors indicate missing collection types
@@ -134,12 +136,12 @@ export interface Pessoas {
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
+| Issue                   | Solution                                                                |
+| ----------------------- | ----------------------------------------------------------------------- |
 | Missing collection type | Add collection to `datasources.config.ts` and run `pnpm generate-types` |
-| Type mismatch with API | Regenerate types — collection schema may have changed |
-| Import path errors | Use `#/generated/nocobase/*` or `#/generated/ixc/*` aliases |
-| Relation types missing | Use `Pick<GeneratedType, 'relationField'>` to extract |
+| Type mismatch with API  | Regenerate types — collection schema may have changed                   |
+| Import path errors      | Use `#/generated/nocobase/*` or `#/generated/ixc/*` aliases             |
+| Relation types missing  | Use `Pick<GeneratedType, 'relationField'>` to extract                   |
 
 <!-- AGENTS-GENERATED:END troubleshooting -->
 

@@ -153,11 +153,41 @@ export function generateEnumDefinition(
 	fieldName: string,
 	enumOptions: EnumOption[],
 ): string {
-	const members = enumOptions
+	// Deduplicate by value first; then deduplicate by member name (keep first occurrence)
+	const seenValues = new Set<string | number>();
+	const seenMemberNames = new Set<string>();
+	const dedupedOptions = enumOptions
+		.filter((opt) => {
+			if (seenValues.has(opt.value)) {
+				return false;
+			}
+			seenValues.add(opt.value);
+			return true;
+		})
+		.filter((opt) => {
+			const memberName = toEnumMemberName(opt.value);
+			if (seenMemberNames.has(memberName)) {
+				return false;
+			}
+			seenMemberNames.add(memberName);
+			return true;
+		});
+
+	const members = dedupedOptions
 		.map((opt) => {
 			const memberName = toEnumMemberName(opt.value);
+			// Escape actual whitespace chars that would break the string literal
+			const escapedValue =
+				typeof opt.value === "string"
+					? opt.value
+							.replace(/\\/g, "\\\\")
+							.replace(/"/g, '\\"')
+							.replace(/\r/g, "\\r")
+							.replace(/\n/g, "\\n")
+							.replace(/\t/g, "\\t")
+					: String(opt.value);
 			const memberValue =
-				typeof opt.value === "string" ? `"${opt.value}"` : String(opt.value);
+				typeof opt.value === "string" ? `"${escapedValue}"` : String(opt.value);
 			return `\t${memberName} = ${memberValue}`;
 		})
 		.join(",\n");
@@ -177,10 +207,29 @@ export function generateEnumLabelMap(
 	fieldName: string,
 	enumOptions: EnumOption[],
 ): string {
+	const seenValues = new Set<string | number>();
+	const seenMemberNames = new Set<string>();
+	const dedupedOptions = enumOptions
+		.filter((opt) => {
+			if (seenValues.has(opt.value)) {
+				return false;
+			}
+			seenValues.add(opt.value);
+			return true;
+		})
+		.filter((opt) => {
+			const memberName = toEnumMemberName(opt.value);
+			if (seenMemberNames.has(memberName)) {
+				return false;
+			}
+			seenMemberNames.add(memberName);
+			return true;
+		});
+
 	const fieldNameWithoutPrefix = fieldName.replace(/^[tf]_/, "");
 	const enumName = `${toCollectionTypeName(collectionName)}${toEnumMemberName(fieldNameWithoutPrefix)}`;
 
-	const entries = enumOptions
+	const entries = dedupedOptions
 		.map((opt) => {
 			const memberName = toEnumMemberName(opt.value);
 			const label = JSON.stringify(opt.label);

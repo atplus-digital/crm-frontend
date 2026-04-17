@@ -14,12 +14,12 @@ Automation scripts for development workflow — type generation, build helpers, 
 
 ## Key Files
 
-| File | Purpose |
-|------|---------|
-| `generate-types/index.ts` | Main type generation script for NocoBase/IXC collections |
-| `generate-types/datasources.config.ts` | Configuration for data sources and collection filtering |
-| `generate-types/src/` | Generation logic (field mapping, type extraction, code writing) |
-| `generate-types/test/` | Test suite for generation utilities (21 test files) |
+| File                                   | Purpose                                                         |
+| -------------------------------------- | --------------------------------------------------------------- |
+| `generate-types/index.ts`              | Main type generation script for NocoBase/IXC collections        |
+| `generate-types/datasources.config.ts` | Configuration for data sources and collection filtering         |
+| `generate-types/src/`                  | Generation logic (field mapping, type extraction, code writing) |
+| `generate-types/test/`                 | Test suite for generation utilities (21 test files)             |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -59,6 +59,7 @@ pnpm tsx scripts/generate-types/index.ts --verbose
 **Purpose:** Auto-generate TypeScript interfaces from NocoBase and IXC collection schemas.
 
 **Workflow:**
+
 1. Reads `datasources.config.ts` for API endpoints and collection filters
 2. Fetches collection schemas from both data sources
 3. Extracts field definitions, types, enums, and relations
@@ -66,6 +67,7 @@ pnpm tsx scripts/generate-types/index.ts --verbose
 5. Updates barrel exports (`index.ts`) automatically
 
 **Config structure:**
+
 ```typescript
 // datasources.config.ts
 export const datasources = {
@@ -83,6 +85,7 @@ export const datasources = {
 ```
 
 **When to modify:**
+
 - Adding new collections to track
 - Changing field type mappings
 - Customizing enum extraction
@@ -99,15 +102,24 @@ export const datasources = {
 **Files:** 21 test files covering generation logic and utilities
 
 **Test utilities:**
+
 ```typescript
 // scripts/generate-types/test/setup.ts
-import { createMockField, createMockCollectionTypesMap } from "@scripts/generate-types/test/setup";
+import {
+  createMockField,
+  createMockCollectionTypesMap,
+} from "@scripts/generate-types/test/setup";
 
-const field = createMockField({ name: "name", type: "string", interface: "input" });
+const field = createMockField({
+  name: "name",
+  type: "string",
+  interface: "input",
+});
 const typesMap = createMockCollectionTypesMap();
 ```
 
 **Mocking pattern:**
+
 ```typescript
 vi.mock("node:fs", () => ({
   existsSync: vi.fn(),
@@ -118,6 +130,7 @@ vi.mock("node:fs", () => ({
 ```
 
 **Run tests:**
+
 ```bash
 pnpm test scripts/generate-types
 ```
@@ -142,11 +155,11 @@ pnpm test scripts/generate-types
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| Generation fails with 401 | Verify `NOCOBASE_TOKEN` and `IXC_TOKEN` in `.env` |
-| Missing collections in output | Add to `datasources.config.ts` collections array |
-| Type errors after generation | Check for field type changes in source schemas |
+| Issue                         | Solution                                                   |
+| ----------------------------- | ---------------------------------------------------------- |
+| Generation fails with 401     | Verify `NOCOBASE_TOKEN` and `IXC_TOKEN` in `.env`          |
+| Missing collections in output | Add to `datasources.config.ts` collections array           |
+| Type errors after generation  | Check for field type changes in source schemas             |
 | Tests fail with module errors | Ensure `vi.mock()` calls are at top of file before imports |
 
 <!-- AGENTS-GENERATED:END troubleshooting -->
