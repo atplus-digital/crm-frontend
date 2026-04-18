@@ -78,19 +78,6 @@ export enum NegociacoesFkNegociacaoIndicador {
 	Value9 = "9",
 }
 
-export enum NegociacoesFkNegociacaoVendedor {
-	Value12 = "12",
-	Value20 = "20",
-	Value27 = "27",
-	Value31 = "31",
-	Value32 = "32",
-	Value34 = "34",
-	Value35 = "35",
-	Value36 = "36",
-	Value37 = "37",
-	Value38 = "38",
-}
-
 export enum NegociacoesMotivo {
 	I = "I",
 	M = "M",
@@ -195,7 +182,7 @@ export interface Negociacoes {
 	f_fk_contrato_ixc: number;
 	f_fk_cupom_desconto: NegociacoesFkCupomDesconto;
 	f_fk_negociacao_indicador: NegociacoesFkNegociacaoIndicador;
-	f_fk_negociacao_vendedor: NegociacoesFkNegociacaoVendedor;
+	f_fk_negociacao_vendedor: number;
 	f_fk_pacote: number;
 	f_fk_pessoa_negociacao: number;
 	f_fk_pessoa_pj_negociacao: number;
@@ -368,22 +355,6 @@ export const NEGOCIACOES_FKNEGOCIACAOINDICADOR_LABELS: Record<
 > = {
 	[NegociacoesFkNegociacaoIndicador.Value12]: "Código 12",
 	[NegociacoesFkNegociacaoIndicador.Value9]: "Código 9",
-};
-
-export const NEGOCIACOES_FKNEGOCIACAOVENDEDOR_LABELS: Record<
-	NegociacoesFkNegociacaoVendedor,
-	string
-> = {
-	[NegociacoesFkNegociacaoVendedor.Value12]: "Código 12",
-	[NegociacoesFkNegociacaoVendedor.Value20]: "Código 20",
-	[NegociacoesFkNegociacaoVendedor.Value27]: "Código 27",
-	[NegociacoesFkNegociacaoVendedor.Value31]: "Código 31",
-	[NegociacoesFkNegociacaoVendedor.Value32]: "Código 32",
-	[NegociacoesFkNegociacaoVendedor.Value34]: "Código 34",
-	[NegociacoesFkNegociacaoVendedor.Value35]: "Código 35",
-	[NegociacoesFkNegociacaoVendedor.Value36]: "Código 36",
-	[NegociacoesFkNegociacaoVendedor.Value37]: "Código 37",
-	[NegociacoesFkNegociacaoVendedor.Value38]: "Código 38",
 };
 
 export const NEGOCIACOES_MOTIVO_LABELS: Record<NegociacoesMotivo, string> = {

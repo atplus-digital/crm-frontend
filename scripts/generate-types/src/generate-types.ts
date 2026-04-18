@@ -9,7 +9,11 @@ import { NocoBaseClient } from "./generation/client";
 import { buildCollectionTypes } from "./generation/collection-types";
 import { generateCollectionsFile } from "./generation/collections-index";
 import { generateContent, generateSplitFiles } from "./generation/content";
-import { mergeEnums } from "./generation/enum-inference";
+import {
+	adapterEnumsToInferredEnums,
+	mergeAdapterWithSample,
+	mergeEnums,
+} from "./generation/enum-inference";
 import { generateMultiCollectionReport } from "./generation/enum-inference-report";
 import {
 	createBaseTypeIndex,
@@ -103,7 +107,6 @@ async function runGenerateTypesForDataSource(
 			requestHeaders: {
 				"X-Data-Source": dataSource.dataSource,
 			},
-			enableSampleFieldFallback: dataSource.enableSampleFieldFallback,
 		},
 	);
 	const baseInterfaceNaming = resolveBaseInterfaceNamingConfig(
@@ -141,51 +144,80 @@ async function runGenerateTypesForDataSource(
 		},
 	});
 
-	if (isIXC && dataSource.enableSampleFieldFallback) {
-		for (const [collectionName, types] of Object.entries(collectionTypes)) {
-			const scalarFieldNames = Array.from(types.scalars.keys()).filter(
-				(name) => !types.relations.has(name),
-			);
+	// Inferência de enums por amostragem de dados (fallback quando uiSchema não tem enum definido)
+	for (const [collectionName, types] of Object.entries(collectionTypes)) {
+		const scalarFieldNames = Array.from(types.scalars.keys()).filter(
+			(name) => !types.relations.has(name),
+		);
 
-			if (scalarFieldNames.length > 0) {
+		if (scalarFieldNames.length > 0) {
+			let adapterEnums: Record<
+				string,
+				{ values: string[]; labels?: Record<string, string> }
+			> = {};
+			let usedAdapter = false;
+
+			if (dataSource.preEnumAdapter) {
 				try {
-					const inferredEnums = await client.inferEnumsFromData(
-						collectionName,
-						scalarFieldNames,
+					adapterEnums =
+						await dataSource.preEnumAdapter.fetchEnums(collectionName);
+					usedAdapter = true;
+				} catch {
+					logVerbose(
+						`[${collectionName}] Adapter '${dataSource.preEnumAdapter.name}' falhou — usando sample-based`,
 					);
+				}
+			}
 
-					const existingEnums = new Map(types.enums);
-					const mergedEnums = mergeEnums(existingEnums, inferredEnums);
+			try {
+				const inferredEnums = await client.inferEnumsFromData(
+					collectionName,
+					scalarFieldNames,
+				);
 
-					types.enums = mergedEnums;
+				const existingEnums = new Map(types.enums);
 
-					const inferredCount = Object.keys(inferredEnums).length;
-					if (inferredCount > 0) {
-						const enumFieldsWithMeta = new Map<
-							string,
-							{
-								values: string[];
-								labels: Record<string, string>;
-								cardinality: number;
-								totalRecords: number;
-							}
-						>();
-						for (const [fieldName, enumInfo] of Object.entries(inferredEnums)) {
-							enumFieldsWithMeta.set(fieldName, {
-								values: enumInfo.values,
-								labels: enumInfo.labels,
-								cardinality: enumInfo.cardinality,
-								totalRecords: enumInfo.totalRecords,
-							});
+				let finalInferredEnums = inferredEnums;
+				if (usedAdapter && Object.keys(adapterEnums).length > 0) {
+					const adapterInferred = adapterEnumsToInferredEnums(adapterEnums);
+					finalInferredEnums = mergeAdapterWithSample(
+						adapterInferred,
+						inferredEnums,
+					);
+				}
+
+				const mergedEnums = mergeEnums(existingEnums, finalInferredEnums);
+
+				types.enums = mergedEnums;
+
+				const inferredCount = Object.keys(finalInferredEnums).length;
+				if (inferredCount > 0) {
+					const enumFieldsWithMeta = new Map<
+						string,
+						{
+							values: string[];
+							labels: Record<string, string>;
+							cardinality: number;
+							totalRecords: number;
 						}
-						collectionReports.push({
-							collectionName,
-							enumFields: enumFieldsWithMeta,
+					>();
+					for (const [fieldName, enumInfo] of Object.entries(
+						finalInferredEnums,
+					)) {
+						enumFieldsWithMeta.set(fieldName, {
+							values: enumInfo.values,
+							labels: enumInfo.labels,
+							cardinality: enumInfo.cardinality,
+							totalRecords: enumInfo.totalRecords,
 						});
 					}
-				} catch {
-					// No-op
+					collectionReports.push({
+						collectionName,
+						enumFields: enumFieldsWithMeta,
+					});
 				}
+			} catch {
+				// No-op
 			}
 		}
 	}

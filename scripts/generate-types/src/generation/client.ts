@@ -29,7 +29,6 @@ class HttpResponseError extends Error {
 
 interface NocoBaseClientOptions {
 	requestHeaders?: Record<string, string>;
-	enableSampleFieldFallback?: boolean;
 }
 
 /**
@@ -65,7 +64,6 @@ export class NocoBaseClient {
 	public readonly baseUrl: string;
 
 	private readonly requestHeaders?: Record<string, string>;
-	private readonly enableSampleFieldFallback: boolean;
 
 	public constructor(
 		private readonly credentials: NocoBaseCredentials,
@@ -73,9 +71,6 @@ export class NocoBaseClient {
 	) {
 		this.baseUrl = credentials.baseUrl;
 		this.requestHeaders = options?.requestHeaders;
-		this.enableSampleFieldFallback = Boolean(
-			options?.enableSampleFieldFallback,
-		);
 	}
 
 	/**
@@ -94,6 +89,9 @@ export class NocoBaseClient {
 
 	/**
 	 * Busca todos os campos de uma collection específica.
+	 * Tenta primeiro o endpoint collections.fields:list (que retorna uiSchema completo).
+	 * Se falhar, usa fallback para collections:get com appends=fields.
+	 * Se collections:get falhar com 404, inferir campos por amostragem de dados.
 	 *
 	 * @param collectionName - Nome da collection
 	 * @returns Array de campos ordenados por nome
@@ -102,36 +100,7 @@ export class NocoBaseClient {
 	public async fetchCollectionFields(
 		collectionName: string,
 	): Promise<NocoBaseField[]> {
-		if (this.enableSampleFieldFallback) {
-			return this.fetchCollectionFieldsWithFallback(collectionName);
-		}
-
-		// Primeiro tenta collections.fields:list para pegar campos com uiSchema completo (contendo enums)
-		// Se falhar (como acontece com alguns datasources externos), reverte para o método original
-		try {
-			const params = new URLSearchParams({
-				filter: JSON.stringify({ collectionName }),
-			});
-
-			const response = await this.fetchJson<{
-				data: NocoBaseField[];
-			}>(`collections.fields:list?${params}`);
-
-			return sortByName(response.data);
-		} catch {
-			// Se collections.fields:list falhar, reverte para o método original
-			// Isso é importante para datasources que não suportam este endpoint
-			const params = new URLSearchParams({
-				appends: "fields",
-				filterByTk: collectionName,
-			});
-
-			const response = await this.fetchJson<NocoBaseCollectionResponse>(
-				`collections:get?${params}`,
-			);
-
-			return sortByName(response.data.fields);
-		}
+		return this.fetchCollectionFieldsWithFallback(collectionName);
 	}
 
 	/**

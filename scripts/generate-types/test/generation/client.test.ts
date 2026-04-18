@@ -45,29 +45,6 @@ describe("NocoBaseClient", () => {
 			const client = new NocoBaseClient(credentials, options);
 			expect(client.baseUrl).toBe("https://api.example.com");
 		});
-
-		it("should enable sample field fallback when option is true", () => {
-			const credentials: NocoBaseCredentials = {
-				baseUrl: "https://api.example.com",
-				token: "test-token",
-				timeoutMs: 5000,
-			};
-			const options = {
-				enableSampleFieldFallback: true,
-			};
-			const client = new NocoBaseClient(credentials, options);
-			expect(client.baseUrl).toBe("https://api.example.com");
-		});
-
-		it("should disable sample field fallback by default", () => {
-			const credentials: NocoBaseCredentials = {
-				baseUrl: "https://api.example.com",
-				token: "test-token",
-				timeoutMs: 5000,
-			};
-			const client = new NocoBaseClient(credentials);
-			expect(client.baseUrl).toBe("https://api.example.com");
-		});
 	});
 
 	describe("fetchCollections", () => {
@@ -119,7 +96,7 @@ describe("NocoBaseClient", () => {
 		});
 	});
 
-	describe("fetchCollectionFields (without fallback)", () => {
+	describe("fetchCollectionFields", () => {
 		it("should return sorted fields alphabetically by name", async () => {
 			const mockFields = [
 				{ name: "zebra_field", type: "string" },
@@ -127,10 +104,9 @@ describe("NocoBaseClient", () => {
 				{ name: "beta_field", type: "string" },
 			];
 
-			// Primeiro tenta collections.fields:list (novo comportamento)
 			vi.mocked(fetch).mockResolvedValueOnce({
 				ok: true,
-				json: async () => ({ data: mockFields }),
+				json: async () => ({ data: { fields: mockFields } }),
 			} as Response);
 
 			const credentials: NocoBaseCredentials = {
@@ -177,9 +153,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials, {
-				enableSampleFieldFallback: true,
-			});
+			const client = new NocoBaseClient(credentials);
 
 			const result = await client.fetchCollectionFields("nonexistent");
 
@@ -202,9 +176,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials, {
-				enableSampleFieldFallback: true,
-			});
+			const client = new NocoBaseClient(credentials);
 
 			await expect(client.fetchCollectionFields("users")).rejects.toThrow(
 				"HTTP 500 Internal Server Error",
@@ -233,9 +205,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials, {
-				enableSampleFieldFallback: true,
-			});
+			const client = new NocoBaseClient(credentials);
 
 			const result = await client.fetchCollectionFields("empty_collection");
 			expect(result).toEqual([]);
@@ -264,9 +234,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials, {
-					enableSampleFieldFallback: true,
-				});
+				const client = new NocoBaseClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const priceField = result.find((f) => f.name === "price");
@@ -299,9 +267,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials, {
-					enableSampleFieldFallback: true,
-				});
+				const client = new NocoBaseClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const isActiveField = result.find((f) => f.name === "isActive");
@@ -334,9 +300,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials, {
-					enableSampleFieldFallback: true,
-				});
+				const client = new NocoBaseClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const tagsField = result.find((f) => f.name === "tags");
@@ -369,9 +333,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials, {
-					enableSampleFieldFallback: true,
-				});
+				const client = new NocoBaseClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const nullField = result.find((f) => f.name === "nullField");
@@ -404,9 +366,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials, {
-					enableSampleFieldFallback: true,
-				});
+				const client = new NocoBaseClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const metadataField = result.find((f) => f.name === "metadata");
@@ -439,9 +399,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials, {
-					enableSampleFieldFallback: true,
-				});
+				const client = new NocoBaseClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const createdAtField = result.find((f) => f.name === "createdAt");
@@ -474,9 +432,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials, {
-					enableSampleFieldFallback: true,
-				});
+				const client = new NocoBaseClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const titleField = result.find((f) => f.name === "title");
@@ -585,9 +541,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials, {
-				enableSampleFieldFallback: true,
-			});
+			const client = new NocoBaseClient(credentials);
 
 			const result = await client.fetchCollectionFields("test");
 			const optionalField = result.find((f) => f.name === "optionalField");
@@ -620,9 +574,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials, {
-				enableSampleFieldFallback: true,
-			});
+			const client = new NocoBaseClient(credentials);
 
 			const result = await client.fetchCollectionFields("test");
 			const bigintField = result.find((f) => f.name === "bigintField");
@@ -655,9 +607,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials, {
-				enableSampleFieldFallback: true,
-			});
+			const client = new NocoBaseClient(credentials);
 
 			const result = await client.fetchCollectionFields("test");
 			const dateField = result.find((f) => f.name === "dateField");

@@ -350,21 +350,6 @@ export enum ClientePrimeiroAcessoCentral {
 	S = "S",
 }
 
-export enum ClienteProfissao {
-	Aposentado = "Aposentado",
-	Armador = "Armador",
-	Dentista = "Dentista",
-	DesempregadaNoMomento = "Desempregada no momento",
-	EmpresRio = "Empresário",
-	OperadorDeEmpilhadeira = "Operador de empilhadeira",
-	OperadoraDeTransmissO = "Operadora de transmissão",
-	Professora = "Professora",
-	ServiOsGerais = "Serviços Gerais",
-	ServidorPBlico = "Servidor Público",
-	Vendedor = "Vendedor",
-	Vendedora = "Vendedora",
-}
-
 export enum ClienteProspeccaoUltimoContato {
 	Value20220824 = "2022-08-24",
 	Value20230314 = "2023-03-14",
@@ -451,18 +436,6 @@ export enum ClienteTipoPessoa {
 
 export enum ClienteTipoPessoaTitularConta {
 	F = "F",
-}
-
-export enum ClienteUf {
-	Value1 = "1",
-	Value10 = "10",
-	Value12 = "12",
-	Value13 = "13",
-	Value2 = "2",
-	Value24 = "24",
-	Value25 = "25",
-	Value3 = "3",
-	Value4 = "4",
 }
 
 export enum ClienteUfCob {
@@ -629,7 +602,7 @@ export interface Cliente {
 	plano_negociacao_auto_viab: string;
 	porta_ssh_sistema: string;
 	primeiro_acesso_central: ClientePrimeiroAcessoCentral;
-	profissao: ClienteProfissao;
+	profissao: string;
 	prospeccao_proximo_contato: string;
 	prospeccao_ultimo_contato: ClienteProspeccaoUltimoContato;
 	qtd_celular_calc_vel: string;
@@ -686,7 +659,7 @@ export interface Cliente {
 	tv_code: string;
 	tv_refresh_token: string;
 	tv_token_expires_in: string;
-	uf: ClienteUf;
+	uf: number;
 	uf_cob: ClienteUfCob;
 	ultima_atualizacao: string;
 	url_sistema: string;
@@ -1187,21 +1160,6 @@ export const CLIENTE_PRIMEIROACESSOCENTRAL_LABELS: Record<
 	[ClientePrimeiroAcessoCentral.S]: "Sim",
 };
 
-export const CLIENTE_PROFISSAO_LABELS: Record<ClienteProfissao, string> = {
-	[ClienteProfissao.Aposentado]: "Aposentado",
-	[ClienteProfissao.Armador]: "Armador",
-	[ClienteProfissao.Dentista]: "Dentista",
-	[ClienteProfissao.DesempregadaNoMomento]: "Desempregada No Momento",
-	[ClienteProfissao.EmpresRio]: "Empresário",
-	[ClienteProfissao.OperadorDeEmpilhadeira]: "Operador De Empilhadeira",
-	[ClienteProfissao.OperadoraDeTransmissO]: "Operadora De Transmissão",
-	[ClienteProfissao.Professora]: "Professora",
-	[ClienteProfissao.ServiOsGerais]: "Serviços Gerais",
-	[ClienteProfissao.ServidorPBlico]: "Servidor Público",
-	[ClienteProfissao.Vendedor]: "Vendedor",
-	[ClienteProfissao.Vendedora]: "Vendedora",
-};
-
 export const CLIENTE_PROSPECCAOULTIMOCONTATO_LABELS: Record<
 	ClienteProspeccaoUltimoContato,
 	string
@@ -1331,18 +1289,6 @@ export const CLIENTE_TIPOPESSOATITULARCONTA_LABELS: Record<
 	string
 > = {
 	[ClienteTipoPessoaTitularConta.F]: "F",
-};
-
-export const CLIENTE_UF_LABELS: Record<ClienteUf, string> = {
-	[ClienteUf.Value1]: "Ativo",
-	[ClienteUf.Value10]: "Código 10",
-	[ClienteUf.Value12]: "Código 12",
-	[ClienteUf.Value13]: "Código 13",
-	[ClienteUf.Value2]: "Código 2",
-	[ClienteUf.Value24]: "Código 24",
-	[ClienteUf.Value25]: "Código 25",
-	[ClienteUf.Value3]: "Código 3",
-	[ClienteUf.Value4]: "Código 4",
 };
 
 export const CLIENTE_UFCOB_LABELS: Record<ClienteUfCob, string> = {

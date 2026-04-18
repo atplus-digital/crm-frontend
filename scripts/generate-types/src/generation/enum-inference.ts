@@ -291,6 +291,39 @@ export function inferredEnumToEnumOptions(
  * @param inferredEnums - Enums inferidos da amostra
  * @returns Enums mesclados
  */
+export function adapterEnumsToInferredEnums(
+	adapterEnums: Record<
+		string,
+		{ values: string[]; labels?: Record<string, string> }
+	>,
+): InferredEnumsMap {
+	const result: InferredEnumsMap = {};
+
+	for (const [fieldName, adapterEnum] of Object.entries(adapterEnums)) {
+		result[fieldName] = {
+			values: adapterEnum.values,
+			labels: adapterEnum.labels ?? {},
+			cardinality: adapterEnum.values.length,
+			totalRecords: 0,
+		};
+	}
+
+	return result;
+}
+
+export function mergeAdapterWithSample(
+	adapterEnums: InferredEnumsMap,
+	sampleEnums: InferredEnumsMap,
+): InferredEnumsMap {
+	const merged: InferredEnumsMap = { ...sampleEnums };
+
+	for (const [fieldName, adapterEnum] of Object.entries(adapterEnums)) {
+		merged[fieldName] = adapterEnum;
+	}
+
+	return merged;
+}
+
 export function mergeEnums(
 	existingEnums: Map<string, Array<{ value: string | number; label: string }>>,
 	inferredEnums: InferredEnumsMap,

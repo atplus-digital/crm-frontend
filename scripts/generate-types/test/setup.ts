@@ -56,7 +56,6 @@ const mockScriptConfig = {
 			outputDir: "/tmp/test-generated-ixc",
 			splitCollections: ["cliente_contrato"],
 			collections: ["cliente_contrato"],
-			enableSampleFieldFallback: true,
 		}),
 	],
 };

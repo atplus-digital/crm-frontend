@@ -206,18 +206,6 @@ export enum ClienteContratoGerarFinanAssinDigitalContrato {
 	P = "P",
 }
 
-export enum ClienteContratoIdCarteiraCobranca {
-	Value1 = "1",
-	Value11 = "11",
-	Value14 = "14",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-	Value9 = "9",
-}
-
 export enum ClienteContratoIdCondPagAtiv {
 	Value0 = "0",
 }
@@ -266,45 +254,12 @@ export enum ClienteContratoIdResponsavel {
 	Value0 = "0",
 }
 
-export enum ClienteContratoIdResponsavelCancelamento {
-	Value0 = "0",
-	Value108 = "108",
-	Value109 = "109",
-	Value11 = "11",
-	Value110 = "110",
-	Value146 = "146",
-	Value18 = "18",
-	Value52 = "52",
-	Value68 = "68",
-	Value80 = "80",
-	Value89 = "89",
-	Value96 = "96",
-}
-
 export enum ClienteContratoIdResponsavelDesistencia {
 	Value0 = "0",
 }
 
 export enum ClienteContratoIdResponsavelNegativacao {
 	Value0 = "0",
-}
-
-export enum ClienteContratoIdTipoContrato {
-	Value1 = "1",
-	Value10 = "10",
-	Value12 = "12",
-	Value15 = "15",
-	Value2 = "2",
-	Value20 = "20",
-	Value25 = "25",
-	Value30 = "30",
-	Value32 = "32",
-	Value35 = "35",
-	Value37 = "37",
-	Value38 = "38",
-	Value40 = "40",
-	Value5 = "5",
-	Value8 = "8",
 }
 
 export enum ClienteContratoIdTipoDocAtiv {
@@ -377,23 +332,6 @@ export enum ClienteContratoLiberacaoSuspensaoParcial {
 
 export enum ClienteContratoMotivoAdicional {
 	Value0 = "0",
-}
-
-export enum ClienteContratoMotivoCancelamento {
-	Value0 = "0",
-	Value1 = "1",
-	Value12 = "12",
-	Value15 = "15",
-	Value17 = "17",
-	Value18 = "18",
-	Value2 = "2",
-	Value20 = "20",
-	Value23 = "23",
-	Value28 = "28",
-	Value3 = "3",
-	Value6 = "6",
-	Value7 = "7",
-	Value8 = "8",
 }
 
 export enum ClienteContratoMotivoDesistencia {
@@ -471,23 +409,6 @@ export enum ClienteContratoTaxaImprodutiva {
 
 export enum ClienteContratoTaxaInstalacao {
 	Value000 = "0.00",
-}
-
-export enum ClienteContratoTempoPermanencia {
-	Value00 = "0.0",
-	Value457 = "45.7",
-	Value581 = "58.1",
-	Value602 = "60.2",
-	Value737 = "73.7",
-	Value745 = "74.5",
-	Value770 = "77.0",
-	Value780 = "78.0",
-	Value799 = "79.9",
-	Value866 = "86.6",
-	Value881 = "88.1",
-	Value884 = "88.4",
-	Value901 = "90.1",
-	Value963 = "96.3",
 }
 
 export enum ClienteContratoTestemunhaAssinaturaDigital {
@@ -621,7 +542,7 @@ export interface ClienteContrato {
 	fim_vigencia_summit: string;
 	financeiro_migrado: ClienteContratoFinanceiroMigrado;
 	gerar_finan_assin_digital_contrato: ClienteContratoGerarFinanAssinDigitalContrato;
-	id_carteira_cobranca: ClienteContratoIdCarteiraCobranca;
+	id_carteira_cobranca: number;
 	id_cidade: string;
 	id_cliente: number;
 	id_cond_pag_ativ: ClienteContratoIdCondPagAtiv;
@@ -637,10 +558,10 @@ export interface ClienteContrato {
 	id_notifica_massa: string;
 	id_produto_ativ: ClienteContratoIdProdutoAtiv;
 	id_responsavel: ClienteContratoIdResponsavel;
-	id_responsavel_cancelamento: ClienteContratoIdResponsavelCancelamento;
+	id_responsavel_cancelamento: string;
 	id_responsavel_desistencia: ClienteContratoIdResponsavelDesistencia;
 	id_responsavel_negativacao: ClienteContratoIdResponsavelNegativacao;
-	id_tipo_contrato: ClienteContratoIdTipoContrato;
+	id_tipo_contrato: number;
 	id_tipo_doc_ativ: ClienteContratoIdTipoDocAtiv;
 	id_tipo_documento: ClienteContratoIdTipoDocumento;
 	id_vd_contrato: number;
@@ -670,7 +591,7 @@ export interface ClienteContrato {
 	lote: string;
 	moeda: string;
 	motivo_adicional: ClienteContratoMotivoAdicional;
-	motivo_cancelamento: ClienteContratoMotivoCancelamento;
+	motivo_cancelamento: number;
 	motivo_desistencia: ClienteContratoMotivoDesistencia;
 	motivo_inclusao: ClienteContratoMotivoInclusao;
 	motivo_restri_auto_libera_parc: string;
@@ -711,7 +632,7 @@ export interface ClienteContrato {
 	taxa_instalacao: ClienteContratoTaxaInstalacao;
 	tel_franquia_prefix: string;
 	tel_franquia_segundos: string;
-	tempo_permanencia: ClienteContratoTempoPermanencia;
+	tempo_permanencia: string;
 	testemunha_assinatura_digital: ClienteContratoTestemunhaAssinaturaDigital;
 	tipo: ClienteContratoTipo;
 	tipo_cobranca: ClienteContratoTipoCobranca;
@@ -1061,21 +982,6 @@ export const CLIENTECONTRATO_GERARFINANASSINDIGITALCONTRATO_LABELS: Record<
 	[ClienteContratoGerarFinanAssinDigitalContrato.P]: "P",
 };
 
-export const CLIENTECONTRATO_IDCARTEIRACOBRANCA_LABELS: Record<
-	ClienteContratoIdCarteiraCobranca,
-	string
-> = {
-	[ClienteContratoIdCarteiraCobranca.Value1]: "Ativo",
-	[ClienteContratoIdCarteiraCobranca.Value11]: "Código 11",
-	[ClienteContratoIdCarteiraCobranca.Value14]: "Código 14",
-	[ClienteContratoIdCarteiraCobranca.Value2]: "Código 2",
-	[ClienteContratoIdCarteiraCobranca.Value3]: "Código 3",
-	[ClienteContratoIdCarteiraCobranca.Value4]: "Código 4",
-	[ClienteContratoIdCarteiraCobranca.Value5]: "Código 5",
-	[ClienteContratoIdCarteiraCobranca.Value6]: "Código 6",
-	[ClienteContratoIdCarteiraCobranca.Value9]: "Código 9",
-};
-
 export const CLIENTECONTRATO_IDCONDPAGATIV_LABELS: Record<
 	ClienteContratoIdCondPagAtiv,
 	string
@@ -1157,24 +1063,6 @@ export const CLIENTECONTRATO_IDRESPONSAVEL_LABELS: Record<
 	[ClienteContratoIdResponsavel.Value0]: "Inativo",
 };
 
-export const CLIENTECONTRATO_IDRESPONSAVELCANCELAMENTO_LABELS: Record<
-	ClienteContratoIdResponsavelCancelamento,
-	string
-> = {
-	[ClienteContratoIdResponsavelCancelamento.Value0]: "Inativo",
-	[ClienteContratoIdResponsavelCancelamento.Value108]: "108",
-	[ClienteContratoIdResponsavelCancelamento.Value109]: "109",
-	[ClienteContratoIdResponsavelCancelamento.Value11]: "Código 11",
-	[ClienteContratoIdResponsavelCancelamento.Value110]: "110",
-	[ClienteContratoIdResponsavelCancelamento.Value146]: "146",
-	[ClienteContratoIdResponsavelCancelamento.Value18]: "Código 18",
-	[ClienteContratoIdResponsavelCancelamento.Value52]: "Código 52",
-	[ClienteContratoIdResponsavelCancelamento.Value68]: "Código 68",
-	[ClienteContratoIdResponsavelCancelamento.Value80]: "Código 80",
-	[ClienteContratoIdResponsavelCancelamento.Value89]: "Código 89",
-	[ClienteContratoIdResponsavelCancelamento.Value96]: "Código 96",
-};
-
 export const CLIENTECONTRATO_IDRESPONSAVELDESISTENCIA_LABELS: Record<
 	ClienteContratoIdResponsavelDesistencia,
 	string
@@ -1187,27 +1075,6 @@ export const CLIENTECONTRATO_IDRESPONSAVELNEGATIVACAO_LABELS: Record<
 	string
 > = {
 	[ClienteContratoIdResponsavelNegativacao.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_IDTIPOCONTRATO_LABELS: Record<
-	ClienteContratoIdTipoContrato,
-	string
-> = {
-	[ClienteContratoIdTipoContrato.Value1]: "Ativo",
-	[ClienteContratoIdTipoContrato.Value10]: "Código 10",
-	[ClienteContratoIdTipoContrato.Value12]: "Código 12",
-	[ClienteContratoIdTipoContrato.Value15]: "Código 15",
-	[ClienteContratoIdTipoContrato.Value2]: "Código 2",
-	[ClienteContratoIdTipoContrato.Value20]: "Código 20",
-	[ClienteContratoIdTipoContrato.Value25]: "Código 25",
-	[ClienteContratoIdTipoContrato.Value30]: "Código 30",
-	[ClienteContratoIdTipoContrato.Value32]: "Código 32",
-	[ClienteContratoIdTipoContrato.Value35]: "Código 35",
-	[ClienteContratoIdTipoContrato.Value37]: "Código 37",
-	[ClienteContratoIdTipoContrato.Value38]: "Código 38",
-	[ClienteContratoIdTipoContrato.Value40]: "Código 40",
-	[ClienteContratoIdTipoContrato.Value5]: "Código 5",
-	[ClienteContratoIdTipoContrato.Value8]: "Código 8",
 };
 
 export const CLIENTECONTRATO_IDTIPODOCATIV_LABELS: Record<
@@ -1333,26 +1200,6 @@ export const CLIENTECONTRATO_MOTIVOADICIONAL_LABELS: Record<
 	[ClienteContratoMotivoAdicional.Value0]: "Inativo",
 };
 
-export const CLIENTECONTRATO_MOTIVOCANCELAMENTO_LABELS: Record<
-	ClienteContratoMotivoCancelamento,
-	string
-> = {
-	[ClienteContratoMotivoCancelamento.Value0]: "Inativo",
-	[ClienteContratoMotivoCancelamento.Value1]: "Ativo",
-	[ClienteContratoMotivoCancelamento.Value12]: "Código 12",
-	[ClienteContratoMotivoCancelamento.Value15]: "Código 15",
-	[ClienteContratoMotivoCancelamento.Value17]: "Código 17",
-	[ClienteContratoMotivoCancelamento.Value18]: "Código 18",
-	[ClienteContratoMotivoCancelamento.Value2]: "Código 2",
-	[ClienteContratoMotivoCancelamento.Value20]: "Código 20",
-	[ClienteContratoMotivoCancelamento.Value23]: "Código 23",
-	[ClienteContratoMotivoCancelamento.Value28]: "Código 28",
-	[ClienteContratoMotivoCancelamento.Value3]: "Código 3",
-	[ClienteContratoMotivoCancelamento.Value6]: "Código 6",
-	[ClienteContratoMotivoCancelamento.Value7]: "Código 7",
-	[ClienteContratoMotivoCancelamento.Value8]: "Código 8",
-};
-
 export const CLIENTECONTRATO_MOTIVODESISTENCIA_LABELS: Record<
 	ClienteContratoMotivoDesistencia,
 	string
@@ -1473,26 +1320,6 @@ export const CLIENTECONTRATO_TAXAINSTALACAO_LABELS: Record<
 	string
 > = {
 	[ClienteContratoTaxaInstalacao.Value000]: "0.00",
-};
-
-export const CLIENTECONTRATO_TEMPOPERMANENCIA_LABELS: Record<
-	ClienteContratoTempoPermanencia,
-	string
-> = {
-	[ClienteContratoTempoPermanencia.Value00]: "0.0",
-	[ClienteContratoTempoPermanencia.Value457]: "45.7",
-	[ClienteContratoTempoPermanencia.Value581]: "58.1",
-	[ClienteContratoTempoPermanencia.Value602]: "60.2",
-	[ClienteContratoTempoPermanencia.Value737]: "73.7",
-	[ClienteContratoTempoPermanencia.Value745]: "74.5",
-	[ClienteContratoTempoPermanencia.Value770]: "77.0",
-	[ClienteContratoTempoPermanencia.Value780]: "78.0",
-	[ClienteContratoTempoPermanencia.Value799]: "79.9",
-	[ClienteContratoTempoPermanencia.Value866]: "86.6",
-	[ClienteContratoTempoPermanencia.Value881]: "88.1",
-	[ClienteContratoTempoPermanencia.Value884]: "88.4",
-	[ClienteContratoTempoPermanencia.Value901]: "90.1",
-	[ClienteContratoTempoPermanencia.Value963]: "96.3",
 };
 
 export const CLIENTECONTRATO_TESTEMUNHAASSINATURADIGITAL_LABELS: Record<

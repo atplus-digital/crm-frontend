@@ -1,6 +1,6 @@
 # Relatório de Inferência de Enums - IXC
 
-> **Data:** 2026-04-17
+> **Data:** 2026-04-18
 > **Collections analisadas:** 6
 
 ---
@@ -9,11 +9,11 @@
 
 | Collection            | Campos Enum | Status |
 | --------------------- | ----------- | ------ |
-| cliente               | 99          | ✅     |
-| cliente_contrato      | 104         | ✅     |
+| cliente               | 97          | ✅     |
+| cliente_contrato      | 99          | ✅     |
 | fn_areceber           | 42          | ✅     |
-| linha_mvno            | 11          | ✅     |
-| su_ticket             | 22          | ✅     |
+| linha_mvno            | 9           | ✅     |
+| su_ticket             | 18          | ✅     |
 | vd_contratos_produtos | 13          | ✅     |
 
 ---
@@ -110,7 +110,6 @@
 | pipe_id_organizacao           | 1             | ✅ Aprovado | 0                                                     |
 | pis_retem                     | 1             | ✅ Aprovado | N                                                     |
 | primeiro_acesso_central       | 2             | ✅ Aprovado | N, S                                                  |
-| profissao                     | 12            | ❓ Avaliar  | Aposentado, Armador, Dentista, Desempregada no mom... |
 | prospeccao_ultimo_contato     | 7             | ⚠️ Revisar  | 2022-08-24, 2023-03-14, 2023-04-03, 2023-04-04, 20... |
 | quantidade_dependentes        | 1             | ✅ Aprovado | 0                                                     |
 | rede_ativacao                 | 1             | ✅ Aprovado | P                                                     |
@@ -130,7 +129,6 @@
 | tipo_localidade               | 1             | ✅ Aprovado | U                                                     |
 | tipo_pessoa                   | 2             | ✅ Aprovado | F, J                                                  |
 | tipo_pessoa_titular_conta     | 1             | ✅ Aprovado | F                                                     |
-| uf                            | 9             | ⚠️ Revisar  | 1, 10, 12, 13, 2, 24, 25, 3, 4                        |
 | uf_cob                        | 2             | ✅ Aprovado | 0, 2                                                  |
 
 ### Detalhes
@@ -941,27 +939,6 @@
 | N     | Não   |
 | S     | Sim   |
 
-#### profissao
-
-- **Valores:** 12
-- **Total Registros:** 1000
-- **Status:** ❓ Avaliar
-
-| Valor                    | Label                    |
-| ------------------------ | ------------------------ |
-| Aposentado               | Aposentado               |
-| Armador                  | Armador                  |
-| Dentista                 | Dentista                 |
-| Desempregada no momento  | Desempregada No Momento  |
-| Empresário               | Empresário               |
-| Operador de empilhadeira | Operador De Empilhadeira |
-| Operadora de transmissão | Operadora De Transmissão |
-| Professora               | Professora               |
-| Serviços Gerais          | Serviços Gerais          |
-| Servidor Público         | Servidor Público         |
-| Vendedor                 | Vendedor                 |
-| Vendedora                | Vendedora                |
-
 #### prospeccao_ultimo_contato
 
 - **Valores:** 7
@@ -1165,24 +1142,6 @@
 | ----- | ----- |
 | F     | F     |
 
-#### uf
-
-- **Valores:** 9
-- **Total Registros:** 1000
-- **Status:** ⚠️ Revisar
-
-| Valor | Label     |
-| ----- | --------- |
-| 1     | Ativo     |
-| 10    | Código 10 |
-| 12    | Código 12 |
-| 13    | Código 13 |
-| 2     | Código 2  |
-| 24    | Código 24 |
-| 25    | Código 25 |
-| 3     | Código 3  |
-| 4     | Código 4  |
-
 #### uf_cob
 
 - **Valores:** 2
@@ -1245,7 +1204,6 @@
 | fidelidade                             | 2             | ✅ Aprovado | 12, 24                                                |
 | financeiro_migrado                     | 1             | ✅ Aprovado | N                                                     |
 | gerar_finan_assin_digital_contrato     | 2             | ✅ Aprovado | N, P                                                  |
-| id_carteira_cobranca                   | 9             | ⚠️ Revisar  | 1, 11, 14, 2, 3, 4, 5, 6, 9                           |
 | id_cond_pag_ativ                       | 1             | ✅ Aprovado | 0                                                     |
 | id_condominio                          | 1             | ✅ Aprovado | 0                                                     |
 | id_contrato_principal                  | 1             | ✅ Aprovado | 0                                                     |
@@ -1257,10 +1215,8 @@
 | id_motivo_negativacao                  | 1             | ✅ Aprovado | 0                                                     |
 | id_produto_ativ                        | 1             | ✅ Aprovado | 0                                                     |
 | id_responsavel                         | 1             | ✅ Aprovado | 0                                                     |
-| id_responsavel_cancelamento            | 12            | ❓ Avaliar  | 0, 108, 109, 11, 110, 146, 18, 52, 68, 80, 89, 96     |
 | id_responsavel_desistencia             | 1             | ✅ Aprovado | 0                                                     |
 | id_responsavel_negativacao             | 1             | ✅ Aprovado | 0                                                     |
-| id_tipo_contrato                       | 15            | ❓ Avaliar  | 1, 10, 12, 15, 2, 20, 25, 30, 32, 35, 37, 38, 40, ... |
 | id_tipo_doc_ativ                       | 1             | ✅ Aprovado | 0                                                     |
 | id_tipo_documento                      | 1             | ✅ Aprovado | 501                                                   |
 | id_vendedor_ativ                       | 1             | ✅ Aprovado | 0                                                     |
@@ -1278,7 +1234,6 @@
 | liberacao_bloqueio_manual              | 2             | ✅ Aprovado | P, S                                                  |
 | liberacao_suspensao_parcial            | 1             | ✅ Aprovado | P                                                     |
 | motivo_adicional                       | 1             | ✅ Aprovado | 0                                                     |
-| motivo_cancelamento                    | 14            | ❓ Avaliar  | 0, 1, 12, 15, 17, 18, 2, 20, 23, 28, 3, 6, 7, 8       |
 | motivo_desistencia                     | 1             | ✅ Aprovado | 0                                                     |
 | motivo_inclusao                        | 5             | ✅ Aprovado | D, I, N, T, U                                         |
 | num_parcelas_atraso                    | 1             | ✅ Aprovado | 0                                                     |
@@ -1295,7 +1250,6 @@
 | status_velocidade                      | 2             | ✅ Aprovado | N, R                                                  |
 | taxa_improdutiva                       | 1             | ✅ Aprovado | 0.000                                                 |
 | taxa_instalacao                        | 1             | ✅ Aprovado | 0.00                                                  |
-| tempo_permanencia                      | 14            | ❓ Avaliar  | 0.0, 45.7, 58.1, 60.2, 73.7, 74.5, 77.0, 78.0, 79.... |
 | testemunha_assinatura_digital          | 1             | ✅ Aprovado | 0                                                     |
 | tipo                                   | 1             | ✅ Aprovado | I                                                     |
 | tipo_cobranca                          | 1             | ✅ Aprovado | P                                                     |
@@ -1765,24 +1719,6 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 | N     | Não   |
 | P     | P     |
 
-#### id_carteira_cobranca
-
-- **Valores:** 9
-- **Total Registros:** 1000
-- **Status:** ⚠️ Revisar
-
-| Valor | Label     |
-| ----- | --------- |
-| 1     | Ativo     |
-| 11    | Código 11 |
-| 14    | Código 14 |
-| 2     | Código 2  |
-| 3     | Código 3  |
-| 4     | Código 4  |
-| 5     | Código 5  |
-| 6     | Código 6  |
-| 9     | Código 9  |
-
 #### id_cond_pag_ativ
 
 - **Valores:** 1
@@ -1897,27 +1833,6 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 | ----- | ------- |
 | 0     | Inativo |
 
-#### id_responsavel_cancelamento
-
-- **Valores:** 12
-- **Total Registros:** 1000
-- **Status:** ❓ Avaliar
-
-| Valor | Label     |
-| ----- | --------- |
-| 0     | Inativo   |
-| 108   | 108       |
-| 109   | 109       |
-| 11    | Código 11 |
-| 110   | 110       |
-| 146   | 146       |
-| 18    | Código 18 |
-| 52    | Código 52 |
-| 68    | Código 68 |
-| 80    | Código 80 |
-| 89    | Código 89 |
-| 96    | Código 96 |
-
 #### id_responsavel_desistencia
 
 - **Valores:** 1
@@ -1937,30 +1852,6 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 | Valor | Label   |
 | ----- | ------- |
 | 0     | Inativo |
-
-#### id_tipo_contrato
-
-- **Valores:** 15
-- **Total Registros:** 1000
-- **Status:** ❓ Avaliar
-
-| Valor | Label     |
-| ----- | --------- |
-| 1     | Ativo     |
-| 10    | Código 10 |
-| 12    | Código 12 |
-| 15    | Código 15 |
-| 2     | Código 2  |
-| 20    | Código 20 |
-| 25    | Código 25 |
-| 30    | Código 30 |
-| 32    | Código 32 |
-| 35    | Código 35 |
-| 37    | Código 37 |
-| 38    | Código 38 |
-| 40    | Código 40 |
-| 5     | Código 5  |
-| 8     | Código 8  |
 
 #### id_tipo_doc_ativ
 
@@ -2136,29 +2027,6 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 | ----- | ------- |
 | 0     | Inativo |
 
-#### motivo_cancelamento
-
-- **Valores:** 14
-- **Total Registros:** 1000
-- **Status:** ❓ Avaliar
-
-| Valor | Label     |
-| ----- | --------- |
-| 0     | Inativo   |
-| 1     | Ativo     |
-| 12    | Código 12 |
-| 15    | Código 15 |
-| 17    | Código 17 |
-| 18    | Código 18 |
-| 2     | Código 2  |
-| 20    | Código 20 |
-| 23    | Código 23 |
-| 28    | Código 28 |
-| 3     | Código 3  |
-| 6     | Código 6  |
-| 7     | Código 7  |
-| 8     | Código 8  |
-
 #### motivo_desistencia
 
 - **Valores:** 1
@@ -2331,29 +2199,6 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 | Valor | Label |
 | ----- | ----- |
 | 0.00  | 0.00  |
-
-#### tempo_permanencia
-
-- **Valores:** 14
-- **Total Registros:** 1000
-- **Status:** ❓ Avaliar
-
-| Valor | Label |
-| ----- | ----- |
-| 0.0   | 0.0   |
-| 45.7  | 45.7  |
-| 58.1  | 58.1  |
-| 60.2  | 60.2  |
-| 73.7  | 73.7  |
-| 74.5  | 74.5  |
-| 77.0  | 77.0  |
-| 78.0  | 78.0  |
-| 79.9  | 79.9  |
-| 86.6  | 86.6  |
-| 88.1  | 88.1  |
-| 88.4  | 88.4  |
-| 90.1  | 90.1  |
-| 96.3  | 96.3  |
 
 #### testemunha_assinatura_digital
 
@@ -2969,19 +2814,17 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 ## Collection: linha_mvno
 
-| Campo                         | Cardinalidade | Status      | Valores                                               |
-| ----------------------------- | ------------- | ----------- | ----------------------------------------------------- |
-| api                           | 2             | ✅ Aprovado | A, I                                                  |
-| data_agendamento              | 1             | ✅ Aprovado | 0000-00-00                                            |
-| ddd_telefone                  | 6             | ⚠️ Revisar  | 24, 41, 44, 47, 48, 49                                |
-| dia_recorrencia               | 7             | ⚠️ Revisar  | 0, 1, 10, 15, 20, 25, 5                               |
-| esim                          | 2             | ✅ Aprovado | N, S                                                  |
-| id_assinatura_cliente         | 1             | ✅ Aprovado | 0                                                     |
-| id_assinatura_cliente_produto | 1             | ✅ Aprovado | 0                                                     |
-| id_integracao                 | 2             | ✅ Aprovado | 1, 2                                                  |
-| id_prod_ixc_mvno              | 16            | ❓ Avaliar  | 0, 1, 10, 11, 12, 13, 14, 15, 2, 3, 4, 5, 6, 7, 8,... |
-| link_esim                     | 13            | ❓ Avaliar  | LPA:1$datorabrazil.validspereachdpplus.com$3NY4OAF... |
-| portabilidade                 | 2             | ✅ Aprovado | N, S                                                  |
+| Campo                         | Cardinalidade | Status      | Valores                 |
+| ----------------------------- | ------------- | ----------- | ----------------------- |
+| api                           | 2             | ✅ Aprovado | A, I                    |
+| data_agendamento              | 1             | ✅ Aprovado | 0000-00-00              |
+| ddd_telefone                  | 6             | ⚠️ Revisar  | 24, 41, 44, 47, 48, 49  |
+| dia_recorrencia               | 7             | ⚠️ Revisar  | 0, 1, 10, 15, 20, 25, 5 |
+| esim                          | 2             | ✅ Aprovado | N, S                    |
+| id_assinatura_cliente         | 1             | ✅ Aprovado | 0                       |
+| id_assinatura_cliente_produto | 1             | ✅ Aprovado | 0                       |
+| id_integracao                 | 2             | ✅ Aprovado | 1, 2                    |
+| portabilidade                 | 2             | ✅ Aprovado | N, S                    |
 
 ### Detalhes
 
@@ -3079,53 +2922,6 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 | 1     | Ativo    |
 | 2     | Código 2 |
 
-#### id_prod_ixc_mvno
-
-- **Valores:** 16
-- **Total Registros:** 372
-- **Status:** ❓ Avaliar
-
-| Valor | Label     |
-| ----- | --------- |
-| 0     | Inativo   |
-| 1     | Ativo     |
-| 10    | Código 10 |
-| 11    | Código 11 |
-| 12    | Código 12 |
-| 13    | Código 13 |
-| 14    | Código 14 |
-| 15    | Código 15 |
-| 2     | Código 2  |
-| 3     | Código 3  |
-| 4     | Código 4  |
-| 5     | Código 5  |
-| 6     | Código 6  |
-| 7     | Código 7  |
-| 8     | Código 8  |
-| 9     | Código 9  |
-
-#### link_esim
-
-- **Valores:** 13
-- **Total Registros:** 372
-- **Status:** ❓ Avaliar
-
-| Valor                                                                                                       | Label                                                                                                       |
-| ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| LPA:1$datorabrazil.validspereachdpplus.com$3NY4OAFYJPAN1XDQB8RZYHGUJU3B3674OAY5RHIWP8Q6UYZ0BD7LMEJ8S50JEDF9 | Lpa:1$datorabrazil.validspereachdpplus.com$3ny4oafyjpan1xdqb8rzyhguju3b3674oay5rhiwp8q6uyz0bd7lmej8s50jedf9 |
-| LPA:1$datorabrazil.validspereachdpplus.com$7P-LNKBHJXKN1R7SQ-ECQ1O6ANOP0-7H5AVL8UMRG2KV7O9TTQTRVHRMJ5RO3I37 | Lpa:1$datorabrazil.validspereachdpplus.com$7p Lnkbhjxkn1r7sq Ecq1o6anop0 7h5avl8umrg2kv7o9ttqtrvhrmj5ro3i37 |
-| LPA:1$datorabrazil.validspereachdpplus.com$7PPUEWGT1ZUQCSRETKK5Z4BUX716KRWGK1GNKVZJ5P86ZJUO0CW49O6AWR8EPFGK | Lpa:1$datorabrazil.validspereachdpplus.com$7ppuewgt1zuqcsretkk5z4bux716krwgk1gnkvzj5p86zjuo0cw49o6awr8epfgk |
-| LPA:1$datorabrazil.validspereachdpplus.com$EW5EFATMW1AN2A-C-IA37ZOK0Z5ZTP2H6-OP4Y2-O9SCVI0I8TP88CI8HIL65SGL | Lpa:1$datorabrazil.validspereachdpplus.com$ew5efatmw1an2a C Ia37zok0z5ztp2h6 Op4y2 O9scvi0i8tp88ci8hil65sgl |
-| LPA:1$datorabrazil.validspereachdpplus.com$G2J1GC9PS1VSV47EVJCR8A75SA4SM7JZ0LCMC-J0G7N03OJVRM34R-HYOF8MFU1H | Lpa:1$datorabrazil.validspereachdpplus.com$g2j1gc9ps1vsv47evjcr8a75sa4sm7jz0lcmc J0g7n03ojvrm34r Hyof8mfu1h |
-| LPA:1$datorabrazil.validspereachdpplus.com$HGO-WGGQJYSOE567HOTPGSQVA1WV9M5UH8J05OOVK5FMQKU6N7OYNJ-5URMB91PN | Lpa:1$datorabrazil.validspereachdpplus.com$hgo Wggqjysoe567hotpgsqva1wv9m5uh8j05oovk5fmqku6n7oynj 5urmb91pn |
-| LPA:1$datorabrazil.validspereachdpplus.com$JLIGIE6DVEEO57VIBIFN7ZA7QPRF9BR-Y9EEWCHWT8WY88--US9Z9P9A1ZOM9N3N | Lpa:1$datorabrazil.validspereachdpplus.com$jligie6dveeo57vibifn7za7qprf9br Y9eewchwt8wy88 Us9z9p9a1zom9n3n  |
-| LPA:1$datorabrazil.validspereachdpplus.com$KC727TERUN7WT5HY6CMRE8Q5TOIBOC8F-7337B938OZ0RBVQON6L94IIL1MQB7WW | Lpa:1$datorabrazil.validspereachdpplus.com$kc727terun7wt5hy6cmre8q5toiboc8f 7337b938oz0rbvqon6l94iil1mqb7ww |
-| LPA:1$datorabrazil.validspereachdpplus.com$M4JNNW2O2V2DYQ0FI-9P2MRI8JBQ4RLM8KJ316DKSKL31JV5NZXTLNR-4IOV6TSP | Lpa:1$datorabrazil.validspereachdpplus.com$m4jnnw2o2v2dyq0fi 9p2mri8jbq4rlm8kj316dkskl31jv5nzxtlnr 4iov6tsp |
-| LPA:1$datorabrazil.validspereachdpplus.com$MFQSPY3S79FSSVWT2IGXB8DR6JUXYWFQIIGKZQR2SUE3VXQD35M81FA3C35AY69Z | Lpa:1$datorabrazil.validspereachdpplus.com$mfqspy3s79fssvwt2igxb8dr6juxywfqiigkzqr2sue3vxqd35m81fa3c35ay69z |
-| LPA:1$datorabrazil.validspereachdpplus.com$QF8-VBCYMMMI6HFN0F9QBPCWXU1BM8OE3TS40GDXFB6ICIYUTCGCQ2TWW3YOZQM5 | Lpa:1$datorabrazil.validspereachdpplus.com$qf8 Vbcymmmi6hfn0f9qbpcwxu1bm8oe3ts40gdxfb6iciyutcgcq2tww3yozqm5 |
-| LPA:1$datorabrazil.validspereachdpplus.com$UT5UOXE6DHEBJGZ5P2ZNAZY9IFGX-7C89FGKMRX26UZCPZ0RIMGW2UE01OZ-UYTL | Lpa:1$datorabrazil.validspereachdpplus.com$ut5uoxe6dhebjgz5p2znazy9ifgx 7c89fgkmrx26uzcpz0rimgw2ue01oz UYTL |
-| LPA:1$datorabrazil.validspereachdpplus.com$V7ZB7FK2QSVGY7HI8SK-KS851NVIH7EX8QJMMWAYLF9U61TZ25B0G3JMQAK7WST3 | Lpa:1$datorabrazil.validspereachdpplus.com$v7zb7fk2qsvgy7hi8sk Ks851nvih7ex8qjmmwaylf9u61tz25b0g3jmqak7wst3 |
-
 #### portabilidade
 
 - **Valores:** 2
@@ -3143,30 +2939,26 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 ## Collection: su_ticket
 
-| Campo                     | Cardinalidade | Status      | Valores                                               |
-| ------------------------- | ------------- | ----------- | ----------------------------------------------------- |
-| id_canal_atendimento      | 1             | ✅ Aprovado | 0                                                     |
-| id_circuito               | 1             | ✅ Aprovado | 0                                                     |
-| id_evento_status_processo | 1             | ✅ Aprovado | 0                                                     |
-| id_filial                 | 1             | ✅ Aprovado | 1                                                     |
-| id_responsavel_tecnico    | 11            | ❓ Avaliar  | 0, 1, 10, 14, 20, 3, 34, 35, 4, 52, 7                 |
-| id_resposta               | 1             | ✅ Aprovado | 0                                                     |
-| id_su_diagnostico         | 4             | ✅ Aprovado | 0, 1, 10, 13                                          |
-| id_ticket_origem          | 2             | ✅ Aprovado | H, I                                                  |
-| id_ticket_setor           | 7             | ⚠️ Revisar  | 1, 2, 3, 4, 5, 7, 8                                   |
-| id_usuarios               | 19            | ❓ Avaliar  | 0, 1, 10, 11, 12, 18, 19, 20, 28, 29, 3, 31, 33, 3... |
-| id_wfl_processo           | 12            | ❓ Avaliar  | 0, 11, 12, 13, 2, 3, 4, 5, 6, 7, 8, 9                 |
-| interacao_pendente        | 4             | ✅ Aprovado | A, E, I, N                                            |
-| melhor_horario_agenda     | 1             | ✅ Aprovado | Q                                                     |
-| melhor_horario_reserva    | 3             | ✅ Aprovado | M, Q, T                                               |
-| mensagens_nao_lida_cli    | 10            | ⚠️ Revisar  | 0, 1, 2, 3, 4, 5, 6, 7, 8, 9                          |
-| mensagens_nao_lida_sup    | 2             | ✅ Aprovado | 0, 1                                                  |
-| origem_cadastro           | 1             | ✅ Aprovado | P                                                     |
-| origem_endereco           | 4             | ✅ Aprovado | C, CC, L, M                                           |
-| prioridade                | 3             | ✅ Aprovado | A, C, M                                               |
-| status                    | 3             | ✅ Aprovado | C, F, OSAG                                            |
-| su_status                 | 1             | ✅ Aprovado | S                                                     |
-| tipo                      | 1             | ✅ Aprovado | C                                                     |
+| Campo                     | Cardinalidade | Status      | Valores             |
+| ------------------------- | ------------- | ----------- | ------------------- |
+| id_canal_atendimento      | 1             | ✅ Aprovado | 0                   |
+| id_circuito               | 1             | ✅ Aprovado | 0                   |
+| id_evento_status_processo | 1             | ✅ Aprovado | 0                   |
+| id_filial                 | 1             | ✅ Aprovado | 1                   |
+| id_resposta               | 1             | ✅ Aprovado | 0                   |
+| id_su_diagnostico         | 4             | ✅ Aprovado | 0, 1, 10, 13        |
+| id_ticket_origem          | 2             | ✅ Aprovado | H, I                |
+| id_ticket_setor           | 7             | ⚠️ Revisar  | 1, 2, 3, 4, 5, 7, 8 |
+| interacao_pendente        | 4             | ✅ Aprovado | A, E, I, N          |
+| melhor_horario_agenda     | 1             | ✅ Aprovado | Q                   |
+| melhor_horario_reserva    | 3             | ✅ Aprovado | M, Q, T             |
+| mensagens_nao_lida_sup    | 2             | ✅ Aprovado | 0, 1                |
+| origem_cadastro           | 1             | ✅ Aprovado | P                   |
+| origem_endereco           | 4             | ✅ Aprovado | C, CC, L, M         |
+| prioridade                | 3             | ✅ Aprovado | A, C, M             |
+| status                    | 3             | ✅ Aprovado | C, F, OSAG          |
+| su_status                 | 1             | ✅ Aprovado | S                   |
+| tipo                      | 1             | ✅ Aprovado | C                   |
 
 ### Detalhes
 
@@ -3209,26 +3001,6 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 | Valor | Label |
 | ----- | ----- |
 | 1     | Ativo |
-
-#### id_responsavel_tecnico
-
-- **Valores:** 11
-- **Total Registros:** 1000
-- **Status:** ❓ Avaliar
-
-| Valor | Label     |
-| ----- | --------- |
-| 0     | Inativo   |
-| 1     | Ativo     |
-| 10    | Código 10 |
-| 14    | Código 14 |
-| 20    | Código 20 |
-| 3     | Código 3  |
-| 34    | Código 34 |
-| 35    | Código 35 |
-| 4     | Código 4  |
-| 52    | Código 52 |
-| 7     | Código 7  |
 
 #### id_resposta
 
@@ -3280,55 +3052,6 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 | 7     | Código 7 |
 | 8     | Código 8 |
 
-#### id_usuarios
-
-- **Valores:** 19
-- **Total Registros:** 1000
-- **Status:** ❓ Avaliar
-
-| Valor | Label     |
-| ----- | --------- |
-| 0     | Inativo   |
-| 1     | Ativo     |
-| 10    | Código 10 |
-| 11    | Código 11 |
-| 12    | Código 12 |
-| 18    | Código 18 |
-| 19    | Código 19 |
-| 20    | Código 20 |
-| 28    | Código 28 |
-| 29    | Código 29 |
-| 3     | Código 3  |
-| 31    | Código 31 |
-| 33    | Código 33 |
-| 34    | Código 34 |
-| 39    | Código 39 |
-| 4     | Código 4  |
-| 5     | Código 5  |
-| 6     | Código 6  |
-| 7     | Código 7  |
-
-#### id_wfl_processo
-
-- **Valores:** 12
-- **Total Registros:** 1000
-- **Status:** ❓ Avaliar
-
-| Valor | Label     |
-| ----- | --------- |
-| 0     | Inativo   |
-| 11    | Código 11 |
-| 12    | Código 12 |
-| 13    | Código 13 |
-| 2     | Código 2  |
-| 3     | Código 3  |
-| 4     | Código 4  |
-| 5     | Código 5  |
-| 6     | Código 6  |
-| 7     | Código 7  |
-| 8     | Código 8  |
-| 9     | Código 9  |
-
 #### interacao_pendente
 
 - **Valores:** 4
@@ -3363,25 +3086,6 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 | M     | M     |
 | Q     | Q     |
 | T     | T     |
-
-#### mensagens_nao_lida_cli
-
-- **Valores:** 10
-- **Total Registros:** 1000
-- **Status:** ⚠️ Revisar
-
-| Valor | Label    |
-| ----- | -------- |
-| 0     | Inativo  |
-| 1     | Ativo    |
-| 2     | Código 2 |
-| 3     | Código 3 |
-| 4     | Código 4 |
-| 5     | Código 5 |
-| 6     | Código 6 |
-| 7     | Código 7 |
-| 8     | Código 8 |
-| 9     | Código 9 |
 
 #### mensagens_nao_lida_sup
 

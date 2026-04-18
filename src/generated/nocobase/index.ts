@@ -8,28 +8,8 @@ import type { Negociacoes } from "./negociacoes";
 import type { Pessoas } from "./pessoas";
 import type { Users } from "./users";
 
-export enum ColaboradoresDoSetorFkColaboradoresSetor1 {
-	Value1 = "1",
-	Value10 = "10",
-	Value12 = "12",
-	Value13 = "13",
-	Value14 = "14",
-	Value15 = "15",
-	Value17 = "17",
-	Value18 = "18",
-	Value2 = "2",
-	Value20 = "20",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-	Value7 = "7",
-	Value8 = "8",
-	Value9 = "9",
-}
-
 export interface ColaboradoresDoSetor {
-	f_fk_colaboradores_setor_1: ColaboradoresDoSetorFkColaboradoresSetor1;
+	f_fk_colaboradores_setor_1: number;
 	f_fk_colaboradores_setor_2: number;
 }
 
@@ -37,29 +17,6 @@ export type ColaboradoresDoSetorRelations = Record<string, never>;
 
 export type ColaboradoresDoSetorRelationKey =
 	keyof ColaboradoresDoSetorRelations;
-
-export const COLABORADORESDOSETOR_FKCOLABORADORESSETOR1_LABELS: Record<
-	ColaboradoresDoSetorFkColaboradoresSetor1,
-	string
-> = {
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value1]: "Ativo",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value10]: "Código 10",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value12]: "Código 12",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value13]: "Código 13",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value14]: "Código 14",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value15]: "Código 15",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value17]: "Código 17",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value18]: "Código 18",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value2]: "Código 2",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value20]: "Código 20",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value3]: "Código 3",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value4]: "Código 4",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value5]: "Código 5",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value6]: "Código 6",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value7]: "Código 7",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value8]: "Código 8",
-	[ColaboradoresDoSetorFkColaboradoresSetor1.Value9]: "Código 9",
-};
 
 export interface ColaboradoresXSetor {
 	f_fk_colaboradores_setor_1: number;
@@ -124,28 +81,6 @@ export type FFkOrigemTiposRelations = Record<string, never>;
 
 export type FFkOrigemTiposRelationKey = keyof FFkOrigemTiposRelations;
 
-export enum FFuncionariosCreatedat {
-	Value20251030t184052292z = "2025-10-30T18:40:52.292Z",
-	Value20251114t140814335z = "2025-11-14T14:08:14.335Z",
-	Value20251201t132337519z = "2025-12-01T13:23:37.519Z",
-	Value20251201t134032841z = "2025-12-01T13:40:32.841Z",
-	Value20251201t180436112z = "2025-12-01T18:04:36.112Z",
-	Value20260209t165558650z = "2026-02-09T16:55:58.650Z",
-	Value20260209t175807526z = "2026-02-09T17:58:07.526Z",
-	Value20260209t180606486z = "2026-02-09T18:06:06.486Z",
-	Value20260209t182403789z = "2026-02-09T18:24:03.789Z",
-	Value20260218t125041978z = "2026-02-18T12:50:41.978Z",
-	Value20260218t144101172z = "2026-02-18T14:41:01.172Z",
-	Value20260218t191602108z = "2026-02-18T19:16:02.108Z",
-	Value20260227t144118063z = "2026-02-27T14:41:18.063Z",
-	Value20260305t174029156z = "2026-03-05T17:40:29.156Z",
-	Value20260320t175519792z = "2026-03-20T17:55:19.792Z",
-	Value20260320t181135954z = "2026-03-20T18:11:35.954Z",
-	Value20260402t183206361z = "2026-04-02T18:32:06.361Z",
-	Value20260409t204308066z = "2026-04-09T20:43:08.066Z",
-	Value20260416t210151400z = "2026-04-16T21:01:51.400Z",
-}
-
 export enum FFuncionariosAtivo {
 	Sim = "Sim",
 	NO = "Não",
@@ -166,19 +101,6 @@ export enum FFuncionariosChecklistAdmissional {
 
 export enum FFuncionariosCnpj {
 	Value59556090000144 = "59.556.090/0001-44",
-}
-
-export enum FFuncionariosContaSalarioPix {
-	Value000110923 = "00011092-3",
-	Value000246218 = "00024621-8",
-	Value010215082 = "01021508-2",
-	Value244347 = "244347",
-	Value262523 = "262523",
-	Value382822 = "38282-2",
-	Value395863 = "39586-3",
-	Value533335 = "53333-5",
-	Value592997 = "59299-7",
-	Value762718604 = "76271860-4",
 }
 
 export enum FFuncionariosCurso {
@@ -243,17 +165,6 @@ export enum FFuncionariosEstadoCivil {
 	Separado = "Separado",
 }
 
-export enum FFuncionariosFkFuncionarios2 {
-	Value1 = "1",
-	Value11 = "11",
-	Value2 = "2",
-	Value3 = "3",
-	Value6 = "6",
-	Value7 = "7",
-	Value8 = "8",
-	Value9 = "9",
-}
-
 export enum FFuncionariosFkSetor {
 	Value355511080845316 = "355511080845316",
 	Value355511080845317 = "355511080845317",
@@ -271,21 +182,6 @@ export enum FFuncionariosGenero {
 	Feminino = "Feminino",
 }
 
-export enum FFuncionariosMesNascimento {
-	Value1 = "1",
-	Value10 = "10",
-	Value11 = "11",
-	Value12 = "12",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-	Value7 = "7",
-	Value8 = "8",
-	Value9 = "9",
-}
-
 export enum FFuncionariosMobilidade {
 	ValeTransporteTransul = "Vale Transporte (Transul)",
 	MobilidadeCartOBenefCios = "Mobilidade (Cartão Benefícios)",
@@ -294,24 +190,6 @@ export enum FFuncionariosMobilidade {
 export enum FFuncionariosNacionalidade {
 	Brasileira = "Brasileira",
 	Brasileiro = "Brasileiro",
-}
-
-export enum FFuncionariosNaturalidade {
-	AlegreteRs = "Alegrete/RS",
-	CamposNovos = "Campos Novos",
-	CaxiasDoSulRs = "Caxias do Sul/RS",
-	CriciMa = "Criciúma",
-	CuritibaPr = "Curitiba/PR",
-	CuritibanosSc = "Curitibanos/SC",
-	JoaAbaSc = "Joaçaba/SC",
-	Lages = "Lages",
-	LagesSc = "Lages/SC",
-	OtacLioCostaSc = "Otacílio Costa/SC",
-	PiraDoSulPr = "Piraí do Sul/PR",
-	RioDoSul = "Rio do Sul",
-	SaleteSc = "Salete/SC",
-	SOLeopoldoRs = "São Leopoldo/RS",
-	TaioSc = "Taio/SC",
 }
 
 export enum FFuncionariosNomeContatoEmergencia {
@@ -391,23 +269,10 @@ export enum FFuncionariosVinculoComColaborador {
 	Conjuge = "Conjuge",
 }
 
-export enum FFuncionariosZonaEleitoral {
-	Value100 = "100",
-	Value104 = "104",
-	Value11 = "11",
-	Value169 = "169",
-	Value21 = "21",
-	Value5 = "5",
-	Value54 = "54",
-	Value57 = "57",
-	Value58 = "58",
-	Value93 = "93",
-}
-
 export interface FFuncionarios {
 	id: number;
 	f_fk_funcionarios: number;
-	f_fk_funcionarios2: FFuncionariosFkFuncionarios2;
+	f_fk_funcionarios2: number;
 	f_fk_setor: FFuncionariosFkSetor;
 	f_fk_turnos: FFuncionariosFkTurnos;
 	f_id_tecnico_ixc: number;
@@ -418,7 +283,7 @@ export interface FFuncionarios {
 	f_checklist_admissional: FFuncionariosChecklistAdmissional;
 	f_cnh: string;
 	f_cnpj: FFuncionariosCnpj;
-	f_conta_salario_pix: FFuncionariosContaSalarioPix;
+	f_conta_salario_pix: string;
 	f_cpf: string;
 	f_curso: FFuncionariosCurso;
 	f_data_admissao: string;
@@ -440,11 +305,11 @@ export interface FFuncionarios {
 	f_escolaridade: FFuncionariosEscolaridade;
 	f_estado_civil: FFuncionariosEstadoCivil;
 	f_genero: FFuncionariosGenero;
-	f_mes_nascimento: FFuncionariosMesNascimento;
+	f_mes_nascimento: string;
 	f_mobilidade: FFuncionariosMobilidade;
 	f_motivo_demissao: string;
 	f_nacionalidade: FFuncionariosNacionalidade;
-	f_naturalidade: FFuncionariosNaturalidade;
+	f_naturalidade: string;
 	f_nome: string;
 	f_nome_contato_emergencia: FFuncionariosNomeContatoEmergencia;
 	f_orgao_expedidor: FFuncionariosOrgaoExpedidor;
@@ -464,9 +329,9 @@ export interface FFuncionarios {
 	f_valor_rescisao: number;
 	f_vencimento_contrato: FFuncionariosVencimentoContrato;
 	f_vinculo_com_colaborador: FFuncionariosVinculoComColaborador;
-	f_zona_eleitoral: FFuncionariosZonaEleitoral;
+	f_zona_eleitoral: string;
 	updatedAt: string;
-	createdAt: FFuncionariosCreatedat;
+	createdAt: string;
 }
 
 export interface FFuncionariosRelations {
@@ -491,31 +356,6 @@ export interface FFuncionariosRelations {
 }
 
 export type FFuncionariosRelationKey = keyof FFuncionariosRelations;
-
-export const FFUNCIONARIOS_CREATEDAT_LABELS: Record<
-	FFuncionariosCreatedat,
-	string
-> = {
-	[FFuncionariosCreatedat.Value20251030t184052292z]: "2025 10 30t18:40:52.292z",
-	[FFuncionariosCreatedat.Value20251114t140814335z]: "2025 11 14t14:08:14.335z",
-	[FFuncionariosCreatedat.Value20251201t132337519z]: "2025 12 01t13:23:37.519z",
-	[FFuncionariosCreatedat.Value20251201t134032841z]: "2025 12 01t13:40:32.841z",
-	[FFuncionariosCreatedat.Value20251201t180436112z]: "2025 12 01t18:04:36.112z",
-	[FFuncionariosCreatedat.Value20260209t165558650z]: "2026 02 09t16:55:58.650z",
-	[FFuncionariosCreatedat.Value20260209t175807526z]: "2026 02 09t17:58:07.526z",
-	[FFuncionariosCreatedat.Value20260209t180606486z]: "2026 02 09t18:06:06.486z",
-	[FFuncionariosCreatedat.Value20260209t182403789z]: "2026 02 09t18:24:03.789z",
-	[FFuncionariosCreatedat.Value20260218t125041978z]: "2026 02 18t12:50:41.978z",
-	[FFuncionariosCreatedat.Value20260218t144101172z]: "2026 02 18t14:41:01.172z",
-	[FFuncionariosCreatedat.Value20260218t191602108z]: "2026 02 18t19:16:02.108z",
-	[FFuncionariosCreatedat.Value20260227t144118063z]: "2026 02 27t14:41:18.063z",
-	[FFuncionariosCreatedat.Value20260305t174029156z]: "2026 03 05t17:40:29.156z",
-	[FFuncionariosCreatedat.Value20260320t175519792z]: "2026 03 20t17:55:19.792z",
-	[FFuncionariosCreatedat.Value20260320t181135954z]: "2026 03 20t18:11:35.954z",
-	[FFuncionariosCreatedat.Value20260402t183206361z]: "2026 04 02t18:32:06.361z",
-	[FFuncionariosCreatedat.Value20260409t204308066z]: "2026 04 09t20:43:08.066z",
-	[FFuncionariosCreatedat.Value20260416t210151400z]: "2026 04 16t21:01:51.400z",
-};
 
 export const FFUNCIONARIOS_ATIVO_LABELS: Record<FFuncionariosAtivo, string> = {
 	[FFuncionariosAtivo.Sim]: "Sim",
@@ -546,22 +386,6 @@ export const FFUNCIONARIOS_CHECKLISTADMISSIONAL_LABELS: Record<
 
 export const FFUNCIONARIOS_CNPJ_LABELS: Record<FFuncionariosCnpj, string> = {
 	[FFuncionariosCnpj.Value59556090000144]: "59.556.090/0001 44",
-};
-
-export const FFUNCIONARIOS_CONTASALARIOPIX_LABELS: Record<
-	FFuncionariosContaSalarioPix,
-	string
-> = {
-	[FFuncionariosContaSalarioPix.Value000110923]: "00011092 3",
-	[FFuncionariosContaSalarioPix.Value000246218]: "00024621 8",
-	[FFuncionariosContaSalarioPix.Value010215082]: "01021508 2",
-	[FFuncionariosContaSalarioPix.Value244347]: "244347",
-	[FFuncionariosContaSalarioPix.Value262523]: "262523",
-	[FFuncionariosContaSalarioPix.Value382822]: "38282 2",
-	[FFuncionariosContaSalarioPix.Value395863]: "39586 3",
-	[FFuncionariosContaSalarioPix.Value533335]: "53333 5",
-	[FFuncionariosContaSalarioPix.Value592997]: "59299 7",
-	[FFuncionariosContaSalarioPix.Value762718604]: "76271860 4",
 };
 
 export const FFUNCIONARIOS_CURSO_LABELS: Record<FFuncionariosCurso, string> = {
@@ -653,20 +477,6 @@ export const FFUNCIONARIOS_ESTADOCIVIL_LABELS: Record<
 	[FFuncionariosEstadoCivil.Separado]: "Separado",
 };
 
-export const FFUNCIONARIOS_FKFUNCIONARIOS2_LABELS: Record<
-	FFuncionariosFkFuncionarios2,
-	string
-> = {
-	[FFuncionariosFkFuncionarios2.Value1]: "Ativo",
-	[FFuncionariosFkFuncionarios2.Value11]: "Código 11",
-	[FFuncionariosFkFuncionarios2.Value2]: "Código 2",
-	[FFuncionariosFkFuncionarios2.Value3]: "Código 3",
-	[FFuncionariosFkFuncionarios2.Value6]: "Código 6",
-	[FFuncionariosFkFuncionarios2.Value7]: "Código 7",
-	[FFuncionariosFkFuncionarios2.Value8]: "Código 8",
-	[FFuncionariosFkFuncionarios2.Value9]: "Código 9",
-};
-
 export const FFUNCIONARIOS_FKSETOR_LABELS: Record<
 	FFuncionariosFkSetor,
 	string
@@ -691,24 +501,6 @@ export const FFUNCIONARIOS_GENERO_LABELS: Record<FFuncionariosGenero, string> =
 		[FFuncionariosGenero.Feminino]: "Feminino",
 	};
 
-export const FFUNCIONARIOS_MESNASCIMENTO_LABELS: Record<
-	FFuncionariosMesNascimento,
-	string
-> = {
-	[FFuncionariosMesNascimento.Value1]: "Ativo",
-	[FFuncionariosMesNascimento.Value10]: "Código 10",
-	[FFuncionariosMesNascimento.Value11]: "Código 11",
-	[FFuncionariosMesNascimento.Value12]: "Código 12",
-	[FFuncionariosMesNascimento.Value2]: "Código 2",
-	[FFuncionariosMesNascimento.Value3]: "Código 3",
-	[FFuncionariosMesNascimento.Value4]: "Código 4",
-	[FFuncionariosMesNascimento.Value5]: "Código 5",
-	[FFuncionariosMesNascimento.Value6]: "Código 6",
-	[FFuncionariosMesNascimento.Value7]: "Código 7",
-	[FFuncionariosMesNascimento.Value8]: "Código 8",
-	[FFuncionariosMesNascimento.Value9]: "Código 9",
-};
-
 export const FFUNCIONARIOS_MOBILIDADE_LABELS: Record<
 	FFuncionariosMobilidade,
 	string
@@ -724,27 +516,6 @@ export const FFUNCIONARIOS_NACIONALIDADE_LABELS: Record<
 > = {
 	[FFuncionariosNacionalidade.Brasileira]: "Brasileira",
 	[FFuncionariosNacionalidade.Brasileiro]: "Brasileiro",
-};
-
-export const FFUNCIONARIOS_NATURALIDADE_LABELS: Record<
-	FFuncionariosNaturalidade,
-	string
-> = {
-	[FFuncionariosNaturalidade.AlegreteRs]: "Alegrete/rs",
-	[FFuncionariosNaturalidade.CamposNovos]: "Campos Novos",
-	[FFuncionariosNaturalidade.CaxiasDoSulRs]: "Caxias Do Sul/rs",
-	[FFuncionariosNaturalidade.CriciMa]: "Criciúma",
-	[FFuncionariosNaturalidade.CuritibaPr]: "Curitiba/pr",
-	[FFuncionariosNaturalidade.CuritibanosSc]: "Curitibanos/sc",
-	[FFuncionariosNaturalidade.JoaAbaSc]: "Joaçaba/sc",
-	[FFuncionariosNaturalidade.Lages]: "Lages",
-	[FFuncionariosNaturalidade.LagesSc]: "Lages/sc",
-	[FFuncionariosNaturalidade.OtacLioCostaSc]: "Otacílio Costa/sc",
-	[FFuncionariosNaturalidade.PiraDoSulPr]: "Piraí Do Sul/pr",
-	[FFuncionariosNaturalidade.RioDoSul]: "Rio Do Sul",
-	[FFuncionariosNaturalidade.SaleteSc]: "Salete/sc",
-	[FFuncionariosNaturalidade.SOLeopoldoRs]: "São Leopoldo/rs",
-	[FFuncionariosNaturalidade.TaioSc]: "Taio/sc",
 };
 
 export const FFUNCIONARIOS_NOMECONTATOEMERGENCIA_LABELS: Record<
@@ -862,22 +633,6 @@ export const FFUNCIONARIOS_VINCULOCOMCOLABORADOR_LABELS: Record<
 		"Filho(a) ou Enteado(a)",
 	[FFuncionariosVinculoComColaborador.AvS]: "Avós",
 	[FFuncionariosVinculoComColaborador.Conjuge]: "Conjuge",
-};
-
-export const FFUNCIONARIOS_ZONAELEITORAL_LABELS: Record<
-	FFuncionariosZonaEleitoral,
-	string
-> = {
-	[FFuncionariosZonaEleitoral.Value100]: "100",
-	[FFuncionariosZonaEleitoral.Value104]: "104",
-	[FFuncionariosZonaEleitoral.Value11]: "Código 11",
-	[FFuncionariosZonaEleitoral.Value169]: "169",
-	[FFuncionariosZonaEleitoral.Value21]: "Código 21",
-	[FFuncionariosZonaEleitoral.Value5]: "Código 5",
-	[FFuncionariosZonaEleitoral.Value54]: "Código 54",
-	[FFuncionariosZonaEleitoral.Value57]: "Código 57",
-	[FFuncionariosZonaEleitoral.Value58]: "Código 58",
-	[FFuncionariosZonaEleitoral.Value93]: "Código 93",
 };
 
 export interface FRecursosFilho {
@@ -1267,17 +1022,6 @@ export const AEGIS_STATUSMAC_LABELS: Record<AegisStatusmac, string> = {
 	[AegisStatusmac.Error]: "Erro ao Limpar MAC",
 };
 
-export enum AnexosNegociacoesExtname {
-	Html = ".html",
-	Jfif = ".jfif",
-	Jpeg = ".jpeg",
-	Jpg = ".jpg",
-	Mp4 = ".mp4",
-	Pdf = ".pdf",
-	PdfFilename = ".pdf-filename_=",
-	Png = ".png",
-}
-
 export enum AnexosNegociacoesMeta {
 	ObjectObject = "[object Object]",
 }
@@ -1297,7 +1041,7 @@ export enum AnexosNegociacoesStorageid {
 
 export interface AnexosNegociacoes {
 	id: number;
-	extname: AnexosNegociacoesExtname;
+	extname: string;
 	f_anexos_fk: number;
 	filename: string;
 	meta: AnexosNegociacoesMeta;
@@ -1319,20 +1063,6 @@ export interface AnexosNegociacoesRelations {
 }
 
 export type AnexosNegociacoesRelationKey = keyof AnexosNegociacoesRelations;
-
-export const ANEXOSNEGOCIACOES_EXTNAME_LABELS: Record<
-	AnexosNegociacoesExtname,
-	string
-> = {
-	[AnexosNegociacoesExtname.Html]: ".html",
-	[AnexosNegociacoesExtname.Jfif]: ".jfif",
-	[AnexosNegociacoesExtname.Jpeg]: ".jpeg",
-	[AnexosNegociacoesExtname.Jpg]: ".jpg",
-	[AnexosNegociacoesExtname.Mp4]: ".mp4",
-	[AnexosNegociacoesExtname.Pdf]: ".pdf",
-	[AnexosNegociacoesExtname.PdfFilename]: ".pdf Filename =",
-	[AnexosNegociacoesExtname.Png]: ".png",
-};
 
 export const ANEXOSNEGOCIACOES_META_LABELS: Record<
 	AnexosNegociacoesMeta,
@@ -2025,27 +1755,6 @@ export enum CargosCreatedat {
 	Value20260320t195054109z = "2026-03-20T19:50:54.109Z",
 }
 
-export enum CargosCbo {
-	Value142205GerenteDeRecursosHumanos = "142205 - Gerente de recursos humanos",
-	Value142505GerenteDeRede = "142505 - Gerente de rede",
-	Value212410AnalistaDeRedesEDeComunicaODeDados = "212410 - Analista de redes e de comunicação de dados",
-	Value212420AnalistaDeSuporteComputacional = "212420 - Analista de suporte computacional",
-	Value252105Administrador = "252105 - Administrador",
-	Value252405AnalistaDeRecursosHumanos = "252405 - Analista de recursos humanos",
-	Value252545AnalistaFinanceiroInstituiEsFinanceiras = "252545 - Analista financeiro (instituições financeiras)",
-	Value313310TCnicoDeRedeTelecomunicaEs = "313310 - Técnico de rede (telecomunicações)",
-	Value317105ProgramadorDeInternet = "317105 - Programador de internet",
-	Value317210TCnicoDeApoioAoUsuRioDeInformTicaHelpdesk = "317210 - Técnico de apoio ao usuário de informática (helpdesk)",
-	Value354125AssistenteDeVendas = "354125 - Assistente de vendas",
-	Value391145AnalistaDeControleTCnicoDeManutenO = "391145 - Analista de controle técnico de manutenção",
-	Value411010AssistenteAdministrativo = "411010 - Assistente administrativo",
-	Value414105Almoxarife = "414105 - Almoxarife",
-	Value514320Faxineiro = "514320 - Faxineiro",
-	Value521110VendedorDeComRcioVarejista = "521110 - Vendedor de comércio varejista",
-	Value524105VendedorEmDomicLio = "524105 - Vendedor em domicílio",
-	Value732130InstaladorReparadorDeRedesTelefNicasEDeComunicaODeDados = "732130 - Instalador-reparador de redes telefônicas e de comunicação de dados",
-}
-
 export enum CargosFkFuncionarios {
 	Value1 = "1",
 	Value15 = "15",
@@ -2056,7 +1765,7 @@ export interface Cargos {
 	id: number;
 	f_fk_funcionarios: CargosFkFuncionarios;
 	f_atividades: string;
-	f_cbo: CargosCbo;
+	f_cbo: string;
 	f_descricao: string;
 	f_nome: string;
 	updatedAt: string;
@@ -2075,39 +1784,6 @@ export const CARGOS_CREATEDAT_LABELS: Record<CargosCreatedat, string> = {
 	[CargosCreatedat.Value20251104t193252015z]: "2025 11 04t19:32:52.015z",
 	[CargosCreatedat.Value20251114t200042493z]: "2025 11 14t20:00:42.493z",
 	[CargosCreatedat.Value20260320t195054109z]: "2026 03 20t19:50:54.109z",
-};
-
-export const CARGOS_CBO_LABELS: Record<CargosCbo, string> = {
-	[CargosCbo.Value142205GerenteDeRecursosHumanos]:
-		"142205 Gerente De Recursos Humanos",
-	[CargosCbo.Value142505GerenteDeRede]: "142505 Gerente De Rede",
-	[CargosCbo.Value212410AnalistaDeRedesEDeComunicaODeDados]:
-		"212410 Analista De Redes E De Comunicação De Dados",
-	[CargosCbo.Value212420AnalistaDeSuporteComputacional]:
-		"212420 Analista De Suporte Computacional",
-	[CargosCbo.Value252105Administrador]: "252105 Administrador",
-	[CargosCbo.Value252405AnalistaDeRecursosHumanos]:
-		"252405 Analista De Recursos Humanos",
-	[CargosCbo.Value252545AnalistaFinanceiroInstituiEsFinanceiras]:
-		"252545 Analista Financeiro (instituições Financeiras)",
-	[CargosCbo.Value313310TCnicoDeRedeTelecomunicaEs]:
-		"313310 Técnico De Rede (telecomunicações)",
-	[CargosCbo.Value317105ProgramadorDeInternet]:
-		"317105 Programador De Internet",
-	[CargosCbo.Value317210TCnicoDeApoioAoUsuRioDeInformTicaHelpdesk]:
-		"317210 Técnico De Apoio Ao Usuário De Informática (helpdesk)",
-	[CargosCbo.Value354125AssistenteDeVendas]: "354125 Assistente De Vendas",
-	[CargosCbo.Value391145AnalistaDeControleTCnicoDeManutenO]:
-		"391145 Analista De Controle Técnico De Manutenção",
-	[CargosCbo.Value411010AssistenteAdministrativo]:
-		"411010 Assistente Administrativo",
-	[CargosCbo.Value414105Almoxarife]: "414105 Almoxarife",
-	[CargosCbo.Value514320Faxineiro]: "514320 Faxineiro",
-	[CargosCbo.Value521110VendedorDeComRcioVarejista]:
-		"521110 Vendedor De Comércio Varejista",
-	[CargosCbo.Value524105VendedorEmDomicLio]: "524105 Vendedor Em Domicílio",
-	[CargosCbo.Value732130InstaladorReparadorDeRedesTelefNicasEDeComunicaODeDados]:
-		"732130 Instalador Reparador De Redes Telefônicas E De Comunicação De Dados",
 };
 
 export const CARGOS_FKFUNCIONARIOS_LABELS: Record<
@@ -2953,15 +2629,6 @@ export enum DcServidoresMemoria {
 	Value64gb2x32gbDimmDdr4 = "64GB - 2x 32GB DIMM DDR4",
 }
 
-export enum DcServidoresModelo {
-	ProliantBl460cGen8 = " ProLiant BL460c Gen8",
-	ProliantBl460cSeriesGen10 = "ProLiant BL460c Series Gen10",
-	ProliantBl460cSeriesGen8 = "ProLiant BL460c Series Gen8",
-	ProliantBl460cSeriesGen9 = "ProLiant BL460c Series Gen9",
-	ProliantDl160Gen9 = "ProLiant DL160 Gen9",
-	ProliantDl360Gen9 = "Proliant DL360 Gen9",
-}
-
 export enum DcServidoresObs {
 	PBladeP = "<p>Blade.</p>",
 	PRackP = "<p>Rack.</p>",
@@ -2988,7 +2655,7 @@ export interface DcServidores {
 	f_fk_discos: DcServidoresFkDiscos;
 	f_fabricante: DcServidoresFabricante;
 	f_memoria: DcServidoresMemoria;
-	f_modelo: DcServidoresModelo;
+	f_modelo: string;
 	f_obs: DcServidoresObs;
 	f_processador: DcServidoresProcessador;
 	f_sn: string;
@@ -3036,16 +2703,6 @@ export const DCSERVIDORES_MEMORIA_LABELS: Record<DcServidoresMemoria, string> =
 			"256gb 16 X 16gb DIMM Ddr4",
 		[DcServidoresMemoria.Value64gb2x32gbDimmDdr4]: "64gb 2x 32gb DIMM Ddr4",
 	};
-
-export const DCSERVIDORES_MODELO_LABELS: Record<DcServidoresModelo, string> = {
-	[DcServidoresModelo.ProliantBl460cGen8]: "Proliant Bl460c Gen8",
-	[DcServidoresModelo.ProliantBl460cSeriesGen10]:
-		"Proliant Bl460c Series Gen10",
-	[DcServidoresModelo.ProliantBl460cSeriesGen8]: "Proliant Bl460c Series Gen8",
-	[DcServidoresModelo.ProliantBl460cSeriesGen9]: "Proliant Bl460c Series Gen9",
-	[DcServidoresModelo.ProliantDl160Gen9]: "Proliant Dl160 Gen9",
-	[DcServidoresModelo.ProliantDl360Gen9]: "Proliant Dl360 Gen9",
-};
 
 export const DCSERVIDORES_OBS_LABELS: Record<DcServidoresObs, string> = {
 	[DcServidoresObs.PBladeP]: "<p>blade.</p>",
@@ -3323,40 +2980,9 @@ export enum DiscosDataAquisicao {
 	Value20250526t030000000z = "2025-05-26T03:00:00.000Z",
 }
 
-export enum DiscosFkDiscos {
-	Value10 = "10",
-	Value12 = "12",
-	Value13 = "13",
-	Value14 = "14",
-	Value5 = "5",
-	Value6 = "6",
-	Value7 = "7",
-	Value8 = "8",
-}
-
 export enum DiscosFornecedor {
 	Desconhecido = "desconhecido",
 	Pauta = "Pauta",
-}
-
-export enum DiscosModelo {
-	Value00wg685 = "00WG685",
-	Eg0300fcvbf = "EG0300FCVBF",
-	Eg0900fblsk = "EG0900FBLSK",
-	Eg0900fbvfq = "EG0900FBVFQ",
-	Eg0900jehmb = "EG0900JEHMB",
-	Eh0146farwd = "EH0146FARWD",
-	Eh0146fawjb = "EH0146FAWJB",
-	Eh0450jdytk = "EH0450JDYTK",
-	Eh0450jedhd = "EH0450JEDHD",
-	KingstonDc600m = "KINGSTON DC600M",
-	SavvioSt9900805ss = "Savvio ST9900805SS",
-	SeagateBarracuda = "Seagate Barracuda",
-	SsdAdataSu650 = "SSD ADATA SU650",
-	St1000nm0023 = "ST1000NM0023",
-	Wd10spzx = "WD10SPZX",
-	Wd5000aakx = "WD5000AAKX",
-	Wd6001bkhg18d22v0 = "WD6001BKHG-18D22V0",
 }
 
 export enum DiscosPrecoCompra {
@@ -3388,11 +3014,11 @@ export enum DiscosTipo {
 
 export interface Discos {
 	id: number;
-	f_fk_discos: DiscosFkDiscos;
+	f_fk_discos: number;
 	f_capacidade: DiscosCapacidade;
 	f_data_aquisicao: DiscosDataAquisicao;
 	f_fornecedor: DiscosFornecedor;
-	f_modelo: DiscosModelo;
+	f_modelo: string;
 	f_preco_compra: DiscosPrecoCompra;
 	f_preco_venda_locacao: DiscosPrecoVendaLocacao;
 	f_SN: string;
@@ -3432,40 +3058,9 @@ export const DISCOS_DATAAQUISICAO_LABELS: Record<DiscosDataAquisicao, string> =
 		[DiscosDataAquisicao.Value20250526t030000000z]: "2025 05 26t03:00:00.000z",
 	};
 
-export const DISCOS_FKDISCOS_LABELS: Record<DiscosFkDiscos, string> = {
-	[DiscosFkDiscos.Value10]: "Código 10",
-	[DiscosFkDiscos.Value12]: "Código 12",
-	[DiscosFkDiscos.Value13]: "Código 13",
-	[DiscosFkDiscos.Value14]: "Código 14",
-	[DiscosFkDiscos.Value5]: "Código 5",
-	[DiscosFkDiscos.Value6]: "Código 6",
-	[DiscosFkDiscos.Value7]: "Código 7",
-	[DiscosFkDiscos.Value8]: "Código 8",
-};
-
 export const DISCOS_FORNECEDOR_LABELS: Record<DiscosFornecedor, string> = {
 	[DiscosFornecedor.Desconhecido]: "Desconhecido",
 	[DiscosFornecedor.Pauta]: "Pauta",
-};
-
-export const DISCOS_MODELO_LABELS: Record<DiscosModelo, string> = {
-	[DiscosModelo.Value00wg685]: "00wg685",
-	[DiscosModelo.Eg0300fcvbf]: "Eg0300fcvbf",
-	[DiscosModelo.Eg0900fblsk]: "Eg0900fblsk",
-	[DiscosModelo.Eg0900fbvfq]: "Eg0900fbvfq",
-	[DiscosModelo.Eg0900jehmb]: "Eg0900jehmb",
-	[DiscosModelo.Eh0146farwd]: "Eh0146farwd",
-	[DiscosModelo.Eh0146fawjb]: "Eh0146fawjb",
-	[DiscosModelo.Eh0450jdytk]: "Eh0450jdytk",
-	[DiscosModelo.Eh0450jedhd]: "Eh0450jedhd",
-	[DiscosModelo.KingstonDc600m]: "Kingston Dc600m",
-	[DiscosModelo.SavvioSt9900805ss]: "Savvio St9900805ss",
-	[DiscosModelo.SeagateBarracuda]: "Seagate Barracuda",
-	[DiscosModelo.SsdAdataSu650]: "SSD Adata Su650",
-	[DiscosModelo.St1000nm0023]: "St1000nm0023",
-	[DiscosModelo.Wd10spzx]: "Wd10spzx",
-	[DiscosModelo.Wd5000aakx]: "Wd5000aakx",
-	[DiscosModelo.Wd6001bkhg18d22v0]: "Wd6001bkhg 18d22v0",
 };
 
 export const DISCOS_PRECOCOMPRA_LABELS: Record<DiscosPrecoCompra, string> = {
@@ -3507,25 +3102,6 @@ export enum EquipamentosFkEquipamentosInterfaces {
 	Value9 = "9",
 }
 
-export enum EquipamentosObservacoes {
-	P1020106P = "<p>10.20.10.6</p>",
-	P172311206P = "<p>172.31.1.206</p>",
-	P17231255204P = "<p>172.31.255.204</p>",
-	P4522910448P = "<p>45.229.104.48</p>",
-	P452291048829P = "<p>45.229.104.88/29</p>",
-	PAcessoMk17231254226PPRadiusOnP = "<p>Acesso MK: 172.31.254.226</p><p>Radius: ON.</p>",
-	PAlimentaOViaADisjuntor5P = "<p>Alimentação: VIA A DISJUNTOR 5</p>",
-	PAmbulatRioP = "<p>Ambulatório.</p>",
-	PConcentradorVpnSDedicadoP = "<p>Concentrador VPN´s Dedicado</p>",
-	PContatoLocalDcCtaPPCarlos554191495431PPNbspAberturaDeChamadoAtravSDoEMailAcessoidcBrDigitalParaEquipeDoDatacenterP = "<p>Contato local DC - CTA:</p><p>Carlos: +55 41 9149-5431</p><p>&nbsp;Abertura de chamado através do e-mail acessoidc@br.digital para equipe do datacenter.</p>",
-	PCpeInstaladoPelaBrdigitalParaAtenderLastmileGeogridmapsTroP = "<p>CPE Instalado pela BRDIGITAL para atender Lastmile Geogridmaps TRO</p>",
-	PEquipamentoDaVivoInstaladoNoNossoRackParaProverLinkDeInterconexODeTelefoniaPPBrP = "<p>Equipamento da VIVO. instalado no nosso rack para prover link de interconexão de telefonia.</p><p><br></p>",
-	PEquipamentoParticularP = "<p>Equipamento particular.</p>",
-	PEsnOfSlot06r2450020982P = "<p>ESN of slot 0: 6R2450020982</p>",
-	PHttpsAtplusSmartoltComOnuView23932P = "<p>https://atplus.smartolt.com/onu/view/23932</p>",
-	PIp452291042024444P = "<p>IP: 45.229.104.202:4444</p>",
-}
-
 export interface Equipamentos {
 	id: number;
 	f_fk_ativo_rack: number;
@@ -3534,7 +3110,7 @@ export interface Equipamentos {
 	f_34u76klwxoj: number;
 	f_modelo: string;
 	f_nome: string;
-	f_observacoes: EquipamentosObservacoes;
+	f_observacoes: string;
 	f_sigla: string;
 	f_sn: string;
 	updatedAt: string;
@@ -3567,38 +3143,6 @@ export const EQUIPAMENTOS_FKEQUIPAMENTOSINTERFACES_LABELS: Record<
 > = {
 	[EquipamentosFkEquipamentosInterfaces.Value8]: "Código 8",
 	[EquipamentosFkEquipamentosInterfaces.Value9]: "Código 9",
-};
-
-export const EQUIPAMENTOS_OBSERVACOES_LABELS: Record<
-	EquipamentosObservacoes,
-	string
-> = {
-	[EquipamentosObservacoes.P1020106P]: "<p>10.20.10.6</p>",
-	[EquipamentosObservacoes.P172311206P]: "<p>172.31.1.206</p>",
-	[EquipamentosObservacoes.P17231255204P]: "<p>172.31.255.204</p>",
-	[EquipamentosObservacoes.P4522910448P]: "<p>45.229.104.48</p>",
-	[EquipamentosObservacoes.P452291048829P]: "<p>45.229.104.88/29</p>",
-	[EquipamentosObservacoes.PAcessoMk17231254226PPRadiusOnP]:
-		"<p>acesso Mk: 172.31.254.226</p><p>radius: On.</p>",
-	[EquipamentosObservacoes.PAlimentaOViaADisjuntor5P]:
-		"<p>alimentação: VIA A Disjuntor 5</p>",
-	[EquipamentosObservacoes.PAmbulatRioP]: "<p>ambulatório.</p>",
-	[EquipamentosObservacoes.PConcentradorVpnSDedicadoP]:
-		"<p>concentrador Vpn´s Dedicado</p>",
-	[EquipamentosObservacoes.PContatoLocalDcCtaPPCarlos554191495431PPNbspAberturaDeChamadoAtravSDoEMailAcessoidcBrDigitalParaEquipeDoDatacenterP]:
-		"<p>contato Local DC Cta:</p><p>carlos: +55 41 9149 5431</p><p>&nbsp;abertura De Chamado Através Do E Mail Acessoidc@br.digital Para Equipe Do Datacenter.</p>",
-	[EquipamentosObservacoes.PCpeInstaladoPelaBrdigitalParaAtenderLastmileGeogridmapsTroP]:
-		"<p>cpe Instalado Pela Brdigital Para Atender Lastmile Geogridmaps Tro</p>",
-	[EquipamentosObservacoes.PEquipamentoDaVivoInstaladoNoNossoRackParaProverLinkDeInterconexODeTelefoniaPPBrP]:
-		"<p>equipamento Da Vivo. Instalado No Nosso Rack Para Prover Link De Interconexão De Telefonia.</p><p><br></p>",
-	[EquipamentosObservacoes.PEquipamentoParticularP]:
-		"<p>equipamento Particular.</p>",
-	[EquipamentosObservacoes.PEsnOfSlot06r2450020982P]:
-		"<p>esn Of Slot 0: 6r2450020982</p>",
-	[EquipamentosObservacoes.PHttpsAtplusSmartoltComOnuView23932P]:
-		"<p>https://atplus.smartolt.com/onu/view/23932</p>",
-	[EquipamentosObservacoes.PIp452291042024444P]:
-		"<p>ip: 45.229.104.202:4444</p>",
 };
 
 export interface EquipamentosEmPredios {
@@ -4841,84 +4385,14 @@ export const NEGOCIACOESITENS_TIPOPRODUTO_LABELS: Record<
 	[NegociacoesItensTipoProduto.Tv]: "TV",
 };
 
-export enum Nukww9tmq83Fk1SetorTipos {
-	Value1 = "1",
-	Value10 = "10",
-	Value11 = "11",
-	Value12 = "12",
-	Value13 = "13",
-	Value14 = "14",
-	Value15 = "15",
-	Value17 = "17",
-	Value18 = "18",
-	Value2 = "2",
-	Value20 = "20",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-	Value7 = "7",
-	Value8 = "8",
-	Value9 = "9",
-}
-
-export enum Nukww9tmq83Fk2SetorTipos {
-	Value1 = "1",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-	Value7 = "7",
-	Value8 = "8",
-	Value9 = "9",
-}
-
 export interface Nukww9tmq83 {
-	f_fk1_setor_tipos: Nukww9tmq83Fk1SetorTipos;
-	f_fk2_setor_tipos: Nukww9tmq83Fk2SetorTipos;
+	f_fk1_setor_tipos: number;
+	f_fk2_setor_tipos: number;
 }
 
 export type Nukww9tmq83Relations = Record<string, never>;
 
 export type Nukww9tmq83RelationKey = keyof Nukww9tmq83Relations;
-
-export const NUKWW9TMQ83_FK1SETORTIPOS_LABELS: Record<
-	Nukww9tmq83Fk1SetorTipos,
-	string
-> = {
-	[Nukww9tmq83Fk1SetorTipos.Value1]: "Ativo",
-	[Nukww9tmq83Fk1SetorTipos.Value10]: "Código 10",
-	[Nukww9tmq83Fk1SetorTipos.Value11]: "Código 11",
-	[Nukww9tmq83Fk1SetorTipos.Value12]: "Código 12",
-	[Nukww9tmq83Fk1SetorTipos.Value13]: "Código 13",
-	[Nukww9tmq83Fk1SetorTipos.Value14]: "Código 14",
-	[Nukww9tmq83Fk1SetorTipos.Value15]: "Código 15",
-	[Nukww9tmq83Fk1SetorTipos.Value17]: "Código 17",
-	[Nukww9tmq83Fk1SetorTipos.Value18]: "Código 18",
-	[Nukww9tmq83Fk1SetorTipos.Value2]: "Código 2",
-	[Nukww9tmq83Fk1SetorTipos.Value20]: "Código 20",
-	[Nukww9tmq83Fk1SetorTipos.Value3]: "Código 3",
-	[Nukww9tmq83Fk1SetorTipos.Value4]: "Código 4",
-	[Nukww9tmq83Fk1SetorTipos.Value5]: "Código 5",
-	[Nukww9tmq83Fk1SetorTipos.Value6]: "Código 6",
-	[Nukww9tmq83Fk1SetorTipos.Value7]: "Código 7",
-	[Nukww9tmq83Fk1SetorTipos.Value8]: "Código 8",
-	[Nukww9tmq83Fk1SetorTipos.Value9]: "Código 9",
-};
-
-export const NUKWW9TMQ83_FK2SETORTIPOS_LABELS: Record<
-	Nukww9tmq83Fk2SetorTipos,
-	string
-> = {
-	[Nukww9tmq83Fk2SetorTipos.Value1]: "Ativo",
-	[Nukww9tmq83Fk2SetorTipos.Value3]: "Código 3",
-	[Nukww9tmq83Fk2SetorTipos.Value4]: "Código 4",
-	[Nukww9tmq83Fk2SetorTipos.Value5]: "Código 5",
-	[Nukww9tmq83Fk2SetorTipos.Value6]: "Código 6",
-	[Nukww9tmq83Fk2SetorTipos.Value7]: "Código 7",
-	[Nukww9tmq83Fk2SetorTipos.Value8]: "Código 8",
-	[Nukww9tmq83Fk2SetorTipos.Value9]: "Código 9",
-};
 
 export enum OeQualirunProcedimento {
 	Value1776052314044ff9B78615a4b0d7a3e2 = "17760523-1404-4ff9-b786-15a4b0d7a3e2",
@@ -5685,29 +5159,8 @@ export enum PatrimonioQuantidade {
 	Value1 = "1",
 }
 
-export enum PatrimonioSo {
-	Value1 = "1",
-	Hyperos = "HyperOS",
-	Windows = "windows",
-	Windows11 = "WINDOWS 11",
-	Windows11EntrepriseLtsc = "Windows 11 Entreprise  LTSC",
-	Windows11Pro = "windows 11 pro",
-	Windows11Pro25h2 = "Windows 11 Pro 25H2",
-}
-
 export enum PatrimonioTipoPatrimonio {
 	Value1 = "1",
-}
-
-export enum PatrimonioValorPatrimonio {
-	Value1 = "1",
-	Value111 = "111",
-	Value2000 = "2000",
-	Value2222 = "2222",
-	Value2500 = "2500",
-	Value3000 = "3000",
-	Value517 = "517",
-	Value700 = "700",
 }
 
 export interface Patrimonio {
@@ -5722,9 +5175,9 @@ export interface Patrimonio {
 	f_processador: string;
 	f_quantidade: PatrimonioQuantidade;
 	f_ram: string;
-	f_so: PatrimonioSo;
+	f_so: string;
 	f_tipo_patrimonio: PatrimonioTipoPatrimonio;
-	f_valor_patrimonio: PatrimonioValorPatrimonio;
+	f_valor_patrimonio: number;
 	updatedAt: string;
 	createdAt: string;
 }
@@ -5751,35 +5204,11 @@ export const PATRIMONIO_QUANTIDADE_LABELS: Record<
 	[PatrimonioQuantidade.Value1]: "Ativo",
 };
 
-export const PATRIMONIO_SO_LABELS: Record<PatrimonioSo, string> = {
-	[PatrimonioSo.Value1]: "Ativo",
-	[PatrimonioSo.Hyperos]: "Hyperos",
-	[PatrimonioSo.Windows]: "Windows",
-	[PatrimonioSo.Windows11]: "Windows 11",
-	[PatrimonioSo.Windows11EntrepriseLtsc]: "Windows 11 Entreprise LTSC",
-	[PatrimonioSo.Windows11Pro]: "Windows 11 Pro",
-	[PatrimonioSo.Windows11Pro25h2]: "Windows 11 Pro 25h2",
-};
-
 export const PATRIMONIO_TIPOPATRIMONIO_LABELS: Record<
 	PatrimonioTipoPatrimonio,
 	string
 > = {
 	[PatrimonioTipoPatrimonio.Value1]: "Equipamento",
-};
-
-export const PATRIMONIO_VALORPATRIMONIO_LABELS: Record<
-	PatrimonioValorPatrimonio,
-	string
-> = {
-	[PatrimonioValorPatrimonio.Value1]: "Ativo",
-	[PatrimonioValorPatrimonio.Value111]: "111",
-	[PatrimonioValorPatrimonio.Value2000]: "2000",
-	[PatrimonioValorPatrimonio.Value2222]: "2222",
-	[PatrimonioValorPatrimonio.Value2500]: "2500",
-	[PatrimonioValorPatrimonio.Value3000]: "3000",
-	[PatrimonioValorPatrimonio.Value517]: "517",
-	[PatrimonioValorPatrimonio.Value700]: "700",
 };
 
 export enum PeriodosFeriasDiasDireito {
@@ -6006,18 +5435,6 @@ export enum QualirunAssinaturaGovMimetype {
 	ImagePng = "image/png",
 }
 
-export enum QualirunAssinaturaGovSize {
-	Value1047315 = "1047315",
-	Value16183 = "16183",
-	Value175219 = "175219",
-	Value214551 = "214551",
-	Value223618 = "223618",
-	Value253335 = "253335",
-	Value325092 = "325092",
-	Value6901217 = "6901217",
-	Value9149 = "9149",
-}
-
 export interface QualirunAssinaturaGov {
 	id: number;
 	f_fk_negociacoes: QualirunAssinaturaGovFkNegociacoes;
@@ -6027,7 +5444,7 @@ export interface QualirunAssinaturaGov {
 	mimetype: QualirunAssinaturaGovMimetype;
 	path: string;
 	preview: string;
-	size: QualirunAssinaturaGovSize;
+	size: number;
 	title: string;
 	url: string;
 	updatedAt: string;
@@ -6075,21 +5492,6 @@ export const QUALIRUNASSINATURAGOV_MIMETYPE_LABELS: Record<
 	[QualirunAssinaturaGovMimetype.ApplicationPdf]: "Application/pdf",
 	[QualirunAssinaturaGovMimetype.ImageJpeg]: "Image/jpeg",
 	[QualirunAssinaturaGovMimetype.ImagePng]: "Image/png",
-};
-
-export const QUALIRUNASSINATURAGOV_SIZE_LABELS: Record<
-	QualirunAssinaturaGovSize,
-	string
-> = {
-	[QualirunAssinaturaGovSize.Value1047315]: "1047315",
-	[QualirunAssinaturaGovSize.Value16183]: "16183",
-	[QualirunAssinaturaGovSize.Value175219]: "175219",
-	[QualirunAssinaturaGovSize.Value214551]: "214551",
-	[QualirunAssinaturaGovSize.Value223618]: "223618",
-	[QualirunAssinaturaGovSize.Value253335]: "253335",
-	[QualirunAssinaturaGovSize.Value325092]: "325092",
-	[QualirunAssinaturaGovSize.Value6901217]: "6901217",
-	[QualirunAssinaturaGovSize.Value9149]: "9149",
 };
 
 export enum QualirunInfoAdicionaisCreatedat {
@@ -6637,19 +6039,6 @@ export type Rguxtr9p91dRelations = Record<string, never>;
 
 export type Rguxtr9p91dRelationKey = keyof Rguxtr9p91dRelations;
 
-export enum ServicosFkServicoXContrato {
-	Value10 = "10",
-	Value11 = "11",
-	Value12 = "12",
-	Value13 = "13",
-	Value3 = "3",
-	Value4 = "4",
-	Value6 = "6",
-	Value7 = "7",
-	Value8 = "8",
-	Value9 = "9",
-}
-
 export enum ServicosIdContratoIxc {
 	Value13638 = "13638",
 	Value15659 = "15659",
@@ -6658,23 +6047,6 @@ export enum ServicosIdContratoIxc {
 	Value18415 = "18415",
 	Value23151 = "23151",
 	Value6161 = "6161",
-}
-
-export enum ServicosIdServicoIxc {
-	Value270380 = "270380",
-	Value29049 = "29049",
-	Value55164 = "55164",
-	Value55638 = "55638",
-	Value63599 = "63599",
-	Value63600 = "63600",
-	Value65762 = "65762",
-	Value84098 = "84098",
-	Value84099 = "84099",
-	Value84103 = "84103",
-	Value84469 = "84469",
-	Value84470 = "84470",
-	Value84526 = "84526",
-	Value84938 = "84938",
 }
 
 export enum ServicosPropriedades {
@@ -6701,26 +6073,11 @@ export enum ServicosTipo {
 	Value6 = "6",
 }
 
-export enum ServicosVelocidade {
-	Value10Mbps = "10 Mbps",
-	Value100m = "100M",
-	Value100mbps = "100Mbps",
-	Value10mbps = "10Mbps",
-	Value15mbps = "15Mbps",
-	Value1gbpsTrunkFlex = "1Gbps Trunk Flex",
-	Value20mbps = "20Mbps",
-	Value2mbps = "2Mbps",
-	Value300m = "300M",
-	Value4mbps = "4Mbps",
-	Value50mbps = "50Mbps",
-	Na = "NA",
-}
-
 export interface Servicos {
 	id: number;
-	f_fk_servico_x_contrato: ServicosFkServicoXContrato;
+	f_fk_servico_x_contrato: number;
 	f_id_contrato_ixc: ServicosIdContratoIxc;
-	f_id_servico_ixc: ServicosIdServicoIxc;
+	f_id_servico_ixc: string;
 	f_caracteristicas: string;
 	f_descricao: string;
 	f_designacao_atplus: string;
@@ -6728,7 +6085,7 @@ export interface Servicos {
 	f_propriedades: ServicosPropriedades;
 	f_status: ServicosStatus;
 	f_tipo: ServicosTipo;
-	f_velocidade: ServicosVelocidade;
+	f_velocidade: string;
 	updatedAt: string;
 	createdAt: string;
 }
@@ -6745,22 +6102,6 @@ export interface ServicosRelations {
 
 export type ServicosRelationKey = keyof ServicosRelations;
 
-export const SERVICOS_FKSERVICOXCONTRATO_LABELS: Record<
-	ServicosFkServicoXContrato,
-	string
-> = {
-	[ServicosFkServicoXContrato.Value10]: "Código 10",
-	[ServicosFkServicoXContrato.Value11]: "Código 11",
-	[ServicosFkServicoXContrato.Value12]: "Código 12",
-	[ServicosFkServicoXContrato.Value13]: "Código 13",
-	[ServicosFkServicoXContrato.Value3]: "Código 3",
-	[ServicosFkServicoXContrato.Value4]: "Código 4",
-	[ServicosFkServicoXContrato.Value6]: "Código 6",
-	[ServicosFkServicoXContrato.Value7]: "Código 7",
-	[ServicosFkServicoXContrato.Value8]: "Código 8",
-	[ServicosFkServicoXContrato.Value9]: "Código 9",
-};
-
 export const SERVICOS_IDCONTRATOIXC_LABELS: Record<
 	ServicosIdContratoIxc,
 	string
@@ -6772,26 +6113,6 @@ export const SERVICOS_IDCONTRATOIXC_LABELS: Record<
 	[ServicosIdContratoIxc.Value18415]: "18415",
 	[ServicosIdContratoIxc.Value23151]: "23151",
 	[ServicosIdContratoIxc.Value6161]: "6161",
-};
-
-export const SERVICOS_IDSERVICOIXC_LABELS: Record<
-	ServicosIdServicoIxc,
-	string
-> = {
-	[ServicosIdServicoIxc.Value270380]: "270380",
-	[ServicosIdServicoIxc.Value29049]: "29049",
-	[ServicosIdServicoIxc.Value55164]: "55164",
-	[ServicosIdServicoIxc.Value55638]: "55638",
-	[ServicosIdServicoIxc.Value63599]: "63599",
-	[ServicosIdServicoIxc.Value63600]: "63600",
-	[ServicosIdServicoIxc.Value65762]: "65762",
-	[ServicosIdServicoIxc.Value84098]: "84098",
-	[ServicosIdServicoIxc.Value84099]: "84099",
-	[ServicosIdServicoIxc.Value84103]: "84103",
-	[ServicosIdServicoIxc.Value84469]: "84469",
-	[ServicosIdServicoIxc.Value84470]: "84470",
-	[ServicosIdServicoIxc.Value84526]: "84526",
-	[ServicosIdServicoIxc.Value84938]: "84938",
 };
 
 export const SERVICOS_PROPRIEDADES_LABELS: Record<
@@ -6824,21 +6145,6 @@ export const SERVICOS_TIPO_LABELS: Record<ServicosTipo, string> = {
 	[ServicosTipo.Value4]: "OUTRO",
 	[ServicosTipo.Value5]: "Lastmile",
 	[ServicosTipo.Value6]: "Colocation",
-};
-
-export const SERVICOS_VELOCIDADE_LABELS: Record<ServicosVelocidade, string> = {
-	[ServicosVelocidade.Value10Mbps]: "10 Mbps",
-	[ServicosVelocidade.Value100m]: "100m",
-	[ServicosVelocidade.Value100mbps]: "100mbps",
-	[ServicosVelocidade.Value10mbps]: "10mbps",
-	[ServicosVelocidade.Value15mbps]: "15mbps",
-	[ServicosVelocidade.Value1gbpsTrunkFlex]: "1gbps Trunk Flex",
-	[ServicosVelocidade.Value20mbps]: "20mbps",
-	[ServicosVelocidade.Value2mbps]: "2mbps",
-	[ServicosVelocidade.Value300m]: "300m",
-	[ServicosVelocidade.Value4mbps]: "4mbps",
-	[ServicosVelocidade.Value50mbps]: "50mbps",
-	[ServicosVelocidade.Na]: "NA",
 };
 
 export enum ServicosXServicosValue8n72gqelvp5 {
@@ -6930,38 +6236,12 @@ export enum SistemasAcessosFkFuncionarios {
 	Value98 = "98",
 }
 
-export enum SistemasAcessosUrl {
-	HttpsAdminEaiNetBr = "https://admin.eai.net.br/",
-	HttpsAtpchatAtplusCloud = "https://atpchat.atplus.cloud/",
-	HttpsCrmAtplusCloud = "https://crm.atplus.cloud/",
-	HttpsErpAtplusCloudAdmPhp = "https://erp.atplus.cloud/adm.php",
-	HttpsExtranetOletelecomComBr = "https://extranet.oletelecom.com.br/",
-	HttpsIahubAppPortal = "https://iahub.app/portal",
-	HttpsOperadoraAppBrLogin = "https://operadora.app.br/login",
-	HttpsPrevisaAthenasOnline = "https://previsa.athenas.online/",
-	HttpsWwwMicrosoftComPtBr = "https://www.microsoft.com/pt-br",
-}
-
-export enum SistemasAcessosUpdatedat {
-	Value20260326t171753451z = "2026-03-26T17:17:53.451Z",
-	Value20260326t171956833z = "2026-03-26T17:19:56.833Z",
-	Value20260326t175925233z = "2026-03-26T17:59:25.233Z",
-	Value20260326t180007728z = "2026-03-26T18:00:07.728Z",
-	Value20260326t180019435z = "2026-03-26T18:00:19.435Z",
-	Value20260326t180029372z = "2026-03-26T18:00:29.372Z",
-	Value20260326t180044797z = "2026-03-26T18:00:44.797Z",
-	Value20260326t180057112z = "2026-03-26T18:00:57.112Z",
-	Value20260326t180111485z = "2026-03-26T18:01:11.485Z",
-	Value20260326t180123394z = "2026-03-26T18:01:23.394Z",
-	Value20260326t180131401z = "2026-03-26T18:01:31.401Z",
-}
-
 export interface SistemasAcessos {
 	id: number;
 	f_fk_funcionarios: SistemasAcessosFkFuncionarios;
 	f_sistemas_acessos: string;
-	f_url: SistemasAcessosUrl;
-	updatedAt: SistemasAcessosUpdatedat;
+	f_url: string;
+	updatedAt: string;
 	createdAt: SistemasAcessosCreatedat;
 }
 
@@ -6992,87 +6272,6 @@ export const SISTEMASACESSOS_FKFUNCIONARIOS_LABELS: Record<
 	[SistemasAcessosFkFuncionarios.Value98]: "Código 98",
 };
 
-export const SISTEMASACESSOS_URL_LABELS: Record<SistemasAcessosUrl, string> = {
-	[SistemasAcessosUrl.HttpsAdminEaiNetBr]: "Https://admin.eai.net.br/",
-	[SistemasAcessosUrl.HttpsAtpchatAtplusCloud]: "Https://atpchat.atplus.cloud/",
-	[SistemasAcessosUrl.HttpsCrmAtplusCloud]: "Https://crm.atplus.cloud/",
-	[SistemasAcessosUrl.HttpsErpAtplusCloudAdmPhp]:
-		"Https://erp.atplus.cloud/adm.php",
-	[SistemasAcessosUrl.HttpsExtranetOletelecomComBr]:
-		"Https://extranet.oletelecom.com.br/",
-	[SistemasAcessosUrl.HttpsIahubAppPortal]: "Https://iahub.app/portal",
-	[SistemasAcessosUrl.HttpsOperadoraAppBrLogin]:
-		"Https://operadora.app.br/login",
-	[SistemasAcessosUrl.HttpsPrevisaAthenasOnline]:
-		"Https://previsa.athenas.online/",
-	[SistemasAcessosUrl.HttpsWwwMicrosoftComPtBr]:
-		"Https://www.microsoft.com/pt Br",
-};
-
-export const SISTEMASACESSOS_UPDATEDAT_LABELS: Record<
-	SistemasAcessosUpdatedat,
-	string
-> = {
-	[SistemasAcessosUpdatedat.Value20260326t171753451z]:
-		"2026 03 26t17:17:53.451z",
-	[SistemasAcessosUpdatedat.Value20260326t171956833z]:
-		"2026 03 26t17:19:56.833z",
-	[SistemasAcessosUpdatedat.Value20260326t175925233z]:
-		"2026 03 26t17:59:25.233z",
-	[SistemasAcessosUpdatedat.Value20260326t180007728z]:
-		"2026 03 26t18:00:07.728z",
-	[SistemasAcessosUpdatedat.Value20260326t180019435z]:
-		"2026 03 26t18:00:19.435z",
-	[SistemasAcessosUpdatedat.Value20260326t180029372z]:
-		"2026 03 26t18:00:29.372z",
-	[SistemasAcessosUpdatedat.Value20260326t180044797z]:
-		"2026 03 26t18:00:44.797z",
-	[SistemasAcessosUpdatedat.Value20260326t180057112z]:
-		"2026 03 26t18:00:57.112z",
-	[SistemasAcessosUpdatedat.Value20260326t180111485z]:
-		"2026 03 26t18:01:11.485z",
-	[SistemasAcessosUpdatedat.Value20260326t180123394z]:
-		"2026 03 26t18:01:23.394z",
-	[SistemasAcessosUpdatedat.Value20260326t180131401z]:
-		"2026 03 26t18:01:31.401z",
-};
-
-export enum SitesCidade {
-	CampoBeloDoSul = "Campo Belo do Sul",
-	Catanduvas = "Catanduvas",
-	Chapec = "Chapecó",
-	Cotia = "Cotia",
-	Curitiba = "Curitiba",
-	Curitibanos = "Curitibanos",
-	FlorianPolis = "Florianópolis",
-	Fortaleza = "Fortaleza",
-	HervalDOeste = "Herval D'Oeste",
-	JoaAba = "Joaçaba",
-	Joinville = "Joinville",
-	Lages = "Lages",
-	Recife = "Recife",
-	SOJos = "São José",
-	TubarO = "Tubarão",
-}
-
-export enum SitesDadosAcesso {
-	PStrongDataCenterFortalezaCeStrongNbspPPNbspNbspPPRazOSocialNbspBrfibraTelecomunicaEsLtdaNbspNbspPPEndereONbspRuaDrRatisbonaN75BairroFTimaFortalezaCeNbspNbspPPCnpjNbsp73972002001350NbspNbspPPInscriOEstadualNbsp063818574NbspNbspPPNaturezaDaOperaONbspRemessaDeAtivoImobilizadoParaUsoForaDoEstabelecimentoNbspNbspPPDadosAdicionaisDaNfNbspContratoDePrestaODeServiOsNEmitidoEmNbspP = "<p><strong>DATA CENTER FORTALEZA/CE</strong>&nbsp;</p><p>&nbsp;&nbsp;</p><p>Razão Social:&nbsp;BRFIBRA TELECOMUNICAÇÕES LTDA&nbsp;&nbsp;</p><p>Endereço:&nbsp;Rua Dr. Ratisbona, nº 75, Bairro Fátima, Fortaleza/CE&nbsp;&nbsp;</p><p>CNPJ:&nbsp;73.972.002/0013-50&nbsp;&nbsp;</p><p>Inscrição Estadual:&nbsp;063/818574&nbsp;&nbsp;</p><p>Natureza da Operação:&nbsp;Remessa de Ativo Imobilizado para uso fora do estabelecimento&nbsp;&nbsp;</p><p>Dados Adicionais da NF:&nbsp;Contrato de Prestação de Serviços Nº (_____________) emitido em __/__/____.&nbsp;</p>",
-	PStrongDataCenterRecifePeNbspStrongNbspPPNbspPPRazOSocialNbspBrfibraTelecomunicaEsLtdaNbspNbspPPEndereONbspRuaGeneralJoaquimInCioN412Sala701BairroIlhaDoLeiteRecifePeNbspNbspPPCnpjNbsp73972002001430NbspNbspPPInscriOEstadualNbsp038170752NbspNbspPPNaturezaDaOperaONbspRemessaDeAtivoImobilizadoParaUsoForaDoEstabelecimentoNbspNbspPPDadosAdicionaisDaNfNbspContratoDePrestaODeServiOsNEmitidoEmNbspNbspP = "<p><strong>DATA CENTER RECIFE/PE&nbsp;</strong>&nbsp;</p><p>&nbsp;</p><p>Razão Social:&nbsp;BRFIBRA TELECOMUNICAÇÕES LTDA&nbsp;&nbsp;</p><p>Endereço:&nbsp;Rua General Joaquim Inácio, nº 412, sala 701, Bairro Ilha do Leite, Recife/PE&nbsp;&nbsp;</p><p>CNPJ:&nbsp;73.972.002/0014-30&nbsp;&nbsp;</p><p>Inscrição Estadual:&nbsp;038/170752&nbsp;&nbsp;</p><p>Natureza da Operação:&nbsp;Remessa de Ativo Imobilizado para uso fora do estabelecimento&nbsp;&nbsp;</p><p>Dados Adicionais da NF:&nbsp;Contrato de Prestação de Serviços Nº (_____________) emitido em __/__/____.&nbsp;&nbsp;</p>",
-	PStrongDataNbspCenterNbspCuritibaPrNbspStrongNbspPPNbspCta53004891624PPRazOSocialNbspBrfibraTelecomunicaEsLtdaNbspNbspPPEndereORuaProfessorRubensElkeNbspBragaN107BBairroParolinNbspCuritibaPrNbspNbspPPCnpj73972002000469NbspNbspPPInscriOEstadual9037424290NbspNbspPPNaturezaDaOperaORemessaDeAtivoImobilizadoParaUsoForaDoEstabelecimentoNbspNbspPPDadosAdicionaisDaNfContratoDePrestaODeServiOsN0492024Anexo01EmitidoEm08042024P = "<p><strong>DATA&nbsp;CENTER&nbsp;CURITIBA/PR&nbsp;</strong>&nbsp;</p><p>&nbsp;CTA53004891624</p><p>Razão Social:&nbsp;BRFIBRA TELECOMUNICAÇÕES LTDA&nbsp;&nbsp;</p><p>Endereço: Rua Professor Rubens Elke&nbsp;Braga, nº 107-B, Bairro Parolin,&nbsp;Curitiba, PR&nbsp;&nbsp;</p><p>CNPJ: 73.972.002/0004-69&nbsp;&nbsp;</p><p>Inscrição Estadual: 90374242-90&nbsp;&nbsp;</p><p>Natureza da Operação: Remessa de Ativo Imobilizado para uso fora do estabelecimento&nbsp;&nbsp;</p><p>Dados Adicionais da NF: Contrato de Prestação de Serviços Nº 049/2024 Anexo 01 emitido em 08/04/2024</p>",
-	PStrongInstalaODeEquipamentosNoLocalNecessRioSolicitarAcessoPeloHelpdeskDaBrdigitalStrongPPRazOSocialBrfibraTelecomunicaEsLtdaNbspNbspPPEndereOAvPatrCioCaldeiraDeAndradeN12862AndarBairroCapoeirasFlorianPolisScNbspNbspPPCnpj73972002002674NbspNbspPPInscriOEstadual255313101NbspNbspPPNaturezaDaOperaORemessaDeAtivoImobilizadoParaUsoForaDoEstabelecimentoNbspNbspPPDadosAdicionaisDaNfContratoDePrestaODeServiOsNContrato0442024Anexo11EmitidoEm05122024PPBrPPStrongHelpDeskStrongPPHttpsHelpbrdigitalAgideskComPPBrPPStrongContatoDoTCnicoNoLocalStrongPPResponsVelEvertonPPWhatsapp48984038401PPPodeSerAcionadoEmCasosDeEmergenciaVerificaORPidaEEtcP = "<p><strong>Instalação de equipamentos no local, necessário solicitar acesso pelo helpdesk da BRDIGITAL</strong></p><p>Razão Social: BRFIBRA TELECOMUNICAÇÕES LTDA&nbsp;&nbsp;</p><p>Endereço: Av. Patrício Caldeira de Andrade, nº 1286, 2º andar, Bairro Capoeiras, Florianópolis, SC&nbsp;&nbsp;</p><p>CNPJ: 73.972.002/0026-74&nbsp;&nbsp;</p><p>Inscrição Estadual: 255/313101&nbsp;&nbsp;</p><p>Natureza da Operação: Remessa de Ativo Imobilizado para uso fora do estabelecimento&nbsp;&nbsp;</p><p>Dados Adicionais da NF: Contrato de Prestação de Serviços Nº Contrato 044/2024 Anexo 11 emitido em 05/12/2024</p><p><br></p><p><strong>Help Desk:</strong></p><p>https://helpbrdigital.agidesk.com/</p><p><br></p><p><strong>Contato do técnico no Local:</strong></p><p>Responsável: Everton</p><p>Whatsapp: 48984038401</p><p>Pode ser acionado em casos de emergencia, verificação rápida, e etc. </p>",
-	PContatoComSimTelecomViaGrupoDeWhatsappP = "<p>Contato com SIM TELECOM via Grupo de Whatsapp</p>",
-	PDentroDoDcDaCirionCuritibaP = "<p>Dentro do DC da Cirion Curitiba</p>",
-	PGaleriaTrevisanPP2717310585444451551506813019318614P = "<p>Galeria Trevisan</p><p>-27.173105854444515, -51.506813019318614</p>",
-	PJoOConstantinoNetoPP48991301910P = "<p>João Constantino Neto</p><p>(48)991301910</p>",
-	PMarcosCsnetwork49985030165P = "<p>Marcos CSNetwork: (49) 98503-0165</p>",
-	PNOTemosAcessoAoSiteClientePsaUtilizaOLocalP = "<p>Não temos acesso ao site. Cliente PSA utiliza o local</p>",
-	PPortaria49998272550P = "<p>Portaria: (49) 99827-2550</p>",
-	PSemEstruturaClientePsaNoLocalP = "<p>Sem Estrutura. Cliente PSA no local</p>",
-	PSolicitarAcessoAVivoPorEmailEnviandoAPlanilhaGausPreenchidaParaAReaDeGerenciamentoDeAcessoDaVivoPPEMailEfssobralIcomontecnologiaComBrPPModeloNaPastaDeEngenhariaEPlanejamentoGtStfcAtplusGtTelefonicaP = "<p>Solicitar Acesso a VIVO por email, enviando a planilha GAUS Preenchida para a Área de Gerenciamento de acesso da VIVO</p><p>E-mail: efssobral@icomontecnologia.com.br</p><p>Modelo na pasta de Engenharia e Planejamento &gt; STFC ATPLUS &gt; Telefonica</p>",
-	PSolicitarAcessoJuntoAReaDeInterconexOClaroPPContatosNoSiteLgsPPDiego49988735474P = "<p>Solicitar Acesso junto a área de interconexão claro.</p><p>Contatos no site LGS:</p><p>Diego 49988735474</p>",
-	PSotrimaP = "<p>SOTRIMA</p>",
-}
-
 export enum SitesStatus {
 	Repnmsclnb8 = "repnmsclnb8",
 	X2lk2z9p2ds = "x2lk2z9p2ds",
@@ -7098,9 +6297,9 @@ export interface Sites {
 	f_fk_telecom_contatos: number;
 	f_bairro: string;
 	f_cep: string;
-	f_cidade: SitesCidade;
+	f_cidade: string;
 	f_complemento: string;
-	f_dados_acesso: SitesDadosAcesso;
+	f_dados_acesso: string;
 	f_endereco: string;
 	f_nome: string;
 	f_numero: string;
@@ -7122,55 +6321,6 @@ export interface SitesRelations {
 }
 
 export type SitesRelationKey = keyof SitesRelations;
-
-export const SITES_CIDADE_LABELS: Record<SitesCidade, string> = {
-	[SitesCidade.CampoBeloDoSul]: "Campo Belo Do Sul",
-	[SitesCidade.Catanduvas]: "Catanduvas",
-	[SitesCidade.Chapec]: "Chapecó",
-	[SitesCidade.Cotia]: "Cotia",
-	[SitesCidade.Curitiba]: "Curitiba",
-	[SitesCidade.Curitibanos]: "Curitibanos",
-	[SitesCidade.FlorianPolis]: "Florianópolis",
-	[SitesCidade.Fortaleza]: "Fortaleza",
-	[SitesCidade.HervalDOeste]: "Herval D'oeste",
-	[SitesCidade.JoaAba]: "Joaçaba",
-	[SitesCidade.Joinville]: "Joinville",
-	[SitesCidade.Lages]: "Lages",
-	[SitesCidade.Recife]: "Recife",
-	[SitesCidade.SOJos]: "São José",
-	[SitesCidade.TubarO]: "Tubarão",
-};
-
-export const SITES_DADOSACESSO_LABELS: Record<SitesDadosAcesso, string> = {
-	[SitesDadosAcesso.PStrongDataCenterFortalezaCeStrongNbspPPNbspNbspPPRazOSocialNbspBrfibraTelecomunicaEsLtdaNbspNbspPPEndereONbspRuaDrRatisbonaN75BairroFTimaFortalezaCeNbspNbspPPCnpjNbsp73972002001350NbspNbspPPInscriOEstadualNbsp063818574NbspNbspPPNaturezaDaOperaONbspRemessaDeAtivoImobilizadoParaUsoForaDoEstabelecimentoNbspNbspPPDadosAdicionaisDaNfNbspContratoDePrestaODeServiOsNEmitidoEmNbspP]:
-		"<p><strong>data Center Fortaleza/ce</strong>&nbsp;</p><p>&nbsp;&nbsp;</p><p>razão Social:&nbsp;brfibra Telecomunicações Ltda&nbsp;&nbsp;</p><p>endereço:&nbsp;rua Dr. Ratisbona, Nº 75, Bairro Fátima, Fortaleza/ce&nbsp;&nbsp;</p><p>cnpj:&nbsp;73.972.002/0013 50&nbsp;&nbsp;</p><p>inscrição Estadual:&nbsp;063/818574&nbsp;&nbsp;</p><p>natureza Da Operação:&nbsp;remessa De Ativo Imobilizado Para Uso Fora Do Estabelecimento&nbsp;&nbsp;</p><p>dados Adicionais Da Nf:&nbsp;contrato De Prestação De Serviços Nº ( ) Emitido Em / / .&nbsp;</p>",
-	[SitesDadosAcesso.PStrongDataCenterRecifePeNbspStrongNbspPPNbspPPRazOSocialNbspBrfibraTelecomunicaEsLtdaNbspNbspPPEndereONbspRuaGeneralJoaquimInCioN412Sala701BairroIlhaDoLeiteRecifePeNbspNbspPPCnpjNbsp73972002001430NbspNbspPPInscriOEstadualNbsp038170752NbspNbspPPNaturezaDaOperaONbspRemessaDeAtivoImobilizadoParaUsoForaDoEstabelecimentoNbspNbspPPDadosAdicionaisDaNfNbspContratoDePrestaODeServiOsNEmitidoEmNbspNbspP]:
-		"<p><strong>data Center Recife/pe&nbsp;</strong>&nbsp;</p><p>&nbsp;</p><p>razão Social:&nbsp;brfibra Telecomunicações Ltda&nbsp;&nbsp;</p><p>endereço:&nbsp;rua General Joaquim Inácio, Nº 412, Sala 701, Bairro Ilha Do Leite, Recife/pe&nbsp;&nbsp;</p><p>cnpj:&nbsp;73.972.002/0014 30&nbsp;&nbsp;</p><p>inscrição Estadual:&nbsp;038/170752&nbsp;&nbsp;</p><p>natureza Da Operação:&nbsp;remessa De Ativo Imobilizado Para Uso Fora Do Estabelecimento&nbsp;&nbsp;</p><p>dados Adicionais Da Nf:&nbsp;contrato De Prestação De Serviços Nº ( ) Emitido Em / / .&nbsp;&nbsp;</p>",
-	[SitesDadosAcesso.PStrongDataNbspCenterNbspCuritibaPrNbspStrongNbspPPNbspCta53004891624PPRazOSocialNbspBrfibraTelecomunicaEsLtdaNbspNbspPPEndereORuaProfessorRubensElkeNbspBragaN107BBairroParolinNbspCuritibaPrNbspNbspPPCnpj73972002000469NbspNbspPPInscriOEstadual9037424290NbspNbspPPNaturezaDaOperaORemessaDeAtivoImobilizadoParaUsoForaDoEstabelecimentoNbspNbspPPDadosAdicionaisDaNfContratoDePrestaODeServiOsN0492024Anexo01EmitidoEm08042024P]:
-		"<p><strong>data&nbsp;center&nbsp;curitiba/pr&nbsp;</strong>&nbsp;</p><p>&nbsp;cta53004891624</p><p>razão Social:&nbsp;brfibra Telecomunicações Ltda&nbsp;&nbsp;</p><p>endereço: Rua Professor Rubens Elke&nbsp;braga, Nº 107 B, Bairro Parolin,&nbsp;curitiba, Pr&nbsp;&nbsp;</p><p>cnpj: 73.972.002/0004 69&nbsp;&nbsp;</p><p>inscrição Estadual: 90374242 90&nbsp;&nbsp;</p><p>natureza Da Operação: Remessa De Ativo Imobilizado Para Uso Fora Do Estabelecimento&nbsp;&nbsp;</p><p>dados Adicionais Da Nf: Contrato De Prestação De Serviços Nº 049/2024 Anexo 01 Emitido Em 08/04/2024</p>",
-	[SitesDadosAcesso.PStrongInstalaODeEquipamentosNoLocalNecessRioSolicitarAcessoPeloHelpdeskDaBrdigitalStrongPPRazOSocialBrfibraTelecomunicaEsLtdaNbspNbspPPEndereOAvPatrCioCaldeiraDeAndradeN12862AndarBairroCapoeirasFlorianPolisScNbspNbspPPCnpj73972002002674NbspNbspPPInscriOEstadual255313101NbspNbspPPNaturezaDaOperaORemessaDeAtivoImobilizadoParaUsoForaDoEstabelecimentoNbspNbspPPDadosAdicionaisDaNfContratoDePrestaODeServiOsNContrato0442024Anexo11EmitidoEm05122024PPBrPPStrongHelpDeskStrongPPHttpsHelpbrdigitalAgideskComPPBrPPStrongContatoDoTCnicoNoLocalStrongPPResponsVelEvertonPPWhatsapp48984038401PPPodeSerAcionadoEmCasosDeEmergenciaVerificaORPidaEEtcP]:
-		"<p><strong>instalação De Equipamentos No Local, Necessário Solicitar Acesso Pelo Helpdesk Da Brdigital</strong></p><p>razão Social: Brfibra Telecomunicações Ltda&nbsp;&nbsp;</p><p>endereço: Av. Patrício Caldeira De Andrade, Nº 1286, 2º Andar, Bairro Capoeiras, Florianópolis, Sc&nbsp;&nbsp;</p><p>cnpj: 73.972.002/0026 74&nbsp;&nbsp;</p><p>inscrição Estadual: 255/313101&nbsp;&nbsp;</p><p>natureza Da Operação: Remessa De Ativo Imobilizado Para Uso Fora Do Estabelecimento&nbsp;&nbsp;</p><p>dados Adicionais Da Nf: Contrato De Prestação De Serviços Nº Contrato 044/2024 Anexo 11 Emitido Em 05/12/2024</p><p><br></p><p><strong>help Desk:</strong></p><p>https://helpbrdigital.agidesk.com/</p><p><br></p><p><strong>contato Do Técnico No Local:</strong></p><p>responsável: Everton</p><p>whatsapp: 48984038401</p><p>pode Ser Acionado Em Casos De Emergencia, Verificação Rápida, E Etc. </p>",
-	[SitesDadosAcesso.PContatoComSimTelecomViaGrupoDeWhatsappP]:
-		"<p>contato Com SIM Telecom Via Grupo De Whatsapp</p>",
-	[SitesDadosAcesso.PDentroDoDcDaCirionCuritibaP]:
-		"<p>dentro Do DC Da Cirion Curitiba</p>",
-	[SitesDadosAcesso.PGaleriaTrevisanPP2717310585444451551506813019318614P]:
-		"<p>galeria Trevisan</p><p> 27.173105854444515, 51.506813019318614</p>",
-	[SitesDadosAcesso.PJoOConstantinoNetoPP48991301910P]:
-		"<p>joão Constantino Neto</p><p>(48)991301910</p>",
-	[SitesDadosAcesso.PMarcosCsnetwork49985030165P]:
-		"<p>marcos Csnetwork: (49) 98503 0165</p>",
-	[SitesDadosAcesso.PNOTemosAcessoAoSiteClientePsaUtilizaOLocalP]:
-		"<p>não Temos Acesso Ao Site. Cliente PSA Utiliza O Local</p>",
-	[SitesDadosAcesso.PPortaria49998272550P]: "<p>portaria: (49) 99827 2550</p>",
-	[SitesDadosAcesso.PSemEstruturaClientePsaNoLocalP]:
-		"<p>sem Estrutura. Cliente PSA No Local</p>",
-	[SitesDadosAcesso.PSolicitarAcessoAVivoPorEmailEnviandoAPlanilhaGausPreenchidaParaAReaDeGerenciamentoDeAcessoDaVivoPPEMailEfssobralIcomontecnologiaComBrPPModeloNaPastaDeEngenhariaEPlanejamentoGtStfcAtplusGtTelefonicaP]:
-		"<p>solicitar Acesso A VIVO Por Email, Enviando A Planilha GAUS Preenchida Para A Área De Gerenciamento De Acesso Da Vivo</p><p>e Mail: Efssobral@icomontecnologia.com.br</p><p>modelo Na Pasta De Engenharia E Planejamento &gt; STFC Atplus &gt; Telefonica</p>",
-	[SitesDadosAcesso.PSolicitarAcessoJuntoAReaDeInterconexOClaroPPContatosNoSiteLgsPPDiego49988735474P]:
-		"<p>solicitar Acesso Junto A Área De Interconexão Claro.</p><p>contatos No Site Lgs:</p><p>diego 49988735474</p>",
-	[SitesDadosAcesso.PSotrimaP]: "<p>sotrima</p>",
-};
 
 export const SITES_STATUS_LABELS: Record<SitesStatus, string> = {
 	[SitesStatus.Repnmsclnb8]: "Planejado",
@@ -7413,18 +6563,6 @@ export const SOLICITACAOCOMPRAS_FKSOLICITACAOCOMPRAS_LABELS: Record<
 	[SolicitacaoComprasFkSolicitacaoCompras.Value4976]: "4976",
 };
 
-export enum SuspensaoContratoDiasSuspensao {
-	Value1 = "1",
-	Value120 = "120",
-	Value22 = "22",
-	Value60 = "60",
-	Value65 = "65",
-	Value75 = "75",
-	Value76 = "76",
-	Value79 = "79",
-	Value90 = "90",
-}
-
 export enum SuspensaoContratoStatus {
 	Value0 = "0",
 	Value1 = "1",
@@ -7439,7 +6577,7 @@ export interface SuspensaoContrato {
 	f_fk_pessoas_pj: number;
 	f_fk_responsavel: number;
 	f_cpf: string;
-	f_dias_suspensao: SuspensaoContratoDiasSuspensao;
+	f_dias_suspensao: string;
 	f_email: string;
 	f_final_suspensao: string;
 	f_id_contrato: string;
@@ -7464,21 +6602,6 @@ export interface SuspensaoContratoRelations {
 }
 
 export type SuspensaoContratoRelationKey = keyof SuspensaoContratoRelations;
-
-export const SUSPENSAOCONTRATO_DIASSUSPENSAO_LABELS: Record<
-	SuspensaoContratoDiasSuspensao,
-	string
-> = {
-	[SuspensaoContratoDiasSuspensao.Value1]: "Ativo",
-	[SuspensaoContratoDiasSuspensao.Value120]: "120",
-	[SuspensaoContratoDiasSuspensao.Value22]: "Código 22",
-	[SuspensaoContratoDiasSuspensao.Value60]: "Código 60",
-	[SuspensaoContratoDiasSuspensao.Value65]: "Código 65",
-	[SuspensaoContratoDiasSuspensao.Value75]: "Código 75",
-	[SuspensaoContratoDiasSuspensao.Value76]: "Código 76",
-	[SuspensaoContratoDiasSuspensao.Value79]: "Código 79",
-	[SuspensaoContratoDiasSuspensao.Value90]: "Código 90",
-};
 
 export const SUSPENSAOCONTRATO_STATUS_LABELS: Record<
 	SuspensaoContratoStatus,
@@ -7519,22 +6642,6 @@ export enum TelecomAnexosValue6j2u7ptvn88 {
 	Value74 = "74",
 }
 
-export enum TelecomAnexosValue88kxg6s8bb8 {
-	Value10 = "10",
-	Value28 = "28",
-	Value29 = "29",
-	Value31 = "31",
-	Value32 = "32",
-	Value33 = "33",
-	Value34 = "34",
-	Value35 = "35",
-	Value36 = "36",
-	Value37 = "37",
-	Value38 = "38",
-	Value39 = "39",
-	Value40 = "40",
-}
-
 export enum TelecomAnexosWo3wzgdoyoa {
 	Value130 = "130",
 	Value134 = "134",
@@ -7570,7 +6677,7 @@ export interface TelecomAnexos {
 	id: number;
 	extname: TelecomAnexosExtname;
 	f_6j2u7ptvn88: TelecomAnexosValue6j2u7ptvn88;
-	f_88kxg6s8bb8: TelecomAnexosValue88kxg6s8bb8;
+	f_88kxg6s8bb8: number;
 	f_wo3wzgdoyoa: TelecomAnexosWo3wzgdoyoa;
 	f_ycsq6mkkvk7: TelecomAnexosYcsq6mkkvk7;
 	filename: string;
@@ -7613,25 +6720,6 @@ export const TELECOMANEXOS_VALUE6J2U7PTVN88_LABELS: Record<
 	[TelecomAnexosValue6j2u7ptvn88.Value2]: "Código 2",
 	[TelecomAnexosValue6j2u7ptvn88.Value6]: "Código 6",
 	[TelecomAnexosValue6j2u7ptvn88.Value74]: "Código 74",
-};
-
-export const TELECOMANEXOS_VALUE88KXG6S8BB8_LABELS: Record<
-	TelecomAnexosValue88kxg6s8bb8,
-	string
-> = {
-	[TelecomAnexosValue88kxg6s8bb8.Value10]: "Código 10",
-	[TelecomAnexosValue88kxg6s8bb8.Value28]: "Código 28",
-	[TelecomAnexosValue88kxg6s8bb8.Value29]: "Código 29",
-	[TelecomAnexosValue88kxg6s8bb8.Value31]: "Código 31",
-	[TelecomAnexosValue88kxg6s8bb8.Value32]: "Código 32",
-	[TelecomAnexosValue88kxg6s8bb8.Value33]: "Código 33",
-	[TelecomAnexosValue88kxg6s8bb8.Value34]: "Código 34",
-	[TelecomAnexosValue88kxg6s8bb8.Value35]: "Código 35",
-	[TelecomAnexosValue88kxg6s8bb8.Value36]: "Código 36",
-	[TelecomAnexosValue88kxg6s8bb8.Value37]: "Código 37",
-	[TelecomAnexosValue88kxg6s8bb8.Value38]: "Código 38",
-	[TelecomAnexosValue88kxg6s8bb8.Value39]: "Código 39",
-	[TelecomAnexosValue88kxg6s8bb8.Value40]: "Código 40",
 };
 
 export const TELECOMANEXOS_WO3WZGDOYOA_LABELS: Record<
@@ -7889,31 +6977,10 @@ export enum TelecomOpcoesL2lRmfqnk0k53u {
 	Value9 = "9",
 }
 
-export enum TelecomOpcoesL2lVelocidade {
-	Value1Gbps = "1 Gbps",
-	Value10Gbps = "10 Gbps",
-	Value100Mbps = "100 Mbps",
-	Value1000 = "1000",
-	Value100m = "100M",
-	Value100mbps = "100Mbps",
-	Value150Mbps = "150 Mbps",
-	Value2Gbps = "2 Gbps",
-	Value20Gbps = "20 Gbps",
-	Value20Mbps = "20 Mbps",
-	Value200Mbps = "200 Mbps",
-	Value30Mbps = "30 Mbps",
-	Value300Mbps = "300 Mbps",
-	Value400Mbps = "400 Mbps",
-	Value50Mbps = "50 Mbps",
-	Value50mbps = "50Mbps",
-	Value55Mbps = "55 Mbps",
-	Value600Mbps = "600 Mbps",
-}
-
 export interface TelecomOpcoesL2l {
 	id: number;
 	f_rmfqnk0k53u: TelecomOpcoesL2lRmfqnk0k53u;
-	f_velocidade: TelecomOpcoesL2lVelocidade;
+	f_velocidade: string;
 	updatedAt: string;
 	createdAt: string;
 }
@@ -7932,89 +6999,12 @@ export const TELECOMOPCOESL2L_RMFQNK0K53U_LABELS: Record<
 	[TelecomOpcoesL2lRmfqnk0k53u.Value9]: "Código 9",
 };
 
-export const TELECOMOPCOESL2L_VELOCIDADE_LABELS: Record<
-	TelecomOpcoesL2lVelocidade,
-	string
-> = {
-	[TelecomOpcoesL2lVelocidade.Value1Gbps]: "1 Gbps",
-	[TelecomOpcoesL2lVelocidade.Value10Gbps]: "10 Gbps",
-	[TelecomOpcoesL2lVelocidade.Value100Mbps]: "100 Mbps",
-	[TelecomOpcoesL2lVelocidade.Value1000]: "1000",
-	[TelecomOpcoesL2lVelocidade.Value100m]: "100m",
-	[TelecomOpcoesL2lVelocidade.Value100mbps]: "100mbps",
-	[TelecomOpcoesL2lVelocidade.Value150Mbps]: "150 Mbps",
-	[TelecomOpcoesL2lVelocidade.Value2Gbps]: "2 Gbps",
-	[TelecomOpcoesL2lVelocidade.Value20Gbps]: "20 Gbps",
-	[TelecomOpcoesL2lVelocidade.Value20Mbps]: "20 Mbps",
-	[TelecomOpcoesL2lVelocidade.Value200Mbps]: "200 Mbps",
-	[TelecomOpcoesL2lVelocidade.Value30Mbps]: "30 Mbps",
-	[TelecomOpcoesL2lVelocidade.Value300Mbps]: "300 Mbps",
-	[TelecomOpcoesL2lVelocidade.Value400Mbps]: "400 Mbps",
-	[TelecomOpcoesL2lVelocidade.Value50Mbps]: "50 Mbps",
-	[TelecomOpcoesL2lVelocidade.Value50mbps]: "50mbps",
-	[TelecomOpcoesL2lVelocidade.Value55Mbps]: "55 Mbps",
-	[TelecomOpcoesL2lVelocidade.Value600Mbps]: "600 Mbps",
-};
-
-export enum TelecomRacksFkRackFila {
-	Value1 = "1",
-	Value10 = "10",
-	Value11 = "11",
-	Value12 = "12",
-	Value13 = "13",
-	Value14 = "14",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value6 = "6",
-	Value8 = "8",
-	Value9 = "9",
-}
-
-export enum TelecomRacksFkRackSala {
-	Value10 = "10",
-	Value11 = "11",
-	Value12 = "12",
-	Value13 = "13",
-	Value15 = "15",
-	Value16 = "16",
-	Value17 = "17",
-	Value18 = "18",
-	Value19 = "19",
-	Value2 = "2",
-	Value3 = "3",
-	Value5 = "5",
-	Value7 = "7",
-	Value9 = "9",
-}
-
-export enum TelecomRacksRack {
-	Value01 = "01",
-	Value013 = "013",
-	Value014 = "014",
-	Value020 = "020",
-	B01 = "B01",
-	Bastidor4 = "BASTIDOR-4",
-	Bt4 = "BT-4",
-	DgoIx = "DGO-IX",
-	R01 = "R01",
-	R02 = "R02",
-	R03 = "R03",
-	R04 = "R04",
-	R05 = "R05",
-	R06 = "R06",
-	R07 = "R07",
-	R08 = "R08",
-	R20 = "R20",
-	Rack0695 = "RACK 0695",
-}
-
 export interface TelecomRacks {
 	id: number;
-	f_fk_rack_fila: TelecomRacksFkRackFila;
-	f_fk_rack_sala: TelecomRacksFkRackSala;
+	f_fk_rack_fila: number;
+	f_fk_rack_sala: number;
 	f_fk_site_racks: number;
-	f_rack: TelecomRacksRack;
+	f_rack: string;
 	f_sigla: string;
 	parentId: number;
 	updatedAt: string;
@@ -8036,94 +7026,8 @@ export interface TelecomRacksRelations {
 
 export type TelecomRacksRelationKey = keyof TelecomRacksRelations;
 
-export const TELECOMRACKS_FKRACKFILA_LABELS: Record<
-	TelecomRacksFkRackFila,
-	string
-> = {
-	[TelecomRacksFkRackFila.Value1]: "Ativo",
-	[TelecomRacksFkRackFila.Value10]: "Código 10",
-	[TelecomRacksFkRackFila.Value11]: "Código 11",
-	[TelecomRacksFkRackFila.Value12]: "Código 12",
-	[TelecomRacksFkRackFila.Value13]: "Código 13",
-	[TelecomRacksFkRackFila.Value14]: "Código 14",
-	[TelecomRacksFkRackFila.Value2]: "Código 2",
-	[TelecomRacksFkRackFila.Value3]: "Código 3",
-	[TelecomRacksFkRackFila.Value4]: "Código 4",
-	[TelecomRacksFkRackFila.Value6]: "Código 6",
-	[TelecomRacksFkRackFila.Value8]: "Código 8",
-	[TelecomRacksFkRackFila.Value9]: "Código 9",
-};
-
-export const TELECOMRACKS_FKRACKSALA_LABELS: Record<
-	TelecomRacksFkRackSala,
-	string
-> = {
-	[TelecomRacksFkRackSala.Value10]: "Código 10",
-	[TelecomRacksFkRackSala.Value11]: "Código 11",
-	[TelecomRacksFkRackSala.Value12]: "Código 12",
-	[TelecomRacksFkRackSala.Value13]: "Código 13",
-	[TelecomRacksFkRackSala.Value15]: "Código 15",
-	[TelecomRacksFkRackSala.Value16]: "Código 16",
-	[TelecomRacksFkRackSala.Value17]: "Código 17",
-	[TelecomRacksFkRackSala.Value18]: "Código 18",
-	[TelecomRacksFkRackSala.Value19]: "Código 19",
-	[TelecomRacksFkRackSala.Value2]: "Código 2",
-	[TelecomRacksFkRackSala.Value3]: "Código 3",
-	[TelecomRacksFkRackSala.Value5]: "Código 5",
-	[TelecomRacksFkRackSala.Value7]: "Código 7",
-	[TelecomRacksFkRackSala.Value9]: "Código 9",
-};
-
-export const TELECOMRACKS_RACK_LABELS: Record<TelecomRacksRack, string> = {
-	[TelecomRacksRack.Value01]: "Código 01",
-	[TelecomRacksRack.Value013]: "013",
-	[TelecomRacksRack.Value014]: "014",
-	[TelecomRacksRack.Value020]: "020",
-	[TelecomRacksRack.B01]: "B01",
-	[TelecomRacksRack.Bastidor4]: "Bastidor 4",
-	[TelecomRacksRack.Bt4]: "BT 4",
-	[TelecomRacksRack.DgoIx]: "DGO IX",
-	[TelecomRacksRack.R01]: "R01",
-	[TelecomRacksRack.R02]: "R02",
-	[TelecomRacksRack.R03]: "R03",
-	[TelecomRacksRack.R04]: "R04",
-	[TelecomRacksRack.R05]: "R05",
-	[TelecomRacksRack.R06]: "R06",
-	[TelecomRacksRack.R07]: "R07",
-	[TelecomRacksRack.R08]: "R08",
-	[TelecomRacksRack.R20]: "R20",
-	[TelecomRacksRack.Rack0695]: "RACK 0695",
-};
-
 export enum TelecomRecursosValue2ew016ynyo6 {
 	Value3 = "3",
-}
-
-export enum TelecomRecursosDesignacaoExterna {
-	Value17598 = "17598",
-	Value1952644 = "1952644",
-	Value8150d3js4 = "81-50D3JS4",
-	Value8150d3js8 = "81-50D3JS8",
-	Cta53004891624 = "CTA53004891624",
-	Cta53007441824 = "CTA53007441824",
-	Fns53007971924 = "FNS53007971924",
-	Fns53007972024 = "FNS53007972024",
-	Fns53008536025 = "FNS53008536025",
-	Lgs53004891424 = "LGS53004891424",
-	Lgs53007972324 = "LGS53007972324",
-	Soo53007972124 = "SOO53007972124",
-}
-
-export enum TelecomRecursosDetalhes {
-	Value10GbpsNoTotal = "10 GBPS no total",
-	Value17918417254Atplus17918417253VivoBgpAs267121Asvivo = "179.184.17.254 - ATPLUS\n179.184.17.253 - VIVO\nBGP AS267121 <> ASVIVO\n",
-	Value4522910448 = "45.229.104.48",
-	Asdadsadsadsadasdasd = "asdadsadsadsadasdasd",
-	ColocationFornecidoParaNddSpo = "Colocation Fornecido para NDD SPO",
-	ContratadoComACirionExclusivamenteParaAtenderANdd = "Contratado com a Cirion exclusivamente para atender a NDD",
-	FavorIrAoLocalRemoverUmCabo = "Favor ir ao local remover um cabo.",
-	Velocidade1GbpsEntregaDePortaTrunkCrossConnectDeResponsabilidadeDoClienteClienteProveuAsSeguintesInformaEsDePontaARackDc07Rack010007ParaPontaBSimDc11012014Pp01Ft1012Xconnection500400695 = "VELOCIDADE: 1 GBPS\nEntrega de porta trunk. Cross Connect de responsabilidade do cliente. Cliente proveu as seguintes informações:\nDE: Ponta A: Rack DC07 Rack 010.007\nPARA: Ponta B: SIM - DC-11 012-014 - PP01 FT10 1/2\nXConnection -  500400695",
-	Vlan1010Asn265005BlocosDeIp1708420002231562024 = "VLAN:\n1010\nASN: \n265005\nBlocos de IP:\n170.84.200.0/22\n31.56.2.0/24",
 }
 
 export enum TelecomRecursosFinalidade {
@@ -8188,8 +7092,8 @@ export interface TelecomRecursos {
 	f_2ew016ynyo6: TelecomRecursosValue2ew016ynyo6;
 	f_contrato_ixc: number;
 	f_designacao_atplus: string;
-	f_designacao_externa: TelecomRecursosDesignacaoExterna;
-	f_detalhes: TelecomRecursosDetalhes;
+	f_designacao_externa: string;
+	f_detalhes: string;
 	f_finalidade: TelecomRecursosFinalidade;
 	f_id_produto: TelecomRecursosIdProduto;
 	f_nome: string;
@@ -8227,45 +7131,6 @@ export const TELECOMRECURSOS_VALUE2EW016YNYO6_LABELS: Record<
 	string
 > = {
 	[TelecomRecursosValue2ew016ynyo6.Value3]: "Código 3",
-};
-
-export const TELECOMRECURSOS_DESIGNACAOEXTERNA_LABELS: Record<
-	TelecomRecursosDesignacaoExterna,
-	string
-> = {
-	[TelecomRecursosDesignacaoExterna.Value17598]: "17598",
-	[TelecomRecursosDesignacaoExterna.Value1952644]: "1952644",
-	[TelecomRecursosDesignacaoExterna.Value8150d3js4]: "81 50d3js4",
-	[TelecomRecursosDesignacaoExterna.Value8150d3js8]: "81 50d3js8",
-	[TelecomRecursosDesignacaoExterna.Cta53004891624]: "Cta53004891624",
-	[TelecomRecursosDesignacaoExterna.Cta53007441824]: "Cta53007441824",
-	[TelecomRecursosDesignacaoExterna.Fns53007971924]: "Fns53007971924",
-	[TelecomRecursosDesignacaoExterna.Fns53007972024]: "Fns53007972024",
-	[TelecomRecursosDesignacaoExterna.Fns53008536025]: "Fns53008536025",
-	[TelecomRecursosDesignacaoExterna.Lgs53004891424]: "Lgs53004891424",
-	[TelecomRecursosDesignacaoExterna.Lgs53007972324]: "Lgs53007972324",
-	[TelecomRecursosDesignacaoExterna.Soo53007972124]: "Soo53007972124",
-};
-
-export const TELECOMRECURSOS_DETALHES_LABELS: Record<
-	TelecomRecursosDetalhes,
-	string
-> = {
-	[TelecomRecursosDetalhes.Value10GbpsNoTotal]: "10 GBPS No Total",
-	[TelecomRecursosDetalhes.Value17918417254Atplus17918417253VivoBgpAs267121Asvivo]:
-		"179.184.17.254 Atplus 179.184.17.253 VIVO BGP As267121 <> Asvivo",
-	[TelecomRecursosDetalhes.Value4522910448]: "45.229.104.48",
-	[TelecomRecursosDetalhes.Asdadsadsadsadasdasd]: "Asdadsadsadsadasdasd",
-	[TelecomRecursosDetalhes.ColocationFornecidoParaNddSpo]:
-		"Colocation Fornecido Para NDD SPO",
-	[TelecomRecursosDetalhes.ContratadoComACirionExclusivamenteParaAtenderANdd]:
-		"Contratado Com A Cirion Exclusivamente Para Atender A NDD",
-	[TelecomRecursosDetalhes.FavorIrAoLocalRemoverUmCabo]:
-		"Favor Ir Ao Local Remover Um Cabo.",
-	[TelecomRecursosDetalhes.Velocidade1GbpsEntregaDePortaTrunkCrossConnectDeResponsabilidadeDoClienteClienteProveuAsSeguintesInformaEsDePontaARackDc07Rack010007ParaPontaBSimDc11012014Pp01Ft1012Xconnection500400695]:
-		"Velocidade: 1 GBPS Entrega De Porta Trunk. Cross Connect De Responsabilidade Do Cliente. Cliente Proveu As Seguintes Informações: De: Ponta A: Rack Dc07 Rack 010.007 Para: Ponta B: SIM DC 11 012 014 Pp01 Ft10 1/2 Xconnection 500400695",
-	[TelecomRecursosDetalhes.Vlan1010Asn265005BlocosDeIp1708420002231562024]:
-		"Vlan: 1010 Asn: 265005 Blocos De Ip: 170.84.200.0/22 31.56.2.0/24",
 };
 
 export const TELECOMRECURSOS_FINALIDADE_LABELS: Record<
@@ -8364,28 +7229,11 @@ export enum TelecomTransitoOpcoesValue1eu8gjcf9js {
 	Value8 = "8",
 }
 
-export enum TelecomTransitoOpcoesVelocidade {
-	Value1Gbps = "1 Gbps",
-	Value10Gbps = "10 Gbps",
-	Value100Mbps = "100 Mbps",
-	Value100mbps = "100Mbps",
-	Value150Mbps = "150 Mbps",
-	Value2Gbps = "2 Gbps",
-	Value20Mbps = "20 Mbps",
-	Value200Mbps = "200 Mbps",
-	Value30Mbps = "30 Mbps",
-	Value300Mbps = "300 Mbps",
-	Value400Mbps = "400 Mbps",
-	Value50Mbps = "50 Mbps",
-	Value55Mbps = "55 Mbps",
-	Value600Mbps = "600 Mbps",
-}
-
 export interface TelecomTransitoOpcoes {
 	id: number;
 	f_1eu8gjcf9js: TelecomTransitoOpcoesValue1eu8gjcf9js;
 	f_ips: string;
-	f_velocidade: TelecomTransitoOpcoesVelocidade;
+	f_velocidade: string;
 	updatedAt: string;
 	createdAt: string;
 }
@@ -8404,26 +7252,6 @@ export const TELECOMTRANSITOOPCOES_VALUE1EU8GJCF9JS_LABELS: Record<
 > = {
 	[TelecomTransitoOpcoesValue1eu8gjcf9js.Value14]: "Código 14",
 	[TelecomTransitoOpcoesValue1eu8gjcf9js.Value8]: "Código 8",
-};
-
-export const TELECOMTRANSITOOPCOES_VELOCIDADE_LABELS: Record<
-	TelecomTransitoOpcoesVelocidade,
-	string
-> = {
-	[TelecomTransitoOpcoesVelocidade.Value1Gbps]: "1 Gbps",
-	[TelecomTransitoOpcoesVelocidade.Value10Gbps]: "10 Gbps",
-	[TelecomTransitoOpcoesVelocidade.Value100Mbps]: "100 Mbps",
-	[TelecomTransitoOpcoesVelocidade.Value100mbps]: "100mbps",
-	[TelecomTransitoOpcoesVelocidade.Value150Mbps]: "150 Mbps",
-	[TelecomTransitoOpcoesVelocidade.Value2Gbps]: "2 Gbps",
-	[TelecomTransitoOpcoesVelocidade.Value20Mbps]: "20 Mbps",
-	[TelecomTransitoOpcoesVelocidade.Value200Mbps]: "200 Mbps",
-	[TelecomTransitoOpcoesVelocidade.Value30Mbps]: "30 Mbps",
-	[TelecomTransitoOpcoesVelocidade.Value300Mbps]: "300 Mbps",
-	[TelecomTransitoOpcoesVelocidade.Value400Mbps]: "400 Mbps",
-	[TelecomTransitoOpcoesVelocidade.Value50Mbps]: "50 Mbps",
-	[TelecomTransitoOpcoesVelocidade.Value55Mbps]: "55 Mbps",
-	[TelecomTransitoOpcoesVelocidade.Value600Mbps]: "600 Mbps",
 };
 
 export enum TemplatesAtendimentoN1Createdat {
@@ -8772,16 +7600,6 @@ export const TEMPLATESATENDIMENTON1_UPDATEDAT_LABELS: Record<
 		"2025 09 04t17:18:15.345z",
 };
 
-export enum TrocaEnderecoEnderecoCidade {
-	BocainaDoSul = "Bocaina do Sul",
-	BomRetiro = "Bom Retiro ",
-	CampoBeloDoSul = "Campo Belo do Sul",
-	CapOAlto = "Capão Alto",
-	Curitibanos = "Curitibanos",
-	Lages = "lages",
-	Vacaria = "Vacaria ",
-}
-
 export enum TrocaEnderecoEnderecoEstado {
 	Sc = "sc",
 }
@@ -8806,7 +7624,7 @@ export interface TrocaEndereco {
 	f_cep: string;
 	f_cliente: string;
 	f_endereco: string;
-	f_endereco_cidade: TrocaEnderecoEnderecoCidade;
+	f_endereco_cidade: string;
 	f_endereco_complemento: string;
 	f_endereco_estado: TrocaEnderecoEnderecoEstado;
 	f_endereco_numero: string;
@@ -8827,19 +7645,6 @@ export interface TrocaEnderecoRelations {
 }
 
 export type TrocaEnderecoRelationKey = keyof TrocaEnderecoRelations;
-
-export const TROCAENDERECO_ENDERECOCIDADE_LABELS: Record<
-	TrocaEnderecoEnderecoCidade,
-	string
-> = {
-	[TrocaEnderecoEnderecoCidade.BocainaDoSul]: "Bocaina Do Sul",
-	[TrocaEnderecoEnderecoCidade.BomRetiro]: "Bom Retiro",
-	[TrocaEnderecoEnderecoCidade.CampoBeloDoSul]: "Campo Belo Do Sul",
-	[TrocaEnderecoEnderecoCidade.CapOAlto]: "Capão Alto",
-	[TrocaEnderecoEnderecoCidade.Curitibanos]: "Curitibanos",
-	[TrocaEnderecoEnderecoCidade.Lages]: "Lages",
-	[TrocaEnderecoEnderecoCidade.Vacaria]: "Vacaria",
-};
 
 export const TROCAENDERECO_ENDERECOESTADO_LABELS: Record<
 	TrocaEnderecoEnderecoEstado,
@@ -9107,21 +7912,6 @@ export type Ynltolqbwj1Relations = Record<string, never>;
 
 export type Ynltolqbwj1RelationKey = keyof Ynltolqbwj1Relations;
 
-export enum ZapsignDataDeEncerramento {
-	Value20250526 = "2025-05-26",
-	Value20250625 = "2025-06-25",
-	Value20250725 = "2025-07-25",
-	Value20250824 = "2025-08-24",
-	Value20250923 = "2025-09-23",
-	Value20251023 = "2025-10-23",
-	Value20251122 = "2025-11-22",
-	Value20251222 = "2025-12-22",
-	Value20260121 = "2026-01-21",
-	Value20260220 = "2026-02-20",
-	Value20260322 = "2026-03-22",
-	Value20260421 = "2026-04-21",
-}
-
 export enum ZapsignNomeDoPlano {
 	ApiGrowMensal = "API Grow (mensal)",
 	Equipe200Mensal = "Equipe 200 (Mensal)",
@@ -9137,7 +7927,7 @@ export enum ZapsignStatus {
 
 export interface Zapsign {
 	id: number;
-	f_data_de_encerramento: ZapsignDataDeEncerramento;
+	f_data_de_encerramento: string;
 	f_nome_do_plano: ZapsignNomeDoPlano;
 	f_numero_de_creditos: string;
 	f_periodo: ZapsignPeriodo;
@@ -9153,24 +7943,6 @@ export interface ZapsignRelations {
 
 export type ZapsignRelationKey = keyof ZapsignRelations;
 
-export const ZAPSIGN_DATADEENCERRAMENTO_LABELS: Record<
-	ZapsignDataDeEncerramento,
-	string
-> = {
-	[ZapsignDataDeEncerramento.Value20250526]: "2025 05 26",
-	[ZapsignDataDeEncerramento.Value20250625]: "2025 06 25",
-	[ZapsignDataDeEncerramento.Value20250725]: "2025 07 25",
-	[ZapsignDataDeEncerramento.Value20250824]: "2025 08 24",
-	[ZapsignDataDeEncerramento.Value20250923]: "2025 09 23",
-	[ZapsignDataDeEncerramento.Value20251023]: "2025 10 23",
-	[ZapsignDataDeEncerramento.Value20251122]: "2025 11 22",
-	[ZapsignDataDeEncerramento.Value20251222]: "2025 12 22",
-	[ZapsignDataDeEncerramento.Value20260121]: "2026 01 21",
-	[ZapsignDataDeEncerramento.Value20260220]: "2026 02 20",
-	[ZapsignDataDeEncerramento.Value20260322]: "2026 03 22",
-	[ZapsignDataDeEncerramento.Value20260421]: "2026 04 21",
-};
-
 export const ZAPSIGN_NOMEDOPLANO_LABELS: Record<ZapsignNomeDoPlano, string> = {
 	[ZapsignNomeDoPlano.ApiGrowMensal]: "API Grow (mensal)",
 	[ZapsignNomeDoPlano.Equipe200Mensal]: "Equipe 200 (mensal)",
@@ -9184,26 +7956,8 @@ export const ZAPSIGN_STATUS_LABELS: Record<ZapsignStatus, string> = {
 	[ZapsignStatus.Paid]: "Paid",
 };
 
-export enum TemplatesXOrdensDeServicoFkTemplateOs1 {
-	Value1 = "1",
-	Value12 = "12",
-	Value13 = "13",
-	Value17 = "17",
-	Value18 = "18",
-	Value19 = "19",
-	Value2 = "2",
-	Value21 = "21",
-	Value22 = "22",
-	Value23 = "23",
-	Value24 = "24",
-	Value25 = "25",
-	Value6 = "6",
-	Value7 = "7",
-	Value9 = "9",
-}
-
 export interface TemplatesXOrdensDeServico {
-	f_fk_template_os_1: TemplatesXOrdensDeServicoFkTemplateOs1;
+	f_fk_template_os_1: number;
 	f_fk_template_os_2: number;
 }
 
@@ -9211,27 +7965,6 @@ export type TemplatesXOrdensDeServicoRelations = Record<string, never>;
 
 export type TemplatesXOrdensDeServicoRelationKey =
 	keyof TemplatesXOrdensDeServicoRelations;
-
-export const TEMPLATESXORDENSDESERVICO_FKTEMPLATEOS1_LABELS: Record<
-	TemplatesXOrdensDeServicoFkTemplateOs1,
-	string
-> = {
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value1]: "Ativo",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value12]: "Código 12",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value13]: "Código 13",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value17]: "Código 17",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value18]: "Código 18",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value19]: "Código 19",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value2]: "Código 2",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value21]: "Código 21",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value22]: "Código 22",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value23]: "Código 23",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value24]: "Código 24",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value25]: "Código 25",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value6]: "Código 6",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value7]: "Código 7",
-	[TemplatesXOrdensDeServicoFkTemplateOs1.Value9]: "Código 9",
-};
 
 export interface TipoXTemplates {
 	f_fk_tipo_template_1: number;
@@ -9242,55 +7975,14 @@ export type TipoXTemplatesRelations = Record<string, never>;
 
 export type TipoXTemplatesRelationKey = keyof TipoXTemplatesRelations;
 
-export enum VendedorCuponsFkVendedorCupom2 {
-	Value12 = "12",
-	Value20 = "20",
-	Value27 = "27",
-	Value30 = "30",
-	Value31 = "31",
-	Value32 = "32",
-	Value34 = "34",
-	Value35 = "35",
-	Value36 = "36",
-	Value37 = "37",
-	Value38 = "38",
-	Value39 = "39",
-	Value40 = "40",
-	Value42 = "42",
-	Value43 = "43",
-	Value51 = "51",
-}
-
 export interface VendedorCupons {
 	f_fk_vendedor_cupom_1: number;
-	f_fk_vendedor_cupom_2: VendedorCuponsFkVendedorCupom2;
+	f_fk_vendedor_cupom_2: number;
 }
 
 export type VendedorCuponsRelations = Record<string, never>;
 
 export type VendedorCuponsRelationKey = keyof VendedorCuponsRelations;
-
-export const VENDEDORCUPONS_FKVENDEDORCUPOM2_LABELS: Record<
-	VendedorCuponsFkVendedorCupom2,
-	string
-> = {
-	[VendedorCuponsFkVendedorCupom2.Value12]: "Código 12",
-	[VendedorCuponsFkVendedorCupom2.Value20]: "Código 20",
-	[VendedorCuponsFkVendedorCupom2.Value27]: "Código 27",
-	[VendedorCuponsFkVendedorCupom2.Value30]: "Código 30",
-	[VendedorCuponsFkVendedorCupom2.Value31]: "Código 31",
-	[VendedorCuponsFkVendedorCupom2.Value32]: "Código 32",
-	[VendedorCuponsFkVendedorCupom2.Value34]: "Código 34",
-	[VendedorCuponsFkVendedorCupom2.Value35]: "Código 35",
-	[VendedorCuponsFkVendedorCupom2.Value36]: "Código 36",
-	[VendedorCuponsFkVendedorCupom2.Value37]: "Código 37",
-	[VendedorCuponsFkVendedorCupom2.Value38]: "Código 38",
-	[VendedorCuponsFkVendedorCupom2.Value39]: "Código 39",
-	[VendedorCuponsFkVendedorCupom2.Value40]: "Código 40",
-	[VendedorCuponsFkVendedorCupom2.Value42]: "Código 42",
-	[VendedorCuponsFkVendedorCupom2.Value43]: "Código 43",
-	[VendedorCuponsFkVendedorCupom2.Value51]: "Código 51",
-};
 
 export interface VwMermaidPorServico {
 	mermaid_text: string;

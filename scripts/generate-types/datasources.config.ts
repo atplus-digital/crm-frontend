@@ -1,4 +1,5 @@
 import type { DataSourceGenerationConfig } from "./src/@types/script";
+import { createIXCWikiAdapter } from "./src/adapters/ixc-wiki-scraper";
 
 export const dataSourceConfigs = [
 	{
@@ -34,6 +35,6 @@ export const dataSourceConfigs = [
 			"fn_areceber",
 			"su_ticket",
 		],
-		enableSampleFieldFallback: true,
+		preEnumAdapter: createIXCWikiAdapter(),
 	},
 ] satisfies DataSourceGenerationConfig[];
