@@ -134,6 +134,7 @@ export interface ScriptConfig {
 	defaultEnvPath: string;
 	requestTimeoutMs: number;
 	requestConcurrency: number;
+	maxConcurrency: number; // Concorrência máxima para operações paralelas
 	lockWorkspaceFolder?: boolean; // Quando ativado, verifica .vscode/settings.json e bloqueia acesso de escrita à pasta de interfaces
 	baseInterfaceNaming: BaseInterfaceNamingConfig;
 }

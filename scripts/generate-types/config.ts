@@ -6,6 +6,7 @@ const scriptConfig: Partial<ScriptConfig> = {
 	datasources: dataSourceConfigs,
 	lockWorkspaceFolder: true,
 	verbose: false,
+	maxConcurrency: 3,
 } as const;
 
 export const config = parseConfig(scriptConfig);

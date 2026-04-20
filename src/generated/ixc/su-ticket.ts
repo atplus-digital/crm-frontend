@@ -6,8 +6,39 @@
 
 export const SU_TICKET_TABLE_NAME = "su_ticket";
 
+export enum SuTicketDataCriacao {
+	B = "B",
+	M = "M",
+	A = "A",
+	C = "C",
+}
+
+export enum SuTicketDataReservada {
+	I = "I",
+	H = "H",
+}
+
+export enum SuTicketId {
+	C = "C",
+	E = "E",
+}
+
+export enum SuTicketIdAssunto {
+	C = "C",
+	L = "L",
+	Cc = "CC",
+	M = "M",
+}
+
 export enum SuTicketIdFilial {
 	Value1 = "1",
+}
+
+export enum SuTicketIdResposta {
+	E = "E",
+	I = "I",
+	N = "N",
+	A = "A",
 }
 
 export enum SuTicketIdSuDiagnostico {
@@ -54,6 +85,14 @@ export enum SuTicketMensagensNaoLidaSup {
 	Value1 = "1",
 }
 
+export enum SuTicketMenssagem {
+	N = "N",
+	P = "P",
+	Ep = "EP",
+	S = "S",
+	C = "C",
+}
+
 export enum SuTicketOrigemCadastro {
 	P = "P",
 }
@@ -66,9 +105,10 @@ export enum SuTicketOrigemEndereco {
 }
 
 export enum SuTicketPrioridade {
-	A = "A",
-	C = "C",
 	M = "M",
+	T = "T",
+	N = "N",
+	Q = "Q",
 }
 
 export enum SuTicketStatus {
@@ -85,17 +125,22 @@ export enum SuTicketTipo {
 	C = "C",
 }
 
+export enum SuTicketTitulo {
+	E = "E",
+	M = "M",
+}
+
 export interface SuTicket {
-	id: number;
-	data_criacao: string;
+	id: SuTicketId;
+	data_criacao: SuTicketDataCriacao;
 	data_hora_execucao: string;
 	data_hora_os_aberta: string;
 	data_hora_os_encaminhada: string;
 	data_hora_os_execucao: string;
-	data_reservada: string;
+	data_reservada: SuTicketDataReservada;
 	data_ultima_alteracao: string;
 	endereco: string;
-	id_assunto: number;
+	id_assunto: SuTicketIdAssunto;
 	id_canal_atendimento: number;
 	id_circuito: number;
 	id_cliente: number;
@@ -105,7 +150,7 @@ export interface SuTicket {
 	id_filial: SuTicketIdFilial;
 	id_login: number;
 	id_responsavel_tecnico: number;
-	id_resposta: number;
+	id_resposta: SuTicketIdResposta;
 	id_su_diagnostico: SuTicketIdSuDiagnostico;
 	id_ticket_origem: SuTicketIdTicketOrigem;
 	id_ticket_setor: SuTicketIdTicketSetor;
@@ -120,7 +165,7 @@ export interface SuTicket {
 	melhor_horario_reserva: SuTicketMelhorHorarioReserva;
 	mensagens_nao_lida_cli: number;
 	mensagens_nao_lida_sup: SuTicketMensagensNaoLidaSup;
-	menssagem: string;
+	menssagem: SuTicketMenssagem;
 	origem_cadastro: SuTicketOrigemCadastro;
 	origem_endereco: SuTicketOrigemEndereco;
 	origem_endereco_estrutura: string;
@@ -130,7 +175,7 @@ export interface SuTicket {
 	status_sla: string;
 	su_status: SuTicketSuStatus;
 	tipo: SuTicketTipo;
-	titulo: string;
+	titulo: SuTicketTitulo;
 	token: string;
 	ultima_atualizacao: string;
 	updated_user: string;
@@ -140,8 +185,43 @@ export type SuTicketRelations = Record<string, never>;
 
 export type SuTicketRelationKey = keyof SuTicketRelations;
 
+export const SUTICKET_DATACRIACAO_LABELS: Record<SuTicketDataCriacao, string> =
+	{
+		[SuTicketDataCriacao.B]: "Baixa",
+		[SuTicketDataCriacao.M]: "Normal",
+		[SuTicketDataCriacao.A]: "Alta",
+		[SuTicketDataCriacao.C]: "Crítica",
+	};
+
+export const SUTICKET_DATARESERVADA_LABELS: Record<
+	SuTicketDataReservada,
+	string
+> = {
+	[SuTicketDataReservada.I]: "Interna",
+	[SuTicketDataReservada.H]: "Hotsite",
+};
+
+export const SUTICKET_ID_LABELS: Record<SuTicketId, string> = {
+	[SuTicketId.C]: "Cliente",
+	[SuTicketId.E]: "Estrutura própria",
+};
+
+export const SUTICKET_IDASSUNTO_LABELS: Record<SuTicketIdAssunto, string> = {
+	[SuTicketIdAssunto.C]: "Cliente",
+	[SuTicketIdAssunto.L]: "Login",
+	[SuTicketIdAssunto.Cc]: "Contrato",
+	[SuTicketIdAssunto.M]: "Manual",
+};
+
 export const SUTICKET_IDFILIAL_LABELS: Record<SuTicketIdFilial, string> = {
 	[SuTicketIdFilial.Value1]: "Ativo",
+};
+
+export const SUTICKET_IDRESPOSTA_LABELS: Record<SuTicketIdResposta, string> = {
+	[SuTicketIdResposta.E]: "Externa",
+	[SuTicketIdResposta.I]: "Interna",
+	[SuTicketIdResposta.N]: "Nenhuma",
+	[SuTicketIdResposta.A]: "Ambos",
 };
 
 export const SUTICKET_IDSUDIAGNOSTICO_LABELS: Record<
@@ -209,6 +289,14 @@ export const SUTICKET_MENSAGENSNAOLIDASUP_LABELS: Record<
 	[SuTicketMensagensNaoLidaSup.Value1]: "Ativo",
 };
 
+export const SUTICKET_MENSSAGEM_LABELS: Record<SuTicketMenssagem, string> = {
+	[SuTicketMenssagem.N]: "Novo",
+	[SuTicketMenssagem.P]: "Pendente",
+	[SuTicketMenssagem.Ep]: "Em progresso",
+	[SuTicketMenssagem.S]: "Solucionado",
+	[SuTicketMenssagem.C]: "Cancelado",
+};
+
 export const SUTICKET_ORIGEMCADASTRO_LABELS: Record<
 	SuTicketOrigemCadastro,
 	string
@@ -227,9 +315,10 @@ export const SUTICKET_ORIGEMENDERECO_LABELS: Record<
 };
 
 export const SUTICKET_PRIORIDADE_LABELS: Record<SuTicketPrioridade, string> = {
-	[SuTicketPrioridade.A]: "Ativo",
-	[SuTicketPrioridade.C]: "C",
-	[SuTicketPrioridade.M]: "M",
+	[SuTicketPrioridade.M]: "Manhã",
+	[SuTicketPrioridade.T]: "Tarde",
+	[SuTicketPrioridade.N]: "Noite",
+	[SuTicketPrioridade.Q]: "Qualquer",
 };
 
 export const SUTICKET_STATUS_LABELS: Record<SuTicketStatus, string> = {
@@ -244,4 +333,9 @@ export const SUTICKET_SUSTATUS_LABELS: Record<SuTicketSuStatus, string> = {
 
 export const SUTICKET_TIPO_LABELS: Record<SuTicketTipo, string> = {
 	[SuTicketTipo.C]: "C",
+};
+
+export const SUTICKET_TITULO_LABELS: Record<SuTicketTitulo, string> = {
+	[SuTicketTitulo.E]: "Estrutura",
+	[SuTicketTitulo.M]: "Manual",
 };

@@ -31,8 +31,13 @@ export enum LinhaMvnoDiaRecorrencia {
 }
 
 export enum LinhaMvnoEsim {
-	N = "N",
 	S = "S",
+	N = "N",
+}
+
+export enum LinhaMvnoId {
+	A = "A",
+	I = "I",
 }
 
 export enum LinhaMvnoIdIntegracao {
@@ -40,13 +45,47 @@ export enum LinhaMvnoIdIntegracao {
 	Value2 = "2",
 }
 
+export enum LinhaMvnoIdLinhaIntegracao {
+	A = "A",
+	Br = "BR",
+	Bp = "BP",
+	Ba = "BA",
+	I = "I",
+	Bi = "BI",
+	Bt = "BT",
+	C = "C",
+	Aa = "AA",
+}
+
 export enum LinhaMvnoPortabilidade {
 	N = "N",
 	S = "S",
 }
 
+export enum LinhaMvnoProfileMvno {
+	S = "S",
+	N = "N",
+}
+
+export enum LinhaMvnoSimcard {
+	Value1 = "1",
+	Value2 = "2",
+	Value3 = "3",
+	Value4 = "4",
+	Value5 = "5",
+	Value6 = "6",
+	Value7 = "7",
+}
+
+export enum LinhaMvnoTokenValidacao {
+	A = "A",
+	R = "R",
+	Co = "CO",
+	Ca = "CA",
+}
+
 export interface LinhaMvno {
-	id: number;
+	id: LinhaMvnoId;
 	api: LinhaMvnoApi;
 	consulta_saldo: string;
 	dados_moveis: string;
@@ -63,7 +102,7 @@ export interface LinhaMvno {
 	id_contrato_integracao: string;
 	id_customer_mvno: string;
 	id_integracao: LinhaMvnoIdIntegracao;
-	id_linha_integracao: string;
+	id_linha_integracao: LinhaMvnoIdLinhaIntegracao;
 	id_plano_integracao: string;
 	id_portabilidade_integracao: string;
 	id_prod_ixc_mvno: number;
@@ -74,13 +113,13 @@ export interface LinhaMvno {
 	numero_temporario: string;
 	operadora_origem: string;
 	portabilidade: LinhaMvnoPortabilidade;
-	profile_mvno: string;
+	profile_mvno: LinhaMvnoProfileMvno;
 	senha: string;
-	simcard: string;
+	simcard: LinhaMvnoSimcard;
 	sms: string;
 	status_aplicativo: string;
 	tipo_numero: string;
-	token_validacao: string;
+	token_validacao: LinhaMvnoTokenValidacao;
 	voz: string;
 }
 
@@ -119,8 +158,13 @@ export const LINHAMVNO_DIARECORRENCIA_LABELS: Record<
 };
 
 export const LINHAMVNO_ESIM_LABELS: Record<LinhaMvnoEsim, string> = {
-	[LinhaMvnoEsim.N]: "Não",
 	[LinhaMvnoEsim.S]: "Sim",
+	[LinhaMvnoEsim.N]: "Não",
+};
+
+export const LINHAMVNO_ID_LABELS: Record<LinhaMvnoId, string> = {
+	[LinhaMvnoId.A]: "Na API e no IXC",
+	[LinhaMvnoId.I]: "Apenas no IXC",
 };
 
 export const LINHAMVNO_IDINTEGRACAO_LABELS: Record<
@@ -131,10 +175,53 @@ export const LINHAMVNO_IDINTEGRACAO_LABELS: Record<
 	[LinhaMvnoIdIntegracao.Value2]: "Código 2",
 };
 
+export const LINHAMVNO_IDLINHAINTEGRACAO_LABELS: Record<
+	LinhaMvnoIdLinhaIntegracao,
+	string
+> = {
+	[LinhaMvnoIdLinhaIntegracao.A]: "Ativo",
+	[LinhaMvnoIdLinhaIntegracao.Br]: "Bloqueio roubo",
+	[LinhaMvnoIdLinhaIntegracao.Bp]: "Bloqueio perda",
+	[LinhaMvnoIdLinhaIntegracao.Ba]: "Bloqueio parcial",
+	[LinhaMvnoIdLinhaIntegracao.I]: "Inativo",
+	[LinhaMvnoIdLinhaIntegracao.Bi]: "Bloqueio uso indevido",
+	[LinhaMvnoIdLinhaIntegracao.Bt]: "Bloqueio total",
+	[LinhaMvnoIdLinhaIntegracao.C]: "Cancelada",
+	[LinhaMvnoIdLinhaIntegracao.Aa]: "Aguardando ativação",
+};
+
 export const LINHAMVNO_PORTABILIDADE_LABELS: Record<
 	LinhaMvnoPortabilidade,
 	string
 > = {
 	[LinhaMvnoPortabilidade.N]: "Não",
 	[LinhaMvnoPortabilidade.S]: "Sim",
+};
+
+export const LINHAMVNO_PROFILEMVNO_LABELS: Record<
+	LinhaMvnoProfileMvno,
+	string
+> = {
+	[LinhaMvnoProfileMvno.S]: "Sim",
+	[LinhaMvnoProfileMvno.N]: "Não",
+};
+
+export const LINHAMVNO_SIMCARD_LABELS: Record<LinhaMvnoSimcard, string> = {
+	[LinhaMvnoSimcard.Value1]: "Normal",
+	[LinhaMvnoSimcard.Value2]: "Gold",
+	[LinhaMvnoSimcard.Value3]: "DID Móvel",
+	[LinhaMvnoSimcard.Value4]: "M2M",
+	[LinhaMvnoSimcard.Value5]: "M2M Especial",
+	[LinhaMvnoSimcard.Value6]: "Teste",
+	[LinhaMvnoSimcard.Value7]: "QA",
+};
+
+export const LINHAMVNO_TOKENVALIDACAO_LABELS: Record<
+	LinhaMvnoTokenValidacao,
+	string
+> = {
+	[LinhaMvnoTokenValidacao.A]: "Aguardando",
+	[LinhaMvnoTokenValidacao.R]: "Recusado",
+	[LinhaMvnoTokenValidacao.Co]: "Concluído",
+	[LinhaMvnoTokenValidacao.Ca]: "Cancelado",
 };

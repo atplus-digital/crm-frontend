@@ -17,6 +17,7 @@ const defaultConfig: ScriptConfig = {
 	defaultEnvPath: ".env.local",
 	requestTimeoutMs: 15_000,
 	requestConcurrency: 5,
+	maxConcurrency: 3,
 	lockWorkspaceFolder: true,
 	baseInterfaceNaming: {
 		prefix: "",
@@ -41,13 +42,23 @@ function validateMergedConfig(mergedConfig: Partial<ScriptConfig>): void {
 		);
 	}
 
-	// Validar concorrência (deve ser >= 1)
+	// Validar concorrência de requisições (deve ser >= 1)
 	if (
 		mergedConfig.requestConcurrency !== undefined &&
 		mergedConfig.requestConcurrency < 1
 	) {
 		errors.push(
 			`requestConcurrency deve ser >= 1, recebido: ${mergedConfig.requestConcurrency}`,
+		);
+	}
+
+	// Validar concorrência máxima (deve ser >= 1)
+	if (
+		mergedConfig.maxConcurrency !== undefined &&
+		mergedConfig.maxConcurrency < 1
+	) {
+		errors.push(
+			`maxConcurrency deve ser >= 1, recebido: ${mergedConfig.maxConcurrency}`,
 		);
 	}
 
