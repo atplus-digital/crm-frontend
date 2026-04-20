@@ -7,228 +7,233 @@
 export const CLIENTE_TABLE_NAME = "cliente";
 
 export enum ClienteAcessoAutomaticoCentral {
-	P = "P",
 	S = "S",
+	N = "N",
+	P = "P",
 }
 
 export enum ClienteAlterarSenhaPrimeiroAcesso {
+	S = "S",
 	N = "N",
 	P = "P",
 }
 
-export enum ClienteAntigoAcessoCentral {
-	N = "N",
-}
-
 export enum ClienteAtivo {
+	S = "S",
 	N = "N",
-	S = "S",
 }
 
-export enum ClienteAtualizarCadastroGalaxpay {
+export enum ClienteAtivoSerasa {
+	Value1 = "1",
+	Value2 = "2",
+}
+
+export enum ClienteCadastradoViaViabilidade {
+	S = "S",
 	N = "N",
-	S = "S",
 }
 
-export enum ClienteAvisoAtraso {
+export enum ClienteCobEnviaEmail {
 	S = "S",
-}
-
-export enum ClienteCadastradoNoGalaxpay {
-	N = "N",
-	S = "S",
-}
-
-export enum ClienteCliDescontaIssRetidoTotal {
 	N = "N",
 }
 
 export enum ClienteCobEnviaSms {
 	S = "S",
-}
-
-export enum ClienteCofinsRetem {
 	N = "N",
-}
-
-export enum ClienteComplementoCob {
-	Casa = "CASA",
-}
-
-export enum ClienteCondPagamento {
-	Value0 = "0",
-	Value1 = "1",
 }
 
 export enum ClienteContribuinteIcms {
-	I = "I",
-	N = "N",
 	S = "S",
+	N = "N",
+	I = "I",
+	E = "E",
 }
 
 export enum ClienteConvertClienteForn {
+	S = "S",
 	N = "N",
 }
 
 export enum ClienteCrm {
-	N = "N",
-}
-
-export enum ClienteCsllRetem {
+	S = "S",
 	N = "N",
 }
 
 export enum ClienteDescontoIrrfValorInferior {
-	N = "N",
 	S = "S",
+	N = "N",
 }
 
 export enum ClienteEstadoCivil {
 	Casado = "Casado",
-	Divorciado = "Divorciado",
 	Solteiro = "Solteiro",
+	Divorciado = "Divorciado",
+	ViaVo = "ViÃºvo",
 }
 
 export enum ClienteFiltraFilial {
 	S = "S",
+	N = "N",
 }
 
 export enum ClienteGrauSatisfacao {
+	Value1 = "1",
+	Value2 = "2",
 	Value3 = "3",
 	Value4 = "4",
 	Value5 = "5",
 }
 
-export enum ClienteHotsiteAcesso {
-	Value0 = "0",
-	Value2 = "2",
-}
-
-export enum ClienteInssRetem {
-	N = "N",
-}
-
-export enum ClienteIrrfRetem {
-	N = "N",
-}
-
-export enum ClienteIssClassificacao {
-	Value99 = "99",
-}
-
 export enum ClienteIssClassificacaoPadrao {
+	Value00 = "00",
+	Value01 = "01",
+	Value02 = "02",
+	Value03 = "03",
 	Value99 = "99",
 }
 
 export enum ClienteMoradia {
-	A = "A",
 	P = "P",
-}
-
-export enum ClienteNacionalidade {
-	Brasileiro = "Brasileiro",
-}
-
-export enum ClienteNumDiasCob {
-	Value0 = "0",
-	Value1 = "1",
+	A = "A",
 }
 
 export enum ClienteOrgaoPublico {
-	N = "N",
-}
-
-export enum ClienteParticipaCobranca {
-	N = "N",
 	S = "S",
+	N = "N",
 }
 
 export enum ClienteParticipaPreCobranca {
 	S = "S",
-}
-
-export enum ClientePermiteArmazenarCartoes {
 	N = "N",
 }
 
-export enum ClientePisRetem {
-	N = "N",
-}
-
-export enum ClientePrimeiroAcessoCentral {
-	N = "N",
-	S = "S",
-}
-
-export enum ClienteRedeAtivacao {
-	P = "P",
+export enum ClienteRegimeFiscalCol {
+	Value48 = "48",
+	Value49 = "49",
 }
 
 export enum ClienteReguaCobrancaConsidera {
+	S = "S",
+	N = "N",
 	P = "P",
 }
 
 export enum ClienteReguaCobrancaNotificacao {
 	S = "S",
+	N = "N",
 }
 
 export enum ClienteReguaCobrancaWpp {
 	S = "S",
-}
-
-export enum ClienteRgOrgaoEmissor {
-	Dicrj = "DICRJ",
-	Ssp = "SsP",
+	N = "N",
 }
 
 export enum ClienteSenhaHotsiteMd5 {
-	N = "N",
 	S = "S",
+	N = "N",
 }
 
 export enum ClienteSexo {
 	F = "F",
 	M = "M",
-}
-
-export enum ClienteStatusInternet {
-	N = "N",
+	Nb = "NB",
+	O = "O",
+	Pni = "PNI",
 }
 
 export enum ClienteStatusProspeccao {
 	C = "C",
+	S = "S",
+	A = "A",
+	N = "N",
+	V = "V",
+	P = "P",
+	Ab = "AB",
+	Sv = "SV",
+	Sp = "SP",
 }
 
 export enum ClienteTipoAssinante {
 	Value1 = "1",
+	Value2 = "2",
 	Value3 = "3",
+	Value4 = "4",
+	Value5 = "5",
+	Value6 = "6",
 }
 
 export enum ClienteTipoClienteScm {
 	Value01 = "01",
+	Value02 = "02",
 	Value03 = "03",
+	Value04 = "04",
+	Value05 = "05",
+	Value06 = "06",
+	Value07 = "07",
+	Value08 = "08",
+	Value99 = "99",
+	Value013 = "0-13",
+	Value015 = "0-15",
+	Value023 = "0-23",
+	Value047 = "0-47",
+	R99Pn = "R-99-PN",
 }
 
 export enum ClienteTipoDocumentoIdentificacao {
+	Value11 = "11",
+	Value12 = "12",
 	Value13 = "13",
+	Value21 = "21",
+	Value22 = "22",
+	Value31 = "31",
+	Value41 = "41",
+	Value42 = "42",
+	Value47 = "47",
+	Value50 = "50",
+	Value91 = "91",
+	Nuit = "NUIT",
+	Ruc = "RUC",
+	Ci = "CI",
+	Value4 = "4",
+	Value5 = "5",
+	Value6 = "6",
+	Value9 = "9",
+	Cuit = "CUIT",
+	Cibol = "CIBOL",
+	Rut = "RUT",
+	Tin = "TIN",
+	Rif = "RIF",
+	Dni = "DNI",
+	Nir = "NIR",
+	Siren = "SIREN",
+	Ruturu = "RUTURU",
+}
+
+export enum ClienteTipoEnteGovernamental {
+	Value1 = "1",
+	Value2 = "2",
+	Value3 = "3",
+	Value4 = "4",
 }
 
 export enum ClienteTipoLocalidade {
+	R = "R",
 	U = "U",
 }
 
 export enum ClienteTipoPessoa {
 	F = "F",
 	J = "J",
+	E = "E",
+	Value1 = "1",
+	Value2 = "2",
+	Value3 = "3",
 }
 
 export enum ClienteTipoPessoaTitularConta {
 	F = "F",
-}
-
-export enum ClienteUfCob {
-	Value0 = "0",
-	Value2 = "2",
+	J = "J",
 }
 
 export interface Cliente {
@@ -236,34 +241,34 @@ export interface Cliente {
 	acesso_automatico_central: ClienteAcessoAutomaticoCentral;
 	alerta: string;
 	alterar_senha_primeiro_acesso: ClienteAlterarSenhaPrimeiroAcesso;
-	antigo_acesso_central: ClienteAntigoAcessoCentral;
+	antigo_acesso_central: string;
 	apartamento: string;
 	ativo: ClienteAtivo;
-	ativo_serasa: number;
-	atualizar_cadastro_galaxPay: ClienteAtualizarCadastroGalaxpay;
-	aviso_atraso: ClienteAvisoAtraso;
+	ativo_serasa: ClienteAtivoSerasa;
+	atualizar_cadastro_galaxPay: string;
+	aviso_atraso: string;
 	bairro: string;
 	bairro_cob: string;
 	bloco: string;
 	bloqueio_automatico: string;
-	cadastrado_no_galaxPay: ClienteCadastradoNoGalaxpay;
-	cadastrado_via_viabilidade: string;
+	cadastrado_no_galaxPay: string;
+	cadastrado_via_viabilidade: ClienteCadastradoViaViabilidade;
 	cep: string;
 	cep_cob: string;
 	cidade: number;
 	cidade_cob: number;
 	cidade_naturalidade: number;
 	cif: string;
-	cli_desconta_iss_retido_total: ClienteCliDescontaIssRetidoTotal;
+	cli_desconta_iss_retido_total: string;
 	cnpj_cpf: string;
 	cnpj_cpf_titular_conta: string;
-	cob_envia_email: string;
+	cob_envia_email: ClienteCobEnviaEmail;
 	cob_envia_sms: ClienteCobEnviaSms;
 	codigo_operacao: number;
-	cofins_retem: ClienteCofinsRetem;
+	cofins_retem: string;
 	complemento: string;
-	complemento_cob: ClienteComplementoCob;
-	cond_pagamento: ClienteCondPagamento;
+	complemento_cob: string;
+	cond_pagamento: number;
 	contato: string;
 	contribuinte_icms: ClienteContribuinteIcms;
 	convert_cliente_forn: ClienteConvertClienteForn;
@@ -282,7 +287,7 @@ export interface Cliente {
 	crm_data_sem_viabilidade: string;
 	crm_data_sondagem: string;
 	crm_data_vencemos: string;
-	csll_retem: ClienteCsllRetem;
+	csll_retem: string;
 	data: string;
 	data_cadastro: string;
 	data_hash_redefinir_senha: string;
@@ -323,7 +328,7 @@ export interface Cliente {
 	freq_smart_calc_vel: string;
 	grau_satisfacao: ClienteGrauSatisfacao;
 	hash_redefinir_senha: string;
-	hotsite_acesso: ClienteHotsiteAcesso;
+	hotsite_acesso: number;
 	hotsite_email: string;
 	id_campanha: string;
 	id_canal_venda: string;
@@ -351,17 +356,17 @@ export interface Cliente {
 	im: string;
 	indicado_por: string;
 	inscricao_municipal: string;
-	inss_retem: ClienteInssRetem;
+	inss_retem: string;
 	ip_sistema: string;
-	irrf_retem: ClienteIrrfRetem;
-	iss_classificacao: ClienteIssClassificacao;
+	irrf_retem: string;
+	iss_classificacao: string;
 	iss_classificacao_padrao: ClienteIssClassificacaoPadrao;
 	isuf: string;
 	latitude: string;
 	longitude: string;
 	melhor_periodo_reserva_auto_viab: string;
 	moradia: ClienteMoradia;
-	nacionalidade: ClienteNacionalidade;
+	nacionalidade: string;
 	nao_avisar_ate: string;
 	nao_bloquear_ate: string;
 	nascimento_mae: string;
@@ -373,7 +378,7 @@ export interface Cliente {
 	nome_representante_1: string;
 	nome_representante_2: string;
 	nome_social: string;
-	num_dias_cob: ClienteNumDiasCob;
+	num_dias_cob: number;
 	numero: string;
 	numero_antigo: string;
 	numero_cob: string;
@@ -381,15 +386,15 @@ export interface Cliente {
 	obs: string;
 	operador_neutro: string;
 	orgao_publico: ClienteOrgaoPublico;
-	participa_cobranca: ClienteParticipaCobranca;
+	participa_cobranca: string;
 	participa_pre_cobranca: ClienteParticipaPreCobranca;
 	percentual_reducao: string;
-	permite_armazenar_cartoes: ClientePermiteArmazenarCartoes;
+	permite_armazenar_cartoes: string;
 	pipe_id_organizacao: number;
-	pis_retem: ClientePisRetem;
+	pis_retem: string;
 	plano_negociacao_auto_viab: string;
 	porta_ssh_sistema: string;
-	primeiro_acesso_central: ClientePrimeiroAcessoCentral;
+	primeiro_acesso_central: string;
 	profissao: string;
 	prospeccao_proximo_contato: string;
 	prospeccao_ultimo_contato: string;
@@ -401,7 +406,7 @@ export interface Cliente {
 	quantidade_dependentes: number;
 	ramal: string;
 	razao: string;
-	rede_ativacao: ClienteRedeAtivacao;
+	rede_ativacao: string;
 	ref_com_empresa1: string;
 	ref_com_empresa2: string;
 	ref_com_fone1: string;
@@ -412,7 +417,7 @@ export interface Cliente {
 	ref_pes_nome2: string;
 	referencia: string;
 	referencia_cob: string;
-	regime_fiscal_col: string;
+	regime_fiscal_col: ClienteRegimeFiscalCol;
 	regua_cobranca_considera: ClienteReguaCobrancaConsidera;
 	regua_cobranca_notificacao: ClienteReguaCobrancaNotificacao;
 	regua_cobranca_wpp: ClienteReguaCobrancaWpp;
@@ -420,13 +425,13 @@ export interface Cliente {
 	responsavel: number;
 	resultado_calc_vel: string;
 	rg_conjuge: string;
-	rg_orgao_emissor: ClienteRgOrgaoEmissor;
+	rg_orgao_emissor: string;
 	senha: string;
 	senha_hotsite_md5: ClienteSenhaHotsiteMd5;
 	senha_root_sistema: string;
 	Sexo: ClienteSexo;
 	skype: string;
-	status_internet: ClienteStatusInternet;
+	status_internet: string;
 	status_prospeccao: ClienteStatusProspeccao;
 	status_viabilidade: string;
 	substatus_prospeccao: string;
@@ -438,7 +443,7 @@ export interface Cliente {
 	tipo_cliente_scm: ClienteTipoClienteScm;
 	tipo_cobranca_auto_viab: string;
 	tipo_documento_identificacao: ClienteTipoDocumentoIdentificacao;
-	tipo_ente_governamental: string;
+	tipo_ente_governamental: ClienteTipoEnteGovernamental;
 	tipo_localidade: ClienteTipoLocalidade;
 	tipo_pessoa: ClienteTipoPessoa;
 	tipo_pessoa_titular_conta: ClienteTipoPessoaTitularConta;
@@ -448,7 +453,7 @@ export interface Cliente {
 	tv_refresh_token: string;
 	tv_token_expires_in: string;
 	uf: number;
-	uf_cob: ClienteUfCob;
+	uf_cob: number;
 	ultima_atualizacao: string;
 	url_sistema: string;
 	url_site: string;
@@ -465,228 +470,151 @@ export const CLIENTE_ACESSOAUTOMATICOCENTRAL_LABELS: Record<
 	ClienteAcessoAutomaticoCentral,
 	string
 > = {
-	[ClienteAcessoAutomaticoCentral.P]: "P",
 	[ClienteAcessoAutomaticoCentral.S]: "Sim",
+	[ClienteAcessoAutomaticoCentral.N]: "Não",
+	[ClienteAcessoAutomaticoCentral.P]: "Padrão",
 };
 
 export const CLIENTE_ALTERARSENHAPRIMEIROACESSO_LABELS: Record<
 	ClienteAlterarSenhaPrimeiroAcesso,
 	string
 > = {
+	[ClienteAlterarSenhaPrimeiroAcesso.S]: "Sim",
 	[ClienteAlterarSenhaPrimeiroAcesso.N]: "Não",
-	[ClienteAlterarSenhaPrimeiroAcesso.P]: "P",
-};
-
-export const CLIENTE_ANTIGOACESSOCENTRAL_LABELS: Record<
-	ClienteAntigoAcessoCentral,
-	string
-> = {
-	[ClienteAntigoAcessoCentral.N]: "Não",
+	[ClienteAlterarSenhaPrimeiroAcesso.P]: "Padrão",
 };
 
 export const CLIENTE_ATIVO_LABELS: Record<ClienteAtivo, string> = {
-	[ClienteAtivo.N]: "Não",
 	[ClienteAtivo.S]: "Sim",
+	[ClienteAtivo.N]: "Não",
 };
 
-export const CLIENTE_ATUALIZARCADASTROGALAXPAY_LABELS: Record<
-	ClienteAtualizarCadastroGalaxpay,
+export const CLIENTE_ATIVOSERASA_LABELS: Record<ClienteAtivoSerasa, string> = {
+	[ClienteAtivoSerasa.Value1]: "Sim",
+	[ClienteAtivoSerasa.Value2]: "Não",
+};
+
+export const CLIENTE_CADASTRADOVIAVIABILIDADE_LABELS: Record<
+	ClienteCadastradoViaViabilidade,
 	string
 > = {
-	[ClienteAtualizarCadastroGalaxpay.N]: "Não",
-	[ClienteAtualizarCadastroGalaxpay.S]: "Sim",
+	[ClienteCadastradoViaViabilidade.S]: "Sim",
+	[ClienteCadastradoViaViabilidade.N]: "Não",
 };
 
-export const CLIENTE_AVISOATRASO_LABELS: Record<ClienteAvisoAtraso, string> = {
-	[ClienteAvisoAtraso.S]: "Sim",
-};
-
-export const CLIENTE_CADASTRADONOGALAXPAY_LABELS: Record<
-	ClienteCadastradoNoGalaxpay,
+export const CLIENTE_COBENVIAEMAIL_LABELS: Record<
+	ClienteCobEnviaEmail,
 	string
 > = {
-	[ClienteCadastradoNoGalaxpay.N]: "Não",
-	[ClienteCadastradoNoGalaxpay.S]: "Sim",
-};
-
-export const CLIENTE_CLIDESCONTAISSRETIDOTOTAL_LABELS: Record<
-	ClienteCliDescontaIssRetidoTotal,
-	string
-> = {
-	[ClienteCliDescontaIssRetidoTotal.N]: "Não",
+	[ClienteCobEnviaEmail.S]: "Sim",
+	[ClienteCobEnviaEmail.N]: "Não",
 };
 
 export const CLIENTE_COBENVIASMS_LABELS: Record<ClienteCobEnviaSms, string> = {
 	[ClienteCobEnviaSms.S]: "Sim",
-};
-
-export const CLIENTE_COFINSRETEM_LABELS: Record<ClienteCofinsRetem, string> = {
-	[ClienteCofinsRetem.N]: "Não",
-};
-
-export const CLIENTE_COMPLEMENTOCOB_LABELS: Record<
-	ClienteComplementoCob,
-	string
-> = {
-	[ClienteComplementoCob.Casa]: "CASA",
-};
-
-export const CLIENTE_CONDPAGAMENTO_LABELS: Record<
-	ClienteCondPagamento,
-	string
-> = {
-	[ClienteCondPagamento.Value0]: "Inativo",
-	[ClienteCondPagamento.Value1]: "Ativo",
+	[ClienteCobEnviaSms.N]: "Não",
 };
 
 export const CLIENTE_CONTRIBUINTEICMS_LABELS: Record<
 	ClienteContribuinteIcms,
 	string
 > = {
-	[ClienteContribuinteIcms.I]: "Inativo",
-	[ClienteContribuinteIcms.N]: "Não",
 	[ClienteContribuinteIcms.S]: "Sim",
+	[ClienteContribuinteIcms.N]: "Não",
+	[ClienteContribuinteIcms.I]: "Isento",
+	[ClienteContribuinteIcms.E]: "Excluido",
 };
 
 export const CLIENTE_CONVERTCLIENTEFORN_LABELS: Record<
 	ClienteConvertClienteForn,
 	string
 > = {
+	[ClienteConvertClienteForn.S]: "Sim",
 	[ClienteConvertClienteForn.N]: "Não",
 };
 
 export const CLIENTE_CRM_LABELS: Record<ClienteCrm, string> = {
+	[ClienteCrm.S]: "Sim",
 	[ClienteCrm.N]: "Não",
-};
-
-export const CLIENTE_CSLLRETEM_LABELS: Record<ClienteCsllRetem, string> = {
-	[ClienteCsllRetem.N]: "Não",
 };
 
 export const CLIENTE_DESCONTOIRRFVALORINFERIOR_LABELS: Record<
 	ClienteDescontoIrrfValorInferior,
 	string
 > = {
-	[ClienteDescontoIrrfValorInferior.N]: "Não",
 	[ClienteDescontoIrrfValorInferior.S]: "Sim",
+	[ClienteDescontoIrrfValorInferior.N]: "Não",
 };
 
 export const CLIENTE_ESTADOCIVIL_LABELS: Record<ClienteEstadoCivil, string> = {
 	[ClienteEstadoCivil.Casado]: "Casado",
-	[ClienteEstadoCivil.Divorciado]: "Divorciado",
 	[ClienteEstadoCivil.Solteiro]: "Solteiro",
+	[ClienteEstadoCivil.Divorciado]: "Divorciado",
+	[ClienteEstadoCivil.ViaVo]: "Viúvo",
 };
 
 export const CLIENTE_FILTRAFILIAL_LABELS: Record<ClienteFiltraFilial, string> =
 	{
 		[ClienteFiltraFilial.S]: "Sim",
+		[ClienteFiltraFilial.N]: "Não",
 	};
 
 export const CLIENTE_GRAUSATISFACAO_LABELS: Record<
 	ClienteGrauSatisfacao,
 	string
 > = {
-	[ClienteGrauSatisfacao.Value3]: "Código 3",
-	[ClienteGrauSatisfacao.Value4]: "Código 4",
-	[ClienteGrauSatisfacao.Value5]: "Código 5",
-};
-
-export const CLIENTE_HOTSITEACESSO_LABELS: Record<
-	ClienteHotsiteAcesso,
-	string
-> = {
-	[ClienteHotsiteAcesso.Value0]: "Inativo",
-	[ClienteHotsiteAcesso.Value2]: "Código 2",
-};
-
-export const CLIENTE_INSSRETEM_LABELS: Record<ClienteInssRetem, string> = {
-	[ClienteInssRetem.N]: "Não",
-};
-
-export const CLIENTE_IRRFRETEM_LABELS: Record<ClienteIrrfRetem, string> = {
-	[ClienteIrrfRetem.N]: "Não",
-};
-
-export const CLIENTE_ISSCLASSIFICACAO_LABELS: Record<
-	ClienteIssClassificacao,
-	string
-> = {
-	[ClienteIssClassificacao.Value99]: "Código 99",
+	[ClienteGrauSatisfacao.Value1]: "Nada satisfeito",
+	[ClienteGrauSatisfacao.Value2]: "Pouco satisfeito",
+	[ClienteGrauSatisfacao.Value3]: "Satisfeito",
+	[ClienteGrauSatisfacao.Value4]: "Muito satisfeito",
+	[ClienteGrauSatisfacao.Value5]: "Completamente satisfeito",
 };
 
 export const CLIENTE_ISSCLASSIFICACAOPADRAO_LABELS: Record<
 	ClienteIssClassificacaoPadrao,
 	string
 > = {
-	[ClienteIssClassificacaoPadrao.Value99]: "Código 99",
+	[ClienteIssClassificacaoPadrao.Value00]: "00 - Normal",
+	[ClienteIssClassificacaoPadrao.Value01]: "01 - Retido",
+	[ClienteIssClassificacaoPadrao.Value02]: "02 - Substituta",
+	[ClienteIssClassificacaoPadrao.Value03]: "03 - Isento",
+	[ClienteIssClassificacaoPadrao.Value99]: "99 - Padrão",
 };
 
 export const CLIENTE_MORADIA_LABELS: Record<ClienteMoradia, string> = {
-	[ClienteMoradia.A]: "Ativo",
-	[ClienteMoradia.P]: "P",
-};
-
-export const CLIENTE_NACIONALIDADE_LABELS: Record<
-	ClienteNacionalidade,
-	string
-> = {
-	[ClienteNacionalidade.Brasileiro]: "Brasileiro",
-};
-
-export const CLIENTE_NUMDIASCOB_LABELS: Record<ClienteNumDiasCob, string> = {
-	[ClienteNumDiasCob.Value0]: "Inativo",
-	[ClienteNumDiasCob.Value1]: "Ativo",
+	[ClienteMoradia.P]: "Própria",
+	[ClienteMoradia.A]: "Alugada",
 };
 
 export const CLIENTE_ORGAOPUBLICO_LABELS: Record<ClienteOrgaoPublico, string> =
 	{
+		[ClienteOrgaoPublico.S]: "Sim",
 		[ClienteOrgaoPublico.N]: "Não",
 	};
-
-export const CLIENTE_PARTICIPACOBRANCA_LABELS: Record<
-	ClienteParticipaCobranca,
-	string
-> = {
-	[ClienteParticipaCobranca.N]: "Não",
-	[ClienteParticipaCobranca.S]: "Sim",
-};
 
 export const CLIENTE_PARTICIPAPRECOBRANCA_LABELS: Record<
 	ClienteParticipaPreCobranca,
 	string
 > = {
 	[ClienteParticipaPreCobranca.S]: "Sim",
+	[ClienteParticipaPreCobranca.N]: "Não",
 };
 
-export const CLIENTE_PERMITEARMAZENARCARTOES_LABELS: Record<
-	ClientePermiteArmazenarCartoes,
+export const CLIENTE_REGIMEFISCALCOL_LABELS: Record<
+	ClienteRegimeFiscalCol,
 	string
 > = {
-	[ClientePermiteArmazenarCartoes.N]: "Não",
+	[ClienteRegimeFiscalCol.Value48]: "Responsable de IVA",
+	[ClienteRegimeFiscalCol.Value49]: "No responsable de IVA",
 };
-
-export const CLIENTE_PISRETEM_LABELS: Record<ClientePisRetem, string> = {
-	[ClientePisRetem.N]: "Não",
-};
-
-export const CLIENTE_PRIMEIROACESSOCENTRAL_LABELS: Record<
-	ClientePrimeiroAcessoCentral,
-	string
-> = {
-	[ClientePrimeiroAcessoCentral.N]: "Não",
-	[ClientePrimeiroAcessoCentral.S]: "Sim",
-};
-
-export const CLIENTE_REDEATIVACAO_LABELS: Record<ClienteRedeAtivacao, string> =
-	{
-		[ClienteRedeAtivacao.P]: "P",
-	};
 
 export const CLIENTE_REGUACOBRANCACONSIDERA_LABELS: Record<
 	ClienteReguaCobrancaConsidera,
 	string
 > = {
-	[ClienteReguaCobrancaConsidera.P]: "P",
+	[ClienteReguaCobrancaConsidera.S]: "Sim",
+	[ClienteReguaCobrancaConsidera.N]: "Não",
+	[ClienteReguaCobrancaConsidera.P]: "Padrão",
 };
 
 export const CLIENTE_REGUACOBRANCANOTIFICACAO_LABELS: Record<
@@ -694,6 +622,7 @@ export const CLIENTE_REGUACOBRANCANOTIFICACAO_LABELS: Record<
 	string
 > = {
 	[ClienteReguaCobrancaNotificacao.S]: "Sim",
+	[ClienteReguaCobrancaNotificacao.N]: "Não",
 };
 
 export const CLIENTE_REGUACOBRANCAWPP_LABELS: Record<
@@ -701,86 +630,145 @@ export const CLIENTE_REGUACOBRANCAWPP_LABELS: Record<
 	string
 > = {
 	[ClienteReguaCobrancaWpp.S]: "Sim",
-};
-
-export const CLIENTE_RGORGAOEMISSOR_LABELS: Record<
-	ClienteRgOrgaoEmissor,
-	string
-> = {
-	[ClienteRgOrgaoEmissor.Dicrj]: "Dicrj",
-	[ClienteRgOrgaoEmissor.Ssp]: "Ssp",
+	[ClienteReguaCobrancaWpp.N]: "Não",
 };
 
 export const CLIENTE_SENHAHOTSITEMD5_LABELS: Record<
 	ClienteSenhaHotsiteMd5,
 	string
 > = {
-	[ClienteSenhaHotsiteMd5.N]: "Não",
 	[ClienteSenhaHotsiteMd5.S]: "Sim",
+	[ClienteSenhaHotsiteMd5.N]: "Não",
 };
 
 export const CLIENTE_SEXO_LABELS: Record<ClienteSexo, string> = {
-	[ClienteSexo.F]: "F",
-	[ClienteSexo.M]: "M",
-};
-
-export const CLIENTE_STATUSINTERNET_LABELS: Record<
-	ClienteStatusInternet,
-	string
-> = {
-	[ClienteStatusInternet.N]: "Não",
+	[ClienteSexo.F]: "Feminino",
+	[ClienteSexo.M]: "Masculino",
+	[ClienteSexo.Nb]: "Não binário",
+	[ClienteSexo.O]: "Outro",
+	[ClienteSexo.Pni]: "Prefiro não dizer",
 };
 
 export const CLIENTE_STATUSPROSPECCAO_LABELS: Record<
 	ClienteStatusProspeccao,
 	string
 > = {
-	[ClienteStatusProspeccao.C]: "C",
+	[ClienteStatusProspeccao.C]: "Novo",
+	[ClienteStatusProspeccao.S]: "Sondagem",
+	[ClienteStatusProspeccao.A]: "Apresentando",
+	[ClienteStatusProspeccao.N]: "Negociando",
+	[ClienteStatusProspeccao.V]: "Vencemos",
+	[ClienteStatusProspeccao.P]: "Perdemos",
+	[ClienteStatusProspeccao.Ab]: "Abortamos",
+	[ClienteStatusProspeccao.Sv]: "Sem viabilidade",
+	[ClienteStatusProspeccao.Sp]: "Sem porta disponível",
 };
 
 export const CLIENTE_TIPOASSINANTE_LABELS: Record<
 	ClienteTipoAssinante,
 	string
 > = {
-	[ClienteTipoAssinante.Value1]: "Ativo",
-	[ClienteTipoAssinante.Value3]: "Código 3",
+	[ClienteTipoAssinante.Value1]: "Comercial/Industrial",
+	[ClienteTipoAssinante.Value2]: "Poder Público",
+	[ClienteTipoAssinante.Value3]: "Residencial/Pessoa física",
+	[ClienteTipoAssinante.Value4]: "Público",
+	[ClienteTipoAssinante.Value5]: "Semi-Público",
+	[ClienteTipoAssinante.Value6]: "Outros",
 };
 
 export const CLIENTE_TIPOCLIENTESCM_LABELS: Record<
 	ClienteTipoClienteScm,
 	string
 > = {
-	[ClienteTipoClienteScm.Value01]: "Código 01",
-	[ClienteTipoClienteScm.Value03]: "Código 03",
+	[ClienteTipoClienteScm.Value01]: "01 - Comercial",
+	[ClienteTipoClienteScm.Value02]: "02 - Industrial",
+	[ClienteTipoClienteScm.Value03]: "03 - Residencial/Pessoa Física",
+	[ClienteTipoClienteScm.Value04]: "04 - Produtor Rural",
+	[ClienteTipoClienteScm.Value05]:
+		"05 - Órgão da administração pública estadual direta e suas fundações e autarquias, quando mantidas pelo poder público estadual e regidas por normas de direito público, termos do Convênio ICMS 107/95",
+	[ClienteTipoClienteScm.Value06]:
+		"06 - Prestador de serviço de telecomunicação responsável pelo recolhimento do imposto incidente sobre a cessão dos meios de rede do prestador do serviço ao usuário final, termos do Convênio ICMS 17/13",
+	[ClienteTipoClienteScm.Value07]:
+		"07 - Missões Diplomáticas, Repartições Consulares e Organismos Internacionais, nos termos do Convênio ICMS 158/94",
+	[ClienteTipoClienteScm.Value08]:
+		"08 - Igrejas e Templos de qualquer natureza",
+	[ClienteTipoClienteScm.Value99]:
+		"99 - Outros não especificados anteriormente",
+	[ClienteTipoClienteScm.Value013]: "0-13 - Grande contribuinte",
+	[ClienteTipoClienteScm.Value015]: "0-15 - Auto retentor",
+	[ClienteTipoClienteScm.Value023]: "0-23 - Agente de retenção IVA",
+	[ClienteTipoClienteScm.Value047]: "0-47 - Regime simples de tributação",
+	[ClienteTipoClienteScm.R99Pn]: "R-99-PN - Não aplica - Outros",
 };
 
 export const CLIENTE_TIPODOCUMENTOIDENTIFICACAO_LABELS: Record<
 	ClienteTipoDocumentoIdentificacao,
 	string
 > = {
-	[ClienteTipoDocumentoIdentificacao.Value13]: "Código 13",
+	[ClienteTipoDocumentoIdentificacao.Value11]: "Registro civil",
+	[ClienteTipoDocumentoIdentificacao.Value12]: "Tarjeta de identidad",
+	[ClienteTipoDocumentoIdentificacao.Value13]: "Cédula de ciudadanía",
+	[ClienteTipoDocumentoIdentificacao.Value21]: "Tarjeta de extranjería",
+	[ClienteTipoDocumentoIdentificacao.Value22]: "Cédula de extranjería",
+	[ClienteTipoDocumentoIdentificacao.Value31]: "NIT",
+	[ClienteTipoDocumentoIdentificacao.Value41]: "Pasaporte",
+	[ClienteTipoDocumentoIdentificacao.Value42]:
+		"Documento de identificación extranjero",
+	[ClienteTipoDocumentoIdentificacao.Value47]: "PEP",
+	[ClienteTipoDocumentoIdentificacao.Value50]: "NIT de otro país",
+	[ClienteTipoDocumentoIdentificacao.Value91]: "NUIP",
+	[ClienteTipoDocumentoIdentificacao.Nuit]: "NUIT",
+	[ClienteTipoDocumentoIdentificacao.Ruc]: "Registro Único de Contribuyentes",
+	[ClienteTipoDocumentoIdentificacao.Ci]: "Cédula de identidad",
+	[ClienteTipoDocumentoIdentificacao.Value4]: "Cartão de Residência",
+	[ClienteTipoDocumentoIdentificacao.Value5]: "Innominado",
+	[ClienteTipoDocumentoIdentificacao.Value6]:
+		"Cartão de Isenção de Imposto Diplomático",
+	[ClienteTipoDocumentoIdentificacao.Value9]: "Outro",
+	[ClienteTipoDocumentoIdentificacao.Cuit]: "CUIT",
+	[ClienteTipoDocumentoIdentificacao.Cibol]: "Carnet de Identidad",
+	[ClienteTipoDocumentoIdentificacao.Rut]: "Rol Único Tributario",
+	[ClienteTipoDocumentoIdentificacao.Tin]: "Tax Identification Number",
+	[ClienteTipoDocumentoIdentificacao.Rif]:
+		"Registro de Información Fiscal (RIF)",
+	[ClienteTipoDocumentoIdentificacao.Dni]: "Documento Nacional de Indentidad",
+	[ClienteTipoDocumentoIdentificacao.Nir]: "Número de sécurité sociale",
+	[ClienteTipoDocumentoIdentificacao.Siren]:
+		"Système d'Identification du Répertoire des Entreprises",
+	[ClienteTipoDocumentoIdentificacao.Ruturu]: "Registro Único de Tributario",
+};
+
+export const CLIENTE_TIPOENTEGOVERNAMENTAL_LABELS: Record<
+	ClienteTipoEnteGovernamental,
+	string
+> = {
+	[ClienteTipoEnteGovernamental.Value1]: "União",
+	[ClienteTipoEnteGovernamental.Value2]: "Estado",
+	[ClienteTipoEnteGovernamental.Value3]: "Distrito Federal",
+	[ClienteTipoEnteGovernamental.Value4]: "Município",
 };
 
 export const CLIENTE_TIPOLOCALIDADE_LABELS: Record<
 	ClienteTipoLocalidade,
 	string
 > = {
-	[ClienteTipoLocalidade.U]: "U",
+	[ClienteTipoLocalidade.R]: "Zona rural",
+	[ClienteTipoLocalidade.U]: "Zona urbana",
 };
 
 export const CLIENTE_TIPOPESSOA_LABELS: Record<ClienteTipoPessoa, string> = {
-	[ClienteTipoPessoa.F]: "F",
-	[ClienteTipoPessoa.J]: "J",
+	[ClienteTipoPessoa.F]: "Física",
+	[ClienteTipoPessoa.J]: "Jurídica",
+	[ClienteTipoPessoa.E]: "Estrangeiro",
+	[ClienteTipoPessoa.Value1]: "Juridica",
+	[ClienteTipoPessoa.Value2]: "Natural",
+	[ClienteTipoPessoa.Value3]: "Estrangeiro",
 };
 
 export const CLIENTE_TIPOPESSOATITULARCONTA_LABELS: Record<
 	ClienteTipoPessoaTitularConta,
 	string
 > = {
-	[ClienteTipoPessoaTitularConta.F]: "F",
-};
-
-export const CLIENTE_UFCOB_LABELS: Record<ClienteUfCob, string> = {
-	[ClienteUfCob.Value0]: "Inativo",
-	[ClienteUfCob.Value2]: "Código 2",
+	[ClienteTipoPessoaTitularConta.F]: "Física",
+	[ClienteTipoPessoaTitularConta.J]: "Jurídica",
 };

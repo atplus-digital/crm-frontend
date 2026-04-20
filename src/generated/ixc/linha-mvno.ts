@@ -12,13 +12,42 @@ export enum LinhaMvnoApi {
 }
 
 export enum LinhaMvnoEsim {
-	N = "N",
 	S = "S",
+	N = "N",
 }
 
 export enum LinhaMvnoPortabilidade {
-	N = "N",
 	S = "S",
+	N = "N",
+}
+
+export enum LinhaMvnoStatusLinha {
+	A = "A",
+	Br = "BR",
+	Bp = "BP",
+	Ba = "BA",
+	I = "I",
+	Bi = "BI",
+	Bt = "BT",
+	C = "C",
+	Aa = "AA",
+}
+
+export enum LinhaMvnoStatusPortabilidade {
+	A = "A",
+	R = "R",
+	Co = "CO",
+	Ca = "CA",
+}
+
+export enum LinhaMvnoTipoNumero {
+	Value1 = "1",
+	Value2 = "2",
+	Value3 = "3",
+	Value4 = "4",
+	Value5 = "5",
+	Value6 = "6",
+	Value7 = "7",
 }
 
 export interface LinhaMvno {
@@ -55,7 +84,7 @@ export interface LinhaMvno {
 	simcard: string;
 	sms: string;
 	status_aplicativo: string;
-	tipo_numero: string;
+	tipo_numero: LinhaMvnoTipoNumero;
 	token_validacao: string;
 	voz: string;
 }
@@ -65,19 +94,55 @@ export type LinhaMvnoRelations = Record<string, never>;
 export type LinhaMvnoRelationKey = keyof LinhaMvnoRelations;
 
 export const LINHAMVNO_API_LABELS: Record<LinhaMvnoApi, string> = {
-	[LinhaMvnoApi.A]: "Ativo",
-	[LinhaMvnoApi.I]: "Inativo",
+	[LinhaMvnoApi.A]: "Na API e no IXC",
+	[LinhaMvnoApi.I]: "Apenas no IXC",
 };
 
 export const LINHAMVNO_ESIM_LABELS: Record<LinhaMvnoEsim, string> = {
-	[LinhaMvnoEsim.N]: "Não",
 	[LinhaMvnoEsim.S]: "Sim",
+	[LinhaMvnoEsim.N]: "Não",
 };
 
 export const LINHAMVNO_PORTABILIDADE_LABELS: Record<
 	LinhaMvnoPortabilidade,
 	string
 > = {
-	[LinhaMvnoPortabilidade.N]: "Não",
 	[LinhaMvnoPortabilidade.S]: "Sim",
+	[LinhaMvnoPortabilidade.N]: "Não",
 };
+
+export const LINHAMVNO_STATUSLINHA_LABELS: Record<
+	LinhaMvnoStatusLinha,
+	string
+> = {
+	[LinhaMvnoStatusLinha.A]: "Ativo",
+	[LinhaMvnoStatusLinha.Br]: "Bloqueio roubo",
+	[LinhaMvnoStatusLinha.Bp]: "Bloqueio perda",
+	[LinhaMvnoStatusLinha.Ba]: "Bloqueio parcial",
+	[LinhaMvnoStatusLinha.I]: "Inativo",
+	[LinhaMvnoStatusLinha.Bi]: "Bloqueio uso indevido",
+	[LinhaMvnoStatusLinha.Bt]: "Bloqueio total",
+	[LinhaMvnoStatusLinha.C]: "Cancelada",
+	[LinhaMvnoStatusLinha.Aa]: "Aguardando ativação",
+};
+
+export const LINHAMVNO_STATUSPORTABILIDADE_LABELS: Record<
+	LinhaMvnoStatusPortabilidade,
+	string
+> = {
+	[LinhaMvnoStatusPortabilidade.A]: "Aguardando",
+	[LinhaMvnoStatusPortabilidade.R]: "Recusado",
+	[LinhaMvnoStatusPortabilidade.Co]: "Concluído",
+	[LinhaMvnoStatusPortabilidade.Ca]: "Cancelado",
+};
+
+export const LINHAMVNO_TIPONUMERO_LABELS: Record<LinhaMvnoTipoNumero, string> =
+	{
+		[LinhaMvnoTipoNumero.Value1]: "Normal",
+		[LinhaMvnoTipoNumero.Value2]: "Gold",
+		[LinhaMvnoTipoNumero.Value3]: "DID Móvel",
+		[LinhaMvnoTipoNumero.Value4]: "M2M",
+		[LinhaMvnoTipoNumero.Value5]: "M2M Especial",
+		[LinhaMvnoTipoNumero.Value6]: "Teste",
+		[LinhaMvnoTipoNumero.Value7]: "QA",
+	};

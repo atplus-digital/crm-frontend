@@ -129,19 +129,15 @@ function parseEnumValues(raw: string): EnumAdapterFieldEnum {
 	const labels: Record<string, string> = {};
 	const values: string[] = [];
 
-	const normalized = raw
-		.replace(/\s*=\s*/g, "=")
-		.replace(/\u00a0/g, " ")
-		.trim();
+	const cleaned = raw.replace(/^Valores disponíveis:\s*/i, "").trim();
+	const lines = cleaned.split(/\n+/);
 
-	const parts = normalized.split(/(?<!=)=(?!=)/);
-
-	for (const part of parts) {
-		const eqIndex = part.indexOf("=");
+	for (const line of lines) {
+		const eqIndex = line.indexOf("=");
 		if (eqIndex === -1) continue;
 
-		const value = part.slice(0, eqIndex).trim();
-		const label = part.slice(eqIndex + 1).trim();
+		const value = line.slice(0, eqIndex).trim();
+		const label = line.slice(eqIndex + 1).trim();
 
 		if (!value) continue;
 
