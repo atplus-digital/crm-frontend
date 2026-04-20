@@ -5,11 +5,14 @@ export interface InferredEnumValue {
 	label: string;
 }
 
+export type EnumOrigin = "api" | "adapter" | "inferencia";
+
 export interface InferredEnumInfo {
 	values: string[];
 	labels: Record<string, string>;
 	cardinality: number;
 	totalRecords: number;
+	origin: EnumOrigin;
 }
 
 export type InferredEnumsMap = Record<string, InferredEnumInfo>;
@@ -266,6 +269,7 @@ function processEnumValues(
 		labels,
 		cardinality: distinctValues.length,
 		totalRecords,
+		origin: "inferencia",
 	};
 }
 
@@ -350,6 +354,7 @@ export function adapterEnumsToInferredEnums(
 			labels: adapterEnum.labels ?? {},
 			cardinality: adapterEnum.values.length,
 			totalRecords: 0,
+			origin: "adapter",
 		};
 	}
 

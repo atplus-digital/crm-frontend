@@ -28,6 +28,7 @@ export interface InferredEnumsMap {
 		labels: Record<string, string>;
 		cardinality: number;
 		totalRecords: number;
+		origin: "api" | "adapter" | "inferencia";
 	};
 }
 

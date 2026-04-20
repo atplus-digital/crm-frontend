@@ -1,27 +1,19 @@
 import type { InferredEnumInfo } from "./enum-inference";
 
-interface FieldReport {
-	fieldName: string;
-	inferredEnum: InferredEnumInfo;
+function formatOrigin(origin: InferredEnumInfo["origin"]): string {
+	switch (origin) {
+		case "api":
+			return "API";
+		case "adapter":
+			return "Adapter";
+		case "inferencia":
+			return "Inferência";
+		default:
+			return origin;
+	}
 }
 
-interface CollectionReport {
-	collectionName: string;
-	totalFields: number;
-	enumFields: FieldReport[];
-	rejectedFields: Array<{
-		fieldName: string;
-		uniqueValues: number;
-		totalRecords: number;
-		reason: string;
-	}>;
-}
-
-function formatEnumValue(value: string): string {
-	return value === "" ? "(vazio)" : value;
-}
-
-function _formatStatus(enumInfo: InferredEnumInfo): string {
+function _formatStatus(enumInfo: { cardinality: number }): string {
 	if (enumInfo.cardinality <= 5) {
 		return "✅";
 	}
@@ -31,28 +23,25 @@ function _formatStatus(enumInfo: InferredEnumInfo): string {
 	return "❓ Avaliar";
 }
 
-function _formatEnumDetails(fieldName: string, info: InferredEnumInfo): string {
-	const lines: string[] = [];
-
-	lines.push(`#### ${fieldName}`);
-	lines.push("");
-	lines.push(`- **Valores:** ${info.values.length}`);
-	lines.push(`- **Total Registros:** ${info.totalRecords}`);
-	lines.push(`- **Status:** ${_formatStatus(info)}`);
-	lines.push("");
-	lines.push("| Valor | Label |");
-	lines.push("|-------|-------|");
-	for (const value of info.values) {
-		const label = info.labels[value] ?? value;
-		lines.push(`| ${formatEnumValue(value)} | ${label} |`);
-	}
-
-	return lines.join("\n");
+interface RejectedField {
+	fieldName: string;
+	uniqueValues: number;
+	totalRecords: number;
+	reason: string;
 }
 
 export function generateEnumInferenceReport(
 	collectionName: string,
-	enumsByField: Map<string, InferredEnumInfo>,
+	enumsByField: Map<
+		string,
+		{
+			values: string[];
+			labels: Record<string, string>;
+			cardinality: number;
+			totalRecords: number;
+			origin: "api" | "adapter" | "inferencia";
+		}
+	>,
 ): string {
 	const entries = Array.from(enumsByField.entries()).sort(([a], [b]) =>
 		a.localeCompare(b),
@@ -69,28 +58,21 @@ export function generateEnumInferenceReport(
 	const lines: string[] = [
 		`## Collection: ${collectionName}`,
 		"",
-		"| Campo | Count | Status | Valores |",
-		"|-------|--------------|--------|---------|",
+		"| Campo | Origem | Total Registros | Count | Status | Valores |",
+		"|-------|--------|-----------------|-------|--------|---------|",
 	];
 
 	for (const [fieldName, enumInfo] of entries) {
 		const status = _formatStatus(enumInfo);
+		const origin = formatOrigin(enumInfo.origin);
 		const valuesPreview = enumInfo.values.join(", ").slice(0, 50);
 		const valuesDisplay =
 			valuesPreview.length < enumInfo.values.join(", ").length
 				? `${valuesPreview}...`
 				: valuesPreview;
 		lines.push(
-			`| ${fieldName} | ${enumInfo.cardinality} | ${status} | ${valuesDisplay} |`,
+			`| ${fieldName} | ${origin} | ${enumInfo.totalRecords.toLocaleString("pt-BR")} | ${enumInfo.cardinality} | ${status} | ${valuesDisplay} |`,
 		);
-	}
-
-	lines.push("");
-	lines.push("### Detalhes");
-	lines.push("");
-
-	for (const [fieldName, enumInfo] of entries) {
-		lines.push(_formatEnumDetails(fieldName, enumInfo));
 	}
 
 	lines.push("");
@@ -103,12 +85,21 @@ export function generateEnumInferenceReport(
 export function generateMultiCollectionReport(
 	reports: Array<{
 		collectionName: string;
-		enumFields: Map<string, InferredEnumInfo>;
-		rejectedFields?: CollectionReport["rejectedFields"];
+		enumFields: Map<
+			string,
+			{
+				values: string[];
+				labels: Record<string, string>;
+				cardinality: number;
+				totalRecords: number;
+				origin: "api" | "adapter" | "inferencia";
+			}
+		>;
+		rejectedFields?: RejectedField[];
 	}>,
 ): string {
 	const lines: string[] = [
-		"# Relatório de Inferência de Enums - IXC",
+		"# Relatório de Inferência de Enums",
 		"",
 		"> **Data:** " + new Date().toISOString().split("T")[0],
 		"> **Collections analisadas:** " + reports.length,

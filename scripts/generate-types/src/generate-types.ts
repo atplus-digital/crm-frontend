@@ -150,6 +150,7 @@ async function runGenerateTypesForDataSource(
 				labels: Record<string, string>;
 				cardinality: number;
 				totalRecords: number;
+				origin: "api" | "adapter" | "inferencia";
 			}
 		>;
 	}> = [];
@@ -161,8 +162,18 @@ async function runGenerateTypesForDataSource(
 	});
 
 	// Fase 1: Aplicar todas as transformações de enum (adapter, inferência, corrections)
+	// Mapa para rastrear a origem de cada enum para o relatório
+	const enumOrigins = new Map<
+		string,
+		Map<string, { origin: "api" | "adapter" | "inferencia" }>
+	>();
+
 	for (const [collectionName, types] of Object.entries(collectionTypes)) {
 		const existingEnums = new Map(types.enums);
+		const originsForCollection = new Map<
+			string,
+			{ origin: "api" | "adapter" | "inferencia" }
+		>();
 
 		let adapterEnums: Record<
 			string,
@@ -199,6 +210,11 @@ async function runGenerateTypesForDataSource(
 					scalarFieldNames,
 				);
 
+				// Rastrear origem dos enums inferidos
+				for (const fieldName of Object.keys(inferredEnums)) {
+					originsForCollection.set(fieldName, { origin: "inferencia" });
+				}
+
 				const finalInferredEnums = inferredEnums;
 				const mergedEnums = mergeEnums(existingEnums, finalInferredEnums);
 				types.enums = mergedEnums;
@@ -207,8 +223,18 @@ async function runGenerateTypesForDataSource(
 			}
 		} else if (hasAdapterEnum) {
 			const adapterInferred = adapterEnumsToInferredEnums(adapterEnums);
+
+			// Rastrear origem dos enums do adapter
+			for (const fieldName of Object.keys(adapterInferred)) {
+				originsForCollection.set(fieldName, { origin: "adapter" });
+			}
+
 			const mergedEnums = mergeEnums(existingEnums, adapterInferred);
 			types.enums = mergedEnums;
+		}
+
+		if (originsForCollection.size > 0) {
+			enumOrigins.set(collectionName, originsForCollection);
 		}
 	}
 
@@ -222,6 +248,7 @@ async function runGenerateTypesForDataSource(
 				continue;
 			}
 
+			const originsForCollection = enumOrigins.get(collectionName);
 			const enumFieldsWithMeta = new Map<
 				string,
 				{
@@ -229,6 +256,7 @@ async function runGenerateTypesForDataSource(
 					labels: Record<string, string>;
 					cardinality: number;
 					totalRecords: number;
+					origin: "api" | "adapter" | "inferencia";
 				}
 			>();
 
@@ -238,11 +266,16 @@ async function runGenerateTypesForDataSource(
 					enumOptions.map((opt) => [String(opt.value), opt.label]),
 				);
 
+				// Tenta obter a origem rastreada, senão usa "api" como fallback
+				const trackedOrigin = originsForCollection?.get(fieldName)?.origin;
+				const origin = trackedOrigin ?? "api";
+
 				enumFieldsWithMeta.set(fieldName, {
 					values,
 					labels,
 					cardinality: enumOptions.length,
 					totalRecords: 0, // Não disponível após merge final
+					origin,
 				});
 			}
 
