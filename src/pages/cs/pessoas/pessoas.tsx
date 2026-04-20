@@ -25,19 +25,20 @@ import type {
 	PessoaJuridicaFilters,
 	PessoaJuridicaListItem,
 } from "#/features/cs/pessoas/pessoas-types";
+import type { PessoasAnaliseIxc } from "#/generated/nocobase/pessoas";
 
 export function CSPessoasPage() {
 	const [activeTab, setActiveTab] = useState<"pf" | "pj">("pf");
 
 	const [pfFilters, setPFFilters] = useState<PessoaFisicaFilters>({
-		nome: "",
-		cpf: "",
-		analiseIxc: "all",
+		f_nome: "",
+		f_cpf: "",
+		f_analise_ixc: "all",
 	});
 
 	const [pjFilters, setPJFilters] = useState<PessoaJuridicaFilters>({
-		razaoSocial: "",
-		cnpj: "",
+		f_razao_social: "",
+		f_cnpj: "",
 	});
 
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -69,9 +70,9 @@ export function CSPessoasPage() {
 
 	const handleClearFilters = () => {
 		if (activeTab === "pf") {
-			setPFFilters({ nome: "", cpf: "", analiseIxc: "all" });
+			setPFFilters({ f_nome: "", f_cpf: "", f_analise_ixc: "all" });
 		} else {
-			setPJFilters({ razaoSocial: "", cnpj: "" });
+			setPJFilters({ f_razao_social: "", f_cnpj: "" });
 		}
 		handlePageChange(1);
 	};
@@ -133,11 +134,11 @@ export function CSPessoasPage() {
 								<div className="flex-1 min-w-50">
 									<Input
 										placeholder="Filtrar por nome..."
-										value={pfFilters.nome}
+										value={pfFilters.f_nome}
 										onChange={(e) =>
 											setPFFilters((prev) => ({
 												...prev,
-												nome: e.target.value,
+												f_nome: e.target.value,
 											}))
 										}
 									/>
@@ -145,24 +146,28 @@ export function CSPessoasPage() {
 								<div className="w-50">
 									<Input
 										placeholder="Filtrar por CPF..."
-										value={pfFilters.cpf}
+										value={pfFilters.f_cpf}
 										onChange={(e) =>
-											setPFFilters((prev) => ({ ...prev, cpf: e.target.value }))
+											setPFFilters((prev) => ({
+												...prev,
+												f_cpf: e.target.value,
+											}))
 										}
 									/>
 								</div>
 								<div className="w-50">
 									<Select
-										value={pfFilters.analiseIxc}
-										onValueChange={(value) =>
+										value={pfFilters.f_analise_ixc}
+										onValueChange={(value) => {
+											const analise =
+												value === "all"
+													? "all"
+													: (value as unknown as PessoasAnaliseIxc);
 											setPFFilters((prev) => ({
 												...prev,
-												analiseIxc: value as
-													| "all"
-													| "Sem Pendências"
-													| "Com Pendências",
-											}))
-										}
+												f_analise_ixc: analise,
+											}));
+										}}
 									>
 										<SelectTrigger>
 											<SelectValue placeholder="Análise IXC" />
@@ -182,9 +187,9 @@ export function CSPessoasPage() {
 									onApply={() => handlePageChange(1)}
 									onClear={handleClearFilters}
 									canClear={
-										Boolean(pfFilters.nome) ||
-										Boolean(pfFilters.cpf) ||
-										pfFilters.analiseIxc !== "all"
+										Boolean(pfFilters.f_nome) ||
+										Boolean(pfFilters.f_cpf) ||
+										pfFilters.f_analise_ixc !== "all"
 									}
 									applyVariant="outline"
 									clearVariant="ghost"
@@ -213,11 +218,11 @@ export function CSPessoasPage() {
 								<div className="flex-1 min-w-50">
 									<Input
 										placeholder="Filtrar por razão social..."
-										value={pjFilters.razaoSocial}
+										value={pjFilters.f_razao_social}
 										onChange={(e) =>
 											setPJFilters((prev) => ({
 												...prev,
-												razaoSocial: e.target.value,
+												f_razao_social: e.target.value,
 											}))
 										}
 									/>
@@ -225,11 +230,11 @@ export function CSPessoasPage() {
 								<div className="w-50">
 									<Input
 										placeholder="Filtrar por CNPJ..."
-										value={pjFilters.cnpj}
+										value={pjFilters.f_cnpj}
 										onChange={(e) =>
 											setPJFilters((prev) => ({
 												...prev,
-												cnpj: e.target.value,
+												f_cnpj: e.target.value,
 											}))
 										}
 									/>
@@ -237,7 +242,9 @@ export function CSPessoasPage() {
 								<FilterActions
 									onApply={() => handlePageChange(1)}
 									onClear={handleClearFilters}
-									canClear={Boolean(pjFilters.razaoSocial || pjFilters.cnpj)}
+									canClear={Boolean(
+										pjFilters.f_razao_social || pjFilters.f_cnpj,
+									)}
 									applyVariant="outline"
 									clearVariant="ghost"
 								/>
