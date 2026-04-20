@@ -1,17 +1,16 @@
 import {
-	ArrowLeft,
 	Database,
 	FilePlus,
 	FolderOpen,
 	Phone,
 	Smartphone,
 } from "lucide-react";
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
+import { BackButton } from "#/components/detail/back-button";
 import { DetailField } from "#/components/detail/detail-field";
 import { DetailSkeleton } from "#/components/detail/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { EmptyTable } from "#/components/table/empty-table";
-import { Button } from "#/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -76,11 +75,7 @@ export function ContratoDetailPage() {
 			<div className="mx-auto max-w-400 p-4">
 				{/* Header */}
 				<div className="flex items-center gap-4 mb-6">
-					<Button variant="ghost" size="icon" asChild>
-						<Link to="/cs/contratos">
-							<ArrowLeft className="size-4" />
-						</Link>
-					</Button>
+					<BackButton fallbackTo="/cs/contratos" />
 					<div>
 						{isLoading ? (
 							<>

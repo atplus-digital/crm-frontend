@@ -16,10 +16,10 @@ Shared cross-feature hooks for responsive behavior and standardized pagination s
 
 ### Current Hook Inventory
 
-| Hook            | Type          | Returns                      | Dependencies                           | Used By                                        |
-| --------------- | ------------- | ---------------------------- | -------------------------------------- | ---------------------------------------------- |
-| `useIsMobile`   | Media query   | `boolean`                    | `usehooks-ts`                          | Layout/components with responsive branching    |
-| `usePagination` | UI state hook | Pagination model + callbacks | `react`, `@tanstack/react-table` types | Paginated table screens (CS, dashboard tables) |
+| Hook             | Type        | Returns                             | Dependencies  | Used By                           |
+| ---------------- | ----------- | ----------------------------------- | ------------- | --------------------------------- |
+| `useIsMobile`    | Media query | `boolean`                           | `usehooks-ts` | Layout/components with responsive |
+| `useFilterState` | State hook  | Filter state + setters + predicates | `react`       | Filter components across features |
 
 ### State Management Integration
 
@@ -36,10 +36,10 @@ Add hooks here when they are generic and reused across modules. Keep domain-spec
 
 ## Key Files
 
-| File                | Purpose                                                                              |
-| ------------------- | ------------------------------------------------------------------------------------ |
-| `use-mobile.ts`     | `useIsMobile()` helper with a fixed mobile breakpoint (`<768px`)                     |
-| `use-pagination.ts` | `usePagination()` for standardized TanStack Table pagination state/callback handling |
+| File                  | Purpose                                                                            |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| `use-mobile.ts`       | `useIsMobile()` helper with a fixed mobile breakpoint (`<768px`)                   |
+| `use-filter-state.ts` | `useFilterState<T>()` for generic filter state management with apply/clear support |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -65,17 +65,41 @@ import { useIsMobile } from "#/hooks/use-mobile";
 const isMobile = useIsMobile();
 ```
 
-### Pagination hook
+### Filter state hook
 
 ```typescript
-import { usePagination } from "#/hooks/use-pagination";
+import { useFilterState } from "#/hooks/use-filter-state";
 
-const { pagination, onPaginationChange } = usePagination({
-  initialPage: 1,
-  initialPageSize: 20,
-  onPageChange: (page) => refetch({ page }),
-  onPageSizeChange: (pageSize) => refetch({ page: 1, pageSize }),
-});
+interface ContratoFilters {
+  cpfCnpj?: string;
+  nome?: string;
+  status?: string;
+  contratoId?: number;
+}
+
+function ContratosFilters() {
+  const { filters, setFilter, setFilters, clearFilters, applyFilters, hasFilters } =
+    useFilterState<ContratoFilters>(
+      {},
+      (appliedFilters) => {
+        // Callback chamado ao aplicar filtros (ex: recarregar tabela)
+        refetch(appliedFilters);
+      }
+    );
+
+  return (
+    <div>
+      <Input
+        value={filters.cpfCnpj || ""}
+        onChange={(e) => setFilter("cpfCnpj", e.target.value)}
+      />
+      <Button onClick={applyFilters}>Aplicar</Button>
+      <Button onClick={clearFilters} disabled={!hasFilters}>
+        Limpar
+      </Button>
+    </div>
+  );
+}
 ```
 
 <!-- AGENTS-GENERATED:END usage-patterns -->
@@ -95,10 +119,9 @@ const { pagination, onPaginationChange } = usePagination({
 
 ## Golden Samples
 
-| Pattern               | Reference file                                        |
-| --------------------- | ----------------------------------------------------- |
-| Responsive hook       | `src/hooks/use-mobile.ts`                             |
-| Pagination state hook | `src/hooks/use-pagination.ts`                         |
-| Pagination hook usage | `src/components/table/data-table-with-pagination.tsx` |
+| Pattern           | Reference file                  |
+| ----------------- | ------------------------------- |
+| Responsive hook   | `src/hooks/use-mobile.ts`       |
+| Filter state hook | `src/hooks/use-filter-state.ts` |
 
 <!-- AGENTS-GENERATED:END golden-samples -->

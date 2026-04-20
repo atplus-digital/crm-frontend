@@ -1,7 +1,4 @@
-import { MovelTableSkeleton } from "#/components/detail/movel-table-skeleton";
-import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { EmptyTable } from "#/components/table/empty-table";
-import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
+import { ContractTabWrapper } from "#/components/contract/contract-tab-wrapper";
 import {
 	Table,
 	TableBody,
@@ -12,72 +9,56 @@ import {
 } from "#/components/ui/table";
 import { useContratoMovel } from "#/features/cs/contratos/contratos-hooks";
 
+const MOVEL_COLUMNS = [
+	"DDD",
+	"Número",
+	"ID Contrato",
+	"Dia Recorrência",
+	"Portabilidade",
+	"SIMCARD",
+];
+
 interface ContratoMovelTabProps {
 	contratoId: number;
 }
 
 export function ContratoMovelTab({ contratoId }: ContratoMovelTabProps) {
 	const { data, isLoading, error } = useContratoMovel(contratoId);
-
-	if (error) {
-		return (
-			<InlineErrorAlert>
-				Erro ao carregar linhas móveis: {(error as Error).message}
-			</InlineErrorAlert>
-		);
-	}
-
 	const linhas = data?.data ?? [];
 
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>Móvel</CardTitle>
-			</CardHeader>
-			<CardContent>
-				{isLoading ? (
-					<MovelTableSkeleton />
-				) : linhas.length === 0 ? (
-					<EmptyTable
-						columns={[
-							"DDD",
-							"Número",
-							"ID Contrato",
-							"Dia Recorrência",
-							"Portabilidade",
-							"SIMCARD",
-						]}
-						message="Nenhuma linha móvel encontrada"
-					/>
-				) : (
-					<div className="overflow-x-auto">
-						<Table>
-							<TableHeader>
-								<TableRow>
-									<TableHead>DDD</TableHead>
-									<TableHead>Número</TableHead>
-									<TableHead>ID Contrato</TableHead>
-									<TableHead>Dia Recorrência</TableHead>
-									<TableHead>Portabilidade</TableHead>
-									<TableHead>SIMCARD</TableHead>
-								</TableRow>
-							</TableHeader>
-							<TableBody>
-								{linhas.map((linha) => (
-									<TableRow key={linha.id}>
-										<TableCell>{linha.ddd_telefone}</TableCell>
-										<TableCell>{linha.numero_telefone}</TableCell>
-										<TableCell>{linha.id_contrato}</TableCell>
-										<TableCell>{linha.dia_recorrencia}</TableCell>
-										<TableCell>{linha.portabilidade}</TableCell>
-										<TableCell>{linha.simcard}</TableCell>
-									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</div>
-				)}
-			</CardContent>
-		</Card>
+		<ContractTabWrapper
+			title="Móvel"
+			isLoading={isLoading}
+			error={error}
+			errorMessage="Erro ao carregar linhas móveis"
+			isEmpty={linhas.length === 0}
+			emptyMessage="Nenhuma linha móvel encontrada"
+			emptyColumns={MOVEL_COLUMNS}
+		>
+			<div className="overflow-x-auto">
+				<Table>
+					<TableHeader>
+						<TableRow>
+							{MOVEL_COLUMNS.map((col) => (
+								<TableHead key={col}>{col}</TableHead>
+							))}
+						</TableRow>
+					</TableHeader>
+					<TableBody>
+						{linhas.map((linha) => (
+							<TableRow key={linha.id}>
+								<TableCell>{linha.ddd_telefone}</TableCell>
+								<TableCell>{linha.numero_telefone}</TableCell>
+								<TableCell>{linha.id_contrato}</TableCell>
+								<TableCell>{linha.dia_recorrencia}</TableCell>
+								<TableCell>{linha.portabilidade}</TableCell>
+								<TableCell>{linha.simcard}</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</div>
+		</ContractTabWrapper>
 	);
 }

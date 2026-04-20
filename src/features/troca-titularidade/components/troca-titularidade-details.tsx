@@ -1,16 +1,9 @@
-import {
-	ArrowLeft,
-	Calendar,
-	DollarSign,
-	FileText,
-	MapPin,
-	User,
-} from "lucide-react";
-import { Link, useParams } from "react-router";
+import { Calendar, DollarSign, FileText, MapPin, User } from "lucide-react";
+import { useParams } from "react-router";
+import { BackButton } from "#/components/detail/back-button";
 import { DetailField } from "#/components/detail/detail-field";
 import { CardSectionSkeleton } from "#/components/detail/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { Button } from "#/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -88,11 +81,7 @@ export function TrocaTitularidadeDetailPage() {
 		<div className="flex-1 overflow-auto bg-background">
 			<div className="mx-auto max-w-400 p-4">
 				<div className="flex items-center gap-4 mb-6">
-					<Button variant="ghost" size="icon" asChild>
-						<Link to="/troca-titularidade">
-							<ArrowLeft className="size-4" />
-						</Link>
-					</Button>
+					<BackButton fallbackTo="/troca-titularidade" />
 					<div>
 						{isLoading ? (
 							<>

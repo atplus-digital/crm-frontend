@@ -1,6 +1,6 @@
 import { Mail, Phone, Shield, User } from "lucide-react";
-import { DetailItem } from "#/components/dashboard/detail-item";
-import { InfoCard } from "#/components/dashboard/info-card";
+import { DetailItem } from "#/components/detail/detail-item";
+import { InfoCard } from "#/components/detail/info-card";
 import { Badge } from "#/components/ui/badge";
 import { Separator } from "#/components/ui/separator";
 import type { AuthUser } from "#/features/auth";

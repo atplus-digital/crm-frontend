@@ -10,3 +10,4 @@ todos.json
 /coverage
 .sisyphus
 .playwright-mcp
+.cache

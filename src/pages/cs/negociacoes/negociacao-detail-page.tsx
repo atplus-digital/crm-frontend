@@ -1,17 +1,16 @@
 import {
-	ArrowLeft,
 	Calendar,
 	Database,
 	FilePlus,
 	FolderOpen,
 	Smartphone,
 } from "lucide-react";
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
+import { BackButton } from "#/components/detail/back-button";
 import { DetailField } from "#/components/detail/detail-field";
 import { DetailSkeleton } from "#/components/detail/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Badge } from "#/components/ui/badge";
-import { Button } from "#/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { Skeleton } from "#/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
@@ -59,11 +58,7 @@ export function NegociacaoDetailPage() {
 			<div className="mx-auto max-w-400 p-4">
 				{/* Header */}
 				<div className="flex items-center gap-4 mb-6">
-					<Button variant="ghost" size="icon" asChild>
-						<Link to="/cs/negociacoes">
-							<ArrowLeft className="size-4" />
-						</Link>
-					</Button>
+					<BackButton fallbackTo="/cs/negociacoes" />
 					<div>
 						{isLoading ? (
 							<>

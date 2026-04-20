@@ -1,4 +1,4 @@
-import { Badge } from "#/components/ui/badge";
+import { StatusBadge } from "#/components/badges/status-badge";
 import {
 	CONTRATO_STATUS_LABELS,
 	INTERNET_STATUS_LABELS,
@@ -18,31 +18,25 @@ const internetStatusClasses: Record<string, string> = {
 };
 
 export function ContratoStatusBadge({ status }: { status: string }) {
-	const label =
-		CONTRATO_STATUS_LABELS[status as keyof typeof CONTRATO_STATUS_LABELS] ??
-		status;
-	const className =
-		contratoStatusClasses[status] ??
-		"bg-gray-100 text-gray-800 dark:bg-gray-800/30 dark:text-gray-400";
-
 	return (
-		<Badge variant="outline" className={className}>
-			{label}
-		</Badge>
+		<StatusBadge
+			value={status}
+			labels={CONTRATO_STATUS_LABELS}
+			colorClasses={contratoStatusClasses}
+			variant="badge"
+			defaultVariant="outline"
+		/>
 	);
 }
 
 export function InternetStatusBadge({ status }: { status: string }) {
-	const label =
-		INTERNET_STATUS_LABELS[status as keyof typeof INTERNET_STATUS_LABELS] ??
-		status;
-	const className =
-		internetStatusClasses[status] ??
-		"bg-gray-100 text-gray-800 dark:bg-gray-800/30 dark:text-gray-400";
-
 	return (
-		<Badge variant="outline" className={className}>
-			{label}
-		</Badge>
+		<StatusBadge
+			value={status}
+			labels={INTERNET_STATUS_LABELS}
+			colorClasses={internetStatusClasses}
+			variant="badge"
+			defaultVariant="outline"
+		/>
 	);
 }
