@@ -15,6 +15,7 @@ export const dataSourceConfigs = [
 			"t_crm_troca_titularidade",
 			"t_registros_de_contato",
 		],
+
 		generateEnumReport: true,
 	},
 	{

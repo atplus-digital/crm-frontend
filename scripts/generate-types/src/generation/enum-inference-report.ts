@@ -13,7 +13,28 @@ function formatOrigin(origin: InferredEnumInfo["origin"]): string {
 	}
 }
 
-function _formatStatus(enumInfo: { cardinality: number }): string {
+function _hasDuplicateLabels(enumInfo: {
+	values: string[];
+	labels: Record<string, string>;
+}): boolean {
+	const labelCounts = new Map<string, number>();
+	for (const value of enumInfo.values) {
+		const label = enumInfo.labels[value];
+		if (label) {
+			labelCounts.set(label, (labelCounts.get(label) || 0) + 1);
+		}
+	}
+	return Array.from(labelCounts.values()).some((count) => count > 1);
+}
+
+function _formatStatus(enumInfo: {
+	cardinality: number;
+	values: string[];
+	labels: Record<string, string>;
+}): string {
+	if (_hasDuplicateLabels(enumInfo)) {
+		return "⚠️ Duplicado";
+	}
 	if (enumInfo.cardinality <= 5) {
 		return "✅";
 	}
@@ -38,7 +59,6 @@ export function generateEnumInferenceReport(
 			values: string[];
 			labels: Record<string, string>;
 			cardinality: number;
-			totalRecords: number;
 			origin: "api" | "adapter" | "inferencia";
 		}
 	>,
@@ -58,8 +78,8 @@ export function generateEnumInferenceReport(
 	const lines: string[] = [
 		`## Collection: ${collectionName}`,
 		"",
-		"| Campo | Origem | Total Registros | Count | Status | Valores |",
-		"|-------|--------|-----------------|-------|--------|---------|",
+		"| Campo | Origem | Count | Status | Valores |",
+		"|-------|--------|-------|--------|---------|",
 	];
 
 	for (const [fieldName, enumInfo] of entries) {
@@ -71,7 +91,7 @@ export function generateEnumInferenceReport(
 				? `${valuesPreview}...`
 				: valuesPreview;
 		lines.push(
-			`| ${fieldName} | ${origin} | ${enumInfo.totalRecords.toLocaleString("pt-BR")} | ${enumInfo.cardinality} | ${status} | ${valuesDisplay} |`,
+			`| ${fieldName} | ${origin} | ${enumInfo.cardinality} | ${status} | ${valuesDisplay} |`,
 		);
 	}
 
@@ -91,7 +111,6 @@ export function generateMultiCollectionReport(
 				values: string[];
 				labels: Record<string, string>;
 				cardinality: number;
-				totalRecords: number;
 				origin: "api" | "adapter" | "inferencia";
 			}
 		>;

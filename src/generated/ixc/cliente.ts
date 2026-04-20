@@ -34,29 +34,13 @@ export enum ClienteAvisoAtraso {
 	S = "S",
 }
 
-export enum ClienteBairroCob {
-	ContaDinheiro = "Conta Dinheiro",
-	Guaruj = "Guarujá",
-	VilaNova = "Vila Nova",
-}
-
 export enum ClienteCadastradoNoGalaxpay {
 	N = "N",
 	S = "S",
 }
 
-export enum ClienteCepCob {
-	Value88503210 = "88503-210",
-	Value88520100 = "88520-100",
-	Value88521020 = "88521-020",
-}
-
 export enum ClienteCliDescontaIssRetidoTotal {
 	N = "N",
-}
-
-export enum ClienteCobEnviaEmail {
-	S = "S",
 }
 
 export enum ClienteCobEnviaSms {
@@ -74,13 +58,6 @@ export enum ClienteComplementoCob {
 export enum ClienteCondPagamento {
 	Value0 = "0",
 	Value1 = "1",
-}
-
-export enum ClienteContato {
-	Value49999126600OsmarDuarteBranco = "(49) 99912-6600 - Osmar Duarte Branco",
-	Value29505623968 = "29505623968",
-	Value49999854349 = "49999854349",
-	EstagioseadUnifacvestEduBr = "estagiosead@unifacvest.edu.br",
 }
 
 export enum ClienteContribuinteIcms {
@@ -101,32 +78,15 @@ export enum ClienteCsllRetem {
 	N = "N",
 }
 
-export enum ClienteDataHashRedefinirSenha {
-	Value20220213210939 = "2022-02-13 21:09:39",
-	Value20220430184027 = "2022-04-30 18:40:27",
-	Value20220609214542 = "2022-06-09 21:45:42",
-	InvalidDate = "Invalid date",
-}
-
 export enum ClienteDescontoIrrfValorInferior {
 	N = "N",
 	S = "S",
-}
-
-export enum ClienteEnderecoCob {
-	AvenidaSegundoBatalhORodoviRio = "Avenida Segundo Batalhão Rodoviário",
-	RuaJoODaSilvaRamos = "Rua João da Silva Ramos",
-	RuaTomDeSouza = "Rua Tomé de Souza",
 }
 
 export enum ClienteEstadoCivil {
 	Casado = "Casado",
 	Divorciado = "Divorciado",
 	Solteiro = "Solteiro",
-}
-
-export enum ClienteFilialId {
-	Value1 = "1",
 }
 
 export enum ClienteFiltraFilial {
@@ -139,18 +99,7 @@ export enum ClienteGrauSatisfacao {
 	Value5 = "5",
 }
 
-export enum ClienteHashRedefinirSenha {
-	Value2cddcfdf3e2b1292698984122b758245 = "2cddcfdf3e2b1292698984122b758245",
-	B66fbb2dd0c2ff76f8e9165f7a448dfb = "b66fbb2dd0c2ff76f8e9165f7a448dfb",
-	E9b8b8e9d41ecb186ad4ac53e246fbad = "e9b8b8e9d41ecb186ad4ac53e246fbad",
-}
-
 export enum ClienteHotsiteAcesso {
-	Value0 = "0",
-	Value2 = "2",
-}
-
-export enum ClienteIdTipoCliente {
 	Value0 = "0",
 	Value2 = "2",
 }
@@ -294,13 +243,13 @@ export interface Cliente {
 	atualizar_cadastro_galaxPay: ClienteAtualizarCadastroGalaxpay;
 	aviso_atraso: ClienteAvisoAtraso;
 	bairro: string;
-	bairro_cob: ClienteBairroCob;
+	bairro_cob: string;
 	bloco: string;
 	bloqueio_automatico: string;
 	cadastrado_no_galaxPay: ClienteCadastradoNoGalaxpay;
 	cadastrado_via_viabilidade: string;
 	cep: string;
-	cep_cob: ClienteCepCob;
+	cep_cob: string;
 	cidade: number;
 	cidade_cob: number;
 	cidade_naturalidade: number;
@@ -308,14 +257,14 @@ export interface Cliente {
 	cli_desconta_iss_retido_total: ClienteCliDescontaIssRetidoTotal;
 	cnpj_cpf: string;
 	cnpj_cpf_titular_conta: string;
-	cob_envia_email: ClienteCobEnviaEmail;
+	cob_envia_email: string;
 	cob_envia_sms: ClienteCobEnviaSms;
 	codigo_operacao: number;
 	cofins_retem: ClienteCofinsRetem;
 	complemento: string;
 	complemento_cob: ClienteComplementoCob;
 	cond_pagamento: ClienteCondPagamento;
-	contato: ClienteContato;
+	contato: string;
 	contribuinte_icms: ClienteContribuinteIcms;
 	convert_cliente_forn: ClienteConvertClienteForn;
 	cpf_conjuge: string;
@@ -336,7 +285,7 @@ export interface Cliente {
 	csll_retem: ClienteCsllRetem;
 	data: string;
 	data_cadastro: string;
-	data_hash_redefinir_senha: ClienteDataHashRedefinirSenha;
+	data_hash_redefinir_senha: string;
 	data_nascimento: string;
 	data_nascimento_conjuge: string;
 	data_reserva_auto_viab: string;
@@ -357,13 +306,13 @@ export interface Cliente {
 	emp_fone: string;
 	emp_remuneracao: string;
 	endereco: string;
-	endereco_cob: ClienteEnderecoCob;
+	endereco_cob: string;
 	estado_civil: ClienteEstadoCivil;
 	external_id: string;
 	external_system: string;
 	facebook: string;
 	fantasia: string;
-	filial_id: ClienteFilialId;
+	filial_id: number;
 	filtra_filial: ClienteFiltraFilial;
 	fone: string;
 	fone_conjuge: string;
@@ -373,7 +322,7 @@ export interface Cliente {
 	freq_pessoas_calc_vel: string;
 	freq_smart_calc_vel: string;
 	grau_satisfacao: ClienteGrauSatisfacao;
-	hash_redefinir_senha: ClienteHashRedefinirSenha;
+	hash_redefinir_senha: string;
 	hotsite_acesso: ClienteHotsiteAcesso;
 	hotsite_email: string;
 	id_campanha: string;
@@ -389,7 +338,7 @@ export interface Cliente {
 	id_operadora_celular: number;
 	id_perfil: number;
 	id_segmento: string;
-	id_tipo_cliente: ClienteIdTipoCliente;
+	id_tipo_cliente: number;
 	id_vd_contrato_desejado: string;
 	id_vendedor: number;
 	id_vindi: string;
@@ -552,12 +501,6 @@ export const CLIENTE_AVISOATRASO_LABELS: Record<ClienteAvisoAtraso, string> = {
 	[ClienteAvisoAtraso.S]: "Sim",
 };
 
-export const CLIENTE_BAIRROCOB_LABELS: Record<ClienteBairroCob, string> = {
-	[ClienteBairroCob.ContaDinheiro]: "Conta Dinheiro",
-	[ClienteBairroCob.Guaruj]: "Guarujá",
-	[ClienteBairroCob.VilaNova]: "Vila Nova",
-};
-
 export const CLIENTE_CADASTRADONOGALAXPAY_LABELS: Record<
 	ClienteCadastradoNoGalaxpay,
 	string
@@ -566,24 +509,11 @@ export const CLIENTE_CADASTRADONOGALAXPAY_LABELS: Record<
 	[ClienteCadastradoNoGalaxpay.S]: "Sim",
 };
 
-export const CLIENTE_CEPCOB_LABELS: Record<ClienteCepCob, string> = {
-	[ClienteCepCob.Value88503210]: "88503 210",
-	[ClienteCepCob.Value88520100]: "88520 100",
-	[ClienteCepCob.Value88521020]: "88521 020",
-};
-
 export const CLIENTE_CLIDESCONTAISSRETIDOTOTAL_LABELS: Record<
 	ClienteCliDescontaIssRetidoTotal,
 	string
 > = {
 	[ClienteCliDescontaIssRetidoTotal.N]: "Não",
-};
-
-export const CLIENTE_COBENVIAEMAIL_LABELS: Record<
-	ClienteCobEnviaEmail,
-	string
-> = {
-	[ClienteCobEnviaEmail.S]: "Sim",
 };
 
 export const CLIENTE_COBENVIASMS_LABELS: Record<ClienteCobEnviaSms, string> = {
@@ -607,14 +537,6 @@ export const CLIENTE_CONDPAGAMENTO_LABELS: Record<
 > = {
 	[ClienteCondPagamento.Value0]: "Inativo",
 	[ClienteCondPagamento.Value1]: "Ativo",
-};
-
-export const CLIENTE_CONTATO_LABELS: Record<ClienteContato, string> = {
-	[ClienteContato.Value49999126600OsmarDuarteBranco]:
-		"(49) 99912 6600 Osmar Duarte Branco",
-	[ClienteContato.Value29505623968]: "29505623968",
-	[ClienteContato.Value49999854349]: "49999854349",
-	[ClienteContato.EstagioseadUnifacvestEduBr]: "Estagiosead@unifacvest.edu.br",
 };
 
 export const CLIENTE_CONTRIBUINTEICMS_LABELS: Record<
@@ -641,16 +563,6 @@ export const CLIENTE_CSLLRETEM_LABELS: Record<ClienteCsllRetem, string> = {
 	[ClienteCsllRetem.N]: "Não",
 };
 
-export const CLIENTE_DATAHASHREDEFINIRSENHA_LABELS: Record<
-	ClienteDataHashRedefinirSenha,
-	string
-> = {
-	[ClienteDataHashRedefinirSenha.Value20220213210939]: "2022 02 13 21:09:39",
-	[ClienteDataHashRedefinirSenha.Value20220430184027]: "2022 04 30 18:40:27",
-	[ClienteDataHashRedefinirSenha.Value20220609214542]: "2022 06 09 21:45:42",
-	[ClienteDataHashRedefinirSenha.InvalidDate]: "Invalid Date",
-};
-
 export const CLIENTE_DESCONTOIRRFVALORINFERIOR_LABELS: Record<
 	ClienteDescontoIrrfValorInferior,
 	string
@@ -659,21 +571,10 @@ export const CLIENTE_DESCONTOIRRFVALORINFERIOR_LABELS: Record<
 	[ClienteDescontoIrrfValorInferior.S]: "Sim",
 };
 
-export const CLIENTE_ENDERECOCOB_LABELS: Record<ClienteEnderecoCob, string> = {
-	[ClienteEnderecoCob.AvenidaSegundoBatalhORodoviRio]:
-		"Avenida Segundo Batalhão Rodoviário",
-	[ClienteEnderecoCob.RuaJoODaSilvaRamos]: "Rua João Da Silva Ramos",
-	[ClienteEnderecoCob.RuaTomDeSouza]: "Rua Tomé De Souza",
-};
-
 export const CLIENTE_ESTADOCIVIL_LABELS: Record<ClienteEstadoCivil, string> = {
 	[ClienteEstadoCivil.Casado]: "Casado",
 	[ClienteEstadoCivil.Divorciado]: "Divorciado",
 	[ClienteEstadoCivil.Solteiro]: "Solteiro",
-};
-
-export const CLIENTE_FILIALID_LABELS: Record<ClienteFilialId, string> = {
-	[ClienteFilialId.Value1]: "Ativo",
 };
 
 export const CLIENTE_FILTRAFILIAL_LABELS: Record<ClienteFiltraFilial, string> =
@@ -690,32 +591,12 @@ export const CLIENTE_GRAUSATISFACAO_LABELS: Record<
 	[ClienteGrauSatisfacao.Value5]: "Código 5",
 };
 
-export const CLIENTE_HASHREDEFINIRSENHA_LABELS: Record<
-	ClienteHashRedefinirSenha,
-	string
-> = {
-	[ClienteHashRedefinirSenha.Value2cddcfdf3e2b1292698984122b758245]:
-		"2cddcfdf3e2b1292698984122b758245",
-	[ClienteHashRedefinirSenha.B66fbb2dd0c2ff76f8e9165f7a448dfb]:
-		"B66fbb2dd0c2ff76f8e9165f7a448dfb",
-	[ClienteHashRedefinirSenha.E9b8b8e9d41ecb186ad4ac53e246fbad]:
-		"E9b8b8e9d41ecb186ad4ac53e246fbad",
-};
-
 export const CLIENTE_HOTSITEACESSO_LABELS: Record<
 	ClienteHotsiteAcesso,
 	string
 > = {
 	[ClienteHotsiteAcesso.Value0]: "Inativo",
 	[ClienteHotsiteAcesso.Value2]: "Código 2",
-};
-
-export const CLIENTE_IDTIPOCLIENTE_LABELS: Record<
-	ClienteIdTipoCliente,
-	string
-> = {
-	[ClienteIdTipoCliente.Value0]: "Inativo",
-	[ClienteIdTipoCliente.Value2]: "Código 2",
 };
 
 export const CLIENTE_INSSRETEM_LABELS: Record<ClienteInssRetem, string> = {

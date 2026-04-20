@@ -6,32 +6,6 @@
 
 export const SU_TICKET_TABLE_NAME = "su_ticket";
 
-export enum SuTicketIdFilial {
-	Value1 = "1",
-}
-
-export enum SuTicketIdSuDiagnostico {
-	Value0 = "0",
-	Value1 = "1",
-	Value10 = "10",
-	Value13 = "13",
-}
-
-export enum SuTicketIdTicketOrigem {
-	H = "H",
-	I = "I",
-}
-
-export enum SuTicketIdTicketSetor {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value7 = "7",
-	Value8 = "8",
-}
-
 export enum SuTicketInteracaoPendente {
 	A = "A",
 	E = "E",
@@ -56,13 +30,6 @@ export enum SuTicketMensagensNaoLidaSup {
 
 export enum SuTicketOrigemCadastro {
 	P = "P",
-}
-
-export enum SuTicketOrigemEndereco {
-	C = "C",
-	Cc = "CC",
-	L = "L",
-	M = "M",
 }
 
 export enum SuTicketPrioridade {
@@ -102,13 +69,13 @@ export interface SuTicket {
 	id_contrato: number;
 	id_estrutura: string;
 	id_evento_status_processo: number;
-	id_filial: SuTicketIdFilial;
+	id_filial: number;
 	id_login: number;
 	id_responsavel_tecnico: number;
 	id_resposta: number;
-	id_su_diagnostico: SuTicketIdSuDiagnostico;
-	id_ticket_origem: SuTicketIdTicketOrigem;
-	id_ticket_setor: SuTicketIdTicketSetor;
+	id_su_diagnostico: number;
+	id_ticket_origem: string;
+	id_ticket_setor: number;
 	id_ticket_status: string;
 	id_usuario_abertura: string;
 	id_usuarios: number;
@@ -122,7 +89,7 @@ export interface SuTicket {
 	mensagens_nao_lida_sup: SuTicketMensagensNaoLidaSup;
 	menssagem: string;
 	origem_cadastro: SuTicketOrigemCadastro;
-	origem_endereco: SuTicketOrigemEndereco;
+	origem_endereco: string;
 	origem_endereco_estrutura: string;
 	prioridade: SuTicketPrioridade;
 	protocolo: string;
@@ -139,41 +106,6 @@ export interface SuTicket {
 export type SuTicketRelations = Record<string, never>;
 
 export type SuTicketRelationKey = keyof SuTicketRelations;
-
-export const SUTICKET_IDFILIAL_LABELS: Record<SuTicketIdFilial, string> = {
-	[SuTicketIdFilial.Value1]: "Ativo",
-};
-
-export const SUTICKET_IDSUDIAGNOSTICO_LABELS: Record<
-	SuTicketIdSuDiagnostico,
-	string
-> = {
-	[SuTicketIdSuDiagnostico.Value0]: "Inativo",
-	[SuTicketIdSuDiagnostico.Value1]: "Ativo",
-	[SuTicketIdSuDiagnostico.Value10]: "Código 10",
-	[SuTicketIdSuDiagnostico.Value13]: "Código 13",
-};
-
-export const SUTICKET_IDTICKETORIGEM_LABELS: Record<
-	SuTicketIdTicketOrigem,
-	string
-> = {
-	[SuTicketIdTicketOrigem.H]: "H",
-	[SuTicketIdTicketOrigem.I]: "Inativo",
-};
-
-export const SUTICKET_IDTICKETSETOR_LABELS: Record<
-	SuTicketIdTicketSetor,
-	string
-> = {
-	[SuTicketIdTicketSetor.Value1]: "Ativo",
-	[SuTicketIdTicketSetor.Value2]: "Código 2",
-	[SuTicketIdTicketSetor.Value3]: "Código 3",
-	[SuTicketIdTicketSetor.Value4]: "Código 4",
-	[SuTicketIdTicketSetor.Value5]: "Código 5",
-	[SuTicketIdTicketSetor.Value7]: "Código 7",
-	[SuTicketIdTicketSetor.Value8]: "Código 8",
-};
 
 export const SUTICKET_INTERACAOPENDENTE_LABELS: Record<
 	SuTicketInteracaoPendente,
@@ -214,16 +146,6 @@ export const SUTICKET_ORIGEMCADASTRO_LABELS: Record<
 	string
 > = {
 	[SuTicketOrigemCadastro.P]: "P",
-};
-
-export const SUTICKET_ORIGEMENDERECO_LABELS: Record<
-	SuTicketOrigemEndereco,
-	string
-> = {
-	[SuTicketOrigemEndereco.C]: "C",
-	[SuTicketOrigemEndereco.Cc]: "CC",
-	[SuTicketOrigemEndereco.L]: "L",
-	[SuTicketOrigemEndereco.M]: "M",
 };
 
 export const SUTICKET_PRIORIDADE_LABELS: Record<SuTicketPrioridade, string> = {

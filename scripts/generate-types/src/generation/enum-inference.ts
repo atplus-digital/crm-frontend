@@ -24,7 +24,7 @@ export interface EnumInferenceConfig {
 	/**
 	 * Threshold de cardinalidade para considerar um campo como enum.
 	 * Campos com cardinalidade menor que este valor são candidatos a enum.
-	 * @default 8
+	 * @default 5
 	 */
 	cardinalityThreshold: number;
 
@@ -40,6 +40,18 @@ export interface EnumInferenceConfig {
 	 * @default 0.8
 	 */
 	minRepetitionRatio?: number;
+
+	/**
+	 * Lista negra de padrões de nomes de campos que nunca serão enums.
+	 * @default []
+	 */
+	fieldNameBlacklist?: RegExp[];
+
+	/**
+	 * Lista negra de padrões de valores que nunca serão enums.
+	 * @default []
+	 */
+	valueBlacklist?: RegExp[];
 }
 
 /**
@@ -99,6 +111,99 @@ const ESTADOS_BRASIL: Record<string, string> = {
 	SE: "Sergipe",
 	TO: "Tocantins",
 };
+
+/**
+ * Lista negra de padrões de nomes de campos que nunca serão tratados como enums.
+ */
+const FIELD_NAME_BLACKLIST: RegExp[] = [
+	// CEPs, contatos, emails, telefones
+	/^cep$/i,
+	/^cep_/i,
+	/_cep$/i,
+	/^contato$/i,
+	/^contato_/i,
+	/_contato$/i,
+	/^email$/i,
+	/^email_/i,
+	/_email$/i,
+	/^telefone$/i,
+	/^telefone_/i,
+	/_telefone$/i,
+	/^celular$/i,
+	/^celular_/i,
+	/_celular$/i,
+
+	// Campos temporais
+	/^data$/i,
+	/^data_/i,
+	/_data$/i,
+	/^date$/i,
+	/^date_/i,
+	/_date$/i,
+	/^hora$/i,
+	/^hora_/i,
+	/_hora$/i,
+	/^time$/i,
+	/^time_/i,
+	/_time$/i,
+	/^timestamp$/i,
+	/^timestamp_/i,
+	/_timestamp$/i,
+
+	// IDs, hashes e valores únicos
+	/^id$/i,
+	/^id_/i,
+	/_id$/i,
+	/^hash$/i,
+	/^hash_/i,
+	/_hash$/i,
+	/^uuid$/i,
+	/^uuid_/i,
+	/_uuid$/i,
+
+	// Endereços completos
+	/^endereco$/i,
+	/^endereco_/i,
+	/_endereco$/i,
+	/^logradouro$/i,
+	/^logradouro_/i,
+	/_logradouro$/i,
+	/^bairro$/i,
+	/^bairro_/i,
+	/_bairro$/i,
+];
+
+/**
+ * Lista negra de padrões de valores que nunca serão tratados como enums.
+ */
+const VALUE_BLACKLIST: RegExp[] = [
+	// CPF
+	/^\d{3}\.\d{3}-\d{2}$/,
+	/^\d{11}$/,
+	// CNPJ
+	/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/,
+	/^\d{14}$/,
+	// CEP
+	/^\d{5}-\d{3}$/,
+	/^\d{8}$/,
+	// Email
+	/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i,
+	// Telefone
+	/^\(\d{2}\)\s?\d{4,5}-?\d{4}$/,
+	/^\d{10,11}$/,
+	// Data ISO
+	/^\d{4}-\d{2}-\d{2}/,
+	// Hash UUID
+	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
+];
+
+/**
+ * Remove apenas acentos de uma string, mantendo espaços e outros caracteres.
+ * Usado para gerar nomes de enums válidos em TypeScript.
+ */
+export function removeAccents(str: string): string {
+	return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
 
 /**
  * Heurística para inferir label de um valor enum.
@@ -174,6 +279,9 @@ function isEnumCandidate(
 	totalRecords: number,
 	cardinalityThreshold: number,
 	minRepetitionRatio?: number,
+	fieldName?: string,
+	fieldNameBlacklist?: RegExp[],
+	valueBlacklist?: RegExp[],
 ): boolean {
 	// Cardinalidade baixa: menos valores distintos que o threshold
 	if (distinctValues.length >= cardinalityThreshold) {
@@ -183,6 +291,22 @@ function isEnumCandidate(
 	// Se não há registros, não é candidato
 	if (totalRecords === 0) {
 		return false;
+	}
+
+	if (fieldName && fieldNameBlacklist && fieldNameBlacklist.length > 0) {
+		if (fieldNameBlacklist.some((pattern) => pattern.test(fieldName))) {
+			return false;
+		}
+	}
+
+	if (valueBlacklist && valueBlacklist.length > 0) {
+		if (
+			distinctValues.some((v) =>
+				valueBlacklist.some((pattern) => pattern.test(v)),
+			)
+		) {
+			return false;
+		}
 	}
 
 	// Regras adicionais para filtrar campos que não são enums
@@ -274,6 +398,34 @@ function processEnumValues(
 }
 
 /**
+ * Gera nome de membro de enum em PascalCase sem acentos.
+ * Ex: "União Estável" → "UniaoEstavel", "Viúvo" → "Viuvo"
+ */
+export function generateEnumMemberName(
+	value: string,
+	baseName?: string,
+): string {
+	const cleaned = removeAccents(value);
+	const parts = cleaned
+		.split(/[^a-zA-Z0-9]+/)
+		.filter((part) => part.length > 0);
+
+	if (parts.length === 0) {
+		return baseName ? `Value${baseName}` : "Unknown";
+	}
+
+	const result = parts
+		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+		.join("");
+
+	if (/^\d/.test(result)) {
+		return `Value${result}`;
+	}
+
+	return result;
+}
+
+/**
  * Inferir enums a partir de amostra de dados.
  * Analisa valores distintos e identifica campos com baixa cardinalidade.
  *
@@ -287,8 +439,11 @@ export function inferEnumsFromSample(
 	fieldNames: string[],
 	inferenceConfig?: Partial<EnumInferenceConfig>,
 ): InferredEnumsMap {
-	const threshold = inferenceConfig?.cardinalityThreshold ?? 8;
+	const threshold = inferenceConfig?.cardinalityThreshold ?? 5;
 	const minRepetitionRatio = inferenceConfig?.minRepetitionRatio;
+	const fieldNameBlacklist =
+		inferenceConfig?.fieldNameBlacklist ?? FIELD_NAME_BLACKLIST;
+	const valueBlacklist = inferenceConfig?.valueBlacklist ?? VALUE_BLACKLIST;
 	const inferredEnums: InferredEnumsMap = {};
 
 	for (const fieldName of fieldNames) {
@@ -304,6 +459,9 @@ export function inferEnumsFromSample(
 				records.length,
 				threshold,
 				minRepetitionRatio,
+				fieldName,
+				fieldNameBlacklist,
+				valueBlacklist,
 			)
 		) {
 			const enumInfo = processEnumValues(

@@ -255,7 +255,6 @@ async function runGenerateTypesForDataSource(
 					values: string[];
 					labels: Record<string, string>;
 					cardinality: number;
-					totalRecords: number;
 					origin: "api" | "adapter" | "inferencia";
 				}
 			>();
@@ -274,7 +273,7 @@ async function runGenerateTypesForDataSource(
 					values,
 					labels,
 					cardinality: enumOptions.length,
-					totalRecords: 0, // Não disponível após merge final
+					totalRecords: 0,
 					origin,
 				});
 			}

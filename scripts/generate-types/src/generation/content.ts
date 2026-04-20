@@ -11,6 +11,7 @@ import {
 	toCollectionTypeName,
 	toValidIdentifier,
 } from "@scripts/generate-types/src/utils/naming";
+import { removeAccents } from "./enum-inference";
 import { getRelationCardinality, renderRelationValueType } from "./relations";
 
 function _sortMapEntries<T>(map: Map<string, T>): [string, T][] {
@@ -126,14 +127,19 @@ export function generateFileHeader(): string {
  */
 function toEnumMemberName(value: string | number): string {
 	const raw = value.toString();
-	const sanitized = raw
+	const withoutAccents = removeAccents(raw);
+	const sanitized = withoutAccents
 		.replace(/[^a-zA-Z0-9]/g, "_")
 		.replace(/_+/g, "_")
 		.replace(/^_|_$/g, "");
 
-	const pascal = sanitized
-		.split("_")
-		.filter((part) => part.length > 0)
+	const parts = sanitized.split("_").filter((part) => part.length > 0);
+
+	if (parts.length === 0) {
+		return "Unknown";
+	}
+
+	const pascal = parts
 		.map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
 		.join("");
 

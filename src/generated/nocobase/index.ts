@@ -83,7 +83,7 @@ export type FFkOrigemTiposRelationKey = keyof FFkOrigemTiposRelations;
 
 export enum FFuncionariosAtivo {
 	Sim = "Sim",
-	NO = "Não",
+	Nao = "Não",
 }
 
 export enum FFuncionariosChecklistAdmissional {
@@ -118,9 +118,9 @@ export enum FFuncionariosEpiCalcado {
 }
 
 export enum FFuncionariosEscolaridade {
-	EnsinoMDio = "Ensino Médio",
+	EnsinoMedio = "Ensino Médio",
 	Superior = "Superior",
-	PSMba = "Pós, MBA",
+	PosMba = "Pós, MBA",
 	Mestrado = "Mestrado",
 	Doutorado = "Doutorado",
 }
@@ -128,8 +128,8 @@ export enum FFuncionariosEscolaridade {
 export enum FFuncionariosEstadoCivil {
 	Solteiro = "Solteiro",
 	Casado = "Casado",
-	UniOEstVel = "União Estável",
-	ViVo = "Viúvo",
+	UniaoEstavel = "União Estável",
+	Viuvo = "Viúvo",
 	Divorciado = "Divorciado",
 	Separado = "Separado",
 }
@@ -141,17 +141,17 @@ export enum FFuncionariosGenero {
 
 export enum FFuncionariosMobilidade {
 	ValeTransporteTransul = "Vale Transporte (Transul)",
-	MobilidadeCartOBenefCios = "Mobilidade (Cartão Benefícios)",
+	MobilidadeCartaoBeneficios = "Mobilidade (Cartão Benefícios)",
 }
 
 export enum FFuncionariosPcd {
 	Sim = "Sim",
-	NO = "Não",
+	Nao = "Não",
 }
 
 export enum FFuncionariosReservista {
 	Sim = "Sim",
-	NO = "Não",
+	Nao = "Não",
 }
 
 export enum FFuncionariosSituacaoEscolaridade {
@@ -162,17 +162,17 @@ export enum FFuncionariosSituacaoEscolaridade {
 
 export enum FFuncionariosTerceiro {
 	Sim = "Sim",
-	NO = "Não",
+	Nao = "Não",
 }
 
 export enum FFuncionariosTipoContrato {
 	Clt = "CLT",
-	PrestadorDeServiOs = "Prestador de Serviços",
-	EstagiRio = "Estagiário",
+	PrestadorDeServicos = "Prestador de Serviços",
+	Estagiario = "Estagiário",
 	JovemAprendiz = "Jovem Aprendiz",
-	SCio = "Sócio",
-	TemporRio = "Temporário",
-	CltComissO = "CLT + Comissão",
+	Socio = "Sócio",
+	Temporario = "Temporário",
+	CltComissao = "CLT + Comissão",
 }
 
 export enum FFuncionariosUnidade {
@@ -193,7 +193,7 @@ export enum FFuncionariosUniversidade {
 export enum FFuncionariosVinculoComColaborador {
 	Pais = "Pais",
 	FilhoAOuEnteadoA = "Filho(a) ou Enteado(a)",
-	AvS = "Avós",
+	Avos = "Avós",
 	Conjuge = "Conjuge",
 }
 
@@ -287,7 +287,7 @@ export type FFuncionariosRelationKey = keyof FFuncionariosRelations;
 
 export const FFUNCIONARIOS_ATIVO_LABELS: Record<FFuncionariosAtivo, string> = {
 	[FFuncionariosAtivo.Sim]: "Sim",
-	[FFuncionariosAtivo.NO]: "Não",
+	[FFuncionariosAtivo.Nao]: "Não",
 };
 
 export const FFUNCIONARIOS_CHECKLISTADMISSIONAL_LABELS: Record<
@@ -340,9 +340,9 @@ export const FFUNCIONARIOS_ESCOLARIDADE_LABELS: Record<
 	FFuncionariosEscolaridade,
 	string
 > = {
-	[FFuncionariosEscolaridade.EnsinoMDio]: "Ensino Médio",
+	[FFuncionariosEscolaridade.EnsinoMedio]: "Ensino Médio",
 	[FFuncionariosEscolaridade.Superior]: "Superior",
-	[FFuncionariosEscolaridade.PSMba]: "Pós, MBA",
+	[FFuncionariosEscolaridade.PosMba]: "Pós, MBA",
 	[FFuncionariosEscolaridade.Mestrado]: "Mestrado",
 	[FFuncionariosEscolaridade.Doutorado]: "Doutorado",
 };
@@ -353,8 +353,8 @@ export const FFUNCIONARIOS_ESTADOCIVIL_LABELS: Record<
 > = {
 	[FFuncionariosEstadoCivil.Solteiro]: "Solteiro",
 	[FFuncionariosEstadoCivil.Casado]: "Casado",
-	[FFuncionariosEstadoCivil.UniOEstVel]: "União Estável",
-	[FFuncionariosEstadoCivil.ViVo]: "Viúvo",
+	[FFuncionariosEstadoCivil.UniaoEstavel]: "União Estável",
+	[FFuncionariosEstadoCivil.Viuvo]: "Viúvo",
 	[FFuncionariosEstadoCivil.Divorciado]: "Divorciado",
 	[FFuncionariosEstadoCivil.Separado]: "Separado",
 };
@@ -370,13 +370,13 @@ export const FFUNCIONARIOS_MOBILIDADE_LABELS: Record<
 	string
 > = {
 	[FFuncionariosMobilidade.ValeTransporteTransul]: "Vale Transporte (Transul)",
-	[FFuncionariosMobilidade.MobilidadeCartOBenefCios]:
+	[FFuncionariosMobilidade.MobilidadeCartaoBeneficios]:
 		"Mobilidade (Cartão Benefícios)",
 };
 
 export const FFUNCIONARIOS_PCD_LABELS: Record<FFuncionariosPcd, string> = {
 	[FFuncionariosPcd.Sim]: "Sim",
-	[FFuncionariosPcd.NO]: "Não",
+	[FFuncionariosPcd.Nao]: "Não",
 };
 
 export const FFUNCIONARIOS_RESERVISTA_LABELS: Record<
@@ -384,7 +384,7 @@ export const FFUNCIONARIOS_RESERVISTA_LABELS: Record<
 	string
 > = {
 	[FFuncionariosReservista.Sim]: "Sim",
-	[FFuncionariosReservista.NO]: "Não",
+	[FFuncionariosReservista.Nao]: "Não",
 };
 
 export const FFUNCIONARIOS_SITUACAOESCOLARIDADE_LABELS: Record<
@@ -401,7 +401,7 @@ export const FFUNCIONARIOS_TERCEIRO_LABELS: Record<
 	string
 > = {
 	[FFuncionariosTerceiro.Sim]: "Sim",
-	[FFuncionariosTerceiro.NO]: "Não",
+	[FFuncionariosTerceiro.Nao]: "Não",
 };
 
 export const FFUNCIONARIOS_TIPOCONTRATO_LABELS: Record<
@@ -409,12 +409,12 @@ export const FFUNCIONARIOS_TIPOCONTRATO_LABELS: Record<
 	string
 > = {
 	[FFuncionariosTipoContrato.Clt]: "CLT",
-	[FFuncionariosTipoContrato.PrestadorDeServiOs]: "Prestador de Serviços",
-	[FFuncionariosTipoContrato.EstagiRio]: "Estagiário",
+	[FFuncionariosTipoContrato.PrestadorDeServicos]: "Prestador de Serviços",
+	[FFuncionariosTipoContrato.Estagiario]: "Estagiário",
 	[FFuncionariosTipoContrato.JovemAprendiz]: "Jovem Aprendiz",
-	[FFuncionariosTipoContrato.SCio]: "Sócio",
-	[FFuncionariosTipoContrato.TemporRio]: "Temporário",
-	[FFuncionariosTipoContrato.CltComissO]: "CLT + Comissão",
+	[FFuncionariosTipoContrato.Socio]: "Sócio",
+	[FFuncionariosTipoContrato.Temporario]: "Temporário",
+	[FFuncionariosTipoContrato.CltComissao]: "CLT + Comissão",
 };
 
 export const FFUNCIONARIOS_UNIDADE_LABELS: Record<
@@ -445,7 +445,7 @@ export const FFUNCIONARIOS_VINCULOCOMCOLABORADOR_LABELS: Record<
 	[FFuncionariosVinculoComColaborador.Pais]: "Pais",
 	[FFuncionariosVinculoComColaborador.FilhoAOuEnteadoA]:
 		"Filho(a) ou Enteado(a)",
-	[FFuncionariosVinculoComColaborador.AvS]: "Avós",
+	[FFuncionariosVinculoComColaborador.Avos]: "Avós",
 	[FFuncionariosVinculoComColaborador.Conjuge]: "Conjuge",
 };
 
@@ -1842,7 +1842,7 @@ export type Ij93gv1hx9mRelationKey = keyof Ij93gv1hx9mRelations;
 
 export enum InfoArquivosArquivoExterno {
 	Sim = "sim",
-	NO = "não",
+	Nao = "não",
 }
 
 export interface InfoArquivos {
@@ -1868,7 +1868,7 @@ export const INFOARQUIVOS_ARQUIVOEXTERNO_LABELS: Record<
 	string
 > = {
 	[InfoArquivosArquivoExterno.Sim]: "Sim",
-	[InfoArquivosArquivoExterno.NO]: "Não",
+	[InfoArquivosArquivoExterno.Nao]: "Não",
 };
 
 export enum InfoAsoInformado {
@@ -2697,9 +2697,9 @@ export type QualirunAssinaturaGovRelationKey =
 	keyof QualirunAssinaturaGovRelations;
 
 export enum QualirunInfoAdicionaisGrauEscolaridade {
-	EnsinoMDio = "Ensino Médio",
+	EnsinoMedio = "Ensino Médio",
 	Superior = "Superior",
-	PSMba = "Pós, MBA",
+	PosMba = "Pós, MBA",
 	Mestrado = "Mestrado",
 	Doutorado = "Doutorado",
 }
@@ -2719,7 +2719,7 @@ export enum QualirunInfoAdicionaisStatus {
 export enum QualirunInfoAdicionaisVinculoContatoEmergencia {
 	Pais = "Pais",
 	FilhoAOuEnteadoA = "Filho(a) ou Enteado(a)",
-	AvS = "Avós",
+	Avos = "Avós",
 	Conjuge = "Conjuge",
 }
 
@@ -2757,9 +2757,9 @@ export const QUALIRUNINFOADICIONAIS_GRAUESCOLARIDADE_LABELS: Record<
 	QualirunInfoAdicionaisGrauEscolaridade,
 	string
 > = {
-	[QualirunInfoAdicionaisGrauEscolaridade.EnsinoMDio]: "Ensino Médio",
+	[QualirunInfoAdicionaisGrauEscolaridade.EnsinoMedio]: "Ensino Médio",
 	[QualirunInfoAdicionaisGrauEscolaridade.Superior]: "Superior",
-	[QualirunInfoAdicionaisGrauEscolaridade.PSMba]: "Pós, MBA",
+	[QualirunInfoAdicionaisGrauEscolaridade.PosMba]: "Pós, MBA",
 	[QualirunInfoAdicionaisGrauEscolaridade.Mestrado]: "Mestrado",
 	[QualirunInfoAdicionaisGrauEscolaridade.Doutorado]: "Doutorado",
 };
@@ -2789,7 +2789,7 @@ export const QUALIRUNINFOADICIONAIS_VINCULOCONTATOEMERGENCIA_LABELS: Record<
 	[QualirunInfoAdicionaisVinculoContatoEmergencia.Pais]: "Pais",
 	[QualirunInfoAdicionaisVinculoContatoEmergencia.FilhoAOuEnteadoA]:
 		"Filho(a) ou Enteado(a)",
-	[QualirunInfoAdicionaisVinculoContatoEmergencia.AvS]: "Avós",
+	[QualirunInfoAdicionaisVinculoContatoEmergencia.Avos]: "Avós",
 	[QualirunInfoAdicionaisVinculoContatoEmergencia.Conjuge]: "Conjuge",
 };
 
@@ -3104,7 +3104,7 @@ export type Siurxeb1juyRelationKey = keyof Siurxeb1juyRelations;
 
 export enum SolicitacaoComprasCategoria {
 	Produto = "Produto",
-	ServiO = "Serviço",
+	Servico = "Serviço",
 }
 
 export enum SolicitacaoComprasDepartamento {
@@ -3112,7 +3112,7 @@ export enum SolicitacaoComprasDepartamento {
 	Comercial = "Comercial",
 	Financeiro = "Financeiro",
 	Infraestrutura = "Infraestrutura",
-	LaboratRioTCnico = "Laboratório Técnico",
+	LaboratorioTecnico = "Laboratório Técnico",
 	Marketing = "Marketing",
 	Noc = "NOC",
 	Operacional = "Operacional",
@@ -3120,14 +3120,14 @@ export enum SolicitacaoComprasDepartamento {
 	Processos = "Processos",
 	Projetos = "Projetos",
 	Rh = "RH",
-	ServiOsGerais = "Serviços Gerais",
+	ServicosGerais = "Serviços Gerais",
 }
 
 export enum SolicitacaoComprasMetodoDePagamento {
-	Definir = "Á definir",
+	ADefinir = "Á definir",
 	Pix = "Pix",
 	Boleto = "Boleto",
-	CartO = "Cartão",
+	Cartao = "Cartão",
 }
 
 export enum SolicitacaoComprasPrazo {
@@ -3149,11 +3149,11 @@ export enum SolicitacaoComprasPrazo {
 
 export enum SolicitacaoComprasStatus {
 	CaixaDeEntrada = "Caixa de Entrada",
-	AprovaODaGestO = "Aprovação da Gestão",
+	AprovacaoDaGestao = "Aprovação da Gestão",
 	PedidoDeCompra = "Pedido de Compra",
 	ProcessamentoFinanceiro = "Processamento Financeiro",
 	FilaDeEntrega = "Fila de Entrega",
-	ConcluDo = "Concluído",
+	Concluido = "Concluído",
 	Rejeitado = "Rejeitado",
 	Standby = "Standby",
 }
@@ -3202,7 +3202,7 @@ export const SOLICITACAOCOMPRAS_CATEGORIA_LABELS: Record<
 	string
 > = {
 	[SolicitacaoComprasCategoria.Produto]: "Produto",
-	[SolicitacaoComprasCategoria.ServiO]: "Serviço",
+	[SolicitacaoComprasCategoria.Servico]: "Serviço",
 };
 
 export const SOLICITACAOCOMPRAS_DEPARTAMENTO_LABELS: Record<
@@ -3213,7 +3213,7 @@ export const SOLICITACAOCOMPRAS_DEPARTAMENTO_LABELS: Record<
 	[SolicitacaoComprasDepartamento.Comercial]: "Comercial",
 	[SolicitacaoComprasDepartamento.Financeiro]: "Financeiro",
 	[SolicitacaoComprasDepartamento.Infraestrutura]: "Infraestrutura",
-	[SolicitacaoComprasDepartamento.LaboratRioTCnico]: "Laboratório Técnico",
+	[SolicitacaoComprasDepartamento.LaboratorioTecnico]: "Laboratório Técnico",
 	[SolicitacaoComprasDepartamento.Marketing]: "Marketing",
 	[SolicitacaoComprasDepartamento.Noc]: "NOC",
 	[SolicitacaoComprasDepartamento.Operacional]: "Operacional",
@@ -3221,17 +3221,17 @@ export const SOLICITACAOCOMPRAS_DEPARTAMENTO_LABELS: Record<
 	[SolicitacaoComprasDepartamento.Processos]: "Processos",
 	[SolicitacaoComprasDepartamento.Projetos]: "Projetos",
 	[SolicitacaoComprasDepartamento.Rh]: "RH",
-	[SolicitacaoComprasDepartamento.ServiOsGerais]: "Serviços Gerais",
+	[SolicitacaoComprasDepartamento.ServicosGerais]: "Serviços Gerais",
 };
 
 export const SOLICITACAOCOMPRAS_METODODEPAGAMENTO_LABELS: Record<
 	SolicitacaoComprasMetodoDePagamento,
 	string
 > = {
-	[SolicitacaoComprasMetodoDePagamento.Definir]: "Á definir",
+	[SolicitacaoComprasMetodoDePagamento.ADefinir]: "Á definir",
 	[SolicitacaoComprasMetodoDePagamento.Pix]: "Pix",
 	[SolicitacaoComprasMetodoDePagamento.Boleto]: "Boleto",
-	[SolicitacaoComprasMetodoDePagamento.CartO]: "Cartão",
+	[SolicitacaoComprasMetodoDePagamento.Cartao]: "Cartão",
 };
 
 export const SOLICITACAOCOMPRAS_PRAZO_LABELS: Record<
@@ -3259,12 +3259,12 @@ export const SOLICITACAOCOMPRAS_STATUS_LABELS: Record<
 	string
 > = {
 	[SolicitacaoComprasStatus.CaixaDeEntrada]: "Caixa de Entrada",
-	[SolicitacaoComprasStatus.AprovaODaGestO]: "Aprovação da Gestão",
+	[SolicitacaoComprasStatus.AprovacaoDaGestao]: "Aprovação da Gestão",
 	[SolicitacaoComprasStatus.PedidoDeCompra]: "Pedido de Compra",
 	[SolicitacaoComprasStatus.ProcessamentoFinanceiro]:
 		"Processamento Financeiro",
 	[SolicitacaoComprasStatus.FilaDeEntrega]: "Fila de Entrega",
-	[SolicitacaoComprasStatus.ConcluDo]: "Concluído",
+	[SolicitacaoComprasStatus.Concluido]: "Concluído",
 	[SolicitacaoComprasStatus.Rejeitado]: "Rejeitado",
 	[SolicitacaoComprasStatus.Standby]: "Standby",
 };
@@ -3724,7 +3724,7 @@ export type TelecomTransitoOpcoesRelationKey =
 
 export enum TemplatesAtendimentoN1AcessaPelaRedeDaAtplus {
 	Sim = "Sim",
-	NO = "Não",
+	Nao = "Não",
 }
 
 export enum TemplatesAtendimentoN1Alteracoes {
@@ -3739,19 +3739,19 @@ export enum TemplatesAtendimentoN1Aplicativo {
 	Paramount = "Paramount+",
 	HboMax = "HBO Max",
 	ViaLivros = "Via Livros",
-	OlTv = "Olé TV",
+	OleTv = "Olé TV",
 	TodosOsAplicativos = "Todos os aplicativos",
 }
 
 export enum TemplatesAtendimentoN1AplicativoEspecifico {
 	Sim = "Sim",
-	NO = "Não",
+	Nao = "Não",
 }
 
 export enum TemplatesAtendimentoN1ApnPreenchida {
 	Sim = "Sim",
-	NO = "Não",
-	NOSoubeDizer = "Não soube dizer",
+	Nao = "Não",
+	NaoSoubeDizer = "Não soube dizer",
 }
 
 export enum TemplatesAtendimentoN1Fabricante {
@@ -3765,7 +3765,7 @@ export enum TemplatesAtendimentoN1Fabricante {
 
 export enum TemplatesAtendimentoN1Los {
 	Sim = "Sim",
-	NO = "Não",
+	Nao = "Não",
 }
 
 export enum TemplatesAtendimentoN1QualApnConfigurada {
@@ -3785,17 +3785,17 @@ export enum TemplatesAtendimentoN1StatusDoCircuito {
 }
 
 export enum TemplatesAtendimentoN1TelefoniaTipoDeProblema {
-	NORecebeLigaEs = "Não recebe ligações",
-	NOEfetuaLigaEs = "Não efetua ligações",
-	QuedasNasLigaEs = "Quedas nas ligações",
-	ChiadoVozRobTica = "Chiado / Voz robótica",
+	NaoRecebeLigacoes = "Não recebe ligações",
+	NaoEfetuaLigacoes = "Não efetua ligações",
+	QuedasNasLigacoes = "Quedas nas ligações",
+	ChiadoVozRobotica = "Chiado / Voz robótica",
 	MudoSemTom = "Mudo / Sem tom",
 }
 
 export enum TemplatesAtendimentoN1TipoDeAtendimento {
-	LentidO = "Lentidão",
-	SemConexO = "Sem conexão",
-	SiteEspecFico = "Site específico",
+	Lentidao = "Lentidão",
+	SemConexao = "Sem conexão",
+	SiteEspecifico = "Site específico",
 	Telefonia = "Telefonia",
 	AberturaDePortas = "Abertura de portas",
 	TrocaDeNomeSenha = "Troca de nome/senha",
@@ -3810,9 +3810,9 @@ export enum TemplatesAtendimentoN1TipoDeConexaoDoDispositivo {
 }
 
 export enum TemplatesAtendimentoN1TipoDeProblemaMvno {
-	NORecebeLigaEs = "Não recebe ligações",
-	NOEfetuaLigaEs = "Não efetua ligações",
-	DadosMVeisNOFuncionam = "Dados móveis não funcionam",
+	NaoRecebeLigacoes = "Não recebe ligações",
+	NaoEfetuaLigacoes = "Não efetua ligações",
+	DadosMoveisNaoFuncionam = "Dados móveis não funcionam",
 }
 
 export enum TemplatesAtendimentoN1TorreRede {
@@ -3873,7 +3873,7 @@ export const TEMPLATESATENDIMENTON1_ACESSAPELAREDEDAATPLUS_LABELS: Record<
 	string
 > = {
 	[TemplatesAtendimentoN1AcessaPelaRedeDaAtplus.Sim]: "Sim",
-	[TemplatesAtendimentoN1AcessaPelaRedeDaAtplus.NO]: "Nao",
+	[TemplatesAtendimentoN1AcessaPelaRedeDaAtplus.Nao]: "Nao",
 };
 
 export const TEMPLATESATENDIMENTON1_ALTERACOES_LABELS: Record<
@@ -3894,7 +3894,7 @@ export const TEMPLATESATENDIMENTON1_APLICATIVO_LABELS: Record<
 	[TemplatesAtendimentoN1Aplicativo.Paramount]: "Paramount+",
 	[TemplatesAtendimentoN1Aplicativo.HboMax]: "HBO Max",
 	[TemplatesAtendimentoN1Aplicativo.ViaLivros]: "Via Livros",
-	[TemplatesAtendimentoN1Aplicativo.OlTv]: "Olé TV",
+	[TemplatesAtendimentoN1Aplicativo.OleTv]: "Olé TV",
 	[TemplatesAtendimentoN1Aplicativo.TodosOsAplicativos]: "Todos os aplicativos",
 };
 
@@ -3903,7 +3903,7 @@ export const TEMPLATESATENDIMENTON1_APLICATIVOESPECIFICO_LABELS: Record<
 	string
 > = {
 	[TemplatesAtendimentoN1AplicativoEspecifico.Sim]: "Sim",
-	[TemplatesAtendimentoN1AplicativoEspecifico.NO]: "Não",
+	[TemplatesAtendimentoN1AplicativoEspecifico.Nao]: "Não",
 };
 
 export const TEMPLATESATENDIMENTON1_APNPREENCHIDA_LABELS: Record<
@@ -3911,8 +3911,8 @@ export const TEMPLATESATENDIMENTON1_APNPREENCHIDA_LABELS: Record<
 	string
 > = {
 	[TemplatesAtendimentoN1ApnPreenchida.Sim]: "Sim",
-	[TemplatesAtendimentoN1ApnPreenchida.NO]: "Não",
-	[TemplatesAtendimentoN1ApnPreenchida.NOSoubeDizer]: "Não soube dizer",
+	[TemplatesAtendimentoN1ApnPreenchida.Nao]: "Não",
+	[TemplatesAtendimentoN1ApnPreenchida.NaoSoubeDizer]: "Não soube dizer",
 };
 
 export const TEMPLATESATENDIMENTON1_FABRICANTE_LABELS: Record<
@@ -3932,7 +3932,7 @@ export const TEMPLATESATENDIMENTON1_LOS_LABELS: Record<
 	string
 > = {
 	[TemplatesAtendimentoN1Los.Sim]: "Sim",
-	[TemplatesAtendimentoN1Los.NO]: "Não",
+	[TemplatesAtendimentoN1Los.Nao]: "Não",
 };
 
 export const TEMPLATESATENDIMENTON1_QUALAPNCONFIGURADA_LABELS: Record<
@@ -3966,13 +3966,13 @@ export const TEMPLATESATENDIMENTON1_TELEFONIATIPODEPROBLEMA_LABELS: Record<
 	TemplatesAtendimentoN1TelefoniaTipoDeProblema,
 	string
 > = {
-	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.NORecebeLigaEs]:
+	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.NaoRecebeLigacoes]:
 		"Não recebe ligações",
-	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.NOEfetuaLigaEs]:
+	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.NaoEfetuaLigacoes]:
 		"Não efetua ligações",
-	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.QuedasNasLigaEs]:
+	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.QuedasNasLigacoes]:
 		"Quedas nas ligações",
-	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.ChiadoVozRobTica]:
+	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.ChiadoVozRobotica]:
 		"Chiado / Voz robótica",
 	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.MudoSemTom]: "Mudo / Sem tom",
 };
@@ -3981,9 +3981,9 @@ export const TEMPLATESATENDIMENTON1_TIPODEATENDIMENTO_LABELS: Record<
 	TemplatesAtendimentoN1TipoDeAtendimento,
 	string
 > = {
-	[TemplatesAtendimentoN1TipoDeAtendimento.LentidO]: "Lentidão/Quedas",
-	[TemplatesAtendimentoN1TipoDeAtendimento.SemConexO]: "Sem conexão",
-	[TemplatesAtendimentoN1TipoDeAtendimento.SiteEspecFico]: "Site específico",
+	[TemplatesAtendimentoN1TipoDeAtendimento.Lentidao]: "Lentidão/Quedas",
+	[TemplatesAtendimentoN1TipoDeAtendimento.SemConexao]: "Sem conexão",
+	[TemplatesAtendimentoN1TipoDeAtendimento.SiteEspecifico]: "Site específico",
 	[TemplatesAtendimentoN1TipoDeAtendimento.Telefonia]: "Telefonia",
 	[TemplatesAtendimentoN1TipoDeAtendimento.AberturaDePortas]:
 		"Abertura de portas",
@@ -4006,11 +4006,11 @@ export const TEMPLATESATENDIMENTON1_TIPODEPROBLEMAMVNO_LABELS: Record<
 	TemplatesAtendimentoN1TipoDeProblemaMvno,
 	string
 > = {
-	[TemplatesAtendimentoN1TipoDeProblemaMvno.NORecebeLigaEs]:
+	[TemplatesAtendimentoN1TipoDeProblemaMvno.NaoRecebeLigacoes]:
 		"Não recebe ligações",
-	[TemplatesAtendimentoN1TipoDeProblemaMvno.NOEfetuaLigaEs]:
+	[TemplatesAtendimentoN1TipoDeProblemaMvno.NaoEfetuaLigacoes]:
 		"Não efetua ligações",
-	[TemplatesAtendimentoN1TipoDeProblemaMvno.DadosMVeisNOFuncionam]:
+	[TemplatesAtendimentoN1TipoDeProblemaMvno.DadosMoveisNaoFuncionam]:
 		"Dados móveis não funcionam",
 };
 
@@ -4116,11 +4116,11 @@ export type TurnosRelationKey = keyof TurnosRelations;
 export enum ViagemSolicitacaoDestinoViagem {
 	BocainaDoSul = "Bocaina do Sul",
 	CampoBeloDoSul = "Campo Belo do Sul",
-	CapOAlto = "Capão Alto",
+	CapaoAlto = "Capão Alto",
 	CerroNegro = "Cerro Negro",
 	CorreiaPinto = "Correia Pinto",
 	Curitibanos = "Curitibanos",
-	FlorianPolis = "Florianópolis",
+	Florianopolis = "Florianópolis",
 	Painel = "Painel",
 	Outros = "Outros",
 }
@@ -4133,7 +4133,7 @@ export enum ViagemSolicitacaoDiaria {
 export enum ViagemSolicitacaoFase {
 	CaixaDeEntrada = "Caixa de Entrada",
 	ProcessamentoFinanceiro = "Processamento Financeiro",
-	ConcluDo = "Concluído",
+	Concluido = "Concluído",
 	Arquivado = "Arquivado",
 }
 
@@ -4183,11 +4183,11 @@ export const VIAGEMSOLICITACAO_DESTINOVIAGEM_LABELS: Record<
 > = {
 	[ViagemSolicitacaoDestinoViagem.BocainaDoSul]: "Bocaina do Sul",
 	[ViagemSolicitacaoDestinoViagem.CampoBeloDoSul]: "Campo Belo do Sul",
-	[ViagemSolicitacaoDestinoViagem.CapOAlto]: "Capão Alto",
+	[ViagemSolicitacaoDestinoViagem.CapaoAlto]: "Capão Alto",
 	[ViagemSolicitacaoDestinoViagem.CerroNegro]: "Cerro Negro",
 	[ViagemSolicitacaoDestinoViagem.CorreiaPinto]: "Correia Pinto",
 	[ViagemSolicitacaoDestinoViagem.Curitibanos]: "Curitibanos",
-	[ViagemSolicitacaoDestinoViagem.FlorianPolis]: "Florianópolis",
+	[ViagemSolicitacaoDestinoViagem.Florianopolis]: "Florianópolis",
 	[ViagemSolicitacaoDestinoViagem.Painel]: "Painel",
 	[ViagemSolicitacaoDestinoViagem.Outros]: "Outros",
 };
@@ -4206,7 +4206,7 @@ export const VIAGEMSOLICITACAO_FASE_LABELS: Record<
 > = {
 	[ViagemSolicitacaoFase.CaixaDeEntrada]: "Caixa de Entrada",
 	[ViagemSolicitacaoFase.ProcessamentoFinanceiro]: "Processamento Financeiro",
-	[ViagemSolicitacaoFase.ConcluDo]: "Concluído",
+	[ViagemSolicitacaoFase.Concluido]: "Concluído",
 	[ViagemSolicitacaoFase.Arquivado]: "Arquivado",
 };
 

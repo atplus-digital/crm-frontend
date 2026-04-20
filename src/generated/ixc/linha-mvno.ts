@@ -11,33 +11,9 @@ export enum LinhaMvnoApi {
 	I = "I",
 }
 
-export enum LinhaMvnoDddTelefone {
-	Value24 = "24",
-	Value41 = "41",
-	Value44 = "44",
-	Value47 = "47",
-	Value48 = "48",
-	Value49 = "49",
-}
-
-export enum LinhaMvnoDiaRecorrencia {
-	Value0 = "0",
-	Value1 = "1",
-	Value10 = "10",
-	Value15 = "15",
-	Value20 = "20",
-	Value25 = "25",
-	Value5 = "5",
-}
-
 export enum LinhaMvnoEsim {
 	N = "N",
 	S = "S",
-}
-
-export enum LinhaMvnoIdIntegracao {
-	Value1 = "1",
-	Value2 = "2",
 }
 
 export enum LinhaMvnoPortabilidade {
@@ -52,8 +28,8 @@ export interface LinhaMvno {
 	dados_moveis: string;
 	data_agendamento: string;
 	data_recarga: string;
-	ddd_telefone: LinhaMvnoDddTelefone;
-	dia_recorrencia: LinhaMvnoDiaRecorrencia;
+	ddd_telefone: number;
+	dia_recorrencia: string;
 	esim: LinhaMvnoEsim;
 	expiracao_dados: string;
 	id_account_mvno: string;
@@ -62,7 +38,7 @@ export interface LinhaMvno {
 	id_contrato: number;
 	id_contrato_integracao: string;
 	id_customer_mvno: string;
-	id_integracao: LinhaMvnoIdIntegracao;
+	id_integracao: number;
 	id_linha_integracao: string;
 	id_plano_integracao: string;
 	id_portabilidade_integracao: string;
@@ -93,42 +69,9 @@ export const LINHAMVNO_API_LABELS: Record<LinhaMvnoApi, string> = {
 	[LinhaMvnoApi.I]: "Inativo",
 };
 
-export const LINHAMVNO_DDDTELEFONE_LABELS: Record<
-	LinhaMvnoDddTelefone,
-	string
-> = {
-	[LinhaMvnoDddTelefone.Value24]: "Código 24",
-	[LinhaMvnoDddTelefone.Value41]: "Código 41",
-	[LinhaMvnoDddTelefone.Value44]: "Código 44",
-	[LinhaMvnoDddTelefone.Value47]: "Código 47",
-	[LinhaMvnoDddTelefone.Value48]: "Código 48",
-	[LinhaMvnoDddTelefone.Value49]: "Código 49",
-};
-
-export const LINHAMVNO_DIARECORRENCIA_LABELS: Record<
-	LinhaMvnoDiaRecorrencia,
-	string
-> = {
-	[LinhaMvnoDiaRecorrencia.Value0]: "Inativo",
-	[LinhaMvnoDiaRecorrencia.Value1]: "Ativo",
-	[LinhaMvnoDiaRecorrencia.Value10]: "Código 10",
-	[LinhaMvnoDiaRecorrencia.Value15]: "Código 15",
-	[LinhaMvnoDiaRecorrencia.Value20]: "Código 20",
-	[LinhaMvnoDiaRecorrencia.Value25]: "Código 25",
-	[LinhaMvnoDiaRecorrencia.Value5]: "Código 5",
-};
-
 export const LINHAMVNO_ESIM_LABELS: Record<LinhaMvnoEsim, string> = {
 	[LinhaMvnoEsim.N]: "Não",
 	[LinhaMvnoEsim.S]: "Sim",
-};
-
-export const LINHAMVNO_IDINTEGRACAO_LABELS: Record<
-	LinhaMvnoIdIntegracao,
-	string
-> = {
-	[LinhaMvnoIdIntegracao.Value1]: "Ativo",
-	[LinhaMvnoIdIntegracao.Value2]: "Código 2",
 };
 
 export const LINHAMVNO_PORTABILIDADE_LABELS: Record<

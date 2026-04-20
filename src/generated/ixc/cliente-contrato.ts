@@ -83,11 +83,6 @@ export enum ClienteContratoDocumentPhoto {
 	P = "P",
 }
 
-export enum ClienteContratoEnderecoPadraoCliente {
-	N = "N",
-	S = "S",
-}
-
 export enum ClienteContratoFidelidade {
 	Value12 = "12",
 	Value24 = "24",
@@ -100,26 +95,6 @@ export enum ClienteContratoFinanceiroMigrado {
 export enum ClienteContratoGerarFinanAssinDigitalContrato {
 	N = "N",
 	P = "P",
-}
-
-export enum ClienteContratoIdFilial {
-	Value1 = "1",
-}
-
-export enum ClienteContratoIdModelo {
-	Value5 = "5",
-}
-
-export enum ClienteContratoIdMotivoInclusao {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value5 = "5",
-	Value7 = "7",
-}
-
-export enum ClienteContratoIdTipoDocumento {
-	Value501 = "501",
 }
 
 export enum ClienteContratoImpBkp {
@@ -161,14 +136,6 @@ export enum ClienteContratoLiberacaoSuspensaoParcial {
 	P = "P",
 }
 
-export enum ClienteContratoMotivoInclusao {
-	D = "D",
-	I = "I",
-	N = "N",
-	T = "T",
-	U = "U",
-}
-
 export enum ClienteContratoObs {
 	CanceladoViaBancoDeDados = "cancelado via banco de dados",
 }
@@ -207,14 +174,6 @@ export enum ClienteContratoStatus {
 	A = "A",
 	I = "I",
 	P = "P",
-}
-
-export enum ClienteContratoStatusInternet {
-	A = "A",
-	Aa = "AA",
-	Ca = "CA",
-	D = "D",
-	Fa = "FA",
 }
 
 export enum ClienteContratoStatusVelocidade {
@@ -323,7 +282,7 @@ export interface ClienteContrato {
 	email_assinatura_digital: string;
 	email_cobranca: string;
 	endereco: string;
-	endereco_padrao_cliente: ClienteContratoEnderecoPadraoCliente;
+	endereco_padrao_cliente: string;
 	estrato_social_col: string;
 	fidelidade: ClienteContratoFidelidade;
 	fim_vigencia_summit: string;
@@ -336,11 +295,11 @@ export interface ClienteContrato {
 	id_condominio: string;
 	id_contrato_principal: string;
 	id_crm_negociacoes: string;
-	id_filial: ClienteContratoIdFilial;
+	id_filial: number;
 	id_indexador_reajuste: string;
 	id_instalador: string;
-	id_modelo: ClienteContratoIdModelo;
-	id_motivo_inclusao: ClienteContratoIdMotivoInclusao;
+	id_modelo: number;
+	id_motivo_inclusao: number;
 	id_motivo_negativacao: string;
 	id_notifica_massa: string;
 	id_produto_ativ: string;
@@ -350,7 +309,7 @@ export interface ClienteContrato {
 	id_responsavel_negativacao: string;
 	id_tipo_contrato: number;
 	id_tipo_doc_ativ: string;
-	id_tipo_documento: ClienteContratoIdTipoDocumento;
+	id_tipo_documento: number;
 	id_vd_contrato: number;
 	id_vendedor: number;
 	id_vendedor_ativ: string;
@@ -380,7 +339,7 @@ export interface ClienteContrato {
 	motivo_adicional: string;
 	motivo_cancelamento: number;
 	motivo_desistencia: string;
-	motivo_inclusao: ClienteContratoMotivoInclusao;
+	motivo_inclusao: string;
 	motivo_restri_auto_libera_parc: string;
 	motivo_restricao_auto_desbloq: string;
 	nao_avisar_ate: string;
@@ -412,7 +371,7 @@ export interface ClienteContrato {
 	selfie_photo: ClienteContratoSelfiePhoto;
 	situacao_financeira_contrato: ClienteContratoSituacaoFinanceiraContrato;
 	status: ClienteContratoStatus;
-	status_internet: ClienteContratoStatusInternet;
+	status_internet: string;
 	status_recorrencia: string;
 	status_velocidade: ClienteContratoStatusVelocidade;
 	taxa_improdutiva: string;
@@ -571,14 +530,6 @@ export const CLIENTECONTRATO_DOCUMENTPHOTO_LABELS: Record<
 	[ClienteContratoDocumentPhoto.P]: "P",
 };
 
-export const CLIENTECONTRATO_ENDERECOPADRAOCLIENTE_LABELS: Record<
-	ClienteContratoEnderecoPadraoCliente,
-	string
-> = {
-	[ClienteContratoEnderecoPadraoCliente.N]: "Não",
-	[ClienteContratoEnderecoPadraoCliente.S]: "Sim",
-};
-
 export const CLIENTECONTRATO_FIDELIDADE_LABELS: Record<
 	ClienteContratoFidelidade,
 	string
@@ -600,38 +551,6 @@ export const CLIENTECONTRATO_GERARFINANASSINDIGITALCONTRATO_LABELS: Record<
 > = {
 	[ClienteContratoGerarFinanAssinDigitalContrato.N]: "Não",
 	[ClienteContratoGerarFinanAssinDigitalContrato.P]: "P",
-};
-
-export const CLIENTECONTRATO_IDFILIAL_LABELS: Record<
-	ClienteContratoIdFilial,
-	string
-> = {
-	[ClienteContratoIdFilial.Value1]: "Ativo",
-};
-
-export const CLIENTECONTRATO_IDMODELO_LABELS: Record<
-	ClienteContratoIdModelo,
-	string
-> = {
-	[ClienteContratoIdModelo.Value5]: "Código 5",
-};
-
-export const CLIENTECONTRATO_IDMOTIVOINCLUSAO_LABELS: Record<
-	ClienteContratoIdMotivoInclusao,
-	string
-> = {
-	[ClienteContratoIdMotivoInclusao.Value1]: "Ativo",
-	[ClienteContratoIdMotivoInclusao.Value2]: "Código 2",
-	[ClienteContratoIdMotivoInclusao.Value3]: "Código 3",
-	[ClienteContratoIdMotivoInclusao.Value5]: "Código 5",
-	[ClienteContratoIdMotivoInclusao.Value7]: "Código 7",
-};
-
-export const CLIENTECONTRATO_IDTIPODOCUMENTO_LABELS: Record<
-	ClienteContratoIdTipoDocumento,
-	string
-> = {
-	[ClienteContratoIdTipoDocumento.Value501]: "501",
 };
 
 export const CLIENTECONTRATO_IMPBKP_LABELS: Record<
@@ -700,17 +619,6 @@ export const CLIENTECONTRATO_LIBERACAOSUSPENSAOPARCIAL_LABELS: Record<
 	[ClienteContratoLiberacaoSuspensaoParcial.P]: "P",
 };
 
-export const CLIENTECONTRATO_MOTIVOINCLUSAO_LABELS: Record<
-	ClienteContratoMotivoInclusao,
-	string
-> = {
-	[ClienteContratoMotivoInclusao.D]: "D",
-	[ClienteContratoMotivoInclusao.I]: "Inativo",
-	[ClienteContratoMotivoInclusao.N]: "Não",
-	[ClienteContratoMotivoInclusao.T]: "T",
-	[ClienteContratoMotivoInclusao.U]: "U",
-};
-
 export const CLIENTECONTRATO_OBS_LABELS: Record<ClienteContratoObs, string> = {
 	[ClienteContratoObs.CanceladoViaBancoDeDados]: "Cancelado Via Banco De Dados",
 };
@@ -773,17 +681,6 @@ export const CLIENTECONTRATO_STATUS_LABELS: Record<
 	[ClienteContratoStatus.A]: "Ativo",
 	[ClienteContratoStatus.I]: "Inativo",
 	[ClienteContratoStatus.P]: "P",
-};
-
-export const CLIENTECONTRATO_STATUSINTERNET_LABELS: Record<
-	ClienteContratoStatusInternet,
-	string
-> = {
-	[ClienteContratoStatusInternet.A]: "Ativo",
-	[ClienteContratoStatusInternet.Aa]: "AA",
-	[ClienteContratoStatusInternet.Ca]: "CA",
-	[ClienteContratoStatusInternet.D]: "D",
-	[ClienteContratoStatusInternet.Fa]: "FA",
 };
 
 export const CLIENTECONTRATO_STATUSVELOCIDADE_LABELS: Record<

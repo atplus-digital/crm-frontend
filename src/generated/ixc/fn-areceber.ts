@@ -32,29 +32,6 @@ export enum FnAreceberEstornado {
 	N = "N",
 }
 
-export enum FnAreceberFilialId {
-	Value1 = "1",
-}
-
-export enum FnAreceberIdCarteiraCobranca {
-	Value0 = "0",
-	Value4 = "4",
-	Value5 = "5",
-}
-
-export enum FnAreceberIdMotCancelamento {
-	Value1 = "1",
-}
-
-export enum FnAreceberIdRemessa {
-	Value0 = "0",
-	Value2 = "2",
-}
-
-export enum FnAreceberIdSaida {
-	Value25 = "-25",
-}
-
 export enum FnAreceberImpresso {
 	N = "N",
 	S = "S",
@@ -118,13 +95,6 @@ export enum FnAreceberTituloProtestado {
 	N = "N",
 }
 
-export enum FnAreceberUltimaAtualizacao {
-	Value20211228t125930000z = "2021-12-28T12:59:30.000Z",
-	Value20251121t185348000z = "2025-11-21T18:53:48.000Z",
-	Value20251121t185419000z = "2025-11-21T18:54:19.000Z",
-	Value20260303t123005000z = "2026-03-03T12:30:05.000Z",
-}
-
 export interface FnAreceber {
 	id: number;
 	aguardando_confirmacao_pagamento: FnAreceberAguardandoConfirmacaoPagamento;
@@ -157,12 +127,12 @@ export interface FnAreceber {
 	em_processamento: FnAreceberEmProcessamento;
 	enviado_remessa_baixa: FnAreceberEnviadoRemessaBaixa;
 	estornado: FnAreceberEstornado;
-	filial_id: FnAreceberFilialId;
+	filial_id: number;
 	forma_recebimento: string;
 	gateway_link: string;
 	gerencianet_token: string;
 	id_assinatura_cliente: number;
-	id_carteira_cobranca: FnAreceberIdCarteiraCobranca;
+	id_carteira_cobranca: number;
 	id_cliente: number;
 	id_cobranca: string;
 	id_conta: number;
@@ -172,17 +142,17 @@ export interface FnAreceber {
 	id_im_imovel: string;
 	id_lote_geracao_financeiro: string;
 	id_lote_geracao_financeiro_fatura: string;
-	id_mot_cancelamento: FnAreceberIdMotCancelamento;
+	id_mot_cancelamento: string;
 	id_nota_gerada: number;
 	id_nota_gerada_opc2: string;
 	id_nota_gerada_opc3: string;
 	id_nota_gerada_opc4: string;
-	id_remessa: FnAreceberIdRemessa;
+	id_remessa: number;
 	id_remessa_alteracao: string;
 	id_remessa_baixa: string;
 	id_renegociacao: string;
 	id_renegociacao_novo: string;
-	id_saida: FnAreceberIdSaida;
+	id_saida: number;
 	id_sip: string;
 	ids_contratos_origem: string;
 	ids_faturas_origem: string;
@@ -221,7 +191,7 @@ export interface FnAreceber {
 	titulo_negativacao_integracao: string;
 	titulo_protestado: FnAreceberTituloProtestado;
 	titulo_renegociado: string;
-	ultima_atualizacao: FnAreceberUltimaAtualizacao;
+	ultima_atualizacao: string;
 	validade_desconto_condicional: string;
 	valor: string;
 	valor_aberto: string;
@@ -277,36 +247,6 @@ export const FNARECEBER_ESTORNADO_LABELS: Record<FnAreceberEstornado, string> =
 	{
 		[FnAreceberEstornado.N]: "Não",
 	};
-
-export const FNARECEBER_FILIALID_LABELS: Record<FnAreceberFilialId, string> = {
-	[FnAreceberFilialId.Value1]: "Ativo",
-};
-
-export const FNARECEBER_IDCARTEIRACOBRANCA_LABELS: Record<
-	FnAreceberIdCarteiraCobranca,
-	string
-> = {
-	[FnAreceberIdCarteiraCobranca.Value0]: "Inativo",
-	[FnAreceberIdCarteiraCobranca.Value4]: "Código 4",
-	[FnAreceberIdCarteiraCobranca.Value5]: "Código 5",
-};
-
-export const FNARECEBER_IDMOTCANCELAMENTO_LABELS: Record<
-	FnAreceberIdMotCancelamento,
-	string
-> = {
-	[FnAreceberIdMotCancelamento.Value1]: "Ativo",
-};
-
-export const FNARECEBER_IDREMESSA_LABELS: Record<FnAreceberIdRemessa, string> =
-	{
-		[FnAreceberIdRemessa.Value0]: "Inativo",
-		[FnAreceberIdRemessa.Value2]: "Código 2",
-	};
-
-export const FNARECEBER_IDSAIDA_LABELS: Record<FnAreceberIdSaida, string> = {
-	[FnAreceberIdSaida.Value25]: "25",
-};
 
 export const FNARECEBER_IMPRESSO_LABELS: Record<FnAreceberImpresso, string> = {
 	[FnAreceberImpresso.N]: "Não",
@@ -399,18 +339,4 @@ export const FNARECEBER_TITULOPROTESTADO_LABELS: Record<
 	string
 > = {
 	[FnAreceberTituloProtestado.N]: "Não",
-};
-
-export const FNARECEBER_ULTIMAATUALIZACAO_LABELS: Record<
-	FnAreceberUltimaAtualizacao,
-	string
-> = {
-	[FnAreceberUltimaAtualizacao.Value20211228t125930000z]:
-		"2021 12 28t12:59:30.000z",
-	[FnAreceberUltimaAtualizacao.Value20251121t185348000z]:
-		"2025 11 21t18:53:48.000z",
-	[FnAreceberUltimaAtualizacao.Value20251121t185419000z]:
-		"2025 11 21t18:54:19.000z",
-	[FnAreceberUltimaAtualizacao.Value20260303t123005000z]:
-		"2026 03 03t12:30:05.000z",
 };
