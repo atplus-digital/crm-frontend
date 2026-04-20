@@ -22,8 +22,8 @@ import {
 	withSplitFileImports,
 } from "./generation/import-injector";
 import { generateIndexFileWithReexports } from "./generation/split-index";
-import { runBiomeFix } from "./utils/biome-runner";
 import { splitCollectionsByConfig } from "./utils/collection-splitter";
+import { runLinterFix } from "./utils/linter-runner";
 import { logInfo, logVerbose } from "./utils/logger";
 import { resolveBaseInterfaceNamingConfig, toFileName } from "./utils/naming";
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
@@ -377,7 +377,7 @@ export async function runGenerateTypesForDataSources(): Promise<GenerateTypesRes
 	}
 
 	const outputDirs = dataSourceConfigs.map((d) => d.outputDir);
-	await runBiomeFix(outputDirs);
+	await runLinterFix(outputDirs);
 
 	if (writeFiles.length === 1) {
 		return {
