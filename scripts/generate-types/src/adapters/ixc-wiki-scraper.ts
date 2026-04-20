@@ -12,8 +12,14 @@ interface ParsedField {
 function parseWikiText(rawHtml: string): ParsedField[] {
 	const fields: ParsedField[] = [];
 
+	// Usa [^<]* em vez de [^V]* para não parar em "Valor Padrão" (que contém V).
+	// Exemplo de estrutura HTML:
+	//   Dados técnicos:
+	//   <li>Tipo de campo: Botão de seleção</li>
+	//   <li>Valor Padrão: 01 - Comercial</li>   ← tem V, mas não é "Valores disponíveis"
+	//   <li>Valores disponíveis: <br>01 = 01 - Comercial<br>...
 	const fieldBlockRegex =
-		/([a-z_][a-z_0-9]+)\s+Dados t[ée]cnicos:[^V]*(?:Valores dispon[íi]veis:\s*([^\n]+))?/gi;
+		/([a-z_][a-z_0-9]+)\s+Dados t[ée]cnicos:[^<]*(?:Valores dispon[íi]veis:\s*([^\n]+))?/gi;
 
 	for (const match of rawHtml.matchAll(fieldBlockRegex)) {
 		const name = match[1].trim();

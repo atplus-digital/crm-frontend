@@ -4,11 +4,6 @@ import type {
 	EnumInferenceConfig as ScriptEnumInferenceConfig,
 } from "../@types/script";
 
-export interface InferredEnumValue {
-	value: string;
-	label: string;
-}
-
 export type EnumOrigin = "api" | "adapter" | "inferencia";
 
 export interface InferredEnumInfo {

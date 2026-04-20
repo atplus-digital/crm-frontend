@@ -117,7 +117,12 @@ async function fetchFromWiki(url: string): Promise<string> {
 		throw new Error(`HTTP ${response.status}`);
 	}
 
-	return response.text();
+	// A API do IXC Wiki retorna charset=ISO-8859-1, não UTF-8.
+	// Sem correção, caracteres acentuados (é, í, etc.) são corrompidos
+	// e o regex de scraping falha em encontrar "Dados técnicos".
+	const buffer = await response.arrayBuffer();
+	const decoder = new TextDecoder("iso-8859-1");
+	return decoder.decode(buffer);
 }
 
 export function clearCache(collectionName?: string): void {

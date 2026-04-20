@@ -1,4 +1,5 @@
-import { CommentCard, CommentList } from "#/components/comments";
+import { CommentCard } from "#/components/comments/comment-card";
+import { CommentList } from "#/components/comments/comment-list";
 import { useNegociacaoComentarios } from "#/features/cs/negociacoes/negociacoes-hooks";
 import { formatCommentDate } from "#/lib/utils";
 
