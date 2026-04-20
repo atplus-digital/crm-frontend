@@ -201,6 +201,49 @@ function isEnumCandidate(
 		}
 	}
 
+	// REGRA 1: Único valor com Number(val) === 0 não é enum
+	// Ex: campo "apartamento" com apenas valor "0" significa NULL/ausência de valor
+	if (distinctValues.length === 1) {
+		const singleValue = distinctValues[0];
+		const numericValue = Number(singleValue);
+		if (!isNaN(numericValue) && numericValue === 0) {
+			return false;
+		}
+	}
+
+	// REGRA 2: Padrão de data (YYYY-MM-DD ou YYYYMMDD) não é enum
+	// Ex: "0000-00-00", "2024-01-15" são datas, não enums
+	const datePattern = /^\d{4}(-\d{2})?(-\d{2})?$|^\d{8}$/;
+	if (distinctValues.every((v) => datePattern.test(v))) {
+		return false;
+	}
+
+	// REGRA 3: Variação grande entre valores numéricos (>50) não é enum
+	// Ex: valores [036, 327, 348, 377, 433, 721] têm variação de 685 → não é enum
+	const numericValues = distinctValues
+		.map((v) => Number(v))
+		.filter((n) => !isNaN(n));
+
+	if (
+		numericValues.length === distinctValues.length &&
+		numericValues.length > 1
+	) {
+		const minVal = Math.min(...numericValues);
+		const maxVal = Math.max(...numericValues);
+		const variation = maxVal - minVal;
+
+		// Se a variação entre maior e menor valor for >50, provavelmente não é enum
+		if (variation > 50) {
+			return false;
+		}
+
+		// REGRA 4: Valores que começam em >50 também não são enum
+		// Ex: [1898, 2896] são IDs, não enums
+		if (minVal > 50) {
+			return false;
+		}
+	}
+
 	return true;
 }
 

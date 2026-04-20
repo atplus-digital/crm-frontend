@@ -16,10 +16,6 @@ export enum ClienteContratoAlertaContrato {
 	VaiPagarEm2911 = "vai pagar em 29/11",
 }
 
-export enum ClienteContratoApartamento {
-	Value0 = "0",
-}
-
 export enum ClienteContratoAplicaDescontoTempoBloqueio {
 	S = "S",
 }
@@ -33,20 +29,8 @@ export enum ClienteContratoAssinaturaDigital {
 	P = "P",
 }
 
-export enum ClienteContratoAtivacaoValorParcela {
-	Value000 = "0.00",
-}
-
 export enum ClienteContratoAtivoSummit {
 	N = "N",
-}
-
-export enum ClienteContratoAvalista1 {
-	Value0 = "0",
-}
-
-export enum ClienteContratoAvalista2 {
-	Value0 = "0",
 }
 
 export enum ClienteContratoAvisoAtraso {
@@ -67,17 +51,6 @@ export enum ClienteContratoCcPrevisao {
 	P = "P",
 }
 
-export enum ClienteContratoCidade {
-	Value0 = "0",
-	Value4397 = "4397",
-	Value4450 = "4450",
-	Value4589 = "4589",
-}
-
-export enum ClienteContratoComissao {
-	Value000 = "0.00",
-}
-
 export enum ClienteContratoContratoSuspenso {
 	N = "N",
 }
@@ -92,49 +65,6 @@ export enum ClienteContratoCreditCardRecorrenteCarteiraAntiga {
 	Value5 = "5",
 }
 
-export enum ClienteContratoCreditCardRecorrenteDvCartao {
-	Value036 = "036",
-	Value327 = "327",
-	Value348 = "348",
-	Value377 = "377",
-	Value433 = "433",
-	Value721 = "721",
-}
-
-export enum ClienteContratoCreditCardRecorrenteToken {
-	Value1190 = "1190",
-	Value1429 = "1429",
-	Value1660 = "1660",
-	Value2064 = "2064",
-	Value771 = "771",
-	Value868 = "868",
-}
-
-export enum ClienteContratoDataAssinatura {
-	Value00000000 = "0000-00-00",
-}
-
-export enum ClienteContratoDataCadastroSistema {
-	Value00000000 = "0000-00-00",
-}
-
-export enum ClienteContratoDataDesistencia {
-	Value00000000 = "0000-00-00",
-}
-
-export enum ClienteContratoDataFinalSuspensao {
-	Value00000000 = "0000-00-00",
-}
-
-export enum ClienteContratoDataNegativacao {
-	Value00000000 = "0000-00-00",
-	Value20220110 = "2022-01-10",
-}
-
-export enum ClienteContratoDataRetomadaContrato {
-	Value00000000 = "0000-00-00",
-}
-
 export enum ClienteContratoDesbloqueioConfianca {
 	N = "N",
 	P = "P",
@@ -145,46 +75,12 @@ export enum ClienteContratoDesbloqueioConfiancaAtivo {
 	S = "S",
 }
 
-export enum ClienteContratoDescontoFidelidade {
-	Value000 = "0.00",
-}
-
 export enum ClienteContratoDescricaoAuxPlanoVenda {
 	Permuta = "PERMUTA",
 }
 
 export enum ClienteContratoDocumentPhoto {
 	P = "P",
-}
-
-export enum ClienteContratoDtUltBloqManual {
-	Value00000000 = "0000-00-00",
-	Value20220105 = "2022-01-05",
-	Value20220318 = "2022-03-18",
-	Value20220503 = "2022-05-03",
-	Value20220628 = "2022-06-28",
-	Value20251003 = "2025-10-03",
-	Value20260105 = "2026-01-05",
-}
-
-export enum ClienteContratoDtUltDesbloqAuto {
-	Value00000000 = "0000-00-00",
-}
-
-export enum ClienteContratoDtUltDesbloqManual {
-	Value00000000 = "0000-00-00",
-}
-
-export enum ClienteContratoDtUltDesiste {
-	Value00000000 = "0000-00-00",
-}
-
-export enum ClienteContratoDtUltLiberacaoSuspParc {
-	Value00000000 = "0000-00-00",
-}
-
-export enum ClienteContratoDtUtlNegativacao {
-	Value00000000 = "0000-00-00",
 }
 
 export enum ClienteContratoEnderecoPadraoCliente {
@@ -206,28 +102,8 @@ export enum ClienteContratoGerarFinanAssinDigitalContrato {
 	P = "P",
 }
 
-export enum ClienteContratoIdCondPagAtiv {
-	Value0 = "0",
-}
-
-export enum ClienteContratoIdCondominio {
-	Value0 = "0",
-}
-
-export enum ClienteContratoIdContratoPrincipal {
-	Value0 = "0",
-}
-
 export enum ClienteContratoIdFilial {
 	Value1 = "1",
-}
-
-export enum ClienteContratoIdIndexadorReajuste {
-	Value0 = "0",
-}
-
-export enum ClienteContratoIdInstalador {
-	Value0 = "0",
 }
 
 export enum ClienteContratoIdModelo {
@@ -242,41 +118,8 @@ export enum ClienteContratoIdMotivoInclusao {
 	Value7 = "7",
 }
 
-export enum ClienteContratoIdMotivoNegativacao {
-	Value0 = "0",
-}
-
-export enum ClienteContratoIdProdutoAtiv {
-	Value0 = "0",
-}
-
-export enum ClienteContratoIdResponsavel {
-	Value0 = "0",
-}
-
-export enum ClienteContratoIdResponsavelDesistencia {
-	Value0 = "0",
-}
-
-export enum ClienteContratoIdResponsavelNegativacao {
-	Value0 = "0",
-}
-
-export enum ClienteContratoIdTipoDocAtiv {
-	Value0 = "0",
-}
-
 export enum ClienteContratoIdTipoDocumento {
 	Value501 = "501",
-}
-
-export enum ClienteContratoIdVendedorAtiv {
-	Value0 = "0",
-}
-
-export enum ClienteContratoIdsContratosRecorrencia {
-	Value1898 = "1898",
-	Value2896 = "2896",
 }
 
 export enum ClienteContratoImpBkp {
@@ -287,16 +130,8 @@ export enum ClienteContratoImpCarteira {
 	N = "N",
 }
 
-export enum ClienteContratoImpFinal {
-	Value00000000 = "0000-00-00",
-}
-
 export enum ClienteContratoImpImportacao {
 	N = "N",
-}
-
-export enum ClienteContratoImpInicial {
-	Value00000000 = "0000-00-00",
 }
 
 export enum ClienteContratoImpRede {
@@ -305,10 +140,6 @@ export enum ClienteContratoImpRede {
 
 export enum ClienteContratoImpTreinamento {
 	N = "N",
-}
-
-export enum ClienteContratoIndicacaoContratoId {
-	Value0 = "0",
 }
 
 export enum ClienteContratoIntegracaoAssinaturaDigital {
@@ -330,24 +161,12 @@ export enum ClienteContratoLiberacaoSuspensaoParcial {
 	P = "P",
 }
 
-export enum ClienteContratoMotivoAdicional {
-	Value0 = "0",
-}
-
-export enum ClienteContratoMotivoDesistencia {
-	Value0 = "0",
-}
-
 export enum ClienteContratoMotivoInclusao {
 	D = "D",
 	I = "I",
 	N = "N",
 	T = "T",
 	U = "U",
-}
-
-export enum ClienteContratoNumParcelasAtraso {
-	Value0 = "0",
 }
 
 export enum ClienteContratoObs {
@@ -403,18 +222,6 @@ export enum ClienteContratoStatusVelocidade {
 	R = "R",
 }
 
-export enum ClienteContratoTaxaImprodutiva {
-	Value0000 = "0.000",
-}
-
-export enum ClienteContratoTaxaInstalacao {
-	Value000 = "0.00",
-}
-
-export enum ClienteContratoTestemunhaAssinaturaDigital {
-	Value0 = "0",
-}
-
 export enum ClienteContratoTipo {
 	I = "I",
 }
@@ -423,29 +230,9 @@ export enum ClienteContratoTipoCobranca {
 	P = "P",
 }
 
-export enum ClienteContratoTipoDocOpc {
-	Value0 = "0",
-	Value512 = "512",
-	Value622 = "622",
-	Value623 = "623",
-	Value624 = "624",
-	Value632 = "632",
-	Value633 = "633",
-}
-
-export enum ClienteContratoTipoDocOpc2 {
-	Value0 = "0",
-	Value900 = "900",
-}
-
 export enum ClienteContratoTipoDocOpc3 {
 	Value0 = "0",
 	Value13 = "13",
-}
-
-export enum ClienteContratoTipoDocOpc4 {
-	Value0 = "0",
-	Value512 = "512",
 }
 
 export enum ClienteContratoTipoLocalidade {
@@ -468,16 +255,16 @@ export interface ClienteContrato {
 	id: number;
 	agrupar_financeiro_contrato: ClienteContratoAgruparFinanceiroContrato;
 	alerta_contrato: ClienteContratoAlertaContrato;
-	apartamento: ClienteContratoApartamento;
+	apartamento: string;
 	aplica_desconto_tempo_bloqueio: ClienteContratoAplicaDescontoTempoBloqueio;
 	aplicar_desconto_tempo_bloqueio: ClienteContratoAplicarDescontoTempoBloqueio;
 	assinatura_digital: ClienteContratoAssinaturaDigital;
 	ativacao_numero_parcelas: string;
-	ativacao_valor_parcela: ClienteContratoAtivacaoValorParcela;
+	ativacao_valor_parcela: string;
 	ativacao_vencimentos: string;
 	ativo_summit: ClienteContratoAtivoSummit;
-	avalista_1: ClienteContratoAvalista1;
-	avalista_2: ClienteContratoAvalista2;
+	avalista_1: string;
+	avalista_2: string;
 	aviso_atraso: ClienteContratoAvisoAtraso;
 	bairro: string;
 	base_geracao_tipo_doc: ClienteContratoBaseGeracaoTipoDoc;
@@ -486,8 +273,8 @@ export interface ClienteContrato {
 	cc_previsao: ClienteContratoCcPrevisao;
 	cep: string;
 	chave_pix: string;
-	cidade: ClienteContratoCidade;
-	comissao: ClienteContratoComissao;
+	cidade: string;
+	comissao: string;
 	complemento: string;
 	concorrente_mot_adicional: string;
 	condicao_pagamento_primeira_fat: string;
@@ -496,43 +283,43 @@ export interface ClienteContrato {
 	contrato_suspenso: ClienteContratoContratoSuspenso;
 	credit_card_recorrente_bandeira_cartao: ClienteContratoCreditCardRecorrenteBandeiraCartao;
 	credit_card_recorrente_carteira_antiga: ClienteContratoCreditCardRecorrenteCarteiraAntiga;
-	credit_card_recorrente_dv_cartao: ClienteContratoCreditCardRecorrenteDvCartao;
-	credit_card_recorrente_token: ClienteContratoCreditCardRecorrenteToken;
+	credit_card_recorrente_dv_cartao: string;
+	credit_card_recorrente_token: string;
 	data: string;
 	data_acesso_desativado: string;
-	data_assinatura: ClienteContratoDataAssinatura;
+	data_assinatura: string;
 	data_ativacao: string;
-	data_cadastro_sistema: ClienteContratoDataCadastroSistema;
+	data_cadastro_sistema: string;
 	data_cancelamento: string;
-	data_desistencia: ClienteContratoDataDesistencia;
+	data_desistencia: string;
 	data_expiracao: string;
-	data_final_suspensao: ClienteContratoDataFinalSuspensao;
+	data_final_suspensao: string;
 	data_inicial_suspensao: string;
-	data_negativacao: ClienteContratoDataNegativacao;
+	data_negativacao: string;
 	data_renovacao: string;
-	data_retomada_contrato: ClienteContratoDataRetomadaContrato;
+	data_retomada_contrato: string;
 	data_validada: string;
 	data_validade: string;
 	desbloqueio_confianca: ClienteContratoDesbloqueioConfianca;
 	desbloqueio_confianca_ativo: ClienteContratoDesbloqueioConfiancaAtivo;
-	desconto_fidelidade: ClienteContratoDescontoFidelidade;
+	desconto_fidelidade: string;
 	descricao_aux_plano_venda: ClienteContratoDescricaoAuxPlanoVenda;
 	document_photo: ClienteContratoDocumentPhoto;
 	dt_retorno_desb_conf: string;
 	dt_ult_ativacao: string;
 	dt_ult_bloq_auto: string;
-	dt_ult_bloq_manual: ClienteContratoDtUltBloqManual;
+	dt_ult_bloq_manual: string;
 	dt_ult_des_bloq_conf: string;
 	dt_ult_desativacao: string;
 	dt_ult_desb_conf: string;
-	dt_ult_desbloq_auto: ClienteContratoDtUltDesbloqAuto;
-	dt_ult_desbloq_manual: ClienteContratoDtUltDesbloqManual;
-	dt_ult_desiste: ClienteContratoDtUltDesiste;
+	dt_ult_desbloq_auto: string;
+	dt_ult_desbloq_manual: string;
+	dt_ult_desiste: string;
 	dt_ult_finan_atraso: string;
 	dt_ult_inativacao: string;
-	dt_ult_liberacao_susp_parc: ClienteContratoDtUltLiberacaoSuspParc;
+	dt_ult_liberacao_susp_parc: string;
 	dt_ult_liberacao_temporaria: string;
-	dt_utl_negativacao: ClienteContratoDtUtlNegativacao;
+	dt_utl_negativacao: string;
 	email_assinatura_digital: string;
 	email_cobranca: string;
 	endereco: string;
@@ -545,42 +332,42 @@ export interface ClienteContrato {
 	id_carteira_cobranca: number;
 	id_cidade: string;
 	id_cliente: number;
-	id_cond_pag_ativ: ClienteContratoIdCondPagAtiv;
-	id_condominio: ClienteContratoIdCondominio;
-	id_contrato_principal: ClienteContratoIdContratoPrincipal;
+	id_cond_pag_ativ: string;
+	id_condominio: string;
+	id_contrato_principal: string;
 	id_crm_negociacoes: string;
 	id_filial: ClienteContratoIdFilial;
-	id_indexador_reajuste: ClienteContratoIdIndexadorReajuste;
-	id_instalador: ClienteContratoIdInstalador;
+	id_indexador_reajuste: string;
+	id_instalador: string;
 	id_modelo: ClienteContratoIdModelo;
 	id_motivo_inclusao: ClienteContratoIdMotivoInclusao;
-	id_motivo_negativacao: ClienteContratoIdMotivoNegativacao;
+	id_motivo_negativacao: string;
 	id_notifica_massa: string;
-	id_produto_ativ: ClienteContratoIdProdutoAtiv;
-	id_responsavel: ClienteContratoIdResponsavel;
+	id_produto_ativ: string;
+	id_responsavel: string;
 	id_responsavel_cancelamento: string;
-	id_responsavel_desistencia: ClienteContratoIdResponsavelDesistencia;
-	id_responsavel_negativacao: ClienteContratoIdResponsavelNegativacao;
+	id_responsavel_desistencia: string;
+	id_responsavel_negativacao: string;
 	id_tipo_contrato: number;
-	id_tipo_doc_ativ: ClienteContratoIdTipoDocAtiv;
+	id_tipo_doc_ativ: string;
 	id_tipo_documento: ClienteContratoIdTipoDocumento;
 	id_vd_contrato: number;
 	id_vendedor: number;
-	id_vendedor_ativ: ClienteContratoIdVendedorAtiv;
+	id_vendedor_ativ: string;
 	id_vindi: string;
-	ids_contratos_recorrencia: ClienteContratoIdsContratosRecorrencia;
+	ids_contratos_recorrencia: string;
 	imp_bkp: ClienteContratoImpBkp;
 	imp_carteira: ClienteContratoImpCarteira;
-	imp_final: ClienteContratoImpFinal;
+	imp_final: string;
 	imp_importacao: ClienteContratoImpImportacao;
-	imp_inicial: ClienteContratoImpInicial;
+	imp_inicial: string;
 	imp_motivo: string;
 	imp_obs: string;
 	imp_realizado: string;
 	imp_rede: ClienteContratoImpRede;
 	imp_status: string;
 	imp_treinamento: ClienteContratoImpTreinamento;
-	indicacao_contrato_id: ClienteContratoIndicacaoContratoId;
+	indicacao_contrato_id: number;
 	inicio_vigencia_summit: string;
 	integracao_assinatura_digital: ClienteContratoIntegracaoAssinaturaDigital;
 	isentar_contrato: ClienteContratoIsentarContrato;
@@ -590,9 +377,9 @@ export interface ClienteContrato {
 	longitude: string;
 	lote: string;
 	moeda: string;
-	motivo_adicional: ClienteContratoMotivoAdicional;
+	motivo_adicional: string;
 	motivo_cancelamento: number;
-	motivo_desistencia: ClienteContratoMotivoDesistencia;
+	motivo_desistencia: string;
 	motivo_inclusao: ClienteContratoMotivoInclusao;
 	motivo_restri_auto_libera_parc: string;
 	motivo_restricao_auto_desbloq: string;
@@ -600,7 +387,7 @@ export interface ClienteContrato {
 	nao_bloquear_ate: string;
 	nao_susp_parc_ate: string;
 	nf_info_adicionais: string;
-	num_parcelas_atraso: ClienteContratoNumParcelasAtraso;
+	num_parcelas_atraso: string;
 	numero: string;
 	numero_antigo: string;
 	obs: ClienteContratoObs;
@@ -628,18 +415,18 @@ export interface ClienteContrato {
 	status_internet: ClienteContratoStatusInternet;
 	status_recorrencia: string;
 	status_velocidade: ClienteContratoStatusVelocidade;
-	taxa_improdutiva: ClienteContratoTaxaImprodutiva;
-	taxa_instalacao: ClienteContratoTaxaInstalacao;
+	taxa_improdutiva: string;
+	taxa_instalacao: string;
 	tel_franquia_prefix: string;
 	tel_franquia_segundos: string;
 	tempo_permanencia: string;
-	testemunha_assinatura_digital: ClienteContratoTestemunhaAssinaturaDigital;
+	testemunha_assinatura_digital: string;
 	tipo: ClienteContratoTipo;
 	tipo_cobranca: ClienteContratoTipoCobranca;
-	tipo_doc_opc: ClienteContratoTipoDocOpc;
-	tipo_doc_opc2: ClienteContratoTipoDocOpc2;
+	tipo_doc_opc: number;
+	tipo_doc_opc2: number;
 	tipo_doc_opc3: ClienteContratoTipoDocOpc3;
-	tipo_doc_opc4: ClienteContratoTipoDocOpc4;
+	tipo_doc_opc4: string;
 	tipo_localidade: ClienteContratoTipoLocalidade;
 	tipo_produtos_plano: ClienteContratoTipoProdutosPlano;
 	token_assinatura_digital: string;
@@ -672,13 +459,6 @@ export const CLIENTECONTRATO_ALERTACONTRATO_LABELS: Record<
 	[ClienteContratoAlertaContrato.VaiPagarEm2911]: "Vai Pagar Em 29/11",
 };
 
-export const CLIENTECONTRATO_APARTAMENTO_LABELS: Record<
-	ClienteContratoApartamento,
-	string
-> = {
-	[ClienteContratoApartamento.Value0]: "Inativo",
-};
-
 export const CLIENTECONTRATO_APLICADESCONTOTEMPOBLOQUEIO_LABELS: Record<
 	ClienteContratoAplicaDescontoTempoBloqueio,
 	string
@@ -701,32 +481,11 @@ export const CLIENTECONTRATO_ASSINATURADIGITAL_LABELS: Record<
 	[ClienteContratoAssinaturaDigital.P]: "P",
 };
 
-export const CLIENTECONTRATO_ATIVACAOVALORPARCELA_LABELS: Record<
-	ClienteContratoAtivacaoValorParcela,
-	string
-> = {
-	[ClienteContratoAtivacaoValorParcela.Value000]: "0.00",
-};
-
 export const CLIENTECONTRATO_ATIVOSUMMIT_LABELS: Record<
 	ClienteContratoAtivoSummit,
 	string
 > = {
 	[ClienteContratoAtivoSummit.N]: "Não",
-};
-
-export const CLIENTECONTRATO_AVALISTA1_LABELS: Record<
-	ClienteContratoAvalista1,
-	string
-> = {
-	[ClienteContratoAvalista1.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_AVALISTA2_LABELS: Record<
-	ClienteContratoAvalista2,
-	string
-> = {
-	[ClienteContratoAvalista2.Value0]: "Inativo",
 };
 
 export const CLIENTECONTRATO_AVISOATRASO_LABELS: Record<
@@ -759,23 +518,6 @@ export const CLIENTECONTRATO_CCPREVISAO_LABELS: Record<
 	[ClienteContratoCcPrevisao.P]: "P",
 };
 
-export const CLIENTECONTRATO_CIDADE_LABELS: Record<
-	ClienteContratoCidade,
-	string
-> = {
-	[ClienteContratoCidade.Value0]: "Inativo",
-	[ClienteContratoCidade.Value4397]: "4397",
-	[ClienteContratoCidade.Value4450]: "4450",
-	[ClienteContratoCidade.Value4589]: "4589",
-};
-
-export const CLIENTECONTRATO_COMISSAO_LABELS: Record<
-	ClienteContratoComissao,
-	string
-> = {
-	[ClienteContratoComissao.Value000]: "0.00",
-};
-
 export const CLIENTECONTRATO_CONTRATOSUSPENSO_LABELS: Record<
 	ClienteContratoContratoSuspenso,
 	string
@@ -799,73 +541,6 @@ export const CLIENTECONTRATO_CREDITCARDRECORRENTECARTEIRAANTIGA_LABELS: Record<
 	[ClienteContratoCreditCardRecorrenteCarteiraAntiga.Value5]: "Código 5",
 };
 
-export const CLIENTECONTRATO_CREDITCARDRECORRENTEDVCARTAO_LABELS: Record<
-	ClienteContratoCreditCardRecorrenteDvCartao,
-	string
-> = {
-	[ClienteContratoCreditCardRecorrenteDvCartao.Value036]: "036",
-	[ClienteContratoCreditCardRecorrenteDvCartao.Value327]: "327",
-	[ClienteContratoCreditCardRecorrenteDvCartao.Value348]: "348",
-	[ClienteContratoCreditCardRecorrenteDvCartao.Value377]: "377",
-	[ClienteContratoCreditCardRecorrenteDvCartao.Value433]: "433",
-	[ClienteContratoCreditCardRecorrenteDvCartao.Value721]: "721",
-};
-
-export const CLIENTECONTRATO_CREDITCARDRECORRENTETOKEN_LABELS: Record<
-	ClienteContratoCreditCardRecorrenteToken,
-	string
-> = {
-	[ClienteContratoCreditCardRecorrenteToken.Value1190]: "1190",
-	[ClienteContratoCreditCardRecorrenteToken.Value1429]: "1429",
-	[ClienteContratoCreditCardRecorrenteToken.Value1660]: "1660",
-	[ClienteContratoCreditCardRecorrenteToken.Value2064]: "2064",
-	[ClienteContratoCreditCardRecorrenteToken.Value771]: "771",
-	[ClienteContratoCreditCardRecorrenteToken.Value868]: "868",
-};
-
-export const CLIENTECONTRATO_DATAASSINATURA_LABELS: Record<
-	ClienteContratoDataAssinatura,
-	string
-> = {
-	[ClienteContratoDataAssinatura.Value00000000]: "0000 00 00",
-};
-
-export const CLIENTECONTRATO_DATACADASTROSISTEMA_LABELS: Record<
-	ClienteContratoDataCadastroSistema,
-	string
-> = {
-	[ClienteContratoDataCadastroSistema.Value00000000]: "0000 00 00",
-};
-
-export const CLIENTECONTRATO_DATADESISTENCIA_LABELS: Record<
-	ClienteContratoDataDesistencia,
-	string
-> = {
-	[ClienteContratoDataDesistencia.Value00000000]: "0000 00 00",
-};
-
-export const CLIENTECONTRATO_DATAFINALSUSPENSAO_LABELS: Record<
-	ClienteContratoDataFinalSuspensao,
-	string
-> = {
-	[ClienteContratoDataFinalSuspensao.Value00000000]: "0000 00 00",
-};
-
-export const CLIENTECONTRATO_DATANEGATIVACAO_LABELS: Record<
-	ClienteContratoDataNegativacao,
-	string
-> = {
-	[ClienteContratoDataNegativacao.Value00000000]: "0000 00 00",
-	[ClienteContratoDataNegativacao.Value20220110]: "2022 01 10",
-};
-
-export const CLIENTECONTRATO_DATARETOMADACONTRATO_LABELS: Record<
-	ClienteContratoDataRetomadaContrato,
-	string
-> = {
-	[ClienteContratoDataRetomadaContrato.Value00000000]: "0000 00 00",
-};
-
 export const CLIENTECONTRATO_DESBLOQUEIOCONFIANCA_LABELS: Record<
 	ClienteContratoDesbloqueioConfianca,
 	string
@@ -882,13 +557,6 @@ export const CLIENTECONTRATO_DESBLOQUEIOCONFIANCAATIVO_LABELS: Record<
 	[ClienteContratoDesbloqueioConfiancaAtivo.S]: "Sim",
 };
 
-export const CLIENTECONTRATO_DESCONTOFIDELIDADE_LABELS: Record<
-	ClienteContratoDescontoFidelidade,
-	string
-> = {
-	[ClienteContratoDescontoFidelidade.Value000]: "0.00",
-};
-
 export const CLIENTECONTRATO_DESCRICAOAUXPLANOVENDA_LABELS: Record<
 	ClienteContratoDescricaoAuxPlanoVenda,
 	string
@@ -901,54 +569,6 @@ export const CLIENTECONTRATO_DOCUMENTPHOTO_LABELS: Record<
 	string
 > = {
 	[ClienteContratoDocumentPhoto.P]: "P",
-};
-
-export const CLIENTECONTRATO_DTULTBLOQMANUAL_LABELS: Record<
-	ClienteContratoDtUltBloqManual,
-	string
-> = {
-	[ClienteContratoDtUltBloqManual.Value00000000]: "0000 00 00",
-	[ClienteContratoDtUltBloqManual.Value20220105]: "2022 01 05",
-	[ClienteContratoDtUltBloqManual.Value20220318]: "2022 03 18",
-	[ClienteContratoDtUltBloqManual.Value20220503]: "2022 05 03",
-	[ClienteContratoDtUltBloqManual.Value20220628]: "2022 06 28",
-	[ClienteContratoDtUltBloqManual.Value20251003]: "2025 10 03",
-	[ClienteContratoDtUltBloqManual.Value20260105]: "2026 01 05",
-};
-
-export const CLIENTECONTRATO_DTULTDESBLOQAUTO_LABELS: Record<
-	ClienteContratoDtUltDesbloqAuto,
-	string
-> = {
-	[ClienteContratoDtUltDesbloqAuto.Value00000000]: "0000 00 00",
-};
-
-export const CLIENTECONTRATO_DTULTDESBLOQMANUAL_LABELS: Record<
-	ClienteContratoDtUltDesbloqManual,
-	string
-> = {
-	[ClienteContratoDtUltDesbloqManual.Value00000000]: "0000 00 00",
-};
-
-export const CLIENTECONTRATO_DTULTDESISTE_LABELS: Record<
-	ClienteContratoDtUltDesiste,
-	string
-> = {
-	[ClienteContratoDtUltDesiste.Value00000000]: "0000 00 00",
-};
-
-export const CLIENTECONTRATO_DTULTLIBERACAOSUSPPARC_LABELS: Record<
-	ClienteContratoDtUltLiberacaoSuspParc,
-	string
-> = {
-	[ClienteContratoDtUltLiberacaoSuspParc.Value00000000]: "0000 00 00",
-};
-
-export const CLIENTECONTRATO_DTUTLNEGATIVACAO_LABELS: Record<
-	ClienteContratoDtUtlNegativacao,
-	string
-> = {
-	[ClienteContratoDtUtlNegativacao.Value00000000]: "0000 00 00",
 };
 
 export const CLIENTECONTRATO_ENDERECOPADRAOCLIENTE_LABELS: Record<
@@ -982,46 +602,11 @@ export const CLIENTECONTRATO_GERARFINANASSINDIGITALCONTRATO_LABELS: Record<
 	[ClienteContratoGerarFinanAssinDigitalContrato.P]: "P",
 };
 
-export const CLIENTECONTRATO_IDCONDPAGATIV_LABELS: Record<
-	ClienteContratoIdCondPagAtiv,
-	string
-> = {
-	[ClienteContratoIdCondPagAtiv.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_IDCONDOMINIO_LABELS: Record<
-	ClienteContratoIdCondominio,
-	string
-> = {
-	[ClienteContratoIdCondominio.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_IDCONTRATOPRINCIPAL_LABELS: Record<
-	ClienteContratoIdContratoPrincipal,
-	string
-> = {
-	[ClienteContratoIdContratoPrincipal.Value0]: "Inativo",
-};
-
 export const CLIENTECONTRATO_IDFILIAL_LABELS: Record<
 	ClienteContratoIdFilial,
 	string
 > = {
 	[ClienteContratoIdFilial.Value1]: "Ativo",
-};
-
-export const CLIENTECONTRATO_IDINDEXADORREAJUSTE_LABELS: Record<
-	ClienteContratoIdIndexadorReajuste,
-	string
-> = {
-	[ClienteContratoIdIndexadorReajuste.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_IDINSTALADOR_LABELS: Record<
-	ClienteContratoIdInstalador,
-	string
-> = {
-	[ClienteContratoIdInstalador.Value0]: "Inativo",
 };
 
 export const CLIENTECONTRATO_IDMODELO_LABELS: Record<
@@ -1042,68 +627,11 @@ export const CLIENTECONTRATO_IDMOTIVOINCLUSAO_LABELS: Record<
 	[ClienteContratoIdMotivoInclusao.Value7]: "Código 7",
 };
 
-export const CLIENTECONTRATO_IDMOTIVONEGATIVACAO_LABELS: Record<
-	ClienteContratoIdMotivoNegativacao,
-	string
-> = {
-	[ClienteContratoIdMotivoNegativacao.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_IDPRODUTOATIV_LABELS: Record<
-	ClienteContratoIdProdutoAtiv,
-	string
-> = {
-	[ClienteContratoIdProdutoAtiv.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_IDRESPONSAVEL_LABELS: Record<
-	ClienteContratoIdResponsavel,
-	string
-> = {
-	[ClienteContratoIdResponsavel.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_IDRESPONSAVELDESISTENCIA_LABELS: Record<
-	ClienteContratoIdResponsavelDesistencia,
-	string
-> = {
-	[ClienteContratoIdResponsavelDesistencia.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_IDRESPONSAVELNEGATIVACAO_LABELS: Record<
-	ClienteContratoIdResponsavelNegativacao,
-	string
-> = {
-	[ClienteContratoIdResponsavelNegativacao.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_IDTIPODOCATIV_LABELS: Record<
-	ClienteContratoIdTipoDocAtiv,
-	string
-> = {
-	[ClienteContratoIdTipoDocAtiv.Value0]: "Inativo",
-};
-
 export const CLIENTECONTRATO_IDTIPODOCUMENTO_LABELS: Record<
 	ClienteContratoIdTipoDocumento,
 	string
 > = {
 	[ClienteContratoIdTipoDocumento.Value501]: "501",
-};
-
-export const CLIENTECONTRATO_IDVENDEDORATIV_LABELS: Record<
-	ClienteContratoIdVendedorAtiv,
-	string
-> = {
-	[ClienteContratoIdVendedorAtiv.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_IDSCONTRATOSRECORRENCIA_LABELS: Record<
-	ClienteContratoIdsContratosRecorrencia,
-	string
-> = {
-	[ClienteContratoIdsContratosRecorrencia.Value1898]: "1898",
-	[ClienteContratoIdsContratosRecorrencia.Value2896]: "2896",
 };
 
 export const CLIENTECONTRATO_IMPBKP_LABELS: Record<
@@ -1120,25 +648,11 @@ export const CLIENTECONTRATO_IMPCARTEIRA_LABELS: Record<
 	[ClienteContratoImpCarteira.N]: "Não",
 };
 
-export const CLIENTECONTRATO_IMPFINAL_LABELS: Record<
-	ClienteContratoImpFinal,
-	string
-> = {
-	[ClienteContratoImpFinal.Value00000000]: "0000 00 00",
-};
-
 export const CLIENTECONTRATO_IMPIMPORTACAO_LABELS: Record<
 	ClienteContratoImpImportacao,
 	string
 > = {
 	[ClienteContratoImpImportacao.N]: "Não",
-};
-
-export const CLIENTECONTRATO_IMPINICIAL_LABELS: Record<
-	ClienteContratoImpInicial,
-	string
-> = {
-	[ClienteContratoImpInicial.Value00000000]: "0000 00 00",
 };
 
 export const CLIENTECONTRATO_IMPREDE_LABELS: Record<
@@ -1153,13 +667,6 @@ export const CLIENTECONTRATO_IMPTREINAMENTO_LABELS: Record<
 	string
 > = {
 	[ClienteContratoImpTreinamento.N]: "Não",
-};
-
-export const CLIENTECONTRATO_INDICACAOCONTRATOID_LABELS: Record<
-	ClienteContratoIndicacaoContratoId,
-	string
-> = {
-	[ClienteContratoIndicacaoContratoId.Value0]: "Inativo",
 };
 
 export const CLIENTECONTRATO_INTEGRACAOASSINATURADIGITAL_LABELS: Record<
@@ -1193,20 +700,6 @@ export const CLIENTECONTRATO_LIBERACAOSUSPENSAOPARCIAL_LABELS: Record<
 	[ClienteContratoLiberacaoSuspensaoParcial.P]: "P",
 };
 
-export const CLIENTECONTRATO_MOTIVOADICIONAL_LABELS: Record<
-	ClienteContratoMotivoAdicional,
-	string
-> = {
-	[ClienteContratoMotivoAdicional.Value0]: "Inativo",
-};
-
-export const CLIENTECONTRATO_MOTIVODESISTENCIA_LABELS: Record<
-	ClienteContratoMotivoDesistencia,
-	string
-> = {
-	[ClienteContratoMotivoDesistencia.Value0]: "Inativo",
-};
-
 export const CLIENTECONTRATO_MOTIVOINCLUSAO_LABELS: Record<
 	ClienteContratoMotivoInclusao,
 	string
@@ -1216,13 +709,6 @@ export const CLIENTECONTRATO_MOTIVOINCLUSAO_LABELS: Record<
 	[ClienteContratoMotivoInclusao.N]: "Não",
 	[ClienteContratoMotivoInclusao.T]: "T",
 	[ClienteContratoMotivoInclusao.U]: "U",
-};
-
-export const CLIENTECONTRATO_NUMPARCELASATRASO_LABELS: Record<
-	ClienteContratoNumParcelasAtraso,
-	string
-> = {
-	[ClienteContratoNumParcelasAtraso.Value0]: "Inativo",
 };
 
 export const CLIENTECONTRATO_OBS_LABELS: Record<ClienteContratoObs, string> = {
@@ -1308,27 +794,6 @@ export const CLIENTECONTRATO_STATUSVELOCIDADE_LABELS: Record<
 	[ClienteContratoStatusVelocidade.R]: "R",
 };
 
-export const CLIENTECONTRATO_TAXAIMPRODUTIVA_LABELS: Record<
-	ClienteContratoTaxaImprodutiva,
-	string
-> = {
-	[ClienteContratoTaxaImprodutiva.Value0000]: "0.000",
-};
-
-export const CLIENTECONTRATO_TAXAINSTALACAO_LABELS: Record<
-	ClienteContratoTaxaInstalacao,
-	string
-> = {
-	[ClienteContratoTaxaInstalacao.Value000]: "0.00",
-};
-
-export const CLIENTECONTRATO_TESTEMUNHAASSINATURADIGITAL_LABELS: Record<
-	ClienteContratoTestemunhaAssinaturaDigital,
-	string
-> = {
-	[ClienteContratoTestemunhaAssinaturaDigital.Value0]: "Inativo",
-};
-
 export const CLIENTECONTRATO_TIPO_LABELS: Record<ClienteContratoTipo, string> =
 	{
 		[ClienteContratoTipo.I]: "Inativo",
@@ -1341,41 +806,12 @@ export const CLIENTECONTRATO_TIPOCOBRANCA_LABELS: Record<
 	[ClienteContratoTipoCobranca.P]: "P",
 };
 
-export const CLIENTECONTRATO_TIPODOCOPC_LABELS: Record<
-	ClienteContratoTipoDocOpc,
-	string
-> = {
-	[ClienteContratoTipoDocOpc.Value0]: "Inativo",
-	[ClienteContratoTipoDocOpc.Value512]: "512",
-	[ClienteContratoTipoDocOpc.Value622]: "622",
-	[ClienteContratoTipoDocOpc.Value623]: "623",
-	[ClienteContratoTipoDocOpc.Value624]: "624",
-	[ClienteContratoTipoDocOpc.Value632]: "632",
-	[ClienteContratoTipoDocOpc.Value633]: "633",
-};
-
-export const CLIENTECONTRATO_TIPODOCOPC2_LABELS: Record<
-	ClienteContratoTipoDocOpc2,
-	string
-> = {
-	[ClienteContratoTipoDocOpc2.Value0]: "Inativo",
-	[ClienteContratoTipoDocOpc2.Value900]: "900",
-};
-
 export const CLIENTECONTRATO_TIPODOCOPC3_LABELS: Record<
 	ClienteContratoTipoDocOpc3,
 	string
 > = {
 	[ClienteContratoTipoDocOpc3.Value0]: "Inativo",
 	[ClienteContratoTipoDocOpc3.Value13]: "Código 13",
-};
-
-export const CLIENTECONTRATO_TIPODOCOPC4_LABELS: Record<
-	ClienteContratoTipoDocOpc4,
-	string
-> = {
-	[ClienteContratoTipoDocOpc4.Value0]: "Inativo",
-	[ClienteContratoTipoDocOpc4.Value512]: "512",
 };
 
 export const CLIENTECONTRATO_TIPOLOCALIDADE_LABELS: Record<
