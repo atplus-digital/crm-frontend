@@ -8,14 +8,12 @@ Funcionalidade de Transferência de Titularidade para permitir a mudança de tit
 
 ## File Map
 
-| File                                            | Purpose                                              |
-| ----------------------------------------------- | ---------------------------------------------------- |
-| `components/troca-titularidade-details.tsx`     | Página de detalhes com todas as informações da troca |
-| `components/troca-titularidade-list.tsx`        | Lista de solicitações de troca de titularidade       |
-| `components/troca-titularidade-attachments.tsx` | Exibição de anexos da troca                          |
-| `components/troca-titularidade-comments.tsx`    | Exibição de comentários da troca                     |
-| `troca-titularidade-hooks.ts`                   | Hooks para operações de dados                        |
-| `index.ts`                                      | Barrel export dos componentes públicos               |
+| File                                        | Purpose                                              |
+| ------------------------------------------- | ---------------------------------------------------- |
+| `components/troca-titularidade-details.tsx` | Página de detalhes com todas as informações da troca |
+| `components/troca-titularidade-list.tsx`    | Lista de solicitações de troca de titularidade       |
+| `troca-titularidade-hooks.ts`               | Hooks para operações de dados                        |
+| `index.ts`                                  | Barrel export dos componentes públicos               |
 
 ## Collection Schema
 
