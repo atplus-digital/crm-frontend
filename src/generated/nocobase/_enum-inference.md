@@ -5,59 +5,66 @@
 
 ---
 
+## Resumo Geral
+
+- **Total de enums inferidos:** 144
+- **Total de campos rejeitados:** 0
+
+---
+
 ## Resumo por Collection
 
-| Collection                          | Campos Enum | Status |
-| ----------------------------------- | ----------- | ------ |
-| f_funcionarios                      | 16          | ✅     |
-| t_acessos                           | 1           | ✅     |
-| t_aegis                             | 3           | ✅     |
-| t_aniversarios                      | 1           | ✅     |
-| t_atendimentos_ixc                  | 5           | ✅     |
-| t_configuracoes                     | 1           | ✅     |
-| t_consultas_pf                      | 1           | ✅     |
-| t_consultas_pj                      | 1           | ✅     |
-| t_crm_troca_titularidade            | 5           | ✅     |
-| t_cupons_desconto                   | 3           | ✅     |
-| t_dados_adicionais_cliente_contrato | 2           | ✅     |
-| t_datacenter_memorias               | 3           | ✅     |
-| t_dc_servidores                     | 2           | ✅     |
-| t_demandas_viabilidades             | 3           | ✅     |
-| t_discos                            | 2           | ✅     |
-| t_empresas                          | 2           | ✅     |
-| t_info_arquivos                     | 1           | ✅     |
-| t_info_aso                          | 2           | ✅     |
-| t_itens_pacotes                     | 2           | ✅     |
-| t_lancamentos_ferias                | 1           | ✅     |
-| t_linha_corporativa                 | 1           | ✅     |
-| t_logs                              | 1           | ✅     |
-| t_negociacoes                       | 11          | ✅     |
-| t_negociacoes_comentarios           | 2           | ✅     |
-| t_negociacoes_itens                 | 2           | ✅     |
-| t_oe_qualirun                       | 2           | ✅     |
-| t_opcoes_smp                        | 1           | ✅     |
-| t_opcoes_stfc                       | 1           | ✅     |
-| t_opcoes_stfc_template              | 1           | ✅     |
-| t_pacotes                           | 5           | ✅     |
-| t_patrimonio                        | 2           | ✅     |
-| t_periodos_ferias                   | 1           | ✅     |
-| t_pessoas                           | 3           | ✅     |
-| t_produtos                          | 2           | ✅     |
-| t_qualirun_info_adicionais          | 4           | ✅     |
-| t_qualirun_processos                | 4           | ✅     |
-| t_recursos_viagem                   | 2           | ✅     |
-| t_registros_de_contato              | 3           | ✅     |
-| t_servicos                          | 2           | ✅     |
-| t_sites                             | 2           | ✅     |
-| t_solicitacao_compras               | 6           | ✅     |
-| t_suspensao_contrato                | 1           | ✅     |
-| t_telecom_colocation_opcoes         | 1           | ✅     |
-| t_telecom_interfaces                | 2           | ✅     |
-| t_telecom_ips_fixos                 | 1           | ✅     |
-| t_telecom_recursos                  | 3           | ✅     |
-| t_templates_atendimento_n1          | 15          | ✅     |
-| t_troca_endereco                    | 2           | ✅     |
-| t_viagem_solicitacao                | 4           | ✅     |
+| Collection                          | Enums | Rejeitados | Status |
+| ----------------------------------- | ----- | ---------- | ------ |
+| f_funcionarios                      | 16    | 0          | ✅     |
+| t_acessos                           | 1     | 0          | ✅     |
+| t_aegis                             | 3     | 0          | ✅     |
+| t_aniversarios                      | 1     | 0          | ✅     |
+| t_atendimentos_ixc                  | 5     | 0          | ✅     |
+| t_configuracoes                     | 1     | 0          | ✅     |
+| t_consultas_pf                      | 1     | 0          | ✅     |
+| t_consultas_pj                      | 1     | 0          | ✅     |
+| t_crm_troca_titularidade            | 5     | 0          | ✅     |
+| t_cupons_desconto                   | 3     | 0          | ✅     |
+| t_dados_adicionais_cliente_contrato | 2     | 0          | ✅     |
+| t_datacenter_memorias               | 3     | 0          | ✅     |
+| t_dc_servidores                     | 2     | 0          | ✅     |
+| t_demandas_viabilidades             | 3     | 0          | ✅     |
+| t_discos                            | 2     | 0          | ✅     |
+| t_empresas                          | 2     | 0          | ✅     |
+| t_info_arquivos                     | 1     | 0          | ✅     |
+| t_info_aso                          | 2     | 0          | ✅     |
+| t_itens_pacotes                     | 2     | 0          | ✅     |
+| t_lancamentos_ferias                | 1     | 0          | ✅     |
+| t_linha_corporativa                 | 1     | 0          | ✅     |
+| t_logs                              | 1     | 0          | ✅     |
+| t_negociacoes                       | 11    | 0          | ✅     |
+| t_negociacoes_comentarios           | 2     | 0          | ✅     |
+| t_negociacoes_itens                 | 2     | 0          | ✅     |
+| t_oe_qualirun                       | 2     | 0          | ✅     |
+| t_opcoes_smp                        | 1     | 0          | ✅     |
+| t_opcoes_stfc                       | 1     | 0          | ✅     |
+| t_opcoes_stfc_template              | 1     | 0          | ✅     |
+| t_pacotes                           | 5     | 0          | ✅     |
+| t_patrimonio                        | 2     | 0          | ✅     |
+| t_periodos_ferias                   | 1     | 0          | ✅     |
+| t_pessoas                           | 3     | 0          | ✅     |
+| t_produtos                          | 2     | 0          | ✅     |
+| t_qualirun_info_adicionais          | 4     | 0          | ✅     |
+| t_qualirun_processos                | 4     | 0          | ✅     |
+| t_recursos_viagem                   | 2     | 0          | ✅     |
+| t_registros_de_contato              | 3     | 0          | ✅     |
+| t_servicos                          | 2     | 0          | ✅     |
+| t_sites                             | 2     | 0          | ✅     |
+| t_solicitacao_compras               | 6     | 0          | ✅     |
+| t_suspensao_contrato                | 1     | 0          | ✅     |
+| t_telecom_colocation_opcoes         | 1     | 0          | ✅     |
+| t_telecom_interfaces                | 2     | 0          | ✅     |
+| t_telecom_ips_fixos                 | 1     | 0          | ✅     |
+| t_telecom_recursos                  | 3     | 0          | ✅     |
+| t_templates_atendimento_n1          | 15    | 0          | ✅     |
+| t_troca_endereco                    | 2     | 0          | ✅     |
+| t_viagem_solicitacao                | 4     | 0          | ✅     |
 
 ---
 

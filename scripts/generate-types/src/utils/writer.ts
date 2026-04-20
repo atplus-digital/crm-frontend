@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
@@ -16,8 +17,20 @@ export { isFileBeingEdited } from "./file-editor-check";
 export function writeGeneratedFile(
 	content: string,
 	outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE),
+	_options: { skipValidation?: boolean } = {},
 ): SingleFileResult {
 	const resolvedOutputPath = resolveOutputPath(outputPath);
+
+	if (config.dryRun) {
+		logger.info(
+			`🔍 [DRY-RUN] Escreveria em: ${path.relative(process.cwd(), resolvedOutputPath)}`,
+		);
+		return {
+			resultType: "single",
+			outputPath: resolvedOutputPath,
+			changed: true,
+		};
+	}
 
 	if (isFileBeingEdited(resolvedOutputPath)) {
 		logger.warn(
@@ -54,6 +67,59 @@ export function writeGeneratedFile(
 	};
 }
 
+/**
+ * Valida todos os arquivos TypeScript em um diretório usando tsc --noEmit.
+ * Executa validação em nível de diretório para resolver imports cruzados entre arquivos gerados.
+ *
+ * @returns `true` se a validação passou, `false` se falhou (nunca lança erro)
+ */
+export function validateTypeScriptDirectory(dirPath: string): boolean {
+	if (!config.validateTypes) {
+		return true;
+	}
+
+	const resolvedDir = path.resolve(process.cwd(), dirPath);
+
+	if (!fs.existsSync(resolvedDir)) {
+		logger.debug(`⏭️  Diretório não existe, pulando validação: ${resolvedDir}`);
+		return true;
+	}
+
+	try {
+		const stdout = execSync(
+			"./node_modules/.bin/tsc --noEmit --pretty false 2>&1 || true",
+			{ stdio: "pipe", timeout: 120000, encoding: "utf-8", cwd: process.cwd() },
+		);
+
+		const generatedDirPrefix = resolvedDir.replace(/\\/g, "/");
+		const hasGeneratedErrors = stdout
+			.split("\n")
+			.some((line) => line.startsWith(generatedDirPrefix));
+
+		if (hasGeneratedErrors) {
+			const generatedErrors = stdout
+				.split("\n")
+				.filter((line) => line.startsWith(generatedDirPrefix))
+				.join("\n");
+			logger.warn(
+				`⚠️  TypeScript inválido em: ${path.relative(process.cwd(), resolvedDir)}/`,
+			);
+			logger.debug(generatedErrors);
+			return false;
+		}
+
+		logger.info(
+			`✓ TypeScript válido: ${path.relative(process.cwd(), resolvedDir)}/`,
+		);
+		return true;
+	} catch {
+		logger.warn(
+			`⚠️  Falha ao executar validação TypeScript para: ${path.relative(process.cwd(), resolvedDir)}/`,
+		);
+		return false;
+	}
+}
+
 function resolveOutputPath(
 	outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE),
 ): string {
@@ -77,13 +143,11 @@ function readExistingContent(filePath: string): string {
 
 /**
  * Escreve múltiplos arquivos TypeScript gerados.
- * @param filesMap - Map<collectionName, content>
- * @param outputDir - Diretório base (ex: "src/@types/generated")
- * @returns Resultado com lista de arquivos escritos
  */
 export function writeMultipleFiles(
 	filesMap: Map<string, string>,
 	outputDir: string = config.outputDir,
+	options: { skipValidation?: boolean } = {},
 ): MultiFileResult {
 	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
 	const files: Array<{
@@ -93,6 +157,27 @@ export function writeMultipleFiles(
 	}> = [];
 	let totalChanged = 0;
 	let totalSkipped = 0;
+
+	if (config.dryRun) {
+		logger.info(
+			`🔍 [DRY-RUN] Escreveria ${filesMap.size} arquivos em ${outputDir}/`,
+		);
+		for (const [collectionName] of filesMap) {
+			const fileName = `${toFileName(collectionName)}.ts`;
+			logger.info(`   - ${fileName}`);
+		}
+
+		return {
+			resultType: "multi",
+			files: Array.from(filesMap.keys()).map((name) => ({
+				outputPath: path.join(resolvedOutputDir, `${toFileName(name)}.ts`),
+				changed: true,
+			})),
+			totalFiles: filesMap.size,
+			totalChanged: filesMap.size,
+			totalSkipped: 0,
+		};
+	}
 
 	if (!fs.existsSync(resolvedOutputDir)) {
 		fs.mkdirSync(resolvedOutputDir, { recursive: true });

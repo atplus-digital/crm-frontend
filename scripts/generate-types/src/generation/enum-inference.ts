@@ -1,4 +1,8 @@
-import type { EnumCorrectionRule } from "../@types/script";
+import { config } from "@scripts/generate-types/config";
+import type {
+	EnumCorrectionRule,
+	EnumInferenceConfig as ScriptEnumInferenceConfig,
+} from "../@types/script";
 
 export interface InferredEnumValue {
 	value: string;
@@ -17,41 +21,47 @@ export interface InferredEnumInfo {
 
 export type InferredEnumsMap = Record<string, InferredEnumInfo>;
 
-/**
- * Configuração para inferência de enums.
- */
+export interface RejectedField {
+	fieldName: string;
+	uniqueValues: number;
+	totalRecords: number;
+	reason: string;
+	suggestion?: string;
+}
+
+export type RejectedFieldsMap = Record<string, RejectedField>;
+
 export interface EnumInferenceConfig {
-	/**
-	 * Threshold de cardinalidade para considerar um campo como enum.
-	 * Campos com cardinalidade menor que este valor são candidatos a enum.
-	 * @default 5
-	 */
 	cardinalityThreshold: number;
-
-	/**
-	 * Tamanho da amostra para calcular cardinalidade.
-	 * @default 5000
-	 */
 	sampleSize: number;
-
-	/**
-	 * Razão mínima de repetição para considerar como enum.
-	 * Ex: 0.8 significa que 80% dos registros devem ter valores repetidos.
-	 * @default 0.8
-	 */
 	minRepetitionRatio?: number;
+	fieldNameBlacklist: RegExp[];
+	valueBlacklist: RegExp[];
+	maxNumericVariation: number;
+	minNumericValue: number;
+	fieldNamePatterns: RegExp[];
+	patternThreshold: number;
+}
 
-	/**
-	 * Lista negra de padrões de nomes de campos que nunca serão enums.
-	 * @default []
-	 */
-	fieldNameBlacklist?: RegExp[];
+function buildEnumInferenceConfig(
+	override?: ScriptEnumInferenceConfig,
+): EnumInferenceConfig {
+	const base = config.enumInference ?? {};
+	const cfg = override ?? base;
 
-	/**
-	 * Lista negra de padrões de valores que nunca serão enums.
-	 * @default []
-	 */
-	valueBlacklist?: RegExp[];
+	return {
+		cardinalityThreshold: cfg.cardinalityThreshold ?? 5,
+		sampleSize: cfg.sampleSize ?? 5000,
+		minRepetitionRatio: cfg.minRepetitionRatio ?? 0.8,
+		fieldNameBlacklist: (cfg.fieldNameBlacklist ?? []).map(
+			(p) => new RegExp(p),
+		),
+		valueBlacklist: (cfg.valueBlacklist ?? []).map((p) => new RegExp(p)),
+		maxNumericVariation: cfg.maxNumericVariation ?? 200,
+		minNumericValue: cfg.minNumericValue ?? 50,
+		fieldNamePatterns: (cfg.fieldNamePatterns ?? []).map((p) => new RegExp(p)),
+		patternThreshold: cfg.patternThreshold ?? 500,
+	};
 }
 
 /**
@@ -111,91 +121,6 @@ const ESTADOS_BRASIL: Record<string, string> = {
 	SE: "Sergipe",
 	TO: "Tocantins",
 };
-
-/**
- * Lista negra de padrões de nomes de campos que nunca serão tratados como enums.
- */
-const FIELD_NAME_BLACKLIST: RegExp[] = [
-	// CEPs, contatos, emails, telefones
-	/^cep$/i,
-	/^cep_/i,
-	/_cep$/i,
-	/^contato$/i,
-	/^contato_/i,
-	/_contato$/i,
-	/^email$/i,
-	/^email_/i,
-	/_email$/i,
-	/^telefone$/i,
-	/^telefone_/i,
-	/_telefone$/i,
-	/^celular$/i,
-	/^celular_/i,
-	/_celular$/i,
-
-	// Campos temporais
-	/^data$/i,
-	/^data_/i,
-	/_data$/i,
-	/^date$/i,
-	/^date_/i,
-	/_date$/i,
-	/^hora$/i,
-	/^hora_/i,
-	/_hora$/i,
-	/^time$/i,
-	/^time_/i,
-	/_time$/i,
-	/^timestamp$/i,
-	/^timestamp_/i,
-	/_timestamp$/i,
-
-	// IDs, hashes e valores únicos
-	/^id$/i,
-	/^id_/i,
-	/_id$/i,
-	/^hash$/i,
-	/^hash_/i,
-	/_hash$/i,
-	/^uuid$/i,
-	/^uuid_/i,
-	/_uuid$/i,
-
-	// Endereços completos
-	/^endereco$/i,
-	/^endereco_/i,
-	/_endereco$/i,
-	/^logradouro$/i,
-	/^logradouro_/i,
-	/_logradouro$/i,
-	/^bairro$/i,
-	/^bairro_/i,
-	/_bairro$/i,
-];
-
-/**
- * Lista negra de padrões de valores que nunca serão tratados como enums.
- */
-const VALUE_BLACKLIST: RegExp[] = [
-	// CPF
-	/^\d{3}\.\d{3}-\d{2}$/,
-	/^\d{11}$/,
-	// CNPJ
-	/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/,
-	/^\d{14}$/,
-	// CEP
-	/^\d{5}-\d{3}$/,
-	/^\d{8}$/,
-	// Email
-	/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i,
-	// Telefone
-	/^\(\d{2}\)\s?\d{4,5}-?\d{4}$/,
-	/^\d{10,11}$/,
-	// Data ISO
-	/^\d{4}-\d{2}-\d{2}/,
-	// Hash UUID
-	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
-];
 
 /**
  * Remove apenas acentos de uma string, mantendo espaços e outros caracteres.
@@ -277,59 +202,46 @@ export function extractDistinctValues(
 function isEnumCandidate(
 	distinctValues: string[],
 	totalRecords: number,
-	cardinalityThreshold: number,
-	minRepetitionRatio?: number,
+	config: EnumInferenceConfig,
 	fieldName?: string,
-	fieldNameBlacklist?: RegExp[],
-	valueBlacklist?: RegExp[],
 ): boolean {
-	// Cardinalidade baixa: menos valores distintos que o threshold
-	if (distinctValues.length >= cardinalityThreshold) {
+	if (distinctValues.length >= config.cardinalityThreshold) {
 		return false;
 	}
 
-	// Se não há registros, não é candidato
 	if (totalRecords === 0) {
 		return false;
 	}
 
-	if (fieldName && fieldNameBlacklist && fieldNameBlacklist.length > 0) {
-		if (fieldNameBlacklist.some((pattern) => pattern.test(fieldName))) {
-			return false;
-		}
+	if (
+		fieldName &&
+		config.fieldNameBlacklist.some((pattern) => pattern.test(fieldName))
+	) {
+		return false;
 	}
 
-	if (valueBlacklist && valueBlacklist.length > 0) {
-		if (
-			distinctValues.some((v) =>
-				valueBlacklist.some((pattern) => pattern.test(v)),
-			)
-		) {
-			return false;
-		}
+	if (
+		config.valueBlacklist.some((v) => distinctValues.some((val) => v.test(val)))
+	) {
+		return false;
 	}
 
-	// Regras adicionais para filtrar campos que não são enums
-
-	// Se há muitos valores únicos relativos ao total, provavelmente não é enum
-	// (ex: 100 registros com 80 valores distintos = alta cardinalidade)
 	const cardinalityRatio = distinctValues.length / totalRecords;
 	if (cardinalityRatio > 0.5 && distinctValues.length > 5) {
 		return false;
 	}
 
-	// Nova regra: verificar razão de repetição mínima
-	// Se minRepetitionRatio = 0.8, então 80% dos registros devem ter valores repetidos
-	if (minRepetitionRatio !== undefined && minRepetitionRatio > 0) {
+	if (
+		config.minRepetitionRatio !== undefined &&
+		config.minRepetitionRatio > 0
+	) {
 		const uniqueRatio = distinctValues.length / totalRecords;
 		const repetitionRatio = 1 - uniqueRatio;
-		if (repetitionRatio < minRepetitionRatio) {
+		if (repetitionRatio < config.minRepetitionRatio) {
 			return false;
 		}
 	}
 
-	// REGRA 1: Único valor com Number(val) === 0 não é enum
-	// Ex: campo "apartamento" com apenas valor "0" significa NULL/ausência de valor
 	if (distinctValues.length === 1) {
 		const singleValue = distinctValues[0];
 		const numericValue = Number(singleValue);
@@ -338,15 +250,11 @@ function isEnumCandidate(
 		}
 	}
 
-	// REGRA 2: Padrão de data (YYYY-MM-DD ou YYYYMMDD) não é enum
-	// Ex: "0000-00-00", "2024-01-15" são datas, não enums
 	const datePattern = /^\d{4}(-\d{2})?(-\d{2})?$|^\d{8}$/;
 	if (distinctValues.every((v) => datePattern.test(v))) {
 		return false;
 	}
 
-	// REGRA 3: Variação grande entre valores numéricos (>50) não é enum
-	// Ex: valores [036, 327, 348, 377, 433, 721] têm variação de 685 → não é enum
 	const numericValues = distinctValues
 		.map((v) => Number(v))
 		.filter((n) => !Number.isNaN(n));
@@ -359,14 +267,20 @@ function isEnumCandidate(
 		const maxVal = Math.max(...numericValues);
 		const variation = maxVal - minVal;
 
-		// Se a variação entre maior e menor valor for >50, provavelmente não é enum
-		if (variation > 50) {
+		const isKnownEnumPattern =
+			fieldName && config.fieldNamePatterns.some((p) => p.test(fieldName));
+		const effectiveThreshold = isKnownEnumPattern
+			? config.patternThreshold
+			: config.maxNumericVariation;
+		const effectiveMinValue = isKnownEnumPattern
+			? config.patternThreshold
+			: config.minNumericValue;
+
+		if (variation > effectiveThreshold) {
 			return false;
 		}
 
-		// REGRA 4: Valores que começam em >50 também não são enum
-		// Ex: [1898, 2896] são IDs, não enums
-		if (minVal > 50) {
+		if (minVal > effectiveMinValue) {
 			return false;
 		}
 	}
@@ -425,26 +339,93 @@ export function generateEnumMemberName(
 	return result;
 }
 
+function getRejectionReason(
+	distinctValues: string[],
+	totalRecords: number,
+	config: EnumInferenceConfig,
+	fieldName?: string,
+): { reason: string; suggestion?: string } | null {
+	if (distinctValues.length >= config.cardinalityThreshold) {
+		return {
+			reason: `Cardinalidade alta (${distinctValues.length} >= ${config.cardinalityThreshold})`,
+			suggestion: "Aumentar cardinalityThreshold se for enum legítimo",
+		};
+	}
+
+	if (
+		fieldName &&
+		config.fieldNameBlacklist.some((pattern) => pattern.test(fieldName))
+	) {
+		return {
+			reason: "Campo na blacklist",
+			suggestion: "Remover da blacklist se for enum",
+		};
+	}
+
+	if (
+		config.valueBlacklist.some((v) => distinctValues.some((val) => v.test(val)))
+	) {
+		return {
+			reason: "Valores na blacklist (CPF, CNPJ, email, etc)",
+		};
+	}
+
+	const numericValues = distinctValues
+		.map((v) => Number(v))
+		.filter((n) => !Number.isNaN(n));
+
+	if (
+		numericValues.length === distinctValues.length &&
+		numericValues.length > 1
+	) {
+		const minVal = Math.min(...numericValues);
+		const maxVal = Math.max(...numericValues);
+		const variation = maxVal - minVal;
+
+		const isKnownEnumPattern =
+			fieldName && config.fieldNamePatterns.some((p) => p.test(fieldName));
+		const effectiveThreshold = isKnownEnumPattern
+			? config.patternThreshold
+			: config.maxNumericVariation;
+		const effectiveMinValue = isKnownEnumPattern
+			? config.patternThreshold
+			: config.minNumericValue;
+
+		if (variation > effectiveThreshold) {
+			return {
+				reason: `Variação numérica alta (${variation} > ${effectiveThreshold})`,
+				suggestion: isKnownEnumPattern
+					? `Aumentar patternThreshold para >${variation}`
+					: `Adicionar ${fieldName} a fieldNamePatterns se for enum`,
+			};
+		}
+
+		if (minVal > effectiveMinValue) {
+			return {
+				reason: `Valores muito altos (mínimo ${minVal} > ${effectiveMinValue})`,
+				suggestion: isKnownEnumPattern
+					? `Aumentar minNumericValue para >${minVal}`
+					: `Adicionar ${fieldName} a fieldNamePatterns se for enum`,
+			};
+		}
+	}
+
+	return null;
+}
+
 /**
  * Inferir enums a partir de amostra de dados.
  * Analisa valores distintos e identifica campos com baixa cardinalidade.
- *
- * @param records - Registros da amostra
- * @param fieldNames - Nomes dos campos a analisar
- * @param config - Configuração de inferência
- * @returns Mapa de campos que são candidatos a enum
+ * Retorna enums inferidos e campos rejeitados com motivos.
  */
 export function inferEnumsFromSample(
 	records: Array<Record<string, unknown>>,
 	fieldNames: string[],
-	inferenceConfig?: Partial<EnumInferenceConfig>,
-): InferredEnumsMap {
-	const threshold = inferenceConfig?.cardinalityThreshold ?? 5;
-	const minRepetitionRatio = inferenceConfig?.minRepetitionRatio;
-	const fieldNameBlacklist =
-		inferenceConfig?.fieldNameBlacklist ?? FIELD_NAME_BLACKLIST;
-	const valueBlacklist = inferenceConfig?.valueBlacklist ?? VALUE_BLACKLIST;
+	inferenceConfig?: ScriptEnumInferenceConfig,
+): { enums: InferredEnumsMap; rejected: RejectedFieldsMap } {
+	const config = buildEnumInferenceConfig(inferenceConfig);
 	const inferredEnums: InferredEnumsMap = {};
+	const rejectedFields: RejectedFieldsMap = {};
 
 	for (const fieldName of fieldNames) {
 		const distinctValues = extractDistinctValues(records, fieldName);
@@ -453,17 +434,7 @@ export function inferEnumsFromSample(
 			continue;
 		}
 
-		if (
-			isEnumCandidate(
-				distinctValues,
-				records.length,
-				threshold,
-				minRepetitionRatio,
-				fieldName,
-				fieldNameBlacklist,
-				valueBlacklist,
-			)
-		) {
+		if (isEnumCandidate(distinctValues, records.length, config, fieldName)) {
 			const enumInfo = processEnumValues(
 				distinctValues,
 				fieldName,
@@ -472,10 +443,25 @@ export function inferEnumsFromSample(
 			if (enumInfo) {
 				inferredEnums[fieldName] = enumInfo;
 			}
+		} else {
+			const rejection = getRejectionReason(
+				distinctValues,
+				records.length,
+				config,
+				fieldName,
+			);
+			if (rejection) {
+				rejectedFields[fieldName] = {
+					fieldName,
+					uniqueValues: distinctValues.length,
+					totalRecords: records.length,
+					...rejection,
+				};
+			}
 		}
 	}
 
-	return inferredEnums;
+	return { enums: inferredEnums, rejected: rejectedFields };
 }
 
 /**

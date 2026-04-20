@@ -5,16 +5,23 @@
 
 ---
 
+## Resumo Geral
+
+- **Total de enums inferidos:** 133
+- **Total de campos rejeitados:** 0
+
+---
+
 ## Resumo por Collection
 
-| Collection            | Campos Enum | Status |
-| --------------------- | ----------- | ------ |
-| cliente               | 50          | ✅     |
-| cliente_contrato      | 46          | ✅     |
-| fn_areceber           | 21          | ✅     |
-| linha_mvno            | 3           | ✅     |
-| su_ticket             | 9           | ✅     |
-| vd_contratos_produtos | 4           | ✅     |
+| Collection            | Enums | Rejeitados | Status |
+| --------------------- | ----- | ---------- | ------ |
+| cliente               | 50    | 0          | ✅     |
+| cliente_contrato      | 46    | 0          | ✅     |
+| fn_areceber           | 21    | 0          | ✅     |
+| linha_mvno            | 3     | 0          | ✅     |
+| su_ticket             | 9     | 0          | ✅     |
+| vd_contratos_produtos | 4     | 0          | ✅     |
 
 ---
 

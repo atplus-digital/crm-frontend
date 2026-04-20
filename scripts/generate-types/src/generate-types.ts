@@ -30,6 +30,7 @@ import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 import {
 	cleanOutputDirectory,
 	getUnusedFiles,
+	validateTypeScriptDirectory,
 	writeGeneratedFile,
 	writeMultipleFiles,
 } from "./utils/writer";
@@ -205,7 +206,7 @@ async function runGenerateTypesForDataSource(
 					continue;
 				}
 
-				const inferredEnums = await client.inferEnumsFromData(
+				const { enums: inferredEnums } = await client.inferEnumsFromData(
 					collectionName,
 					scalarFieldNames,
 				);
@@ -215,8 +216,7 @@ async function runGenerateTypesForDataSource(
 					originsForCollection.set(fieldName, { origin: "inferencia" });
 				}
 
-				const finalInferredEnums = inferredEnums;
-				const mergedEnums = mergeEnums(existingEnums, finalInferredEnums);
+				const mergedEnums = mergeEnums(existingEnums, inferredEnums);
 				types.enums = mergedEnums;
 			} catch {
 				// No-op
@@ -320,6 +320,10 @@ async function runGenerateTypesForDataSource(
 			);
 		}
 
+		if (config.validateTypes) {
+			validateTypeScriptDirectory(dataSource.outputDir);
+		}
+
 		return {
 			writeFiles: [
 				{ outputPath: mainWrite.outputPath, changed: mainWrite.changed },
@@ -394,6 +398,10 @@ async function runGenerateTypesForDataSource(
 		);
 	}
 
+	if (config.validateTypes) {
+		validateTypeScriptDirectory(dataSource.outputDir);
+	}
+
 	const allWriteFiles = [
 		{
 			outputPath: collectionsResult.outputPath,
@@ -414,14 +422,6 @@ async function runGenerateTypesForDataSource(
 	logger.info(
 		`📄 ${dataSource.dataSource}: ${totalChanged} arquivo(s) atualizado(s)${totalSkipped > 0 ? `, ${totalSkipped} pulado(s) (em edição)` : ""}`,
 	);
-
-	if (shouldGenerateEnumReport && collectionReports.length > 0) {
-		const reportContent = generateMultiCollectionReport(collectionReports);
-		writeGeneratedFile(
-			reportContent,
-			path.join(dataSource.outputDir, "_enum-inference.md"),
-		);
-	}
 
 	return {
 		writeFiles: allWriteFiles,

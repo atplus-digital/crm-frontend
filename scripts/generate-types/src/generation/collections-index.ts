@@ -145,7 +145,8 @@ export function generateCollectionsFile(
 
 	lines.push("// Tipo union com todas as collections disponíveis");
 	lines.push(
-		`export type CollectionName = ${generateCollectionNameUnion(collectionNames)};`,
+		`export type CollectionName =
+${generateCollectionNameUnion(collectionNames)};`,
 	);
 	lines.push("");
 	lines.push(

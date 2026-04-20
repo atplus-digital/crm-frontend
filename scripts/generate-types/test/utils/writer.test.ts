@@ -3,26 +3,25 @@ import {
 	cleanOutputDirectory,
 	getUnusedFiles,
 	isFileBeingEdited,
+	validateTypeScriptDirectory,
 	writeGeneratedFile,
 	writeMultipleFiles,
 } from "@scripts/generate-types/src/utils/writer";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-// Mock node:fs
-vi.mock("node:fs", () => {
-	return {
-		existsSync: vi.fn().mockReturnValue(false),
-		mkdirSync: vi.fn(),
-		writeFileSync: vi.fn(),
-		readFileSync: vi.fn(),
-		unlinkSync: vi.fn(),
-		readdirSync: vi.fn(),
-	};
-});
+vi.mock("node:fs", () => ({
+	existsSync: vi.fn().mockReturnValue(false),
+	mkdirSync: vi.fn(),
+	writeFileSync: vi.fn(),
+	readFileSync: vi.fn(),
+	unlinkSync: vi.fn(),
+	readdirSync: vi.fn(),
+}));
 
 vi.mock("@scripts/generate-types/config", () => ({
 	config: {
 		outputDir: "/tmp/test-output",
+		validateTypes: false,
 	},
 }));
 
@@ -30,14 +29,33 @@ vi.mock("@scripts/generate-types/src/utils/naming", () => ({
 	toFileName: (name: string) => name.toLowerCase(),
 }));
 
-// Mock file-editor-check to always return false
 vi.mock("@scripts/generate-types/src/utils/file-editor-check", () => ({
 	isFileBeingEdited: vi.fn().mockReturnValue(false),
+}));
+
+const { getMockConfig, setMockConfig } = vi.hoisted(() => {
+	let mockConfig = {
+		outputDir: "/tmp/test-output",
+		validateTypes: false,
+	};
+	return {
+		getMockConfig: () => mockConfig,
+		setMockConfig: (newConfig: Record<string, unknown>) => {
+			mockConfig = { ...mockConfig, ...newConfig };
+		},
+	};
+});
+
+vi.mock("@scripts/generate-types/config", () => ({
+	get config() {
+		return getMockConfig();
+	},
 }));
 
 describe("writer", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
+		setMockConfig({ outputDir: "/tmp/test-output", validateTypes: false });
 	});
 
 	describe("writeGeneratedFile", () => {
@@ -159,6 +177,25 @@ describe("writer", () => {
 			expect(fs.mkdirSync).toHaveBeenCalledWith("/tmp/new-dir", {
 				recursive: true,
 			});
+		});
+	});
+
+	describe("validateTypeScriptDirectory", () => {
+		it("deve retornar true quando validateTypes é false", () => {
+			setMockConfig({ outputDir: "/tmp/test-output", validateTypes: false });
+
+			const result = validateTypeScriptDirectory("/tmp/output");
+
+			expect(result).toBe(true);
+		});
+
+		it("deve retornar true quando diretório não existe", () => {
+			setMockConfig({ outputDir: "/tmp/test-output", validateTypes: true });
+			vi.mocked(fs.existsSync).mockReturnValue(false);
+
+			const result = validateTypeScriptDirectory("/tmp/nonexistent");
+
+			expect(result).toBe(true);
 		});
 	});
 

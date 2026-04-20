@@ -13,7 +13,7 @@ function formatOrigin(origin: InferredEnumInfo["origin"]): string {
 	}
 }
 
-function _hasDuplicateLabels(enumInfo: {
+function hasDuplicateLabels(enumInfo: {
 	values: string[];
 	labels: Record<string, string>;
 }): boolean {
@@ -27,12 +27,12 @@ function _hasDuplicateLabels(enumInfo: {
 	return Array.from(labelCounts.values()).some((count) => count > 1);
 }
 
-function _formatStatus(enumInfo: {
+function formatStatus(enumInfo: {
 	cardinality: number;
 	values: string[];
 	labels: Record<string, string>;
 }): string {
-	if (_hasDuplicateLabels(enumInfo)) {
+	if (hasDuplicateLabels(enumInfo)) {
 		return "⚠️ Duplicado";
 	}
 	if (enumInfo.cardinality <= 5) {
@@ -44,11 +44,12 @@ function _formatStatus(enumInfo: {
 	return "❓ Avaliar";
 }
 
-interface RejectedField {
+export interface RejectedField {
 	fieldName: string;
 	uniqueValues: number;
 	totalRecords: number;
 	reason: string;
+	suggestion?: string;
 }
 
 export function generateEnumInferenceReport(
@@ -83,7 +84,7 @@ export function generateEnumInferenceReport(
 	];
 
 	for (const [fieldName, enumInfo] of entries) {
-		const status = _formatStatus(enumInfo);
+		const status = formatStatus(enumInfo);
 		const origin = formatOrigin(enumInfo.origin);
 		const valuesPreview = enumInfo.values.join(", ").slice(0, 50);
 		const valuesDisplay =
@@ -127,20 +128,73 @@ export function generateMultiCollectionReport(
 		"",
 	];
 
+	const totalEnums = reports.reduce((sum, r) => sum + r.enumFields.size, 0);
+	const totalRejected = reports.reduce(
+		(sum, r) => sum + (r.rejectedFields?.length ?? 0),
+		0,
+	);
+
+	lines.push("## Resumo Geral");
+	lines.push("");
+	lines.push(`- **Total de enums inferidos:** ${totalEnums}`);
+	lines.push(`- **Total de campos rejeitados:** ${totalRejected}`);
+	lines.push("");
+	lines.push("---");
+	lines.push("");
+
 	lines.push("## Resumo por Collection");
 	lines.push("");
-	lines.push("| Collection | Campos Enum | Status |");
-	lines.push("|------------|-------------|--------|");
+	lines.push("| Collection | Enums | Rejeitados | Status |");
+	lines.push("|------------|-------|------------|--------|");
 
 	for (const report of reports) {
 		const enumCount = report.enumFields.size;
-		const status = enumCount > 0 ? "✅" : "➖";
-		lines.push(`| ${report.collectionName} | ${enumCount} | ${status} |`);
+		const rejectedCount = report.rejectedFields?.length ?? 0;
+		let status = "✅";
+
+		if (enumCount === 0 && rejectedCount === 0) {
+			status = "➖";
+		} else if (rejectedCount > enumCount * 2) {
+			status = "⚠️ Muitos rejeitados";
+		}
+
+		lines.push(
+			`| ${report.collectionName} | ${enumCount} | ${rejectedCount} | ${status} |`,
+		);
 	}
 
 	lines.push("");
 	lines.push("---");
 	lines.push("");
+
+	const hasRejected = reports.some((r) => (r.rejectedFields?.length ?? 0) > 0);
+
+	if (hasRejected) {
+		lines.push("## Campos Rejeitados");
+		lines.push("");
+		lines.push(
+			"| Collection | Campo | Valores Únicos | Total Registros | Motivo | Sugestão |",
+		);
+		lines.push(
+			"|------------|-------|----------------|-----------------|--------|----------|",
+		);
+
+		for (const report of reports) {
+			if (!report.rejectedFields || report.rejectedFields.length === 0) {
+				continue;
+			}
+
+			for (const rejected of report.rejectedFields) {
+				lines.push(
+					`| ${report.collectionName} | ${rejected.fieldName} | ${rejected.uniqueValues} | ${rejected.totalRecords} | ${rejected.reason} | ${rejected.suggestion ?? "—"} |`,
+				);
+			}
+		}
+
+		lines.push("");
+		lines.push("---");
+		lines.push("");
+	}
 
 	lines.push("## Sumário");
 	lines.push("");

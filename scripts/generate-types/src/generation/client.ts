@@ -9,6 +9,7 @@ import type {
 	DataSourceCollection,
 	DataSourceField,
 	InferredEnumsMap,
+	RejectedFieldsMap,
 } from "@scripts/generate-types/src/@types/script";
 import { inferEnumsFromSample } from "./enum-inference";
 
@@ -187,14 +188,14 @@ export class NocoBaseDataSourceClient implements DataSourceClient {
 		collectionName: string,
 		fieldNames: string[],
 		sampleSize = 1000,
-	): Promise<InferredEnumsMap> {
+	): Promise<{ enums: InferredEnumsMap; rejected: RejectedFieldsMap }> {
 		const records = await this.fetchCollectionSample(
 			collectionName,
 			sampleSize,
 		);
 
 		if (records.length === 0) {
-			return {};
+			return { enums: {}, rejected: {} };
 		}
 
 		return inferEnumsFromSample(records, fieldNames);
