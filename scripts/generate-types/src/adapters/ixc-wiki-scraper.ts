@@ -1,4 +1,4 @@
-import type { EnumAdapter } from "../@types/script";
+import type { EnumAdapter, EnumAdapterFieldEnum } from "../@types/script";
 import { fetchWithCache } from "../utils/enum-cache";
 import { logVerbose } from "../utils/logger";
 
@@ -9,17 +9,12 @@ export function createIXCWikiAdapter(): EnumAdapter {
 		name: "IXC Wiki Schema",
 		async fetchEnums(
 			collectionName: string,
-		): Promise<
-			Record<string, { values: string[]; labels: Record<string, string> }>
-		> {
+		): Promise<Record<string, EnumAdapterFieldEnum>> {
 			const url = `${WIKI_BASE_URL}/formulario.php?form=${collectionName}`;
 
 			logVerbose(`[IXC Wiki] Fetching ${url}`);
 
-			let enums: Record<
-				string,
-				{ values: string[]; labels: Record<string, string> }
-			>;
+			let enums: Record<string, EnumAdapterFieldEnum>;
 			try {
 				enums = await fetchWithCache(collectionName, url);
 			} catch (err) {
