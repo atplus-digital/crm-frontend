@@ -14,18 +14,22 @@ React Router v7 route definitions — thin wrappers with `loader` guards + lazy-
 
 ## Key Files
 
-| File                              | Purpose                                      |
-| --------------------------------- | -------------------------------------------- |
-| `router.tsx`                      | Root route tree with `createBrowserRouter()` |
-| `dashboard.tsx`                   | Protected dashboard route (requires auth)    |
-| `auth/login.tsx`                  | Public login route (requires guest)          |
-| `auth/reset-password.tsx`         | Password reset request                       |
-| `auth/reset-password-confirm.tsx` | Password reset confirmation                  |
-| `cs/contratos.tsx`                | Contracts list route                         |
-| `cs/negociacoes.tsx`              | Negotiations list route                      |
-| `cs/negociacoes-detail.tsx`       | Negotiation detail route                     |
-| `cs/pessoas.tsx`                  | People (PF/PJ) list route                    |
-| `cs/pessoa-detail.tsx`            | Person detail route                          |
+| File                                    | Purpose                                      |
+| --------------------------------------- | -------------------------------------------- |
+| `router.tsx`                            | Root route tree with `createBrowserRouter()` |
+| `dashboard/index.tsx`                   | Protected dashboard route (requires auth)    |
+| `profile/index.tsx`                     | User profile settings route                  |
+| `forbidden/index.tsx`                   | 403 Access Denied page                       |
+| `auth/login/index.tsx`                  | Public login route (requires guest)          |
+| `auth/reset-password/index.tsx`         | Password reset request                       |
+| `auth/reset-password-confirm/index.tsx` | Password reset confirmation                  |
+| `cs/pessoas/index.tsx`                  | People (PF/PJ) list route                    |
+| `cs/negociacoes/index.tsx`              | Negotiations list route                      |
+| `cs/negociacoes/$id.tsx`                | Negotiation detail route                     |
+| `cs/contratos/index.tsx`                | Contracts list route                         |
+| `cs/contratos/$id.tsx`                  | Contract detail route                        |
+| `cs/troca-de-titularidade/index.tsx`    | Ownership transfer list route                |
+| `cs/troca-de-titularidade/$id.tsx`      | Ownership transfer detail route              |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -47,12 +51,12 @@ React Router v7 route definitions — thin wrappers with `loader` guards + lazy-
 
 ## Golden Samples
 
-| Pattern                  | Reference file                         |
-| ------------------------ | -------------------------------------- |
-| Protected route loader   | `src/routes/dashboard.tsx`             |
-| Public auth route loader | `src/routes/auth/login.tsx`            |
-| Route with params        | `src/routes/cs/negociacoes-detail.tsx` |
-| Router configuration     | `src/routes/router.tsx`                |
+| Pattern                  | Reference file                      |
+| ------------------------ | ----------------------------------- |
+| Protected route loader   | `src/routes/dashboard/index.tsx`    |
+| Public auth route loader | `src/routes/auth/login/index.tsx`   |
+| Route with params        | `src/routes/cs/negociacoes/$id.tsx` |
+| Router configuration     | `src/routes/router.tsx`             |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
 
@@ -63,30 +67,29 @@ React Router v7 route definitions — thin wrappers with `loader` guards + lazy-
 ### Protected Route (requires authentication)
 
 ```typescript
-// src/routes/dashboard.tsx
+// src/routes/dashboard/index.tsx
 import { requireAuth } from "#/features/auth";
-import { DashboardPage } from "#/pages/dashboard/dashboard-page";
+import { UserDashboard } from "#/pages/dashboard/dashboard-page";
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  requireAuth(new URL(request.url).pathname);
+export async function loader() {
+  requireAuth("/");
   return null;
 }
 
 export function Component() {
-  return <DashboardPage />;
+  return <UserDashboard />;
 }
 ```
 
 ### Public Auth Route (requires guest — NOT authenticated)
 
 ```typescript
-// src/routes/auth/login.tsx
+// src/routes/auth/login/index.tsx
 import { requireGuest } from "#/features/auth";
 import { LoginPage } from "#/pages/auth/login-page";
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export function loader() {
   requireGuest();
-  return null;
 }
 
 export function Component() {
@@ -97,19 +100,16 @@ export function Component() {
 ### Route with Params
 
 ```typescript
-// src/routes/cs/negociacoes-detail.tsx
+// src/routes/cs/negociacoes/$id.tsx
 import { requireAuth } from "#/features/auth";
-import { NegotiationDetailPage } from "#/pages/cs/negociacoes/negociacao-detail-page";
+import { NegociacaoDetailPage } from "#/pages/cs/negociacoes/negociacao-detail-page";
 
-export async function loader({ request, params }: LoaderFunctionArgs) {
-  requireAuth(new URL(request.url).pathname);
-  // Optional: prefetch data here or let page handle it
-  return null;
+export async function loader() {
+  requireAuth("/");
 }
 
 export function Component() {
-  const { id } = useParams();
-  return <NegotiationDetailPage id={id} />;
+  return <NegociacaoDetailPage />;
 }
 ```
 
@@ -131,12 +131,12 @@ export function MyPage() {
 ### Step 2: Create route wrapper
 
 ```typescript
-// src/routes/my-feature/my-route.tsx
+// src/routes/my-feature/index.tsx
 import { requireAuth } from "#/features/auth";
 import { MyPage } from "#/pages/my-feature/my-page";
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  requireAuth(new URL(request.url).pathname);
+export async function loader() {
+  requireAuth("/");
   return null;
 }
 
@@ -149,8 +149,6 @@ export function Component() {
 
 ```typescript
 // src/routes/router.tsx
-import { myRoute } from "./my-feature/my-route";
-
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -159,12 +157,7 @@ export const router = createBrowserRouter([
       // ... existing routes
       {
         path: "my-feature",
-        children: [
-          {
-            index: true,
-            ...myRoute,
-          },
-        ],
+        lazy: () => import("./my-feature/index"),
       },
     ],
   },

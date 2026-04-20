@@ -26,35 +26,35 @@ export const router = createBrowserRouter([
 				children: [
 					{
 						index: true,
-						lazy: () => import("./dashboard"),
+						lazy: () => import("./dashboard/index"),
 					},
 					{
 						path: "profile",
-						lazy: () => import("./profile"),
+						lazy: () => import("./profile/index"),
 					},
 					{
 						path: "cs/pessoas",
-						lazy: () => import("./cs/cs"),
+						lazy: () => import("./cs/pessoas/index"),
 					},
 					{
 						path: "cs/negociacoes",
-						lazy: () => import("./cs/cs-negociacoes"),
+						lazy: () => import("./cs/negociacoes/index"),
 					},
 					{
 						path: "cs/negociacoes/:id",
-						lazy: () => import("./cs/cs-negociacao-detail"),
+						lazy: () => import("./cs/negociacoes/$id"),
 					},
 					{
 						path: "cs/contratos",
-						lazy: () => import("./cs/cs-contratos"),
+						lazy: () => import("./cs/contratos/index"),
 					},
 					{
 						path: "cs/contratos/:id",
-						lazy: () => import("./cs/cs-contrato-detail"),
+						lazy: () => import("./cs/contratos/$id"),
 					},
 					{
 						path: "cs/troca-de-titularidade",
-						lazy: () => import("./cs/troca-de-titularidade"),
+						lazy: () => import("./cs/troca-de-titularidade/index"),
 					},
 					{
 						path: "cs/troca-de-titularidade/:id",
@@ -64,19 +64,19 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "login",
-				lazy: () => import("./auth/login"),
+				lazy: () => import("./auth/login/index"),
 			},
 			{
 				path: "forbidden",
-				lazy: () => import("./forbidden"),
+				lazy: () => import("./forbidden/index"),
 			},
 			{
 				path: "reset-password",
-				lazy: () => import("./auth/reset-password"),
+				lazy: () => import("./auth/reset-password/index"),
 			},
 			{
 				path: "reset-password-confirm",
-				lazy: () => import("./auth/reset-password-confirm"),
+				lazy: () => import("./auth/reset-password-confirm/index"),
 			},
 			{
 				path: "*",
