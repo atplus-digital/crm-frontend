@@ -14,13 +14,13 @@ Feature modules by domain; each folder in `src/features/` owns its contracts, se
 
 ## Key Files
 
-| File               | Purpose                                                                 |
-| ------------------ | ----------------------------------------------------------------------- |
-| `auth/`            | Authentication feature (client, guards, service, store, types, UI)      |
-| `cs/`              | Customer Success feature (contracts, negotiations, people, domain UI)   |
-| `custom-requests/` | Typed custom request registry/service/hooks for dynamic backend actions |
-| `permissions/`     | RBAC feature (permission compute, store, guards, hooks, nav filtering)  |
-| `<feature>/`       | New feature folder with its own scoped `AGENTS.md`                      |
+| File               | Purpose                                                                                       |
+| ------------------ | --------------------------------------------------------------------------------------------- |
+| `auth/`            | Authentication feature (client, guards, service, store, types, UI)                            |
+| `cs/`              | Customer Success feature (contracts, negotiations, people, domain UI)                         |
+| `custom-requests/` | Typed custom request registry/service/hooks for dynamic backend actions                       |
+| `permissions/`     | RBAC feature (permission compute, store, guards, hooks, nav filtering) — lives inside `auth/` |
+| `<feature>/`       | New feature folder with its own scoped `AGENTS.md`                                            |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -46,7 +46,7 @@ Feature modules by domain; each folder in `src/features/` owns its contracts, se
 | Feature with `components/` folder | `src/features/cs/components/contratos-table.tsx` |
 | Feature public API barrel         | `src/features/auth/index.ts`                     |
 | Feature hook wrapper              | `src/features/custom-requests/hooks.ts`          |
-| Feature guard/store pattern       | `src/features/permissions/guards.ts`             |
+| Feature guard/store pattern       | `src/features/auth/permissions/guards.ts`        |
 | Scoped feature docs               | `src/features/cs/AGENTS.md`                      |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
