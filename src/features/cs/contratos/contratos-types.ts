@@ -9,10 +9,7 @@ import type { SuTicket } from "#/generated/ixc/su-ticket";
 import type { VdContratosProdutos } from "#/generated/ixc/vd-contratos-produtos";
 import type { CrmTrocaTitularidade } from "#/generated/nocobase/crm-troca-titularidade";
 import type { RegistrosDeContato } from "#/generated/nocobase/registros-de-contato";
-import type { PaginatedResponse } from "#/repositories/types";
-
-// Re-export PaginatedResponse para compatibilidade
-export type { PaginatedResponse };
+import type { ListParams } from "#/repositories/types";
 
 // ---------------------------------------------------------------------------
 // Status (enumerações de domínio - não geradas pelo IXC)
@@ -117,12 +114,10 @@ export interface ContratoFilters {
 	contratoId?: number;
 }
 
-export interface ContratoListParams {
-	page?: number;
-	pageSize?: number;
-	sort?: string[];
+export type ContratoListParams = Omit<ListParams, "filter"> & {
 	filters?: ContratoFilters;
-}
+	appends?: string[];
+};
 
 export type LinhaMovel = Pick<
 	LinhaMvno,

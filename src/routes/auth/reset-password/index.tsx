@@ -3,7 +3,7 @@ import { env } from "#/env";
 import { requireGuest } from "#/features/auth";
 import { GuestLayout } from "#/features/auth/components/auth-layout";
 import { createLogger } from "#/lib/logger";
-import { ResetPasswordPage } from "#/pages/auth/reset-password-page";
+import { ResetPasswordPage } from "#/pages/auth/reset-password";
 
 const log = createLogger("auth");
 

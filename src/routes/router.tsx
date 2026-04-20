@@ -2,7 +2,7 @@ import { createBrowserRouter, Outlet } from "react-router";
 import { App } from "#/app";
 import { DashboardLayout } from "#/components/layout/dashboard-layout";
 import { authStore, validateTokenOnInit } from "#/features/auth";
-import { NotFoundPage } from "#/pages/not-found-page";
+import { NotFoundPage } from "#/pages/not-found/not-found";
 
 export const router = createBrowserRouter([
 	{

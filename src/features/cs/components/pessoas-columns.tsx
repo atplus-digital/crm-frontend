@@ -4,6 +4,7 @@ import type {
 	PessoaFisicaListItem,
 	PessoaJuridicaListItem,
 } from "#/features/cs/pessoas/pessoas-types";
+import type { Pessoas } from "#/generated/nocobase/pessoas";
 
 const CREDITO_LABELS: Record<string, string> = {
 	Aprovado: "Aprovado",
@@ -108,7 +109,9 @@ export const pfColumns: ColumnDef<PessoaFisicaListItem, unknown>[] = [
 	{
 		id: "createdBy.nickname",
 		header: "Criado por",
-		cell: ({ row }) => row.original.createdBy?.nickname || "-",
+		cell: ({ row }) =>
+			(row.original as Pessoas & { createdBy?: { nickname: string } | null })
+				.createdBy?.nickname || "-",
 	},
 ];
 

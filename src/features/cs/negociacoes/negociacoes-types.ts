@@ -15,10 +15,7 @@ import type {
 } from "#/generated/nocobase/negociacoes";
 import type { Pessoas } from "#/generated/nocobase/pessoas";
 import type { Users } from "#/generated/nocobase/users";
-import type { PaginatedResponse } from "#/repositories/types";
-
-// Re-export PaginatedResponse para compatibilidade
-export type { PaginatedResponse };
+import type { ListParams } from "#/repositories/types";
 
 // ---------------------------------------------------------------------------
 // Status (enumerações de domínio - não geradas)
@@ -388,10 +385,7 @@ export interface NegociacaoFilters {
 	contratoId?: number;
 }
 
-export interface NegociacaoListParams {
-	page?: number;
-	pageSize?: number;
-	sort?: string[];
+export type NegociacaoListParams = Omit<ListParams, "filter"> & {
 	filters?: NegociacaoFilters;
 	appends?: Array<keyof NegociacoesRelations>;
-}
+};

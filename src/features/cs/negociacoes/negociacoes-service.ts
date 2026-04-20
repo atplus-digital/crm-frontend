@@ -15,13 +15,13 @@ import {
 } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";
+import type { PaginatedResponse } from "#/repositories/types";
 import { exportNegociacoesToCsv } from "./export-csv";
 import type {
 	Negociacao,
 	NegociacaoFilters,
 	NegociacaoListParams,
 	NegociacaoWithRelations,
-	PaginatedResponse,
 } from "./negociacoes-types";
 
 const log = createLogger("services:cs:negociacoes");

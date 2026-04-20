@@ -69,7 +69,7 @@ React Router v7 route definitions — thin wrappers with `loader` guards + lazy-
 ```typescript
 // src/routes/dashboard/index.tsx
 import { requireAuth } from "#/features/auth";
-import { UserDashboard } from "#/pages/dashboard/dashboard-page";
+import { UserDashboard } from "#/pages/dashboard/dashboard/dashboard";
 
 export async function loader() {
   requireAuth("/");
@@ -86,7 +86,7 @@ export function Component() {
 ```typescript
 // src/routes/auth/login/index.tsx
 import { requireGuest } from "#/features/auth";
-import { LoginPage } from "#/pages/auth/login-page";
+import { LoginPage } from "#/pages/auth/login/login";
 
 export function loader() {
   requireGuest();
@@ -102,7 +102,7 @@ export function Component() {
 ```typescript
 // src/routes/cs/negociacoes/$id.tsx
 import { requireAuth } from "#/features/auth";
-import { NegociacaoDetailPage } from "#/pages/cs/negociacoes/negociacao-detail-page";
+import { NegociacaoDetailPage } from "#/pages/cs/negociacoes/negociacao-detail/negociacao-detail";
 
 export async function loader() {
   requireAuth("/");
@@ -122,7 +122,7 @@ export function Component() {
 ### Step 1: Create page component
 
 ```typescript
-// src/pages/my-feature/my-page.tsx
+// src/pages/my-feature/my-page/my-page.tsx
 export function MyPage() {
   return <div>My Page</div>;
 }
@@ -133,7 +133,7 @@ export function MyPage() {
 ```typescript
 // src/routes/my-feature/index.tsx
 import { requireAuth } from "#/features/auth";
-import { MyPage } from "#/pages/my-feature/my-page";
+import { MyPage } from "#/pages/my-feature/my-page/my-page";
 
 export async function loader() {
   requireAuth("/");

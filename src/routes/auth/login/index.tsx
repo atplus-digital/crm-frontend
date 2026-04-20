@@ -1,6 +1,6 @@
 import { requireGuest } from "#/features/auth";
 import { createLogger } from "#/lib/logger";
-import { LoginPage } from "#/pages/auth/login-page";
+import { LoginPage } from "#/pages/auth/login";
 
 const log = createLogger("auth");
 

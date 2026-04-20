@@ -12,3 +12,5 @@ pnpm knip:silent
 pnpm biome check
 pnpm test
 
+pnpm build
+pnpm typecheck

@@ -1,6 +1,6 @@
 import type { CollectionRelationsMap } from "#/generated/nocobase/collections";
 import type { Empresas } from "#/generated/nocobase/empresas";
-import type { Pessoas } from "#/generated/nocobase/pessoas";
+import type { Pessoas, PessoasAnaliseIxc } from "#/generated/nocobase/pessoas";
 import { buildFilter, eq, includes } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";
@@ -24,16 +24,18 @@ function buildPessoaFisicaFilter(
 
 	const conditions: Record<string, unknown>[] = [];
 
-	if (filters.nome) {
-		conditions.push(includes("f_nome", filters.nome));
+	if (filters.f_nome) {
+		conditions.push(includes("f_nome", filters.f_nome));
 	}
 
-	if (filters.cpf) {
-		conditions.push(includes("f_cpf", filters.cpf));
+	if (filters.f_cpf) {
+		conditions.push(includes("f_cpf", filters.f_cpf));
 	}
 
-	if (filters.analiseIxc && filters.analiseIxc !== "all") {
-		conditions.push(eq("f_analise_ixc", filters.analiseIxc));
+	if (filters.f_analise_ixc && filters.f_analise_ixc !== "all") {
+		conditions.push(
+			eq("f_analise_ixc", filters.f_analise_ixc as PessoasAnaliseIxc),
+		);
 	}
 
 	return buildFilter(conditions);
@@ -46,12 +48,12 @@ function buildPessoaJuridicaFilter(
 
 	const conditions: Record<string, unknown>[] = [];
 
-	if (filters.razaoSocial) {
-		conditions.push(includes("f_razao_social", filters.razaoSocial));
+	if (filters.f_razao_social) {
+		conditions.push(includes("f_razao_social", filters.f_razao_social));
 	}
 
-	if (filters.cnpj) {
-		conditions.push(includes("f_cnpj", filters.cnpj));
+	if (filters.f_cnpj) {
+		conditions.push(includes("f_cnpj", filters.f_cnpj));
 	}
 
 	return buildFilter(conditions);

@@ -8,6 +8,7 @@ import type { RegistrosDeContato } from "#/generated/nocobase/registros-de-conta
 import { buildFilter, eq } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { ixcRepository, nocobaseRepository } from "#/repositories";
+import type { PaginatedResponse } from "#/repositories/types";
 import type {
 	AtendimentoIXC,
 	ContratoCliente,
@@ -16,7 +17,6 @@ import type {
 	ContratoWithCliente,
 	Fatura,
 	LinhaMovel,
-	PaginatedResponse,
 	ProdutoContrato,
 	RegistroContato,
 	TrocaTitularidade,

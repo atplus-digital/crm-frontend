@@ -1,5 +1,5 @@
 import { requireAuth } from "#/features/auth";
-import { NegociacaoDetailPage } from "#/pages/cs/negociacoes/negociacao-detail-page";
+import { NegociacaoDetailPage } from "#/pages/cs/negociacoes/negociacao-detail";
 
 export async function loader() {
 	requireAuth("/");
