@@ -147,7 +147,7 @@ function readExistingContent(filePath: string): string {
 export function writeMultipleFiles(
 	filesMap: Map<string, string>,
 	outputDir: string = config.outputDir,
-	options: { skipValidation?: boolean } = {},
+	_options: { skipValidation?: boolean } = {},
 ): MultiFileResult {
 	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
 	const files: Array<{

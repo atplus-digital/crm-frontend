@@ -6,10 +6,11 @@ const mockConfigFactory = vi.hoisted(() => {
 	return vi.fn().mockReturnValue({
 		outputDir: "/tmp/test-generated",
 		splitCollections: [],
-		verbose: false,
+		logLevel: "info" as const,
 		defaultEnvPath: ".env.local",
 		requestTimeoutMs: 15_000,
 		requestConcurrency: 5,
+		maxConcurrency: 5,
 		baseInterfaceNaming: { prefix: "", suffix: "Base" },
 		datasources: [
 			{
@@ -95,10 +96,11 @@ describe("generate-types", () => {
 			mockConfigFactory.mockReturnValue({
 				outputDir: "/tmp/test-generated",
 				splitCollections: [],
-				verbose: false,
+				logLevel: "info" as const,
 				defaultEnvPath: ".env.local",
 				requestTimeoutMs: 15_000,
 				requestConcurrency: 5,
+				maxConcurrency: 5,
 				baseInterfaceNaming: { prefix: "", suffix: "Base" },
 				datasources: [
 					{
@@ -148,10 +150,11 @@ describe("generate-types", () => {
 			mockConfigFactory.mockReturnValue({
 				outputDir: "/tmp/test-generated",
 				splitCollections: [],
-				verbose: false,
+				logLevel: "info" as const,
 				defaultEnvPath: ".env.local",
 				requestTimeoutMs: 15_000,
 				requestConcurrency: 5,
+				maxConcurrency: 5,
 				baseInterfaceNaming: { prefix: "", suffix: "Base" },
 				datasources: [
 					{
@@ -181,10 +184,11 @@ describe("generate-types", () => {
 			mockConfigFactory.mockReturnValue({
 				outputDir: "/tmp/test-generated",
 				splitCollections: [],
-				verbose: false,
+				logLevel: "info" as const,
 				defaultEnvPath: ".env.local",
 				requestTimeoutMs: 15_000,
 				requestConcurrency: 5,
+				maxConcurrency: 5,
 				baseInterfaceNaming: { prefix: "", suffix: "Base" },
 				datasources: undefined,
 				baseUrl: "https://example.com/api",
@@ -281,10 +285,11 @@ describe("runGenerateTypesForDataSources", () => {
 		mockConfigFactory.mockReturnValue({
 			outputDir: "/tmp/test-generated",
 			splitCollections: [],
-			verbose: false,
+			logLevel: "info" as const,
 			defaultEnvPath: ".env.local",
 			requestTimeoutMs: 15_000,
 			requestConcurrency: 5,
+			maxConcurrency: 5,
 			baseInterfaceNaming: { prefix: "", suffix: "Base" },
 			datasources: [],
 			baseUrl: "https://example.com/api",
@@ -340,10 +345,11 @@ describe("resolveDataSourceConfigs - edge cases", () => {
 		mockConfigFactory.mockReturnValue({
 			outputDir: "/tmp/test-generated",
 			splitCollections: [],
-			verbose: false,
+			logLevel: "info" as const,
 			defaultEnvPath: ".env.local",
 			requestTimeoutMs: 15_000,
 			requestConcurrency: 5,
+			maxConcurrency: 5,
 			baseInterfaceNaming: { prefix: "", suffix: "Base" },
 			datasources: undefined,
 			baseUrl: "https://example.com/api",
@@ -359,10 +365,11 @@ describe("resolveDataSourceConfigs - edge cases", () => {
 		mockConfigFactory.mockReturnValue({
 			outputDir: "/tmp/test-generated",
 			splitCollections: [],
-			verbose: false,
+			logLevel: "info" as const,
 			defaultEnvPath: ".env.local",
 			requestTimeoutMs: 15_000,
 			requestConcurrency: 5,
+			maxConcurrency: 5,
 			datasources: [
 				{
 					name: "valid",

@@ -18,6 +18,10 @@ vi.mock("node:fs", () => ({
 	readdirSync: vi.fn(),
 }));
 
+vi.mock("@scripts/generate-types/src/utils/file-editor-check", () => ({
+	isFileBeingEdited: vi.fn().mockReturnValue(false),
+}));
+
 vi.mock("@scripts/generate-types/config", () => ({
 	config: {
 		outputDir: "/tmp/test-output",
@@ -27,10 +31,6 @@ vi.mock("@scripts/generate-types/config", () => ({
 
 vi.mock("@scripts/generate-types/src/utils/naming", () => ({
 	toFileName: (name: string) => name.toLowerCase(),
-}));
-
-vi.mock("@scripts/generate-types/src/utils/file-editor-check", () => ({
-	isFileBeingEdited: vi.fn().mockReturnValue(false),
 }));
 
 const { getMockConfig, setMockConfig } = vi.hoisted(() => {

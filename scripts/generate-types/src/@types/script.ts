@@ -1,6 +1,8 @@
 import type { RejectedFieldsMap } from "../generation/enum-inference";
 import type { NocoBaseCredentials } from "./nocobase";
 
+export type { RejectedFieldsMap } from "../generation/enum-inference";
+
 /**
  * Interfaces genéricas para datasource agnóstico
  */

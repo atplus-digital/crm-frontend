@@ -13,6 +13,7 @@ import {
 	nestedField,
 	or,
 } from "#/lib/filter-builder";
+import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";
 import { exportNegociacoesToCsv } from "./export-csv";
 import type {
@@ -22,6 +23,8 @@ import type {
 	NegociacaoWithRelations,
 	PaginatedResponse,
 } from "./negociacoes-types";
+
+const log = createLogger("services:cs:negociacoes");
 
 function buildNegociacaoFilter(
 	filters?: NegociacaoFilters,
@@ -108,121 +111,175 @@ function buildNegociacaoFilter(
 export async function fetchNegociacoes(
 	params: NegociacaoListParams = {},
 ): Promise<PaginatedResponse<NegociacaoWithRelations>> {
-	const {
-		page = 1,
-		pageSize = 20,
-		sort = ["-createdAt"],
-		filters,
-		appends = ["f_vendedor", "f_pessoa", "f_negociacao_pessoa_juridica"],
-	} = params;
+	try {
+		const {
+			page = 1,
+			pageSize = 20,
+			sort = ["-createdAt"],
+			filters,
+			appends = ["f_vendedor", "f_pessoa", "f_negociacao_pessoa_juridica"],
+		} = params;
 
-	const filter = buildNegociacaoFilter(filters);
+		const filter = buildNegociacaoFilter(filters);
 
-	const response = await nocobaseRepository.list("t_negociacoes", {
-		page,
-		pageSize,
-		appends: appends as Array<
-			keyof import("#/generated/nocobase/negociacoes").NegociacoesRelations
-		>,
-		...(sort.length > 0 && { sort }),
-		...(filter && { filter }),
-	});
+		const response = await nocobaseRepository.list("t_negociacoes", {
+			page,
+			pageSize,
+			appends: appends as Array<
+				keyof import("#/generated/nocobase/negociacoes").NegociacoesRelations
+			>,
+			...(sort.length > 0 && { sort }),
+			...(filter && { filter }),
+		});
 
-	return {
-		data: response.data as unknown as NegociacaoWithRelations[],
-		meta: response.meta,
-	};
+		return {
+			data: response.data as unknown as NegociacaoWithRelations[],
+			meta: response.meta,
+		};
+	} catch (error) {
+		const message =
+			error instanceof Error ? error.message : "Erro desconhecido";
+		log.error("Failed to fetch negociações", { params, error: message });
+		throw error;
+	}
 }
 
 export async function fetchNegociacaoById(
 	id: number,
 ): Promise<NegociacaoWithRelations> {
-	const response = await nocobaseRepository.get("t_negociacoes", id, {
-		appends: [
-			"f_vendedor",
-			"f_pessoa",
-			"f_negociacao_pessoa_juridica",
-			"f_itens_negociacao",
-			"f_anexos",
-			"f_comentarios",
-			"f_pacote",
-			"f_pacotes_adicionais",
-			"f_cupom_desconto",
-			"createdBy",
-			"updatedBy",
-		],
-	});
+	try {
+		const response = await nocobaseRepository.get("t_negociacoes", id, {
+			appends: [
+				"f_vendedor",
+				"f_pessoa",
+				"f_negociacao_pessoa_juridica",
+				"f_itens_negociacao",
+				"f_anexos",
+				"f_comentarios",
+				"f_pacote",
+				"f_pacotes_adicionais",
+				"f_cupom_desconto",
+				"createdBy",
+				"updatedBy",
+			],
+		});
 
-	return response as unknown as NegociacaoWithRelations;
+		return response as unknown as NegociacaoWithRelations;
+	} catch (error) {
+		const message =
+			error instanceof Error ? error.message : "Erro desconhecido";
+		log.error("Failed to fetch negociação by ID", { id, error: message });
+		throw error;
+	}
 }
 
 export async function fetchNegociacaoItens(
 	negociacaoId: number,
 ): Promise<PaginatedResponse<NegociacoesItens>> {
-	const response = await nocobaseRepository.list(
-		"t_negociacoes_itens" as never,
-		{
-			page: 1,
-			pageSize: 100,
-			filter: eq("f_fk_negociacao", negociacaoId),
-		},
-	);
+	try {
+		const response = await nocobaseRepository.list(
+			"t_negociacoes_itens" as never,
+			{
+				page: 1,
+				pageSize: 100,
+				filter: eq("f_fk_negociacao", negociacaoId),
+			},
+		);
 
-	return {
-		data: response.data as unknown as NegociacoesItens[],
-		meta: response.meta,
-	};
+		return {
+			data: response.data as unknown as NegociacoesItens[],
+			meta: response.meta,
+		};
+	} catch (error) {
+		const message =
+			error instanceof Error ? error.message : "Erro desconhecido";
+		log.error("Failed to fetch negociação itens", {
+			negociacaoId,
+			error: message,
+		});
+		throw error;
+	}
 }
 
 export async function fetchNegociacaoAnexos(
 	negociacaoId: number,
 ): Promise<PaginatedResponse<AnexosNegociacoes>> {
-	const response = await nocobaseRepository.list(
-		"t_anexos_negociacoes" as never,
-		{
-			page: 1,
-			pageSize: 100,
-			filter: eq("f_anexos_fk", negociacaoId),
-		},
-	);
+	try {
+		const response = await nocobaseRepository.list(
+			"t_anexos_negociacoes" as never,
+			{
+				page: 1,
+				pageSize: 100,
+				filter: eq("f_anexos_fk", negociacaoId),
+			},
+		);
 
-	return {
-		data: response.data as unknown as AnexosNegociacoes[],
-		meta: response.meta,
-	};
+		return {
+			data: response.data as unknown as AnexosNegociacoes[],
+			meta: response.meta,
+		};
+	} catch (error) {
+		const message =
+			error instanceof Error ? error.message : "Erro desconhecido";
+		log.error("Failed to fetch negociação anexos", {
+			negociacaoId,
+			error: message,
+		});
+		throw error;
+	}
 }
 
 export async function fetchNegociacaoComentarios(
 	negociacaoId: number,
 ): Promise<PaginatedResponse<NegociacoesComentarios>> {
-	const response = await nocobaseRepository.list(
-		"t_negociacoes_comentarios" as never,
-		{
-			page: 1,
-			pageSize: 100,
-			filter: eq("f_fk_comentarios_negociacoes", negociacaoId),
-		},
-	);
+	try {
+		const response = await nocobaseRepository.list(
+			"t_negociacoes_comentarios" as never,
+			{
+				page: 1,
+				pageSize: 100,
+				filter: eq("f_fk_comentarios_negociacoes", negociacaoId),
+			},
+		);
 
-	return {
-		data: response.data as unknown as NegociacoesComentarios[],
-		meta: response.meta,
-	};
+		return {
+			data: response.data as unknown as NegociacoesComentarios[],
+			meta: response.meta,
+		};
+	} catch (error) {
+		const message =
+			error instanceof Error ? error.message : "Erro desconhecido";
+		log.error("Failed to fetch negociação comentários", {
+			negociacaoId,
+			error: message,
+		});
+		throw error;
+	}
 }
 
 export async function fetchNegociacaoPacotes(
 	negociacaoId: number,
 ): Promise<PaginatedResponse<Pacotes>> {
-	const response = await nocobaseRepository.list("t_pacotes" as never, {
-		page: 1,
-		pageSize: 100,
-		filter: { f_negociacao: negociacaoId },
-	});
+	try {
+		const response = await nocobaseRepository.list("t_pacotes" as never, {
+			page: 1,
+			pageSize: 100,
+			filter: { f_negociacao: negociacaoId },
+		});
 
-	return {
-		data: response.data as unknown as Pacotes[],
-		meta: response.meta,
-	};
+		return {
+			data: response.data as unknown as Pacotes[],
+			meta: response.meta,
+		};
+	} catch (error) {
+		const message =
+			error instanceof Error ? error.message : "Erro desconhecido";
+		log.error("Failed to fetch negociação pacotes", {
+			negociacaoId,
+			error: message,
+		});
+		throw error;
+	}
 }
 
 export async function createNegociacao(
@@ -230,15 +287,22 @@ export async function createNegociacao(
 		f_contrato_ixc?: number | string | null;
 	},
 ): Promise<Negociacao> {
-	const payload: Record<string, unknown> = {};
+	try {
+		const payload: Record<string, unknown> = {};
 
-	Object.assign(payload, data);
-	if (data.f_contrato_ixc != null) {
-		payload.f_contrato_ixc = String(data.f_contrato_ixc);
+		Object.assign(payload, data);
+		if (data.f_contrato_ixc != null) {
+			payload.f_contrato_ixc = String(data.f_contrato_ixc);
+		}
+
+		const result = await nocobaseRepository.create("t_negociacoes", payload);
+		return result as unknown as Negociacao;
+	} catch (error) {
+		const message =
+			error instanceof Error ? error.message : "Erro desconhecido";
+		log.error("Failed to create negociação", { data, error: message });
+		throw error;
 	}
-
-	const result = await nocobaseRepository.create("t_negociacoes", payload);
-	return result as unknown as Negociacao;
 }
 
 export async function updateNegociacao(
@@ -247,19 +311,37 @@ export async function updateNegociacao(
 		f_contrato_ixc?: number | string | null;
 	},
 ): Promise<Negociacao> {
-	const payload: Record<string, unknown> = {};
+	try {
+		const payload: Record<string, unknown> = {};
 
-	Object.assign(payload, data);
-	if (data.f_contrato_ixc != null) {
-		payload.f_contrato_ixc = String(data.f_contrato_ixc);
+		Object.assign(payload, data);
+		if (data.f_contrato_ixc != null) {
+			payload.f_contrato_ixc = String(data.f_contrato_ixc);
+		}
+
+		const result = await nocobaseRepository.update(
+			"t_negociacoes",
+			id,
+			payload,
+		);
+		return result as unknown as Negociacao;
+	} catch (error) {
+		const message =
+			error instanceof Error ? error.message : "Erro desconhecido";
+		log.error("Failed to update negociação", { id, error: message });
+		throw error;
 	}
-
-	const result = await nocobaseRepository.update("t_negociacoes", id, payload);
-	return result as unknown as Negociacao;
 }
 
 export async function deleteNegociacao(id: number): Promise<void> {
-	await nocobaseRepository.delete("t_negociacoes", id);
+	try {
+		await nocobaseRepository.delete("t_negociacoes", id);
+	} catch (error) {
+		const message =
+			error instanceof Error ? error.message : "Erro desconhecido";
+		log.error("Failed to delete negociação", { id, error: message });
+		throw error;
+	}
 }
 
 export { exportNegociacoesToCsv };

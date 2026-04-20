@@ -255,6 +255,7 @@ async function runGenerateTypesForDataSource(
 					values: string[];
 					labels: Record<string, string>;
 					cardinality: number;
+					totalRecords: number;
 					origin: "api" | "adapter" | "inferencia";
 				}
 			>();

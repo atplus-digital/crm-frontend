@@ -2,13 +2,24 @@ import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { ArrowRight } from "lucide-react";
 import { useMemo } from "react";
 import { Link } from "react-router";
+import { StatusBadge } from "#/components/badges/status-badge";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
 import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
-import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import type { CrmTrocaTitularidadeWithRelations } from "#/features/troca-titularidade/troca-titularidade-hooks";
 import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/nocobase/crm-troca-titularidade";
 import { formatDatePtBR } from "#/lib/utils";
+
+const TROCA_STATUS_VARIANTS: Record<
+	string,
+	"default" | "secondary" | "destructive" | "outline"
+> = {
+	"0": "secondary",
+	"1": "default",
+	"2": "outline",
+	"3": "default",
+	"9": "destructive",
+};
 
 interface PaginationInfo {
 	page: number;
@@ -24,36 +35,6 @@ interface TrocaTitularidadeListProps {
 	pagination: PaginationInfo;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
-}
-
-function getStatusBadge(status: string) {
-	const statusLabels: Record<string, string> =
-		CRMTROCATITULARIDADE_STATUS_LABELS;
-
-	let variant: "default" | "secondary" | "destructive" | "outline" | "success" =
-		"default";
-
-	switch (status) {
-		case "0": // Novo
-			variant = "secondary";
-			break;
-		case "1": // Aguardando assinatura
-			variant = "default";
-			break;
-		case "2": // Aguardando auditoria
-			variant = "outline";
-			break;
-		case "3": // Concluído
-			variant = "default";
-			break;
-		case "9": // Cancelado
-			variant = "destructive";
-			break;
-		default:
-			variant = "default";
-	}
-
-	return <Badge variant={variant}>{statusLabels[status] || status}</Badge>;
 }
 
 function getColumns(): ColumnDef<CrmTrocaTitularidadeWithRelations, unknown>[] {
@@ -78,7 +59,14 @@ function getColumns(): ColumnDef<CrmTrocaTitularidadeWithRelations, unknown>[] {
 			header: ({ column }) => (
 				<DataTableColumnHeader column={column} title="Status" />
 			),
-			cell: ({ row }) => getStatusBadge(row.original.f_status),
+			cell: ({ row }) => (
+				<StatusBadge
+					value={row.original.f_status}
+					labels={CRMTROCATITULARIDADE_STATUS_LABELS}
+					variants={TROCA_STATUS_VARIANTS}
+					defaultVariant="secondary"
+				/>
+			),
 		},
 		{
 			id: "cedente",

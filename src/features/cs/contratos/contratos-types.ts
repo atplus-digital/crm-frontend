@@ -9,7 +9,7 @@ import type { SuTicket } from "#/generated/ixc/su-ticket";
 import type { VdContratosProdutos } from "#/generated/ixc/vd-contratos-produtos";
 import type { CrmTrocaTitularidade } from "#/generated/nocobase/crm-troca-titularidade";
 import type { RegistrosDeContato } from "#/generated/nocobase/registros-de-contato";
-import type { PaginatedResponse } from "#/lib/api-types";
+import type { PaginatedResponse } from "#/repositories/types";
 
 // Re-export PaginatedResponse para compatibilidade
 export type { PaginatedResponse };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FilterActions } from "#/components/filters/filter-actions";
 import { Input } from "#/components/ui/input";
 import {
@@ -12,6 +12,15 @@ import {
 	CONTRATO_STATUS_LABELS,
 	type ContratoFilters,
 } from "#/features/cs/contratos/contratos-types";
+import { useFilterState } from "#/hooks/use-filter-state";
+
+interface FilterFormState {
+	[key: string]: string;
+	cpfCnpj: string;
+	nome: string;
+	status: string;
+	contratoId: string;
+}
 
 interface ContratosFiltersProps {
 	onFilter: (filters: ContratoFilters) => void;
@@ -22,36 +31,34 @@ export function ContratosFilters({
 	onFilter,
 	currentFilters,
 }: ContratosFiltersProps) {
-	const [cpfCnpj, setCpfCnpj] = useState(currentFilters.cpfCnpj ?? "");
-	const [nome, setNome] = useState(currentFilters.nome ?? "");
-	const [status, setStatus] = useState(currentFilters.status ?? "");
-	const [contratoId, setContratoId] = useState(
-		currentFilters.contratoId?.toString() ?? "",
-	);
+	const { filters, setFilter, setFilters, clearFilters, canClear } =
+		useFilterState<FilterFormState>({
+			cpfCnpj: currentFilters.cpfCnpj ?? "",
+			nome: currentFilters.nome ?? "",
+			status: currentFilters.status ?? "",
+			contratoId: currentFilters.contratoId?.toString() ?? "",
+		});
 
 	useEffect(() => {
-		setCpfCnpj(currentFilters.cpfCnpj ?? "");
-		setNome(currentFilters.nome ?? "");
-		setStatus(currentFilters.status ?? "");
-		setContratoId(currentFilters.contratoId?.toString() ?? "");
-	}, [currentFilters]);
-
-	const allFieldsEmpty = !cpfCnpj && !nome && !status && !contratoId;
+		setFilters({
+			cpfCnpj: currentFilters.cpfCnpj ?? "",
+			nome: currentFilters.nome ?? "",
+			status: currentFilters.status ?? "",
+			contratoId: currentFilters.contratoId?.toString() ?? "",
+		});
+	}, [currentFilters, setFilters]);
 
 	function handleFilter() {
 		onFilter({
-			cpfCnpj: cpfCnpj || undefined,
-			nome: nome || undefined,
-			status: (status || undefined) as ContratoFilters["status"],
-			contratoId: contratoId ? Number(contratoId) : undefined,
+			cpfCnpj: filters.cpfCnpj || undefined,
+			nome: filters.nome || undefined,
+			status: (filters.status || undefined) as ContratoFilters["status"],
+			contratoId: filters.contratoId ? Number(filters.contratoId) : undefined,
 		});
 	}
 
 	function handleClear() {
-		setCpfCnpj("");
-		setNome("");
-		setStatus("");
-		setContratoId("");
+		clearFilters();
 		onFilter({});
 	}
 
@@ -60,15 +67,18 @@ export function ContratosFilters({
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
 				<Input
 					placeholder="000.000.000-00"
-					value={cpfCnpj}
-					onChange={(e) => setCpfCnpj(e.target.value)}
+					value={filters.cpfCnpj}
+					onChange={(e) => setFilter("cpfCnpj", e.target.value)}
 				/>
 				<Input
 					placeholder="Buscar por nome..."
-					value={nome}
-					onChange={(e) => setNome(e.target.value)}
+					value={filters.nome}
+					onChange={(e) => setFilter("nome", e.target.value)}
 				/>
-				<Select value={status} onValueChange={setStatus}>
+				<Select
+					value={filters.status}
+					onValueChange={(value) => setFilter("status", value)}
+				>
 					<SelectTrigger className="w-full">
 						<SelectValue placeholder="Status do Contrato" />
 					</SelectTrigger>
@@ -84,15 +94,15 @@ export function ContratosFilters({
 				<Input
 					type="number"
 					placeholder="ID do contrato"
-					value={contratoId}
-					onChange={(e) => setContratoId(e.target.value)}
+					value={filters.contratoId}
+					onChange={(e) => setFilter("contratoId", e.target.value)}
 				/>
 			</div>
 			<FilterActions
 				className="mt-4"
 				onApply={handleFilter}
 				onClear={handleClear}
-				canClear={!allFieldsEmpty}
+				canClear={canClear}
 			/>
 		</div>
 	);

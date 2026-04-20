@@ -9,11 +9,6 @@ import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import { logVerbose } from "./logger";
 
-interface CacheEntry {
-	html: string;
-	timestamp: number;
-}
-
 interface CacheMetadata {
 	entries: Record<string, number>;
 }
@@ -61,10 +56,6 @@ function saveMetadata(metadata: CacheMetadata): void {
 	writeFileSync(metadataFile, JSON.stringify(metadata, null, 2));
 }
 
-function isCacheValid(timestamp: number, ttlMs: number): boolean {
-	return Date.now() - timestamp < ttlMs;
-}
-
 export async function fetchWithCache(
 	collectionName: string,
 	url: string,
@@ -101,7 +92,6 @@ export async function fetchWithCache(
 	const html = await fetchFromWiki(url);
 
 	try {
-		const cacheDir = getCacheDir();
 		writeFileSync(cacheFile, html);
 
 		const metadata = loadMetadata();

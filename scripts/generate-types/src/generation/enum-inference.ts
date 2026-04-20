@@ -294,7 +294,7 @@ function isEnumCandidate(
 function processEnumValues(
 	distinctValues: string[],
 	fieldName: string,
-	totalRecords: number,
+	_totalRecords: number,
 ): InferredEnumInfo | null {
 	const labels: Record<string, string> = {};
 
@@ -306,7 +306,7 @@ function processEnumValues(
 		values: distinctValues,
 		labels,
 		cardinality: distinctValues.length,
-		totalRecords,
+		totalRecords: _totalRecords,
 		origin: "inferencia",
 	};
 }
@@ -341,7 +341,7 @@ export function generateEnumMemberName(
 
 function getRejectionReason(
 	distinctValues: string[],
-	totalRecords: number,
+	_totalRecords: number,
 	config: EnumInferenceConfig,
 	fieldName?: string,
 ): { reason: string; suggestion?: string } | null {

@@ -1,3 +1,4 @@
+import { CardSectionSkeleton } from "#/components/detail/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { EmptyTable } from "#/components/table/empty-table";
 import { Button } from "#/components/ui/button";
@@ -64,7 +65,12 @@ export function ContratoNegociacoesTab({
 	}
 
 	if (isLoading) {
-		return <NegociacoesSkeleton />;
+		return (
+			<div className="flex flex-col gap-6">
+				<CardSectionSkeleton />
+				<CardSectionSkeleton />
+			</div>
+		);
 	}
 
 	return (
@@ -197,31 +203,6 @@ export function ContratoNegociacoesTab({
 							message="Nenhuma renovação encontrada"
 						/>
 					)}
-				</CardContent>
-			</Card>
-		</div>
-	);
-}
-
-function NegociacoesSkeleton() {
-	return (
-		<div className="flex flex-col gap-6">
-			<Card>
-				<CardHeader>
-					<Skeleton className="h-6 w-48" />
-					<Skeleton className="h-4 w-64" />
-				</CardHeader>
-				<CardContent>
-					<Skeleton className="h-32 w-full" />
-				</CardContent>
-			</Card>
-			<Card>
-				<CardHeader>
-					<Skeleton className="h-6 w-48" />
-					<Skeleton className="h-4 w-64" />
-				</CardHeader>
-				<CardContent>
-					<Skeleton className="h-32 w-full" />
 				</CardContent>
 			</Card>
 		</div>

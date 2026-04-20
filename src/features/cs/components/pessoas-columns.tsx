@@ -1,10 +1,44 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "#/components/ui/badge";
+import { StatusBadge } from "#/components/badges/status-badge";
 import type {
 	PessoaFisicaListItem,
 	PessoaJuridicaListItem,
 } from "#/features/cs/pessoas/pessoas-types";
-import { cn } from "#/lib/utils";
+
+const CREDITO_LABELS: Record<string, string> = {
+	Aprovado: "Aprovado",
+	"Aprovado com Atenção": "Aprovado com Atenção",
+	Negado: "Negado",
+};
+
+const CREDITO_COLOR_CLASSES: Record<string, string> = {
+	Aprovado: "bg-green-500/10 text-green-600 hover:bg-green-500/20",
+	"Aprovado com Atenção":
+		"bg-yellow-500/10 text-yellow-600 hover:bg-yellow-500/20",
+};
+
+const CREDITO_VARIANTS: Record<
+	string,
+	"default" | "destructive" | "secondary"
+> = {
+	Aprovado: "default",
+	Negado: "destructive",
+};
+
+const ANALISE_IXC_LABELS: Record<string, string> = {
+	"Sem Pendências": "Sem Pendências",
+};
+
+const ANALISE_IXC_COLOR_CLASSES: Record<string, string> = {
+	"Sem Pendências": "bg-green-500/10 text-green-600 hover:bg-green-500/20",
+};
+
+const ANALISE_IXC_VARIANTS: Record<
+	string,
+	"default" | "destructive" | "secondary"
+> = {
+	"Sem Pendências": "default",
+};
 
 export const pfColumns: ColumnDef<PessoaFisicaListItem, unknown>[] = [
 	{ accessorKey: "id", header: "ID" },
@@ -26,40 +60,22 @@ export const pfColumns: ColumnDef<PessoaFisicaListItem, unknown>[] = [
 			const value = row.original.f_credito;
 			if (!value) {
 				return (
-					<Badge variant="secondary" className="bg-gray-100 text-gray-600">
-						Não analisado
-					</Badge>
+					<StatusBadge
+						value="nao_analisado"
+						labels={{ nao_analisado: "Não analisado" }}
+						defaultVariant="secondary"
+						defaultClass="bg-gray-100 text-gray-600"
+					/>
 				);
 			}
-			const variants: Record<
-				string,
-				{
-					variant: "default" | "secondary" | "destructive" | "outline";
-					className: string;
-					label: string;
-				}
-			> = {
-				Aprovado: {
-					variant: "default",
-					className: "bg-green-500/10 text-green-600 hover:bg-green-500/20",
-					label: "Aprovado",
-				},
-				"Aprovado com Atenção": {
-					variant: "default",
-					className: "bg-yellow-500/10 text-yellow-600 hover:bg-yellow-500/20",
-					label: "Aprovado com Atenção",
-				},
-				Negado: { variant: "destructive", className: "", label: "Negado" },
-			};
-			const config = variants[value] || {
-				variant: "secondary",
-				className: "",
-				label: value,
-			};
 			return (
-				<Badge variant={config.variant} className={config.className}>
-					{config.label}
-				</Badge>
+				<StatusBadge
+					value={value}
+					labels={CREDITO_LABELS}
+					variants={CREDITO_VARIANTS}
+					colorClasses={CREDITO_COLOR_CLASSES}
+					defaultVariant="secondary"
+				/>
 			);
 		},
 	},
@@ -69,19 +85,22 @@ export const pfColumns: ColumnDef<PessoaFisicaListItem, unknown>[] = [
 		cell: ({ row }) => {
 			const value = row.original.f_analise_ixc;
 			if (!value) {
-				return <Badge variant="secondary">Não analisado</Badge>;
+				return (
+					<StatusBadge
+						value="nao_analisado"
+						labels={{ nao_analisado: "Não analisado" }}
+						defaultVariant="secondary"
+					/>
+				);
 			}
-			const isSemPendencias = value === "Sem Pendências";
 			return (
-				<Badge
-					variant={isSemPendencias ? "default" : "destructive"}
-					className={cn(
-						isSemPendencias &&
-							"bg-green-500/10 text-green-600 hover:bg-green-500/20",
-					)}
-				>
-					{value}
-				</Badge>
+				<StatusBadge
+					value={value}
+					labels={ANALISE_IXC_LABELS}
+					variants={ANALISE_IXC_VARIANTS}
+					colorClasses={ANALISE_IXC_COLOR_CLASSES}
+					defaultVariant="destructive"
+				/>
 			);
 		},
 	},

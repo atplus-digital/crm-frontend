@@ -15,7 +15,7 @@ import type {
 } from "#/generated/nocobase/negociacoes";
 import type { Pessoas } from "#/generated/nocobase/pessoas";
 import type { Users } from "#/generated/nocobase/users";
-import type { PaginatedResponse } from "#/lib/api-types";
+import type { PaginatedResponse } from "#/repositories/types";
 
 // Re-export PaginatedResponse para compatibilidade
 export type { PaginatedResponse };

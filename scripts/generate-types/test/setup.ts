@@ -22,7 +22,7 @@ const mockScriptConfig = {
 		"t_telecom_recursos",
 	] as string[],
 	defaultEnvPath: ".env.local",
-	verbose: false,
+	logLevel: "info" as const,
 	requestTimeoutMs: 15_000,
 	requestConcurrency: 5,
 	maxConcurrency: 3,

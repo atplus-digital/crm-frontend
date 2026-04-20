@@ -1,27 +1,23 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Download, ExternalLink, RefreshCw } from "lucide-react";
 import { Link } from "react-router";
+import { StatusBadge } from "#/components/badges/status-badge";
 import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
-import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
-import { cn, formatCurrency, formatDatePtBR } from "#/lib/utils";
+import { NEGOCIACAO_STATUS_LABELS } from "#/features/cs/negociacoes/negociacoes-types";
+import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 
-const statusBadgeStyles: Record<string, string> = {
-	Novo: "bg-blue-500/10 text-blue-600 border-blue-500/20 hover:bg-blue-500/20",
-	Negociando:
-		"bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20",
-	Assinatura:
-		"bg-purple-500/10 text-purple-600 border-purple-500/20 hover:bg-purple-500/20",
-	Auditoria:
-		"bg-orange-500/10 text-orange-600 border-orange-500/20 hover:bg-orange-500/20",
-	Concluido:
-		"bg-green-500/10 text-green-600 border-green-500/20 hover:bg-green-500/20",
-	Arquivado:
-		"bg-gray-500/10 text-gray-600 border-gray-500/20 hover:bg-gray-500/20",
+const negociacaoStatusColorClasses: Record<string, string> = {
+	"1": "bg-blue-500/10 text-blue-600 border-blue-500/20 hover:bg-blue-500/20",
+	"2": "bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20",
+	"3": "bg-purple-500/10 text-purple-600 border-purple-500/20 hover:bg-purple-500/20",
+	"4": "bg-orange-500/10 text-orange-600 border-orange-500/20 hover:bg-orange-500/20",
+	"5": "bg-green-500/10 text-green-600 border-green-500/20 hover:bg-green-500/20",
+	"6": "bg-gray-500/10 text-gray-600 border-gray-500/20 hover:bg-gray-500/20",
 };
 
-const motivoBadgeStyles: Record<string, string> = {
+const negociacaoMotivoColorClasses: Record<string, string> = {
 	M: "bg-amber-500/10 text-amber-600 border-amber-500/20",
 	D: "bg-red-500/10 text-red-600 border-red-500/20",
 	U: "bg-blue-500/10 text-blue-600 border-blue-500/20",
@@ -31,7 +27,7 @@ const motivoBadgeStyles: Record<string, string> = {
 	L: "bg-lime-500/10 text-lime-600 border-lime-500/20",
 };
 
-const motivoLabels: Record<string, string> = {
+const negociacaoMotivoLabels: Record<string, string> = {
 	M: "Mud.Endereço",
 	D: "Downgrade",
 	U: "Upgrade",
@@ -45,28 +41,6 @@ const motivoLabels: Record<string, string> = {
 };
 
 type NegociacaoItem = NegociacaoWithRelations;
-
-function StatusBadge({ status }: { status: string }) {
-	// Normalizar status para chave do objeto
-	const normalizedStatus = status === "Concluído" ? "Concluido" : status;
-	const style =
-		statusBadgeStyles[normalizedStatus] || statusBadgeStyles.Arquivado;
-	return (
-		<Badge variant="outline" className={cn(style, "font-medium")}>
-			{status}
-		</Badge>
-	);
-}
-
-function MotivoBadge({ motivo }: { motivo: string }) {
-	const style = motivoBadgeStyles[motivo] || motivoBadgeStyles.N;
-	const label = motivoLabels[motivo] || motivo;
-	return (
-		<Badge variant="outline" className={cn(style, "font-medium")}>
-			{label}
-		</Badge>
-	);
-}
 
 const columns: ColumnDef<NegociacaoItem>[] = [
 	{
@@ -116,7 +90,15 @@ const columns: ColumnDef<NegociacaoItem>[] = [
 	{
 		accessorKey: "f_motivo",
 		header: "Motivo",
-		cell: ({ row }) => <MotivoBadge motivo={row.original.f_motivo || "N"} />,
+		cell: ({ row }) => (
+			<StatusBadge
+				value={row.original.f_motivo || "N"}
+				labels={negociacaoMotivoLabels}
+				colorClasses={negociacaoMotivoColorClasses}
+				defaultVariant="outline"
+				defaultClass={negociacaoMotivoColorClasses.N}
+			/>
+		),
 	},
 	{
 		accessorKey: "f_valor_mensal",
@@ -137,7 +119,15 @@ const columns: ColumnDef<NegociacaoItem>[] = [
 	{
 		accessorKey: "f_status",
 		header: "Status",
-		cell: ({ row }) => <StatusBadge status={row.original.f_status} />,
+		cell: ({ row }) => (
+			<StatusBadge
+				value={row.original.f_status}
+				labels={NEGOCIACAO_STATUS_LABELS}
+				colorClasses={negociacaoStatusColorClasses}
+				defaultVariant="outline"
+				defaultClass={negociacaoStatusColorClasses["6"]}
+			/>
+		),
 	},
 	{
 		accessorKey: "f_substatus",

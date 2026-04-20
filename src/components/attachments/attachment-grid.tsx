@@ -21,6 +21,7 @@ interface AttachmentGridProps {
 	emptyMessage?: string;
 	columns?: { sm: number; lg: number };
 	className?: string;
+	showActions?: boolean;
 }
 
 export function AttachmentGrid({
