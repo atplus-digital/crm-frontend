@@ -142,6 +142,11 @@ interface BaseDataSourceGenerationConfig {
 	 */
 	preEnumAdapter?: EnumAdapter;
 	enumCorrection?: EnumCorrectionConfig;
+	/**
+	 * Gera relatório de enum inference (_ixc-enum-inference.md) para esta datasource.
+	 * @default false
+	 */
+	generateEnumReport?: boolean;
 }
 
 export type DataSourceGenerationConfig = BaseDataSourceGenerationConfig;

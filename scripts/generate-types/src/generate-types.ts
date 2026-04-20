@@ -140,7 +140,7 @@ async function runGenerateTypesForDataSource(
 		`📋 Encontradas ${collections.length} collections para ${dataSource.dataSource}`,
 	);
 
-	const isIXC = dataSource.name === "ixc";
+	const shouldGenerateEnumReport = dataSource.generateEnumReport ?? false;
 	const collectionReports: Array<{
 		collectionName: string;
 		enumFields: Map<
@@ -160,6 +160,7 @@ async function runGenerateTypesForDataSource(
 		},
 	});
 
+	// Fase 1: Aplicar todas as transformações de enum (adapter, inferência, corrections)
 	for (const [collectionName, types] of Object.entries(collectionTypes)) {
 		const existingEnums = new Map(types.enums);
 
@@ -201,33 +202,6 @@ async function runGenerateTypesForDataSource(
 				const finalInferredEnums = inferredEnums;
 				const mergedEnums = mergeEnums(existingEnums, finalInferredEnums);
 				types.enums = mergedEnums;
-
-				const inferredCount = Object.keys(finalInferredEnums).length;
-				if (inferredCount > 0) {
-					const enumFieldsWithMeta = new Map<
-						string,
-						{
-							values: string[];
-							labels: Record<string, string>;
-							cardinality: number;
-							totalRecords: number;
-						}
-					>();
-					for (const [fieldName, enumInfo] of Object.entries(
-						finalInferredEnums,
-					)) {
-						enumFieldsWithMeta.set(fieldName, {
-							values: enumInfo.values,
-							labels: enumInfo.labels,
-							cardinality: enumInfo.cardinality,
-							totalRecords: enumInfo.totalRecords,
-						});
-					}
-					collectionReports.push({
-						collectionName,
-						enumFields: enumFieldsWithMeta,
-					});
-				}
 			} catch {
 				// No-op
 			}
@@ -238,7 +212,48 @@ async function runGenerateTypesForDataSource(
 		}
 	}
 
+	// Fase 2: Aplicar correções de enum (labels customizados)
 	applyEnumCorrections(collectionTypes, dataSource.enumCorrection);
+
+	// Fase 3: Coletar TODOS os enums finais para o relatório (se habilitado)
+	if (shouldGenerateEnumReport) {
+		for (const [collectionName, types] of Object.entries(collectionTypes)) {
+			if (types.enums.size === 0) {
+				continue;
+			}
+
+			const enumFieldsWithMeta = new Map<
+				string,
+				{
+					values: string[];
+					labels: Record<string, string>;
+					cardinality: number;
+					totalRecords: number;
+				}
+			>();
+
+			for (const [fieldName, enumOptions] of types.enums.entries()) {
+				const values = enumOptions.map((opt) => String(opt.value));
+				const labels = Object.fromEntries(
+					enumOptions.map((opt) => [String(opt.value), opt.label]),
+				);
+
+				enumFieldsWithMeta.set(fieldName, {
+					values,
+					labels,
+					cardinality: enumOptions.length,
+					totalRecords: 0, // Não disponível após merge final
+				});
+			}
+
+			if (enumFieldsWithMeta.size > 0) {
+				collectionReports.push({
+					collectionName,
+					enumFields: enumFieldsWithMeta,
+				});
+			}
+		}
+	}
 
 	const { mainCollections, splitCollections } = splitCollectionsByConfig(
 		collectionTypes,
@@ -265,11 +280,11 @@ async function runGenerateTypesForDataSource(
 	if (splitCollections.size === 0) {
 		const mainWrite = writeGeneratedFile(mainContent, mainOutputPath);
 
-		if (isIXC && collectionReports.length > 0) {
+		if (shouldGenerateEnumReport && collectionReports.length > 0) {
 			const reportContent = generateMultiCollectionReport(collectionReports);
 			writeGeneratedFile(
 				reportContent,
-				path.join(dataSource.outputDir, "_ixc-enum-inference.md"),
+				path.join(dataSource.outputDir, "_enum-inference.md"),
 			);
 		}
 
@@ -339,11 +354,11 @@ async function runGenerateTypesForDataSource(
 		dataSource.outputDir,
 	);
 
-	if (isIXC && collectionReports.length > 0) {
+	if (shouldGenerateEnumReport && collectionReports.length > 0) {
 		const reportContent = generateMultiCollectionReport(collectionReports);
 		writeGeneratedFile(
 			reportContent,
-			path.join(dataSource.outputDir, "_ixc-enum-inference.md"),
+			path.join(dataSource.outputDir, "_enum-inference.md"),
 		);
 	}
 
@@ -367,6 +382,14 @@ async function runGenerateTypesForDataSource(
 	logger.info(
 		`📄 ${dataSource.dataSource}: ${totalChanged} arquivo(s) atualizado(s)${totalSkipped > 0 ? `, ${totalSkipped} pulado(s) (em edição)` : ""}`,
 	);
+
+	if (shouldGenerateEnumReport && collectionReports.length > 0) {
+		const reportContent = generateMultiCollectionReport(collectionReports);
+		writeGeneratedFile(
+			reportContent,
+			path.join(dataSource.outputDir, "_enum-inference.md"),
+		);
+	}
 
 	return {
 		writeFiles: allWriteFiles,

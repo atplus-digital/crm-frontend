@@ -15,6 +15,7 @@ export const dataSourceConfigs = [
 			"t_crm_troca_titularidade",
 			"t_registros_de_contato",
 		],
+		generateEnumReport: true,
 	},
 	{
 		name: "ixc",
@@ -39,5 +40,6 @@ export const dataSourceConfigs = [
 		],
 		preEnumAdapter: createIXCWikiAdapter(),
 		enumCorrection: [],
+		generateEnumReport: true,
 	},
 ] satisfies DataSourceGenerationConfig[];
