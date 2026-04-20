@@ -31,21 +31,16 @@ function sortByName<T extends { name: string }>(items: T[]): T[] {
 	return [...items].sort((a, b) => a.name.localeCompare(b.name));
 }
 
-/**
- * Constrói GeneratedTypes a partir de um array de campos.
- * Separa campos em scalars (valores primitivos) e relations.
- *
- * @param fields - Array de campos da collection
- * @returns GeneratedTypes com scalars e relations separados
- */
 function buildGeneratedTypes(
 	fields: DataSourceField[],
 	knownCollections: ReadonlySet<string>,
+	schemaAvailable: boolean,
 ): GeneratedTypes {
 	const generated: GeneratedTypes = {
 		scalars: new Map(),
 		relations: new Map(),
 		enums: new Map(),
+		schemaAvailable,
 	};
 
 	for (const field of fields) {
@@ -151,10 +146,12 @@ export async function buildCollectionTypes(
 				total: sortedCollections.length,
 			});
 
-			const fields = await client.fetchCollectionFields(collection.name);
+			const { fields, schemaAvailable } = await client.fetchCollectionFields(
+				collection.name,
+			);
 			return [
 				collection.name,
-				buildGeneratedTypes(fields, knownCollections),
+				buildGeneratedTypes(fields, knownCollections, schemaAvailable),
 			] as const;
 		},
 	);

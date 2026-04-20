@@ -87,7 +87,7 @@ export class NocoBaseDataSourceClient implements DataSourceClient {
 
 	public async fetchCollectionFields(
 		collectionName: string,
-	): Promise<DataSourceField[]> {
+	): Promise<{ fields: DataSourceField[]; schemaAvailable: boolean }> {
 		return this.fetchCollectionFieldsWithFallback(collectionName);
 	}
 
@@ -107,7 +107,7 @@ export class NocoBaseDataSourceClient implements DataSourceClient {
 
 	private async fetchCollectionFieldsWithFallback(
 		collectionName: string,
-	): Promise<NocoBaseField[]> {
+	): Promise<{ fields: NocoBaseField[]; schemaAvailable: boolean }> {
 		try {
 			const params = new URLSearchParams({
 				appends: "fields",
@@ -118,7 +118,10 @@ export class NocoBaseDataSourceClient implements DataSourceClient {
 				`collections:get?${params}`,
 			);
 
-			return sortByName(response.data.fields);
+			return {
+				fields: sortByName(response.data.fields),
+				schemaAvailable: true,
+			};
 		} catch (error) {
 			if (!(error instanceof HttpResponseError) || error.status !== 404) {
 				throw error;
@@ -129,14 +132,17 @@ export class NocoBaseDataSourceClient implements DataSourceClient {
 			);
 			const sampleRecord = sampleResponse.data?.[0] ?? null;
 			if (!sampleRecord) {
-				return [];
+				return { fields: [], schemaAvailable: false };
 			}
 
 			const inferredFields = Object.entries(sampleRecord).map(([name, value]) =>
 				this.inferFieldFromSample(name, value),
 			);
 
-			return sortByName(inferredFields);
+			return {
+				fields: sortByName(inferredFields),
+				schemaAvailable: false,
+			};
 		}
 	}
 

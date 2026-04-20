@@ -40,7 +40,14 @@ export interface DataSourceClient {
 
 	fetchCollections(): Promise<DataSourceCollection[]>;
 
-	fetchCollectionFields(collectionName: string): Promise<DataSourceField[]>;
+	/**
+	 * Busca campos de uma collection.
+	 * @returns Objeto com campos e flag indicando se o schema foi obtido pela rota primária.
+	 *         `schemaAvailable: false` indica que a rota primária falhou (ex: 404) e foi usado fallback.
+	 */
+	fetchCollectionFields(
+		collectionName: string,
+	): Promise<{ fields: DataSourceField[]; schemaAvailable: boolean }>;
 
 	inferEnumsFromData(
 		collectionName: string,
@@ -112,85 +119,14 @@ export interface EnumAdapter {
 	): Promise<Record<string, EnumAdapterFieldEnum>>;
 }
 
-/**
- * Override de labels para valores existentes de um enum.
- * Usado para corrigir labels de enums que já existem mas têm labels ruins ou ausentes.
- *
- * @example
- * // Para um campo status com valores "1", "2", "3"
- * {
- *   collection: "cliente",
- *   field: "status",
- *   labels: {
- *     "1": "Ativo",
- *     "2": "Inativo",
- *     "3": "Bloqueado",
- *   },
- * }
- */
-export interface EnumOverrideRule {
-	/** Nome da collection. */
+export interface EnumCorrectionRule {
 	collection: string;
-	/** Nome do campo. */
 	field: string;
-	/**
-	 * Labels para cada valor do enum.
-	 * Valores não listados mantêm a label original (se houver).
-	 */
+	values?: string[];
 	labels: Record<string, string>;
 }
 
-/**
- * Força a criação de um enum completo em um campo que não tem enum em nenhuma etapa.
- *
- * @example
- * {
- *   collection: "su_ticket",
- *   field: "prioridade",
- *   values: ["1", "2", "3", "4", "5"],
- *   labels: {
- *     "1": "Crítica",
- *     "2": "Alta",
- *     "3": "Média",
- *     "4": "Baixa",
- *     "5": "Informativa",
- *   },
- * }
- */
-export interface ForceEnumRule {
-	/** Nome da collection. */
-	collection: string;
-	/** Nome do campo. */
-	field: string;
-	/** Valores possíveis do enum. */
-	values: string[];
-	/** Labels para cada valor. */
-	labels: Record<string, string>;
-}
-
-/**
- * Configuração de correção planejada de enums para uma datasource.
- *
- * enumOverrides: Sobrescreve labels de enums existentes (corrige labels ruins/ausentes).
- * forceEnums: Cria enums em campos que não tinham enum em nenhuma etapa anterior.
- *
- * Ambos são aplicados DEPOIS de toda a pipeline de enums (schema → adapter → inference),
- * em TODOS os datasources, como correção planejada.
- */
-export interface EnumCorrectionConfig {
-	/**
-	 * Sobrescreve labels de enums existentes.
-	 * Funciona em qualquer enum criado por schema, adapter ou inference.
-	 * Valores não listados mantêm a label original.
-	 */
-	enumOverrides?: EnumOverrideRule[];
-
-	/**
-	 * Força criação de enum em campos que não tiveram enum em nenhuma etapa.
-	 * Só tem efeito em campos que ainda não têm enum definido.
-	 */
-	forceEnums?: ForceEnumRule[];
-}
+export type EnumCorrectionConfig = EnumCorrectionRule[];
 
 interface BaseDataSourceGenerationConfig {
 	name: string;
@@ -205,11 +141,6 @@ interface BaseDataSourceGenerationConfig {
 	 * Se o adapter falhar ou retornar {}, o pipeline usa a inferência por amostragem normalmente.
 	 */
 	preEnumAdapter?: EnumAdapter;
-	/**
-	 * Configuração de correção planejada de enums.
-	 * Aplicada DEPOIS de toda a pipeline (schema → adapter → inference),
-	 * em TODAS as datasources.
-	 */
 	enumCorrection?: EnumCorrectionConfig;
 }
 

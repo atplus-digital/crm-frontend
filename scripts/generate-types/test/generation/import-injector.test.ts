@@ -16,6 +16,7 @@ function createEmptyCollectionTypesMap(
 			scalars: new Map(),
 			relations: new Map(),
 			enums: new Map(),
+			schemaAvailable: true,
 		};
 	}
 

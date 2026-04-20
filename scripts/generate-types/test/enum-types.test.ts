@@ -155,6 +155,7 @@ describe("generateCollectionEnums", () => {
 					],
 				],
 			]),
+			schemaAvailable: true,
 		};
 
 		const result = generateCollectionEnums("t_pessoas", types);
@@ -171,6 +172,7 @@ describe("generateCollectionEnums", () => {
 			scalars: new Map([["id", "number"]]),
 			relations: new Map(),
 			enums: new Map(),
+			schemaAvailable: true,
 		};
 
 		const result = generateCollectionEnums("t_pessoas", types);
@@ -186,6 +188,7 @@ describe("generateCollectionEnums", () => {
 				["alfa", [{ value: "a", label: "A" }]],
 				["beta", [{ value: "b", label: "B" }]],
 			]),
+			schemaAvailable: true,
 		};
 
 		const result = generateCollectionEnums("t_teste", types);

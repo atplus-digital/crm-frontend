@@ -126,6 +126,7 @@ export function createMockGeneratedTypes(
 		scalars: new Map(Object.entries(scalars)),
 		relations: new Map(Object.entries(relations)),
 		enums: new Map(),
+		schemaAvailable: true,
 	};
 }
 
@@ -147,6 +148,7 @@ export function createMockCollectionTypesMap(
 			scalars: new Map(Object.entries(types.scalars ?? {})),
 			relations: new Map(Object.entries(types.relations ?? {})),
 			enums: new Map(),
+			schemaAvailable: true,
 		};
 	}
 	return map;

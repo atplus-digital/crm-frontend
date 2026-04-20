@@ -458,15 +458,8 @@ export type FRecursosFilhoRelations = Record<string, never>;
 
 export type FRecursosFilhoRelationKey = keyof FRecursosFilhoRelations;
 
-export enum InterfacesEquipamentosFkEquipamentosInterfaces1 {
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-}
-
 export interface InterfacesEquipamentos {
-	f_fk_equipamentos_interfaces_1: InterfacesEquipamentosFkEquipamentosInterfaces1;
+	f_fk_equipamentos_interfaces_1: number;
 	f_fk_equipamentos_interfaces_2: number;
 }
 
@@ -475,24 +468,9 @@ export type InterfacesEquipamentosRelations = Record<string, never>;
 export type InterfacesEquipamentosRelationKey =
 	keyof InterfacesEquipamentosRelations;
 
-export const INTERFACESEQUIPAMENTOS_FKEQUIPAMENTOSINTERFACES1_LABELS: Record<
-	InterfacesEquipamentosFkEquipamentosInterfaces1,
-	string
-> = {
-	[InterfacesEquipamentosFkEquipamentosInterfaces1.Value2]: "Código 2",
-	[InterfacesEquipamentosFkEquipamentosInterfaces1.Value3]: "Código 3",
-	[InterfacesEquipamentosFkEquipamentosInterfaces1.Value4]: "Código 4",
-	[InterfacesEquipamentosFkEquipamentosInterfaces1.Value5]: "Código 5",
-};
-
-export enum LinksIndicadoresUsuariosFkLinksUsuarios2 {
-	Value1 = "1",
-	Value32 = "32",
-}
-
 export interface LinksIndicadoresUsuarios {
 	f_fk_links_usuarios_1: number;
-	f_fk_links_usuarios_2: LinksIndicadoresUsuariosFkLinksUsuarios2;
+	f_fk_links_usuarios_2: number;
 }
 
 export type LinksIndicadoresUsuariosRelations = Record<string, never>;
@@ -500,93 +478,26 @@ export type LinksIndicadoresUsuariosRelations = Record<string, never>;
 export type LinksIndicadoresUsuariosRelationKey =
 	keyof LinksIndicadoresUsuariosRelations;
 
-export const LINKSINDICADORESUSUARIOS_FKLINKSUSUARIOS2_LABELS: Record<
-	LinksIndicadoresUsuariosFkLinksUsuarios2,
-	string
-> = {
-	[LinksIndicadoresUsuariosFkLinksUsuarios2.Value1]: "Ativo",
-	[LinksIndicadoresUsuariosFkLinksUsuarios2.Value32]: "Código 32",
-};
-
-export enum OrigemXTiposFkOrigemTipo1 {
-	Value2 = "2",
-	Value6 = "6",
-}
-
-export enum OrigemXTiposFkOrigemTipo2 {
-	Value1 = "1",
-	Value18 = "18",
-}
-
 export interface OrigemXTipos {
-	f_fk_origem_tipo_1: OrigemXTiposFkOrigemTipo1;
-	f_fk_origem_tipo_2: OrigemXTiposFkOrigemTipo2;
+	f_fk_origem_tipo_1: number;
+	f_fk_origem_tipo_2: number;
 }
 
 export type OrigemXTiposRelations = Record<string, never>;
 
 export type OrigemXTiposRelationKey = keyof OrigemXTiposRelations;
 
-export const ORIGEMXTIPOS_FKORIGEMTIPO1_LABELS: Record<
-	OrigemXTiposFkOrigemTipo1,
-	string
-> = {
-	[OrigemXTiposFkOrigemTipo1.Value2]: "Código 2",
-	[OrigemXTiposFkOrigemTipo1.Value6]: "Código 6",
-};
-
-export const ORIGEMXTIPOS_FKORIGEMTIPO2_LABELS: Record<
-	OrigemXTiposFkOrigemTipo2,
-	string
-> = {
-	[OrigemXTiposFkOrigemTipo2.Value1]: "Ativo",
-	[OrigemXTiposFkOrigemTipo2.Value18]: "Código 18",
-};
-
-export enum RolesAllowconfigure {
-	True = "true",
-}
-
-export enum RolesAllownewmenu {
-	False = "false",
-	True = "true",
-}
-
-export enum RolesAllownewmobilemenu {
-	False = "false",
-	True = "true",
-}
-
-export enum RolesDefault {
-	False = "false",
-	True = "true",
-}
-
-export enum RolesHidden {
-	False = "false",
-	True = "true",
-}
-
-export enum RolesSnippets {
-	AppPmPmUi = "!app,!pm,!pm.*,!ui.*",
-	PmPmUi = "!pm,!pm.*,!ui.*",
-}
-
-export enum RolesStrategy {
-	ObjectObject = "[object Object]",
-}
-
 export interface Roles {
 	sort: number;
-	allowConfigure: RolesAllowconfigure;
-	allowNewMenu: RolesAllownewmenu;
-	allowNewMobileMenu: RolesAllownewmobilemenu;
-	default: RolesDefault;
+	allowConfigure: boolean;
+	allowNewMenu: boolean;
+	allowNewMobileMenu: boolean;
+	default: boolean;
 	description: string;
-	hidden: RolesHidden;
+	hidden: boolean;
 	name: string;
-	snippets: RolesSnippets;
-	strategy: RolesStrategy;
+	snippets: unknown[];
+	strategy: Record<string, unknown>;
 	title: string;
 }
 
@@ -599,93 +510,19 @@ export interface RolesRelations {
 
 export type RolesRelationKey = keyof RolesRelations;
 
-export const ROLES_ALLOWCONFIGURE_LABELS: Record<RolesAllowconfigure, string> =
-	{
-		[RolesAllowconfigure.True]: "Sim",
-	};
-
-export const ROLES_ALLOWNEWMENU_LABELS: Record<RolesAllownewmenu, string> = {
-	[RolesAllownewmenu.False]: "Não",
-	[RolesAllownewmenu.True]: "Sim",
-};
-
-export const ROLES_ALLOWNEWMOBILEMENU_LABELS: Record<
-	RolesAllownewmobilemenu,
-	string
-> = {
-	[RolesAllownewmobilemenu.False]: "Não",
-	[RolesAllownewmobilemenu.True]: "Sim",
-};
-
-export const ROLES_DEFAULT_LABELS: Record<RolesDefault, string> = {
-	[RolesDefault.False]: "Não",
-	[RolesDefault.True]: "Sim",
-};
-
-export const ROLES_HIDDEN_LABELS: Record<RolesHidden, string> = {
-	[RolesHidden.False]: "Não",
-	[RolesHidden.True]: "Sim",
-};
-
-export const ROLES_SNIPPETS_LABELS: Record<RolesSnippets, string> = {
-	[RolesSnippets.AppPmPmUi]: "!app,!pm,!pm.*,!ui.*",
-	[RolesSnippets.PmPmUi]: "!pm,!pm.*,!ui.*",
-};
-
-export const ROLES_STRATEGY_LABELS: Record<RolesStrategy, string> = {
-	[RolesStrategy.ObjectObject]: "[object Object]",
-};
-
-export enum _3advfk0gv0zFkInsumosServicos {
-	Value21 = "21",
-}
-
-export enum _3advfk0gv0zFkServicosInsumos {
-	Value34 = "34",
-}
-
 export interface _3advfk0gv0z {
-	f_fk_insumos_servicos: _3advfk0gv0zFkInsumosServicos;
-	f_fk_servicos_insumos: _3advfk0gv0zFkServicosInsumos;
+	f_fk_insumos_servicos: number;
+	f_fk_servicos_insumos: number;
 }
 
 export type _3advfk0gv0zRelations = Record<string, never>;
 
 export type _3advfk0gv0zRelationKey = keyof _3advfk0gv0zRelations;
 
-export const _3ADVFK0GV0Z_FKINSUMOSSERVICOS_LABELS: Record<
-	_3advfk0gv0zFkInsumosServicos,
-	string
-> = {
-	[_3advfk0gv0zFkInsumosServicos.Value21]: "Código 21",
-};
-
-export const _3ADVFK0GV0Z_FKSERVICOSINSUMOS_LABELS: Record<
-	_3advfk0gv0zFkServicosInsumos,
-	string
-> = {
-	[_3advfk0gv0zFkServicosInsumos.Value34]: "Código 34",
-};
-
-export enum _902ctke5dhqCreatedat {
-	Value20260113t185057400z = "2026-01-13T18:50:57.400Z",
-	Value20260113t185058894z = "2026-01-13T18:50:58.894Z",
-}
-
-export enum _902ctke5dhqId {
-	Value342478045446144 = "342478045446144",
-	Value342478047543298 = "342478047543298",
-}
-
-export enum _902ctke5dhqUpdatedat {
-	Value20260113t185057400z = "2026-01-13T18:50:57.400Z",
-	Value20260113t185058894z = "2026-01-13T18:50:58.894Z",
-}
-
 export interface _902ctke5dhq {
-	id: _902ctke5dhqId;
-	updatedAt: _902ctke5dhqUpdatedat;
-	createdAt: _902ctke5dhqCreatedat;
+	id: number;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface _902ctke5dhqRelations {
@@ -695,27 +532,6 @@ export interface _902ctke5dhqRelations {
 }
 
 export type _902ctke5dhqRelationKey = keyof _902ctke5dhqRelations;
-
-export const _902CTKE5DHQ_CREATEDAT_LABELS: Record<
-	_902ctke5dhqCreatedat,
-	string
-> = {
-	[_902ctke5dhqCreatedat.Value20260113t185057400z]: "2026 01 13t18:50:57.400z",
-	[_902ctke5dhqCreatedat.Value20260113t185058894z]: "2026 01 13t18:50:58.894z",
-};
-
-export const _902CTKE5DHQ_ID_LABELS: Record<_902ctke5dhqId, string> = {
-	[_902ctke5dhqId.Value342478045446144]: "342478045446144",
-	[_902ctke5dhqId.Value342478047543298]: "342478047543298",
-};
-
-export const _902CTKE5DHQ_UPDATEDAT_LABELS: Record<
-	_902ctke5dhqUpdatedat,
-	string
-> = {
-	[_902ctke5dhqUpdatedat.Value20260113t185057400z]: "2026 01 13t18:50:57.400z",
-	[_902ctke5dhqUpdatedat.Value20260113t185058894z]: "2026 01 13t18:50:58.894z",
-};
 
 export enum AcessosTipo {
 	Value1 = "1",
@@ -805,34 +621,17 @@ export const AEGIS_STATUSMAC_LABELS: Record<AegisStatusmac, string> = {
 	[AegisStatusmac.Error]: "Erro ao Limpar MAC",
 };
 
-export enum AnexosNegociacoesMeta {
-	ObjectObject = "[object Object]",
-}
-
-export enum AnexosNegociacoesMimetype {
-	ApplicationOctetStream = "application/octet-stream",
-	ApplicationPdf = "application/pdf",
-	ImageJpeg = "image/jpeg",
-	ImagePng = "image/png",
-	TextHtml = "text/html",
-	VideoMp4 = "video/mp4",
-}
-
-export enum AnexosNegociacoesStorageid {
-	Value1 = "1",
-}
-
 export interface AnexosNegociacoes {
 	id: number;
 	extname: string;
 	f_anexos_fk: number;
 	filename: string;
-	meta: AnexosNegociacoesMeta;
-	mimetype: AnexosNegociacoesMimetype;
+	meta: Record<string, unknown>;
+	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
-	storageId: AnexosNegociacoesStorageid;
+	storageId: number;
 	title: string;
 	url: string;
 	updatedAt: string;
@@ -847,68 +646,17 @@ export interface AnexosNegociacoesRelations {
 
 export type AnexosNegociacoesRelationKey = keyof AnexosNegociacoesRelations;
 
-export const ANEXOSNEGOCIACOES_META_LABELS: Record<
-	AnexosNegociacoesMeta,
-	string
-> = {
-	[AnexosNegociacoesMeta.ObjectObject]: "[object Object]",
-};
-
-export const ANEXOSNEGOCIACOES_MIMETYPE_LABELS: Record<
-	AnexosNegociacoesMimetype,
-	string
-> = {
-	[AnexosNegociacoesMimetype.ApplicationOctetStream]:
-		"Application/octet Stream",
-	[AnexosNegociacoesMimetype.ApplicationPdf]: "Application/pdf",
-	[AnexosNegociacoesMimetype.ImageJpeg]: "Image/jpeg",
-	[AnexosNegociacoesMimetype.ImagePng]: "Image/png",
-	[AnexosNegociacoesMimetype.TextHtml]: "Text/html",
-	[AnexosNegociacoesMimetype.VideoMp4]: "Video/mp4",
-};
-
-export const ANEXOSNEGOCIACOES_STORAGEID_LABELS: Record<
-	AnexosNegociacoesStorageid,
-	string
-> = {
-	[AnexosNegociacoesStorageid.Value1]: "Ativo",
-};
-
-export enum AnexosTrocaTitularidadeExtname {
-	HtmlFilename = ".html-filename_=",
-	Jpeg = ".jpeg",
-	Jpg = ".jpg",
-	Pdf = ".pdf",
-	PdfFilename = ".pdf-filename_=",
-	Png = ".png",
-}
-
-export enum AnexosTrocaTitularidadeMeta {
-	ObjectObject = "[object Object]",
-}
-
-export enum AnexosTrocaTitularidadeMimetype {
-	ApplicationOctetStream = "application/octet-stream",
-	ApplicationPdf = "application/pdf",
-	ImageJpeg = "image/jpeg",
-	ImagePng = "image/png",
-}
-
-export enum AnexosTrocaTitularidadeStorageid {
-	Value1 = "1",
-}
-
 export interface AnexosTrocaTitularidade {
 	id: number;
-	extname: AnexosTrocaTitularidadeExtname;
+	extname: string;
 	f_anexos_fk: number;
 	filename: string;
-	meta: AnexosTrocaTitularidadeMeta;
-	mimetype: AnexosTrocaTitularidadeMimetype;
+	meta: Record<string, unknown>;
+	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
-	storageId: AnexosTrocaTitularidadeStorageid;
+	storageId: number;
 	title: string;
 	url: string;
 	updatedAt: string;
@@ -923,43 +671,6 @@ export interface AnexosTrocaTitularidadeRelations {
 
 export type AnexosTrocaTitularidadeRelationKey =
 	keyof AnexosTrocaTitularidadeRelations;
-
-export const ANEXOSTROCATITULARIDADE_EXTNAME_LABELS: Record<
-	AnexosTrocaTitularidadeExtname,
-	string
-> = {
-	[AnexosTrocaTitularidadeExtname.HtmlFilename]: ".html Filename =",
-	[AnexosTrocaTitularidadeExtname.Jpeg]: ".jpeg",
-	[AnexosTrocaTitularidadeExtname.Jpg]: ".jpg",
-	[AnexosTrocaTitularidadeExtname.Pdf]: ".pdf",
-	[AnexosTrocaTitularidadeExtname.PdfFilename]: ".pdf Filename =",
-	[AnexosTrocaTitularidadeExtname.Png]: ".png",
-};
-
-export const ANEXOSTROCATITULARIDADE_META_LABELS: Record<
-	AnexosTrocaTitularidadeMeta,
-	string
-> = {
-	[AnexosTrocaTitularidadeMeta.ObjectObject]: "[object Object]",
-};
-
-export const ANEXOSTROCATITULARIDADE_MIMETYPE_LABELS: Record<
-	AnexosTrocaTitularidadeMimetype,
-	string
-> = {
-	[AnexosTrocaTitularidadeMimetype.ApplicationOctetStream]:
-		"Application/octet Stream",
-	[AnexosTrocaTitularidadeMimetype.ApplicationPdf]: "Application/pdf",
-	[AnexosTrocaTitularidadeMimetype.ImageJpeg]: "Image/jpeg",
-	[AnexosTrocaTitularidadeMimetype.ImagePng]: "Image/png",
-};
-
-export const ANEXOSTROCATITULARIDADE_STORAGEID_LABELS: Record<
-	AnexosTrocaTitularidadeStorageid,
-	string
-> = {
-	[AnexosTrocaTitularidadeStorageid.Value1]: "Ativo",
-};
 
 export enum AniversariosStatus {
 	Novo = "novo",
@@ -994,45 +705,17 @@ export const ANIVERSARIOS_STATUS_LABELS: Record<AniversariosStatus, string> = {
 	[AniversariosStatus.Erro]: "Erro",
 };
 
-export enum ArquivosFuncionariosExtname {
-	Jpg = ".jpg",
-	Png = ".png",
-}
-
-export enum ArquivosFuncionariosFkInfoArquivos {
-	Value357470340907008 = "357470340907008",
-	Value357470340907009 = "357470340907009",
-	Value357470340907010 = "357470340907010",
-	Value357470340907011 = "357470340907011",
-}
-
-export enum ArquivosFuncionariosMeta {
-	ObjectObject = "[object Object]",
-}
-
-export enum ArquivosFuncionariosMimetype {
-	ImageJpeg = "image/jpeg",
-	ImagePng = "image/png",
-}
-
-export enum ArquivosFuncionariosSize {
-	Value1047315 = "1047315",
-	Value16183 = "16183",
-	Value6901217 = "6901217",
-	Value86921 = "86921",
-}
-
 export interface ArquivosFuncionarios {
 	id: number;
 	f_fk_funcionarios: number;
-	f_fk_info_arquivos: ArquivosFuncionariosFkInfoArquivos;
-	extname: ArquivosFuncionariosExtname;
+	f_fk_info_arquivos: number;
+	extname: string;
 	filename: string;
-	meta: ArquivosFuncionariosMeta;
-	mimetype: ArquivosFuncionariosMimetype;
+	meta: Record<string, unknown>;
+	mimetype: string;
 	path: string;
 	preview: string;
-	size: ArquivosFuncionariosSize;
+	size: number;
 	title: string;
 	url: string;
 	updatedAt: string;
@@ -1050,72 +733,14 @@ export interface ArquivosFuncionariosRelations {
 export type ArquivosFuncionariosRelationKey =
 	keyof ArquivosFuncionariosRelations;
 
-export const ARQUIVOSFUNCIONARIOS_EXTNAME_LABELS: Record<
-	ArquivosFuncionariosExtname,
-	string
-> = {
-	[ArquivosFuncionariosExtname.Jpg]: ".jpg",
-	[ArquivosFuncionariosExtname.Png]: ".png",
-};
-
-export const ARQUIVOSFUNCIONARIOS_FKINFOARQUIVOS_LABELS: Record<
-	ArquivosFuncionariosFkInfoArquivos,
-	string
-> = {
-	[ArquivosFuncionariosFkInfoArquivos.Value357470340907008]: "357470340907008",
-	[ArquivosFuncionariosFkInfoArquivos.Value357470340907009]: "357470340907009",
-	[ArquivosFuncionariosFkInfoArquivos.Value357470340907010]: "357470340907010",
-	[ArquivosFuncionariosFkInfoArquivos.Value357470340907011]: "357470340907011",
-};
-
-export const ARQUIVOSFUNCIONARIOS_META_LABELS: Record<
-	ArquivosFuncionariosMeta,
-	string
-> = {
-	[ArquivosFuncionariosMeta.ObjectObject]: "[object Object]",
-};
-
-export const ARQUIVOSFUNCIONARIOS_MIMETYPE_LABELS: Record<
-	ArquivosFuncionariosMimetype,
-	string
-> = {
-	[ArquivosFuncionariosMimetype.ImageJpeg]: "Image/jpeg",
-	[ArquivosFuncionariosMimetype.ImagePng]: "Image/png",
-};
-
-export const ARQUIVOSFUNCIONARIOS_SIZE_LABELS: Record<
-	ArquivosFuncionariosSize,
-	string
-> = {
-	[ArquivosFuncionariosSize.Value1047315]: "1047315",
-	[ArquivosFuncionariosSize.Value16183]: "16183",
-	[ArquivosFuncionariosSize.Value6901217]: "6901217",
-	[ArquivosFuncionariosSize.Value86921]: "86921",
-};
-
-export enum AsosExtname {
-	Jfif = ".jfif",
-	Jpeg = ".jpeg",
-	Pdf = ".pdf",
-}
-
-export enum AsosMeta {
-	ObjectObject = "[object Object]",
-}
-
-export enum AsosMimetype {
-	ApplicationPdf = "application/pdf",
-	ImageJpeg = "image/jpeg",
-}
-
 export interface Asos {
 	id: number;
 	f_fk_funcionarios: number;
 	f_fk_infos_aso: number;
-	extname: AsosExtname;
+	extname: string;
 	filename: string;
-	meta: AsosMeta;
-	mimetype: AsosMimetype;
+	meta: Record<string, unknown>;
+	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
@@ -1134,21 +759,6 @@ export interface AsosRelations {
 }
 
 export type AsosRelationKey = keyof AsosRelations;
-
-export const ASOS_EXTNAME_LABELS: Record<AsosExtname, string> = {
-	[AsosExtname.Jfif]: ".jfif",
-	[AsosExtname.Jpeg]: ".jpeg",
-	[AsosExtname.Pdf]: ".pdf",
-};
-
-export const ASOS_META_LABELS: Record<AsosMeta, string> = {
-	[AsosMeta.ObjectObject]: "[object Object]",
-};
-
-export const ASOS_MIMETYPE_LABELS: Record<AsosMimetype, string> = {
-	[AsosMimetype.ApplicationPdf]: "Application/pdf",
-	[AsosMimetype.ImageJpeg]: "Image/jpeg",
-};
 
 export enum AtendimentosIxcAssunto {
 	Value88 = "88",
@@ -1399,29 +1009,12 @@ export const ATENDIMENTOSIXC_TAREFAS_LABELS: Record<
 		"MANUN. PREV. (2) - Encaminhar O.S para Financeiro",
 };
 
-export enum AuditoriaAutomaticaConferencia {
-	True = "true",
-}
-
-export enum AuditoriaAutomaticaIdNegociacao {
-	Value7152 = "7152",
-}
-
-export enum AuditoriaAutomaticaValorMensal {
-	Value1079 = "107.9",
-	Value1179 = "117.9",
-	Value1299 = "129.9",
-	Value1379 = "137.9",
-	Value1778 = "177.8",
-	Value999 = "99.9",
-}
-
 export interface AuditoriaAutomatica {
 	id: number;
-	f_conferencia: AuditoriaAutomaticaConferencia;
-	f_id_negociacao: AuditoriaAutomaticaIdNegociacao;
+	f_conferencia: boolean;
+	f_id_negociacao: number;
 	f_titulo_negociacao: string;
-	f_valor_mensal: AuditoriaAutomaticaValorMensal;
+	f_valor_mensal: number;
 	updatedAt: string;
 	createdAt: string;
 }
@@ -1434,53 +1027,15 @@ export interface AuditoriaAutomaticaRelations {
 
 export type AuditoriaAutomaticaRelationKey = keyof AuditoriaAutomaticaRelations;
 
-export const AUDITORIAAUTOMATICA_CONFERENCIA_LABELS: Record<
-	AuditoriaAutomaticaConferencia,
-	string
-> = {
-	[AuditoriaAutomaticaConferencia.True]: "Sim",
-};
-
-export const AUDITORIAAUTOMATICA_IDNEGOCIACAO_LABELS: Record<
-	AuditoriaAutomaticaIdNegociacao,
-	string
-> = {
-	[AuditoriaAutomaticaIdNegociacao.Value7152]: "7152",
-};
-
-export const AUDITORIAAUTOMATICA_VALORMENSAL_LABELS: Record<
-	AuditoriaAutomaticaValorMensal,
-	string
-> = {
-	[AuditoriaAutomaticaValorMensal.Value1079]: "107.9",
-	[AuditoriaAutomaticaValorMensal.Value1179]: "117.9",
-	[AuditoriaAutomaticaValorMensal.Value1299]: "129.9",
-	[AuditoriaAutomaticaValorMensal.Value1379]: "137.9",
-	[AuditoriaAutomaticaValorMensal.Value1778]: "177.8",
-	[AuditoriaAutomaticaValorMensal.Value999]: "99.9",
-};
-
-export enum CargosCreatedat {
-	Value20251104t193252015z = "2025-11-04T19:32:52.015Z",
-	Value20251114t200042493z = "2025-11-14T20:00:42.493Z",
-	Value20260320t195054109z = "2026-03-20T19:50:54.109Z",
-}
-
-export enum CargosFkFuncionarios {
-	Value1 = "1",
-	Value15 = "15",
-	Value17 = "17",
-}
-
 export interface Cargos {
 	id: number;
-	f_fk_funcionarios: CargosFkFuncionarios;
+	f_fk_funcionarios: number;
 	f_atividades: string;
 	f_cbo: string;
 	f_descricao: string;
 	f_nome: string;
 	updatedAt: string;
-	createdAt: CargosCreatedat;
+	createdAt: string;
 }
 
 export interface CargosRelations {
@@ -1490,21 +1045,6 @@ export interface CargosRelations {
 }
 
 export type CargosRelationKey = keyof CargosRelations;
-
-export const CARGOS_CREATEDAT_LABELS: Record<CargosCreatedat, string> = {
-	[CargosCreatedat.Value20251104t193252015z]: "2025 11 04t19:32:52.015z",
-	[CargosCreatedat.Value20251114t200042493z]: "2025 11 14t20:00:42.493z",
-	[CargosCreatedat.Value20260320t195054109z]: "2026 03 20t19:50:54.109z",
-};
-
-export const CARGOS_FKFUNCIONARIOS_LABELS: Record<
-	CargosFkFuncionarios,
-	string
-> = {
-	[CargosFkFuncionarios.Value1]: "Ativo",
-	[CargosFkFuncionarios.Value15]: "Código 15",
-	[CargosFkFuncionarios.Value17]: "Código 17",
-};
 
 export interface ComentarioViagem {
 	id: number;
@@ -1687,39 +1227,15 @@ export const CONSULTASPJ_STATUSCONSULTA_LABELS: Record<
 	[ConsultasPjStatusConsulta.Value9]: "Negado",
 };
 
-export enum ContratoIxcItensCreatedat {
-	Value20250315t204506335z = "2025-03-15T20:45:06.335Z",
-}
-
-export enum ContratoIxcItensMensalidade {
-	String = "string",
-}
-
-export enum ContratoIxcItensProduto {
-	String = "string",
-}
-
-export enum ContratoIxcItensQuantidade {
-	String = "string",
-}
-
-export enum ContratoIxcItensId {
-	Value1 = "1",
-}
-
-export enum ContratoIxcItensUpdatedat {
-	Value20250315t204506335z = "2025-03-15T20:45:06.335Z",
-}
-
 export interface ContratoIxcItens {
-	id: ContratoIxcItensId;
+	id: number;
 	f_fk_itens_contrato_ixc: number;
 	f_id_produto_contrato_ixc: string;
-	f_mensalidade: ContratoIxcItensMensalidade;
-	f_produto: ContratoIxcItensProduto;
-	f_quantidade: ContratoIxcItensQuantidade;
-	updatedAt: ContratoIxcItensUpdatedat;
-	createdAt: ContratoIxcItensCreatedat;
+	f_mensalidade: string;
+	f_produto: string;
+	f_quantidade: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ContratoIxcItensRelations {
@@ -1729,75 +1245,18 @@ export interface ContratoIxcItensRelations {
 
 export type ContratoIxcItensRelationKey = keyof ContratoIxcItensRelations;
 
-export const CONTRATOIXCITENS_CREATEDAT_LABELS: Record<
-	ContratoIxcItensCreatedat,
-	string
-> = {
-	[ContratoIxcItensCreatedat.Value20250315t204506335z]:
-		"2025 03 15t20:45:06.335z",
-};
-
-export const CONTRATOIXCITENS_MENSALIDADE_LABELS: Record<
-	ContratoIxcItensMensalidade,
-	string
-> = {
-	[ContratoIxcItensMensalidade.String]: "String",
-};
-
-export const CONTRATOIXCITENS_PRODUTO_LABELS: Record<
-	ContratoIxcItensProduto,
-	string
-> = {
-	[ContratoIxcItensProduto.String]: "String",
-};
-
-export const CONTRATOIXCITENS_QUANTIDADE_LABELS: Record<
-	ContratoIxcItensQuantidade,
-	string
-> = {
-	[ContratoIxcItensQuantidade.String]: "String",
-};
-
-export const CONTRATOIXCITENS_ID_LABELS: Record<ContratoIxcItensId, string> = {
-	[ContratoIxcItensId.Value1]: "Ativo",
-};
-
-export const CONTRATOIXCITENS_UPDATEDAT_LABELS: Record<
-	ContratoIxcItensUpdatedat,
-	string
-> = {
-	[ContratoIxcItensUpdatedat.Value20250315t204506335z]:
-		"2025 03 15t20:45:06.335z",
-};
-
-export enum ContratosExtname {
-	Pdf = ".pdf",
-}
-
-export enum ContratosMeta {
-	ObjectObject = "[object Object]",
-}
-
-export enum ContratosMimetype {
-	ApplicationPdf = "application/pdf",
-}
-
-export enum ContratosStorageid {
-	Value1 = "1",
-}
-
 export interface Contratos {
 	id: number;
 	f_fk_negociacao_contrato: number;
 	f_fk_suspensao: number;
-	extname: ContratosExtname;
+	extname: string;
 	filename: string;
-	meta: ContratosMeta;
-	mimetype: ContratosMimetype;
+	meta: Record<string, unknown>;
+	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
-	storageId: ContratosStorageid;
+	storageId: number;
 	title: string;
 	url: string;
 	updatedAt: string;
@@ -1812,53 +1271,13 @@ export interface ContratosRelations {
 
 export type ContratosRelationKey = keyof ContratosRelations;
 
-export const CONTRATOS_EXTNAME_LABELS: Record<ContratosExtname, string> = {
-	[ContratosExtname.Pdf]: ".pdf",
-};
-
-export const CONTRATOS_META_LABELS: Record<ContratosMeta, string> = {
-	[ContratosMeta.ObjectObject]: "[object Object]",
-};
-
-export const CONTRATOS_MIMETYPE_LABELS: Record<ContratosMimetype, string> = {
-	[ContratosMimetype.ApplicationPdf]: "Application/pdf",
-};
-
-export const CONTRATOS_STORAGEID_LABELS: Record<ContratosStorageid, string> = {
-	[ContratosStorageid.Value1]: "Ativo",
-};
-
-export enum ContratosIxcCreatedat {
-	Value20250315t194534412z = "2025-03-15T19:45:34.412Z",
-	Value20250316t152900948z = "2025-03-16T15:29:00.948Z",
-	Value20250317t190348417z = "2025-03-17T19:03:48.417Z",
-	Value20250317t190947913z = "2025-03-17T19:09:47.913Z",
-	Value20250326t201330062z = "2025-03-26T20:13:30.062Z",
-}
-
-export enum ContratosIxcId {
-	Value1 = "1",
-	Value14588 = "14588",
-	Value17416 = "17416",
-	Value17566 = "17566",
-	Value2 = "2",
-}
-
-export enum ContratosIxcUpdatedat {
-	Value20250315t194534412z = "2025-03-15T19:45:34.412Z",
-	Value20250316t152900948z = "2025-03-16T15:29:00.948Z",
-	Value20250317t190348417z = "2025-03-17T19:03:48.417Z",
-	Value20250317t190947913z = "2025-03-17T19:09:47.913Z",
-	Value20250326t201330062z = "2025-03-26T20:13:30.062Z",
-}
-
 export interface ContratosIxc {
-	id: ContratosIxcId;
+	id: number;
 	f_descricao: string;
 	f_expiracao: string;
 	f_vencimento: string;
-	updatedAt: ContratosIxcUpdatedat;
-	createdAt: ContratosIxcCreatedat;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ContratosIxcRelations {
@@ -1868,36 +1287,6 @@ export interface ContratosIxcRelations {
 }
 
 export type ContratosIxcRelationKey = keyof ContratosIxcRelations;
-
-export const CONTRATOSIXC_CREATEDAT_LABELS: Record<
-	ContratosIxcCreatedat,
-	string
-> = {
-	[ContratosIxcCreatedat.Value20250315t194534412z]: "2025 03 15t19:45:34.412z",
-	[ContratosIxcCreatedat.Value20250316t152900948z]: "2025 03 16t15:29:00.948z",
-	[ContratosIxcCreatedat.Value20250317t190348417z]: "2025 03 17t19:03:48.417z",
-	[ContratosIxcCreatedat.Value20250317t190947913z]: "2025 03 17t19:09:47.913z",
-	[ContratosIxcCreatedat.Value20250326t201330062z]: "2025 03 26t20:13:30.062z",
-};
-
-export const CONTRATOSIXC_ID_LABELS: Record<ContratosIxcId, string> = {
-	[ContratosIxcId.Value1]: "Ativo",
-	[ContratosIxcId.Value14588]: "14588",
-	[ContratosIxcId.Value17416]: "17416",
-	[ContratosIxcId.Value17566]: "17566",
-	[ContratosIxcId.Value2]: "Código 2",
-};
-
-export const CONTRATOSIXC_UPDATEDAT_LABELS: Record<
-	ContratosIxcUpdatedat,
-	string
-> = {
-	[ContratosIxcUpdatedat.Value20250315t194534412z]: "2025 03 15t19:45:34.412z",
-	[ContratosIxcUpdatedat.Value20250316t152900948z]: "2025 03 16t15:29:00.948z",
-	[ContratosIxcUpdatedat.Value20250317t190348417z]: "2025 03 17t19:03:48.417z",
-	[ContratosIxcUpdatedat.Value20250317t190947913z]: "2025 03 17t19:09:47.913z",
-	[ContratosIxcUpdatedat.Value20250326t201330062z]: "2025 03 26t20:13:30.062z",
-};
 
 export enum CuponsDescontoStatus {
 	Value0 = "0",
@@ -2220,23 +1609,12 @@ export const DEMANDASVIABILIDADES_STATUS_LABELS: Record<
 	[DemandasViabilidadesStatus.Value3]: "Não Viável",
 };
 
-export enum DepartamentosCreatedat {
-	Value20251104t195023028z = "2025-11-04T19:50:23.028Z",
-}
-
-export enum DepartamentosFkFuncionarios {
-	Value1 = "1",
-	Value15 = "15",
-	Value24 = "24",
-	Value30 = "30",
-}
-
 export interface Departamentos {
 	id: number;
-	f_fk_funcionarios: DepartamentosFkFuncionarios;
+	f_fk_funcionarios: number;
 	f_nome: string;
 	updatedAt: string;
-	createdAt: DepartamentosCreatedat;
+	createdAt: string;
 }
 
 export interface DepartamentosRelations {
@@ -2246,23 +1624,6 @@ export interface DepartamentosRelations {
 }
 
 export type DepartamentosRelationKey = keyof DepartamentosRelations;
-
-export const DEPARTAMENTOS_CREATEDAT_LABELS: Record<
-	DepartamentosCreatedat,
-	string
-> = {
-	[DepartamentosCreatedat.Value20251104t195023028z]: "2025 11 04t19:50:23.028z",
-};
-
-export const DEPARTAMENTOS_FKFUNCIONARIOS_LABELS: Record<
-	DepartamentosFkFuncionarios,
-	string
-> = {
-	[DepartamentosFkFuncionarios.Value1]: "Ativo",
-	[DepartamentosFkFuncionarios.Value15]: "Código 15",
-	[DepartamentosFkFuncionarios.Value24]: "Código 24",
-	[DepartamentosFkFuncionarios.Value30]: "Código 30",
-};
 
 export enum DiscosCapacidade {
 	Value1 = "1",
@@ -2334,20 +1695,11 @@ export const DISCOS_TIPO_LABELS: Record<DiscosTipo, string> = {
 	[DiscosTipo.Value6]: "HDD SATA",
 };
 
-export enum EquipamentosFkEquipamentosAnexos {
-	Value2 = "2",
-}
-
-export enum EquipamentosFkEquipamentosInterfaces {
-	Value8 = "8",
-	Value9 = "9",
-}
-
 export interface Equipamentos {
 	id: number;
 	f_fk_ativo_rack: number;
-	f_fk_equipamentos_anexos: EquipamentosFkEquipamentosAnexos;
-	f_fk_equipamentos_interfaces: EquipamentosFkEquipamentosInterfaces;
+	f_fk_equipamentos_anexos: number;
+	f_fk_equipamentos_interfaces: number;
 	f_34u76klwxoj: number;
 	f_modelo: string;
 	f_nome: string;
@@ -2371,21 +1723,6 @@ export interface EquipamentosRelations {
 
 export type EquipamentosRelationKey = keyof EquipamentosRelations;
 
-export const EQUIPAMENTOS_FKEQUIPAMENTOSANEXOS_LABELS: Record<
-	EquipamentosFkEquipamentosAnexos,
-	string
-> = {
-	[EquipamentosFkEquipamentosAnexos.Value2]: "Código 2",
-};
-
-export const EQUIPAMENTOS_FKEQUIPAMENTOSINTERFACES_LABELS: Record<
-	EquipamentosFkEquipamentosInterfaces,
-	string
-> = {
-	[EquipamentosFkEquipamentosInterfaces.Value8]: "Código 8",
-	[EquipamentosFkEquipamentosInterfaces.Value9]: "Código 9",
-};
-
 export interface EquipamentosEmPredios {
 	id: number;
 	f_contato_sindico: string;
@@ -2407,37 +1744,12 @@ export interface EquipamentosEmPrediosRelations {
 export type EquipamentosEmPrediosRelationKey =
 	keyof EquipamentosEmPrediosRelations;
 
-export enum FacilidadeCreatedat {
-	Value20251014t232432757z = "2025-10-14T23:24:32.757Z",
-	Value20251014t232532650z = "2025-10-14T23:25:32.650Z",
-}
-
-export enum FacilidadeDescricao {
-	IpFixo = "IP Fixo",
-	SessOBgpTeste = "Sessão BGP TESTE",
-}
-
-export enum FacilidadeNome {
-	IpFixo = "IP Fixo",
-	SessOBgp = "Sessão BGP",
-}
-
-export enum FacilidadeId {
-	Value1 = "1",
-	Value2 = "2",
-}
-
-export enum FacilidadeUpdatedat {
-	Value20251014t232432757z = "2025-10-14T23:24:32.757Z",
-	Value20251014t232532650z = "2025-10-14T23:25:32.650Z",
-}
-
 export interface Facilidade {
-	id: FacilidadeId;
-	f_descricao: FacilidadeDescricao;
-	f_nome: FacilidadeNome;
-	updatedAt: FacilidadeUpdatedat;
-	createdAt: FacilidadeCreatedat;
+	id: number;
+	f_descricao: string;
+	f_nome: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface FacilidadeRelations {
@@ -2447,58 +1759,11 @@ export interface FacilidadeRelations {
 
 export type FacilidadeRelationKey = keyof FacilidadeRelations;
 
-export const FACILIDADE_CREATEDAT_LABELS: Record<FacilidadeCreatedat, string> =
-	{
-		[FacilidadeCreatedat.Value20251014t232432757z]: "2025 10 14t23:24:32.757z",
-		[FacilidadeCreatedat.Value20251014t232532650z]: "2025 10 14t23:25:32.650z",
-	};
-
-export const FACILIDADE_DESCRICAO_LABELS: Record<FacilidadeDescricao, string> =
-	{
-		[FacilidadeDescricao.IpFixo]: "IP Fixo",
-		[FacilidadeDescricao.SessOBgpTeste]: "Sessão BGP Teste",
-	};
-
-export const FACILIDADE_NOME_LABELS: Record<FacilidadeNome, string> = {
-	[FacilidadeNome.IpFixo]: "IP Fixo",
-	[FacilidadeNome.SessOBgp]: "Sessão BGP",
-};
-
-export const FACILIDADE_ID_LABELS: Record<FacilidadeId, string> = {
-	[FacilidadeId.Value1]: "Ativo",
-	[FacilidadeId.Value2]: "Código 2",
-};
-
-export const FACILIDADE_UPDATEDAT_LABELS: Record<FacilidadeUpdatedat, string> =
-	{
-		[FacilidadeUpdatedat.Value20251014t232432757z]: "2025 10 14t23:24:32.757z",
-		[FacilidadeUpdatedat.Value20251014t232532650z]: "2025 10 14t23:25:32.650z",
-	};
-
-export enum FornecedoresTelecomFkClienteCircuiro {
-	Value1 = "1",
-	Value2 = "2",
-}
-
-export enum FornecedoresTelecomFkFornecedorCircuito {
-	Value1 = "1",
-	Value2 = "2",
-}
-
-export enum FornecedoresTelecomInstrucoes {
-	PDataCurCursorClienteP = '<p data-cur="cursor">Cliente</p>',
-	PClienteP = "<p>Cliente</p>",
-	PContatoStrongNelsonPortoNetoStrongPP35095089000100P = "<p>Contato: <strong>NELSON PORTO NETO</strong></p><p>35.095.089/0001-00</p>",
-	PFornecedorP = "<p>Fornecedor</p>",
-	PGerenteDeContasPPMichelCaldeirasMteixeiraBrDigital48991537698PPAberturaDeChamadosWhatsapp555130229350P = "<p>Gerente de Contas:</p><p>Michel Caldeiras - mteixeira@br.digital - 48 99153-7698</p><p>Abertura de Chamados: Whatsapp: 555130229350</p>",
-	PParceiroDeCuritibanosP = "<p>Parceiro de Curitibanos</p>",
-}
-
 export interface FornecedoresTelecom {
 	id: number;
-	f_fk_cliente_circuiro: FornecedoresTelecomFkClienteCircuiro;
-	f_fk_fornecedor_circuito: FornecedoresTelecomFkFornecedorCircuito;
-	f_instrucoes: FornecedoresTelecomInstrucoes;
+	f_fk_cliente_circuiro: number;
+	f_fk_fornecedor_circuito: number;
+	f_instrucoes: string;
 	f_nome_fantasia: string;
 	f_razao_social: string;
 	updatedAt: string;
@@ -2516,108 +1781,20 @@ export interface FornecedoresTelecomRelations {
 
 export type FornecedoresTelecomRelationKey = keyof FornecedoresTelecomRelations;
 
-export const FORNECEDORESTELECOM_FKCLIENTECIRCUIRO_LABELS: Record<
-	FornecedoresTelecomFkClienteCircuiro,
-	string
-> = {
-	[FornecedoresTelecomFkClienteCircuiro.Value1]: "Ativo",
-	[FornecedoresTelecomFkClienteCircuiro.Value2]: "Código 2",
-};
-
-export const FORNECEDORESTELECOM_FKFORNECEDORCIRCUITO_LABELS: Record<
-	FornecedoresTelecomFkFornecedorCircuito,
-	string
-> = {
-	[FornecedoresTelecomFkFornecedorCircuito.Value1]: "Ativo",
-	[FornecedoresTelecomFkFornecedorCircuito.Value2]: "Código 2",
-};
-
-export const FORNECEDORESTELECOM_INSTRUCOES_LABELS: Record<
-	FornecedoresTelecomInstrucoes,
-	string
-> = {
-	[FornecedoresTelecomInstrucoes.PDataCurCursorClienteP]:
-		'<p Data Cur="cursor">cliente</p>',
-	[FornecedoresTelecomInstrucoes.PClienteP]: "<p>cliente</p>",
-	[FornecedoresTelecomInstrucoes.PContatoStrongNelsonPortoNetoStrongPP35095089000100P]:
-		"<p>contato: <strong>nelson Porto Neto</strong></p><p>35.095.089/0001 00</p>",
-	[FornecedoresTelecomInstrucoes.PFornecedorP]: "<p>fornecedor</p>",
-	[FornecedoresTelecomInstrucoes.PGerenteDeContasPPMichelCaldeirasMteixeiraBrDigital48991537698PPAberturaDeChamadosWhatsapp555130229350P]:
-		"<p>gerente De Contas:</p><p>michel Caldeiras Mteixeira@br.digital 48 99153 7698</p><p>abertura De Chamados: Whatsapp: 555130229350</p>",
-	[FornecedoresTelecomInstrucoes.PParceiroDeCuritibanosP]:
-		"<p>parceiro De Curitibanos</p>",
-};
-
-export enum FotoAniversarioCreatedat {
-	Value20260414t141848544z = "2026-04-14T14:18:48.544Z",
-	Value20260414t141848735z = "2026-04-14T14:18:48.735Z",
-}
-
-export enum FotoAniversarioExtname {
-	Png = ".png",
-}
-
-export enum FotoAniversarioFkAniversarios {
-	Value358932448018432 = "358932448018432",
-	Value358932448018434 = "358932448018434",
-}
-
-export enum FotoAniversarioFilename {
-	BrenoNetoFreitas1804C6gvgoPng = "Breno Neto Freitas; 18-04-c6gvgo.png",
-	MateusSalomODeBarrosNeto1302C3vdpcPng = "Mateus Salomão de Barros Neto; 13-02-c3vdpc.png",
-}
-
-export enum FotoAniversarioId {
-	Value358932448018433 = "358932448018433",
-	Value358932448018435 = "358932448018435",
-}
-
-export enum FotoAniversarioMeta {
-	ObjectObject = "[object Object]",
-}
-
-export enum FotoAniversarioMimetype {
-	ImagePng = "image/png",
-}
-
-export enum FotoAniversarioPreview {
-	StorageUploadsBreno20neto20freitas3b201804C6gvgoPng = "/storage/uploads/Breno%20Neto%20Freitas%3B%2018-04-c6gvgo.png",
-	StorageUploadsMateus20salomC3A3o20de20barros20neto3b201302C3vdpcPng = "/storage/uploads/Mateus%20Salom%C3%A3o%20de%20Barros%20Neto%3B%2013-02-c3vdpc.png",
-}
-
-export enum FotoAniversarioSize {
-	Value13284 = "13284",
-}
-
-export enum FotoAniversarioTitle {
-	BrenoNetoFreitas1804 = "Breno Neto Freitas; 18-04",
-	MateusSalomODeBarrosNeto1302 = "Mateus Salomão de Barros Neto; 13-02",
-}
-
-export enum FotoAniversarioUpdatedat {
-	Value20260414t141848602z = "2026-04-14T14:18:48.602Z",
-	Value20260414t141848784z = "2026-04-14T14:18:48.784Z",
-}
-
-export enum FotoAniversarioUrl {
-	StorageUploadsBreno20neto20freitas3b201804C6gvgoPng = "/storage/uploads/Breno%20Neto%20Freitas%3B%2018-04-c6gvgo.png",
-	StorageUploadsMateus20salomC3A3o20de20barros20neto3b201302C3vdpcPng = "/storage/uploads/Mateus%20Salom%C3%A3o%20de%20Barros%20Neto%3B%2013-02-c3vdpc.png",
-}
-
 export interface FotoAniversario {
-	id: FotoAniversarioId;
-	f_fk_aniversarios: FotoAniversarioFkAniversarios;
-	extname: FotoAniversarioExtname;
-	filename: FotoAniversarioFilename;
-	meta: FotoAniversarioMeta;
-	mimetype: FotoAniversarioMimetype;
+	id: number;
+	f_fk_aniversarios: number;
+	extname: string;
+	filename: string;
+	meta: Record<string, unknown>;
+	mimetype: string;
 	path: string;
-	preview: FotoAniversarioPreview;
-	size: FotoAniversarioSize;
-	title: FotoAniversarioTitle;
-	url: FotoAniversarioUrl;
-	updatedAt: FotoAniversarioUpdatedat;
-	createdAt: FotoAniversarioCreatedat;
+	preview: string;
+	size: number;
+	title: string;
+	url: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface FotoAniversarioRelations {
@@ -2629,161 +1806,20 @@ export interface FotoAniversarioRelations {
 
 export type FotoAniversarioRelationKey = keyof FotoAniversarioRelations;
 
-export const FOTOANIVERSARIO_CREATEDAT_LABELS: Record<
-	FotoAniversarioCreatedat,
-	string
-> = {
-	[FotoAniversarioCreatedat.Value20260414t141848544z]:
-		"2026 04 14t14:18:48.544z",
-	[FotoAniversarioCreatedat.Value20260414t141848735z]:
-		"2026 04 14t14:18:48.735z",
-};
-
-export const FOTOANIVERSARIO_EXTNAME_LABELS: Record<
-	FotoAniversarioExtname,
-	string
-> = {
-	[FotoAniversarioExtname.Png]: ".png",
-};
-
-export const FOTOANIVERSARIO_FKANIVERSARIOS_LABELS: Record<
-	FotoAniversarioFkAniversarios,
-	string
-> = {
-	[FotoAniversarioFkAniversarios.Value358932448018432]: "358932448018432",
-	[FotoAniversarioFkAniversarios.Value358932448018434]: "358932448018434",
-};
-
-export const FOTOANIVERSARIO_FILENAME_LABELS: Record<
-	FotoAniversarioFilename,
-	string
-> = {
-	[FotoAniversarioFilename.BrenoNetoFreitas1804C6gvgoPng]:
-		"Breno Neto Freitas; 18 04 C6gvgo.png",
-	[FotoAniversarioFilename.MateusSalomODeBarrosNeto1302C3vdpcPng]:
-		"Mateus Salomão De Barros Neto; 13 02 C3vdpc.png",
-};
-
-export const FOTOANIVERSARIO_ID_LABELS: Record<FotoAniversarioId, string> = {
-	[FotoAniversarioId.Value358932448018433]: "358932448018433",
-	[FotoAniversarioId.Value358932448018435]: "358932448018435",
-};
-
-export const FOTOANIVERSARIO_META_LABELS: Record<FotoAniversarioMeta, string> =
-	{
-		[FotoAniversarioMeta.ObjectObject]: "[object Object]",
-	};
-
-export const FOTOANIVERSARIO_MIMETYPE_LABELS: Record<
-	FotoAniversarioMimetype,
-	string
-> = {
-	[FotoAniversarioMimetype.ImagePng]: "Image/png",
-};
-
-export const FOTOANIVERSARIO_PREVIEW_LABELS: Record<
-	FotoAniversarioPreview,
-	string
-> = {
-	[FotoAniversarioPreview.StorageUploadsBreno20neto20freitas3b201804C6gvgoPng]:
-		"/storage/uploads/breno%20neto%20freitas%3b%2018 04 C6gvgo.png",
-	[FotoAniversarioPreview.StorageUploadsMateus20salomC3A3o20de20barros20neto3b201302C3vdpcPng]:
-		"/storage/uploads/mateus%20salom%c3%a3o%20de%20barros%20neto%3b%2013 02 C3vdpc.png",
-};
-
-export const FOTOANIVERSARIO_SIZE_LABELS: Record<FotoAniversarioSize, string> =
-	{
-		[FotoAniversarioSize.Value13284]: "13284",
-	};
-
-export const FOTOANIVERSARIO_TITLE_LABELS: Record<
-	FotoAniversarioTitle,
-	string
-> = {
-	[FotoAniversarioTitle.BrenoNetoFreitas1804]: "Breno Neto Freitas; 18 04",
-	[FotoAniversarioTitle.MateusSalomODeBarrosNeto1302]:
-		"Mateus Salomão De Barros Neto; 13 02",
-};
-
-export const FOTOANIVERSARIO_UPDATEDAT_LABELS: Record<
-	FotoAniversarioUpdatedat,
-	string
-> = {
-	[FotoAniversarioUpdatedat.Value20260414t141848602z]:
-		"2026 04 14t14:18:48.602z",
-	[FotoAniversarioUpdatedat.Value20260414t141848784z]:
-		"2026 04 14t14:18:48.784z",
-};
-
-export const FOTOANIVERSARIO_URL_LABELS: Record<FotoAniversarioUrl, string> = {
-	[FotoAniversarioUrl.StorageUploadsBreno20neto20freitas3b201804C6gvgoPng]:
-		"/storage/uploads/breno%20neto%20freitas%3b%2018 04 C6gvgo.png",
-	[FotoAniversarioUrl.StorageUploadsMateus20salomC3A3o20de20barros20neto3b201302C3vdpcPng]:
-		"/storage/uploads/mateus%20salom%c3%a3o%20de%20barros%20neto%3b%2013 02 C3vdpc.png",
-};
-
-export enum FotoFuncionariosCreatedat {
-	Value20251103t185830947z = "2025-11-03T18:58:30.947Z",
-}
-
-export enum FotoFuncionariosExtname {
-	Pdf = ".pdf",
-}
-
-export enum FotoFuncionariosFkFuncionarios {
-	Value8 = "8",
-}
-
-export enum FotoFuncionariosFilename {
-	BrasilTecparServicosDeTelecomunicacoes7apdd6Pdf = "BRASIL TECPAR SERVICOS DE TELECOMUNICACOES-7apdd6.pdf",
-}
-
-export enum FotoFuncionariosId {
-	Value1 = "1",
-}
-
-export enum FotoFuncionariosMeta {
-	ObjectObject = "[object Object]",
-}
-
-export enum FotoFuncionariosMimetype {
-	ApplicationPdf = "application/pdf",
-}
-
-export enum FotoFuncionariosPreview {
-	StorageUploadsBrasil20tecpar20servicos20de20telecomunicacoes7apdd6Pdf = "/storage/uploads/BRASIL%20TECPAR%20SERVICOS%20DE%20TELECOMUNICACOES-7apdd6.pdf",
-}
-
-export enum FotoFuncionariosSize {
-	Value4792190 = "4792190",
-}
-
-export enum FotoFuncionariosTitle {
-	BrasilTecparServicosDeTelecomunicacoes = "BRASIL TECPAR SERVICOS DE TELECOMUNICACOES",
-}
-
-export enum FotoFuncionariosUpdatedat {
-	Value20251103t185831637z = "2025-11-03T18:58:31.637Z",
-}
-
-export enum FotoFuncionariosUrl {
-	StorageUploadsBrasil20tecpar20servicos20de20telecomunicacoes7apdd6Pdf = "/storage/uploads/BRASIL%20TECPAR%20SERVICOS%20DE%20TELECOMUNICACOES-7apdd6.pdf",
-}
-
 export interface FotoFuncionarios {
-	id: FotoFuncionariosId;
-	f_fk_funcionarios: FotoFuncionariosFkFuncionarios;
-	extname: FotoFuncionariosExtname;
-	filename: FotoFuncionariosFilename;
-	meta: FotoFuncionariosMeta;
-	mimetype: FotoFuncionariosMimetype;
+	id: number;
+	f_fk_funcionarios: number;
+	extname: string;
+	filename: string;
+	meta: Record<string, unknown>;
+	mimetype: string;
 	path: string;
-	preview: FotoFuncionariosPreview;
-	size: FotoFuncionariosSize;
-	title: FotoFuncionariosTitle;
-	url: FotoFuncionariosUrl;
-	updatedAt: FotoFuncionariosUpdatedat;
-	createdAt: FotoFuncionariosCreatedat;
+	preview: string;
+	size: number;
+	title: string;
+	url: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface FotoFuncionariosRelations {
@@ -2794,91 +1830,6 @@ export interface FotoFuncionariosRelations {
 }
 
 export type FotoFuncionariosRelationKey = keyof FotoFuncionariosRelations;
-
-export const FOTOFUNCIONARIOS_CREATEDAT_LABELS: Record<
-	FotoFuncionariosCreatedat,
-	string
-> = {
-	[FotoFuncionariosCreatedat.Value20251103t185830947z]:
-		"2025 11 03t18:58:30.947z",
-};
-
-export const FOTOFUNCIONARIOS_EXTNAME_LABELS: Record<
-	FotoFuncionariosExtname,
-	string
-> = {
-	[FotoFuncionariosExtname.Pdf]: ".pdf",
-};
-
-export const FOTOFUNCIONARIOS_FKFUNCIONARIOS_LABELS: Record<
-	FotoFuncionariosFkFuncionarios,
-	string
-> = {
-	[FotoFuncionariosFkFuncionarios.Value8]: "Código 8",
-};
-
-export const FOTOFUNCIONARIOS_FILENAME_LABELS: Record<
-	FotoFuncionariosFilename,
-	string
-> = {
-	[FotoFuncionariosFilename.BrasilTecparServicosDeTelecomunicacoes7apdd6Pdf]:
-		"Brasil Tecpar Servicos DE Telecomunicacoes 7apdd6.pdf",
-};
-
-export const FOTOFUNCIONARIOS_ID_LABELS: Record<FotoFuncionariosId, string> = {
-	[FotoFuncionariosId.Value1]: "Ativo",
-};
-
-export const FOTOFUNCIONARIOS_META_LABELS: Record<
-	FotoFuncionariosMeta,
-	string
-> = {
-	[FotoFuncionariosMeta.ObjectObject]: "[object Object]",
-};
-
-export const FOTOFUNCIONARIOS_MIMETYPE_LABELS: Record<
-	FotoFuncionariosMimetype,
-	string
-> = {
-	[FotoFuncionariosMimetype.ApplicationPdf]: "Application/pdf",
-};
-
-export const FOTOFUNCIONARIOS_PREVIEW_LABELS: Record<
-	FotoFuncionariosPreview,
-	string
-> = {
-	[FotoFuncionariosPreview.StorageUploadsBrasil20tecpar20servicos20de20telecomunicacoes7apdd6Pdf]:
-		"/storage/uploads/brasil%20tecpar%20servicos%20de%20telecomunicacoes 7apdd6.pdf",
-};
-
-export const FOTOFUNCIONARIOS_SIZE_LABELS: Record<
-	FotoFuncionariosSize,
-	string
-> = {
-	[FotoFuncionariosSize.Value4792190]: "4792190",
-};
-
-export const FOTOFUNCIONARIOS_TITLE_LABELS: Record<
-	FotoFuncionariosTitle,
-	string
-> = {
-	[FotoFuncionariosTitle.BrasilTecparServicosDeTelecomunicacoes]:
-		"Brasil Tecpar Servicos DE Telecomunicacoes",
-};
-
-export const FOTOFUNCIONARIOS_UPDATEDAT_LABELS: Record<
-	FotoFuncionariosUpdatedat,
-	string
-> = {
-	[FotoFuncionariosUpdatedat.Value20251103t185831637z]:
-		"2025 11 03t18:58:31.637z",
-};
-
-export const FOTOFUNCIONARIOS_URL_LABELS: Record<FotoFuncionariosUrl, string> =
-	{
-		[FotoFuncionariosUrl.StorageUploadsBrasil20tecpar20servicos20de20telecomunicacoes7apdd6Pdf]:
-			"/storage/uploads/brasil%20tecpar%20servicos%20de%20telecomunicacoes 7apdd6.pdf",
-	};
 
 export interface Ij93gv1hx9m {
 	f_fk_equipamentos_interfaces: number;
@@ -3133,55 +2084,17 @@ export const LOGS_LOGLEVEL_LABELS: Record<LogsLogLevel, string> = {
 	[LogsLogLevel.Error]: "Error",
 };
 
-export enum LogsCargosCbo {
-	Value732130InstaladorReparadorDeRedesTelefNicasEDeComunicaODeDados = "732130 - Instalador-reparador de redes telefônicas e de comunicação de dados",
-}
-
-export enum LogsCargosCreatedat {
-	Value20260320t183424998z = "2026-03-20T18:34:24.998Z",
-	Value20260320t195157986z = "2026-03-20T19:51:57.986Z",
-	Value20260331t185806121z = "2026-03-31T18:58:06.121Z",
-}
-
-export enum LogsCargosDataInicioCargo {
-	Value20032026 = "20/03/2026",
-	Value31032026 = "31/03/2026",
-}
-
-export enum LogsCargosFkFuncionarios {
-	Value116 = "116",
-	Value8 = "8",
-}
-
-export enum LogsCargosNomeCargo {
-	AssistenteSuporteTCnico = "Assistente Suporte Técnico",
-	AuxiliarTCnico = "Auxiliar Técnico",
-	Outro = "Outro",
-}
-
-export enum LogsCargosId {
-	Value354434761621506 = "354434761621506",
-	Value354444519669762 = "354444519669762",
-	Value356430877032450 = "356430877032450",
-}
-
-export enum LogsCargosUpdatedat {
-	Value20260320t185853194z = "2026-03-20T18:58:53.194Z",
-	Value20260320t195157986z = "2026-03-20T19:51:57.986Z",
-	Value20260331t185806121z = "2026-03-31T18:58:06.121Z",
-}
-
 export interface LogsCargos {
-	id: LogsCargosId;
-	f_fk_funcionarios: LogsCargosFkFuncionarios;
-	CBO: LogsCargosCbo;
+	id: number;
+	f_fk_funcionarios: number;
+	CBO: string;
 	f_atividades: string;
 	f_cargo_anterior: string;
-	f_data_inicio_cargo: LogsCargosDataInicioCargo;
+	f_data_inicio_cargo: string;
 	f_descricao: string;
-	f_nome_cargo: LogsCargosNomeCargo;
-	updatedAt: LogsCargosUpdatedat;
-	createdAt: LogsCargosCreatedat;
+	f_nome_cargo: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface LogsCargosRelations {
@@ -3191,54 +2104,6 @@ export interface LogsCargosRelations {
 }
 
 export type LogsCargosRelationKey = keyof LogsCargosRelations;
-
-export const LOGSCARGOS_CBO_LABELS: Record<LogsCargosCbo, string> = {
-	[LogsCargosCbo.Value732130InstaladorReparadorDeRedesTelefNicasEDeComunicaODeDados]:
-		"732130 Instalador Reparador De Redes Telefônicas E De Comunicação De Dados",
-};
-
-export const LOGSCARGOS_CREATEDAT_LABELS: Record<LogsCargosCreatedat, string> =
-	{
-		[LogsCargosCreatedat.Value20260320t183424998z]: "2026 03 20t18:34:24.998z",
-		[LogsCargosCreatedat.Value20260320t195157986z]: "2026 03 20t19:51:57.986z",
-		[LogsCargosCreatedat.Value20260331t185806121z]: "2026 03 31t18:58:06.121z",
-	};
-
-export const LOGSCARGOS_DATAINICIOCARGO_LABELS: Record<
-	LogsCargosDataInicioCargo,
-	string
-> = {
-	[LogsCargosDataInicioCargo.Value20032026]: "20/03/2026",
-	[LogsCargosDataInicioCargo.Value31032026]: "31/03/2026",
-};
-
-export const LOGSCARGOS_FKFUNCIONARIOS_LABELS: Record<
-	LogsCargosFkFuncionarios,
-	string
-> = {
-	[LogsCargosFkFuncionarios.Value116]: "116",
-	[LogsCargosFkFuncionarios.Value8]: "Código 8",
-};
-
-export const LOGSCARGOS_NOMECARGO_LABELS: Record<LogsCargosNomeCargo, string> =
-	{
-		[LogsCargosNomeCargo.AssistenteSuporteTCnico]: "Assistente Suporte Técnico",
-		[LogsCargosNomeCargo.AuxiliarTCnico]: "Auxiliar Técnico",
-		[LogsCargosNomeCargo.Outro]: "Outro",
-	};
-
-export const LOGSCARGOS_ID_LABELS: Record<LogsCargosId, string> = {
-	[LogsCargosId.Value354434761621506]: "354434761621506",
-	[LogsCargosId.Value354444519669762]: "354444519669762",
-	[LogsCargosId.Value356430877032450]: "356430877032450",
-};
-
-export const LOGSCARGOS_UPDATEDAT_LABELS: Record<LogsCargosUpdatedat, string> =
-	{
-		[LogsCargosUpdatedat.Value20260320t185853194z]: "2026 03 20t18:58:53.194z",
-		[LogsCargosUpdatedat.Value20260320t195157986z]: "2026 03 20t19:51:57.986z",
-		[LogsCargosUpdatedat.Value20260331t185806121z]: "2026 03 31t18:58:06.121z",
-	};
 
 export interface Muu3vsavv3h {
 	f_fk_1_setor_x_colaborador: number;
@@ -3455,81 +2320,17 @@ export const OPCOESSMP_PORTABILIDADE_LABELS: Record<
 	[OpcoesSmpPortabilidade.Value1]: "SIM",
 };
 
-export enum OpcoesSmpTemplateBonus {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value5 = "5",
-}
-
-export enum OpcoesSmpTemplateFranquiaDados {
-	Value14 = "14",
-	Value22 = "22",
-	Value3 = "3",
-	Value30 = "30",
-	Value45 = "45",
-	Value7 = "7",
-}
-
-export enum OpcoesSmpTemplateMinutos {
-	Value100 = "100",
-	Value50 = "50",
-	Ilimitado = "Ilimitado",
-}
-
-export enum OpcoesSmpTemplateNomePlano {
-	EaiChip14Gb2GbBonus = "Eai Chip 14 GB + 2 GB Bonus",
-	EaiChip22Gb3GbBonus = "Eai Chip 22 GB + 3 GB Bonus",
-	EaiChip3Gb1GbBonus = "Eai Chip 3 GB + 1 GB Bonus",
-	EaiChip30Gb5GbBonus = "Eai Chip 30 GB + 5 GB Bonus",
-	EaiChip45Gb5GbBonus = "Eai Chip 45 GB + 5 GB Bonus",
-	EaiChip7Gb1GbBonus = "Eai Chip 7 GB + 1 GB Bonus",
-}
-
-export enum OpcoesSmpTemplateSms {
-	Value100 = "100",
-	Value20 = "20",
-	Value50 = "50",
-}
-
-export enum OpcoesSmpTemplateSvaIncluso {
-	SkeeloEbookAvanAdo = "Skeelo - Ebook Avançado",
-	SkeeloEbookGold = "Skeelo - Ebook Gold",
-	SkeeloEbookIntermediRio = "Skeelo - Ebook Intermediário",
-	SkeeloEbookPremium = "Skeelo - Ebook Premium",
-	SkeeloEbookPremiumPlus = "Skeelo - Ebook Premium Plus",
-	SkeeloEbookRegular = "Skeelo - Ebook Regular",
-}
-
-export enum OpcoesSmpTemplateValorSmp {
-	Value13 = "13",
-	Value21 = "21",
-	Value26 = "26",
-	Value30 = "30",
-	Value38 = "38",
-	Value41 = "41",
-}
-
-export enum OpcoesSmpTemplateValorSva {
-	Value149 = "14.9",
-	Value189 = "18.9",
-	Value259 = "25.9",
-	Value299 = "29.9",
-	Value349 = "34.9",
-	Value99 = "9.9",
-}
-
 export interface OpcoesSmpTemplate {
 	id: number;
 	f_fk_smp_produtos: number;
-	f_bonus: OpcoesSmpTemplateBonus;
-	f_franquia_dados: OpcoesSmpTemplateFranquiaDados;
-	f_minutos: OpcoesSmpTemplateMinutos;
-	f_nome_plano: OpcoesSmpTemplateNomePlano;
-	f_sms: OpcoesSmpTemplateSms;
-	f_sva_incluso: OpcoesSmpTemplateSvaIncluso;
-	f_valor_smp: OpcoesSmpTemplateValorSmp;
-	f_valor_sva: OpcoesSmpTemplateValorSva;
+	f_bonus: string;
+	f_franquia_dados: string;
+	f_minutos: string;
+	f_nome_plano: string;
+	f_sms: string;
+	f_sva_incluso: string;
+	f_valor_smp: number;
+	f_valor_sva: number;
 	updatedAt: string;
 	createdAt: string;
 }
@@ -3540,100 +2341,6 @@ export interface OpcoesSmpTemplateRelations {
 }
 
 export type OpcoesSmpTemplateRelationKey = keyof OpcoesSmpTemplateRelations;
-
-export const OPCOESSMPTEMPLATE_BONUS_LABELS: Record<
-	OpcoesSmpTemplateBonus,
-	string
-> = {
-	[OpcoesSmpTemplateBonus.Value1]: "Ativo",
-	[OpcoesSmpTemplateBonus.Value2]: "Código 2",
-	[OpcoesSmpTemplateBonus.Value3]: "Código 3",
-	[OpcoesSmpTemplateBonus.Value5]: "Código 5",
-};
-
-export const OPCOESSMPTEMPLATE_FRANQUIADADOS_LABELS: Record<
-	OpcoesSmpTemplateFranquiaDados,
-	string
-> = {
-	[OpcoesSmpTemplateFranquiaDados.Value14]: "Código 14",
-	[OpcoesSmpTemplateFranquiaDados.Value22]: "Código 22",
-	[OpcoesSmpTemplateFranquiaDados.Value3]: "Código 3",
-	[OpcoesSmpTemplateFranquiaDados.Value30]: "Código 30",
-	[OpcoesSmpTemplateFranquiaDados.Value45]: "Código 45",
-	[OpcoesSmpTemplateFranquiaDados.Value7]: "Código 7",
-};
-
-export const OPCOESSMPTEMPLATE_MINUTOS_LABELS: Record<
-	OpcoesSmpTemplateMinutos,
-	string
-> = {
-	[OpcoesSmpTemplateMinutos.Value100]: "100",
-	[OpcoesSmpTemplateMinutos.Value50]: "Código 50",
-	[OpcoesSmpTemplateMinutos.Ilimitado]: "Ilimitado",
-};
-
-export const OPCOESSMPTEMPLATE_NOMEPLANO_LABELS: Record<
-	OpcoesSmpTemplateNomePlano,
-	string
-> = {
-	[OpcoesSmpTemplateNomePlano.EaiChip14Gb2GbBonus]:
-		"Eai Chip 14 GB + 2 GB Bonus",
-	[OpcoesSmpTemplateNomePlano.EaiChip22Gb3GbBonus]:
-		"Eai Chip 22 GB + 3 GB Bonus",
-	[OpcoesSmpTemplateNomePlano.EaiChip3Gb1GbBonus]: "Eai Chip 3 GB + 1 GB Bonus",
-	[OpcoesSmpTemplateNomePlano.EaiChip30Gb5GbBonus]:
-		"Eai Chip 30 GB + 5 GB Bonus",
-	[OpcoesSmpTemplateNomePlano.EaiChip45Gb5GbBonus]:
-		"Eai Chip 45 GB + 5 GB Bonus",
-	[OpcoesSmpTemplateNomePlano.EaiChip7Gb1GbBonus]: "Eai Chip 7 GB + 1 GB Bonus",
-};
-
-export const OPCOESSMPTEMPLATE_SMS_LABELS: Record<
-	OpcoesSmpTemplateSms,
-	string
-> = {
-	[OpcoesSmpTemplateSms.Value100]: "100",
-	[OpcoesSmpTemplateSms.Value20]: "Código 20",
-	[OpcoesSmpTemplateSms.Value50]: "Código 50",
-};
-
-export const OPCOESSMPTEMPLATE_SVAINCLUSO_LABELS: Record<
-	OpcoesSmpTemplateSvaIncluso,
-	string
-> = {
-	[OpcoesSmpTemplateSvaIncluso.SkeeloEbookAvanAdo]: "Skeelo Ebook Avançado",
-	[OpcoesSmpTemplateSvaIncluso.SkeeloEbookGold]: "Skeelo Ebook Gold",
-	[OpcoesSmpTemplateSvaIncluso.SkeeloEbookIntermediRio]:
-		"Skeelo Ebook Intermediário",
-	[OpcoesSmpTemplateSvaIncluso.SkeeloEbookPremium]: "Skeelo Ebook Premium",
-	[OpcoesSmpTemplateSvaIncluso.SkeeloEbookPremiumPlus]:
-		"Skeelo Ebook Premium Plus",
-	[OpcoesSmpTemplateSvaIncluso.SkeeloEbookRegular]: "Skeelo Ebook Regular",
-};
-
-export const OPCOESSMPTEMPLATE_VALORSMP_LABELS: Record<
-	OpcoesSmpTemplateValorSmp,
-	string
-> = {
-	[OpcoesSmpTemplateValorSmp.Value13]: "Código 13",
-	[OpcoesSmpTemplateValorSmp.Value21]: "Código 21",
-	[OpcoesSmpTemplateValorSmp.Value26]: "Código 26",
-	[OpcoesSmpTemplateValorSmp.Value30]: "Código 30",
-	[OpcoesSmpTemplateValorSmp.Value38]: "Código 38",
-	[OpcoesSmpTemplateValorSmp.Value41]: "Código 41",
-};
-
-export const OPCOESSMPTEMPLATE_VALORSVA_LABELS: Record<
-	OpcoesSmpTemplateValorSva,
-	string
-> = {
-	[OpcoesSmpTemplateValorSva.Value149]: "14.9",
-	[OpcoesSmpTemplateValorSva.Value189]: "18.9",
-	[OpcoesSmpTemplateValorSva.Value259]: "25.9",
-	[OpcoesSmpTemplateValorSva.Value299]: "29.9",
-	[OpcoesSmpTemplateValorSva.Value349]: "34.9",
-	[OpcoesSmpTemplateValorSva.Value99]: "9.9",
-};
 
 export enum OpcoesStfcPortabilidade {
 	Sim = "SIM",
@@ -3699,14 +2406,9 @@ export const OPCOESSTFCTEMPLATE_PORTABILIDADE_LABELS: Record<
 	[OpcoesStfcTemplatePortabilidade.Value1]: "SIM",
 };
 
-export enum P10scfhrhkwM7vet8zixc9 {
-	Value342478045446144 = "342478045446144",
-	Value342478047543298 = "342478047543298",
-}
-
 export interface P10scfhrhkw {
 	id: number;
-	f_m7vet8zixc9: P10scfhrhkwM7vet8zixc9;
+	f_m7vet8zixc9: number;
 	updatedAt: string;
 	createdAt: string;
 }
@@ -3718,14 +2420,6 @@ export interface P10scfhrhkwRelations {
 }
 
 export type P10scfhrhkwRelationKey = keyof P10scfhrhkwRelations;
-
-export const P10SCFHRHKW_M7VET8ZIXC9_LABELS: Record<
-	P10scfhrhkwM7vet8zixc9,
-	string
-> = {
-	[P10scfhrhkwM7vet8zixc9.Value342478045446144]: "342478045446144",
-	[P10scfhrhkwM7vet8zixc9.Value342478047543298]: "342478047543298",
-};
 
 export enum PacotesAbreAtendimento {
 	Value0 = "0",
@@ -3810,47 +2504,14 @@ export const PACOTES_VENDERPARA_LABELS: Record<PacotesVenderPara, string> = {
 	[PacotesVenderPara.Pj]: "Pessoa Jurídica",
 };
 
-export enum ParentescoCreatedat {
-	Value20260223t190333591z = "2026-02-23T19:03:33.591Z",
-	Value20260406t124358509z = "2026-04-06T12:43:58.509Z",
-}
-
-export enum ParentescoCpf {
-	Value12345678944 = "12345678944",
-}
-
-export enum ParentescoFkFuncionarios {
-	Value8 = "8",
-}
-
-export enum ParentescoNome {
-	MaribelAparecidaDeBarrosNeto = "Maribel Aparecida de Barros Neto",
-	Teste = "Teste",
-}
-
-export enum ParentescoVinculoColaborador {
-	Filho = "Filho",
-	ME = "Mãe",
-}
-
-export enum ParentescoId {
-	Value349908581220352 = "349908581220352",
-	Value357470963761152 = "357470963761152",
-}
-
-export enum ParentescoUpdatedat {
-	Value20260310t201528611z = "2026-03-10T20:15:28.611Z",
-	Value20260406t124358509z = "2026-04-06T12:43:58.509Z",
-}
-
 export interface Parentesco {
-	id: ParentescoId;
-	f_fk_funcionarios: ParentescoFkFuncionarios;
-	f_cpf: ParentescoCpf;
-	f_nome: ParentescoNome;
-	f_vinculo_colaborador: ParentescoVinculoColaborador;
-	updatedAt: ParentescoUpdatedat;
-	createdAt: ParentescoCreatedat;
+	id: number;
+	f_fk_funcionarios: number;
+	f_cpf: string;
+	f_nome: string;
+	f_vinculo_colaborador: string;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface ParentescoRelations {
@@ -3860,48 +2521,6 @@ export interface ParentescoRelations {
 }
 
 export type ParentescoRelationKey = keyof ParentescoRelations;
-
-export const PARENTESCO_CREATEDAT_LABELS: Record<ParentescoCreatedat, string> =
-	{
-		[ParentescoCreatedat.Value20260223t190333591z]: "2026 02 23t19:03:33.591z",
-		[ParentescoCreatedat.Value20260406t124358509z]: "2026 04 06t12:43:58.509z",
-	};
-
-export const PARENTESCO_CPF_LABELS: Record<ParentescoCpf, string> = {
-	[ParentescoCpf.Value12345678944]: "12345678944",
-};
-
-export const PARENTESCO_FKFUNCIONARIOS_LABELS: Record<
-	ParentescoFkFuncionarios,
-	string
-> = {
-	[ParentescoFkFuncionarios.Value8]: "Código 8",
-};
-
-export const PARENTESCO_NOME_LABELS: Record<ParentescoNome, string> = {
-	[ParentescoNome.MaribelAparecidaDeBarrosNeto]:
-		"Maribel Aparecida De Barros Neto",
-	[ParentescoNome.Teste]: "Teste",
-};
-
-export const PARENTESCO_VINCULOCOLABORADOR_LABELS: Record<
-	ParentescoVinculoColaborador,
-	string
-> = {
-	[ParentescoVinculoColaborador.Filho]: "Filho",
-	[ParentescoVinculoColaborador.ME]: "Mãe",
-};
-
-export const PARENTESCO_ID_LABELS: Record<ParentescoId, string> = {
-	[ParentescoId.Value349908581220352]: "349908581220352",
-	[ParentescoId.Value357470963761152]: "357470963761152",
-};
-
-export const PARENTESCO_UPDATEDAT_LABELS: Record<ParentescoUpdatedat, string> =
-	{
-		[ParentescoUpdatedat.Value20260310t201528611z]: "2026 03 10t20:15:28.611z",
-		[ParentescoUpdatedat.Value20260406t124358509z]: "2026 04 06t12:43:58.509z",
-	};
 
 export enum PatrimonioEstadoUso {
 	Novo = "NOVO",
@@ -4052,35 +2671,13 @@ export const PRODUTOS_TIPOPRODUTO_LABELS: Record<ProdutosTipoProduto, string> =
 		[ProdutosTipoProduto.Tv]: "TV",
 	};
 
-export enum QualirunAssinaturaGovExtname {
-	Jpg = ".jpg",
-	Pdf = ".pdf",
-	Png = ".png",
-}
-
-export enum QualirunAssinaturaGovFkNegociacoes {
-	Value5799 = "5799",
-	Value7023 = "7023",
-	Value7282 = "7282",
-}
-
-export enum QualirunAssinaturaGovMeta {
-	ObjectObject = "[object Object]",
-}
-
-export enum QualirunAssinaturaGovMimetype {
-	ApplicationPdf = "application/pdf",
-	ImageJpeg = "image/jpeg",
-	ImagePng = "image/png",
-}
-
 export interface QualirunAssinaturaGov {
 	id: number;
-	f_fk_negociacoes: QualirunAssinaturaGovFkNegociacoes;
-	extname: QualirunAssinaturaGovExtname;
+	f_fk_negociacoes: number;
+	extname: string;
 	filename: string;
-	meta: QualirunAssinaturaGovMeta;
-	mimetype: QualirunAssinaturaGovMimetype;
+	meta: Record<string, unknown>;
+	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
@@ -4098,40 +2695,6 @@ export interface QualirunAssinaturaGovRelations {
 
 export type QualirunAssinaturaGovRelationKey =
 	keyof QualirunAssinaturaGovRelations;
-
-export const QUALIRUNASSINATURAGOV_EXTNAME_LABELS: Record<
-	QualirunAssinaturaGovExtname,
-	string
-> = {
-	[QualirunAssinaturaGovExtname.Jpg]: ".jpg",
-	[QualirunAssinaturaGovExtname.Pdf]: ".pdf",
-	[QualirunAssinaturaGovExtname.Png]: ".png",
-};
-
-export const QUALIRUNASSINATURAGOV_FKNEGOCIACOES_LABELS: Record<
-	QualirunAssinaturaGovFkNegociacoes,
-	string
-> = {
-	[QualirunAssinaturaGovFkNegociacoes.Value5799]: "5799",
-	[QualirunAssinaturaGovFkNegociacoes.Value7023]: "7023",
-	[QualirunAssinaturaGovFkNegociacoes.Value7282]: "7282",
-};
-
-export const QUALIRUNASSINATURAGOV_META_LABELS: Record<
-	QualirunAssinaturaGovMeta,
-	string
-> = {
-	[QualirunAssinaturaGovMeta.ObjectObject]: "[object Object]",
-};
-
-export const QUALIRUNASSINATURAGOV_MIMETYPE_LABELS: Record<
-	QualirunAssinaturaGovMimetype,
-	string
-> = {
-	[QualirunAssinaturaGovMimetype.ApplicationPdf]: "Application/pdf",
-	[QualirunAssinaturaGovMimetype.ImageJpeg]: "Image/jpeg",
-	[QualirunAssinaturaGovMimetype.ImagePng]: "Image/png",
-};
 
 export enum QualirunInfoAdicionaisGrauEscolaridade {
 	EnsinoMDio = "Ensino Médio",
@@ -4431,15 +2994,8 @@ export const SERVICOS_TIPO_LABELS: Record<ServicosTipo, string> = {
 	[ServicosTipo.Value6]: "Colocation",
 };
 
-export enum ServicosXServicosValue8n72gqelvp5 {
-	Value25 = "25",
-	Value50 = "50",
-	Value51 = "51",
-	Value52 = "52",
-}
-
 export interface ServicosXServicos {
-	f_8n72gqelvp5: ServicosXServicosValue8n72gqelvp5;
+	f_8n72gqelvp5: number;
 	f_d40asyeldtp: number;
 }
 
@@ -4447,39 +3003,13 @@ export type ServicosXServicosRelations = Record<string, never>;
 
 export type ServicosXServicosRelationKey = keyof ServicosXServicosRelations;
 
-export const SERVICOSXSERVICOS_VALUE8N72GQELVP5_LABELS: Record<
-	ServicosXServicosValue8n72gqelvp5,
-	string
-> = {
-	[ServicosXServicosValue8n72gqelvp5.Value25]: "Código 25",
-	[ServicosXServicosValue8n72gqelvp5.Value50]: "Código 50",
-	[ServicosXServicosValue8n72gqelvp5.Value51]: "Código 51",
-	[ServicosXServicosValue8n72gqelvp5.Value52]: "Código 52",
-};
-
-export enum SetorCreatedat {
-	Value20260326t170813125z = "2026-03-26T17:08:13.125Z",
-}
-
-export enum SetorFkFuncionarios {
-	Value100 = "100",
-	Value135 = "135",
-	Value84 = "84",
-	Value92 = "92",
-	Value94 = "94",
-}
-
-export enum SetorUpdatedat {
-	Value20260326t170813125z = "2026-03-26T17:08:13.125Z",
-}
-
 export interface Setor {
 	id: number;
-	f_fk_funcionarios: SetorFkFuncionarios;
+	f_fk_funcionarios: unknown[];
 	f_fk_sistemas_acessos: unknown[];
 	f_nome_setor: string;
-	updatedAt: SetorUpdatedat;
-	createdAt: SetorCreatedat;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface SetorRelations {
@@ -4492,41 +3022,13 @@ export interface SetorRelations {
 
 export type SetorRelationKey = keyof SetorRelations;
 
-export const SETOR_CREATEDAT_LABELS: Record<SetorCreatedat, string> = {
-	[SetorCreatedat.Value20260326t170813125z]: "2026 03 26t17:08:13.125z",
-};
-
-export const SETOR_FKFUNCIONARIOS_LABELS: Record<SetorFkFuncionarios, string> =
-	{
-		[SetorFkFuncionarios.Value100]: "100",
-		[SetorFkFuncionarios.Value135]: "135",
-		[SetorFkFuncionarios.Value84]: "Código 84",
-		[SetorFkFuncionarios.Value92]: "Código 92",
-		[SetorFkFuncionarios.Value94]: "Código 94",
-	};
-
-export const SETOR_UPDATEDAT_LABELS: Record<SetorUpdatedat, string> = {
-	[SetorUpdatedat.Value20260326t170813125z]: "2026 03 26t17:08:13.125z",
-};
-
-export enum SistemasAcessosCreatedat {
-	Value20260326t171753451z = "2026-03-26T17:17:53.451Z",
-	Value20260326t175925233z = "2026-03-26T17:59:25.233Z",
-}
-
-export enum SistemasAcessosFkFuncionarios {
-	Value82 = "82",
-	Value83 = "83",
-	Value98 = "98",
-}
-
 export interface SistemasAcessos {
 	id: number;
-	f_fk_funcionarios: SistemasAcessosFkFuncionarios;
+	f_fk_funcionarios: unknown[];
 	f_sistemas_acessos: string;
 	f_url: string;
 	updatedAt: string;
-	createdAt: SistemasAcessosCreatedat;
+	createdAt: string;
 }
 
 export interface SistemasAcessosRelations {
@@ -4536,25 +3038,6 @@ export interface SistemasAcessosRelations {
 }
 
 export type SistemasAcessosRelationKey = keyof SistemasAcessosRelations;
-
-export const SISTEMASACESSOS_CREATEDAT_LABELS: Record<
-	SistemasAcessosCreatedat,
-	string
-> = {
-	[SistemasAcessosCreatedat.Value20260326t171753451z]:
-		"2026 03 26t17:17:53.451z",
-	[SistemasAcessosCreatedat.Value20260326t175925233z]:
-		"2026 03 26t17:59:25.233z",
-};
-
-export const SISTEMASACESSOS_FKFUNCIONARIOS_LABELS: Record<
-	SistemasAcessosFkFuncionarios,
-	string
-> = {
-	[SistemasAcessosFkFuncionarios.Value82]: "Código 82",
-	[SistemasAcessosFkFuncionarios.Value83]: "Código 83",
-	[SistemasAcessosFkFuncionarios.Value98]: "Código 98",
-};
 
 export enum SitesStatus {
 	Repnmsclnb8 = "repnmsclnb8",
@@ -4610,40 +3093,14 @@ export const SITES_TIPO_LABELS: Record<SitesTipo, string> = {
 	[SitesTipo.Value3]: "CLIENTE",
 };
 
-export enum Siurxeb1juyStgjevi19lg {
-	Value1 = "1",
-	Value15 = "15",
-	Value16 = "16",
-}
-
-export enum Siurxeb1juyVazo5n0bhe5 {
-	Value9 = "9",
-}
-
 export interface Siurxeb1juy {
-	f_stgjevi19lg: Siurxeb1juyStgjevi19lg;
-	f_vazo5n0bhe5: Siurxeb1juyVazo5n0bhe5;
+	f_stgjevi19lg: number;
+	f_vazo5n0bhe5: number;
 }
 
 export type Siurxeb1juyRelations = Record<string, never>;
 
 export type Siurxeb1juyRelationKey = keyof Siurxeb1juyRelations;
-
-export const SIURXEB1JUY_STGJEVI19LG_LABELS: Record<
-	Siurxeb1juyStgjevi19lg,
-	string
-> = {
-	[Siurxeb1juyStgjevi19lg.Value1]: "Ativo",
-	[Siurxeb1juyStgjevi19lg.Value15]: "Código 15",
-	[Siurxeb1juyStgjevi19lg.Value16]: "Código 16",
-};
-
-export const SIURXEB1JUY_VAZO5N0BHE5_LABELS: Record<
-	Siurxeb1juyVazo5n0bhe5,
-	string
-> = {
-	[Siurxeb1juyVazo5n0bhe5.Value9]: "Código 9",
-};
 
 export enum SolicitacaoComprasCategoria {
 	Produto = "Produto",
@@ -4884,66 +3341,20 @@ export interface TabelaGeralRelations {
 
 export type TabelaGeralRelationKey = keyof TabelaGeralRelations;
 
-export enum TelecomAnexosExtname {
-	Drawio = ".drawio",
-	Jpeg = ".jpeg",
-	Jpg = ".jpg",
-	Mov = ".mov",
-	Pdf = ".pdf",
-	Png = ".png",
-}
-
-export enum TelecomAnexosValue6j2u7ptvn88 {
-	Value2 = "2",
-	Value6 = "6",
-	Value74 = "74",
-}
-
-export enum TelecomAnexosWo3wzgdoyoa {
-	Value130 = "130",
-	Value134 = "134",
-	Value2 = "2",
-}
-
-export enum TelecomAnexosYcsq6mkkvk7 {
-	Value12 = "12",
-	Value20 = "20",
-	Value63 = "63",
-	Value65 = "65",
-	Value66 = "66",
-	Value85 = "85",
-}
-
-export enum TelecomAnexosMeta {
-	ObjectObject = "[object Object]",
-}
-
-export enum TelecomAnexosMimetype {
-	ApplicationOctetStream = "application/octet-stream",
-	ApplicationPdf = "application/pdf",
-	ImageJpeg = "image/jpeg",
-	ImagePng = "image/png",
-	VideoQuicktime = "video/quicktime",
-}
-
-export enum TelecomAnexosStorageid {
-	Value1 = "1",
-}
-
 export interface TelecomAnexos {
 	id: number;
-	extname: TelecomAnexosExtname;
-	f_6j2u7ptvn88: TelecomAnexosValue6j2u7ptvn88;
+	extname: string;
+	f_6j2u7ptvn88: number;
 	f_88kxg6s8bb8: number;
-	f_wo3wzgdoyoa: TelecomAnexosWo3wzgdoyoa;
-	f_ycsq6mkkvk7: TelecomAnexosYcsq6mkkvk7;
+	f_wo3wzgdoyoa: number;
+	f_ycsq6mkkvk7: number;
 	filename: string;
-	meta: TelecomAnexosMeta;
-	mimetype: TelecomAnexosMimetype;
+	meta: Record<string, unknown>;
+	mimetype: string;
 	path: string;
 	preview: string;
 	size: number;
-	storageId: TelecomAnexosStorageid;
+	storageId: number;
 	title: string;
 	url: string;
 	updatedAt: string;
@@ -4957,70 +3368,6 @@ export interface TelecomAnexosRelations {
 }
 
 export type TelecomAnexosRelationKey = keyof TelecomAnexosRelations;
-
-export const TELECOMANEXOS_EXTNAME_LABELS: Record<
-	TelecomAnexosExtname,
-	string
-> = {
-	[TelecomAnexosExtname.Drawio]: ".drawio",
-	[TelecomAnexosExtname.Jpeg]: ".jpeg",
-	[TelecomAnexosExtname.Jpg]: ".jpg",
-	[TelecomAnexosExtname.Mov]: ".mov",
-	[TelecomAnexosExtname.Pdf]: ".pdf",
-	[TelecomAnexosExtname.Png]: ".png",
-};
-
-export const TELECOMANEXOS_VALUE6J2U7PTVN88_LABELS: Record<
-	TelecomAnexosValue6j2u7ptvn88,
-	string
-> = {
-	[TelecomAnexosValue6j2u7ptvn88.Value2]: "Código 2",
-	[TelecomAnexosValue6j2u7ptvn88.Value6]: "Código 6",
-	[TelecomAnexosValue6j2u7ptvn88.Value74]: "Código 74",
-};
-
-export const TELECOMANEXOS_WO3WZGDOYOA_LABELS: Record<
-	TelecomAnexosWo3wzgdoyoa,
-	string
-> = {
-	[TelecomAnexosWo3wzgdoyoa.Value130]: "130",
-	[TelecomAnexosWo3wzgdoyoa.Value134]: "134",
-	[TelecomAnexosWo3wzgdoyoa.Value2]: "Código 2",
-};
-
-export const TELECOMANEXOS_YCSQ6MKKVK7_LABELS: Record<
-	TelecomAnexosYcsq6mkkvk7,
-	string
-> = {
-	[TelecomAnexosYcsq6mkkvk7.Value12]: "Código 12",
-	[TelecomAnexosYcsq6mkkvk7.Value20]: "Código 20",
-	[TelecomAnexosYcsq6mkkvk7.Value63]: "Código 63",
-	[TelecomAnexosYcsq6mkkvk7.Value65]: "Código 65",
-	[TelecomAnexosYcsq6mkkvk7.Value66]: "Código 66",
-	[TelecomAnexosYcsq6mkkvk7.Value85]: "Código 85",
-};
-
-export const TELECOMANEXOS_META_LABELS: Record<TelecomAnexosMeta, string> = {
-	[TelecomAnexosMeta.ObjectObject]: "[object Object]",
-};
-
-export const TELECOMANEXOS_MIMETYPE_LABELS: Record<
-	TelecomAnexosMimetype,
-	string
-> = {
-	[TelecomAnexosMimetype.ApplicationOctetStream]: "Application/octet Stream",
-	[TelecomAnexosMimetype.ApplicationPdf]: "Application/pdf",
-	[TelecomAnexosMimetype.ImageJpeg]: "Image/jpeg",
-	[TelecomAnexosMimetype.ImagePng]: "Image/png",
-	[TelecomAnexosMimetype.VideoQuicktime]: "Video/quicktime",
-};
-
-export const TELECOMANEXOS_STORAGEID_LABELS: Record<
-	TelecomAnexosStorageid,
-	string
-> = {
-	[TelecomAnexosStorageid.Value1]: "Ativo",
-};
 
 export enum TelecomColocationOpcoesEnergia {
 	Value0nqbw68srah = "0nqbw68srah",
@@ -5056,15 +3403,10 @@ export const TELECOMCOLOCATIONOPCOES_ENERGIA_LABELS: Record<
 	[TelecomColocationOpcoesEnergia.Mra46p506xo]: "DC -48",
 };
 
-export enum TelecomContratosFkFornecedor {
-	Value1 = "1",
-	Value2 = "2",
-}
-
 export interface TelecomContratos {
 	id: number;
 	f_fk_cliente: number;
-	f_fk_fornecedor: TelecomContratosFkFornecedor;
+	f_fk_fornecedor: number;
 	f_descricao: string;
 	f_o6r7bgwk9bb: number;
 	updatedAt: string;
@@ -5081,21 +3423,9 @@ export interface TelecomContratosRelations {
 
 export type TelecomContratosRelationKey = keyof TelecomContratosRelations;
 
-export const TELECOMCONTRATOS_FKFORNECEDOR_LABELS: Record<
-	TelecomContratosFkFornecedor,
-	string
-> = {
-	[TelecomContratosFkFornecedor.Value1]: "Ativo",
-	[TelecomContratosFkFornecedor.Value2]: "Código 2",
-};
-
-export enum TelecomFilaFkFila {
-	Value1 = "1",
-}
-
 export interface TelecomFila {
 	id: number;
-	f_fk_fila: TelecomFilaFkFila;
+	f_fk_fila: number;
 	f_nome: string;
 	updatedAt: string;
 	createdAt: string;
@@ -5108,10 +3438,6 @@ export interface TelecomFilaRelations {
 }
 
 export type TelecomFilaRelationKey = keyof TelecomFilaRelations;
-
-export const TELECOMFILA_FKFILA_LABELS: Record<TelecomFilaFkFila, string> = {
-	[TelecomFilaFkFila.Value1]: "Ativo",
-};
 
 export enum TelecomInterfacesConfiguracao {
 	Value1 = "1",
@@ -5208,13 +3534,9 @@ export const TELECOMIPSFIXOS_POSSUIIPFIXO_LABELS: Record<
 	[TelecomIpsFixosPossuiIpFixo.Value1]: "Sim",
 };
 
-export enum TelecomOpcoesL2lRmfqnk0k53u {
-	Value9 = "9",
-}
-
 export interface TelecomOpcoesL2l {
 	id: number;
-	f_rmfqnk0k53u: TelecomOpcoesL2lRmfqnk0k53u;
+	f_rmfqnk0k53u: number;
 	f_velocidade: string;
 	updatedAt: string;
 	createdAt: string;
@@ -5226,13 +3548,6 @@ export interface TelecomOpcoesL2lRelations {
 }
 
 export type TelecomOpcoesL2lRelationKey = keyof TelecomOpcoesL2lRelations;
-
-export const TELECOMOPCOESL2L_RMFQNK0K53U_LABELS: Record<
-	TelecomOpcoesL2lRmfqnk0k53u,
-	string
-> = {
-	[TelecomOpcoesL2lRmfqnk0k53u.Value9]: "Código 9",
-};
 
 export interface TelecomRacks {
 	id: number;
@@ -5374,13 +3689,9 @@ export const TELECOMRECURSOS_TIPO_LABELS: Record<TelecomRecursosTipo, string> =
 		[TelecomRecursosTipo.Value14]: "Contrato",
 	};
 
-export enum TelecomSalasFkSalas {
-	Value1 = "1",
-}
-
 export interface TelecomSalas {
 	id: number;
-	f_fk_salas: TelecomSalasFkSalas;
+	f_fk_salas: number;
 	f_nome: string;
 	updatedAt: string;
 	createdAt: string;
@@ -5394,19 +3705,9 @@ export interface TelecomSalasRelations {
 
 export type TelecomSalasRelationKey = keyof TelecomSalasRelations;
 
-export const TELECOMSALAS_FKSALAS_LABELS: Record<TelecomSalasFkSalas, string> =
-	{
-		[TelecomSalasFkSalas.Value1]: "Ativo",
-	};
-
-export enum TelecomTransitoOpcoesValue1eu8gjcf9js {
-	Value14 = "14",
-	Value8 = "8",
-}
-
 export interface TelecomTransitoOpcoes {
 	id: number;
-	f_1eu8gjcf9js: TelecomTransitoOpcoesValue1eu8gjcf9js;
+	f_1eu8gjcf9js: number;
 	f_ips: string;
 	f_velocidade: string;
 	updatedAt: string;
@@ -5420,14 +3721,6 @@ export interface TelecomTransitoOpcoesRelations {
 
 export type TelecomTransitoOpcoesRelationKey =
 	keyof TelecomTransitoOpcoesRelations;
-
-export const TELECOMTRANSITOOPCOES_VALUE1EU8GJCF9JS_LABELS: Record<
-	TelecomTransitoOpcoesValue1eu8gjcf9js,
-	string
-> = {
-	[TelecomTransitoOpcoesValue1eu8gjcf9js.Value14]: "Código 14",
-	[TelecomTransitoOpcoesValue1eu8gjcf9js.Value8]: "Código 8",
-};
 
 export enum TemplatesAtendimentoN1AcessaPelaRedeDaAtplus {
 	Sim = "Sim",
@@ -5805,19 +4098,11 @@ export interface TrocasdetitularidadeComentariosRelations {
 export type TrocasdetitularidadeComentariosRelationKey =
 	keyof TrocasdetitularidadeComentariosRelations;
 
-export enum TurnosCreatedat {
-	Value20260223t203759071z = "2026-02-23T20:37:59.071Z",
-}
-
-export enum TurnosUpdatedat {
-	Value20260223t203759071z = "2026-02-23T20:37:59.071Z",
-}
-
 export interface Turnos {
 	id: number;
 	f_turno: string;
-	updatedAt: TurnosUpdatedat;
-	createdAt: TurnosCreatedat;
+	updatedAt: string;
+	createdAt: string;
 }
 
 export interface TurnosRelations {
@@ -5827,14 +4112,6 @@ export interface TurnosRelations {
 }
 
 export type TurnosRelationKey = keyof TurnosRelations;
-
-export const TURNOS_CREATEDAT_LABELS: Record<TurnosCreatedat, string> = {
-	[TurnosCreatedat.Value20260223t203759071z]: "2026 02 23t20:37:59.071z",
-};
-
-export const TURNOS_UPDATEDAT_LABELS: Record<TurnosUpdatedat, string> = {
-	[TurnosUpdatedat.Value20260223t203759071z]: "2026 02 23t20:37:59.071z",
-};
 
 export enum ViagemSolicitacaoDestinoViagem {
 	BocainaDoSul = "Bocaina do Sul",
@@ -5968,26 +4245,13 @@ export type Ynltolqbwj1Relations = Record<string, never>;
 
 export type Ynltolqbwj1RelationKey = keyof Ynltolqbwj1Relations;
 
-export enum ZapsignNomeDoPlano {
-	ApiGrowMensal = "API Grow (mensal)",
-	Equipe200Mensal = "Equipe 200 (Mensal)",
-}
-
-export enum ZapsignPeriodo {
-	Monthly = "monthly",
-}
-
-export enum ZapsignStatus {
-	Paid = "paid",
-}
-
 export interface Zapsign {
 	id: number;
 	f_data_de_encerramento: string;
-	f_nome_do_plano: ZapsignNomeDoPlano;
+	f_nome_do_plano: string;
 	f_numero_de_creditos: string;
-	f_periodo: ZapsignPeriodo;
-	f_status: ZapsignStatus;
+	f_periodo: string;
+	f_status: string;
 	updatedAt: string;
 	createdAt: string;
 }
@@ -5998,19 +4262,6 @@ export interface ZapsignRelations {
 }
 
 export type ZapsignRelationKey = keyof ZapsignRelations;
-
-export const ZAPSIGN_NOMEDOPLANO_LABELS: Record<ZapsignNomeDoPlano, string> = {
-	[ZapsignNomeDoPlano.ApiGrowMensal]: "API Grow (mensal)",
-	[ZapsignNomeDoPlano.Equipe200Mensal]: "Equipe 200 (mensal)",
-};
-
-export const ZAPSIGN_PERIODO_LABELS: Record<ZapsignPeriodo, string> = {
-	[ZapsignPeriodo.Monthly]: "Monthly",
-};
-
-export const ZAPSIGN_STATUS_LABELS: Record<ZapsignStatus, string> = {
-	[ZapsignStatus.Paid]: "Paid",
-};
 
 export interface TemplatesXOrdensDeServico {
 	f_fk_template_os_1: number;

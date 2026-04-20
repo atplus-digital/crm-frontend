@@ -160,11 +160,8 @@ async function runGenerateTypesForDataSource(
 		},
 	});
 
-	// Pipeline de enums: schema → adapter → inference (fallback)
-	// Só roda inference quando schema e adapter não forneceram enums
 	for (const [collectionName, types] of Object.entries(collectionTypes)) {
 		const existingEnums = new Map(types.enums);
-		const hasSchemaEnum = existingEnums.size > 0;
 
 		let adapterEnums: Record<
 			string,
@@ -186,8 +183,7 @@ async function runGenerateTypesForDataSource(
 
 		const hasAdapterEnum = usedAdapter && Object.keys(adapterEnums).length > 0;
 
-		// Só roda inference como fallback quando schema E adapter não tinham enum
-		if (!hasSchemaEnum && !hasAdapterEnum) {
+		if (!types.schemaAvailable && !hasAdapterEnum) {
 			try {
 				const scalarFieldNames = Array.from(types.scalars.keys()).filter(
 					(name) => !types.relations.has(name),
@@ -235,13 +231,10 @@ async function runGenerateTypesForDataSource(
 			} catch {
 				// No-op
 			}
-		} else {
-			// Schema ou adapter já forneceram enums — usa eles
-			if (hasAdapterEnum) {
-				const adapterInferred = adapterEnumsToInferredEnums(adapterEnums);
-				const mergedEnums = mergeEnums(existingEnums, adapterInferred);
-				types.enums = mergedEnums;
-			}
+		} else if (hasAdapterEnum) {
+			const adapterInferred = adapterEnumsToInferredEnums(adapterEnums);
+			const mergedEnums = mergeEnums(existingEnums, adapterInferred);
+			types.enums = mergedEnums;
 		}
 	}
 

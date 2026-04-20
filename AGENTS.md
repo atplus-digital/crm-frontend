@@ -207,7 +207,7 @@ export interface PessoaFisica {
 - `./src/features/auth/AGENTS.md` — Authentication module
 - `./src/features/cs/AGENTS.md` — Customer Success domain (contratos, negociações, pessoas)
 - `./src/features/custom-requests/AGENTS.md` — Custom request registry/services/hooks
-- `./src/features/permissions/AGENTS.md` — Permissions, actions/snippets and navigation guards
+- `./src/features/auth/permissions/AGENTS.md` — Permissions, actions/snippets and navigation guards
 - `./src/generated/AGENTS.md` — Auto-generated TypeScript types from NocoBase/IXC schemas
 - `./src/hooks/AGENTS.md` — Shared cross-feature hooks
 - `./src/lib/AGENTS.md` — Pure utilities and formatting/filter/logging helpers

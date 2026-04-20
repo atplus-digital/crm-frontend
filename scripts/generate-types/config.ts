@@ -6,7 +6,7 @@ import { logger } from "./src/utils/logger";
 const scriptConfig: Partial<ScriptConfig> = {
 	datasources: dataSourceConfigs,
 	lockWorkspaceFolder: true,
-	logLevel: "info" as const,
+	logLevel: "info",
 	maxConcurrency: 3,
 } as const;
 
