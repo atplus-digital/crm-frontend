@@ -16,27 +16,6 @@ export enum FnAreceberCaixa {
 	Value6 = "6",
 }
 
-export enum FnAreceberCancelamentoIdOperador {
-	Value70 = "70",
-}
-
-export enum FnAreceberDataCancelamento {
-	Value20260302 = "2026-03-02",
-}
-
-export enum FnAreceberDataFinal {
-	Value00000000 = "0000-00-00",
-}
-
-export enum FnAreceberDataInicial {
-	Value00000000 = "0000-00-00",
-}
-
-export enum FnAreceberDuplicata {
-	Value371 = "371",
-	Value8953 = "8953",
-}
-
 export enum FnAreceberEmProcessamento {
 	N = "N",
 }
@@ -53,35 +32,14 @@ export enum FnAreceberFilialId {
 	Value1 = "1",
 }
 
-export enum FnAreceberIdAssinaturaCliente {
-	Value0 = "0",
-}
-
 export enum FnAreceberIdCarteiraCobranca {
 	Value0 = "0",
 	Value4 = "4",
 	Value5 = "5",
 }
 
-export enum FnAreceberIdCobranca {
-	Value3601 = "3601",
-}
-
-export enum FnAreceberIdConta {
-	Value0 = "0",
-	Value174 = "174",
-}
-
-export enum FnAreceberIdContrato {
-	Value0 = "0",
-}
-
 export enum FnAreceberIdMotCancelamento {
 	Value1 = "1",
-}
-
-export enum FnAreceberIdNotaGerada {
-	Value0 = "0",
 }
 
 export enum FnAreceberIdRemessa {
@@ -106,19 +64,9 @@ export enum FnAreceberLiberado {
 	S = "S",
 }
 
-export enum FnAreceberLinhaDigitavel {
-	Value75691325120101258900600001060011769430000008999 = "75691325120101258900600001060011769430000008999",
-	Value75691325120101258900600001380013870350000008999 = "75691325120101258900600001380013870350000008999",
-	Value75691325120101258900604054050010772470000009990 = "75691325120101258900604054050010772470000009990",
-}
-
 export enum FnAreceberLote {
 	Value3 = "-3",
 	Value1 = "1",
-}
-
-export enum FnAreceberNparcela {
-	Value0 = "0",
 }
 
 export enum FnAreceberParcelaProporcional {
@@ -173,23 +121,6 @@ export enum FnAreceberUltimaAtualizacao {
 	Value20260303t123005000z = "2026-03-03T12:30:05.000Z",
 }
 
-export enum FnAreceberValorAberto {
-	Value000 = "0.00",
-}
-
-export enum FnAreceberValorCancelado {
-	Value000 = "0.00",
-	Value9990 = "99.90",
-}
-
-export enum FnAreceberValorJurosMulta {
-	Value000 = "0.00",
-}
-
-export enum FnAreceberValorTotalComJuros {
-	Value000 = "0.00",
-}
-
 export interface FnAreceber {
 	id: number;
 	aguardando_confirmacao_pagamento: FnAreceberAguardandoConfirmacaoPagamento;
@@ -200,25 +131,25 @@ export interface FnAreceber {
 	bandeira_pagamento: string;
 	boleto: number;
 	caixa: FnAreceberCaixa;
-	cancelamento_id_operador: FnAreceberCancelamentoIdOperador;
+	cancelamento_id_operador: string;
 	charge_id: string;
 	conta_recebimento: string;
 	credit_card_transaction_id: string;
 	credito_data: string;
-	data_cancelamento: FnAreceberDataCancelamento;
+	data_cancelamento: string;
 	data_cotacao_diaria: string;
 	data_emissao: string;
 	data_fin_cdr_voip: string;
-	data_final: FnAreceberDataFinal;
+	data_final: string;
 	data_final_ligacoes: string;
 	data_ini_cdr_voip: string;
-	data_inicial: FnAreceberDataInicial;
+	data_inicial: string;
 	data_inicial_ligacoes: string;
 	data_vencimento: string;
 	desconto_condicional_valor: string;
 	descontos_adicionais: string;
 	documento: string;
-	duplicata: FnAreceberDuplicata;
+	duplicata: string;
 	em_processamento: FnAreceberEmProcessamento;
 	enviado_remessa_baixa: FnAreceberEnviadoRemessaBaixa;
 	estornado: FnAreceberEstornado;
@@ -226,19 +157,19 @@ export interface FnAreceber {
 	forma_recebimento: string;
 	gateway_link: string;
 	gerencianet_token: string;
-	id_assinatura_cliente: FnAreceberIdAssinaturaCliente;
+	id_assinatura_cliente: number;
 	id_carteira_cobranca: FnAreceberIdCarteiraCobranca;
 	id_cliente: number;
-	id_cobranca: FnAreceberIdCobranca;
-	id_conta: FnAreceberIdConta;
-	id_contrato: FnAreceberIdContrato;
+	id_cobranca: string;
+	id_conta: number;
+	id_contrato: number;
 	id_contrato_avulso: string;
 	id_contrato_principal: string;
 	id_im_imovel: string;
 	id_lote_geracao_financeiro: string;
 	id_lote_geracao_financeiro_fatura: string;
 	id_mot_cancelamento: FnAreceberIdMotCancelamento;
-	id_nota_gerada: FnAreceberIdNotaGerada;
+	id_nota_gerada: number;
 	id_nota_gerada_opc2: string;
 	id_nota_gerada_opc3: string;
 	id_nota_gerada_opc4: string;
@@ -254,12 +185,12 @@ export interface FnAreceber {
 	impresso: FnAreceberImpresso;
 	libera_periodo: FnAreceberLiberaPeriodo;
 	liberado: FnAreceberLiberado;
-	linha_digitavel: FnAreceberLinhaDigitavel;
+	linha_digitavel: string;
 	lote: FnAreceberLote;
 	moeda: string;
 	motivo_alteracao: string;
 	nn_boleto: string;
-	nparcela: FnAreceberNparcela;
+	nparcela: number;
 	numero_parcela_recorrente: string;
 	obs: string;
 	origem_importacao: string;
@@ -289,15 +220,15 @@ export interface FnAreceber {
 	ultima_atualizacao: FnAreceberUltimaAtualizacao;
 	validade_desconto_condicional: string;
 	valor: string;
-	valor_aberto: FnAreceberValorAberto;
+	valor_aberto: string;
 	valor_ate_vencimento: string;
-	valor_cancelado: FnAreceberValorCancelado;
+	valor_cancelado: string;
 	valor_cotacao_diaria: string;
 	valor_desconto_ate_vencimento: string;
-	valor_juros_multa: FnAreceberValorJurosMulta;
+	valor_juros_multa: string;
 	valor_moeda_original: string;
 	valor_recebido: string;
-	valor_total_com_juros: FnAreceberValorTotalComJuros;
+	valor_total_com_juros: string;
 }
 
 export type FnAreceberRelations = Record<string, never>;
@@ -316,38 +247,6 @@ export const FNARECEBER_CAIXA_LABELS: Record<FnAreceberCaixa, string> = {
 	[FnAreceberCaixa.Value13]: "Código 13",
 	[FnAreceberCaixa.Value6]: "Código 6",
 };
-
-export const FNARECEBER_CANCELAMENTOIDOPERADOR_LABELS: Record<
-	FnAreceberCancelamentoIdOperador,
-	string
-> = {
-	[FnAreceberCancelamentoIdOperador.Value70]: "Código 70",
-};
-
-export const FNARECEBER_DATACANCELAMENTO_LABELS: Record<
-	FnAreceberDataCancelamento,
-	string
-> = {
-	[FnAreceberDataCancelamento.Value20260302]: "2026 03 02",
-};
-
-export const FNARECEBER_DATAFINAL_LABELS: Record<FnAreceberDataFinal, string> =
-	{
-		[FnAreceberDataFinal.Value00000000]: "0000 00 00",
-	};
-
-export const FNARECEBER_DATAINICIAL_LABELS: Record<
-	FnAreceberDataInicial,
-	string
-> = {
-	[FnAreceberDataInicial.Value00000000]: "0000 00 00",
-};
-
-export const FNARECEBER_DUPLICATA_LABELS: Record<FnAreceberDuplicata, string> =
-	{
-		[FnAreceberDuplicata.Value371]: "371",
-		[FnAreceberDuplicata.Value8953]: "8953",
-	};
 
 export const FNARECEBER_EMPROCESSAMENTO_LABELS: Record<
 	FnAreceberEmProcessamento,
@@ -372,13 +271,6 @@ export const FNARECEBER_FILIALID_LABELS: Record<FnAreceberFilialId, string> = {
 	[FnAreceberFilialId.Value1]: "Ativo",
 };
 
-export const FNARECEBER_IDASSINATURACLIENTE_LABELS: Record<
-	FnAreceberIdAssinaturaCliente,
-	string
-> = {
-	[FnAreceberIdAssinaturaCliente.Value0]: "Inativo",
-};
-
 export const FNARECEBER_IDCARTEIRACOBRANCA_LABELS: Record<
 	FnAreceberIdCarteiraCobranca,
 	string
@@ -388,37 +280,11 @@ export const FNARECEBER_IDCARTEIRACOBRANCA_LABELS: Record<
 	[FnAreceberIdCarteiraCobranca.Value5]: "Código 5",
 };
 
-export const FNARECEBER_IDCOBRANCA_LABELS: Record<
-	FnAreceberIdCobranca,
-	string
-> = {
-	[FnAreceberIdCobranca.Value3601]: "3601",
-};
-
-export const FNARECEBER_IDCONTA_LABELS: Record<FnAreceberIdConta, string> = {
-	[FnAreceberIdConta.Value0]: "Inativo",
-	[FnAreceberIdConta.Value174]: "174",
-};
-
-export const FNARECEBER_IDCONTRATO_LABELS: Record<
-	FnAreceberIdContrato,
-	string
-> = {
-	[FnAreceberIdContrato.Value0]: "Inativo",
-};
-
 export const FNARECEBER_IDMOTCANCELAMENTO_LABELS: Record<
 	FnAreceberIdMotCancelamento,
 	string
 > = {
 	[FnAreceberIdMotCancelamento.Value1]: "Ativo",
-};
-
-export const FNARECEBER_IDNOTAGERADA_LABELS: Record<
-	FnAreceberIdNotaGerada,
-	string
-> = {
-	[FnAreceberIdNotaGerada.Value0]: "Inativo",
 };
 
 export const FNARECEBER_IDREMESSA_LABELS: Record<FnAreceberIdRemessa, string> =
@@ -447,25 +313,9 @@ export const FNARECEBER_LIBERADO_LABELS: Record<FnAreceberLiberado, string> = {
 	[FnAreceberLiberado.S]: "Sim",
 };
 
-export const FNARECEBER_LINHADIGITAVEL_LABELS: Record<
-	FnAreceberLinhaDigitavel,
-	string
-> = {
-	[FnAreceberLinhaDigitavel.Value75691325120101258900600001060011769430000008999]:
-		"75691325120101258900600001060011769430000008999",
-	[FnAreceberLinhaDigitavel.Value75691325120101258900600001380013870350000008999]:
-		"75691325120101258900600001380013870350000008999",
-	[FnAreceberLinhaDigitavel.Value75691325120101258900604054050010772470000009990]:
-		"75691325120101258900604054050010772470000009990",
-};
-
 export const FNARECEBER_LOTE_LABELS: Record<FnAreceberLote, string> = {
 	[FnAreceberLote.Value3]: "3",
 	[FnAreceberLote.Value1]: "Ativo",
-};
-
-export const FNARECEBER_NPARCELA_LABELS: Record<FnAreceberNparcela, string> = {
-	[FnAreceberNparcela.Value0]: "Inativo",
 };
 
 export const FNARECEBER_PARCELAPROPORCIONAL_LABELS: Record<
@@ -552,33 +402,4 @@ export const FNARECEBER_ULTIMAATUALIZACAO_LABELS: Record<
 		"2025 11 21t18:54:19.000z",
 	[FnAreceberUltimaAtualizacao.Value20260303t123005000z]:
 		"2026 03 03t12:30:05.000z",
-};
-
-export const FNARECEBER_VALORABERTO_LABELS: Record<
-	FnAreceberValorAberto,
-	string
-> = {
-	[FnAreceberValorAberto.Value000]: "0.00",
-};
-
-export const FNARECEBER_VALORCANCELADO_LABELS: Record<
-	FnAreceberValorCancelado,
-	string
-> = {
-	[FnAreceberValorCancelado.Value000]: "0.00",
-	[FnAreceberValorCancelado.Value9990]: "99.90",
-};
-
-export const FNARECEBER_VALORJUROSMULTA_LABELS: Record<
-	FnAreceberValorJurosMulta,
-	string
-> = {
-	[FnAreceberValorJurosMulta.Value000]: "0.00",
-};
-
-export const FNARECEBER_VALORTOTALCOMJUROS_LABELS: Record<
-	FnAreceberValorTotalComJuros,
-	string
-> = {
-	[FnAreceberValorTotalComJuros.Value000]: "0.00",
 };

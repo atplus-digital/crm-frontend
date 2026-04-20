@@ -11,10 +11,6 @@ export enum LinhaMvnoApi {
 	I = "I",
 }
 
-export enum LinhaMvnoDataAgendamento {
-	Value00000000 = "0000-00-00",
-}
-
 export enum LinhaMvnoDddTelefone {
 	Value24 = "24",
 	Value41 = "41",
@@ -39,14 +35,6 @@ export enum LinhaMvnoEsim {
 	S = "S",
 }
 
-export enum LinhaMvnoIdAssinaturaCliente {
-	Value0 = "0",
-}
-
-export enum LinhaMvnoIdAssinaturaClienteProduto {
-	Value0 = "0",
-}
-
 export enum LinhaMvnoIdIntegracao {
 	Value1 = "1",
 	Value2 = "2",
@@ -62,15 +50,15 @@ export interface LinhaMvno {
 	api: LinhaMvnoApi;
 	consulta_saldo: string;
 	dados_moveis: string;
-	data_agendamento: LinhaMvnoDataAgendamento;
+	data_agendamento: string;
 	data_recarga: string;
 	ddd_telefone: LinhaMvnoDddTelefone;
 	dia_recorrencia: LinhaMvnoDiaRecorrencia;
 	esim: LinhaMvnoEsim;
 	expiracao_dados: string;
 	id_account_mvno: string;
-	id_assinatura_cliente: LinhaMvnoIdAssinaturaCliente;
-	id_assinatura_cliente_produto: LinhaMvnoIdAssinaturaClienteProduto;
+	id_assinatura_cliente: number;
+	id_assinatura_cliente_produto: number;
 	id_contrato: number;
 	id_contrato_integracao: string;
 	id_customer_mvno: string;
@@ -105,13 +93,6 @@ export const LINHAMVNO_API_LABELS: Record<LinhaMvnoApi, string> = {
 	[LinhaMvnoApi.I]: "Inativo",
 };
 
-export const LINHAMVNO_DATAAGENDAMENTO_LABELS: Record<
-	LinhaMvnoDataAgendamento,
-	string
-> = {
-	[LinhaMvnoDataAgendamento.Value00000000]: "0000 00 00",
-};
-
 export const LINHAMVNO_DDDTELEFONE_LABELS: Record<
 	LinhaMvnoDddTelefone,
 	string
@@ -140,20 +121,6 @@ export const LINHAMVNO_DIARECORRENCIA_LABELS: Record<
 export const LINHAMVNO_ESIM_LABELS: Record<LinhaMvnoEsim, string> = {
 	[LinhaMvnoEsim.N]: "Não",
 	[LinhaMvnoEsim.S]: "Sim",
-};
-
-export const LINHAMVNO_IDASSINATURACLIENTE_LABELS: Record<
-	LinhaMvnoIdAssinaturaCliente,
-	string
-> = {
-	[LinhaMvnoIdAssinaturaCliente.Value0]: "Inativo",
-};
-
-export const LINHAMVNO_IDASSINATURACLIENTEPRODUTO_LABELS: Record<
-	LinhaMvnoIdAssinaturaClienteProduto,
-	string
-> = {
-	[LinhaMvnoIdAssinaturaClienteProduto.Value0]: "Inativo",
 };
 
 export const LINHAMVNO_IDINTEGRACAO_LABELS: Record<

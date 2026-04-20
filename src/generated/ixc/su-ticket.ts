@@ -6,24 +6,8 @@
 
 export const SU_TICKET_TABLE_NAME = "su_ticket";
 
-export enum SuTicketIdCanalAtendimento {
-	Value0 = "0",
-}
-
-export enum SuTicketIdCircuito {
-	Value0 = "0",
-}
-
-export enum SuTicketIdEventoStatusProcesso {
-	Value0 = "0",
-}
-
 export enum SuTicketIdFilial {
 	Value1 = "1",
-}
-
-export enum SuTicketIdResposta {
-	Value0 = "0",
 }
 
 export enum SuTicketIdSuDiagnostico {
@@ -112,16 +96,16 @@ export interface SuTicket {
 	data_ultima_alteracao: string;
 	endereco: string;
 	id_assunto: number;
-	id_canal_atendimento: SuTicketIdCanalAtendimento;
-	id_circuito: SuTicketIdCircuito;
+	id_canal_atendimento: number;
+	id_circuito: number;
 	id_cliente: number;
 	id_contrato: number;
 	id_estrutura: string;
-	id_evento_status_processo: SuTicketIdEventoStatusProcesso;
+	id_evento_status_processo: number;
 	id_filial: SuTicketIdFilial;
 	id_login: number;
 	id_responsavel_tecnico: number;
-	id_resposta: SuTicketIdResposta;
+	id_resposta: number;
 	id_su_diagnostico: SuTicketIdSuDiagnostico;
 	id_ticket_origem: SuTicketIdTicketOrigem;
 	id_ticket_setor: SuTicketIdTicketSetor;
@@ -156,30 +140,8 @@ export type SuTicketRelations = Record<string, never>;
 
 export type SuTicketRelationKey = keyof SuTicketRelations;
 
-export const SUTICKET_IDCANALATENDIMENTO_LABELS: Record<
-	SuTicketIdCanalAtendimento,
-	string
-> = {
-	[SuTicketIdCanalAtendimento.Value0]: "Inativo",
-};
-
-export const SUTICKET_IDCIRCUITO_LABELS: Record<SuTicketIdCircuito, string> = {
-	[SuTicketIdCircuito.Value0]: "Inativo",
-};
-
-export const SUTICKET_IDEVENTOSTATUSPROCESSO_LABELS: Record<
-	SuTicketIdEventoStatusProcesso,
-	string
-> = {
-	[SuTicketIdEventoStatusProcesso.Value0]: "Inativo",
-};
-
 export const SUTICKET_IDFILIAL_LABELS: Record<SuTicketIdFilial, string> = {
 	[SuTicketIdFilial.Value1]: "Ativo",
-};
-
-export const SUTICKET_IDRESPOSTA_LABELS: Record<SuTicketIdResposta, string> = {
-	[SuTicketIdResposta.Value0]: "Inativo",
 };
 
 export const SUTICKET_IDSUDIAGNOSTICO_LABELS: Record<
