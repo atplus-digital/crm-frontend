@@ -2,7 +2,6 @@ import * as fs from "node:fs";
 import {
 	cleanOutputDirectory,
 	getUnusedFiles,
-	isFileBeingEdited,
 	validateTypeScriptDirectory,
 	writeGeneratedFile,
 	writeMultipleFiles,

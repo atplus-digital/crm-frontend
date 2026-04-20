@@ -7,10 +7,17 @@ import {
 } from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
+import type { EnumAdapterFieldEnum } from "../@types/script";
 import { logVerbose } from "./logger";
 
 interface CacheMetadata {
 	entries: Record<string, number>;
+}
+
+interface CachedEntry {
+	fetchedAt: number;
+	url: string;
+	enums: Record<string, EnumAdapterFieldEnum>;
 }
 
 const METADATA_FILE = "metadata.json";
@@ -29,7 +36,7 @@ function getCacheDir(): string {
 }
 
 function getCacheFilePath(collectionName: string): string {
-	return path.join(getCacheDir(), `${collectionName}.html`);
+	return path.join(getCacheDir(), `${collectionName}.json`);
 }
 
 function getMetadataFilePath(): string {
@@ -56,13 +63,112 @@ function saveMetadata(metadata: CacheMetadata): void {
 	writeFileSync(metadataFile, JSON.stringify(metadata, null, 2));
 }
 
+interface ParsedField {
+	name: string;
+	valoresDisponiveis?: string;
+}
+
+function parseWikiText(rawHtml: string): Record<string, EnumAdapterFieldEnum> {
+	const fields = parseFieldsFromHtml(rawHtml);
+	const enums: Record<string, EnumAdapterFieldEnum> = {};
+
+	for (const field of fields) {
+		if (!field.valoresDisponiveis) continue;
+
+		const { values, labels } = parseEnumValues(field.valoresDisponiveis);
+		if (values.length < 2) continue;
+
+		enums[field.name] = { values, labels };
+	}
+
+	return enums;
+}
+
+function parseFieldsFromHtml(rawHtml: string): ParsedField[] {
+	const fields: ParsedField[] = [];
+
+	const h3Regex = /<h3[^>]*\bclick_campos[^>]*>([^<]+)<\/h3>/gi;
+	const h3Matches = [...rawHtml.matchAll(h3Regex)].map((m) => ({
+		name: m[1].trim(),
+		index: m.index,
+	}));
+
+	for (let i = 0; i < h3Matches.length; i++) {
+		const { name, index: blockStart } = h3Matches[i];
+		const blockEnd =
+			i + 1 < h3Matches.length ? h3Matches[i + 1].index : rawHtml.length;
+		const block = rawHtml.slice(blockStart, blockEnd);
+
+		const dadosIdx = block.indexOf("Dados t");
+		if (dadosIdx < 0) continue;
+
+		const valoresIdx = block.indexOf("Valores dispon", dadosIdx);
+		if (valoresIdx < 0) continue;
+
+		const liStart = block.lastIndexOf("<li", valoresIdx);
+		const liEnd = block.indexOf("</li>", valoresIdx);
+		if (liStart < 0 || liEnd < 0) continue;
+
+		const liContent = block.slice(liStart, liEnd + 5);
+
+		const valoresRaw = liContent
+			.replace(/<br\s*\/?>/gi, "\n")
+			.replace(/<\/?[^>]+>/g, "")
+			.replace(/&nbsp;/g, " ")
+			.trim();
+
+		if (!valoresRaw) continue;
+
+		fields.push({ name, valoresDisponiveis: valoresRaw });
+	}
+
+	return fields;
+}
+
+function parseEnumValues(raw: string): EnumAdapterFieldEnum {
+	const labels: Record<string, string> = {};
+	const values: string[] = [];
+
+	const normalized = raw
+		.replace(/\s*=\s*/g, "=")
+		.replace(/\u00a0/g, " ")
+		.trim();
+
+	const parts = normalized.split(/(?<!=)=(?!=)/);
+
+	for (const part of parts) {
+		const eqIndex = part.indexOf("=");
+		if (eqIndex === -1) continue;
+
+		const value = part.slice(0, eqIndex).trim();
+		const label = part.slice(eqIndex + 1).trim();
+
+		if (!value) continue;
+
+		values.push(value);
+		labels[value] = decodeHtmlEntities(label);
+	}
+
+	return { values, labels };
+}
+
+function decodeHtmlEntities(text: string): string {
+	return text
+		.replace(/&nbsp;/gi, " ")
+		.replace(/&amp;/gi, "&")
+		.replace(/&lt;/gi, "<")
+		.replace(/&gt;/gi, ">")
+		.trim();
+}
+
 export async function fetchWithCache(
 	collectionName: string,
 	url: string,
-): Promise<string> {
+): Promise<Record<string, EnumAdapterFieldEnum>> {
 	if (!config.cacheEnums) {
 		logVerbose(`[Cache] Disabled — fetching from ${url}`);
-		return fetchFromWiki(url);
+		const html = await fetchFromWiki(url);
+		return parseWikiText(html);
 	}
 
 	const cacheFile = getCacheFilePath(collectionName);
@@ -74,38 +180,43 @@ export async function fetchWithCache(
 			const age = Date.now() - stat.mtimeMs;
 
 			if (age < ttlMs) {
+				const cached = JSON.parse(
+					readFileSync(cacheFile, "utf-8"),
+				) as CachedEntry;
 				logVerbose(
 					`[Cache] HIT: ${collectionName} (${Math.round(age / 1000)}s old)`,
 				);
-				return readFileSync(cacheFile, "utf-8");
+				return cached.enums;
 			}
 
 			logVerbose(
 				`[Cache] EXPIRED: ${collectionName} (${Math.round(age / 1000)}s > ${ttlMs / 1000}s)`,
 			);
-		} catch {
-			// Cache corrupt — continuar com fetch
-		}
+		} catch {}
 	}
 
 	logVerbose(`[Cache] MISS — fetching from ${url}`);
 	const html = await fetchFromWiki(url);
+	const enums = parseWikiText(html);
 
 	try {
-		writeFileSync(cacheFile, html);
+		const entry: CachedEntry = { fetchedAt: Date.now(), url, enums };
+		writeFileSync(cacheFile, JSON.stringify(entry, null, 2));
 
 		const metadata = loadMetadata();
 		metadata.entries[collectionName] = Date.now();
 		saveMetadata(metadata);
 
-		logVerbose(`[Cache] WRITE: ${collectionName}`);
+		logVerbose(
+			`[Cache] WRITE: ${collectionName} (${Object.keys(enums).length} fields)`,
+		);
 	} catch (error) {
 		logVerbose(
 			`[Cache] WRITE FAILED: ${error instanceof Error ? error.message : String(error)}`,
 		);
 	}
 
-	return html;
+	return enums;
 }
 
 async function fetchFromWiki(url: string): Promise<string> {
@@ -117,9 +228,6 @@ async function fetchFromWiki(url: string): Promise<string> {
 		throw new Error(`HTTP ${response.status}`);
 	}
 
-	// A API do IXC Wiki retorna charset=ISO-8859-1, não UTF-8.
-	// Sem correção, caracteres acentuados (é, í, etc.) são corrompidos
-	// e o regex de scraping falha em encontrar "Dados técnicos".
 	const buffer = await response.arrayBuffer();
 	const decoder = new TextDecoder("iso-8859-1");
 	return decoder.decode(buffer);
@@ -131,7 +239,7 @@ export function clearCache(collectionName?: string): void {
 	if (collectionName) {
 		const cacheFile = getCacheFilePath(collectionName);
 		if (existsSync(cacheFile)) {
-			writeFileSync(cacheFile, "");
+			require("node:fs").unlinkSync(cacheFile);
 			logVerbose(`[Cache] CLEARED: ${collectionName}`);
 		}
 	} else {
@@ -140,7 +248,7 @@ export function clearCache(collectionName?: string): void {
 			: [];
 
 		for (const file of files) {
-			if (file.endsWith(".html") || file === METADATA_FILE) {
+			if (file.endsWith(".json") || file === METADATA_FILE) {
 				require("node:fs").unlinkSync(path.join(cacheDir, file));
 			}
 		}
@@ -158,12 +266,10 @@ export function getCacheStats(): { totalEntries: number; totalSize: number } {
 	if (existsSync(cacheDir)) {
 		const files = require("node:fs").readdirSync(cacheDir);
 		for (const file of files) {
-			if (file.endsWith(".html")) {
+			if (file.endsWith(".json")) {
 				try {
 					totalSize += statSync(path.join(cacheDir, file)).size;
-				} catch {
-					// Ignorar arquivos que não podem ser lidos
-				}
+				} catch {}
 			}
 		}
 	}

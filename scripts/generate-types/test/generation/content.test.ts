@@ -418,7 +418,7 @@ describe("content", () => {
 					relations: {},
 				},
 			});
-			const userTypes = types.users!;
+			const userTypes = types.users;
 			userTypes.enums = new Map([
 				[
 					"f_status",
@@ -444,7 +444,7 @@ describe("content", () => {
 					relations: {},
 				},
 			});
-			const userTypes = types.users!;
+			const userTypes = types.users;
 
 			const result = generateCollectionTypes(
 				"users",
@@ -465,7 +465,7 @@ describe("content", () => {
 					relations: {},
 				},
 			});
-			const userTypes = types.users!;
+			const userTypes = types.users;
 
 			const result = generateCollectionTypes(
 				"users",

@@ -140,30 +140,6 @@ export type TrocaTitularidade = {
 	status: CrmTrocaTitularidade["f_status"];
 };
 
-export interface Renegociacao {
-	id: number;
-	f_titulo?: string;
-	f_valor_mensal?: number;
-	f_data_criacao?: string;
-	f_vendedor?: {
-		id: number;
-		nickname: string;
-	};
-	f_status: string;
-	id_contrato?: number;
-}
-
-export interface ContratoAssociado {
-	id: number;
-	endereco: string;
-	numero: string;
-	data_criacao: string;
-	id_contrato: number;
-	status_negociacao: string;
-	motivo_negociacao: string;
-	valor_mensal: number;
-}
-
 export type AtendimentoIXC = {
 	id: SuTicket["id"];
 	id_contrato: SuTicket["id_contrato"];

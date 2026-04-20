@@ -121,8 +121,8 @@ export function generateMultiCollectionReport(
 	const lines: string[] = [
 		"# Relatório de Inferência de Enums",
 		"",
-		"> **Data:** " + new Date().toISOString().split("T")[0],
-		"> **Collections analisadas:** " + reports.length,
+		`> **Data:** ${new Date().toISOString().split("T")[0]}`,
+		`> **Collections analisadas:** ${reports.length}`,
 		"",
 		"---",
 		"",
