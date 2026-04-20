@@ -23,10 +23,10 @@ function formatEnumValue(value: string): string {
 
 function _formatStatus(enumInfo: InferredEnumInfo): string {
 	if (enumInfo.cardinality <= 5) {
-		return "✅ Aprovado";
+		return "✅";
 	}
 	if (enumInfo.cardinality <= 10) {
-		return "⚠️ Revisar";
+		return "⚠️";
 	}
 	return "❓ Avaliar";
 }
@@ -69,7 +69,7 @@ export function generateEnumInferenceReport(
 	const lines: string[] = [
 		`## Collection: ${collectionName}`,
 		"",
-		"| Campo | Cardinalidade | Status | Valores |",
+		"| Campo | Count | Status | Valores |",
 		"|-------|--------------|--------|---------|",
 	];
 

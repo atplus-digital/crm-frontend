@@ -117,24 +117,24 @@
 
 ## Collection: f_funcionarios
 
-| Campo                     | Cardinalidade | Status      | Valores                                               |
-| ------------------------- | ------------- | ----------- | ----------------------------------------------------- |
-| f_ativo                   | 2             | ✅ Aprovado | Sim, Não                                              |
-| f_checklist_admissional   | 10            | ⚠️ Revisar  | aso-admissional, rg, e-cnh, comprovante-residencia... |
-| f_empresa                 | 2             | ✅ Aprovado | ATPlus, Platon                                        |
-| f_epi_calcado             | 10            | ⚠️ Revisar  | 35, 36, 37, 38, 39, 40, 41, 42, 43, 44                |
-| f_escolaridade            | 5             | ✅ Aprovado | Ensino Médio, Superior, Pós, MBA, Mestrado, Doutor... |
-| f_estado_civil            | 6             | ⚠️ Revisar  | Solteiro, Casado, União Estável, Viúvo, Divorciado... |
-| f_genero                  | 2             | ✅ Aprovado | Masculino, Feminino                                   |
-| f_mobilidade              | 2             | ✅ Aprovado | Vale Transporte (Transul), Mobilidade (Cartão Bene... |
-| f_pcd                     | 2             | ✅ Aprovado | Sim, Não                                              |
-| f_reservista              | 2             | ✅ Aprovado | Sim, Não                                              |
-| f_situacao_escolaridade   | 3             | ✅ Aprovado | Completo, Cursando, Trancado                          |
-| f_terceiro                | 2             | ✅ Aprovado | Sim, Não                                              |
-| f_tipo_contrato           | 7             | ⚠️ Revisar  | CLT, Prestador de Serviços, Estagiário, Jovem Apre... |
-| f_unidade                 | 4             | ✅ Aprovado | Matriz, Loja Centro Lages, Loja Curitibanos, Plato... |
-| f_universidade            | 5             | ✅ Aprovado | IFSC, UNIPLAC, CIEE, UNIFACVEST, Outros               |
-| f_vinculo_com_colaborador | 4             | ✅ Aprovado | Pais, Filho(a) ou Enteado(a), Avós, Conjuge           |
+| Campo                     | Count | Status | Valores                                               |
+| ------------------------- | ----- | ------ | ----------------------------------------------------- |
+| f_ativo                   | 2     | ✅     | Sim, Não                                              |
+| f_checklist_admissional   | 10    | ⚠️     | aso-admissional, rg, e-cnh, comprovante-residencia... |
+| f_empresa                 | 2     | ✅     | ATPlus, Platon                                        |
+| f_epi_calcado             | 10    | ⚠️     | 35, 36, 37, 38, 39, 40, 41, 42, 43, 44                |
+| f_escolaridade            | 5     | ✅     | Ensino Médio, Superior, Pós, MBA, Mestrado, Doutor... |
+| f_estado_civil            | 6     | ⚠️     | Solteiro, Casado, União Estável, Viúvo, Divorciado... |
+| f_genero                  | 2     | ✅     | Masculino, Feminino                                   |
+| f_mobilidade              | 2     | ✅     | Vale Transporte (Transul), Mobilidade (Cartão Bene... |
+| f_pcd                     | 2     | ✅     | Sim, Não                                              |
+| f_reservista              | 2     | ✅     | Sim, Não                                              |
+| f_situacao_escolaridade   | 3     | ✅     | Completo, Cursando, Trancado                          |
+| f_terceiro                | 2     | ✅     | Sim, Não                                              |
+| f_tipo_contrato           | 7     | ⚠️     | CLT, Prestador de Serviços, Estagiário, Jovem Apre... |
+| f_unidade                 | 4     | ✅     | Matriz, Loja Centro Lages, Loja Curitibanos, Plato... |
+| f_universidade            | 5     | ✅     | IFSC, UNIPLAC, CIEE, UNIFACVEST, Outros               |
+| f_vinculo_com_colaborador | 4     | ✅     | Pais, Filho(a) ou Enteado(a), Avós, Conjuge           |
 
 ### Detalhes
 
@@ -142,7 +142,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -153,7 +153,7 @@
 
 - **Valores:** 10
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor                            | Label                                                      |
 | -------------------------------- | ---------------------------------------------------------- |
@@ -172,7 +172,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor  | Label  |
 | ------ | ------ |
@@ -183,7 +183,7 @@
 
 - **Valores:** 10
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label |
 | ----- | ----- |
@@ -202,7 +202,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor        | Label        |
 | ------------ | ------------ |
@@ -216,7 +216,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor         | Label         |
 | ------------- | ------------- |
@@ -231,7 +231,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor     | Label     |
 | --------- | --------- |
@@ -242,7 +242,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                          | Label                          |
 | ------------------------------ | ------------------------------ |
@@ -253,7 +253,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -264,7 +264,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -275,7 +275,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor    | Label    |
 | -------- | -------- |
@@ -287,7 +287,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -298,7 +298,7 @@
 
 - **Valores:** 7
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor                 | Label                 |
 | --------------------- | --------------------- |
@@ -314,7 +314,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor             | Label             |
 | ----------------- | ----------------- |
@@ -327,7 +327,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor      | Label      |
 | ---------- | ---------- |
@@ -341,7 +341,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                  | Label                  |
 | ---------------------- | ---------------------- |
@@ -356,9 +356,9 @@
 
 ## Collection: t_acessos
 
-| Campo  | Cardinalidade | Status      | Valores |
-| ------ | ------------- | ----------- | ------- |
-| f_tipo | 3             | ✅ Aprovado | 1, 2, 3 |
+| Campo  | Count | Status | Valores |
+| ------ | ----- | ------ | ------- |
+| f_tipo | 3     | ✅     | 1, 2, 3 |
 
 ### Detalhes
 
@@ -366,7 +366,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -380,11 +380,11 @@
 
 ## Collection: t_aegis
 
-| Campo                       | Cardinalidade | Status      | Valores        |
-| --------------------------- | ------------- | ----------- | -------------- |
-| f_statusdesbloqueioconfiaca | 2             | ✅ Aprovado | success, error |
-| f_statuslogin               | 2             | ✅ Aprovado | success, error |
-| f_statusmac                 | 2             | ✅ Aprovado | success, error |
+| Campo                       | Count | Status | Valores        |
+| --------------------------- | ----- | ------ | -------------- |
+| f_statusdesbloqueioconfiaca | 2     | ✅     | success, error |
+| f_statuslogin               | 2     | ✅     | success, error |
+| f_statusmac                 | 2     | ✅     | success, error |
 
 ### Detalhes
 
@@ -392,7 +392,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor   | Label                                        |
 | ------- | -------------------------------------------- |
@@ -403,7 +403,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor   | Label                        |
 | ------- | ---------------------------- |
@@ -414,7 +414,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor   | Label                 |
 | ------- | --------------------- |
@@ -427,9 +427,9 @@
 
 ## Collection: t_aniversarios
 
-| Campo    | Cardinalidade | Status      | Valores                            |
-| -------- | ------------- | ----------- | ---------------------------------- |
-| f_status | 4             | ✅ Aprovado | novo, em-processo, concluido, erro |
+| Campo    | Count | Status | Valores                            |
+| -------- | ----- | ------ | ---------------------------------- |
+| f_status | 4     | ✅     | novo, em-processo, concluido, erro |
 
 ### Detalhes
 
@@ -437,7 +437,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor       | Label       |
 | ----------- | ----------- |
@@ -452,13 +452,13 @@
 
 ## Collection: t_atendimentos_ixc
 
-| Campo          | Cardinalidade | Status      | Valores                                               |
-| -------------- | ------------- | ----------- | ----------------------------------------------------- |
-| f_assunto      | 4             | ✅ Aprovado | 88, 89, 90, 78                                        |
-| f_diagnosticos | 26            | ❓ Avaliar  | 95, 96, 97, 99, 100, 101, 105, 106, 107, 110, 111,... |
-| f_prioridade   | 4             | ✅ Aprovado | B, N, A, C                                            |
-| f_processo     | 4             | ✅ Aprovado | 33, 36, 34, 40                                        |
-| f_tarefas      | 32            | ❓ Avaliar  | 158, 159, 160, 164, 382, 412, 305, 306, 307, 311, ... |
+| Campo          | Count | Status     | Valores                                               |
+| -------------- | ----- | ---------- | ----------------------------------------------------- |
+| f_assunto      | 4     | ✅         | 88, 89, 90, 78                                        |
+| f_diagnosticos | 26    | ❓ Avaliar | 95, 96, 97, 99, 100, 101, 105, 106, 107, 110, 111,... |
+| f_prioridade   | 4     | ✅         | B, N, A, C                                            |
+| f_processo     | 4     | ✅         | 33, 36, 34, 40                                        |
+| f_tarefas      | 32    | ❓ Avaliar | 158, 159, 160, 164, 382, 412, 305, 306, 307, 311, ... |
 
 ### Detalhes
 
@@ -466,7 +466,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                  |
 | ----- | ---------------------- |
@@ -514,7 +514,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -527,7 +527,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                  |
 | ----- | ---------------------- |
@@ -583,9 +583,9 @@
 
 ## Collection: t_configuracoes
 
-| Campo    | Cardinalidade | Status      | Valores                  |
-| -------- | ------------- | ----------- | ------------------------ |
-| f_escopo | 4             | ✅ Aprovado | IXC, GERAL, SPC, ZAPSIGN |
+| Campo    | Count | Status | Valores                  |
+| -------- | ----- | ------ | ------------------------ |
+| f_escopo | 4     | ✅     | IXC, GERAL, SPC, ZAPSIGN |
 
 ### Detalhes
 
@@ -593,7 +593,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor   | Label     |
 | ------- | --------- |
@@ -608,9 +608,9 @@
 
 ## Collection: t_consultas_pf
 
-| Campo             | Cardinalidade | Status      | Valores |
-| ----------------- | ------------- | ----------- | ------- |
-| f_status_consulta | 3             | ✅ Aprovado | 1, 2, 9 |
+| Campo             | Count | Status | Valores |
+| ----------------- | ----- | ------ | ------- |
+| f_status_consulta | 3     | ✅     | 1, 2, 9 |
 
 ### Detalhes
 
@@ -618,7 +618,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                |
 | ----- | -------------------- |
@@ -632,9 +632,9 @@
 
 ## Collection: t_consultas_pj
 
-| Campo             | Cardinalidade | Status      | Valores |
-| ----------------- | ------------- | ----------- | ------- |
-| f_status_consulta | 3             | ✅ Aprovado | 1, 2, 9 |
+| Campo             | Count | Status | Valores |
+| ----------------- | ----- | ------ | ------- |
+| f_status_consulta | 3     | ✅     | 1, 2, 9 |
 
 ### Detalhes
 
@@ -642,7 +642,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                |
 | ----- | -------------------- |
@@ -656,13 +656,13 @@
 
 ## Collection: t_crm_troca_titularidade
 
-| Campo         | Cardinalidade | Status      | Valores                                  |
-| ------------- | ------------- | ----------- | ---------------------------------------- |
-| f_complemento | 4             | ✅ Aprovado | Casa, Apartamento, Condominio, Comercial |
-| f_estado      | 1             | ✅ Aprovado | SC                                       |
-| f_status      | 5             | ✅ Aprovado | 0, 1, 2, 3, 9                            |
-| f_substatus   | 7             | ⚠️ Revisar  | 0, 1, 2, 3, 4, 5, 6                      |
-| f_tipo_pessoa | 2             | ✅ Aprovado | PF, PJ                                   |
+| Campo         | Count | Status | Valores                                  |
+| ------------- | ----- | ------ | ---------------------------------------- |
+| f_complemento | 4     | ✅     | Casa, Apartamento, Condominio, Comercial |
+| f_estado      | 1     | ✅     | SC                                       |
+| f_status      | 5     | ✅     | 0, 1, 2, 3, 9                            |
+| f_substatus   | 7     | ⚠️     | 0, 1, 2, 3, 4, 5, 6                      |
+| f_tipo_pessoa | 2     | ✅     | PF, PJ                                   |
 
 ### Detalhes
 
@@ -670,7 +670,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor       | Label       |
 | ----------- | ----------- |
@@ -683,7 +683,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -693,7 +693,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                 |
 | ----- | --------------------- |
@@ -707,7 +707,7 @@
 
 - **Valores:** 7
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label                                   |
 | ----- | --------------------------------------- |
@@ -723,7 +723,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label           |
 | ----- | --------------- |
@@ -736,11 +736,11 @@
 
 ## Collection: t_cupons_desconto
 
-| Campo             | Cardinalidade | Status      | Valores    |
-| ----------------- | ------------- | ----------- | ---------- |
-| f_status          | 2             | ✅ Aprovado | 0, 1       |
-| f_tipo            | 4             | ✅ Aprovado | 1, 2, 3, 4 |
-| f_tipo_negociacao | 3             | ✅ Aprovado | 1, 2, S    |
+| Campo             | Count | Status | Valores    |
+| ----------------- | ----- | ------ | ---------- |
+| f_status          | 2     | ✅     | 0, 1       |
+| f_tipo            | 4     | ✅     | 1, 2, 3, 4 |
+| f_tipo_negociacao | 3     | ✅     | 1, 2, S    |
 
 ### Detalhes
 
@@ -748,7 +748,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -759,7 +759,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                                        |
 | ----- | -------------------------------------------- |
@@ -772,7 +772,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label               |
 | ----- | ------------------- |
@@ -786,10 +786,10 @@
 
 ## Collection: t_dados_adicionais_cliente_contrato
 
-| Campo                | Cardinalidade | Status      | Valores                                      |
-| -------------------- | ------------- | ----------- | -------------------------------------------- |
-| f_forma_de_pagamento | 3             | ✅ Aprovado | carne, boleto, recorrencia                   |
-| f_perfil_de_uso      | 5             | ✅ Aprovado | trabalho, estudo, jogos, streaming, pesquisa |
+| Campo                | Count | Status | Valores                                      |
+| -------------------- | ----- | ------ | -------------------------------------------- |
+| f_forma_de_pagamento | 3     | ✅     | carne, boleto, recorrencia                   |
+| f_perfil_de_uso      | 5     | ✅     | trabalho, estudo, jogos, streaming, pesquisa |
 
 ### Detalhes
 
@@ -797,7 +797,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor       | Label       |
 | ----------- | ----------- |
@@ -809,7 +809,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor     | Label             |
 | --------- | ----------------- |
@@ -825,11 +825,11 @@
 
 ## Collection: t_datacenter_memorias
 
-| Campo        | Cardinalidade | Status      | Valores                  |
-| ------------ | ------------- | ----------- | ------------------------ |
-| f_capacidade | 7             | ⚠️ Revisar  | 2, 4, 8, 16, 32, 64, 128 |
-| f_status     | 4             | ✅ Aprovado | 0, 1, 2, 3               |
-| f_tipo       | 3             | ✅ Aprovado | 3, 4, 2                  |
+| Campo        | Count | Status | Valores                  |
+| ------------ | ----- | ------ | ------------------------ |
+| f_capacidade | 7     | ⚠️     | 2, 4, 8, 16, 32, 64, 128 |
+| f_status     | 4     | ✅     | 0, 1, 2, 3               |
+| f_tipo       | 3     | ✅     | 3, 4, 2                  |
 
 ### Detalhes
 
@@ -837,7 +837,7 @@
 
 - **Valores:** 7
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label  |
 | ----- | ------ |
@@ -853,7 +853,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                 |
 | ----- | --------------------- |
@@ -866,7 +866,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -880,10 +880,10 @@
 
 ## Collection: t_dc_servidores
 
-| Campo        | Cardinalidade | Status      | Valores       |
-| ------------ | ------------- | ----------- | ------------- |
-| f_fabricante | 5             | ✅ Aprovado | 1, 2, 3, 4, 5 |
-| f_status     | 4             | ✅ Aprovado | 1, 2, 3, 4    |
+| Campo        | Count | Status | Valores       |
+| ------------ | ----- | ------ | ------------- |
+| f_fabricante | 5     | ✅     | 1, 2, 3, 4, 5 |
+| f_status     | 4     | ✅     | 1, 2, 3, 4    |
 
 ### Detalhes
 
@@ -891,7 +891,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label      |
 | ----- | ---------- |
@@ -905,7 +905,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                |
 | ----- | -------------------- |
@@ -920,11 +920,11 @@
 
 ## Collection: t_demandas_viabilidades
 
-| Campo                | Cardinalidade | Status      | Valores |
-| -------------------- | ------------- | ----------- | ------- |
-| f_forma_atendimento  | 2             | ✅ Aprovado | 1, 2    |
-| f_servico_pretendido | 2             | ✅ Aprovado | 1, 2    |
-| f_status             | 3             | ✅ Aprovado | 1, 2, 3 |
+| Campo                | Count | Status | Valores |
+| -------------------- | ----- | ------ | ------- |
+| f_forma_atendimento  | 2     | ✅     | 1, 2    |
+| f_servico_pretendido | 2     | ✅     | 1, 2    |
+| f_status             | 3     | ✅     | 1, 2, 3 |
 
 ### Detalhes
 
@@ -932,7 +932,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                     |
 | ----- | ------------------------- |
@@ -943,7 +943,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label         |
 | ----- | ------------- |
@@ -954,7 +954,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label      |
 | ----- | ---------- |
@@ -968,10 +968,10 @@
 
 ## Collection: t_discos
 
-| Campo        | Cardinalidade | Status     | Valores                               |
-| ------------ | ------------- | ---------- | ------------------------------------- |
-| f_capacidade | 12            | ❓ Avaliar | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 |
-| f_tipo       | 6             | ⚠️ Revisar | 1, 2, 3, 4, 5, 6                      |
+| Campo        | Count | Status     | Valores                               |
+| ------------ | ----- | ---------- | ------------------------------------- |
+| f_capacidade | 12    | ❓ Avaliar | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 |
+| f_tipo       | 6     | ⚠️         | 1, 2, 3, 4, 5, 6                      |
 
 ### Detalhes
 
@@ -1000,7 +1000,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label       |
 | ----- | ----------- |
@@ -1017,10 +1017,10 @@
 
 ## Collection: t_empresas
 
-| Campo         | Cardinalidade | Status      | Valores |
-| ------------- | ------------- | ----------- | ------- |
-| f_analise_ixc | 2             | ✅ Aprovado | 0, 1    |
-| f_credito     | 3             | ✅ Aprovado | 1, 2, 9 |
+| Campo         | Count | Status | Valores |
+| ------------- | ----- | ------ | ------- |
+| f_analise_ixc | 2     | ✅     | 0, 1    |
+| f_credito     | 3     | ✅     | 1, 2, 9 |
 
 ### Detalhes
 
@@ -1028,7 +1028,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label          |
 | ----- | -------------- |
@@ -1039,7 +1039,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                |
 | ----- | -------------------- |
@@ -1053,9 +1053,9 @@
 
 ## Collection: t_info_arquivos
 
-| Campo             | Cardinalidade | Status      | Valores  |
-| ----------------- | ------------- | ----------- | -------- |
-| f_arquivo_externo | 2             | ✅ Aprovado | sim, não |
+| Campo             | Count | Status | Valores  |
+| ----------------- | ----- | ------ | -------- |
+| f_arquivo_externo | 2     | ✅     | sim, não |
 
 ### Detalhes
 
@@ -1063,7 +1063,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1076,10 +1076,10 @@
 
 ## Collection: t_info_aso
 
-| Campo        | Cardinalidade | Status      | Valores                                               |
-| ------------ | ------------- | ----------- | ----------------------------------------------------- |
-| f_informado  | 2             | ✅ Aprovado | nao, sim                                              |
-| f_tipo_exame | 6             | ⚠️ Revisar  | exame-admissional, exame-periodico, atestado-medic... |
+| Campo        | Count | Status | Valores                                               |
+| ------------ | ----- | ------ | ----------------------------------------------------- |
+| f_informado  | 2     | ✅     | nao, sim                                              |
+| f_tipo_exame | 6     | ⚠️     | exame-admissional, exame-periodico, atestado-medic... |
 
 ### Detalhes
 
@@ -1087,7 +1087,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1098,7 +1098,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor             | Label               |
 | ----------------- | ------------------- |
@@ -1115,10 +1115,10 @@
 
 ## Collection: t_itens_pacotes
 
-| Campo          | Cardinalidade | Status      | Valores                       |
-| -------------- | ------------- | ----------- | ----------------------------- |
-| f_tipo_ixc     | 6             | ⚠️ Revisar  | I, SMP, TV, S, T, SVA         |
-| f_tipo_produto | 5             | ✅ Aprovado | SVA, INTERNET, STFC, MVNO, TV |
+| Campo          | Count | Status | Valores                       |
+| -------------- | ----- | ------ | ----------------------------- |
+| f_tipo_ixc     | 6     | ⚠️     | I, SMP, TV, S, T, SVA         |
+| f_tipo_produto | 5     | ✅     | SVA, INTERNET, STFC, MVNO, TV |
 
 ### Detalhes
 
@@ -1126,7 +1126,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label         |
 | ----- | ------------- |
@@ -1141,7 +1141,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor    | Label    |
 | -------- | -------- |
@@ -1157,9 +1157,9 @@
 
 ## Collection: t_lancamentos_ferias
 
-| Campo    | Cardinalidade | Status      | Valores                                               |
-| -------- | ------------- | ----------- | ----------------------------------------------------- |
-| f_status | 5             | ✅ Aprovado | cancelada, planejada, em-andamento, aprovada, conc... |
+| Campo    | Count | Status | Valores                                               |
+| -------- | ----- | ------ | ----------------------------------------------------- |
+| f_status | 5     | ✅     | cancelada, planejada, em-andamento, aprovada, conc... |
 
 ### Detalhes
 
@@ -1167,7 +1167,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor        | Label        |
 | ------------ | ------------ |
@@ -1183,9 +1183,9 @@
 
 ## Collection: t_linha_corporativa
 
-| Campo  | Cardinalidade | Status      | Valores |
-| ------ | ------------- | ----------- | ------- |
-| f_tipo | 2             | ✅ Aprovado | 1, 2    |
+| Campo  | Count | Status | Valores |
+| ------ | ----- | ------ | ------- |
+| f_tipo | 2     | ✅     | 1, 2    |
 
 ### Detalhes
 
@@ -1193,7 +1193,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label            |
 | ----- | ---------------- |
@@ -1206,9 +1206,9 @@
 
 ## Collection: t_logs
 
-| Campo       | Cardinalidade | Status      | Valores                     |
-| ----------- | ------------- | ----------- | --------------------------- |
-| f_log_level | 4             | ✅ Aprovado | info, warning, alert, error |
+| Campo       | Count | Status | Valores                     |
+| ----------- | ----- | ------ | --------------------------- |
+| f_log_level | 4     | ✅     | info, warning, alert, error |
 
 ### Detalhes
 
@@ -1216,7 +1216,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor   | Label   |
 | ------- | ------- |
@@ -1231,19 +1231,19 @@
 
 ## Collection: t_negociacoes
 
-| Campo                  | Cardinalidade | Status      | Valores                                               |
-| ---------------------- | ------------- | ----------- | ----------------------------------------------------- |
-| f_confissao_divida     | 2             | ✅ Aprovado | Nao, Sim                                              |
-| f_data_vencimento      | 6             | ⚠️ Revisar  | 1, 5, 10, 15, 20, 25                                  |
-| f_endereco_cobranca    | 2             | ✅ Aprovado | 0, 1                                                  |
-| f_endereco_complemento | 4             | ✅ Aprovado | Casa, Apartamento, Condominio, Comercial              |
-| f_fidelidade           | 6             | ⚠️ Revisar  | 0, 12, 24, 36, 48, 60                                 |
-| f_motivo               | 10            | ⚠️ Revisar  | I, M, D, U, N, R, T, L, S, P                          |
-| f_motivo_pontos        | 6             | ⚠️ Revisar  | cep, endereco, numero, telefone, telefone-adc, ema... |
-| f_pontos_atencao       | 7             | ⚠️ Revisar  | 0, 1, 2, 3, 4, 5, 6                                   |
-| f_status               | 6             | ⚠️ Revisar  | 1, 2, 3, 4, 5, 6                                      |
-| f_substatus            | 13            | ❓ Avaliar  | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13             |
-| f_tipo_pessoa          | 2             | ✅ Aprovado | PF, PJ                                                |
+| Campo                  | Count | Status     | Valores                                               |
+| ---------------------- | ----- | ---------- | ----------------------------------------------------- |
+| f_confissao_divida     | 2     | ✅         | Nao, Sim                                              |
+| f_data_vencimento      | 6     | ⚠️         | 1, 5, 10, 15, 20, 25                                  |
+| f_endereco_cobranca    | 2     | ✅         | 0, 1                                                  |
+| f_endereco_complemento | 4     | ✅         | Casa, Apartamento, Condominio, Comercial              |
+| f_fidelidade           | 6     | ⚠️         | 0, 12, 24, 36, 48, 60                                 |
+| f_motivo               | 10    | ⚠️         | I, M, D, U, N, R, T, L, S, P                          |
+| f_motivo_pontos        | 6     | ⚠️         | cep, endereco, numero, telefone, telefone-adc, ema... |
+| f_pontos_atencao       | 7     | ⚠️         | 0, 1, 2, 3, 4, 5, 6                                   |
+| f_status               | 6     | ⚠️         | 1, 2, 3, 4, 5, 6                                      |
+| f_substatus            | 13    | ❓ Avaliar | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13             |
+| f_tipo_pessoa          | 2     | ✅         | PF, PJ                                                |
 
 ### Detalhes
 
@@ -1251,7 +1251,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1262,7 +1262,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label  |
 | ----- | ------ |
@@ -1277,7 +1277,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1288,7 +1288,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor       | Label       |
 | ----------- | ----------- |
@@ -1301,7 +1301,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label    |
 | ----- | -------- |
@@ -1316,7 +1316,7 @@
 
 - **Valores:** 10
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label                   |
 | ----- | ----------------------- |
@@ -1335,7 +1335,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor        | Label                        |
 | ------------ | ---------------------------- |
@@ -1350,7 +1350,7 @@
 
 - **Valores:** 7
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label    |
 | ----- | -------- |
@@ -1366,7 +1366,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label      |
 | ----- | ---------- |
@@ -1403,7 +1403,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label           |
 | ----- | --------------- |
@@ -1416,10 +1416,10 @@
 
 ## Collection: t_negociacoes_comentarios
 
-| Campo                    | Cardinalidade | Status      | Valores    |
-| ------------------------ | ------------- | ----------- | ---------- |
-| f_insere_atendimento_ixc | 2             | ✅ Aprovado | 0, 1       |
-| f_setor_para_obs         | 4             | ✅ Aprovado | 1, 2, 3, 4 |
+| Campo                    | Count | Status | Valores    |
+| ------------------------ | ----- | ------ | ---------- |
+| f_insere_atendimento_ixc | 2     | ✅     | 0, 1       |
+| f_setor_para_obs         | 4     | ✅     | 1, 2, 3, 4 |
 
 ### Detalhes
 
@@ -1427,7 +1427,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1438,7 +1438,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                                     |
 | ----- | ----------------------------------------- |
@@ -1453,10 +1453,10 @@
 
 ## Collection: t_negociacoes_itens
 
-| Campo          | Cardinalidade | Status      | Valores                       |
-| -------------- | ------------- | ----------- | ----------------------------- |
-| f_relacao      | 2             | ✅ Aprovado | COMBO, ADICIONAL              |
-| f_tipo_produto | 5             | ✅ Aprovado | SVA, INTERNET, STFC, MVNO, TV |
+| Campo          | Count | Status | Valores                       |
+| -------------- | ----- | ------ | ----------------------------- |
+| f_relacao      | 2     | ✅     | COMBO, ADICIONAL              |
+| f_tipo_produto | 5     | ✅     | SVA, INTERNET, STFC, MVNO, TV |
 
 ### Detalhes
 
@@ -1464,7 +1464,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor     | Label     |
 | --------- | --------- |
@@ -1475,7 +1475,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor    | Label    |
 | -------- | -------- |
@@ -1491,10 +1491,10 @@
 
 ## Collection: t_oe_qualirun
 
-| Campo          | Cardinalidade | Status      | Valores                              |
-| -------------- | ------------- | ----------- | ------------------------------------ |
-| f_procedimento | 1             | ✅ Aprovado | 17760523-1404-4ff9-b786-15a4b0d7a3e2 |
-| f_status       | 4             | ✅ Aprovado | cancelado, novo, pendente, concluido |
+| Campo          | Count | Status | Valores                              |
+| -------------- | ----- | ------ | ------------------------------------ |
+| f_procedimento | 1     | ✅     | 17760523-1404-4ff9-b786-15a4b0d7a3e2 |
+| f_status       | 4     | ✅     | cancelado, novo, pendente, concluido |
 
 ### Detalhes
 
@@ -1502,7 +1502,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                                | Label              |
 | ------------------------------------ | ------------------ |
@@ -1512,7 +1512,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor     | Label     |
 | --------- | --------- |
@@ -1527,9 +1527,9 @@
 
 ## Collection: t_opcoes_smp
 
-| Campo           | Cardinalidade | Status      | Valores |
-| --------------- | ------------- | ----------- | ------- |
-| f_portabilidade | 2             | ✅ Aprovado | 0, 1    |
+| Campo           | Count | Status | Valores |
+| --------------- | ----- | ------ | ------- |
+| f_portabilidade | 2     | ✅     | 0, 1    |
 
 ### Detalhes
 
@@ -1537,7 +1537,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1550,9 +1550,9 @@
 
 ## Collection: t_opcoes_stfc
 
-| Campo           | Cardinalidade | Status      | Valores  |
-| --------------- | ------------- | ----------- | -------- |
-| f_portabilidade | 2             | ✅ Aprovado | SIM, NAO |
+| Campo           | Count | Status | Valores  |
+| --------------- | ----- | ------ | -------- |
+| f_portabilidade | 2     | ✅     | SIM, NAO |
 
 ### Detalhes
 
@@ -1560,7 +1560,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1573,9 +1573,9 @@
 
 ## Collection: t_opcoes_stfc_template
 
-| Campo           | Cardinalidade | Status      | Valores |
-| --------------- | ------------- | ----------- | ------- |
-| f_portabilidade | 2             | ✅ Aprovado | 0, 1    |
+| Campo           | Count | Status | Valores |
+| --------------- | ----- | ------ | ------- |
+| f_portabilidade | 2     | ✅     | 0, 1    |
 
 ### Detalhes
 
@@ -1583,7 +1583,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1596,13 +1596,13 @@
 
 ## Collection: t_pacotes
 
-| Campo              | Cardinalidade | Status      | Valores |
-| ------------------ | ------------- | ----------- | ------- |
-| f_abre_atendimento | 2             | ✅ Aprovado | 0, 1    |
-| f_pacote_adicional | 2             | ✅ Aprovado | 0, 1    |
-| f_pacote_principal | 2             | ✅ Aprovado | 0, 1    |
-| f_status           | 2             | ✅ Aprovado | 1, 2    |
-| f_vender_para      | 2             | ✅ Aprovado | PF, PJ  |
+| Campo              | Count | Status | Valores |
+| ------------------ | ----- | ------ | ------- |
+| f_abre_atendimento | 2     | ✅     | 0, 1    |
+| f_pacote_adicional | 2     | ✅     | 0, 1    |
+| f_pacote_principal | 2     | ✅     | 0, 1    |
+| f_status           | 2     | ✅     | 1, 2    |
+| f_vender_para      | 2     | ✅     | PF, PJ  |
 
 ### Detalhes
 
@@ -1610,7 +1610,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1621,7 +1621,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1632,7 +1632,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1643,7 +1643,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -1654,7 +1654,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label           |
 | ----- | --------------- |
@@ -1667,10 +1667,10 @@
 
 ## Collection: t_patrimonio
 
-| Campo             | Cardinalidade | Status      | Valores                                               |
-| ----------------- | ------------- | ----------- | ----------------------------------------------------- |
-| f_estado_uso      | 3             | ✅ Aprovado | NOVO, USADO, EM ESTADO DE NOVO, USADO, COM MARCAS ... |
-| f_tipo_patrimonio | 1             | ✅ Aprovado | 1                                                     |
+| Campo             | Count | Status | Valores                                               |
+| ----------------- | ----- | ------ | ----------------------------------------------------- |
+| f_estado_uso      | 3     | ✅     | NOVO, USADO, EM ESTADO DE NOVO, USADO, COM MARCAS ... |
+| f_tipo_patrimonio | 1     | ✅     | 1                                                     |
 
 ### Detalhes
 
@@ -1678,7 +1678,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                    | Label                    |
 | ------------------------ | ------------------------ |
@@ -1690,7 +1690,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label       |
 | ----- | ----------- |
@@ -1702,9 +1702,9 @@
 
 ## Collection: t_periodos_ferias
 
-| Campo            | Cardinalidade | Status      | Valores                                               |
-| ---------------- | ------------- | ----------- | ----------------------------------------------------- |
-| f_status_periodo | 5             | ✅ Aprovado | cancelada, planejada, em-andamento, aprovada, conc... |
+| Campo            | Count | Status | Valores                                               |
+| ---------------- | ----- | ------ | ----------------------------------------------------- |
+| f_status_periodo | 5     | ✅     | cancelada, planejada, em-andamento, aprovada, conc... |
 
 ### Detalhes
 
@@ -1712,7 +1712,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor        | Label        |
 | ------------ | ------------ |
@@ -1728,11 +1728,11 @@
 
 ## Collection: t_pessoas
 
-| Campo         | Cardinalidade | Status      | Valores                   |
-| ------------- | ------------- | ----------- | ------------------------- |
-| f_analise_ixc | 2             | ✅ Aprovado | 0, 1                      |
-| f_credito     | 3             | ✅ Aprovado | 1, 2, 9                   |
-| f_sexo        | 4             | ✅ Aprovado | M, F, MASCULINO, FEMININO |
+| Campo         | Count | Status | Valores                   |
+| ------------- | ----- | ------ | ------------------------- |
+| f_analise_ixc | 2     | ✅     | 0, 1                      |
+| f_credito     | 3     | ✅     | 1, 2, 9                   |
+| f_sexo        | 4     | ✅     | M, F, MASCULINO, FEMININO |
 
 ### Detalhes
 
@@ -1740,7 +1740,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label          |
 | ----- | -------------- |
@@ -1751,7 +1751,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                |
 | ----- | -------------------- |
@@ -1763,7 +1763,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor     | Label     |
 | --------- | --------- |
@@ -1778,10 +1778,10 @@
 
 ## Collection: t_produtos
 
-| Campo          | Cardinalidade | Status      | Valores                       |
-| -------------- | ------------- | ----------- | ----------------------------- |
-| f_tipo_ixc     | 6             | ⚠️ Revisar  | I, SMP, TV, S, T, SVA         |
-| f_tipo_produto | 5             | ✅ Aprovado | SVA, INTERNET, STFC, MVNO, TV |
+| Campo          | Count | Status | Valores                       |
+| -------------- | ----- | ------ | ----------------------------- |
+| f_tipo_ixc     | 6     | ⚠️     | I, SMP, TV, S, T, SVA         |
+| f_tipo_produto | 5     | ✅     | SVA, INTERNET, STFC, MVNO, TV |
 
 ### Detalhes
 
@@ -1789,7 +1789,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label         |
 | ----- | ------------- |
@@ -1804,7 +1804,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor    | Label    |
 | -------- | -------- |
@@ -1820,12 +1820,12 @@
 
 ## Collection: t_qualirun_info_adicionais
 
-| Campo                        | Cardinalidade | Status      | Valores                                               |
-| ---------------------------- | ------------- | ----------- | ----------------------------------------------------- |
-| f_grau_escolaridade          | 5             | ✅ Aprovado | Ensino Médio, Superior, Pós, MBA, Mestrado, Doutor... |
-| f_situacao_curso             | 3             | ✅ Aprovado | Trancado, Cursando, Completo                          |
-| f_status                     | 3             | ✅ Aprovado | recusado, aprovado, aguardando                        |
-| f_vinculo_contato_emergencia | 4             | ✅ Aprovado | Pais, Filho(a) ou Enteado(a), Avós, Conjuge           |
+| Campo                        | Count | Status | Valores                                               |
+| ---------------------------- | ----- | ------ | ----------------------------------------------------- |
+| f_grau_escolaridade          | 5     | ✅     | Ensino Médio, Superior, Pós, MBA, Mestrado, Doutor... |
+| f_situacao_curso             | 3     | ✅     | Trancado, Cursando, Completo                          |
+| f_status                     | 3     | ✅     | recusado, aprovado, aguardando                        |
+| f_vinculo_contato_emergencia | 4     | ✅     | Pais, Filho(a) ou Enteado(a), Avós, Conjuge           |
 
 ### Detalhes
 
@@ -1833,7 +1833,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor        | Label        |
 | ------------ | ------------ |
@@ -1847,7 +1847,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor    | Label    |
 | -------- | -------- |
@@ -1859,7 +1859,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor      | Label      |
 | ---------- | ---------- |
@@ -1871,7 +1871,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                  | Label                  |
 | ---------------------- | ---------------------- |
@@ -1886,12 +1886,12 @@
 
 ## Collection: t_qualirun_processos
 
-| Campo                      | Cardinalidade | Status      | Valores                                               |
-| -------------------------- | ------------- | ----------- | ----------------------------------------------------- |
-| f_detalhes_procedimento    | 2             | ✅ Aprovado | 1, 2                                                  |
-| f_id_procedimento_qualirun | 2             | ✅ Aprovado | c03f166d-a4d7-42b7-ae73-a4c287e171ac, 0a3d75b4-290... |
-| f_procedimento             | 2             | ✅ Aprovado | complemento-informacoes-documentos, confidencialid... |
-| f_status                   | 4             | ✅ Aprovado | novo, pendente, concluido, cancelado                  |
+| Campo                      | Count | Status | Valores                                               |
+| -------------------------- | ----- | ------ | ----------------------------------------------------- |
+| f_detalhes_procedimento    | 2     | ✅     | 1, 2                                                  |
+| f_id_procedimento_qualirun | 2     | ✅     | c03f166d-a4d7-42b7-ae73-a4c287e171ac, 0a3d75b4-290... |
+| f_procedimento             | 2     | ✅     | complemento-informacoes-documentos, confidencialid... |
+| f_status                   | 4     | ✅     | novo, pendente, concluido, cancelado                  |
 
 ### Detalhes
 
@@ -1899,7 +1899,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                                                                                                                                    |
 | ----- | ---------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1910,7 +1910,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                                | Label                                   |
 | ------------------------------------ | --------------------------------------- |
@@ -1921,7 +1921,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                              | Label                                                         |
 | ---------------------------------- | ------------------------------------------------------------- |
@@ -1932,7 +1932,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor     | Label     |
 | --------- | --------- |
@@ -1947,10 +1947,10 @@
 
 ## Collection: t_recursos_viagem
 
-| Campo             | Cardinalidade | Status      | Valores    |
-| ----------------- | ------------- | ----------- | ---------- |
-| f_destino_viagem  | 3             | ✅ Aprovado | 1, 2, 3    |
-| f_meio_transporte | 4             | ✅ Aprovado | 1, 2, 3, 4 |
+| Campo             | Count | Status | Valores    |
+| ----------------- | ----- | ------ | ---------- |
+| f_destino_viagem  | 3     | ✅     | 1, 2, 3    |
+| f_meio_transporte | 4     | ✅     | 1, 2, 3, 4 |
 
 ### Detalhes
 
@@ -1958,7 +1958,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label         |
 | ----- | ------------- |
@@ -1970,7 +1970,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label            |
 | ----- | ---------------- |
@@ -1985,11 +1985,11 @@
 
 ## Collection: t_registros_de_contato
 
-| Campo          | Cardinalidade | Status      | Valores                            |
-| -------------- | ------------- | ----------- | ---------------------------------- |
-| f_categoria    | 3             | ✅ Aprovado | pos-venda, pre-venda, cancelamento |
-| f_nota_tecnico | 6             | ⚠️ Revisar  | 0, 1, 2, 3, 4, 5                   |
-| f_nota_vendas  | 6             | ⚠️ Revisar  | 0, 1, 2, 3, 4, 5                   |
+| Campo          | Count | Status | Valores                            |
+| -------------- | ----- | ------ | ---------------------------------- |
+| f_categoria    | 3     | ✅     | pos-venda, pre-venda, cancelamento |
+| f_nota_tecnico | 6     | ⚠️     | 0, 1, 2, 3, 4, 5                   |
+| f_nota_vendas  | 6     | ⚠️     | 0, 1, 2, 3, 4, 5                   |
 
 ### Detalhes
 
@@ -1997,7 +1997,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor        | Label        |
 | ------------ | ------------ |
@@ -2009,7 +2009,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label   |
 | ----- | ------- |
@@ -2024,7 +2024,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label   |
 | ----- | ------- |
@@ -2041,10 +2041,10 @@
 
 ## Collection: t_servicos
 
-| Campo    | Cardinalidade | Status      | Valores          |
-| -------- | ------------- | ----------- | ---------------- |
-| f_status | 3             | ✅ Aprovado | 0, 1, 2          |
-| f_tipo   | 6             | ⚠️ Revisar  | 1, 2, 3, 4, 5, 6 |
+| Campo    | Count | Status | Valores          |
+| -------- | ----- | ------ | ---------------- |
+| f_status | 3     | ✅     | 0, 1, 2          |
+| f_tipo   | 6     | ⚠️     | 1, 2, 3, 4, 5, 6 |
 
 ### Detalhes
 
@@ -2052,7 +2052,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label               |
 | ----- | ------------------- |
@@ -2064,7 +2064,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label      |
 | ----- | ---------- |
@@ -2081,10 +2081,10 @@
 
 ## Collection: t_sites
 
-| Campo    | Cardinalidade | Status      | Valores                               |
-| -------- | ------------- | ----------- | ------------------------------------- |
-| f_status | 3             | ✅ Aprovado | repnmsclnb8, x2lk2z9p2ds, qw3vjvimoae |
-| f_tipo   | 3             | ✅ Aprovado | 1, 2, 3                               |
+| Campo    | Count | Status | Valores                               |
+| -------- | ----- | ------ | ------------------------------------- |
+| f_status | 3     | ✅     | repnmsclnb8, x2lk2z9p2ds, qw3vjvimoae |
+| f_tipo   | 3     | ✅     | 1, 2, 3                               |
 
 ### Detalhes
 
@@ -2092,7 +2092,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor       | Label      |
 | ----------- | ---------- |
@@ -2104,7 +2104,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label      |
 | ----- | ---------- |
@@ -2118,14 +2118,14 @@
 
 ## Collection: t_solicitacao_compras
 
-| Campo                 | Cardinalidade | Status      | Valores                                               |
-| --------------------- | ------------- | ----------- | ----------------------------------------------------- |
-| f_categoria           | 2             | ✅ Aprovado | Produto, Serviço                                      |
-| f_departamento        | 13            | ❓ Avaliar  | Almox, Comercial, Financeiro, Infraestrutura, Labo... |
-| f_metodo_de_pagamento | 4             | ✅ Aprovado | Á definir, Pix, Boleto, Cartão                        |
-| f_prazo               | 14            | ❓ Avaliar  | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14         |
-| f_status              | 8             | ⚠️ Revisar  | Caixa de Entrada, Aprovação da Gestão, Pedido de C... |
-| f_tipo                | 2             | ✅ Aprovado | 1, 2                                                  |
+| Campo                 | Count | Status     | Valores                                               |
+| --------------------- | ----- | ---------- | ----------------------------------------------------- |
+| f_categoria           | 2     | ✅         | Produto, Serviço                                      |
+| f_departamento        | 13    | ❓ Avaliar | Almox, Comercial, Financeiro, Infraestrutura, Labo... |
+| f_metodo_de_pagamento | 4     | ✅         | Á definir, Pix, Boleto, Cartão                        |
+| f_prazo               | 14    | ❓ Avaliar | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14         |
+| f_status              | 8     | ⚠️         | Caixa de Entrada, Aprovação da Gestão, Pedido de C... |
+| f_tipo                | 2     | ✅         | 1, 2                                                  |
 
 ### Detalhes
 
@@ -2133,7 +2133,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor   | Label   |
 | ------- | ------- |
@@ -2166,7 +2166,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor     | Label     |
 | --------- | --------- |
@@ -2202,7 +2202,7 @@
 
 - **Valores:** 8
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor                    | Label                    |
 | ------------------------ | ------------------------ |
@@ -2219,7 +2219,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label            |
 | ----- | ---------------- |
@@ -2232,9 +2232,9 @@
 
 ## Collection: t_suspensao_contrato
 
-| Campo    | Cardinalidade | Status      | Valores       |
-| -------- | ------------- | ----------- | ------------- |
-| f_status | 5             | ✅ Aprovado | 0, 1, 2, 3, 4 |
+| Campo    | Count | Status | Valores       |
+| -------- | ----- | ------ | ------------- |
+| f_status | 5     | ✅     | 0, 1, 2, 3, 4 |
 
 ### Detalhes
 
@@ -2242,7 +2242,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                 |
 | ----- | --------------------- |
@@ -2258,9 +2258,9 @@
 
 ## Collection: t_telecom_colocation_opcoes
 
-| Campo     | Cardinalidade | Status      | Valores                               |
-| --------- | ------------- | ----------- | ------------------------------------- |
-| f_energia | 3             | ✅ Aprovado | 0nqbw68srah, e5b3lklfpq4, mra46p506xo |
+| Campo     | Count | Status | Valores                               |
+| --------- | ----- | ------ | ------------------------------------- |
+| f_energia | 3     | ✅     | 0nqbw68srah, e5b3lklfpq4, mra46p506xo |
 
 ### Detalhes
 
@@ -2268,7 +2268,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor       | Label  |
 | ----------- | ------ |
@@ -2282,10 +2282,10 @@
 
 ## Collection: t_telecom_interfaces
 
-| Campo          | Cardinalidade | Status      | Valores             |
-| -------------- | ------------- | ----------- | ------------------- |
-| f_configuracao | 3             | ✅ Aprovado | 1, 2, 3             |
-| f_tipo         | 7             | ⚠️ Revisar  | 1, 3, 2, 4, 5, 6, 7 |
+| Campo          | Count | Status | Valores             |
+| -------------- | ----- | ------ | ------------------- |
+| f_configuracao | 3     | ✅     | 1, 2, 3             |
+| f_tipo         | 7     | ⚠️     | 1, 3, 2, 4, 5, 6, 7 |
 
 ### Detalhes
 
@@ -2293,7 +2293,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -2305,7 +2305,7 @@
 
 - **Valores:** 7
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label           |
 | ----- | --------------- |
@@ -2323,9 +2323,9 @@
 
 ## Collection: t_telecom_ips_fixos
 
-| Campo            | Cardinalidade | Status      | Valores |
-| ---------------- | ------------- | ----------- | ------- |
-| f_possui_ip_fixo | 2             | ✅ Aprovado | 0, 1    |
+| Campo            | Count | Status | Valores |
+| ---------------- | ----- | ------ | ------- |
+| f_possui_ip_fixo | 2     | ✅     | 0, 1    |
 
 ### Detalhes
 
@@ -2333,7 +2333,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -2346,11 +2346,11 @@
 
 ## Collection: t_telecom_recursos
 
-| Campo        | Cardinalidade | Status      | Valores                                       |
-| ------------ | ------------- | ----------- | --------------------------------------------- |
-| f_finalidade | 4             | ✅ Aprovado | 3, 2, 4, 1                                    |
-| f_status     | 3             | ✅ Aprovado | 1, 2, 3                                       |
-| f_tipo       | 14            | ❓ Avaliar  | 1, 13, 6, 4, 2, 7, 5, 8, 3, 9, 10, 11, 12, 14 |
+| Campo        | Count | Status     | Valores                                       |
+| ------------ | ----- | ---------- | --------------------------------------------- |
+| f_finalidade | 4     | ✅         | 3, 2, 4, 1                                    |
+| f_status     | 3     | ✅         | 1, 2, 3                                       |
+| f_tipo       | 14    | ❓ Avaliar | 1, 13, 6, 4, 2, 7, 5, 8, 3, 9, 10, 11, 12, 14 |
 
 ### Detalhes
 
@@ -2358,7 +2358,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label               |
 | ----- | ------------------- |
@@ -2371,7 +2371,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label      |
 | ----- | ---------- |
@@ -2408,23 +2408,23 @@
 
 ## Collection: t_templates_atendimento_n1
 
-| Campo                            | Cardinalidade | Status      | Valores                                               |
-| -------------------------------- | ------------- | ----------- | ----------------------------------------------------- |
-| f_acessa_pela_rede_da_atplus     | 2             | ✅ Aprovado | Sim, Não                                              |
-| f_alteracoes                     | 3             | ✅ Aprovado | Somente o nome, Somente a senha, Nome e senha         |
-| f_aplicativo                     | 7             | ⚠️ Revisar  | Deezer, Watch BR, Paramount+, HBO Max, Via Livros,... |
-| f_aplicativo_especifico          | 2             | ✅ Aprovado | Sim, Não                                              |
-| f_apn_preenchida                 | 3             | ✅ Aprovado | Sim, Não, Não soube dizer                             |
-| f_fabricante                     | 6             | ⚠️ Revisar  | Samsung, Apple, Motorola, Xiomi, Asus, Outro          |
-| f_los                            | 2             | ✅ Aprovado | Sim, Não                                              |
-| f_qual_apn_configurada           | 3             | ✅ Aprovado | eai.br, m2m.arqia.br, internet.br                     |
-| f_quantidade_de_dispositivos     | 2             | ✅ Aprovado | Um dispositivo, Todos os dispositivos                 |
-| f_status_do_circuito             | 2             | ✅ Aprovado | Online, Offline                                       |
-| f_telefonia_tipo_de_problema     | 5             | ✅ Aprovado | Não recebe ligações, Não efetua ligações, Quedas n... |
-| f_tipo_de_atendimento            | 9             | ⚠️ Revisar  | Lentidão, Sem conexão, Site específico, Telefonia,... |
-| f_tipo_de_conexao_do_dispositivo | 2             | ✅ Aprovado | Wi-Fi, Cabo de rede                                   |
-| f_tipo_de_problema_mvno          | 3             | ✅ Aprovado | Não recebe ligações, Não efetua ligações, Dados mó... |
-| f_torre_rede                     | 2             | ✅ Aprovado | Com sinal, Sem sinal                                  |
+| Campo                            | Count | Status | Valores                                               |
+| -------------------------------- | ----- | ------ | ----------------------------------------------------- |
+| f_acessa_pela_rede_da_atplus     | 2     | ✅     | Sim, Não                                              |
+| f_alteracoes                     | 3     | ✅     | Somente o nome, Somente a senha, Nome e senha         |
+| f_aplicativo                     | 7     | ⚠️     | Deezer, Watch BR, Paramount+, HBO Max, Via Livros,... |
+| f_aplicativo_especifico          | 2     | ✅     | Sim, Não                                              |
+| f_apn_preenchida                 | 3     | ✅     | Sim, Não, Não soube dizer                             |
+| f_fabricante                     | 6     | ⚠️     | Samsung, Apple, Motorola, Xiomi, Asus, Outro          |
+| f_los                            | 2     | ✅     | Sim, Não                                              |
+| f_qual_apn_configurada           | 3     | ✅     | eai.br, m2m.arqia.br, internet.br                     |
+| f_quantidade_de_dispositivos     | 2     | ✅     | Um dispositivo, Todos os dispositivos                 |
+| f_status_do_circuito             | 2     | ✅     | Online, Offline                                       |
+| f_telefonia_tipo_de_problema     | 5     | ✅     | Não recebe ligações, Não efetua ligações, Quedas n... |
+| f_tipo_de_atendimento            | 9     | ⚠️     | Lentidão, Sem conexão, Site específico, Telefonia,... |
+| f_tipo_de_conexao_do_dispositivo | 2     | ✅     | Wi-Fi, Cabo de rede                                   |
+| f_tipo_de_problema_mvno          | 3     | ✅     | Não recebe ligações, Não efetua ligações, Dados mó... |
+| f_torre_rede                     | 2     | ✅     | Com sinal, Sem sinal                                  |
 
 ### Detalhes
 
@@ -2432,7 +2432,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -2443,7 +2443,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor           | Label           |
 | --------------- | --------------- |
@@ -2455,7 +2455,7 @@
 
 - **Valores:** 7
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor                | Label                |
 | -------------------- | -------------------- |
@@ -2471,7 +2471,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -2482,7 +2482,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor           | Label           |
 | --------------- | --------------- |
@@ -2494,7 +2494,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor    | Label    |
 | -------- | -------- |
@@ -2509,7 +2509,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -2520,7 +2520,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor        | Label        |
 | ------------ | ------------ |
@@ -2532,7 +2532,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                 | Label                 |
 | --------------------- | --------------------- |
@@ -2543,7 +2543,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor   | Label   |
 | ------- | ------- |
@@ -2554,7 +2554,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                 | Label                 |
 | --------------------- | --------------------- |
@@ -2568,7 +2568,7 @@
 
 - **Valores:** 9
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor               | Label               |
 | ------------------- | ------------------- |
@@ -2586,7 +2586,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor        | Label        |
 | ------------ | ------------ |
@@ -2597,7 +2597,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                      | Label                      |
 | -------------------------- | -------------------------- |
@@ -2609,7 +2609,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor     | Label     |
 | --------- | --------- |
@@ -2622,10 +2622,10 @@
 
 ## Collection: t_troca_endereco
 
-| Campo             | Cardinalidade | Status      | Valores       |
-| ----------------- | ------------- | ----------- | ------------- |
-| f_status          | 5             | ✅ Aprovado | 1, 2, 3, 4, 0 |
-| f_taxa_instalacao | 3             | ✅ Aprovado | 0, 1, 2       |
+| Campo             | Count | Status | Valores       |
+| ----------------- | ----- | ------ | ------------- |
+| f_status          | 5     | ✅     | 1, 2, 3, 4, 0 |
+| f_taxa_instalacao | 3     | ✅     | 0, 1, 2       |
 
 ### Detalhes
 
@@ -2633,7 +2633,7 @@
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label                  |
 | ----- | ---------------------- |
@@ -2647,7 +2647,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label               |
 | ----- | ------------------- |
@@ -2661,12 +2661,12 @@
 
 ## Collection: t_viagem_solicitacao
 
-| Campo             | Cardinalidade | Status      | Valores                                               |
-| ----------------- | ------------- | ----------- | ----------------------------------------------------- |
-| f_destino_viagem  | 9             | ⚠️ Revisar  | Bocaina do Sul, Campo Belo do Sul, Capão Alto, Cer... |
-| f_diaria          | 2             | ✅ Aprovado | 5, 10                                                 |
-| f_fase            | 4             | ✅ Aprovado | Caixa de Entrada, Processamento Financeiro, Conclu... |
-| f_meio_transporte | 6             | ⚠️ Revisar  | Kwid ATPlus, Fiorino ATPlus, Fiorino Fhortec, Uno ... |
+| Campo             | Count | Status | Valores                                               |
+| ----------------- | ----- | ------ | ----------------------------------------------------- |
+| f_destino_viagem  | 9     | ⚠️     | Bocaina do Sul, Campo Belo do Sul, Capão Alto, Cer... |
+| f_diaria          | 2     | ✅     | 5, 10                                                 |
+| f_fase            | 4     | ✅     | Caixa de Entrada, Processamento Financeiro, Conclu... |
+| f_meio_transporte | 6     | ⚠️     | Kwid ATPlus, Fiorino ATPlus, Fiorino Fhortec, Uno ... |
 
 ### Detalhes
 
@@ -2674,7 +2674,7 @@
 
 - **Valores:** 9
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor             | Label             |
 | ----------------- | ----------------- |
@@ -2692,7 +2692,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label       |
 | ----- | ----------- |
@@ -2703,7 +2703,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                    | Label                    |
 | ------------------------ | ------------------------ |
@@ -2716,7 +2716,7 @@
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor            | Label            |
 | ---------------- | ---------------- |

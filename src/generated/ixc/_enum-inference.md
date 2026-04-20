@@ -31,67 +31,67 @@
 
 ## Collection: cliente
 
-| Campo                         | Cardinalidade | Status      | Valores                                               |
-| ----------------------------- | ------------- | ----------- | ----------------------------------------------------- |
-| acesso_automatico_central     | 2             | ✅ Aprovado | P, S                                                  |
-| alterar_senha_primeiro_acesso | 2             | ✅ Aprovado | N, P                                                  |
-| antigo_acesso_central         | 1             | ✅ Aprovado | N                                                     |
-| ativo                         | 2             | ✅ Aprovado | N, S                                                  |
-| atualizar_cadastro_galaxPay   | 2             | ✅ Aprovado | N, S                                                  |
-| aviso_atraso                  | 1             | ✅ Aprovado | S                                                     |
-| bairro_cob                    | 3             | ✅ Aprovado | Conta Dinheiro, Guarujá, Vila Nova                    |
-| cadastrado_no_galaxPay        | 2             | ✅ Aprovado | N, S                                                  |
-| cep_cob                       | 3             | ✅ Aprovado | 88503-210, 88520-100, 88521-020                       |
-| cli_desconta_iss_retido_total | 1             | ✅ Aprovado | N                                                     |
-| cob_envia_email               | 1             | ✅ Aprovado | S                                                     |
-| cob_envia_sms                 | 1             | ✅ Aprovado | S                                                     |
-| cofins_retem                  | 1             | ✅ Aprovado | N                                                     |
-| complemento_cob               | 1             | ✅ Aprovado | CASA                                                  |
-| cond_pagamento                | 2             | ✅ Aprovado | 0, 1                                                  |
-| contato                       | 4             | ✅ Aprovado | (49) 99912-6600 - Osmar Duarte Branco, 29505623968... |
-| contribuinte_icms             | 3             | ✅ Aprovado | I, N, S                                               |
-| convert_cliente_forn          | 1             | ✅ Aprovado | N                                                     |
-| crm                           | 1             | ✅ Aprovado | N                                                     |
-| csll_retem                    | 1             | ✅ Aprovado | N                                                     |
-| data_hash_redefinir_senha     | 4             | ✅ Aprovado | 2022-02-13 21:09:39, 2022-04-30 18:40:27, 2022-06-... |
-| desconto_irrf_valor_inferior  | 2             | ✅ Aprovado | N, S                                                  |
-| endereco_cob                  | 3             | ✅ Aprovado | Avenida Segundo Batalhão Rodoviário, Rua João da S... |
-| estado_civil                  | 3             | ✅ Aprovado | Casado, Divorciado, Solteiro                          |
-| filial_id                     | 1             | ✅ Aprovado | 1                                                     |
-| filtra_filial                 | 1             | ✅ Aprovado | S                                                     |
-| grau_satisfacao               | 3             | ✅ Aprovado | 3, 4, 5                                               |
-| hash_redefinir_senha          | 3             | ✅ Aprovado | 2cddcfdf3e2b1292698984122b758245, b66fbb2dd0c2ff76... |
-| hotsite_acesso                | 2             | ✅ Aprovado | 0, 2                                                  |
-| id_tipo_cliente               | 2             | ✅ Aprovado | 0, 2                                                  |
-| inss_retem                    | 1             | ✅ Aprovado | N                                                     |
-| irrf_retem                    | 1             | ✅ Aprovado | N                                                     |
-| iss_classificacao             | 1             | ✅ Aprovado | 99                                                    |
-| iss_classificacao_padrao      | 1             | ✅ Aprovado | 99                                                    |
-| moradia                       | 2             | ✅ Aprovado | A, P                                                  |
-| nacionalidade                 | 1             | ✅ Aprovado | Brasileiro                                            |
-| num_dias_cob                  | 2             | ✅ Aprovado | 0, 1                                                  |
-| orgao_publico                 | 1             | ✅ Aprovado | N                                                     |
-| participa_cobranca            | 2             | ✅ Aprovado | N, S                                                  |
-| participa_pre_cobranca        | 1             | ✅ Aprovado | S                                                     |
-| permite_armazenar_cartoes     | 1             | ✅ Aprovado | N                                                     |
-| pis_retem                     | 1             | ✅ Aprovado | N                                                     |
-| primeiro_acesso_central       | 2             | ✅ Aprovado | N, S                                                  |
-| rede_ativacao                 | 1             | ✅ Aprovado | P                                                     |
-| regua_cobranca_considera      | 1             | ✅ Aprovado | P                                                     |
-| regua_cobranca_notificacao    | 1             | ✅ Aprovado | S                                                     |
-| regua_cobranca_wpp            | 1             | ✅ Aprovado | S                                                     |
-| rg_orgao_emissor              | 3             | ✅ Aprovado | DICRJ, SsP, SSP                                       |
-| senha_hotsite_md5             | 2             | ✅ Aprovado | N, S                                                  |
-| Sexo                          | 2             | ✅ Aprovado | F, M                                                  |
-| status_internet               | 1             | ✅ Aprovado | N                                                     |
-| status_prospeccao             | 1             | ✅ Aprovado | C                                                     |
-| tipo_assinante                | 2             | ✅ Aprovado | 1, 3                                                  |
-| tipo_cliente_scm              | 2             | ✅ Aprovado | 01, 03                                                |
-| tipo_documento_identificacao  | 1             | ✅ Aprovado | 13                                                    |
-| tipo_localidade               | 1             | ✅ Aprovado | U                                                     |
-| tipo_pessoa                   | 2             | ✅ Aprovado | F, J                                                  |
-| tipo_pessoa_titular_conta     | 1             | ✅ Aprovado | F                                                     |
-| uf_cob                        | 2             | ✅ Aprovado | 0, 2                                                  |
+| Campo                         | Count | Status | Valores                                               |
+| ----------------------------- | ----- | ------ | ----------------------------------------------------- |
+| acesso_automatico_central     | 2     | ✅     | P, S                                                  |
+| alterar_senha_primeiro_acesso | 2     | ✅     | N, P                                                  |
+| antigo_acesso_central         | 1     | ✅     | N                                                     |
+| ativo                         | 2     | ✅     | N, S                                                  |
+| atualizar_cadastro_galaxPay   | 2     | ✅     | N, S                                                  |
+| aviso_atraso                  | 1     | ✅     | S                                                     |
+| bairro_cob                    | 3     | ✅     | Conta Dinheiro, Guarujá, Vila Nova                    |
+| cadastrado_no_galaxPay        | 2     | ✅     | N, S                                                  |
+| cep_cob                       | 3     | ✅     | 88503-210, 88520-100, 88521-020                       |
+| cli_desconta_iss_retido_total | 1     | ✅     | N                                                     |
+| cob_envia_email               | 1     | ✅     | S                                                     |
+| cob_envia_sms                 | 1     | ✅     | S                                                     |
+| cofins_retem                  | 1     | ✅     | N                                                     |
+| complemento_cob               | 1     | ✅     | CASA                                                  |
+| cond_pagamento                | 2     | ✅     | 0, 1                                                  |
+| contato                       | 4     | ✅     | (49) 99912-6600 - Osmar Duarte Branco, 29505623968... |
+| contribuinte_icms             | 3     | ✅     | I, N, S                                               |
+| convert_cliente_forn          | 1     | ✅     | N                                                     |
+| crm                           | 1     | ✅     | N                                                     |
+| csll_retem                    | 1     | ✅     | N                                                     |
+| data_hash_redefinir_senha     | 4     | ✅     | 2022-02-13 21:09:39, 2022-04-30 18:40:27, 2022-06-... |
+| desconto_irrf_valor_inferior  | 2     | ✅     | N, S                                                  |
+| endereco_cob                  | 3     | ✅     | Avenida Segundo Batalhão Rodoviário, Rua João da S... |
+| estado_civil                  | 3     | ✅     | Casado, Divorciado, Solteiro                          |
+| filial_id                     | 1     | ✅     | 1                                                     |
+| filtra_filial                 | 1     | ✅     | S                                                     |
+| grau_satisfacao               | 3     | ✅     | 3, 4, 5                                               |
+| hash_redefinir_senha          | 3     | ✅     | 2cddcfdf3e2b1292698984122b758245, b66fbb2dd0c2ff76... |
+| hotsite_acesso                | 2     | ✅     | 0, 2                                                  |
+| id_tipo_cliente               | 2     | ✅     | 0, 2                                                  |
+| inss_retem                    | 1     | ✅     | N                                                     |
+| irrf_retem                    | 1     | ✅     | N                                                     |
+| iss_classificacao             | 1     | ✅     | 99                                                    |
+| iss_classificacao_padrao      | 1     | ✅     | 99                                                    |
+| moradia                       | 2     | ✅     | A, P                                                  |
+| nacionalidade                 | 1     | ✅     | Brasileiro                                            |
+| num_dias_cob                  | 2     | ✅     | 0, 1                                                  |
+| orgao_publico                 | 1     | ✅     | N                                                     |
+| participa_cobranca            | 2     | ✅     | N, S                                                  |
+| participa_pre_cobranca        | 1     | ✅     | S                                                     |
+| permite_armazenar_cartoes     | 1     | ✅     | N                                                     |
+| pis_retem                     | 1     | ✅     | N                                                     |
+| primeiro_acesso_central       | 2     | ✅     | N, S                                                  |
+| rede_ativacao                 | 1     | ✅     | P                                                     |
+| regua_cobranca_considera      | 1     | ✅     | P                                                     |
+| regua_cobranca_notificacao    | 1     | ✅     | S                                                     |
+| regua_cobranca_wpp            | 1     | ✅     | S                                                     |
+| rg_orgao_emissor              | 3     | ✅     | DICRJ, SsP, SSP                                       |
+| senha_hotsite_md5             | 2     | ✅     | N, S                                                  |
+| Sexo                          | 2     | ✅     | F, M                                                  |
+| status_internet               | 1     | ✅     | N                                                     |
+| status_prospeccao             | 1     | ✅     | C                                                     |
+| tipo_assinante                | 2     | ✅     | 1, 3                                                  |
+| tipo_cliente_scm              | 2     | ✅     | 01, 03                                                |
+| tipo_documento_identificacao  | 1     | ✅     | 13                                                    |
+| tipo_localidade               | 1     | ✅     | U                                                     |
+| tipo_pessoa                   | 2     | ✅     | F, J                                                  |
+| tipo_pessoa_titular_conta     | 1     | ✅     | F                                                     |
+| uf_cob                        | 2     | ✅     | 0, 2                                                  |
 
 ### Detalhes
 
@@ -99,7 +99,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -110,7 +110,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -121,7 +121,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -131,7 +131,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -142,7 +142,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -153,7 +153,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -163,7 +163,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor          | Label          |
 | -------------- | -------------- |
@@ -175,7 +175,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -186,7 +186,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor     | Label     |
 | --------- | --------- |
@@ -198,7 +198,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -208,7 +208,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -218,7 +218,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -228,7 +228,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -238,7 +238,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -248,7 +248,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -259,7 +259,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                                 | Label                               |
 | ------------------------------------- | ----------------------------------- |
@@ -272,7 +272,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -284,7 +284,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -294,7 +294,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -304,7 +304,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -314,7 +314,7 @@
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor               | Label               |
 | ------------------- | ------------------- |
@@ -327,7 +327,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -338,7 +338,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                               | Label                               |
 | ----------------------------------- | ----------------------------------- |
@@ -350,7 +350,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor      | Label      |
 | ---------- | ---------- |
@@ -362,7 +362,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -372,7 +372,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -382,7 +382,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -394,7 +394,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                            | Label                            |
 | -------------------------------- | -------------------------------- |
@@ -406,7 +406,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -417,7 +417,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -428,7 +428,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -438,7 +438,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -448,7 +448,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label     |
 | ----- | --------- |
@@ -458,7 +458,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label     |
 | ----- | --------- |
@@ -468,7 +468,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -479,7 +479,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor      | Label      |
 | ---------- | ---------- |
@@ -489,7 +489,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -500,7 +500,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -510,7 +510,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -521,7 +521,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -531,7 +531,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -541,7 +541,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -551,7 +551,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -562,7 +562,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -572,7 +572,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -582,7 +582,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -592,7 +592,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -602,7 +602,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -614,7 +614,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -625,7 +625,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -636,7 +636,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -646,7 +646,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -656,7 +656,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -667,7 +667,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label     |
 | ----- | --------- |
@@ -678,7 +678,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label     |
 | ----- | --------- |
@@ -688,7 +688,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -698,7 +698,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -709,7 +709,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -719,7 +719,7 @@
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -732,62 +732,62 @@
 
 ## Collection: cliente_contrato
 
-| Campo                                  | Cardinalidade | Status      | Valores                      |
-| -------------------------------------- | ------------- | ----------- | ---------------------------- |
-| agrupar_financeiro_contrato            | 1             | ✅ Aprovado | P                            |
-| alerta_contrato                        | 3             | ✅ Aprovado | cliente vai pagar            |
+| Campo                                  | Count | Status | Valores                      |
+| -------------------------------------- | ----- | ------ | ---------------------------- |
+| agrupar_financeiro_contrato            | 1     | ✅     | P                            |
+| alerta_contrato                        | 3     | ✅     | cliente vai pagar            |
 | mais um dos valores ate 29/02...       |
-| aplica_desconto_tempo_bloqueio         | 1             | ✅ Aprovado | S                            |
-| aplicar_desconto_tempo_bloqueio        | 1             | ✅ Aprovado | P                            |
-| assinatura_digital                     | 2             | ✅ Aprovado | N, P                         |
-| ativo_summit                           | 1             | ✅ Aprovado | N                            |
-| aviso_atraso                           | 2             | ✅ Aprovado | N, S                         |
-| base_geracao_tipo_doc                  | 1             | ✅ Aprovado | P                            |
-| bloqueio_automatico                    | 2             | ✅ Aprovado | N, S                         |
-| cc_previsao                            | 1             | ✅ Aprovado | P                            |
-| contrato_suspenso                      | 1             | ✅ Aprovado | N                            |
-| credit_card_recorrente_bandeira_cartao | 3             | ✅ Aprovado | mastercard, MasterCard, Visa |
-| credit_card_recorrente_carteira_antiga | 2             | ✅ Aprovado | 1, 5                         |
-| desbloqueio_confianca                  | 2             | ✅ Aprovado | N, P                         |
-| desbloqueio_confianca_ativo            | 2             | ✅ Aprovado | N, S                         |
-| descricao_aux_plano_venda              | 1             | ✅ Aprovado | PERMUTA                      |
-| document_photo                         | 1             | ✅ Aprovado | P                            |
-| endereco_padrao_cliente                | 2             | ✅ Aprovado | N, S                         |
-| fidelidade                             | 2             | ✅ Aprovado | 12, 24                       |
-| financeiro_migrado                     | 1             | ✅ Aprovado | N                            |
-| gerar_finan_assin_digital_contrato     | 2             | ✅ Aprovado | N, P                         |
-| id_filial                              | 1             | ✅ Aprovado | 1                            |
-| id_modelo                              | 1             | ✅ Aprovado | 5                            |
-| id_motivo_inclusao                     | 5             | ✅ Aprovado | 1, 2, 3, 5, 7                |
-| id_tipo_documento                      | 1             | ✅ Aprovado | 501                          |
-| imp_bkp                                | 1             | ✅ Aprovado | N                            |
-| imp_carteira                           | 1             | ✅ Aprovado | N                            |
-| imp_importacao                         | 1             | ✅ Aprovado | N                            |
-| imp_rede                               | 1             | ✅ Aprovado | N                            |
-| imp_treinamento                        | 1             | ✅ Aprovado | N                            |
-| integracao_assinatura_digital          | 2             | ✅ Aprovado | N, P                         |
-| isentar_contrato                       | 2             | ✅ Aprovado | N, S                         |
-| liberacao_bloqueio_manual              | 2             | ✅ Aprovado | P, S                         |
-| liberacao_suspensao_parcial            | 1             | ✅ Aprovado | P                            |
-| motivo_inclusao                        | 5             | ✅ Aprovado | D, I, N, T, U                |
-| obs                                    | 1             | ✅ Aprovado | cancelado via banco de dados |
-| origem_cancelamento                    | 1             | ✅ Aprovado | M                            |
-| portabilidade_summit                   | 1             | ✅ Aprovado | N                            |
-| renovacao_automatica                   | 2             | ✅ Aprovado | N, S                         |
-| restricao_auto_desbloqueio             | 2             | ✅ Aprovado | N, S                         |
-| restricao_auto_libera_susp_parcial     | 1             | ✅ Aprovado | N                            |
-| selfie_photo                           | 1             | ✅ Aprovado | P                            |
-| situacao_financeira_contrato           | 1             | ✅ Aprovado | R                            |
-| status                                 | 3             | ✅ Aprovado | A, I, P                      |
-| status_internet                        | 5             | ✅ Aprovado | A, AA, CA, D, FA             |
-| status_velocidade                      | 2             | ✅ Aprovado | N, R                         |
-| tipo                                   | 1             | ✅ Aprovado | I                            |
-| tipo_cobranca                          | 1             | ✅ Aprovado | P                            |
-| tipo_doc_opc3                          | 2             | ✅ Aprovado | 0, 13                        |
-| tipo_localidade                        | 1             | ✅ Aprovado | U                            |
-| tipo_produtos_plano                    | 1             | ✅ Aprovado | P                            |
-| updated_responsible_seller             | 1             | ✅ Aprovado | N                            |
-| utilizando_auto_libera_susp_parc       | 1             | ✅ Aprovado | N                            |
+| aplica_desconto_tempo_bloqueio         | 1     | ✅     | S                            |
+| aplicar_desconto_tempo_bloqueio        | 1     | ✅     | P                            |
+| assinatura_digital                     | 2     | ✅     | N, P                         |
+| ativo_summit                           | 1     | ✅     | N                            |
+| aviso_atraso                           | 2     | ✅     | N, S                         |
+| base_geracao_tipo_doc                  | 1     | ✅     | P                            |
+| bloqueio_automatico                    | 2     | ✅     | N, S                         |
+| cc_previsao                            | 1     | ✅     | P                            |
+| contrato_suspenso                      | 1     | ✅     | N                            |
+| credit_card_recorrente_bandeira_cartao | 3     | ✅     | mastercard, MasterCard, Visa |
+| credit_card_recorrente_carteira_antiga | 2     | ✅     | 1, 5                         |
+| desbloqueio_confianca                  | 2     | ✅     | N, P                         |
+| desbloqueio_confianca_ativo            | 2     | ✅     | N, S                         |
+| descricao_aux_plano_venda              | 1     | ✅     | PERMUTA                      |
+| document_photo                         | 1     | ✅     | P                            |
+| endereco_padrao_cliente                | 2     | ✅     | N, S                         |
+| fidelidade                             | 2     | ✅     | 12, 24                       |
+| financeiro_migrado                     | 1     | ✅     | N                            |
+| gerar_finan_assin_digital_contrato     | 2     | ✅     | N, P                         |
+| id_filial                              | 1     | ✅     | 1                            |
+| id_modelo                              | 1     | ✅     | 5                            |
+| id_motivo_inclusao                     | 5     | ✅     | 1, 2, 3, 5, 7                |
+| id_tipo_documento                      | 1     | ✅     | 501                          |
+| imp_bkp                                | 1     | ✅     | N                            |
+| imp_carteira                           | 1     | ✅     | N                            |
+| imp_importacao                         | 1     | ✅     | N                            |
+| imp_rede                               | 1     | ✅     | N                            |
+| imp_treinamento                        | 1     | ✅     | N                            |
+| integracao_assinatura_digital          | 2     | ✅     | N, P                         |
+| isentar_contrato                       | 2     | ✅     | N, S                         |
+| liberacao_bloqueio_manual              | 2     | ✅     | P, S                         |
+| liberacao_suspensao_parcial            | 1     | ✅     | P                            |
+| motivo_inclusao                        | 5     | ✅     | D, I, N, T, U                |
+| obs                                    | 1     | ✅     | cancelado via banco de dados |
+| origem_cancelamento                    | 1     | ✅     | M                            |
+| portabilidade_summit                   | 1     | ✅     | N                            |
+| renovacao_automatica                   | 2     | ✅     | N, S                         |
+| restricao_auto_desbloqueio             | 2     | ✅     | N, S                         |
+| restricao_auto_libera_susp_parcial     | 1     | ✅     | N                            |
+| selfie_photo                           | 1     | ✅     | P                            |
+| situacao_financeira_contrato           | 1     | ✅     | R                            |
+| status                                 | 3     | ✅     | A, I, P                      |
+| status_internet                        | 5     | ✅     | A, AA, CA, D, FA             |
+| status_velocidade                      | 2     | ✅     | N, R                         |
+| tipo                                   | 1     | ✅     | I                            |
+| tipo_cobranca                          | 1     | ✅     | P                            |
+| tipo_doc_opc3                          | 2     | ✅     | 0, 13                        |
+| tipo_localidade                        | 1     | ✅     | U                            |
+| tipo_produtos_plano                    | 1     | ✅     | P                            |
+| updated_responsible_seller             | 1     | ✅     | N                            |
+| utilizando_auto_libera_susp_parc       | 1     | ✅     | N                            |
 
 ### Detalhes
 
@@ -795,7 +795,7 @@
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -805,7 +805,7 @@
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -819,7 +819,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -829,7 +829,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -839,7 +839,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -850,7 +850,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -860,7 +860,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -871,7 +871,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -881,7 +881,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -892,7 +892,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -902,7 +902,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -912,7 +912,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor      | Label      |
 | ---------- | ---------- |
@@ -924,7 +924,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -935,7 +935,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -946,7 +946,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -957,7 +957,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor   | Label   |
 | ------- | ------- |
@@ -967,7 +967,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -977,7 +977,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -988,7 +988,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label     |
 | ----- | --------- |
@@ -999,7 +999,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1009,7 +1009,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1020,7 +1020,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1030,7 +1030,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -1040,7 +1040,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -1054,7 +1054,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1064,7 +1064,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1074,7 +1074,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1084,7 +1084,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1094,7 +1094,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1104,7 +1104,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1114,7 +1114,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1125,7 +1125,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1136,7 +1136,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1147,7 +1147,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1157,7 +1157,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -1171,7 +1171,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                        | Label                        |
 | ---------------------------- | ---------------------------- |
@@ -1181,7 +1181,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1191,7 +1191,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1201,7 +1201,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1212,7 +1212,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1223,7 +1223,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1233,7 +1233,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1243,7 +1243,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1253,7 +1253,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -1265,7 +1265,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 5
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1279,7 +1279,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1290,7 +1290,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -1300,7 +1300,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1310,7 +1310,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label     |
 | ----- | --------- |
@@ -1321,7 +1321,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1331,7 +1331,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1341,7 +1341,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1351,7 +1351,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1363,35 +1363,35 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 ## Collection: fn_areceber
 
-| Campo                            | Cardinalidade | Status      | Valores                                               |
-| -------------------------------- | ------------- | ----------- | ----------------------------------------------------- |
-| aguardando_confirmacao_pagamento | 1             | ✅ Aprovado | N                                                     |
-| caixa                            | 3             | ✅ Aprovado | 0, 13, 6                                              |
-| cancelamento_id_operador         | 1             | ✅ Aprovado | 70                                                    |
-| em_processamento                 | 1             | ✅ Aprovado | N                                                     |
-| enviado_remessa_baixa            | 1             | ✅ Aprovado | N                                                     |
-| estornado                        | 1             | ✅ Aprovado | N                                                     |
-| filial_id                        | 1             | ✅ Aprovado | 1                                                     |
-| id_carteira_cobranca             | 3             | ✅ Aprovado | 0, 4, 5                                               |
-| id_mot_cancelamento              | 1             | ✅ Aprovado | 1                                                     |
-| id_remessa                       | 2             | ✅ Aprovado | 0, 2                                                  |
-| id_saida                         | 1             | ✅ Aprovado | -25                                                   |
-| impresso                         | 2             | ✅ Aprovado | N, S                                                  |
-| libera_periodo                   | 1             | ✅ Aprovado | N                                                     |
-| liberado                         | 1             | ✅ Aprovado | S                                                     |
-| lote                             | 2             | ✅ Aprovado | -3, 1                                                 |
-| parcela_proporcional             | 1             | ✅ Aprovado | N                                                     |
-| parcelado_cartao                 | 1             | ✅ Aprovado | N                                                     |
-| previsao                         | 1             | ✅ Aprovado | S                                                     |
-| recebido_via_pix                 | 1             | ✅ Aprovado | N                                                     |
-| status                           | 2             | ✅ Aprovado | C, R                                                  |
-| status_cobranca                  | 1             | ✅ Aprovado | F                                                     |
-| tarifa_gateway_lancada           | 1             | ✅ Aprovado | N                                                     |
-| tipo_cobranca                    | 1             | ✅ Aprovado | I                                                     |
-| tipo_recebimento                 | 1             | ✅ Aprovado | Boleto                                                |
-| titulo_importado                 | 1             | ✅ Aprovado | S                                                     |
-| titulo_protestado                | 1             | ✅ Aprovado | N                                                     |
-| ultima_atualizacao               | 4             | ✅ Aprovado | 2021-12-28T12:59:30.000Z, 2025-11-21T18:53:48.000Z... |
+| Campo                            | Count | Status | Valores                                               |
+| -------------------------------- | ----- | ------ | ----------------------------------------------------- |
+| aguardando_confirmacao_pagamento | 1     | ✅     | N                                                     |
+| caixa                            | 3     | ✅     | 0, 13, 6                                              |
+| cancelamento_id_operador         | 1     | ✅     | 70                                                    |
+| em_processamento                 | 1     | ✅     | N                                                     |
+| enviado_remessa_baixa            | 1     | ✅     | N                                                     |
+| estornado                        | 1     | ✅     | N                                                     |
+| filial_id                        | 1     | ✅     | 1                                                     |
+| id_carteira_cobranca             | 3     | ✅     | 0, 4, 5                                               |
+| id_mot_cancelamento              | 1     | ✅     | 1                                                     |
+| id_remessa                       | 2     | ✅     | 0, 2                                                  |
+| id_saida                         | 1     | ✅     | -25                                                   |
+| impresso                         | 2     | ✅     | N, S                                                  |
+| libera_periodo                   | 1     | ✅     | N                                                     |
+| liberado                         | 1     | ✅     | S                                                     |
+| lote                             | 2     | ✅     | -3, 1                                                 |
+| parcela_proporcional             | 1     | ✅     | N                                                     |
+| parcelado_cartao                 | 1     | ✅     | N                                                     |
+| previsao                         | 1     | ✅     | S                                                     |
+| recebido_via_pix                 | 1     | ✅     | N                                                     |
+| status                           | 2     | ✅     | C, R                                                  |
+| status_cobranca                  | 1     | ✅     | F                                                     |
+| tarifa_gateway_lancada           | 1     | ✅     | N                                                     |
+| tipo_cobranca                    | 1     | ✅     | I                                                     |
+| tipo_recebimento                 | 1     | ✅     | Boleto                                                |
+| titulo_importado                 | 1     | ✅     | S                                                     |
+| titulo_protestado                | 1     | ✅     | N                                                     |
+| ultima_atualizacao               | 4     | ✅     | 2021-12-28T12:59:30.000Z, 2025-11-21T18:53:48.000Z... |
 
 ### Detalhes
 
@@ -1399,7 +1399,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1409,7 +1409,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label     |
 | ----- | --------- |
@@ -1421,7 +1421,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label     |
 | ----- | --------- |
@@ -1431,7 +1431,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1441,7 +1441,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1451,7 +1451,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1461,7 +1461,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1471,7 +1471,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -1483,7 +1483,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1493,7 +1493,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -1504,7 +1504,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1514,7 +1514,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1525,7 +1525,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1535,7 +1535,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1545,7 +1545,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1556,7 +1556,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1566,7 +1566,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1576,7 +1576,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1586,7 +1586,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1596,7 +1596,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1607,7 +1607,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1617,7 +1617,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1627,7 +1627,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -1637,7 +1637,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor  | Label  |
 | ------ | ------ |
@@ -1647,7 +1647,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1657,7 +1657,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1667,7 +1667,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor                    | Label                    |
 | ------------------------ | ------------------------ |
@@ -1682,14 +1682,14 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 ## Collection: linha_mvno
 
-| Campo           | Cardinalidade | Status      | Valores                 |
-| --------------- | ------------- | ----------- | ----------------------- |
-| api             | 2             | ✅ Aprovado | A, I                    |
-| ddd_telefone    | 6             | ⚠️ Revisar  | 24, 41, 44, 47, 48, 49  |
-| dia_recorrencia | 7             | ⚠️ Revisar  | 0, 1, 10, 15, 20, 25, 5 |
-| esim            | 2             | ✅ Aprovado | N, S                    |
-| id_integracao   | 2             | ✅ Aprovado | 1, 2                    |
-| portabilidade   | 2             | ✅ Aprovado | N, S                    |
+| Campo           | Count | Status | Valores                 |
+| --------------- | ----- | ------ | ----------------------- |
+| api             | 2     | ✅     | A, I                    |
+| ddd_telefone    | 6     | ⚠️     | 24, 41, 44, 47, 48, 49  |
+| dia_recorrencia | 7     | ⚠️     | 0, 1, 10, 15, 20, 25, 5 |
+| esim            | 2     | ✅     | N, S                    |
+| id_integracao   | 2     | ✅     | 1, 2                    |
+| portabilidade   | 2     | ✅     | N, S                    |
 
 ### Detalhes
 
@@ -1697,7 +1697,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -1708,7 +1708,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 6
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label     |
 | ----- | --------- |
@@ -1723,7 +1723,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 7
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label     |
 | ----- | --------- |
@@ -1739,7 +1739,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1750,7 +1750,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -1761,7 +1761,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1774,22 +1774,22 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 ## Collection: su_ticket
 
-| Campo                  | Cardinalidade | Status      | Valores             |
-| ---------------------- | ------------- | ----------- | ------------------- |
-| id_filial              | 1             | ✅ Aprovado | 1                   |
-| id_su_diagnostico      | 4             | ✅ Aprovado | 0, 1, 10, 13        |
-| id_ticket_origem       | 2             | ✅ Aprovado | H, I                |
-| id_ticket_setor        | 7             | ⚠️ Revisar  | 1, 2, 3, 4, 5, 7, 8 |
-| interacao_pendente     | 4             | ✅ Aprovado | A, E, I, N          |
-| melhor_horario_agenda  | 1             | ✅ Aprovado | Q                   |
-| melhor_horario_reserva | 3             | ✅ Aprovado | M, Q, T             |
-| mensagens_nao_lida_sup | 2             | ✅ Aprovado | 0, 1                |
-| origem_cadastro        | 1             | ✅ Aprovado | P                   |
-| origem_endereco        | 4             | ✅ Aprovado | C, CC, L, M         |
-| prioridade             | 3             | ✅ Aprovado | A, C, M             |
-| status                 | 3             | ✅ Aprovado | C, F, OSAG          |
-| su_status              | 1             | ✅ Aprovado | S                   |
-| tipo                   | 1             | ✅ Aprovado | C                   |
+| Campo                  | Count | Status | Valores             |
+| ---------------------- | ----- | ------ | ------------------- |
+| id_filial              | 1     | ✅     | 1                   |
+| id_su_diagnostico      | 4     | ✅     | 0, 1, 10, 13        |
+| id_ticket_origem       | 2     | ✅     | H, I                |
+| id_ticket_setor        | 7     | ⚠️     | 1, 2, 3, 4, 5, 7, 8 |
+| interacao_pendente     | 4     | ✅     | A, E, I, N          |
+| melhor_horario_agenda  | 1     | ✅     | Q                   |
+| melhor_horario_reserva | 3     | ✅     | M, Q, T             |
+| mensagens_nao_lida_sup | 2     | ✅     | 0, 1                |
+| origem_cadastro        | 1     | ✅     | P                   |
+| origem_endereco        | 4     | ✅     | C, CC, L, M         |
+| prioridade             | 3     | ✅     | A, C, M             |
+| status                 | 3     | ✅     | C, F, OSAG          |
+| su_status              | 1     | ✅     | S                   |
+| tipo                   | 1     | ✅     | C                   |
 
 ### Detalhes
 
@@ -1797,7 +1797,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1807,7 +1807,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label     |
 | ----- | --------- |
@@ -1820,7 +1820,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -1831,7 +1831,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 7
 - **Total Registros:** 0
-- **Status:** ⚠️ Revisar
+- **Status:** ⚠️
 
 | Valor | Label    |
 | ----- | -------- |
@@ -1847,7 +1847,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -1860,7 +1860,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1870,7 +1870,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1882,7 +1882,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -1893,7 +1893,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1903,7 +1903,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1916,7 +1916,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1928,7 +1928,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 3
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1940,7 +1940,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1950,7 +1950,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1962,12 +1962,12 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 ## Collection: vd_contratos_produtos
 
-| Campo         | Cardinalidade | Status      | Valores       |
-| ------------- | ------------- | ----------- | ------------- |
-| qtde          | 2             | ✅ Aprovado | 1, 3          |
-| repetir       | 1             | ✅ Aprovado | V             |
-| tipo          | 4             | ✅ Aprovado | I, S, SVA, TV |
-| tipo_desconto | 1             | ✅ Aprovado | V             |
+| Campo         | Count | Status | Valores       |
+| ------------- | ----- | ------ | ------------- |
+| qtde          | 2     | ✅     | 1, 3          |
+| repetir       | 1     | ✅     | V             |
+| tipo          | 4     | ✅     | I, S, SVA, TV |
+| tipo_desconto | 1     | ✅     | V             |
 
 ### Detalhes
 
@@ -1975,7 +1975,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 2
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label    |
 | ----- | -------- |
@@ -1986,7 +1986,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |
@@ -1996,7 +1996,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 4
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label   |
 | ----- | ------- |
@@ -2009,7 +2009,7 @@ mais um dos valores ate 29/02 | Cliente Vai Pagar Mais Um Dos Valores Ate 29/02 
 
 - **Valores:** 1
 - **Total Registros:** 0
-- **Status:** ✅ Aprovado
+- **Status:** ✅
 
 | Valor | Label |
 | ----- | ----- |

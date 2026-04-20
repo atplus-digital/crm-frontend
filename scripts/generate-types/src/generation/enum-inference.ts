@@ -206,7 +206,7 @@ function isEnumCandidate(
 	if (distinctValues.length === 1) {
 		const singleValue = distinctValues[0];
 		const numericValue = Number(singleValue);
-		if (!isNaN(numericValue) && numericValue === 0) {
+		if (!Number.isNaN(numericValue) && numericValue === 0) {
 			return false;
 		}
 	}
@@ -222,7 +222,7 @@ function isEnumCandidate(
 	// Ex: valores [036, 327, 348, 377, 433, 721] têm variação de 685 → não é enum
 	const numericValues = distinctValues
 		.map((v) => Number(v))
-		.filter((n) => !isNaN(n));
+		.filter((n) => !Number.isNaN(n));
 
 	if (
 		numericValues.length === distinctValues.length &&
