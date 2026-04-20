@@ -75,6 +75,6 @@ Funcionalidade de Transferência de Titularidade para permitir a mudança de tit
 
 ## Dependencies
 
-- **Repository:** `#/repositories/troca-titularidade-repository.ts`
+- **Repository:** `#/repositories/nocobase-repository.ts`
 - **Types:** `#/generated/nocobase/crm-troca-titularidade.ts`
 - **Components:** `#/components/ui/*`, `#/components/detail/*`

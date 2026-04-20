@@ -6,9 +6,9 @@ import { DataTableColumnHeader } from "#/components/table/data-table-column-head
 import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
+import type { CrmTrocaTitularidadeWithRelations } from "#/features/troca-titularidade/troca-titularidade-hooks";
 import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/nocobase/crm-troca-titularidade";
 import { formatDatePtBR } from "#/lib/utils";
-import type { CrmTrocaTitularidadeWithRelations } from "#/repositories/troca-titularidade-repository";
 
 interface PaginationInfo {
 	page: number;
