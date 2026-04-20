@@ -339,3 +339,103 @@ export function mergeEnums(
 
 	return merged;
 }
+
+export function applyEnumCorrections(
+	collectionTypes: Record<
+		string,
+		{ enums: Map<string, Array<{ value: string | number; label: string }>> }
+	>,
+	enumCorrection:
+		| {
+				enumOverrides?: Array<{
+					collection: string;
+					field: string;
+					labels: Record<string, string>;
+				}>;
+				forceEnums?: Array<{
+					collection: string;
+					field: string;
+					values: string[];
+					labels: Record<string, string>;
+				}>;
+		  }
+		| undefined,
+): void {
+	if (!enumCorrection) {
+		return;
+	}
+
+	const { enumOverrides, forceEnums } = enumCorrection;
+
+	if (enumOverrides && enumOverrides.length > 0) {
+		const overridesByCollection = new Map<string, typeof enumOverrides>();
+		for (const rule of enumOverrides) {
+			const existing = overridesByCollection.get(rule.collection);
+			if (existing) {
+				existing.push(rule);
+			} else {
+				overridesByCollection.set(rule.collection, [rule]);
+			}
+		}
+
+		for (const [collectionName, collection] of Object.entries(
+			collectionTypes,
+		)) {
+			const rules = overridesByCollection.get(collectionName);
+			if (!rules) {
+				continue;
+			}
+
+			for (const rule of rules) {
+				const enums = collection.enums;
+				const options = enums.get(rule.field);
+				if (!options) {
+					continue;
+				}
+
+				for (const option of options) {
+					const overrideLabel = rule.labels[String(option.value)];
+					if (overrideLabel !== undefined) {
+						option.label = overrideLabel;
+					}
+				}
+			}
+		}
+	}
+
+	if (forceEnums && forceEnums.length > 0) {
+		const forcesByCollection = new Map<string, typeof forceEnums>();
+		for (const rule of forceEnums) {
+			const existing = forcesByCollection.get(rule.collection);
+			if (existing) {
+				existing.push(rule);
+			} else {
+				forcesByCollection.set(rule.collection, [rule]);
+			}
+		}
+
+		for (const [collectionName, collection] of Object.entries(
+			collectionTypes,
+		)) {
+			const rules = forcesByCollection.get(collectionName);
+			if (!rules) {
+				continue;
+			}
+
+			for (const rule of rules) {
+				const enums = collection.enums;
+				if (enums.has(rule.field)) {
+					continue;
+				}
+
+				enums.set(
+					rule.field,
+					rule.values.map((v) => ({
+						value: v,
+						label: rule.labels[v] ?? v,
+					})),
+				);
+			}
+		}
+	}
+}

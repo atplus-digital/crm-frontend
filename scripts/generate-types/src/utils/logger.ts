@@ -1,14 +1,16 @@
-export type LogLevel = "debug" | "info" | "error";
+export type LogLevel = "debug" | "info" | "warn" | "error";
 
 const LOG_LEVEL_PRIORITY: Record<LogLevel, number> = {
 	debug: 0,
 	info: 1,
-	error: 2,
+	warn: 2,
+	error: 3,
 };
 
 interface Logger {
 	debug: (message: string) => void;
 	info: (message: string) => void;
+	warn: (message: string) => void;
 	error: (message: string) => void;
 	setLevel: (level: LogLevel) => void;
 	getLevel: () => LogLevel;
@@ -26,6 +28,11 @@ export function createLogger(): Logger {
 		info: (message: string) => {
 			if (LOG_LEVEL_PRIORITY["info"] >= LOG_LEVEL_PRIORITY[currentLevel]) {
 				console.info(`[INFO] ${message}`);
+			}
+		},
+		warn: (message: string) => {
+			if (LOG_LEVEL_PRIORITY["warn"] >= LOG_LEVEL_PRIORITY[currentLevel]) {
+				console.warn(`[WARN] ${message}`);
 			}
 		},
 		error: (message: string) => {

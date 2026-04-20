@@ -5,15 +5,32 @@ import type {
 	MultiFileResult,
 	SingleFileResult,
 } from "@scripts/generate-types/src/@types/script";
+import { isFileBeingEdited } from "./file-editor-check";
+import { logger } from "./logger";
 import { toFileName } from "./naming";
 
 const MAIN_OUTPUT_FILE = "index.ts";
+
+export { isFileBeingEdited } from "./file-editor-check";
 
 export function writeGeneratedFile(
 	content: string,
 	outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE),
 ): SingleFileResult {
 	const resolvedOutputPath = resolveOutputPath(outputPath);
+
+	if (isFileBeingEdited(resolvedOutputPath)) {
+		logger.warn(
+			`⏭️  Pulando arquivo em edição: ${path.relative(process.cwd(), resolvedOutputPath)}`,
+		);
+		return {
+			resultType: "single",
+			outputPath: resolvedOutputPath,
+			changed: false,
+			skipped: true,
+		};
+	}
+
 	const currentContent = readExistingContent(resolvedOutputPath);
 
 	if (currentContent === content) {
@@ -26,6 +43,9 @@ export function writeGeneratedFile(
 
 	ensureDirectoryExists(resolvedOutputPath);
 	fs.writeFileSync(resolvedOutputPath, content, "utf-8");
+	logger.debug(
+		`✓ Gravado: ${path.relative(process.cwd(), resolvedOutputPath)}`,
+	);
 
 	return {
 		resultType: "single",
@@ -66,10 +86,14 @@ export function writeMultipleFiles(
 	outputDir: string = config.outputDir,
 ): MultiFileResult {
 	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
-	const files: Array<{ outputPath: string; changed: boolean }> = [];
+	const files: Array<{
+		outputPath: string;
+		changed: boolean;
+		skipped?: boolean;
+	}> = [];
 	let totalChanged = 0;
+	let totalSkipped = 0;
 
-	// Garante que o diretório existe
 	if (!fs.existsSync(resolvedOutputDir)) {
 		fs.mkdirSync(resolvedOutputDir, { recursive: true });
 	}
@@ -77,6 +101,16 @@ export function writeMultipleFiles(
 	for (const [collectionName, content] of filesMap) {
 		const fileName = `${toFileName(collectionName)}.ts`;
 		const outputPath = path.join(resolvedOutputDir, fileName);
+
+		if (isFileBeingEdited(outputPath)) {
+			logger.warn(
+				`⏭️  Pulando arquivo em edição: ${path.relative(process.cwd(), outputPath)}`,
+			);
+			files.push({ outputPath, changed: false, skipped: true });
+			totalSkipped++;
+			continue;
+		}
+
 		const currentContent = readExistingContent(outputPath);
 
 		let changed = false;
@@ -84,6 +118,7 @@ export function writeMultipleFiles(
 			fs.writeFileSync(outputPath, content, "utf-8");
 			changed = true;
 			totalChanged++;
+			logger.debug(`✓ Gravado: ${path.relative(process.cwd(), outputPath)}`);
 		}
 
 		files.push({ outputPath, changed });
@@ -94,6 +129,7 @@ export function writeMultipleFiles(
 		files,
 		totalFiles: filesMap.size,
 		totalChanged,
+		totalSkipped,
 	};
 }
 
@@ -132,9 +168,17 @@ export function cleanOutputDirectory(unusedFiles: string[]): string[] {
 	const removed: string[] = [];
 
 	for (const filePath of unusedFiles) {
+		if (isFileBeingEdited(filePath)) {
+			logger.warn(
+				`⏭️  Pulando exclusão de arquivo em edição: ${path.relative(process.cwd(), filePath)}`,
+			);
+			continue;
+		}
+
 		if (fs.existsSync(filePath)) {
 			fs.unlinkSync(filePath);
 			removed.push(filePath);
+			logger.debug(`🗑️  Removido: ${path.relative(process.cwd(), filePath)}`);
 		}
 	}
 

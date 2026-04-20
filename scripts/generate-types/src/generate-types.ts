@@ -12,7 +12,7 @@ import { generateCollectionsFile } from "./generation/collections-index";
 import { generateContent, generateSplitFiles } from "./generation/content";
 import {
 	adapterEnumsToInferredEnums,
-	mergeAdapterWithSample,
+	applyEnumCorrections,
 	mergeEnums,
 } from "./generation/enum-inference";
 import { generateMultiCollectionReport } from "./generation/enum-inference-report";
@@ -37,6 +37,7 @@ import {
 interface GeneratedFileWrite {
 	outputPath: string;
 	changed: boolean;
+	skipped?: boolean;
 }
 
 interface DataSourceFilesResult {
@@ -159,50 +160,50 @@ async function runGenerateTypesForDataSource(
 		},
 	});
 
-	// Inferência de enums por amostragem de dados (fallback quando uiSchema não tem enum definido)
+	// Pipeline de enums: schema → adapter → inference (fallback)
+	// Só roda inference quando schema e adapter não forneceram enums
 	for (const [collectionName, types] of Object.entries(collectionTypes)) {
-		const scalarFieldNames = Array.from(types.scalars.keys()).filter(
-			(name) => !types.relations.has(name),
-		);
+		const existingEnums = new Map(types.enums);
+		const hasSchemaEnum = existingEnums.size > 0;
 
-		if (scalarFieldNames.length > 0) {
-			let adapterEnums: Record<
-				string,
-				{ values: string[]; labels?: Record<string, string> }
-			> = {};
-			let usedAdapter = false;
+		let adapterEnums: Record<
+			string,
+			{ values: string[]; labels?: Record<string, string> }
+		> = {};
+		let usedAdapter = false;
 
-			if (dataSource.preEnumAdapter) {
-				try {
-					adapterEnums =
-						await dataSource.preEnumAdapter.fetchEnums(collectionName);
-					usedAdapter = true;
-				} catch {
-					logger.debug(
-						`[${collectionName}] Adapter '${dataSource.preEnumAdapter.name}' falhou — usando sample-based`,
-					);
-				}
-			}
-
+		if (dataSource.preEnumAdapter) {
 			try {
+				adapterEnums =
+					await dataSource.preEnumAdapter.fetchEnums(collectionName);
+				usedAdapter = true;
+			} catch {
+				logger.debug(
+					`[${collectionName}] Adapter '${dataSource.preEnumAdapter.name}' falhou — usando sample-based`,
+				);
+			}
+		}
+
+		const hasAdapterEnum = usedAdapter && Object.keys(adapterEnums).length > 0;
+
+		// Só roda inference como fallback quando schema E adapter não tinham enum
+		if (!hasSchemaEnum && !hasAdapterEnum) {
+			try {
+				const scalarFieldNames = Array.from(types.scalars.keys()).filter(
+					(name) => !types.relations.has(name),
+				);
+
+				if (scalarFieldNames.length === 0) {
+					continue;
+				}
+
 				const inferredEnums = await client.inferEnumsFromData(
 					collectionName,
 					scalarFieldNames,
 				);
 
-				const existingEnums = new Map(types.enums);
-
-				let finalInferredEnums = inferredEnums;
-				if (usedAdapter && Object.keys(adapterEnums).length > 0) {
-					const adapterInferred = adapterEnumsToInferredEnums(adapterEnums);
-					finalInferredEnums = mergeAdapterWithSample(
-						adapterInferred,
-						inferredEnums,
-					);
-				}
-
+				const finalInferredEnums = inferredEnums;
 				const mergedEnums = mergeEnums(existingEnums, finalInferredEnums);
-
 				types.enums = mergedEnums;
 
 				const inferredCount = Object.keys(finalInferredEnums).length;
@@ -234,8 +235,17 @@ async function runGenerateTypesForDataSource(
 			} catch {
 				// No-op
 			}
+		} else {
+			// Schema ou adapter já forneceram enums — usa eles
+			if (hasAdapterEnum) {
+				const adapterInferred = adapterEnumsToInferredEnums(adapterEnums);
+				const mergedEnums = mergeEnums(existingEnums, adapterInferred);
+				types.enums = mergedEnums;
+			}
 		}
 	}
+
+	applyEnumCorrections(collectionTypes, dataSource.enumCorrection);
 
 	const { mainCollections, splitCollections } = splitCollectionsByConfig(
 		collectionTypes,
@@ -344,15 +354,29 @@ async function runGenerateTypesForDataSource(
 		);
 	}
 
+	const allWriteFiles = [
+		{
+			outputPath: collectionsResult.outputPath,
+			changed: collectionsResult.changed,
+			skipped: collectionsResult.skipped,
+		},
+		{
+			outputPath: indexResult.outputPath,
+			changed: indexResult.changed,
+			skipped: indexResult.skipped,
+		},
+		...(splitResult?.files ?? []),
+	];
+
+	const totalChanged = allWriteFiles.filter((f) => f.changed).length;
+	const totalSkipped = allWriteFiles.filter((f) => f.skipped).length;
+
+	logger.info(
+		`📄 ${dataSource.dataSource}: ${totalChanged} arquivo(s) atualizado(s)${totalSkipped > 0 ? `, ${totalSkipped} pulado(s) (em edição)` : ""}`,
+	);
+
 	return {
-		writeFiles: [
-			{
-				outputPath: collectionsResult.outputPath,
-				changed: collectionsResult.changed,
-			},
-			{ outputPath: indexResult.outputPath, changed: indexResult.changed },
-			...(splitResult?.files ?? []),
-		],
+		writeFiles: allWriteFiles,
 	};
 }
 
@@ -377,11 +401,19 @@ export async function runGenerateTypesForDataSources(): Promise<GenerateTypesRes
 	const outputDirs = dataSourceConfigs.map((d) => d.outputDir);
 	await runLinterFix(outputDirs);
 
+	const totalChanged = writeFiles.filter((f) => f.changed).length;
+	const totalSkipped = writeFiles.filter((f) => f.skipped).length;
+
+	logger.info(
+		`\n✅ Geração concluída: ${totalChanged} arquivo(s) atualizado(s)${totalSkipped > 0 ? `, ${totalSkipped} pulado(s) (em edição)` : ""}`,
+	);
+
 	if (writeFiles.length === 1) {
 		return {
 			resultType: "single",
 			outputPath: writeFiles[0]?.outputPath,
 			changed: writeFiles[0]?.changed,
+			skipped: writeFiles[0]?.skipped,
 		};
 	}
 
@@ -389,7 +421,8 @@ export async function runGenerateTypesForDataSources(): Promise<GenerateTypesRes
 		resultType: "multi",
 		files: writeFiles,
 		totalFiles: writeFiles.length,
-		totalChanged: writeFiles.filter((file) => file.changed).length,
+		totalChanged,
+		totalSkipped,
 	};
 }
 

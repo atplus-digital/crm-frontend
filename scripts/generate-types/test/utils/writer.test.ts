@@ -2,19 +2,23 @@ import * as fs from "node:fs";
 import {
 	cleanOutputDirectory,
 	getUnusedFiles,
+	isFileBeingEdited,
 	writeGeneratedFile,
 	writeMultipleFiles,
 } from "@scripts/generate-types/src/utils/writer";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("node:fs", () => ({
-	existsSync: vi.fn(),
-	mkdirSync: vi.fn(),
-	writeFileSync: vi.fn(),
-	readFileSync: vi.fn(),
-	unlinkSync: vi.fn(),
-	readdirSync: vi.fn(),
-}));
+// Mock node:fs
+vi.mock("node:fs", () => {
+	return {
+		existsSync: vi.fn().mockReturnValue(false),
+		mkdirSync: vi.fn(),
+		writeFileSync: vi.fn(),
+		readFileSync: vi.fn(),
+		unlinkSync: vi.fn(),
+		readdirSync: vi.fn(),
+	};
+});
 
 vi.mock("@scripts/generate-types/config", () => ({
 	config: {
@@ -24,6 +28,11 @@ vi.mock("@scripts/generate-types/config", () => ({
 
 vi.mock("@scripts/generate-types/src/utils/naming", () => ({
 	toFileName: (name: string) => name.toLowerCase(),
+}));
+
+// Mock file-editor-check to always return false
+vi.mock("@scripts/generate-types/src/utils/file-editor-check", () => ({
+	isFileBeingEdited: vi.fn().mockReturnValue(false),
 }));
 
 describe("writer", () => {
@@ -117,6 +126,7 @@ describe("writer", () => {
 				],
 				totalFiles: 2,
 				totalChanged: 2,
+				totalSkipped: 0,
 			});
 		});
 
@@ -133,6 +143,7 @@ describe("writer", () => {
 				files: [{ outputPath: "/tmp/output/users.ts", changed: false }],
 				totalFiles: 1,
 				totalChanged: 0,
+				totalSkipped: 0,
 			});
 		});
 
