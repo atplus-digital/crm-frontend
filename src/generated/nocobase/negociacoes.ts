@@ -33,6 +33,13 @@ export enum NegociacoesDataVencimento {
 	Value25 = "25",
 }
 
+export enum NegociacoesEnderecoCidade {
+	Curibanos = "Curibanos",
+	Curitibanos = "Curitibanos",
+	FlorianPolis = "Florianópolis",
+	Lages = "Lages",
+}
+
 export enum NegociacoesEnderecoCobranca {
 	Value0 = "0",
 	Value1 = "1",
@@ -45,6 +52,12 @@ export enum NegociacoesEnderecoComplemento {
 	Comercial = "Comercial",
 }
 
+export enum NegociacoesEnderecoEstado {
+	Rs = "RS",
+	SantaCatarina = "santa catarina",
+	Sc = "sc",
+}
+
 export enum NegociacoesFidelidade {
 	Value0 = "0",
 	Value12 = "12",
@@ -52,6 +65,17 @@ export enum NegociacoesFidelidade {
 	Value36 = "36",
 	Value48 = "48",
 	Value60 = "60",
+}
+
+export enum NegociacoesFkCupomDesconto {
+	Value0 = "0",
+	Value10 = "10",
+	Value21 = "21",
+}
+
+export enum NegociacoesFkNegociacaoIndicador {
+	Value12 = "12",
+	Value9 = "9",
 }
 
 export enum NegociacoesMotivo {
@@ -76,6 +100,10 @@ export enum NegociacoesMotivoPontos {
 	Email = "email",
 }
 
+export enum NegociacoesParcelasMensais {
+	Value1 = "1",
+}
+
 export enum NegociacoesPontosAtencao {
 	Value0 = "0",
 	Value1 = "1",
@@ -86,6 +114,16 @@ export enum NegociacoesPontosAtencao {
 	Value6 = "6",
 }
 
+export enum NegociacoesScm {
+	Value0 = "0",
+	Value1 = "1",
+}
+
+export enum NegociacoesSmp {
+	Value0 = "0",
+	Value1 = "1",
+}
+
 export enum NegociacoesStatus {
 	Value1 = "1",
 	Value2 = "2",
@@ -93,6 +131,11 @@ export enum NegociacoesStatus {
 	Value4 = "4",
 	Value5 = "5",
 	Value6 = "6",
+}
+
+export enum NegociacoesStfc {
+	Value0 = "0",
+	Value1 = "1",
 }
 
 export enum NegociacoesSubstatus {
@@ -111,17 +154,34 @@ export enum NegociacoesSubstatus {
 	Value13 = "13",
 }
 
+export enum NegociacoesSva {
+	Value0 = "0",
+	Value1 = "1",
+}
+
 export enum NegociacoesTipoPessoa {
 	Pf = "PF",
 	Pj = "PJ",
+}
+
+export enum NegociacoesValorDevedorTotal {
+	Value0 = "0",
+}
+
+export enum NegociacoesValorInstalacao {
+	Value0 = "0",
+	Value20 = "20",
+	Value300 = "300",
+	Value30000 = "30000",
+	Value500 = "500",
 }
 
 export interface Negociacoes {
 	id: number;
 	f_fk_auditoria_automatica: number;
 	f_fk_contrato_ixc: number;
-	f_fk_cupom_desconto: number;
-	f_fk_negociacao_indicador: number;
+	f_fk_cupom_desconto: NegociacoesFkCupomDesconto;
+	f_fk_negociacao_indicador: NegociacoesFkNegociacaoIndicador;
 	f_fk_negociacao_vendedor: number;
 	f_fk_pacote: number;
 	f_fk_pessoa_negociacao: number;
@@ -142,11 +202,11 @@ export interface Negociacoes {
 	f_data_vencimento: NegociacoesDataVencimento;
 	f_email_cobranca: string;
 	f_endereco: string;
-	f_endereco_cidade: string;
+	f_endereco_cidade: NegociacoesEnderecoCidade;
 	f_endereco_cobranca: NegociacoesEnderecoCobranca;
 	f_endereco_complemento: NegociacoesEnderecoComplemento;
 	f_endereco_de_cobranca: string;
-	f_endereco_estado: string;
+	f_endereco_estado: NegociacoesEnderecoEstado;
 	f_endereco_numero: string;
 	f_endereco_referencia: string;
 	f_entrada_saldo_devedor: number;
@@ -163,17 +223,17 @@ export interface Negociacoes {
 	f_nome_razao: string;
 	f_numero_cobranca: string;
 	f_ordenacao: number;
-	f_parcelas_mensais: number;
+	f_parcelas_mensais: NegociacoesParcelasMensais;
 	f_periodo_final: string;
 	f_pontos_atencao: NegociacoesPontosAtencao;
 	f_responsavel_assinatura: string;
 	f_rg_ie: string;
-	f_scm: number;
-	f_smp: number;
+	f_scm: NegociacoesScm;
+	f_smp: NegociacoesSmp;
 	f_status: NegociacoesStatus;
-	f_stfc: number;
+	f_stfc: NegociacoesStfc;
 	f_substatus: NegociacoesSubstatus;
-	f_sva: number;
+	f_sva: NegociacoesSva;
 	f_telefone: string;
 	f_telefone_2: string;
 	f_tipo_pessoa: NegociacoesTipoPessoa;
@@ -181,8 +241,8 @@ export interface Negociacoes {
 	f_valor_beneficios: number;
 	f_valor_da_parcela: string;
 	f_valor_devedor: number;
-	f_valor_devedor_total: string;
-	f_valor_instalacao: number;
+	f_valor_devedor_total: NegociacoesValorDevedorTotal;
+	f_valor_instalacao: NegociacoesValorInstalacao;
 	f_valor_mensal: number;
 	f_valor_mensal_antigo: number;
 	f_valor_mensal_sem_desconto: number;
@@ -231,6 +291,16 @@ export const NEGOCIACOES_DATAVENCIMENTO_LABELS: Record<
 	[NegociacoesDataVencimento.Value25]: "Dia 25",
 };
 
+export const NEGOCIACOES_ENDERECOCIDADE_LABELS: Record<
+	NegociacoesEnderecoCidade,
+	string
+> = {
+	[NegociacoesEnderecoCidade.Curibanos]: "Curibanos",
+	[NegociacoesEnderecoCidade.Curitibanos]: "Curitibanos",
+	[NegociacoesEnderecoCidade.FlorianPolis]: "Florianópolis",
+	[NegociacoesEnderecoCidade.Lages]: "Lages",
+};
+
 export const NEGOCIACOES_ENDERECOCOBRANCA_LABELS: Record<
 	NegociacoesEnderecoCobranca,
 	string
@@ -249,6 +319,15 @@ export const NEGOCIACOES_ENDERECOCOMPLEMENTO_LABELS: Record<
 	[NegociacoesEnderecoComplemento.Comercial]: "Comercial",
 };
 
+export const NEGOCIACOES_ENDERECOESTADO_LABELS: Record<
+	NegociacoesEnderecoEstado,
+	string
+> = {
+	[NegociacoesEnderecoEstado.Rs]: "RS",
+	[NegociacoesEnderecoEstado.SantaCatarina]: "Santa Catarina",
+	[NegociacoesEnderecoEstado.Sc]: "Sc",
+};
+
 export const NEGOCIACOES_FIDELIDADE_LABELS: Record<
 	NegociacoesFidelidade,
 	string
@@ -259,6 +338,23 @@ export const NEGOCIACOES_FIDELIDADE_LABELS: Record<
 	[NegociacoesFidelidade.Value36]: "36 Meses",
 	[NegociacoesFidelidade.Value48]: "48 Meses",
 	[NegociacoesFidelidade.Value60]: "60 Meses",
+};
+
+export const NEGOCIACOES_FKCUPOMDESCONTO_LABELS: Record<
+	NegociacoesFkCupomDesconto,
+	string
+> = {
+	[NegociacoesFkCupomDesconto.Value0]: "Inativo",
+	[NegociacoesFkCupomDesconto.Value10]: "Código 10",
+	[NegociacoesFkCupomDesconto.Value21]: "Código 21",
+};
+
+export const NEGOCIACOES_FKNEGOCIACAOINDICADOR_LABELS: Record<
+	NegociacoesFkNegociacaoIndicador,
+	string
+> = {
+	[NegociacoesFkNegociacaoIndicador.Value12]: "Código 12",
+	[NegociacoesFkNegociacaoIndicador.Value9]: "Código 9",
 };
 
 export const NEGOCIACOES_MOTIVO_LABELS: Record<NegociacoesMotivo, string> = {
@@ -286,6 +382,13 @@ export const NEGOCIACOES_MOTIVOPONTOS_LABELS: Record<
 	[NegociacoesMotivoPontos.Email]: "E-mail duplicado",
 };
 
+export const NEGOCIACOES_PARCELASMENSAIS_LABELS: Record<
+	NegociacoesParcelasMensais,
+	string
+> = {
+	[NegociacoesParcelasMensais.Value1]: "Ativo",
+};
+
 export const NEGOCIACOES_PONTOSATENCAO_LABELS: Record<
 	NegociacoesPontosAtencao,
 	string
@@ -299,6 +402,16 @@ export const NEGOCIACOES_PONTOSATENCAO_LABELS: Record<
 	[NegociacoesPontosAtencao.Value6]: "6 Pontos",
 };
 
+export const NEGOCIACOES_SCM_LABELS: Record<NegociacoesScm, string> = {
+	[NegociacoesScm.Value0]: "Inativo",
+	[NegociacoesScm.Value1]: "Ativo",
+};
+
+export const NEGOCIACOES_SMP_LABELS: Record<NegociacoesSmp, string> = {
+	[NegociacoesSmp.Value0]: "Inativo",
+	[NegociacoesSmp.Value1]: "Ativo",
+};
+
 export const NEGOCIACOES_STATUS_LABELS: Record<NegociacoesStatus, string> = {
 	[NegociacoesStatus.Value1]: "Novo",
 	[NegociacoesStatus.Value2]: "Negociando",
@@ -306,6 +419,11 @@ export const NEGOCIACOES_STATUS_LABELS: Record<NegociacoesStatus, string> = {
 	[NegociacoesStatus.Value4]: "Auditoria",
 	[NegociacoesStatus.Value5]: "Concluído",
 	[NegociacoesStatus.Value6]: "Arquivado",
+};
+
+export const NEGOCIACOES_STFC_LABELS: Record<NegociacoesStfc, string> = {
+	[NegociacoesStfc.Value0]: "Inativo",
+	[NegociacoesStfc.Value1]: "Ativo",
 };
 
 export const NEGOCIACOES_SUBSTATUS_LABELS: Record<
@@ -328,10 +446,33 @@ export const NEGOCIACOES_SUBSTATUS_LABELS: Record<
 	[NegociacoesSubstatus.Value13]: "EM STANDBY",
 };
 
+export const NEGOCIACOES_SVA_LABELS: Record<NegociacoesSva, string> = {
+	[NegociacoesSva.Value0]: "Inativo",
+	[NegociacoesSva.Value1]: "Ativo",
+};
+
 export const NEGOCIACOES_TIPOPESSOA_LABELS: Record<
 	NegociacoesTipoPessoa,
 	string
 > = {
 	[NegociacoesTipoPessoa.Pf]: "Pessoa Física",
 	[NegociacoesTipoPessoa.Pj]: "Pessoa Jurídica",
+};
+
+export const NEGOCIACOES_VALORDEVEDORTOTAL_LABELS: Record<
+	NegociacoesValorDevedorTotal,
+	string
+> = {
+	[NegociacoesValorDevedorTotal.Value0]: "Inativo",
+};
+
+export const NEGOCIACOES_VALORINSTALACAO_LABELS: Record<
+	NegociacoesValorInstalacao,
+	string
+> = {
+	[NegociacoesValorInstalacao.Value0]: "Inativo",
+	[NegociacoesValorInstalacao.Value20]: "Código 20",
+	[NegociacoesValorInstalacao.Value300]: "300",
+	[NegociacoesValorInstalacao.Value30000]: "30000",
+	[NegociacoesValorInstalacao.Value500]: "500",
 };

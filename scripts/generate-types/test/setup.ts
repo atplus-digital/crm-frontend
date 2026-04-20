@@ -25,6 +25,7 @@ const mockScriptConfig = {
 	verbose: false,
 	requestTimeoutMs: 15_000,
 	requestConcurrency: 5,
+	maxConcurrency: 3,
 	baseInterfaceNaming: {
 		prefix: "",
 		suffix: "Base",

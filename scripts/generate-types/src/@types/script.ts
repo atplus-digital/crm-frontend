@@ -130,7 +130,7 @@ export interface ScriptConfig {
 	outputDir: string; // Diretório de saída (ex: "src/@types/generated") — split usa esta pasta; não-split usa <outputDir>/index.ts
 	splitCollections: string[]; // Collections que serão salvas em arquivos individuais
 	datasources?: DataSourceGenerationConfig[];
-	verbose: boolean;
+	logLevel: "debug" | "info" | "error";
 	defaultEnvPath: string;
 	requestTimeoutMs: number;
 	requestConcurrency: number;

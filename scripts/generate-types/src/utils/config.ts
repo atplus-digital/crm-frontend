@@ -13,7 +13,7 @@ const defaultConfig: ScriptConfig = {
 			splitCollections: [],
 		},
 	],
-	verbose: false,
+	logLevel: "info",
 	defaultEnvPath: ".env.local",
 	requestTimeoutMs: 15_000,
 	requestConcurrency: 5,

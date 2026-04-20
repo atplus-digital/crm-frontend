@@ -6,28 +6,37 @@
 
 export const VD_CONTRATOS_PRODUTOS_TABLE_NAME = "vd_contratos_produtos";
 
+export enum VdContratosProdutosDescontoPercentual {
+	Value000 = "0.00",
+}
+
 export enum VdContratosProdutosDescricaoPlanoValor1 {
-	Value1 = "1",
+	Value000 = "0.00",
+}
+
+export enum VdContratosProdutosDescricaoPlanoValor2 {
+	Value000 = "0.00",
+}
+
+export enum VdContratosProdutosFixarIp {
 	Value0 = "0",
 }
 
-export enum VdContratosProdutosId {
-	I = "I",
-	T = "T",
-	S = "S",
-	Sva = "SVA",
-	Tv = "TV",
-	Smp = "SMP",
+export enum VdContratosProdutosIdContratoProdutoPlano {
+	Value0 = "0",
 }
 
-export enum VdContratosProdutosObs {
-	V = "V",
-	P = "P",
+export enum VdContratosProdutosIdTipoDocumento {
+	Value0 = "0",
 }
 
 export enum VdContratosProdutosQtde {
 	Value1 = "1",
 	Value3 = "3",
+}
+
+export enum VdContratosProdutosQtdeRepeticoesDescontoProduto {
+	Value0 = "0",
 }
 
 export enum VdContratosProdutosRepetir {
@@ -46,33 +55,36 @@ export enum VdContratosProdutosTipoDesconto {
 }
 
 export enum VdContratosProdutosValorAteVencimento {
-	V = "V",
-	S = "S",
+	Value000 = "0.00",
+}
+
+export enum VdContratosProdutosValorDescontoProduto {
+	Value000 = "0.00",
 }
 
 export interface VdContratosProdutos {
-	id: VdContratosProdutosId;
+	id: number;
 	atualizado_por: string;
-	desconto_percentual: string;
+	desconto_percentual: VdContratosProdutosDescontoPercentual;
 	desconto_proporcional: string;
 	descricao: string;
 	descricao_plano_valor_1: VdContratosProdutosDescricaoPlanoValor1;
-	descricao_plano_valor_2: string;
-	fixar_ip: number;
+	descricao_plano_valor_2: VdContratosProdutosDescricaoPlanoValor2;
+	fixar_ip: VdContratosProdutosFixarIp;
 	id_contrato: string;
-	id_contrato_produto_plano: string;
+	id_contrato_produto_plano: VdContratosProdutosIdContratoProdutoPlano;
 	id_plano: number;
 	id_produto: number;
-	id_tipo_documento: number;
+	id_tipo_documento: VdContratosProdutosIdTipoDocumento;
 	id_unidade: string;
 	id_vd_contrato: number;
 	inserido_em: string;
 	inserido_por: string;
 	limite_pacote: string;
 	logins_simultaneos: string;
-	obs: VdContratosProdutosObs;
+	obs: string;
 	qtde: VdContratosProdutosQtde;
-	qtde_repeticoes_desconto_produto: string;
+	qtde_repeticoes_desconto_produto: VdContratosProdutosQtdeRepeticoesDescontoProduto;
 	repetir: VdContratosProdutosRepetir;
 	repetir_qtde: string;
 	tipo: VdContratosProdutosTipo;
@@ -81,7 +93,7 @@ export interface VdContratosProdutos {
 	ultima_atualizacao: string;
 	valor_adicional_pacote: string;
 	valor_ate_vencimento: VdContratosProdutosValorAteVencimento;
-	valor_desconto_produto: string;
+	valor_desconto_produto: VdContratosProdutosValorDescontoProduto;
 	valor_unit: string;
 }
 
@@ -89,32 +101,46 @@ export type VdContratosProdutosRelations = Record<string, never>;
 
 export type VdContratosProdutosRelationKey = keyof VdContratosProdutosRelations;
 
+export const VDCONTRATOSPRODUTOS_DESCONTOPERCENTUAL_LABELS: Record<
+	VdContratosProdutosDescontoPercentual,
+	string
+> = {
+	[VdContratosProdutosDescontoPercentual.Value000]: "0.00",
+};
+
 export const VDCONTRATOSPRODUTOS_DESCRICAOPLANOVALOR1_LABELS: Record<
 	VdContratosProdutosDescricaoPlanoValor1,
 	string
 > = {
-	[VdContratosProdutosDescricaoPlanoValor1.Value1]: "Sim",
-	[VdContratosProdutosDescricaoPlanoValor1.Value0]: "Não",
+	[VdContratosProdutosDescricaoPlanoValor1.Value000]: "0.00",
 };
 
-export const VDCONTRATOSPRODUTOS_ID_LABELS: Record<
-	VdContratosProdutosId,
+export const VDCONTRATOSPRODUTOS_DESCRICAOPLANOVALOR2_LABELS: Record<
+	VdContratosProdutosDescricaoPlanoValor2,
 	string
 > = {
-	[VdContratosProdutosId.I]: "Internet",
-	[VdContratosProdutosId.T]: "Telefonia",
-	[VdContratosProdutosId.S]: "Serviços",
-	[VdContratosProdutosId.Sva]: "SVA",
-	[VdContratosProdutosId.Tv]: "TV",
-	[VdContratosProdutosId.Smp]: "MVNO/Telefonia Móvel",
+	[VdContratosProdutosDescricaoPlanoValor2.Value000]: "0.00",
 };
 
-export const VDCONTRATOSPRODUTOS_OBS_LABELS: Record<
-	VdContratosProdutosObs,
+export const VDCONTRATOSPRODUTOS_FIXARIP_LABELS: Record<
+	VdContratosProdutosFixarIp,
 	string
 > = {
-	[VdContratosProdutosObs.V]: "Valor",
-	[VdContratosProdutosObs.P]: "Percentual",
+	[VdContratosProdutosFixarIp.Value0]: "Inativo",
+};
+
+export const VDCONTRATOSPRODUTOS_IDCONTRATOPRODUTOPLANO_LABELS: Record<
+	VdContratosProdutosIdContratoProdutoPlano,
+	string
+> = {
+	[VdContratosProdutosIdContratoProdutoPlano.Value0]: "Inativo",
+};
+
+export const VDCONTRATOSPRODUTOS_IDTIPODOCUMENTO_LABELS: Record<
+	VdContratosProdutosIdTipoDocumento,
+	string
+> = {
+	[VdContratosProdutosIdTipoDocumento.Value0]: "Inativo",
 };
 
 export const VDCONTRATOSPRODUTOS_QTDE_LABELS: Record<
@@ -123,6 +149,13 @@ export const VDCONTRATOSPRODUTOS_QTDE_LABELS: Record<
 > = {
 	[VdContratosProdutosQtde.Value1]: "Ativo",
 	[VdContratosProdutosQtde.Value3]: "Código 3",
+};
+
+export const VDCONTRATOSPRODUTOS_QTDEREPETICOESDESCONTOPRODUTO_LABELS: Record<
+	VdContratosProdutosQtdeRepeticoesDescontoProduto,
+	string
+> = {
+	[VdContratosProdutosQtdeRepeticoesDescontoProduto.Value0]: "Inativo",
 };
 
 export const VDCONTRATOSPRODUTOS_REPETIR_LABELS: Record<
@@ -153,6 +186,12 @@ export const VDCONTRATOSPRODUTOS_VALORATEVENCIMENTO_LABELS: Record<
 	VdContratosProdutosValorAteVencimento,
 	string
 > = {
-	[VdContratosProdutosValorAteVencimento.V]: "Quantidade",
-	[VdContratosProdutosValorAteVencimento.S]: "Sempre",
+	[VdContratosProdutosValorAteVencimento.Value000]: "0.00",
+};
+
+export const VDCONTRATOSPRODUTOS_VALORDESCONTOPRODUTO_LABELS: Record<
+	VdContratosProdutosValorDescontoProduto,
+	string
+> = {
+	[VdContratosProdutosValorDescontoProduto.Value000]: "0.00",
 };

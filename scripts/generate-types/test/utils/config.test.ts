@@ -37,10 +37,11 @@ describe("parseConfig", () => {
 
 			expect(result.outputDir).toBe("./generated");
 			expect(result.splitCollections).toEqual([]);
-			expect(result.verbose).toBe(false);
+			expect(result.logLevel).toBe("info");
 			expect(result.defaultEnvPath).toBe(".env.local");
 			expect(result.requestTimeoutMs).toBe(15_000);
 			expect(result.requestConcurrency).toBe(5);
+			expect(result.maxConcurrency).toBe(3);
 			expect(result.lockWorkspaceFolder).toBe(true);
 			expect(result.baseInterfaceNaming).toEqual({
 				prefix: "",
@@ -234,10 +235,11 @@ describe("parseConfig", () => {
 			const scriptConfig: Partial<ScriptConfig> = {
 				outputDir: "./custom-output",
 				splitCollections: ["users", "posts"],
-				verbose: true,
+				logLevel: "debug",
 				defaultEnvPath: ".env.custom",
 				requestTimeoutMs: 30_000,
 				requestConcurrency: 10,
+				maxConcurrency: 8,
 				lockWorkspaceFolder: false,
 				baseInterfaceNaming: {
 					prefix: "I",
@@ -258,10 +260,11 @@ describe("parseConfig", () => {
 
 			expect(result.outputDir).toBe("./custom-output");
 			expect(result.splitCollections).toEqual(["users", "posts"]);
-			expect(result.verbose).toBe(true);
+			expect(result.logLevel).toBe("debug");
 			expect(result.defaultEnvPath).toBe(".env.custom");
 			expect(result.requestTimeoutMs).toBe(30_000);
 			expect(result.requestConcurrency).toBe(10);
+			expect(result.maxConcurrency).toBe(8);
 			expect(result.lockWorkspaceFolder).toBe(false);
 			expect(result.baseInterfaceNaming).toEqual({
 				prefix: "I",

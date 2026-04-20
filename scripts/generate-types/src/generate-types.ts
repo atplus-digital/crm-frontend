@@ -24,7 +24,7 @@ import {
 import { generateIndexFileWithReexports } from "./generation/split-index";
 import { splitCollectionsByConfig } from "./utils/collection-splitter";
 import { runLinterFix } from "./utils/linter-runner";
-import { logInfo, logVerbose } from "./utils/logger";
+import { logger } from "./utils/logger";
 import { resolveBaseInterfaceNamingConfig, toFileName } from "./utils/naming";
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 import {
@@ -128,14 +128,14 @@ async function runGenerateTypesForDataSource(
 		dataSource.baseInterfaceNaming ?? config.baseInterfaceNaming,
 	);
 
-	logInfo(
+	logger.info(
 		`🔧 Gerando tipos para datasource '${dataSource.dataSource}' em ${dataSource.outputDir}`,
 	);
-	logVerbose(`📡 Conectando a: ${client.baseUrl}`);
+	logger.debug(`📡 Conectando a: ${client.baseUrl}`);
 
 	const collections = await resolveCollectionsForDataSource(client, dataSource);
 
-	logVerbose(
+	logger.debug(
 		`📋 Encontradas ${collections.length} collections para ${dataSource.dataSource}`,
 	);
 
@@ -155,7 +155,7 @@ async function runGenerateTypesForDataSource(
 
 	const collectionTypes = await buildCollectionTypes(client, collections, {
 		onCollectionStart: ({ collectionName, index, total }) => {
-			logVerbose(`⏳ [${index}/${total}] Processando ${collectionName}...`);
+			logger.debug(`⏳ [${index}/${total}] Processando ${collectionName}...`);
 		},
 	});
 
@@ -178,7 +178,7 @@ async function runGenerateTypesForDataSource(
 						await dataSource.preEnumAdapter.fetchEnums(collectionName);
 					usedAdapter = true;
 				} catch {
-					logVerbose(
+					logger.debug(
 						`[${collectionName}] Adapter '${dataSource.preEnumAdapter.name}' falhou — usando sample-based`,
 					);
 				}
@@ -300,17 +300,15 @@ async function runGenerateTypesForDataSource(
 	const unusedFiles = getUnusedFiles(generatedFilePaths, dataSource.outputDir);
 
 	if (unusedFiles.length > 0) {
-		logInfo(
+		logger.info(
 			`\n⚠️  Encontrados ${unusedFiles.length} arquivo(s) não utilizado(s) em ${dataSource.outputDir}/:`,
 		);
-		if (config.verbose) {
-			for (const file of unusedFiles) {
-				logVerbose(`   - ${path.basename(file)}`);
-			}
+		for (const file of unusedFiles) {
+			logger.debug(`   - ${path.basename(file)}`);
 		}
 
 		const removed = cleanOutputDirectory(unusedFiles);
-		logInfo(`🗑️  Removidos ${removed.length} arquivo(s) não utilizado(s).`);
+		logger.info(`🗑️  Removidos ${removed.length} arquivo(s) não utilizado(s).`);
 	}
 
 	const collectionsContent = generateCollectionsFile(
@@ -369,12 +367,12 @@ export async function runGenerateTypesForDataSources(): Promise<GenerateTypesRes
 
 	applyWorkspaceLockIfNeeded();
 
-	const writeFiles: GeneratedFileWrite[] = [];
-
-	for (const dataSource of dataSourceConfigs) {
-		const result = await runGenerateTypesForDataSource(dataSource);
-		writeFiles.push(...result.writeFiles);
-	}
+	const results = await Promise.all(
+		dataSourceConfigs.map((dataSource) =>
+			runGenerateTypesForDataSource(dataSource),
+		),
+	);
+	const writeFiles = results.flatMap((result) => result.writeFiles);
 
 	const outputDirs = dataSourceConfigs.map((d) => d.outputDir);
 	await runLinterFix(outputDirs);

@@ -1,13 +1,47 @@
-import { config } from "@scripts/generate-types/config";
+export type LogLevel = "debug" | "info" | "error";
 
-export function logInfo(message: string) {
-	console.log(message);
+const LOG_LEVEL_PRIORITY: Record<LogLevel, number> = {
+	debug: 0,
+	info: 1,
+	error: 2,
+};
+
+interface Logger {
+	debug: (message: string) => void;
+	info: (message: string) => void;
+	error: (message: string) => void;
+	setLevel: (level: LogLevel) => void;
+	getLevel: () => LogLevel;
 }
 
-export function logVerbose(message: string) {
-	if (!config.verbose) {
-		return;
-	}
+let currentLevel: LogLevel = "info";
 
-	console.log(message);
+export function createLogger(): Logger {
+	return {
+		debug: (message: string) => {
+			if (LOG_LEVEL_PRIORITY["debug"] >= LOG_LEVEL_PRIORITY[currentLevel]) {
+				console.debug(`[DEBUG] ${message}`);
+			}
+		},
+		info: (message: string) => {
+			if (LOG_LEVEL_PRIORITY["info"] >= LOG_LEVEL_PRIORITY[currentLevel]) {
+				console.info(`[INFO] ${message}`);
+			}
+		},
+		error: (message: string) => {
+			if (LOG_LEVEL_PRIORITY["error"] >= LOG_LEVEL_PRIORITY[currentLevel]) {
+				console.error(`[ERROR] ${message}`);
+			}
+		},
+		setLevel: (level: LogLevel) => {
+			currentLevel = level;
+		},
+		getLevel: () => currentLevel,
+	};
 }
+
+export const logger = createLogger();
+
+// Legacy exports for backward compatibility
+export const logInfo = (message: string) => logger.info(message);
+export const logVerbose = (message: string) => logger.debug(message);

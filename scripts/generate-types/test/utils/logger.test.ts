@@ -1,111 +1,75 @@
-import type { RuntimeConfig } from "@scripts/generate-types/src/@types/script";
+import {
+	createLogger,
+	logger,
+	logInfo,
+	logVerbose,
+} from "@scripts/generate-types/src/utils/logger";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-// Hoisted mock factory for config module
-const { getMockConfig, setMockConfig } = vi.hoisted(() => {
-	let mockConfig: RuntimeConfig = {
-		outputDir: "/tmp/test",
-		splitCollections: [],
-		verbose: false,
-		defaultEnvPath: ".env.local",
-		requestTimeoutMs: 15_000,
-		requestConcurrency: 5,
-		baseInterfaceNaming: { prefix: "", suffix: "Base" },
-		baseUrl: "https://example.com/api",
-		token: "fake-token",
-		timeoutMs: 30_000,
-	};
-
-	return {
-		getMockConfig: () => mockConfig,
-		setMockConfig: (newConfig: Partial<RuntimeConfig>) => {
-			mockConfig = { ...mockConfig, ...newConfig };
-		},
-	};
-});
-
-vi.mock("@scripts/generate-types/config", () => ({
-	get config() {
-		return getMockConfig();
-	},
-}));
-
-// Import the module under test after mocks are set up
-import { logInfo, logVerbose } from "@scripts/generate-types/src/utils/logger";
-
 describe("logger", () => {
-	let consoleLogSpy: ReturnType<typeof vi.spyOn>;
+	let consoleInfoSpy: ReturnType<typeof vi.spyOn>;
+	let consoleDebugSpy: ReturnType<typeof vi.spyOn>;
+	let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
 
 	beforeEach(() => {
-		consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-		// Reset config to default (verbose: false)
-		setMockConfig({ verbose: false });
+		consoleInfoSpy = vi.spyOn(console, "info").mockImplementation(() => {});
+		consoleDebugSpy = vi.spyOn(console, "debug").mockImplementation(() => {});
+		consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+		logger.setLevel("info");
 	});
 
 	afterEach(() => {
-		consoleLogSpy.mockRestore();
+		consoleInfoSpy.mockRestore();
+		consoleDebugSpy.mockRestore();
+		consoleErrorSpy.mockRestore();
 	});
 
 	describe("logInfo", () => {
-		it("should call console.log with the message", () => {
+		it("should call console.info with level prefix", () => {
 			const message = "Test info message";
 
 			logInfo(message);
 
-			expect(consoleLogSpy).toHaveBeenCalledWith(message);
-			expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+			expect(consoleInfoSpy).toHaveBeenCalledWith("[INFO] Test info message");
+			expect(consoleInfoSpy).toHaveBeenCalledTimes(1);
 		});
 
-		it("should call console.log even when verbose is false", () => {
-			setMockConfig({ verbose: false });
-			const message = "Info message with verbose off";
+		it("should not log info when level is error", () => {
+			logger.setLevel("error");
 
-			logInfo(message);
-
-			expect(consoleLogSpy).toHaveBeenCalledWith(message);
-		});
-
-		it("should call console.log even when verbose is true", () => {
-			setMockConfig({ verbose: true });
-			const message = "Info message with verbose on";
-
-			logInfo(message);
-
-			expect(consoleLogSpy).toHaveBeenCalledWith(message);
+			logInfo("Info hidden by error level");
+			expect(consoleInfoSpy).not.toHaveBeenCalled();
 		});
 	});
 
 	describe("logVerbose", () => {
-		it("should NOT call console.log when config.verbose is false", () => {
-			setMockConfig({ verbose: false });
+		it("should NOT call console.debug when level is info", () => {
 			const message = "Verbose message when off";
 
 			logVerbose(message);
 
-			expect(consoleLogSpy).not.toHaveBeenCalled();
+			expect(consoleDebugSpy).not.toHaveBeenCalled();
 		});
 
-		it("should call console.log when config.verbose is true", () => {
-			setMockConfig({ verbose: true });
+		it("should call console.debug when level is debug", () => {
+			logger.setLevel("debug");
 			const message = "Verbose message when on";
 
 			logVerbose(message);
 
-			expect(consoleLogSpy).toHaveBeenCalledWith(message);
-			expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+			expect(consoleDebugSpy).toHaveBeenCalledWith(
+				"[DEBUG] Verbose message when on",
+			);
+			expect(consoleDebugSpy).toHaveBeenCalledTimes(1);
 		});
+	});
 
-		it("should toggle behavior based on config.verbose changes", () => {
-			// First call with verbose: false
-			setMockConfig({ verbose: false });
-			logVerbose("First message");
-			expect(consoleLogSpy).not.toHaveBeenCalled();
+	describe("createLogger", () => {
+		it("should expose setLevel and getLevel", () => {
+			const isolatedLogger = createLogger();
 
-			// Second call with verbose: true
-			setMockConfig({ verbose: true });
-			logVerbose("Second message");
-			expect(consoleLogSpy).toHaveBeenCalledWith("Second message");
-			expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+			isolatedLogger.setLevel("error");
+			expect(isolatedLogger.getLevel()).toBe("error");
 		});
 	});
 });
