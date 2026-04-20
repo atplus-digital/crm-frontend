@@ -4,6 +4,7 @@ import { createIXCWikiAdapter } from "./src/adapters/ixc-wiki-scraper";
 export const dataSourceConfigs = [
 	{
 		name: "nocobase",
+		type: "nocobase",
 		dataSource: "main",
 		outputDir: "src/generated/nocobase",
 		splitCollections: [
@@ -17,6 +18,7 @@ export const dataSourceConfigs = [
 	},
 	{
 		name: "ixc",
+		type: "nocobase",
 		dataSource: "d_db_ixcsoft",
 		outputDir: "src/generated/ixc",
 		collections: [

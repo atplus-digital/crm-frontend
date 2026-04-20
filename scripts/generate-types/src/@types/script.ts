@@ -1,5 +1,59 @@
 import type { NocoBaseCredentials } from "./nocobase";
 
+/**
+ * Interfaces genéricas para datasource agnóstico
+ */
+export interface DataSourceCollection {
+	name: string;
+	title?: string;
+}
+
+export interface DataSourceField {
+	name: string;
+	type: string;
+	interface?: string | null;
+	target?: string | null;
+	uiSchema?: {
+		enum?: Array<{
+			value: string | number;
+			label: string;
+		}>;
+		title?: string;
+	};
+}
+
+export interface InferredEnumsMap {
+	[fieldName: string]: {
+		values: string[];
+		labels: Record<string, string>;
+		cardinality: number;
+		totalRecords: number;
+	};
+}
+
+/**
+ * Interface genérica para clientes de datasource
+ * Permite que o script seja agnóstico em relação à fonte de dados
+ */
+export interface DataSourceClient {
+	readonly baseUrl: string;
+
+	fetchCollections(): Promise<DataSourceCollection[]>;
+
+	fetchCollectionFields(collectionName: string): Promise<DataSourceField[]>;
+
+	inferEnumsFromData(
+		collectionName: string,
+		fieldNames: string[],
+		sampleSize?: number,
+	): Promise<InferredEnumsMap>;
+
+	fetchCollectionSample(
+		collectionName: string,
+		pageSize?: number,
+	): Promise<Array<Record<string, unknown>>>;
+}
+
 export interface SingleFileResult {
 	resultType: "single";
 	outputPath: string;
@@ -57,9 +111,11 @@ export interface EnumAdapter {
 
 interface BaseDataSourceGenerationConfig {
 	name: string;
+	type: "nocobase" | "rest";
 	dataSource: string;
 	outputDir: string;
-	splitCollections: string[];
+	splitCollections?: string[];
+	collections?: string[];
 	baseInterfaceNaming?: BaseInterfaceNamingConfig;
 	/**
 	 * Adapter opcional chamado ANTES do fallback sample-based de enums.
@@ -68,35 +124,7 @@ interface BaseDataSourceGenerationConfig {
 	preEnumAdapter?: EnumAdapter;
 }
 
-export interface MainDataSourceGenerationConfig
-	extends BaseDataSourceGenerationConfig {
-	dataSource: "main";
-	collections?: string[];
-}
-
-export interface ExternalDataSourceGenerationConfig
-	extends BaseDataSourceGenerationConfig {
-	collections: string[];
-}
-
-export type DataSourceGenerationConfig =
-	| MainDataSourceGenerationConfig
-	| ExternalDataSourceGenerationConfig;
-
-export function defineDataSource(
-	config: MainDataSourceGenerationConfig,
-): MainDataSourceGenerationConfig;
-export function defineDataSource(
-	config: ExternalDataSourceGenerationConfig,
-): ExternalDataSourceGenerationConfig;
-export function defineDataSource(
-	config: DataSourceGenerationConfig,
-): DataSourceGenerationConfig;
-export function defineDataSource(
-	config: DataSourceGenerationConfig,
-): DataSourceGenerationConfig {
-	return config;
-}
+export type DataSourceGenerationConfig = BaseDataSourceGenerationConfig;
 
 export interface ScriptConfig {
 	outputDir: string; // Diretório de saída (ex: "src/@types/generated") — split usa esta pasta; não-split usa <outputDir>/index.ts

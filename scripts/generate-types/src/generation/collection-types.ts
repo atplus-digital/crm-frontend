@@ -4,12 +4,12 @@ import type {
 	GeneratedTypes,
 } from "@scripts/generate-types/src/@types/generation";
 import type {
-	NocoBaseCollection,
-	NocoBaseField,
-} from "@scripts/generate-types/src/@types/nocobase";
+	DataSourceClient,
+	DataSourceCollection,
+	DataSourceField,
+} from "@scripts/generate-types/src/@types/script";
 import { mapWithConcurrency } from "@scripts/generate-types/src/utils/concurrency";
 import { toCollectionTypeName } from "@scripts/generate-types/src/utils/naming";
-import type { NocoBaseClient } from "./client";
 import { extractRelationInfo, mapFieldType } from "./field-mapper";
 
 /**
@@ -39,7 +39,7 @@ function sortByName<T extends { name: string }>(items: T[]): T[] {
  * @returns GeneratedTypes com scalars e relations separados
  */
 function buildGeneratedTypes(
-	fields: NocoBaseField[],
+	fields: DataSourceField[],
 	knownCollections: ReadonlySet<string>,
 ): GeneratedTypes {
 	const generated: GeneratedTypes = {
@@ -131,8 +131,8 @@ function toCollectionTypesMap(
  * ```
  */
 export async function buildCollectionTypes(
-	client: NocoBaseClient,
-	collections: NocoBaseCollection[],
+	client: DataSourceClient,
+	collections: DataSourceCollection[],
 	options: BuildCollectionTypesOptions = {},
 ): Promise<CollectionTypesMap> {
 	const sortedCollections = sortByName(collections);

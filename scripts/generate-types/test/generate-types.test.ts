@@ -14,6 +14,7 @@ const mockConfigFactory = vi.hoisted(() => {
 		datasources: [
 			{
 				name: "test",
+				type: "nocobase",
 				dataSource: "main",
 				outputDir: "/tmp/test-generated",
 				splitCollections: [],
@@ -102,6 +103,7 @@ describe("generate-types", () => {
 				datasources: [
 					{
 						name: "valid-ds",
+						type: "nocobase",
 						dataSource: "main",
 						outputDir: "/tmp/output1",
 						splitCollections: [],
@@ -154,6 +156,7 @@ describe("generate-types", () => {
 				datasources: [
 					{
 						name: "empty-1",
+						type: "nocobase",
 						dataSource: "main",
 						outputDir: "",
 						splitCollections: [],
@@ -197,6 +200,7 @@ describe("generate-types", () => {
 			const result = generateTypesModule.resolveDataSourceConfigs();
 			expect(result[0]).toEqual({
 				name: "valid-ds",
+				type: "nocobase",
 				dataSource: "main",
 				outputDir: "/tmp/output1",
 				splitCollections: [],
@@ -362,12 +366,14 @@ describe("resolveDataSourceConfigs - edge cases", () => {
 			datasources: [
 				{
 					name: "valid",
+					type: "nocobase",
 					dataSource: "main",
 					outputDir: "/tmp/valid",
 					splitCollections: [],
 				},
 				{
 					name: "empty",
+					type: "nocobase",
 					dataSource: "main",
 					outputDir: "",
 					splitCollections: [],

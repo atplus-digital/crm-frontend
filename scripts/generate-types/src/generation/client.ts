@@ -1,11 +1,15 @@
 import type {
-	NocoBaseCollection,
 	NocoBaseCollectionResponse,
 	NocoBaseCollectionsListResponse,
 	NocoBaseCredentials,
 	NocoBaseField,
 } from "@scripts/generate-types/src/@types/nocobase";
-import type { InferredEnumsMap } from "./enum-inference";
+import type {
+	DataSourceClient,
+	DataSourceCollection,
+	DataSourceField,
+	InferredEnumsMap,
+} from "@scripts/generate-types/src/@types/script";
 import { inferEnumsFromSample } from "./enum-inference";
 
 interface ListSampleResponse {
@@ -50,7 +54,7 @@ function getErrorBodyPreview(rawBody: string): string {
  *
  * @example
  * ```typescript
- * const client = new NocoBaseClient({
+ * const client = new NocoBaseDataSourceClient({
  *   baseUrl: "http://localhost:13000",
  *   token: "abc123",
  *   timeoutMs: 15000
@@ -60,7 +64,7 @@ function getErrorBodyPreview(rawBody: string): string {
  * const fields = await client.fetchCollectionFields("users");
  * ```
  */
-export class NocoBaseClient {
+export class NocoBaseDataSourceClient implements DataSourceClient {
 	public readonly baseUrl: string;
 
 	private readonly requestHeaders?: Record<string, string>;
@@ -73,13 +77,7 @@ export class NocoBaseClient {
 		this.requestHeaders = options?.requestHeaders;
 	}
 
-	/**
-	 * Busca todas as collections da API NocoBase.
-	 *
-	 * @returns Array de collections ordenadas por nome
-	 * @throws {Error} Se timeout ou erro HTTP
-	 */
-	public async fetchCollections(): Promise<NocoBaseCollection[]> {
+	public async fetchCollections(): Promise<DataSourceCollection[]> {
 		const response = await this.fetchJson<NocoBaseCollectionsListResponse>(
 			"collections:list?paginate=false",
 		);
@@ -87,30 +85,12 @@ export class NocoBaseClient {
 		return sortByName(response.data);
 	}
 
-	/**
-	 * Busca todos os campos de uma collection específica.
-	 * Tenta primeiro o endpoint collections.fields:list (que retorna uiSchema completo).
-	 * Se falhar, usa fallback para collections:get com appends=fields.
-	 * Se collections:get falhar com 404, inferir campos por amostragem de dados.
-	 *
-	 * @param collectionName - Nome da collection
-	 * @returns Array de campos ordenados por nome
-	 * @throws {Error} Se timeout ou erro HTTP
-	 */
 	public async fetchCollectionFields(
 		collectionName: string,
-	): Promise<NocoBaseField[]> {
+	): Promise<DataSourceField[]> {
 		return this.fetchCollectionFieldsWithFallback(collectionName);
 	}
 
-	/**
-	 * Busca todos os campos de uma collection via recurso collections.fields.
-	 * Este endpoint retorna campos com uiSchema completo (incluindo enums).
-	 *
-	 * @param collectionName - Nome da collection
-	 * @returns Array de campos ordenados por nome
-	 * @throws {Error} Se timeout ou erro HTTP
-	 */
 	public async fetchFieldsWithUISchema(
 		collectionName: string,
 	): Promise<NocoBaseField[]> {

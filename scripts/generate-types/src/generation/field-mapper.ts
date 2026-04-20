@@ -1,5 +1,5 @@
 import type { RelationInfo } from "@scripts/generate-types/src/@types/generation";
-import type { NocoBaseField } from "@scripts/generate-types/src/@types/nocobase";
+import type { DataSourceField } from "@scripts/generate-types/src/@types/script";
 import { resolveRelationByType, resolveRelationInterface } from "./relations";
 
 /**
@@ -76,7 +76,9 @@ const FIELD_TYPE_MAP: Record<string, string> = {
  * @param field Campo do NocoBase
  * @returns Informações da relação ou null
  */
-export function extractRelationInfo(field: NocoBaseField): RelationInfo | null {
+export function extractRelationInfo(
+	field: DataSourceField,
+): RelationInfo | null {
 	// Campos escalares de sistema não devem ser tratados como relações
 	if (field.name in SYSTEM_SCALAR_FIELDS) {
 		return null;
@@ -143,7 +145,7 @@ function buildEnumType(
  * @param field Campo do NocoBase
  * @returns Tipo TypeScript correspondente
  */
-export function mapFieldType(field: NocoBaseField): string {
+export function mapFieldType(field: DataSourceField): string {
 	// 1. Campos de sistema têm mapeamento fixo
 	if (field.name in SYSTEM_SCALAR_FIELDS) {
 		return SYSTEM_SCALAR_FIELDS[field.name]();

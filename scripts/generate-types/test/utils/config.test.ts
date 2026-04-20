@@ -25,6 +25,7 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "nocobase",
+						type: "nocobase" as const,
 						dataSource: "main",
 						outputDir: "./generated",
 						splitCollections: [],
@@ -58,6 +59,7 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "nocobase",
+						type: "nocobase" as const,
 						dataSource: "main",
 						outputDir: "./generated",
 						splitCollections: [],
@@ -74,6 +76,7 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "nocobase",
+						type: "nocobase" as const,
 						dataSource: "main",
 						outputDir: "./generated",
 						splitCollections: [],
@@ -90,6 +93,7 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "nocobase",
+						type: "nocobase" as const,
 						dataSource: "main",
 						outputDir: "./generated",
 						splitCollections: [],
@@ -106,6 +110,7 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "nocobase",
+						type: "nocobase" as const,
 						dataSource: "main",
 						outputDir: "./generated",
 						splitCollections: [],
@@ -122,6 +127,7 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "nocobase",
+						type: "nocobase" as const,
 						dataSource: "main",
 						outputDir: "./generated",
 						splitCollections: [],
@@ -155,6 +161,7 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "",
+						type: "nocobase" as const,
 						dataSource: "main",
 						outputDir: "./generated",
 						splitCollections: [],
@@ -170,6 +177,7 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "nocobase",
+						type: "nocobase" as const,
 						dataSource: "" as "main",
 						outputDir: "./generated",
 						splitCollections: [],
@@ -185,6 +193,7 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "nocobase",
+						type: "nocobase" as const,
 						dataSource: "main",
 						outputDir: "",
 						splitCollections: [],
@@ -200,12 +209,14 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "nocobase",
+						type: "nocobase" as const,
 						dataSource: "main",
 						outputDir: "./generated",
 						splitCollections: [],
 					},
 					{
 						name: "external",
+						type: "rest" as const,
 						dataSource: "external_datasource",
 						outputDir: "./generated-external",
 						splitCollections: [],
@@ -235,6 +246,7 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "nocobase",
+						type: "nocobase" as const,
 						dataSource: "main",
 						outputDir: "./custom-output",
 						splitCollections: ["users", "posts"],
@@ -262,12 +274,14 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "nocobase",
+						type: "nocobase" as const,
 						dataSource: "main",
 						outputDir: "./generated",
 						splitCollections: [],
 					},
 					{
 						name: "ixc",
+						type: "nocobase" as const,
 						dataSource: "d_db_ixcsoft",
 						outputDir: "./generated-ixc",
 						splitCollections: [],
@@ -294,6 +308,7 @@ describe("parseConfig", () => {
 				datasources: [
 					{
 						name: "",
+						type: "nocobase" as const,
 						dataSource: "" as "main" | "",
 						outputDir: "",
 						splitCollections: [],

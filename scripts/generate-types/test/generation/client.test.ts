@@ -1,8 +1,8 @@
 import type { NocoBaseCredentials } from "@scripts/generate-types/src/@types/nocobase";
-import { NocoBaseClient } from "@scripts/generate-types/src/generation/client";
+import { NocoBaseDataSourceClient } from "@scripts/generate-types/src/generation/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-describe("NocoBaseClient", () => {
+describe("NocoBaseDataSourceClient", () => {
 	beforeEach(() => {
 		vi.stubGlobal("fetch", vi.fn());
 	});
@@ -19,7 +19,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 			expect(client.baseUrl).toBe("https://api.example.com");
 		});
 
@@ -29,7 +29,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 10000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 			expect(client.baseUrl).toBe("https://api.example.com");
 		});
 
@@ -42,7 +42,7 @@ describe("NocoBaseClient", () => {
 			const options = {
 				requestHeaders: { "X-Custom-Header": "value" },
 			};
-			const client = new NocoBaseClient(credentials, options);
+			const client = new NocoBaseDataSourceClient(credentials, options);
 			expect(client.baseUrl).toBe("https://api.example.com");
 		});
 	});
@@ -66,7 +66,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 			const result = await client.fetchCollections();
 
 			expect(result).toHaveLength(3);
@@ -88,7 +88,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			await expect(client.fetchCollections()).rejects.toThrow(
 				"HTTP 500 Internal Server Error",
@@ -114,7 +114,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 			const result = await client.fetchCollectionFields("users");
 
 			expect(result).toHaveLength(3);
@@ -153,7 +153,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			const result = await client.fetchCollectionFields("nonexistent");
 
@@ -176,7 +176,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			await expect(client.fetchCollectionFields("users")).rejects.toThrow(
 				"HTTP 500 Internal Server Error",
@@ -205,7 +205,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			const result = await client.fetchCollectionFields("empty_collection");
 			expect(result).toEqual([]);
@@ -234,7 +234,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials);
+				const client = new NocoBaseDataSourceClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const priceField = result.find((f) => f.name === "price");
@@ -267,7 +267,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials);
+				const client = new NocoBaseDataSourceClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const isActiveField = result.find((f) => f.name === "isActive");
@@ -300,7 +300,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials);
+				const client = new NocoBaseDataSourceClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const tagsField = result.find((f) => f.name === "tags");
@@ -333,7 +333,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials);
+				const client = new NocoBaseDataSourceClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const nullField = result.find((f) => f.name === "nullField");
@@ -366,7 +366,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials);
+				const client = new NocoBaseDataSourceClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const metadataField = result.find((f) => f.name === "metadata");
@@ -399,7 +399,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials);
+				const client = new NocoBaseDataSourceClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const createdAtField = result.find((f) => f.name === "createdAt");
@@ -432,7 +432,7 @@ describe("NocoBaseClient", () => {
 					token: "test-token",
 					timeoutMs: 5000,
 				};
-				const client = new NocoBaseClient(credentials);
+				const client = new NocoBaseDataSourceClient(credentials);
 
 				const result = await client.fetchCollectionFields("test");
 				const titleField = result.find((f) => f.name === "title");
@@ -458,7 +458,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 100,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			await expect(client.fetchCollections()).rejects.toThrow(
 				"Timeout de 100ms ao acessar https://api.example.com/collections:list?paginate=false",
@@ -484,7 +484,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			const result = await client.fetchFieldsWithUISchema("users");
 
@@ -510,7 +510,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			await expect(client.fetchFieldsWithUISchema("users")).rejects.toThrow(
 				"HTTP 500 Internal Server Error",
@@ -541,7 +541,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			const result = await client.fetchCollectionFields("test");
 			const optionalField = result.find((f) => f.name === "optionalField");
@@ -574,7 +574,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			const result = await client.fetchCollectionFields("test");
 			const bigintField = result.find((f) => f.name === "bigintField");
@@ -607,7 +607,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			const result = await client.fetchCollectionFields("test");
 			const dateField = result.find((f) => f.name === "dateField");
@@ -633,7 +633,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			await expect(client.fetchCollections()).rejects.toThrow(
 				"Error: Line 1 Line 2",
@@ -653,7 +653,7 @@ describe("NocoBaseClient", () => {
 				token: "test-token",
 				timeoutMs: 5000,
 			};
-			const client = new NocoBaseClient(credentials);
+			const client = new NocoBaseDataSourceClient(credentials);
 
 			await expect(client.fetchCollections()).rejects.toThrow();
 		});

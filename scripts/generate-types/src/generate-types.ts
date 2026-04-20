@@ -2,10 +2,11 @@ import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type { CollectionTypesMap } from "./@types/generation";
 import type {
+	DataSourceClient,
 	DataSourceGenerationConfig,
 	GenerateTypesResult,
 } from "./@types/script";
-import { NocoBaseClient } from "./generation/client";
+import { NocoBaseDataSourceClient } from "./generation/client";
 import { buildCollectionTypes } from "./generation/collection-types";
 import { generateCollectionsFile } from "./generation/collections-index";
 import { generateContent, generateSplitFiles } from "./generation/content";
@@ -32,9 +33,6 @@ import {
 	writeGeneratedFile,
 	writeMultipleFiles,
 } from "./utils/writer";
-
-const MAIN_DATASOURCE_NAME = "main";
-const IXC_DATASOURCE_NAME = "d_db_ixcsoft";
 
 interface GeneratedFileWrite {
 	outputPath: string;
@@ -74,7 +72,7 @@ export function mergeCollectionTypeMaps(
 }
 
 async function resolveCollectionsForDataSource(
-	client: NocoBaseClient,
+	client: DataSourceClient,
 	dataSource: DataSourceGenerationConfig,
 ): Promise<Array<{ name: string }>> {
 	const configuredCollectionNames = normalizeCollectionNames(
@@ -85,30 +83,47 @@ async function resolveCollectionsForDataSource(
 		return configuredCollectionNames.map((name) => ({ name }));
 	}
 
-	if (dataSource.dataSource !== MAIN_DATASOURCE_NAME) {
+	if (dataSource.type !== "nocobase") {
 		throw new Error(
-			`DataSource '${dataSource.name}' (${dataSource.dataSource}) exige collections explícitas em scripts/generate-types/datasources.config.ts`,
+			`DataSource '${dataSource.name}' (type: '${dataSource.type}') exige collections explícitas em scripts/generate-types/datasources.config.ts`,
 		);
 	}
 
 	return client.fetchCollections();
 }
 
+function createDataSourceClient(
+	dataSource: DataSourceGenerationConfig,
+): DataSourceClient {
+	switch (dataSource.type) {
+		case "nocobase":
+			return new NocoBaseDataSourceClient(
+				{
+					baseUrl: config.baseUrl,
+					token: config.token,
+					timeoutMs: config.requestTimeoutMs,
+				},
+				{
+					requestHeaders: {
+						"X-Data-Source": dataSource.dataSource,
+					},
+				},
+			);
+		case "rest":
+			throw new Error(
+				`Datasource REST ainda não implementado. DataSource: '${dataSource.name}'`,
+			);
+		default:
+			throw new Error(
+				`Tipo de datasource desconhecido: '${(dataSource as DataSourceGenerationConfig).type}'. Esperado: 'nocobase' | 'rest'`,
+			);
+	}
+}
+
 async function runGenerateTypesForDataSource(
 	dataSource: DataSourceGenerationConfig,
 ): Promise<DataSourceFilesResult> {
-	const client = new NocoBaseClient(
-		{
-			baseUrl: config.baseUrl,
-			token: config.token,
-			timeoutMs: config.requestTimeoutMs,
-		},
-		{
-			requestHeaders: {
-				"X-Data-Source": dataSource.dataSource,
-			},
-		},
-	);
+	const client = createDataSourceClient(dataSource);
 	const baseInterfaceNaming = resolveBaseInterfaceNamingConfig(
 		dataSource.baseInterfaceNaming ?? config.baseInterfaceNaming,
 	);
@@ -124,7 +139,7 @@ async function runGenerateTypesForDataSource(
 		`📋 Encontradas ${collections.length} collections para ${dataSource.dataSource}`,
 	);
 
-	const isIXC = dataSource.dataSource === IXC_DATASOURCE_NAME;
+	const isIXC = dataSource.name === "ixc";
 	const collectionReports: Array<{
 		collectionName: string;
 		enumFields: Map<
@@ -224,7 +239,7 @@ async function runGenerateTypesForDataSource(
 
 	const { mainCollections, splitCollections } = splitCollectionsByConfig(
 		collectionTypes,
-		dataSource.splitCollections,
+		dataSource.splitCollections ?? [],
 	);
 	const splitCollectionNamesSet = new Set(splitCollections.keys());
 	const baseTypeIndex = createBaseTypeIndex(

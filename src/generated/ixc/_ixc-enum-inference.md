@@ -1,6 +1,6 @@
 # Relatório de Inferência de Enums - IXC
 
-> **Data:** 2026-04-18
+> **Data:** 2026-04-20
 > **Collections analisadas:** 6
 
 ---

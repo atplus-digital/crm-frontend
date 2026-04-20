@@ -1,8 +1,4 @@
-import {
-	defineDataSource,
-	type RuntimeConfig,
-	type ScriptConfig,
-} from "../@types/script";
+import type { RuntimeConfig, ScriptConfig } from "../@types/script";
 import { resolveEnvConfig } from "./load-config";
 
 const defaultConfig: ScriptConfig = {
@@ -11,6 +7,7 @@ const defaultConfig: ScriptConfig = {
 	datasources: [
 		{
 			name: "nocobase",
+			type: "nocobase",
 			dataSource: "main",
 			outputDir: "./generated",
 			splitCollections: [],
@@ -84,11 +81,11 @@ function validateMergedConfig(mergedConfig: Partial<ScriptConfig>): void {
 		}
 
 		if (
-			dataSource.dataSource !== "main" &&
+			dataSource.type !== "nocobase" &&
 			(!dataSource.collections || dataSource.collections.length === 0)
 		) {
 			errors.push(
-				`dataSource '${dataSource.name}' (${dataSource.dataSource}) deve definir collections explicitamente`,
+				`dataSource '${dataSource.name}' (type: '${dataSource.type}') deve definir collections explicitamente`,
 			);
 		}
 	}
@@ -110,9 +107,7 @@ export function parseConfig(
 
 	const normalizedConfig = {
 		...mergedConfig,
-		datasources: mergedConfig.datasources?.map((datasource) =>
-			defineDataSource(datasource),
-		),
+		datasources: mergedConfig.datasources,
 	};
 
 	validateMergedConfig(normalizedConfig);

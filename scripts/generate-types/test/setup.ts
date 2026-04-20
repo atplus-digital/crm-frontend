@@ -4,10 +4,7 @@ import type {
 	RelationInfo,
 } from "@scripts/generate-types/src/@types/generation";
 import type { NocoBaseField } from "@scripts/generate-types/src/@types/nocobase";
-import {
-	defineDataSource,
-	type RuntimeConfig,
-} from "@scripts/generate-types/src/@types/script";
+import type { RuntimeConfig } from "@scripts/generate-types/src/@types/script";
 import { beforeEach, vi } from "vitest";
 
 const mockScriptConfig = {
@@ -33,8 +30,9 @@ const mockScriptConfig = {
 		suffix: "Base",
 	},
 	datasources: [
-		defineDataSource({
+		{
 			name: "nocobase",
+			type: "nocobase" as const,
 			dataSource: "main",
 			outputDir: "/tmp/test-generated",
 			splitCollections: [
@@ -49,14 +47,15 @@ const mockScriptConfig = {
 				"t_equipamentos",
 				"t_telecom_recursos",
 			],
-		}),
-		defineDataSource({
+		},
+		{
 			name: "ixc",
+			type: "nocobase" as const,
 			dataSource: "d_db_ixcsoft",
 			outputDir: "/tmp/test-generated-ixc",
 			splitCollections: ["cliente_contrato"],
 			collections: ["cliente_contrato"],
-		}),
+		},
 	],
 };
 

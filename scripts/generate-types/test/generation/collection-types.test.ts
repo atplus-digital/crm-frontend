@@ -1,5 +1,5 @@
 import type { NocoBaseCollection } from "@scripts/generate-types/src/@types/nocobase";
-import type { NocoBaseClient } from "@scripts/generate-types/src/generation/client";
+import type { DataSourceClient } from "@scripts/generate-types/src/@types/script";
 import type { BuildCollectionTypesOptions } from "@scripts/generate-types/src/generation/collection-types";
 import { createMockField } from "@scripts/generate-types/test/setup";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -42,7 +42,7 @@ describe("collection-types", () => {
 			const { buildCollectionTypes } = await importModule();
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue([]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			await buildCollectionTypes(mockClient, []);
 
@@ -59,7 +59,7 @@ describe("collection-types", () => {
 			const collection: NocoBaseCollection = { name: "users" };
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue([]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			await buildCollectionTypes(mockClient, [collection]);
 
@@ -76,7 +76,7 @@ describe("collection-types", () => {
 			];
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue([]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			await buildCollectionTypes(mockClient, collections);
 
@@ -101,7 +101,7 @@ describe("collection-types", () => {
 			];
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue([]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			await buildCollectionTypes(mockClient, collections);
 
@@ -126,7 +126,7 @@ describe("collection-types", () => {
 			];
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue(fields),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			const result = await buildCollectionTypes(mockClient, [collection]);
 
@@ -156,7 +156,7 @@ describe("collection-types", () => {
 					if (name === "users") return Promise.resolve(userFields);
 					return Promise.resolve([]);
 				}),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			const result = await buildCollectionTypes(mockClient, collections);
 
@@ -179,7 +179,7 @@ describe("collection-types", () => {
 			];
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue(userFields),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			const result = await buildCollectionTypes(mockClient, collections);
 
@@ -195,7 +195,7 @@ describe("collection-types", () => {
 			const collection: NocoBaseCollection = { name: "users" };
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue([]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			const result = await buildCollectionTypes(mockClient, [collection]);
 
@@ -213,7 +213,7 @@ describe("collection-types", () => {
 			];
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue([]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			await expect(
 				buildCollectionTypes(mockClient, collections),
@@ -230,7 +230,7 @@ describe("collection-types", () => {
 			];
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue([]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 			const onCollectionStart = vi.fn();
 
 			await buildCollectionTypes(mockClient, collections, {
@@ -255,7 +255,7 @@ describe("collection-types", () => {
 			const collection: NocoBaseCollection = { name: "users" };
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue([]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			await buildCollectionTypes(mockClient, [collection]);
 
@@ -272,7 +272,7 @@ describe("collection-types", () => {
 			const collection: NocoBaseCollection = { name: "users" };
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue([]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			await buildCollectionTypes(mockClient, [collection], {
 				concurrency: 10,
@@ -294,7 +294,7 @@ describe("collection-types", () => {
 			];
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue([]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			const result = await buildCollectionTypes(mockClient, collections);
 
@@ -313,7 +313,7 @@ describe("collection-types", () => {
 					.mockResolvedValue([
 						createMockField({ name: "id", type: "integer" }),
 					]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			const result = await buildCollectionTypes(mockClient, collections);
 
@@ -333,7 +333,7 @@ describe("collection-types", () => {
 				fetchCollectionFields: vi
 					.fn()
 					.mockResolvedValue([createMockField({ name: "id" })]),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 			const contexts: BuildCollectionTypesOptions["onCollectionStart"] extends
 				| undefined
 				| ((ctx: infer P) => void)
@@ -387,7 +387,7 @@ describe("collection-types", () => {
 			];
 			const mockClient = {
 				fetchCollectionFields: vi.fn().mockResolvedValue(fields),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			const result = await buildCollectionTypes(mockClient, [collection]);
 
@@ -419,7 +419,7 @@ describe("collection-types", () => {
 					if (name === "t_negociacoes") return Promise.resolve(negFields);
 					return Promise.resolve([]);
 				}),
-			} as unknown as NocoBaseClient;
+			} as unknown as DataSourceClient;
 
 			const result = await buildCollectionTypes(mockClient, collections);
 
