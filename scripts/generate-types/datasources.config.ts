@@ -1,4 +1,5 @@
 import type { DataSourceGenerationConfig } from "./src/@types/script";
+import { createIXCRelationsAdapter } from "./src/adapters/ixc-relations-adapter";
 import { createIXCWikiAdapter } from "./src/adapters/ixc-wiki-scraper";
 
 export const dataSourceConfigs = [
@@ -7,6 +8,7 @@ export const dataSourceConfigs = [
 		type: "nocobase",
 		dataSource: "main",
 		outputDir: "src/generated/nocobase",
+		inferRelationsByName: false, // NocoBase já tem relações via API
 		splitCollections: [
 			"users",
 			"t_negociacoes",
@@ -15,7 +17,6 @@ export const dataSourceConfigs = [
 			"t_crm_troca_titularidade",
 			"t_registros_de_contato",
 		],
-
 		generateEnumReport: true,
 	},
 	{
@@ -40,7 +41,9 @@ export const dataSourceConfigs = [
 			"su_ticket",
 		],
 		preEnumAdapter: createIXCWikiAdapter(),
+		relationsAdapter: createIXCRelationsAdapter(),
 		enumCorrection: [],
 		generateEnumReport: true,
+		inferRelationsByName: true, // Habilita inferência por convenção como fallback
 	},
 ] satisfies DataSourceGenerationConfig[];

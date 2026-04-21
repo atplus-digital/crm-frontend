@@ -6,6 +6,7 @@ import type {
 	DataSourceGenerationConfig,
 	GenerateTypesResult,
 } from "./@types/script";
+import { createIXCRelationsAdapter } from "./adapters/ixc-relations-adapter";
 import { NocoBaseDataSourceClient } from "./generation/client";
 import { buildCollectionTypes } from "./generation/collection-types";
 import { generateCollectionsFile } from "./generation/collections-index";
@@ -156,10 +157,18 @@ async function runGenerateTypesForDataSource(
 		>;
 	}> = [];
 
+	// Configurar adapter de relações para IXC
+	const relationsAdapter =
+		dataSource.name === "ixc" ? createIXCRelationsAdapter() : undefined;
+
 	const collectionTypes = await buildCollectionTypes(client, collections, {
 		onCollectionStart: ({ collectionName, index, total }) => {
 			logger.debug(`⏳ [${index}/${total}] Processando ${collectionName}...`);
 		},
+		relationsAdapter,
+		relationsMapping: dataSource.relationsMapping,
+		inferRelationsByName:
+			dataSource.inferRelationsByName ?? dataSource.name === "ixc",
 	});
 
 	// Fase 1: Aplicar todas as transformações de enum (adapter, inferência, corrections)

@@ -3,6 +3,7 @@
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
+import type { Cliente } from "./cliente";
 
 export const FN_ARECEBER_TABLE_NAME = "fn_areceber";
 
@@ -285,7 +286,18 @@ export interface FnAreceber {
 	valor_total_com_juros: string;
 }
 
-export type FnAreceberRelations = Record<string, never>;
+export interface FnAreceberRelations {
+	f_carteira_cobranca?: unknown | null;
+	f_cliente?: Cliente | null;
+	f_conta?: unknown | null;
+	f_conta_class_finan_a?: unknown | null;
+	f_filial?: unknown | null;
+	f_lote_geracao_financeiro_fatura?: unknown | null;
+	f_renegociacao?: unknown | null;
+	f_renegociacao_novo?: unknown | null;
+	f_saida?: unknown | null;
+	f_sip?: unknown | null;
+}
 
 export type FnAreceberRelationKey = keyof FnAreceberRelations;
 

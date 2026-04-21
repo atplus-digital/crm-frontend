@@ -3,6 +3,8 @@
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
+import type { Cliente } from "./cliente";
+import type { ClienteContrato } from "./cliente-contrato";
 
 export const SU_TICKET_TABLE_NAME = "su_ticket";
 
@@ -108,7 +110,15 @@ export interface SuTicket {
 	updated_user: string;
 }
 
-export type SuTicketRelations = Record<string, never>;
+export interface SuTicketRelations {
+	f_assunto?: unknown | null;
+	f_cliente?: Cliente | null;
+	f_contrato?: ClienteContrato | null;
+	f_equipe?: unknown | null;
+	f_prioridade?: unknown | null;
+	f_responsavel?: unknown | null;
+	f_status?: unknown | null;
+}
 
 export type SuTicketRelationKey = keyof SuTicketRelations;
 

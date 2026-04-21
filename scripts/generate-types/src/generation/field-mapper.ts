@@ -3,6 +3,50 @@ import type { DataSourceField } from "@scripts/generate-types/src/@types/script"
 import { resolveRelationByType, resolveRelationInterface } from "./relations";
 
 /**
+ * Padrões de convenção para inferência automática de relações.
+ * Ordem importa: padrões mais específicos devem vir primeiro.
+ */
+const RELATION_NAME_PATTERNS: Array<{
+	pattern: RegExp;
+	extractTarget: (match: RegExpMatchArray) => string;
+	defaultType: "belongsTo" | "hasMany";
+}> = [
+	// id_cliente → cliente, id_vd_contrato → vd_contrato
+	{
+		pattern: /^id_([a-z_][a-z0-9_]*)$/i,
+		extractTarget: (match) => match[1],
+		defaultType: "belongsTo",
+	},
+	// cliente_id → cliente (menos comum no IXC)
+	{
+		pattern: /^([a-z_][a-z0-9_]*)_id$/i,
+		extractTarget: (match) => match[1],
+		defaultType: "belongsTo",
+	},
+	// f_nc_cliente → cliente (padrão NocoBase para relações)
+	{
+		pattern: /^(?:f_|a_)(?:nc_)?([a-z_][a-z0-9_]*)$/i,
+		extractTarget: (match) => match[1],
+		defaultType: "belongsTo",
+	},
+];
+
+/**
+ * Lista negra de campos que parecem relações mas não são.
+ * Usado para evitar falsos positivos na inferência.
+ */
+const FIELD_BLACKLIST = [
+	"id",
+	"id_hash",
+	"id_sessao",
+	"id_token",
+	"id_cache",
+	"id_temp",
+	"uuid",
+	"guid",
+];
+
+/**
  * Campos escalares de sistema do NocoBase com mapeamento fixo.
  * Esses campos aparecem no payload mas não devem entrar no fluxo de relações.
  */
@@ -70,38 +114,94 @@ const FIELD_TYPE_MAP: Record<string, string> = {
 };
 
 /**
+ * Tenta inferir relação de um campo baseado em convenção de nomes.
+ * Retorna null se o campo não seguir padrões conhecidos.
+ */
+function inferRelationFromFieldName(fieldName: string): RelationInfo | null {
+	// Ignorar campos na lista negra
+	if (FIELD_BLACKLIST.includes(fieldName.toLowerCase())) {
+		return null;
+	}
+
+	// Testar contra cada padrão
+	for (const {
+		pattern,
+		extractTarget,
+		defaultType,
+	} of RELATION_NAME_PATTERNS) {
+		const match = fieldName.match(pattern);
+		if (match) {
+			const inferredTarget = extractTarget(match);
+
+			return {
+				type: defaultType,
+				targetCollection: inferredTarget,
+			};
+		}
+	}
+
+	return null;
+}
+
+/**
  * Extrai informações de relação de um campo.
- * Retorna null para campos de sistema ou campos que não são relações.
+ * Retorna null para campos escalares de sistema ou campos que não são relações.
+ *
+ * Prioridade de detecção:
+ * 1. Mapeamento manual (relationsMapping)
+ * 2. Metadados da API (field.interface, field.type, field.target)
+ * 3. Inferência por convenção de nomes
  *
  * @param field Campo do NocoBase
+ * @param manualRelations Mapeamento manual opcional
+ * @param inferRelationsByName Habilita inferência por convenção de nomes
  * @returns Informações da relação ou null
  */
 export function extractRelationInfo(
 	field: DataSourceField,
+	manualRelations?: Record<
+		string,
+		{ target: string; type: "belongsTo" | "hasMany" | "m2m" | "hasOne" }
+	>,
+	inferRelationsByName = false,
 ): RelationInfo | null {
 	// Campos escalares de sistema não devem ser tratados como relações
 	if (field.name in SYSTEM_SCALAR_FIELDS) {
 		return null;
 	}
 
-	// Resolve o tipo de relação baseado na interface (m2o, o2m, m2m, etc)
+	// 1. Verificar mapeamento manual primeiro (maior prioridade)
+	if (manualRelations?.[field.name]) {
+		const manual = manualRelations[field.name];
+		return {
+			type: manual.type,
+			targetCollection: manual.target,
+		};
+	}
+
+	// 2. Tentar resolver pelos metadados da API
 	let relationType = resolveRelationInterface(field.interface);
 
-	// Fallback: resolver pelo field.type quando interface é null/None
-	// Ex: roles.menuUiSchemas (type=belongsToMany, interface=None)
-	// Ex: t_solicitacao_compras.f_anexos (type=belongsToMany, interface=attachment)
 	if (!relationType) {
 		relationType = resolveRelationByType(field.type);
 	}
 
-	if (!relationType) {
-		return null;
+	if (relationType) {
+		return {
+			type: relationType,
+			targetCollection: field.target ?? "",
+		};
 	}
 
-	return {
-		type: relationType,
-		targetCollection: field.target ?? "",
-	};
+	// 3. Fallback: inferir por convenção de nomes (se habilitado)
+	if (inferRelationsByName) {
+		const inferred = inferRelationFromFieldName(field.name);
+		if (inferred) {
+			return inferred;
+		}
+	}
+
+	return null;
 }
 
 /**

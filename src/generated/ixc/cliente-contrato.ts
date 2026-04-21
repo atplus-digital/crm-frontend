@@ -3,6 +3,8 @@
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
+import type { Cliente } from "./cliente";
+import type { VdContratosProdutos } from "./vd-contratos-produtos";
 
 export const CLIENTE_CONTRATO_TABLE_NAME = "cliente_contrato";
 
@@ -424,7 +426,25 @@ export interface ClienteContrato {
 	valor_unitario: string;
 }
 
-export type ClienteContratoRelations = Record<string, never>;
+export interface ClienteContratoRelations {
+	f_carteira_cobranca?: unknown | null;
+	f_cliente?: Cliente | null;
+	f_cond_pag_ativ?: unknown | null;
+	f_contrato_principal?: ClienteContrato | null;
+	f_filial?: unknown | null;
+	f_indexador_reajuste?: unknown | null;
+	f_indicacao_contrato?: unknown | null;
+	f_modelo?: unknown | null;
+	f_moeda?: unknown | null;
+	f_motivo_inclusao?: unknown | null;
+	f_produto_ativ?: unknown | null;
+	f_responsavel?: unknown | null;
+	f_tipo_contrato?: unknown | null;
+	f_tipo_doc_ativ?: unknown | null;
+	f_tipo_documento?: unknown | null;
+	f_vd_contrato?: VdContratosProdutos | null;
+	f_vendedor?: unknown | null;
+}
 
 export type ClienteContratoRelationKey = keyof ClienteContratoRelations;
 

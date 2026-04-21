@@ -1,6 +1,5 @@
 # Relatório de Inferência de Enums
 
-> **Data:** 2026-04-20
 > **Collections analisadas:** 49
 
 ---

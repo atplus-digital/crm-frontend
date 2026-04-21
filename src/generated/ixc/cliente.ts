@@ -462,7 +462,25 @@ export interface Cliente {
 	yapay_token_account: string;
 }
 
-export type ClienteRelations = Record<string, never>;
+export interface ClienteRelations {
+	f_candato_tipo?: unknown | null;
+	f_cidade?: unknown | null;
+	f_cidade_cob?: unknown | null;
+	f_cidade_naturalidade?: unknown | null;
+	f_concorrente?: unknown | null;
+	f_condominio?: unknown | null;
+	f_conta?: unknown | null;
+	f_estado_nascimento?: unknown | null;
+	f_fornecedor_conversao?: unknown | null;
+	f_operadora_celular?: unknown | null;
+	f_perfil?: unknown | null;
+	f_responsavel?: unknown | null;
+	f_segmento?: unknown | null;
+	f_tipo_cliente?: unknown | null;
+	f_uf?: unknown | null;
+	f_uf_cob?: unknown | null;
+	f_vendedor?: unknown | null;
+}
 
 export type ClienteRelationKey = keyof ClienteRelations;
 

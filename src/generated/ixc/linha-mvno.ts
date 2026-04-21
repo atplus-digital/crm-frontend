@@ -3,6 +3,7 @@
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
+import type { Cliente } from "./cliente";
 
 export const LINHA_MVNO_TABLE_NAME = "linha_mvno";
 
@@ -89,7 +90,11 @@ export interface LinhaMvno {
 	voz: string;
 }
 
-export type LinhaMvnoRelations = Record<string, never>;
+export interface LinhaMvnoRelations {
+	f_chip?: unknown | null;
+	f_cliente?: Cliente | null;
+	f_plano?: unknown | null;
+}
 
 export type LinhaMvnoRelationKey = keyof LinhaMvnoRelations;
 

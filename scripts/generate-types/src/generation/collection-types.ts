@@ -7,6 +7,7 @@ import type {
 	DataSourceClient,
 	DataSourceCollection,
 	DataSourceField,
+	RelationsAdapter,
 } from "@scripts/generate-types/src/@types/script";
 import { mapWithConcurrency } from "@scripts/generate-types/src/utils/concurrency";
 import { toCollectionTypeName } from "@scripts/generate-types/src/utils/naming";
@@ -22,6 +23,24 @@ export interface BuildCollectionTypesOptions {
 		index: number;
 		total: number;
 	}) => void;
+	/**
+	 * Adapter opcional para buscar relações de fonte externa.
+	 */
+	relationsAdapter?: RelationsAdapter;
+	/**
+	 * Mapeamento manual de relações por collection.
+	 */
+	relationsMapping?: Record<
+		string,
+		Record<
+			string,
+			{ target: string; type: "belongsTo" | "hasMany" | "m2m" | "hasOne" }
+		>
+	>;
+	/**
+	 * Habilita inferência automática de relações por convenção de nomes.
+	 */
+	inferRelationsByName?: boolean;
 }
 
 /**
@@ -35,6 +54,11 @@ function buildGeneratedTypes(
 	fields: DataSourceField[],
 	knownCollections: ReadonlySet<string>,
 	schemaAvailable: boolean,
+	manualRelations?: Record<
+		string,
+		{ target: string; type: "belongsTo" | "hasMany" | "m2m" | "hasOne" }
+	>,
+	inferRelationsByName = false,
 ): GeneratedTypes {
 	const generated: GeneratedTypes = {
 		scalars: new Map(),
@@ -43,8 +67,13 @@ function buildGeneratedTypes(
 		schemaAvailable,
 	};
 
+	// 1. Processar campos da API
 	for (const field of fields) {
-		const relationInfo = extractRelationInfo(field);
+		const relationInfo = extractRelationInfo(
+			field,
+			manualRelations,
+			inferRelationsByName,
+		);
 		if (relationInfo) {
 			generated.relations.set(field.name, {
 				...relationInfo,
@@ -59,6 +88,24 @@ function buildGeneratedTypes(
 
 		if (field.uiSchema?.enum && field.uiSchema.enum.length > 0) {
 			generated.enums.set(field.name, field.uiSchema.enum);
+		}
+	}
+
+	// 2. Adicionar relações manuais que não existem como campos na API
+	// Ex: adapter retorna f_cliente, mas a API só retorna id_cliente
+	if (manualRelations) {
+		for (const [relationFieldName, relation] of Object.entries(
+			manualRelations,
+		)) {
+			// Só adicionar se ainda não existir
+			if (!generated.relations.has(relationFieldName)) {
+				generated.relations.set(relationFieldName, {
+					type: relation.type,
+					targetCollection: knownCollections.has(relation.target)
+						? relation.target
+						: "",
+				});
+			}
 		}
 	}
 
@@ -135,6 +182,7 @@ export async function buildCollectionTypes(
 		sortedCollections.map((collection) => collection.name),
 	);
 	const concurrency = options.concurrency ?? config.requestConcurrency;
+	const inferRelationsByName = options.inferRelationsByName ?? false;
 
 	const entries = await mapWithConcurrency(
 		sortedCollections,
@@ -149,9 +197,39 @@ export async function buildCollectionTypes(
 			const { fields, schemaAvailable } = await client.fetchCollectionFields(
 				collection.name,
 			);
+
+			// Obter relações do adapter (se configurado)
+			let adapterRelations: Record<
+				string,
+				{ target: string; type: "belongsTo" | "hasMany" | "m2m" | "hasOne" }
+			> = {};
+
+			if (options.relationsAdapter) {
+				try {
+					adapterRelations = await options.relationsAdapter.fetchRelations(
+						collection.name,
+					);
+				} catch {
+					// No-op - fallback para inferência
+				}
+			}
+
+			// Mesclar: manual > adapter > inferência
+			const manualRelations = options.relationsMapping?.[collection.name];
+			const mergedRelations = { ...adapterRelations, ...manualRelations };
+
+			const relationsToPass =
+				Object.keys(mergedRelations).length > 0 ? mergedRelations : undefined;
+
 			return [
 				collection.name,
-				buildGeneratedTypes(fields, knownCollections, schemaAvailable),
+				buildGeneratedTypes(
+					fields,
+					knownCollections,
+					schemaAvailable,
+					relationsToPass,
+					inferRelationsByName && !relationsToPass,
+				),
 			] as const;
 		},
 	);

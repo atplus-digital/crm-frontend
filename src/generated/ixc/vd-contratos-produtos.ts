@@ -65,7 +65,12 @@ export interface VdContratosProdutos {
 	valor_unit: string;
 }
 
-export type VdContratosProdutosRelations = Record<string, never>;
+export interface VdContratosProdutosRelations {
+	f_classificacao?: unknown | null;
+	f_grupo?: unknown | null;
+	f_subgrupo?: unknown | null;
+	f_unidade?: unknown | null;
+}
 
 export type VdContratosProdutosRelationKey = keyof VdContratosProdutosRelations;
 

@@ -102,6 +102,43 @@ export interface EnumAdapterFieldEnum {
 }
 
 /**
+ * Definição de relação manual para datasource.
+ * Usado para mapear explicitamente campos de relação que não são detectados automaticamente.
+ */
+export interface ManualRelationMapping {
+	[fieldName: string]: {
+		/** Collection alvo da relação */
+		target: string;
+		/** Tipo de relação (belongsTo, hasMany, etc) */
+		type: "belongsTo" | "hasMany" | "m2m" | "hasOne";
+	};
+}
+
+/**
+ * Adapter de relações para fontes externas.
+ * Permite que datasources busquem informações de relacionamento de APIs/documentação
+ * antes do fallback por inferência de convenção de nomes.
+ */
+export interface RelationsAdapter {
+	/** Nome descritivo do adapter (usado em logs). */
+	name: string;
+	/**
+	 * Busca relações de fonte externa para uma collection.
+	 * @param collectionName Nome da collection para buscar relações.
+	 * @returns Mapa de campo → dados da relação. Retornar {} significa "sem relações para esta collection".
+	 * @throws Erro → o fallback por inferência é utilizado automaticamente.
+	 */
+	fetchRelations(
+		collectionName: string,
+	): Promise<
+		Record<
+			string,
+			{ target: string; type: "belongsTo" | "hasMany" | "m2m" | "hasOne" }
+		>
+	>;
+}
+
+/**
  * Adapter de enum para fontes externas.
  * Permite que datasources busquem valores de enum completos de APIs/documentation
  * antes do fallback por amostragem.
@@ -220,6 +257,22 @@ interface BaseDataSourceGenerationConfig {
 	 * Sobrescreve configurações globais do config.ts.
 	 */
 	enumInference?: EnumInferenceConfig;
+	/**
+	 * Mapeamento manual de relações para esta datasource.
+	 * Usado como primeira camada antes do adapter e inferência automática.
+	 */
+	relationsMapping?: Record<string, ManualRelationMapping>;
+	/**
+	 * Adapter opcional para buscar relações de fonte externa.
+	 * Chamado após relationsMapping e antes do fallback por inferência de convenção.
+	 */
+	relationsAdapter?: RelationsAdapter;
+	/**
+	 * Habilita inferência automática de relações por convenção de nomes.
+	 * Padrão: true para IXC, false para NocoBase (que já tem relações via API).
+	 * @default true
+	 */
+	inferRelationsByName?: boolean;
 }
 
 export type DataSourceGenerationConfig = BaseDataSourceGenerationConfig;
