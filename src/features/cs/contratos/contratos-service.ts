@@ -11,7 +11,6 @@ import { ixcRepository, nocobaseRepository } from "#/repositories";
 import type { PaginatedResponse } from "#/repositories/types";
 import type {
 	AtendimentoIXC,
-	ContratoCliente,
 	ContratoFilters,
 	ContratoListParams,
 	ContratoWithCliente,
@@ -72,13 +71,9 @@ export async function fetchContratos(
 			},
 		);
 
-		const data = response.data as Array<
-			ClienteContrato & { f_nc_cliente?: ContratoCliente | null }
-		>;
-
 		return {
 			...response,
-			data,
+			data: response.data as unknown as Array<ContratoWithCliente>,
 		};
 	} catch (error) {
 		const message =

@@ -428,7 +428,6 @@ export interface ClienteContrato {
 
 export interface ClienteContratoRelations {
 	f_carteira_cobranca?: unknown | null;
-	f_cliente?: Cliente | null;
 	f_cond_pag_ativ?: unknown | null;
 	f_contrato_principal?: ClienteContrato | null;
 	f_filial?: unknown | null;
@@ -437,6 +436,7 @@ export interface ClienteContratoRelations {
 	f_modelo?: unknown | null;
 	f_moeda?: unknown | null;
 	f_motivo_inclusao?: unknown | null;
+	f_nc_cliente?: Cliente | null;
 	f_produto_ativ?: unknown | null;
 	f_responsavel?: unknown | null;
 	f_tipo_contrato?: unknown | null;

@@ -106,7 +106,7 @@ const IXC_RELATIONS_MAP: Record<
 		id_cliente: {
 			target: "cliente",
 			type: "belongsTo",
-			relationFieldName: "f_cliente",
+			relationFieldName: "f_nc_cliente",
 		},
 		id_vd_contrato: {
 			target: "vd_contratos_produtos",
