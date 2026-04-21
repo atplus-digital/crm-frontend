@@ -21,11 +21,10 @@ import {
 } from "#/features/cs/pessoas/pessoas-hooks";
 import type {
 	PessoaFisicaFilters,
-	PessoaFisicaListItem,
 	PessoaJuridicaFilters,
-	PessoaJuridicaListItem,
 } from "#/features/cs/pessoas/pessoas-types";
-import type { PessoasAnaliseIxc } from "#/generated/nocobase/pessoas";
+import type { Empresas } from "#/generated/nocobase/empresas";
+import type { Pessoas, PessoasAnaliseIxc } from "#/generated/nocobase/pessoas";
 
 export function CSPessoasPage() {
 	const [activeTab, setActiveTab] = useState<"pf" | "pj">("pf");
@@ -198,7 +197,7 @@ export function CSPessoasPage() {
 
 							<DataTableWithPagination
 								columns={pfColumns}
-								data={(pfData?.data as unknown as PessoaFisicaListItem[]) ?? []}
+								data={(pfData?.data as unknown as Pessoas[]) ?? []}
 								total={pfData?.meta?.total ?? 0}
 								totalPages={pfData?.meta?.totalPage ?? 0}
 								onPageChange={handlePageChange}
@@ -252,9 +251,7 @@ export function CSPessoasPage() {
 
 							<DataTableWithPagination
 								columns={pjColumns}
-								data={
-									(pjData?.data as unknown as PessoaJuridicaListItem[]) ?? []
-								}
+								data={(pjData?.data as unknown as Empresas[]) ?? []}
 								total={pjData?.meta?.total ?? 0}
 								totalPages={pjData?.meta?.totalPage ?? 0}
 								onPageChange={handlePageChange}

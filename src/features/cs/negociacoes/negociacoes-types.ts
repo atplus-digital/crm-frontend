@@ -162,20 +162,10 @@ export type NegociacaoVendedor = Pick<Users, "id" | "nickname" | "email">;
 export type Negociacao = Omit<Negociacoes, "f_contrato_ixc"> & {
 	f_status: NegociacaoStatus;
 	f_vendedor?: NegociacaoVendedor | null;
-	f_pessoa?: NegociacaoPessoaFisica | null;
-	f_negociacao_pessoa_juridica?: NegociacaoPessoaJuridica | null;
+	f_pessoa?: Pessoas | null;
+	f_negociacao_pessoa_juridica?: Empresas | null;
 	f_contrato_ixc?: number | string | null;
 };
-
-// ---------------------------------------------------------------------------
-// Relation Types (7 must-have relations)
-// ---------------------------------------------------------------------------
-
-export type NegociacaoItens = NegociacoesItens;
-export type NegociacaoAnexos = AnexosNegociacoes;
-export type NegociacaoComentarios = NegociacoesComentarios;
-export type NegociacaoPacotes = Pacotes;
-export type NegociacaoCupomDesconto = CuponsDesconto;
 
 // ---------------------------------------------------------------------------
 // NegociacaoWithRelations (complete with all 7 relations)
@@ -312,13 +302,6 @@ export const CONFISAO_DIVIDA_LABELS: Record<string, string> = {
 	Sim: "Sim",
 	Nao: "Não",
 };
-
-// ---------------------------------------------------------------------------
-// Legacy aliases (para compatibilidade com código existente)
-// ---------------------------------------------------------------------------
-
-export type NegociacaoPessoaFisica = Pessoas;
-export type NegociacaoPessoaJuridica = Empresas;
 
 // ---------------------------------------------------------------------------
 // Filters

@@ -5,15 +5,17 @@ import { buildFilter, eq, includes } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";
 import type {
-	PessoaFisica,
 	PessoaFisicaFilters,
 	PessoaFisicaListParams,
 	PessoaFisicaResponse,
-	PessoaJuridica,
 	PessoaJuridicaFilters,
 	PessoaJuridicaListParams,
 	PessoaJuridicaResponse,
 } from "./pessoas-types";
+
+// Aliases de domínio para clareza no código de serviço
+type PessoaFisica = Pessoas;
+type PessoaJuridica = Empresas;
 
 const log = createLogger("services:cs:pessoas");
 

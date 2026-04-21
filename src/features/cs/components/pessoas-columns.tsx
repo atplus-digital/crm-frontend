@@ -1,9 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { StatusBadge } from "#/components/badges/status-badge";
-import type {
-	PessoaFisicaListItem,
-	PessoaJuridicaListItem,
-} from "#/features/cs/pessoas/pessoas-types";
 import type { Pessoas } from "#/generated/nocobase/pessoas";
 
 const CREDITO_LABELS: Record<string, string> = {
@@ -41,7 +37,7 @@ const ANALISE_IXC_VARIANTS: Record<
 	"Sem Pendências": "default",
 };
 
-export const pfColumns: ColumnDef<PessoaFisicaListItem, unknown>[] = [
+export const pfColumns: ColumnDef<Pessoas, unknown>[] = [
 	{ accessorKey: "id", header: "ID" },
 	{
 		accessorKey: "createdAt",
@@ -115,7 +111,9 @@ export const pfColumns: ColumnDef<PessoaFisicaListItem, unknown>[] = [
 	},
 ];
 
-export const pjColumns: ColumnDef<PessoaJuridicaListItem, unknown>[] = [
+import type { Empresas } from "#/generated/nocobase/empresas";
+
+export const pjColumns: ColumnDef<Empresas, unknown>[] = [
 	{ accessorKey: "id", header: "ID" },
 	{ accessorKey: "f_razao_social", header: "Razão Social" },
 	{ accessorKey: "f_nome_fantasia", header: "Nome Fantasia" },
