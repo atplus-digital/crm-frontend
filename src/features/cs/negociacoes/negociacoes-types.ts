@@ -3,13 +3,6 @@
 
 import type { Empresas } from "#/generated/nocobase/empresas";
 import type {
-	AnexosNegociacoes,
-	CuponsDesconto,
-	NegociacoesComentarios,
-	NegociacoesItens,
-	Pacotes,
-} from "#/generated/nocobase/index";
-import type {
 	Negociacoes,
 	NegociacoesRelations,
 } from "#/generated/nocobase/negociacoes";
@@ -168,22 +161,10 @@ export type Negociacao = Omit<Negociacoes, "f_contrato_ixc"> & {
 };
 
 // ---------------------------------------------------------------------------
-// NegociacaoWithRelations (complete with all 7 relations)
+// NegociacaoWithRelations (complete with all relations)
 // ---------------------------------------------------------------------------
-
-export type NegociacaoWithRelations = Negociacoes & {
-	f_vendedor: Users;
-	f_pessoa?: Pessoas | null;
-	f_negociacao_pessoa_juridica?: Empresas | null;
-	f_itens_negociacao?: NegociacoesItens[];
-	f_anexos?: AnexosNegociacoes[];
-	f_comentarios?: NegociacoesComentarios[];
-	f_pacote?: Pacotes | null;
-	f_pacotes_adicionais?: Pacotes[];
-	f_cupom_desconto?: CuponsDesconto | null;
-	createdBy?: Users | null;
-	updatedBy?: Users | null;
-};
+// Usa NegociacoesRelations que já vem gerado com todas as relações
+export type NegociacaoWithRelations = Negociacoes & NegociacoesRelations;
 
 // ---------------------------------------------------------------------------
 // Display Labels (internal code → UI text for badges/details)

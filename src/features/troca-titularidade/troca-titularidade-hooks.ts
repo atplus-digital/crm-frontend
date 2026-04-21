@@ -14,10 +14,9 @@ export interface TrocaTitularidadeListParams {
 	appends?: (keyof CrmTrocaTitularidadeRelations)[];
 }
 
+// Usa CrmTrocaTitularidadeRelations que já vem gerado com todas as relações
 export type CrmTrocaTitularidadeWithRelations = CrmTrocaTitularidade &
-	Partial<{
-		[K in keyof CrmTrocaTitularidadeRelations]: CrmTrocaTitularidadeRelations[K];
-	}>;
+	CrmTrocaTitularidadeRelations;
 
 export const trocaTitularidadeQueryOptions = (
 	params: TrocaTitularidadeListParams = {},
