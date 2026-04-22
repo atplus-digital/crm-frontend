@@ -7,7 +7,7 @@ import { DetailSection } from "#/components/detail/detail-section";
 import { CardSectionSkeleton } from "#/components/detail/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Skeleton } from "#/components/ui/skeleton";
-import { useTrocaTitularidadeById } from "#/features/troca-titularidade/troca-titularidade-hooks";
+import { useTrocaTitularidadeById } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import {
 	CRMTROCATITULARIDADE_STATUS_LABELS,
 	CRMTROCATITULARIDADE_SUBSTATUS_LABELS,

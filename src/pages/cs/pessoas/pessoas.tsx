@@ -14,7 +14,7 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { pfColumns, pjColumns } from "#/features/cs/components/pessoas-columns";
+import { pfColumns, pjColumns } from "#/features/cs/pessoas/pessoas-columns";
 import {
 	usePessoasFisicas,
 	usePessoasJuridicas,

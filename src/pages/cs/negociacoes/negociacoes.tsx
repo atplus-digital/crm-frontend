@@ -4,10 +4,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import {
 	KanbanFilters,
 	ListaFilters,
-} from "#/features/cs/components/negociacoes-filters";
-import { NegociacoesKanban } from "#/features/cs/components/negociacoes-kanban";
-import { NegociacoesList } from "#/features/cs/components/negociacoes-list";
+} from "#/features/cs/negociacoes/negociacoes-filters";
 import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
+import { NegociacoesKanban } from "#/features/cs/negociacoes/negociacoes-kanban";
+import { NegociacoesList } from "#/features/cs/negociacoes/negociacoes-list";
 import { exportNegociacoesToCsv } from "#/features/cs/negociacoes/negociacoes-service";
 import type { NegociacaoFilters } from "#/features/cs/negociacoes/negociacoes-types";
 

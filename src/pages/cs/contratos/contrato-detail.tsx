@@ -21,14 +21,14 @@ import {
 import { Separator } from "#/components/ui/separator";
 import { Skeleton } from "#/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { ContratoAtendimentosTab } from "#/features/cs/components/contrato-atendimentos-tab";
-import { ContratoMovelTab } from "#/features/cs/components/contrato-movel-tab";
-import { ContratoNegociacoesTab } from "#/features/cs/components/contrato-negociacoes-tab";
-import { ContratoRegistrosTab } from "#/features/cs/components/contrato-registros-tab";
+import { ContratoAtendimentosTab } from "#/features/cs/contratos/contrato-atendimentos-tab";
+import { ContratoMovelTab } from "#/features/cs/contratos/contrato-movel-tab";
+import { ContratoNegociacoesTab } from "#/features/cs/contratos/contrato-negociacoes-tab";
+import { ContratoRegistrosTab } from "#/features/cs/contratos/contrato-registros-tab";
 import {
 	ContratoStatusBadge,
 	InternetStatusBadge,
-} from "#/features/cs/components/contrato-status-badge";
+} from "#/features/cs/contratos/contrato-status-badge";
 import {
 	useContratoById,
 	useContratoFaturas,

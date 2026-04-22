@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { ContratosFilters } from "#/features/cs/components/contratos-filters";
-import { ContratosTable } from "#/features/cs/components/contratos-table";
+import { ContratosFilters } from "#/features/cs/contratos/contratos-filters";
 import { useContratos } from "#/features/cs/contratos/contratos-hooks";
+import { ContratosTable } from "#/features/cs/contratos/contratos-table";
 import type { ContratoFilters } from "#/features/cs/contratos/contratos-types";
 
 export function ContratosPage() {

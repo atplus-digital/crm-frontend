@@ -6,7 +6,7 @@ import { StatusBadge } from "#/components/badges/status-badge";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
 import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Button } from "#/components/ui/button";
-import type { CrmTrocaTitularidadeWithRelations } from "#/features/troca-titularidade/troca-titularidade-hooks";
+import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/nocobase/crm-troca-titularidade";
 import { formatDatePtBR } from "#/lib/utils";
 

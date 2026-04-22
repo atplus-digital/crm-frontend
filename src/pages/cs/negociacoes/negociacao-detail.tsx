@@ -14,13 +14,13 @@ import { Badge } from "#/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { Skeleton } from "#/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { NegociacaoAnexosTab } from "#/features/cs/components/negociacao-anexos-tab";
+import { NegociacaoAnexosTab } from "#/features/cs/negociacoes/negociacao-anexos-tab";
 import {
 	PontosAtencaoBadge,
 	StatusBadge,
-} from "#/features/cs/components/negociacao-badges";
-import { NegociacaoComentariosTab } from "#/features/cs/components/negociacao-comentarios-tab";
-import { NegociacaoItensTab } from "#/features/cs/components/negociacao-itens-tab";
+} from "#/features/cs/negociacoes/negociacao-badges";
+import { NegociacaoComentariosTab } from "#/features/cs/negociacoes/negociacao-comentarios-tab";
+import { NegociacaoItensTab } from "#/features/cs/negociacoes/negociacao-itens-tab";
 import { useNegociacao } from "#/features/cs/negociacoes/negociacoes-hooks";
 import {
 	CONFISAO_DIVIDA_LABELS,

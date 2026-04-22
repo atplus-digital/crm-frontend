@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { TrocaTitularidadeList } from "#/features/troca-titularidade";
-import { useTrocaTitularidade } from "#/features/troca-titularidade/troca-titularidade-hooks";
+import { TrocaTitularidadeList } from "#/features/cs/troca-titularidade";
+import { useTrocaTitularidade } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 
 export function TrocaTitularidadePage() {
 	const [searchParams, setSearchParams] = useSearchParams();
