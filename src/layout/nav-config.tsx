@@ -1,3 +1,6 @@
+import { House, Users } from "lucide-react";
+import type { ReactNode } from "react";
+
 export type NavIconName = "fileText" | "handshake" | "home" | "user" | "users";
 
 /**
@@ -24,6 +27,8 @@ export interface NavItem {
  */
 export interface NavSection {
 	label: string;
+	/** Optional JSX icon rendered next to the section label. */
+	icon?: ReactNode;
 	to: string;
 	/** Additional path prefixes used to mark the section as active. */
 	matches?: string[];
@@ -32,7 +37,8 @@ export interface NavSection {
 
 export const APP_NAV_SECTIONS: NavSection[] = [
 	{
-		label: "Geral",
+		label: "Home",
+		icon: <House className="size-4" />,
 		to: "/",
 		matches: ["/", "/profile"],
 		items: [
@@ -50,6 +56,7 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 	},
 	{
 		label: "Customer Success",
+		icon: <Users className="size-4" />,
 		to: "/cs/pessoas",
 		matches: ["/cs"],
 		items: [

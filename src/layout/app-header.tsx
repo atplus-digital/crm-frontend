@@ -22,11 +22,14 @@ export function AppHeader() {
 							key={section.to}
 							to={section.to}
 							className={cn(
-								"inline-flex h-9 items-center rounded-md px-3 text-sm font-medium whitespace-nowrap text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
+								"inline-flex h-9 items-center gap-2 rounded-md px-3 text-sm font-medium whitespace-nowrap text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
 								isActive && "bg-muted text-foreground",
 							)}
 						>
-							{section.label}
+							{section.icon ? (
+								<span className="shrink-0">{section.icon}</span>
+							) : null}
+							<span>{section.label}</span>
 						</Link>
 					);
 				})}
