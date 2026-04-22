@@ -1,6 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { StatusBadge } from "#/components/badges/status-badge";
 import type { Pessoas } from "#/generated/nocobase/pessoas";
+import { formatDatePtBR } from "#/lib/utils";
 
 const CREDITO_LABELS: Record<string, string> = {
 	Aprovado: "Aprovado",
@@ -43,9 +44,7 @@ export const pfColumns: ColumnDef<Pessoas, unknown>[] = [
 		accessorKey: "createdAt",
 		header: "Criado em",
 		cell: ({ row }) =>
-			row.original.createdAt
-				? new Date(row.original.createdAt).toLocaleDateString("pt-BR")
-				: "-",
+			row.original.createdAt ? formatDatePtBR(row.original.createdAt) : "-",
 	},
 	{ accessorKey: "f_nome", header: "Nome Completo" },
 	{ accessorKey: "f_cpf", header: "CPF" },

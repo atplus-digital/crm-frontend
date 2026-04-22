@@ -118,7 +118,7 @@ function KanbanCardComponent({ card }: KanbanCardProps) {
 				</div>
 				{card.f_substatus && (
 					<div className="mt-2">
-						<span className="inline-block max-w-full truncate rounded bg-muted px-1.5 py-0.5 text-[10px] text-muted-foreground">
+						<span className="inline-block max-w-full truncate rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground">
 							{card.f_substatus}
 						</span>
 					</div>
@@ -135,7 +135,7 @@ interface KanbanColumnProps {
 
 function KanbanColumn({ status, cards }: KanbanColumnProps) {
 	return (
-		<div className="flex w-70 shrink-0 flex-col rounded-xl border border-border bg-muted/30">
+		<div className="flex w-72 shrink-0 flex-col rounded-xl border border-border bg-muted/30">
 			{/* Column header */}
 			<div
 				className={cn(

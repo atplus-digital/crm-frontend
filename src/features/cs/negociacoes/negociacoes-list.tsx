@@ -134,7 +134,7 @@ const columns: ColumnDef<NegociacaoItem>[] = [
 		accessorKey: "f_substatus",
 		header: "Substatus",
 		cell: ({ row }) => (
-			<span className="max-w-62.5 truncate block">
+			<span className="max-w-64 truncate block">
 				{row.original.f_substatus || "-"}
 			</span>
 		),
