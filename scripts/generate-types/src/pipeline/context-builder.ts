@@ -3,8 +3,7 @@ import type {
 	DataSourceGenerationConfig,
 	RuntimeConfig,
 } from "../@types/script";
-import { logger } from "../utils/logger";
-import type { InitContext, PipelineContext } from "./types";
+import type { InitContext } from "./types";
 
 export function createInitialContext(
 	config: RuntimeConfig,
@@ -12,12 +11,4 @@ export function createInitialContext(
 	client: DataSourceClient,
 ): InitContext {
 	return { config, dataSource, client };
-}
-
-export function cloneContext(ctx: PipelineContext): PipelineContext {
-	return { ...ctx };
-}
-
-export function getContextLogger() {
-	return logger;
 }

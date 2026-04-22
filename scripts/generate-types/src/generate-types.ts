@@ -9,7 +9,7 @@ import type {
 import { NocoBaseDataSourceClient } from "./generation/client";
 import { createInitialContext } from "./pipeline/context-builder";
 import { defaultPipeline } from "./pipeline/default-pipeline";
-import { runLinterFix } from "./utils/linter-runner";
+import { runPostPipeline } from "./pipeline/post-pipeline";
 import { logger } from "./utils/logger";
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 
@@ -124,7 +124,7 @@ export async function runGenerateTypesForDataSources(): Promise<GenerateTypesRes
 	const outputDirs = dataSourceConfigs
 		.filter((_, i) => settledResults[i]?.status === "fulfilled")
 		.map((d) => d.outputDir);
-	await runLinterFix(outputDirs);
+	await runPostPipeline(outputDirs, writeFiles);
 
 	const totalChanged = writeFiles.filter((f) => f.changed).length;
 	const totalSkipped = writeFiles.filter((f) => f.skipped).length;

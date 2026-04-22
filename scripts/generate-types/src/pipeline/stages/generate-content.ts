@@ -7,7 +7,10 @@ import {
 	withSplitFileImports,
 } from "../../generation/import-injector";
 import { generateIndexFileWithReexports } from "../../generation/split-index";
-import { resolveBaseInterfaceNamingConfig } from "../../utils/naming";
+import {
+	resolveBaseInterfaceNamingConfig,
+	toFileName,
+} from "../../utils/naming";
 import type { PipelineContext } from "../types";
 
 /**
@@ -85,8 +88,8 @@ export async function generateContentStage(
 		baseInterfaceNaming,
 	);
 
-	for (const [fileName, content] of splitFilesContent) {
-		fileContents.set(`${fileName}.ts`, content);
+	for (const [collectionName, content] of splitFilesContent) {
+		fileContents.set(`${toFileName(collectionName)}.ts`, content);
 	}
 
 	fileContents.set("collections.ts", collectionsContent);

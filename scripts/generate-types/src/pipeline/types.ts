@@ -98,16 +98,6 @@ export interface BuildTypesContext extends PipelineContext {
 	collectionTypes: CollectionTypesMap;
 }
 
-export interface ApplyEnumAdapterContext extends PipelineContext {
-	collectionTypes: CollectionTypesMap;
-	enumOrigins: Map<string, Map<string, EnumOriginEntry>>;
-}
-
-export interface ApplyEnumInferenceContext extends PipelineContext {
-	collectionTypes: CollectionTypesMap;
-	enumOrigins: Map<string, Map<string, EnumOriginEntry>>;
-}
-
 export interface ApplyEnumCorrectionsContext extends PipelineContext {
 	collectionTypes: CollectionTypesMap;
 }
@@ -116,28 +106,6 @@ export interface SplitCollectionsContext extends PipelineContext {
 	collectionTypes: CollectionTypesMap;
 	mainCollections: CollectionTypesMap;
 	splitCollections: Map<string, CollectionTypesMap>;
-}
-
-export interface GenerateContentContext extends PipelineContext {
-	mainCollections: CollectionTypesMap;
-	splitCollections: Map<string, CollectionTypesMap>;
-	fileContents: Map<string, string>;
-}
-
-export interface WriteFilesContext extends PipelineContext {
-	fileContents: Map<string, string>;
-	writeResults: GeneratedFileWrite[];
-}
-
-export interface GenerateEnumReportContext extends PipelineContext {
-	writeResults: GeneratedFileWrite[];
-	enumReportContent?: string;
-}
-
-export interface CleanupAndValidateContext extends PipelineContext {
-	writeResults: GeneratedFileWrite[];
-	cleanedFiles?: string[];
-	typeValidationPassed?: boolean;
 }
 
 // ──────────────────────────────────────────────

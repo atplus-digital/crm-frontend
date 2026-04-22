@@ -306,34 +306,6 @@ function processEnumValues(
 	};
 }
 
-/**
- * Gera nome de membro de enum em PascalCase sem acentos.
- * Ex: "União Estável" → "UniaoEstavel", "Viúvo" → "Viuvo"
- */
-export function generateEnumMemberName(
-	value: string,
-	baseName?: string,
-): string {
-	const cleaned = removeAccents(value);
-	const parts = cleaned
-		.split(/[^a-zA-Z0-9]+/)
-		.filter((part) => part.length > 0);
-
-	if (parts.length === 0) {
-		return baseName ? `Value${baseName}` : "Unknown";
-	}
-
-	const result = parts
-		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-		.join("");
-
-	if (/^\d/.test(result)) {
-		return `Value${result}`;
-	}
-
-	return result;
-}
-
 function getRejectionReason(
 	distinctValues: string[],
 	_totalRecords: number,
@@ -498,19 +470,6 @@ export function adapterEnumsToInferredEnums(
 	}
 
 	return result;
-}
-
-export function mergeAdapterWithSample(
-	adapterEnums: InferredEnumsMap,
-	sampleEnums: InferredEnumsMap,
-): InferredEnumsMap {
-	const merged: InferredEnumsMap = { ...sampleEnums };
-
-	for (const [fieldName, adapterEnum] of Object.entries(adapterEnums)) {
-		merged[fieldName] = adapterEnum;
-	}
-
-	return merged;
 }
 
 export function mergeEnums(
