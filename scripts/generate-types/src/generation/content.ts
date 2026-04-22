@@ -151,62 +151,41 @@ function toEnumMemberName(value: string | number): string {
 }
 
 /**
- * Gera enum TypeScript nomeado para um campo.
- * Ex: export enum PessoasStatus { Ativo = "ativo", Inativo = "inativo" }
+ * Gera type alias para um campo enum usando keyof typeof.
+ * Padrão moderno: type inferido do objeto constante de labels.
+ * Ex: export type PessoasStatus = keyof typeof STATUS_LABELS;
  */
 export function generateEnumDefinition(
 	collectionName: string,
 	fieldName: string,
-	enumOptions: EnumOption[],
+	_enumOptions: EnumOption[],
 ): string {
-	// Deduplicate by value first; then deduplicate by member name (keep first occurrence)
-	const seenValues = new Set<string | number>();
-	const seenMemberNames = new Set<string>();
-	const dedupedOptions = enumOptions
-		.filter((opt) => {
-			if (seenValues.has(opt.value)) {
-				return false;
-			}
-			seenValues.add(opt.value);
-			return true;
-		})
-		.filter((opt) => {
-			const memberName = toEnumMemberName(opt.value);
-			if (seenMemberNames.has(memberName)) {
-				return false;
-			}
-			seenMemberNames.add(memberName);
-			return true;
-		});
-
-	const members = dedupedOptions
-		.map((opt) => {
-			const memberName = toEnumMemberName(opt.value);
-			// Escape actual whitespace chars that would break the string literal
-			const escapedValue =
-				typeof opt.value === "string"
-					? opt.value
-							.replace(/\\/g, "\\\\")
-							.replace(/"/g, '\\"')
-							.replace(/\r/g, "\\r")
-							.replace(/\n/g, "\\n")
-							.replace(/\t/g, "\\t")
-					: String(opt.value);
-			const memberValue =
-				typeof opt.value === "string" ? `"${escapedValue}"` : String(opt.value);
-			return `\t${memberName} = ${memberValue}`;
-		})
-		.join(",\n");
-
 	const fieldNameWithoutPrefix = fieldName.replace(/^[tf]_/, "");
 	const enumName = `${toCollectionTypeName(collectionName)}${toEnumMemberName(fieldNameWithoutPrefix)}`;
+	const mapName = `${toCollectionTypeName(collectionName).toUpperCase()}_${toEnumMemberName(fieldNameWithoutPrefix).toUpperCase()}_LABELS`;
 
-	return `export enum ${enumName} {\n${members}\n}`;
+	return `export type ${enumName} = keyof typeof ${mapName};`;
 }
 
 /**
- * Gera o mapa de labels tipado para um enum.
- * Ex: export const STATUS_LABELS: Record<PessoasStatus, string> = { ... }
+ * Verifica se uma string pode ser usada como key de objeto sem quotes.
+ * Para keys de objeto TypeScript, strings numéricas puras são válidas.
+ * Regras: letras/números/underscore, OU apenas números (sem leading zeros).
+ */
+function isValidObjectKey(str: string): boolean {
+	// Strings numéricas puras SEM leading zeros são válidas
+	if (/^[1-9]\d*$|^0$/.test(str)) {
+		return true;
+	}
+	// Identifiers TypeScript tradicionais
+	return /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(str);
+}
+
+/**
+ * Gera o objeto constante de labels com as const.
+ * Padrão moderno: objeto constante como single source of truth.
+ * Preserva valores originais da API como keys quando são identifiers válidos.
+ * Ex: export const STATUS_LABELS = { ativo: "Ativo", inativo: "Inativo" } as const;
  */
 export function generateEnumLabelMap(
 	collectionName: string,
@@ -224,7 +203,13 @@ export function generateEnumLabelMap(
 			return true;
 		})
 		.filter((opt) => {
-			const memberName = toEnumMemberName(opt.value);
+			// Check if value can be used as-is or needs transformation
+			const valueStr = String(opt.value);
+			const needsTransformation = !isValidObjectKey(valueStr);
+			const memberName = needsTransformation
+				? toEnumMemberName(opt.value)
+				: valueStr;
+
 			if (seenMemberNames.has(memberName)) {
 				return false;
 			}
@@ -233,19 +218,27 @@ export function generateEnumLabelMap(
 		});
 
 	const fieldNameWithoutPrefix = fieldName.replace(/^[tf]_/, "");
-	const enumName = `${toCollectionTypeName(collectionName)}${toEnumMemberName(fieldNameWithoutPrefix)}`;
 
 	const entries = dedupedOptions
 		.map((opt) => {
-			const memberName = toEnumMemberName(opt.value);
+			const valueStr = String(opt.value);
+			const needsTransformation = !isValidObjectKey(valueStr);
+			const memberName = needsTransformation
+				? toEnumMemberName(opt.value)
+				: valueStr;
 			const label = JSON.stringify(opt.label);
-			return `\t[${enumName}.${memberName}]: ${label}`;
+
+			// Always quote keys to ensure they are treated as string literals, not numbers
+			// This prevents TypeScript from inferring 'number' type for numeric keys
+			const keyName = `"${memberName}"`;
+
+			return `\t${keyName}: ${label}`;
 		})
 		.join(",\n");
 
 	const mapName = `${toCollectionTypeName(collectionName).toUpperCase()}_${toEnumMemberName(fieldNameWithoutPrefix).toUpperCase()}_LABELS`;
 
-	return `export const ${mapName}: Record<${enumName}, string> = {\n${entries}\n};`;
+	return `export const ${mapName} = {\n${entries}\n} as const;`;
 }
 
 /**
@@ -390,7 +383,7 @@ export function generateCollectionRelationKeyType(
 
 /**
  * Gera a definição completa de tipos para uma collection.
- * Inclui: Enums + Base interface + Relations interface + RelationKey type + Enum maps
+ * Ordem: Constantes de labels → Type aliases → Interfaces → Types auxiliares
  */
 export function generateCollectionTypes(
 	collectionName: string,
@@ -407,19 +400,25 @@ export function generateCollectionTypes(
 		lines.push("");
 	}
 
-	// 1. Enums primeiro (para serem usados nas interfaces)
+	// 1. Enum maps (labels) PRIMEIRO - constantes que servem como base para os types
+	if (types.enums.size > 0) {
+		lines.push(generateCollectionEnumMaps(collectionName, types));
+		lines.push("");
+	}
+
+	// 2. Type aliases (inferidos de keyof typeof LABELS)
 	if (types.enums.size > 0) {
 		lines.push(generateCollectionEnums(collectionName, types));
 		lines.push("");
 	}
 
-	// 2. Interface Base
+	// 3. Interface Base
 	lines.push(
 		generateCollectionBaseInterface(collectionName, types, baseInterfaceNaming),
 	);
 	lines.push("");
 
-	// 3. Relations
+	// 4. Relations
 	lines.push(
 		generateCollectionRelationsInterface(
 			collectionName,
@@ -429,14 +428,8 @@ export function generateCollectionTypes(
 	);
 	lines.push("");
 
-	// 4. RelationKey type
+	// 5. RelationKey type
 	lines.push(generateCollectionRelationKeyType(collectionName));
-
-	// 5. Enum maps (labels)
-	if (types.enums.size > 0) {
-		lines.push("");
-		lines.push(generateCollectionEnumMaps(collectionName, types));
-	}
 
 	return lines.join("\n");
 }

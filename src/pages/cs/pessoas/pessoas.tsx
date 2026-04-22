@@ -24,7 +24,7 @@ import type {
 	PessoaJuridicaFilters,
 } from "#/features/cs/pessoas/pessoas-types";
 import type { Empresas } from "#/generated/nocobase/empresas";
-import type { Pessoas, PessoasAnaliseIxc } from "#/generated/nocobase/pessoas";
+import type { Pessoas } from "#/generated/nocobase/pessoas";
 
 export function CSPessoasPage() {
 	const [activeTab, setActiveTab] = useState<"pf" | "pj">("pf");
@@ -156,12 +156,11 @@ export function CSPessoasPage() {
 								</div>
 								<div className="w-50">
 									<Select
-										value={pfFilters.f_analise_ixc}
+										value={String(pfFilters.f_analise_ixc)}
 										onValueChange={(value) => {
-											const analise =
-												value === "all"
-													? "all"
-													: (value as unknown as PessoasAnaliseIxc);
+											const analise = (
+												value === "all" ? "all" : value
+											) as PessoaFisicaFilters["f_analise_ixc"];
 											setPFFilters((prev) => ({
 												...prev,
 												f_analise_ixc: analise,
@@ -173,12 +172,8 @@ export function CSPessoasPage() {
 										</SelectTrigger>
 										<SelectContent>
 											<SelectItem value="all">Todos</SelectItem>
-											<SelectItem value="Sem Pendências">
-												Sem Pendências
-											</SelectItem>
-											<SelectItem value="Com Pendências">
-												Com Pendências
-											</SelectItem>
+											<SelectItem value="1">Sem Pendências</SelectItem>
+											<SelectItem value="0">Com Pendências</SelectItem>
 										</SelectContent>
 									</Select>
 								</div>

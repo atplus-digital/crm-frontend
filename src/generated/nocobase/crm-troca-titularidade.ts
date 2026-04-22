@@ -14,39 +14,54 @@ import type { Users } from "./users";
 
 export const T_CRM_TROCA_TITULARIDADE_TABLE_NAME = "t_crm_troca_titularidade";
 
-export enum CrmTrocaTitularidadeComplemento {
-	Casa = "Casa",
-	Apartamento = "Apartamento",
-	Condominio = "Condominio",
-	Comercial = "Comercial",
-}
+export const CRMTROCATITULARIDADE_COMPLEMENTO_LABELS = {
+	Casa: "Casa",
+	Apartamento: "Apartamento",
+	Condominio: "Condominio",
+	Comercial: "Comercial",
+} as const;
 
-export enum CrmTrocaTitularidadeEstado {
-	Sc = "SC",
-}
+export const CRMTROCATITULARIDADE_ESTADO_LABELS = {
+	SC: "SC",
+} as const;
 
-export enum CrmTrocaTitularidadeStatus {
-	Value0 = "0",
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value9 = "9",
-}
+export const CRMTROCATITULARIDADE_STATUS_LABELS = {
+	"0": "Novo",
+	"1": "Aguardando assinatura",
+	"2": "Aguardando Auditoria",
+	"3": "Concluído",
+	"9": "Cancelado",
+} as const;
 
-export enum CrmTrocaTitularidadeSubstatus {
-	Value0 = "0",
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-}
+export const CRMTROCATITULARIDADE_SUBSTATUS_LABELS = {
+	"0": "NA",
+	"1": "APROVADO - Aguardando inserção no IXC",
+	"2": "APROVADO - Erro na integração com o IXC",
+	"3": "APROVADO - Concluído",
+	"4": "REPROVADO - Divergência de Dados",
+	"5": "REPROVADO - Financeiro em Atraso",
+	"6": "AGUARDANDO - Auditoria",
+} as const;
 
-export enum CrmTrocaTitularidadeTipoPessoa {
-	Pf = "PF",
-	Pj = "PJ",
-}
+export const CRMTROCATITULARIDADE_TIPOPESSOA_LABELS = {
+	PF: "Pessoa Física",
+	PJ: "Pessoa Jurídica",
+} as const;
+
+export type CrmTrocaTitularidadeComplemento =
+	keyof typeof CRMTROCATITULARIDADE_COMPLEMENTO_LABELS;
+
+export type CrmTrocaTitularidadeEstado =
+	keyof typeof CRMTROCATITULARIDADE_ESTADO_LABELS;
+
+export type CrmTrocaTitularidadeStatus =
+	keyof typeof CRMTROCATITULARIDADE_STATUS_LABELS;
+
+export type CrmTrocaTitularidadeSubstatus =
+	keyof typeof CRMTROCATITULARIDADE_SUBSTATUS_LABELS;
+
+export type CrmTrocaTitularidadeTipoPessoa =
+	keyof typeof CRMTROCATITULARIDADE_TIPOPESSOA_LABELS;
 
 export interface CrmTrocaTitularidade {
 	id: number;
@@ -95,54 +110,3 @@ export interface CrmTrocaTitularidadeRelations {
 
 export type CrmTrocaTitularidadeRelationKey =
 	keyof CrmTrocaTitularidadeRelations;
-
-export const CRMTROCATITULARIDADE_COMPLEMENTO_LABELS: Record<
-	CrmTrocaTitularidadeComplemento,
-	string
-> = {
-	[CrmTrocaTitularidadeComplemento.Casa]: "Casa",
-	[CrmTrocaTitularidadeComplemento.Apartamento]: "Apartamento",
-	[CrmTrocaTitularidadeComplemento.Condominio]: "Condominio",
-	[CrmTrocaTitularidadeComplemento.Comercial]: "Comercial",
-};
-
-export const CRMTROCATITULARIDADE_ESTADO_LABELS: Record<
-	CrmTrocaTitularidadeEstado,
-	string
-> = {
-	[CrmTrocaTitularidadeEstado.Sc]: "SC",
-};
-
-export const CRMTROCATITULARIDADE_STATUS_LABELS: Record<
-	CrmTrocaTitularidadeStatus,
-	string
-> = {
-	[CrmTrocaTitularidadeStatus.Value0]: "Novo",
-	[CrmTrocaTitularidadeStatus.Value1]: "Aguardando assinatura",
-	[CrmTrocaTitularidadeStatus.Value2]: "Aguardando Auditoria",
-	[CrmTrocaTitularidadeStatus.Value3]: "Concluído",
-	[CrmTrocaTitularidadeStatus.Value9]: "Cancelado",
-};
-
-export const CRMTROCATITULARIDADE_SUBSTATUS_LABELS: Record<
-	CrmTrocaTitularidadeSubstatus,
-	string
-> = {
-	[CrmTrocaTitularidadeSubstatus.Value0]: "NA",
-	[CrmTrocaTitularidadeSubstatus.Value1]:
-		"APROVADO - Aguardando inserção no IXC",
-	[CrmTrocaTitularidadeSubstatus.Value2]:
-		"APROVADO - Erro na integração com o IXC",
-	[CrmTrocaTitularidadeSubstatus.Value3]: "APROVADO - Concluído",
-	[CrmTrocaTitularidadeSubstatus.Value4]: "REPROVADO - Divergência de Dados",
-	[CrmTrocaTitularidadeSubstatus.Value5]: "REPROVADO - Financeiro em Atraso",
-	[CrmTrocaTitularidadeSubstatus.Value6]: "AGUARDANDO - Auditoria",
-};
-
-export const CRMTROCATITULARIDADE_TIPOPESSOA_LABELS: Record<
-	CrmTrocaTitularidadeTipoPessoa,
-	string
-> = {
-	[CrmTrocaTitularidadeTipoPessoa.Pf]: "Pessoa Física",
-	[CrmTrocaTitularidadeTipoPessoa.Pj]: "Pessoa Jurídica",
-};

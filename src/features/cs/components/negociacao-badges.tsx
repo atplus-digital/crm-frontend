@@ -30,18 +30,19 @@ export function StatusBadge({ status, substatus }: StatusBadgeProps) {
 }
 
 interface PontosAtencaoBadgeProps {
-	value: string;
+	value: string | number;
 }
 
 export function PontosAtencaoBadge({ value }: PontosAtencaoBadgeProps) {
 	const num = Number(value);
 	const variant =
 		num === 0 ? "default" : num <= 2 ? "secondary" : "destructive";
+	const valueStr = String(value);
 	return (
 		<GenericStatusBadge
-			value={value}
+			value={valueStr}
 			labels={PONTOS_ATENCAO_LABELS}
-			variants={{ [value]: variant }}
+			variants={{ [valueStr]: variant }}
 		/>
 	);
 }

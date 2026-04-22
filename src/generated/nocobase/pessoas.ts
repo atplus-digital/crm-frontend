@@ -7,23 +7,29 @@ import type { Users } from "./users";
 
 export const T_PESSOAS_TABLE_NAME = "t_pessoas";
 
-export enum PessoasAnaliseIxc {
-	Value0 = "0",
-	Value1 = "1",
-}
+export const PESSOAS_ANALISEIXC_LABELS = {
+	"0": "Com Pendências",
+	"1": "Sem Pendências",
+} as const;
 
-export enum PessoasCredito {
-	Value1 = "1",
-	Value2 = "2",
-	Value9 = "9",
-}
+export const PESSOAS_CREDITO_LABELS = {
+	"1": "Aprovado",
+	"2": "Aprovado com Atenção",
+	"9": "Negado",
+} as const;
 
-export enum PessoasSexo {
-	M = "M",
-	F = "F",
-	Masculino = "MASCULINO",
-	Feminino = "FEMININO",
-}
+export const PESSOAS_SEXO_LABELS = {
+	M: "MASCULINO",
+	F: "FEMININO",
+	MASCULINO: "MASCULINO",
+	FEMININO: "FEMININO",
+} as const;
+
+export type PessoasAnaliseIxc = keyof typeof PESSOAS_ANALISEIXC_LABELS;
+
+export type PessoasCredito = keyof typeof PESSOAS_CREDITO_LABELS;
+
+export type PessoasSexo = keyof typeof PESSOAS_SEXO_LABELS;
 
 export interface Pessoas {
 	id: number;
@@ -44,21 +50,3 @@ export interface PessoasRelations {
 }
 
 export type PessoasRelationKey = keyof PessoasRelations;
-
-export const PESSOAS_ANALISEIXC_LABELS: Record<PessoasAnaliseIxc, string> = {
-	[PessoasAnaliseIxc.Value0]: "Com Pendências",
-	[PessoasAnaliseIxc.Value1]: "Sem Pendências",
-};
-
-export const PESSOAS_CREDITO_LABELS: Record<PessoasCredito, string> = {
-	[PessoasCredito.Value1]: "Aprovado",
-	[PessoasCredito.Value2]: "Aprovado com Atenção",
-	[PessoasCredito.Value9]: "Negado",
-};
-
-export const PESSOAS_SEXO_LABELS: Record<PessoasSexo, string> = {
-	[PessoasSexo.M]: "MASCULINO",
-	[PessoasSexo.F]: "FEMININO",
-	[PessoasSexo.Masculino]: "MASCULINO",
-	[PessoasSexo.Feminino]: "FEMININO",
-};

@@ -7,49 +7,63 @@ import type { Cliente } from "./cliente";
 
 export const LINHA_MVNO_TABLE_NAME = "linha_mvno";
 
-export enum LinhaMvnoApi {
-	A = "A",
-	I = "I",
-}
+export const LINHAMVNO_API_LABELS = {
+	A: "Na API e no IXC",
+	I: "Apenas no IXC",
+} as const;
 
-export enum LinhaMvnoEsim {
-	S = "S",
-	N = "N",
-}
+export const LINHAMVNO_ESIM_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum LinhaMvnoPortabilidade {
-	S = "S",
-	N = "N",
-}
+export const LINHAMVNO_PORTABILIDADE_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum LinhaMvnoStatusLinha {
-	A = "A",
-	Br = "BR",
-	Bp = "BP",
-	Ba = "BA",
-	I = "I",
-	Bi = "BI",
-	Bt = "BT",
-	C = "C",
-	Aa = "AA",
-}
+export const LINHAMVNO_STATUSLINHA_LABELS = {
+	A: "Ativo",
+	BR: "Bloqueio roubo",
+	BP: "Bloqueio perda",
+	BA: "Bloqueio parcial",
+	I: "Inativo",
+	BI: "Bloqueio uso indevido",
+	BT: "Bloqueio total",
+	C: "Cancelada",
+	AA: "Aguardando ativação",
+} as const;
 
-export enum LinhaMvnoStatusPortabilidade {
-	A = "A",
-	R = "R",
-	Co = "CO",
-	Ca = "CA",
-}
+export const LINHAMVNO_STATUSPORTABILIDADE_LABELS = {
+	A: "Aguardando",
+	R: "Recusado",
+	CO: "Concluído",
+	CA: "Cancelado",
+} as const;
 
-export enum LinhaMvnoTipoNumero {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-	Value7 = "7",
-}
+export const LINHAMVNO_TIPONUMERO_LABELS = {
+	"1": "Normal",
+	"2": "Gold",
+	"3": "DID Móvel",
+	"4": "M2M",
+	"5": "M2M Especial",
+	"6": "Teste",
+	"7": "QA",
+} as const;
+
+export type LinhaMvnoApi = keyof typeof LINHAMVNO_API_LABELS;
+
+export type LinhaMvnoEsim = keyof typeof LINHAMVNO_ESIM_LABELS;
+
+export type LinhaMvnoPortabilidade =
+	keyof typeof LINHAMVNO_PORTABILIDADE_LABELS;
+
+export type LinhaMvnoStatusLinha = keyof typeof LINHAMVNO_STATUSLINHA_LABELS;
+
+export type LinhaMvnoStatusPortabilidade =
+	keyof typeof LINHAMVNO_STATUSPORTABILIDADE_LABELS;
+
+export type LinhaMvnoTipoNumero = keyof typeof LINHAMVNO_TIPONUMERO_LABELS;
 
 export interface LinhaMvno {
 	id: number;
@@ -97,57 +111,3 @@ export interface LinhaMvnoRelations {
 }
 
 export type LinhaMvnoRelationKey = keyof LinhaMvnoRelations;
-
-export const LINHAMVNO_API_LABELS: Record<LinhaMvnoApi, string> = {
-	[LinhaMvnoApi.A]: "Na API e no IXC",
-	[LinhaMvnoApi.I]: "Apenas no IXC",
-};
-
-export const LINHAMVNO_ESIM_LABELS: Record<LinhaMvnoEsim, string> = {
-	[LinhaMvnoEsim.S]: "Sim",
-	[LinhaMvnoEsim.N]: "Não",
-};
-
-export const LINHAMVNO_PORTABILIDADE_LABELS: Record<
-	LinhaMvnoPortabilidade,
-	string
-> = {
-	[LinhaMvnoPortabilidade.S]: "Sim",
-	[LinhaMvnoPortabilidade.N]: "Não",
-};
-
-export const LINHAMVNO_STATUSLINHA_LABELS: Record<
-	LinhaMvnoStatusLinha,
-	string
-> = {
-	[LinhaMvnoStatusLinha.A]: "Ativo",
-	[LinhaMvnoStatusLinha.Br]: "Bloqueio roubo",
-	[LinhaMvnoStatusLinha.Bp]: "Bloqueio perda",
-	[LinhaMvnoStatusLinha.Ba]: "Bloqueio parcial",
-	[LinhaMvnoStatusLinha.I]: "Inativo",
-	[LinhaMvnoStatusLinha.Bi]: "Bloqueio uso indevido",
-	[LinhaMvnoStatusLinha.Bt]: "Bloqueio total",
-	[LinhaMvnoStatusLinha.C]: "Cancelada",
-	[LinhaMvnoStatusLinha.Aa]: "Aguardando ativação",
-};
-
-export const LINHAMVNO_STATUSPORTABILIDADE_LABELS: Record<
-	LinhaMvnoStatusPortabilidade,
-	string
-> = {
-	[LinhaMvnoStatusPortabilidade.A]: "Aguardando",
-	[LinhaMvnoStatusPortabilidade.R]: "Recusado",
-	[LinhaMvnoStatusPortabilidade.Co]: "Concluído",
-	[LinhaMvnoStatusPortabilidade.Ca]: "Cancelado",
-};
-
-export const LINHAMVNO_TIPONUMERO_LABELS: Record<LinhaMvnoTipoNumero, string> =
-	{
-		[LinhaMvnoTipoNumero.Value1]: "Normal",
-		[LinhaMvnoTipoNumero.Value2]: "Gold",
-		[LinhaMvnoTipoNumero.Value3]: "DID Móvel",
-		[LinhaMvnoTipoNumero.Value4]: "M2M",
-		[LinhaMvnoTipoNumero.Value5]: "M2M Especial",
-		[LinhaMvnoTipoNumero.Value6]: "Teste",
-		[LinhaMvnoTipoNumero.Value7]: "QA",
-	};

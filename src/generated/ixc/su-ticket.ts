@@ -8,56 +8,77 @@ import type { ClienteContrato } from "./cliente-contrato";
 
 export const SU_TICKET_TABLE_NAME = "su_ticket";
 
-export enum SuTicketIdTicketOrigem {
-	I = "I",
-	H = "H",
-}
+export const SUTICKET_IDTICKETORIGEM_LABELS = {
+	I: "Interna",
+	H: "Hotsite",
+} as const;
 
-export enum SuTicketInteracaoPendente {
-	E = "E",
-	I = "I",
-	N = "N",
-	A = "A",
-}
+export const SUTICKET_INTERACAOPENDENTE_LABELS = {
+	E: "Externa",
+	I: "Interna",
+	N: "Nenhuma",
+	A: "Ambos",
+} as const;
 
-export enum SuTicketMelhorHorarioReserva {
-	M = "M",
-	T = "T",
-	N = "N",
-	Q = "Q",
-}
+export const SUTICKET_MELHORHORARIORESERVA_LABELS = {
+	M: "Manhã",
+	T: "Tarde",
+	N: "Noite",
+	Q: "Qualquer",
+} as const;
 
-export enum SuTicketOrigemEndereco {
-	C = "C",
-	L = "L",
-	Cc = "CC",
-	M = "M",
-}
+export const SUTICKET_ORIGEMENDERECO_LABELS = {
+	C: "Cliente",
+	L: "Login",
+	CC: "Contrato",
+	M: "Manual",
+} as const;
 
-export enum SuTicketOrigemEnderecoEstrutura {
-	E = "E",
-	M = "M",
-}
+export const SUTICKET_ORIGEMENDERECOESTRUTURA_LABELS = {
+	E: "Estrutura",
+	M: "Manual",
+} as const;
 
-export enum SuTicketPrioridade {
-	B = "B",
-	M = "M",
-	A = "A",
-	C = "C",
-}
+export const SUTICKET_PRIORIDADE_LABELS = {
+	B: "Baixa",
+	M: "Normal",
+	A: "Alta",
+	C: "Crítica",
+} as const;
 
-export enum SuTicketSuStatus {
-	N = "N",
-	P = "P",
-	Ep = "EP",
-	S = "S",
-	C = "C",
-}
+export const SUTICKET_SUSTATUS_LABELS = {
+	N: "Novo",
+	P: "Pendente",
+	EP: "Em progresso",
+	S: "Solucionado",
+	C: "Cancelado",
+} as const;
 
-export enum SuTicketTipo {
-	C = "C",
-	E = "E",
-}
+export const SUTICKET_TIPO_LABELS = {
+	C: "Cliente",
+	E: "Estrutura própria",
+} as const;
+
+export type SuTicketIdTicketOrigem =
+	keyof typeof SUTICKET_IDTICKETORIGEM_LABELS;
+
+export type SuTicketInteracaoPendente =
+	keyof typeof SUTICKET_INTERACAOPENDENTE_LABELS;
+
+export type SuTicketMelhorHorarioReserva =
+	keyof typeof SUTICKET_MELHORHORARIORESERVA_LABELS;
+
+export type SuTicketOrigemEndereco =
+	keyof typeof SUTICKET_ORIGEMENDERECO_LABELS;
+
+export type SuTicketOrigemEnderecoEstrutura =
+	keyof typeof SUTICKET_ORIGEMENDERECOESTRUTURA_LABELS;
+
+export type SuTicketPrioridade = keyof typeof SUTICKET_PRIORIDADE_LABELS;
+
+export type SuTicketSuStatus = keyof typeof SUTICKET_SUSTATUS_LABELS;
+
+export type SuTicketTipo = keyof typeof SUTICKET_TIPO_LABELS;
 
 export interface SuTicket {
 	id: number;
@@ -121,69 +142,3 @@ export interface SuTicketRelations {
 }
 
 export type SuTicketRelationKey = keyof SuTicketRelations;
-
-export const SUTICKET_IDTICKETORIGEM_LABELS: Record<
-	SuTicketIdTicketOrigem,
-	string
-> = {
-	[SuTicketIdTicketOrigem.I]: "Interna",
-	[SuTicketIdTicketOrigem.H]: "Hotsite",
-};
-
-export const SUTICKET_INTERACAOPENDENTE_LABELS: Record<
-	SuTicketInteracaoPendente,
-	string
-> = {
-	[SuTicketInteracaoPendente.E]: "Externa",
-	[SuTicketInteracaoPendente.I]: "Interna",
-	[SuTicketInteracaoPendente.N]: "Nenhuma",
-	[SuTicketInteracaoPendente.A]: "Ambos",
-};
-
-export const SUTICKET_MELHORHORARIORESERVA_LABELS: Record<
-	SuTicketMelhorHorarioReserva,
-	string
-> = {
-	[SuTicketMelhorHorarioReserva.M]: "Manhã",
-	[SuTicketMelhorHorarioReserva.T]: "Tarde",
-	[SuTicketMelhorHorarioReserva.N]: "Noite",
-	[SuTicketMelhorHorarioReserva.Q]: "Qualquer",
-};
-
-export const SUTICKET_ORIGEMENDERECO_LABELS: Record<
-	SuTicketOrigemEndereco,
-	string
-> = {
-	[SuTicketOrigemEndereco.C]: "Cliente",
-	[SuTicketOrigemEndereco.L]: "Login",
-	[SuTicketOrigemEndereco.Cc]: "Contrato",
-	[SuTicketOrigemEndereco.M]: "Manual",
-};
-
-export const SUTICKET_ORIGEMENDERECOESTRUTURA_LABELS: Record<
-	SuTicketOrigemEnderecoEstrutura,
-	string
-> = {
-	[SuTicketOrigemEnderecoEstrutura.E]: "Estrutura",
-	[SuTicketOrigemEnderecoEstrutura.M]: "Manual",
-};
-
-export const SUTICKET_PRIORIDADE_LABELS: Record<SuTicketPrioridade, string> = {
-	[SuTicketPrioridade.B]: "Baixa",
-	[SuTicketPrioridade.M]: "Normal",
-	[SuTicketPrioridade.A]: "Alta",
-	[SuTicketPrioridade.C]: "Crítica",
-};
-
-export const SUTICKET_SUSTATUS_LABELS: Record<SuTicketSuStatus, string> = {
-	[SuTicketSuStatus.N]: "Novo",
-	[SuTicketSuStatus.P]: "Pendente",
-	[SuTicketSuStatus.Ep]: "Em progresso",
-	[SuTicketSuStatus.S]: "Solucionado",
-	[SuTicketSuStatus.C]: "Cancelado",
-};
-
-export const SUTICKET_TIPO_LABELS: Record<SuTicketTipo, string> = {
-	[SuTicketTipo.C]: "Cliente",
-	[SuTicketTipo.E]: "Estrutura própria",
-};

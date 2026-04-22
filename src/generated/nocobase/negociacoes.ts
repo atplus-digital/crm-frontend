@@ -19,102 +19,130 @@ import type { Users } from "./users";
 
 export const T_NEGOCIACOES_TABLE_NAME = "t_negociacoes";
 
-export enum NegociacoesConfissaoDivida {
-	Nao = "Nao",
-	Sim = "Sim",
-}
+export const NEGOCIACOES_CONFISSAODIVIDA_LABELS = {
+	Nao: "Nao",
+	Sim: "Sim",
+} as const;
 
-export enum NegociacoesDataVencimento {
-	Value1 = "1",
-	Value5 = "5",
-	Value10 = "10",
-	Value15 = "15",
-	Value20 = "20",
-	Value25 = "25",
-}
+export const NEGOCIACOES_DATAVENCIMENTO_LABELS = {
+	"1": "Dia 01",
+	"5": "Dia 05",
+	"10": "Dia 10",
+	"15": "Dia 15",
+	"20": "Dia 20",
+	"25": "Dia 25",
+} as const;
 
-export enum NegociacoesEnderecoCobranca {
-	Value0 = "0",
-	Value1 = "1",
-}
+export const NEGOCIACOES_ENDERECOCOBRANCA_LABELS = {
+	"0": "Não",
+	"1": "Sim",
+} as const;
 
-export enum NegociacoesEnderecoComplemento {
-	Casa = "Casa",
-	Apartamento = "Apartamento",
-	Condominio = "Condominio",
-	Comercial = "Comercial",
-}
+export const NEGOCIACOES_ENDERECOCOMPLEMENTO_LABELS = {
+	Casa: "Casa",
+	Apartamento: "Apartamento",
+	Condominio: "Condominio",
+	Comercial: "Comercial",
+} as const;
 
-export enum NegociacoesFidelidade {
-	Value0 = "0",
-	Value12 = "12",
-	Value24 = "24",
-	Value36 = "36",
-	Value48 = "48",
-	Value60 = "60",
-}
+export const NEGOCIACOES_FIDELIDADE_LABELS = {
+	"0": "0 Meses",
+	"12": "12 Meses",
+	"24": "24 Meses",
+	"36": "36 Meses",
+	"48": "48 Meses",
+	"60": "60 Meses",
+} as const;
 
-export enum NegociacoesMotivo {
-	I = "I",
-	M = "M",
-	D = "D",
-	U = "U",
-	N = "N",
-	R = "R",
-	T = "T",
-	L = "L",
-	S = "S",
-	P = "P",
-}
+export const NEGOCIACOES_MOTIVO_LABELS = {
+	I: "Venda Nova",
+	M: "Mudança de Endereço",
+	D: "Downgrade",
+	U: "Upgrade",
+	N: "Renegociação",
+	R: "Reativação",
+	T: "Mudança de Tecnologia",
+	L: "Mudança de Titularidade",
+	S: "Segunda Contratação",
+	P: "Proposta",
+} as const;
 
-export enum NegociacoesMotivoPontos {
-	Cep = "cep",
-	Endereco = "endereco",
-	Numero = "numero",
-	Telefone = "telefone",
-	TelefoneAdc = "telefone-adc",
-	Email = "email",
-}
+export const NEGOCIACOES_MOTIVOPONTOS_LABELS = {
+	cep: "CEP duplicado",
+	endereco: "Endereço duplicado",
+	numero: "Número duplicado",
+	telefone: "Telefone duplicado",
+	TelefoneAdc: "Telefone adicional duplicado",
+	email: "E-mail duplicado",
+} as const;
 
-export enum NegociacoesPontosAtencao {
-	Value0 = "0",
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-}
+export const NEGOCIACOES_PONTOSATENCAO_LABELS = {
+	"0": "0 Pontos",
+	"1": "1 Ponto",
+	"2": "2 Pontos",
+	"3": "3 Pontos",
+	"4": "4 Pontos",
+	"5": "5 Pontos",
+	"6": "6 Pontos",
+} as const;
 
-export enum NegociacoesStatus {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-}
+export const NEGOCIACOES_STATUS_LABELS = {
+	"1": "Novo",
+	"2": "Negociando",
+	"3": "Assinatura",
+	"4": "Auditoria",
+	"5": "Concluído",
+	"6": "Arquivado",
+} as const;
 
-export enum NegociacoesSubstatus {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-	Value7 = "7",
-	Value8 = "8",
-	Value9 = "9",
-	Value10 = "10",
-	Value11 = "11",
-	Value12 = "12",
-	Value13 = "13",
-}
+export const NEGOCIACOES_SUBSTATUS_LABELS = {
+	"1": "NA",
+	"2": "AGUARDANDO - Assinatura do contrato pelo cliente",
+	"3": "AGUARDANDO - Auditoria",
+	"4": "APROVADO - Aguardando inserção no IXC",
+	"5": "REPROVADO - Divergência de Dados",
+	"6": "REPROVADO - Fraude",
+	"7": "REPROVADO - Análise de Crédito",
+	"8": "APROVADO - Erro na integração com o IXC",
+	"9": "APROVADO - Concluído",
+	"10": "PERDIDO",
+	"11": "APROVADO - Aguardando atualização no IXC",
+	"12": "REPROVADO - Financeiro em Atraso",
+	"13": "EM STANDBY",
+} as const;
 
-export enum NegociacoesTipoPessoa {
-	Pf = "PF",
-	Pj = "PJ",
-}
+export const NEGOCIACOES_TIPOPESSOA_LABELS = {
+	PF: "Pessoa Física",
+	PJ: "Pessoa Jurídica",
+} as const;
+
+export type NegociacoesConfissaoDivida =
+	keyof typeof NEGOCIACOES_CONFISSAODIVIDA_LABELS;
+
+export type NegociacoesDataVencimento =
+	keyof typeof NEGOCIACOES_DATAVENCIMENTO_LABELS;
+
+export type NegociacoesEnderecoCobranca =
+	keyof typeof NEGOCIACOES_ENDERECOCOBRANCA_LABELS;
+
+export type NegociacoesEnderecoComplemento =
+	keyof typeof NEGOCIACOES_ENDERECOCOMPLEMENTO_LABELS;
+
+export type NegociacoesFidelidade = keyof typeof NEGOCIACOES_FIDELIDADE_LABELS;
+
+export type NegociacoesMotivo = keyof typeof NEGOCIACOES_MOTIVO_LABELS;
+
+export type NegociacoesMotivoPontos =
+	keyof typeof NEGOCIACOES_MOTIVOPONTOS_LABELS;
+
+export type NegociacoesPontosAtencao =
+	keyof typeof NEGOCIACOES_PONTOSATENCAO_LABELS;
+
+export type NegociacoesStatus = keyof typeof NEGOCIACOES_STATUS_LABELS;
+
+export type NegociacoesSubstatus = keyof typeof NEGOCIACOES_SUBSTATUS_LABELS;
+
+export type NegociacoesTipoPessoa = keyof typeof NEGOCIACOES_TIPOPESSOA_LABELS;
 
 export interface Negociacoes {
 	id: number;
@@ -210,128 +238,3 @@ export interface NegociacoesRelations {
 }
 
 export type NegociacoesRelationKey = keyof NegociacoesRelations;
-
-export const NEGOCIACOES_CONFISSAODIVIDA_LABELS: Record<
-	NegociacoesConfissaoDivida,
-	string
-> = {
-	[NegociacoesConfissaoDivida.Nao]: "Nao",
-	[NegociacoesConfissaoDivida.Sim]: "Sim",
-};
-
-export const NEGOCIACOES_DATAVENCIMENTO_LABELS: Record<
-	NegociacoesDataVencimento,
-	string
-> = {
-	[NegociacoesDataVencimento.Value1]: "Dia 01",
-	[NegociacoesDataVencimento.Value5]: "Dia 05",
-	[NegociacoesDataVencimento.Value10]: "Dia 10",
-	[NegociacoesDataVencimento.Value15]: "Dia 15",
-	[NegociacoesDataVencimento.Value20]: "Dia 20",
-	[NegociacoesDataVencimento.Value25]: "Dia 25",
-};
-
-export const NEGOCIACOES_ENDERECOCOBRANCA_LABELS: Record<
-	NegociacoesEnderecoCobranca,
-	string
-> = {
-	[NegociacoesEnderecoCobranca.Value0]: "Não",
-	[NegociacoesEnderecoCobranca.Value1]: "Sim",
-};
-
-export const NEGOCIACOES_ENDERECOCOMPLEMENTO_LABELS: Record<
-	NegociacoesEnderecoComplemento,
-	string
-> = {
-	[NegociacoesEnderecoComplemento.Casa]: "Casa",
-	[NegociacoesEnderecoComplemento.Apartamento]: "Apartamento",
-	[NegociacoesEnderecoComplemento.Condominio]: "Condominio",
-	[NegociacoesEnderecoComplemento.Comercial]: "Comercial",
-};
-
-export const NEGOCIACOES_FIDELIDADE_LABELS: Record<
-	NegociacoesFidelidade,
-	string
-> = {
-	[NegociacoesFidelidade.Value0]: "0 Meses",
-	[NegociacoesFidelidade.Value12]: "12 Meses",
-	[NegociacoesFidelidade.Value24]: "24 Meses",
-	[NegociacoesFidelidade.Value36]: "36 Meses",
-	[NegociacoesFidelidade.Value48]: "48 Meses",
-	[NegociacoesFidelidade.Value60]: "60 Meses",
-};
-
-export const NEGOCIACOES_MOTIVO_LABELS: Record<NegociacoesMotivo, string> = {
-	[NegociacoesMotivo.I]: "Venda Nova",
-	[NegociacoesMotivo.M]: "Mudança de Endereço",
-	[NegociacoesMotivo.D]: "Downgrade",
-	[NegociacoesMotivo.U]: "Upgrade",
-	[NegociacoesMotivo.N]: "Renegociação",
-	[NegociacoesMotivo.R]: "Reativação",
-	[NegociacoesMotivo.T]: "Mudança de Tecnologia",
-	[NegociacoesMotivo.L]: "Mudança de Titularidade",
-	[NegociacoesMotivo.S]: "Segunda Contratação",
-	[NegociacoesMotivo.P]: "Proposta",
-};
-
-export const NEGOCIACOES_MOTIVOPONTOS_LABELS: Record<
-	NegociacoesMotivoPontos,
-	string
-> = {
-	[NegociacoesMotivoPontos.Cep]: "CEP duplicado",
-	[NegociacoesMotivoPontos.Endereco]: "Endereço duplicado",
-	[NegociacoesMotivoPontos.Numero]: "Número duplicado",
-	[NegociacoesMotivoPontos.Telefone]: "Telefone duplicado",
-	[NegociacoesMotivoPontos.TelefoneAdc]: "Telefone adicional duplicado",
-	[NegociacoesMotivoPontos.Email]: "E-mail duplicado",
-};
-
-export const NEGOCIACOES_PONTOSATENCAO_LABELS: Record<
-	NegociacoesPontosAtencao,
-	string
-> = {
-	[NegociacoesPontosAtencao.Value0]: "0 Pontos",
-	[NegociacoesPontosAtencao.Value1]: "1 Ponto",
-	[NegociacoesPontosAtencao.Value2]: "2 Pontos",
-	[NegociacoesPontosAtencao.Value3]: "3 Pontos",
-	[NegociacoesPontosAtencao.Value4]: "4 Pontos",
-	[NegociacoesPontosAtencao.Value5]: "5 Pontos",
-	[NegociacoesPontosAtencao.Value6]: "6 Pontos",
-};
-
-export const NEGOCIACOES_STATUS_LABELS: Record<NegociacoesStatus, string> = {
-	[NegociacoesStatus.Value1]: "Novo",
-	[NegociacoesStatus.Value2]: "Negociando",
-	[NegociacoesStatus.Value3]: "Assinatura",
-	[NegociacoesStatus.Value4]: "Auditoria",
-	[NegociacoesStatus.Value5]: "Concluído",
-	[NegociacoesStatus.Value6]: "Arquivado",
-};
-
-export const NEGOCIACOES_SUBSTATUS_LABELS: Record<
-	NegociacoesSubstatus,
-	string
-> = {
-	[NegociacoesSubstatus.Value1]: "NA",
-	[NegociacoesSubstatus.Value2]:
-		"AGUARDANDO - Assinatura do contrato pelo cliente",
-	[NegociacoesSubstatus.Value3]: "AGUARDANDO - Auditoria",
-	[NegociacoesSubstatus.Value4]: "APROVADO - Aguardando inserção no IXC",
-	[NegociacoesSubstatus.Value5]: "REPROVADO - Divergência de Dados",
-	[NegociacoesSubstatus.Value6]: "REPROVADO - Fraude",
-	[NegociacoesSubstatus.Value7]: "REPROVADO - Análise de Crédito",
-	[NegociacoesSubstatus.Value8]: "APROVADO - Erro na integração com o IXC",
-	[NegociacoesSubstatus.Value9]: "APROVADO - Concluído",
-	[NegociacoesSubstatus.Value10]: "PERDIDO",
-	[NegociacoesSubstatus.Value11]: "APROVADO - Aguardando atualização no IXC",
-	[NegociacoesSubstatus.Value12]: "REPROVADO - Financeiro em Atraso",
-	[NegociacoesSubstatus.Value13]: "EM STANDBY",
-};
-
-export const NEGOCIACOES_TIPOPESSOA_LABELS: Record<
-	NegociacoesTipoPessoa,
-	string
-> = {
-	[NegociacoesTipoPessoa.Pf]: "Pessoa Física",
-	[NegociacoesTipoPessoa.Pj]: "Pessoa Jurídica",
-};

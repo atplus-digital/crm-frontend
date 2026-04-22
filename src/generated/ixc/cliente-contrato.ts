@@ -8,237 +8,351 @@ import type { VdContratosProdutos } from "./vd-contratos-produtos";
 
 export const CLIENTE_CONTRATO_TABLE_NAME = "cliente_contrato";
 
-export enum ClienteContratoAgruparFinanceiroContrato {
-	S = "S",
-	N = "N",
-	P = "P",
-}
+export const CLIENTECONTRATO_AGRUPARFINANCEIROCONTRATO_LABELS = {
+	S: "Sim",
+	N: "Não",
+	P: "Padrão",
+} as const;
 
-export enum ClienteContratoAplicarDescontoTempoBloqueio {
-	S = "S",
-	N = "N",
-	P = "P",
-}
+export const CLIENTECONTRATO_APLICARDESCONTOTEMPOBLOQUEIO_LABELS = {
+	S: "Sim",
+	N: "Não",
+	P: "Padrão",
+} as const;
 
-export enum ClienteContratoAssinaturaDigital {
-	S = "S",
-	N = "N",
-	P = "P",
-}
+export const CLIENTECONTRATO_ASSINATURADIGITAL_LABELS = {
+	S: "Sim",
+	N: "Não",
+	P: "Padrão",
+} as const;
 
-export enum ClienteContratoAvisoAtraso {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_AVISOATRASO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum ClienteContratoBaseGeracaoTipoDoc {
-	Opc = "OPC",
-	Prod = "PROD",
-	P = "P",
-}
+export const CLIENTECONTRATO_BASEGERACAOTIPODOC_LABELS = {
+	OPC: "Documento opcional do contrato",
+	PROD: "Documento do produto do contrato",
+	P: "Padrão",
+} as const;
 
-export enum ClienteContratoBloqueioAutomatico {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_BLOQUEIOAUTOMATICO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum ClienteContratoCcPrevisao {
-	P = "P",
-	N = "N",
-	S = "S",
-	M = "M",
-}
+export const CLIENTECONTRATO_CCPREVISAO_LABELS = {
+	P: "Configuração padrão (Parâmetros)",
+	N: "Competência (Previsão não)",
+	S: "Caixa (Previsão sim)",
+	M: "Manual",
+} as const;
 
-export enum ClienteContratoContratoRecorrencia {
-	Pix = "PIX",
-	Credit = "CREDIT",
-	N = "N",
-}
+export const CLIENTECONTRATO_CONTRATORECORRENCIA_LABELS = {
+	PIX: "Pix automático",
+	CREDIT: "Cartão de crédito",
+	N: "Sem recorrência ativa",
+} as const;
 
-export enum ClienteContratoContratoSuspenso {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_CONTRATOSUSPENSO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum ClienteContratoDesbloqueioConfianca {
-	S = "S",
-	N = "N",
-	P = "P",
-}
+export const CLIENTECONTRATO_DESBLOQUEIOCONFIANCA_LABELS = {
+	S: "Habilitado",
+	N: "Desabilitado",
+	P: "Padrão",
+} as const;
 
-export enum ClienteContratoDesbloqueioConfiancaAtivo {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_DESBLOQUEIOCONFIANCAATIVO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum ClienteContratoDocumentPhoto {
-	S = "S",
-	N = "N",
-	P = "P",
-}
+export const CLIENTECONTRATO_DOCUMENTPHOTO_LABELS = {
+	S: "Sim",
+	N: "Não",
+	P: "Padrão",
+} as const;
 
-export enum ClienteContratoEstratoSocialCol {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-}
+export const CLIENTECONTRATO_ESTRATOSOCIALCOL_LABELS = {
+	"1": "1",
+	"2": "2",
+	"3": "3",
+	"4": "4",
+	"5": "5",
+	"6": "6",
+} as const;
 
-export enum ClienteContratoGerarFinanAssinDigitalContrato {
-	S = "S",
-	N = "N",
-	P = "P",
-}
+export const CLIENTECONTRATO_GERARFINANASSINDIGITALCONTRATO_LABELS = {
+	S: "Sim",
+	N: "Não",
+	P: "Padrão",
+} as const;
 
-export enum ClienteContratoImpBkp {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_IMPBKP_LABELS = {
+	S: "Realizado",
+	N: "Em Andamento",
+} as const;
 
-export enum ClienteContratoImpCarteira {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_IMPCARTEIRA_LABELS = {
+	S: "Realizada",
+	N: "Em Andamento",
+} as const;
 
-export enum ClienteContratoImpImportacao {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_IMPIMPORTACAO_LABELS = {
+	S: "Realizada",
+	N: "Em Andamento",
+} as const;
 
-export enum ClienteContratoImpRealizado {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_IMPREALIZADO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum ClienteContratoImpRede {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_IMPREDE_LABELS = {
+	S: "Realizada",
+	N: "Em Andamento",
+} as const;
 
-export enum ClienteContratoImpStatus {
-	F = "F",
-	A = "A",
-}
+export const CLIENTECONTRATO_IMPSTATUS_LABELS = {
+	F: "Finalizada",
+	A: "Em Andamento",
+} as const;
 
-export enum ClienteContratoImpTreinamento {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_IMPTREINAMENTO_LABELS = {
+	S: "Realizado",
+	N: "Em Andamento",
+} as const;
 
-export enum ClienteContratoIntegracaoAssinaturaDigital {
-	S = "S",
-	N = "N",
-	P = "P",
-}
+export const CLIENTECONTRATO_INTEGRACAOASSINATURADIGITAL_LABELS = {
+	S: "Sim",
+	N: "Não",
+	P: "Padrão",
+} as const;
 
-export enum ClienteContratoIsentarContrato {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_ISENTARCONTRATO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum ClienteContratoLiberacaoBloqueioManual {
-	S = "S",
-	N = "N",
-	P = "P",
-}
+export const CLIENTECONTRATO_LIBERACAOBLOQUEIOMANUAL_LABELS = {
+	S: "Sim",
+	N: "Não",
+	P: "Padrão",
+} as const;
 
-export enum ClienteContratoLiberacaoSuspensaoParcial {
-	H = "H",
-	D = "D",
-	P = "P",
-}
+export const CLIENTECONTRATO_LIBERACAOSUSPENSAOPARCIAL_LABELS = {
+	H: "Habilitado",
+	D: "Desabilitado",
+	P: "Padrão",
+} as const;
 
-export enum ClienteContratoMotivoInclusao {
-	I = "I",
-	U = "U",
-	D = "D",
-	M = "M",
-	T = "T",
-	L = "L",
-	N = "N",
-	R = "R",
-}
+export const CLIENTECONTRATO_MOTIVOINCLUSAO_LABELS = {
+	I: "Instalação",
+	U: "Upgrade",
+	D: "Downgrade",
+	M: "Mudança de Endereço",
+	T: "Mudança de Tecnologia",
+	L: "Mudança de titularidade",
+	N: "Negociação",
+	R: "Reativação",
+} as const;
 
-export enum ClienteContratoOrigemCancelamento {
-	M = "M",
-	A = "A",
-}
+export const CLIENTECONTRATO_ORIGEMCANCELAMENTO_LABELS = {
+	M: "Manual",
+	A: "Automático",
+} as const;
 
-export enum ClienteContratoRenovacaoAutomatica {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_RENOVACAOAUTOMATICA_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum ClienteContratoRestricaoAutoDesbloqueio {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_RESTRICAOAUTODESBLOQUEIO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum ClienteContratoRestricaoAutoLiberaSuspParcial {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_RESTRICAOAUTOLIBERASUSPPARCIAL_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum ClienteContratoSelfiePhoto {
-	S = "S",
-	N = "N",
-	P = "P",
-}
+export const CLIENTECONTRATO_SELFIEPHOTO_LABELS = {
+	S: "Sim",
+	N: "Não",
+	P: "Padrão",
+} as const;
 
-export enum ClienteContratoStatus {
-	P = "P",
-	A = "A",
-	I = "I",
-	N = "N",
-	D = "D",
-}
+export const CLIENTECONTRATO_STATUS_LABELS = {
+	P: "Pré-contrato",
+	A: "Ativo",
+	I: "Inativo",
+	N: "Negativado",
+	D: "Desistiu",
+} as const;
 
-export enum ClienteContratoStatusInternet {
-	A = "A",
-	D = "D",
-	Cm = "CM",
-	Ca = "CA",
-	Fa = "FA",
-	Aa = "AA",
-}
+export const CLIENTECONTRATO_STATUSINTERNET_LABELS = {
+	A: "Ativo",
+	D: "Desativado",
+	CM: "Bloqueio Manual",
+	CA: "Bloqueio Automático",
+	FA: "Financeiro em atraso",
+	AA: "Aguardando Assinatura",
+} as const;
 
-export enum ClienteContratoStatusRecorrencia {
-	AguardandoAprovacao = "AGUARDANDO_APROVACAO",
-	Aprovada = "APROVADA",
-	Rejeitada = "REJEITADA",
-	Expirada = "EXPIRADA",
-	Cancelada = "CANCELADA",
-}
+export const CLIENTECONTRATO_STATUSRECORRENCIA_LABELS = {
+	AGUARDANDO_APROVACAO: "Aguardando aprovação",
+	APROVADA: "Aprovada",
+	REJEITADA: "Rejeitada",
+	EXPIRADA: "Expirada",
+	CANCELADA: "Cancelada",
+} as const;
 
-export enum ClienteContratoStatusVelocidade {
-	N = "N",
-	R = "R",
-}
+export const CLIENTECONTRATO_STATUSVELOCIDADE_LABELS = {
+	N: "Normal",
+	R: "Reduzida",
+} as const;
 
-export enum ClienteContratoTipo {
-	I = "I",
-	T = "T",
-	S = "S",
-	Sva = "SVA",
-}
+export const CLIENTECONTRATO_TIPO_LABELS = {
+	I: "Internet",
+	T: "Telefonia",
+	S: "Serviços",
+	SVA: "SVA",
+} as const;
 
-export enum ClienteContratoTipoCobranca {
-	P = "P",
-	I = "I",
-	E = "E",
-}
+export const CLIENTECONTRATO_TIPOCOBRANCA_LABELS = {
+	P: "Configuração padrão",
+	I: "Impresso",
+	E: "E-mail",
+} as const;
 
-export enum ClienteContratoTipoLocalidade {
-	R = "R",
-	U = "U",
-}
+export const CLIENTECONTRATO_TIPOLOCALIDADE_LABELS = {
+	R: "Zona Rural",
+	U: "Zona Urbana",
+} as const;
 
-export enum ClienteContratoUtilizandoAutoLiberaSuspParc {
-	S = "S",
-	N = "N",
-}
+export const CLIENTECONTRATO_UTILIZANDOAUTOLIBERASUSPPARC_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
+
+export type ClienteContratoAgruparFinanceiroContrato =
+	keyof typeof CLIENTECONTRATO_AGRUPARFINANCEIROCONTRATO_LABELS;
+
+export type ClienteContratoAplicarDescontoTempoBloqueio =
+	keyof typeof CLIENTECONTRATO_APLICARDESCONTOTEMPOBLOQUEIO_LABELS;
+
+export type ClienteContratoAssinaturaDigital =
+	keyof typeof CLIENTECONTRATO_ASSINATURADIGITAL_LABELS;
+
+export type ClienteContratoAvisoAtraso =
+	keyof typeof CLIENTECONTRATO_AVISOATRASO_LABELS;
+
+export type ClienteContratoBaseGeracaoTipoDoc =
+	keyof typeof CLIENTECONTRATO_BASEGERACAOTIPODOC_LABELS;
+
+export type ClienteContratoBloqueioAutomatico =
+	keyof typeof CLIENTECONTRATO_BLOQUEIOAUTOMATICO_LABELS;
+
+export type ClienteContratoCcPrevisao =
+	keyof typeof CLIENTECONTRATO_CCPREVISAO_LABELS;
+
+export type ClienteContratoContratoRecorrencia =
+	keyof typeof CLIENTECONTRATO_CONTRATORECORRENCIA_LABELS;
+
+export type ClienteContratoContratoSuspenso =
+	keyof typeof CLIENTECONTRATO_CONTRATOSUSPENSO_LABELS;
+
+export type ClienteContratoDesbloqueioConfianca =
+	keyof typeof CLIENTECONTRATO_DESBLOQUEIOCONFIANCA_LABELS;
+
+export type ClienteContratoDesbloqueioConfiancaAtivo =
+	keyof typeof CLIENTECONTRATO_DESBLOQUEIOCONFIANCAATIVO_LABELS;
+
+export type ClienteContratoDocumentPhoto =
+	keyof typeof CLIENTECONTRATO_DOCUMENTPHOTO_LABELS;
+
+export type ClienteContratoEstratoSocialCol =
+	keyof typeof CLIENTECONTRATO_ESTRATOSOCIALCOL_LABELS;
+
+export type ClienteContratoGerarFinanAssinDigitalContrato =
+	keyof typeof CLIENTECONTRATO_GERARFINANASSINDIGITALCONTRATO_LABELS;
+
+export type ClienteContratoImpBkp = keyof typeof CLIENTECONTRATO_IMPBKP_LABELS;
+
+export type ClienteContratoImpCarteira =
+	keyof typeof CLIENTECONTRATO_IMPCARTEIRA_LABELS;
+
+export type ClienteContratoImpImportacao =
+	keyof typeof CLIENTECONTRATO_IMPIMPORTACAO_LABELS;
+
+export type ClienteContratoImpRealizado =
+	keyof typeof CLIENTECONTRATO_IMPREALIZADO_LABELS;
+
+export type ClienteContratoImpRede =
+	keyof typeof CLIENTECONTRATO_IMPREDE_LABELS;
+
+export type ClienteContratoImpStatus =
+	keyof typeof CLIENTECONTRATO_IMPSTATUS_LABELS;
+
+export type ClienteContratoImpTreinamento =
+	keyof typeof CLIENTECONTRATO_IMPTREINAMENTO_LABELS;
+
+export type ClienteContratoIntegracaoAssinaturaDigital =
+	keyof typeof CLIENTECONTRATO_INTEGRACAOASSINATURADIGITAL_LABELS;
+
+export type ClienteContratoIsentarContrato =
+	keyof typeof CLIENTECONTRATO_ISENTARCONTRATO_LABELS;
+
+export type ClienteContratoLiberacaoBloqueioManual =
+	keyof typeof CLIENTECONTRATO_LIBERACAOBLOQUEIOMANUAL_LABELS;
+
+export type ClienteContratoLiberacaoSuspensaoParcial =
+	keyof typeof CLIENTECONTRATO_LIBERACAOSUSPENSAOPARCIAL_LABELS;
+
+export type ClienteContratoMotivoInclusao =
+	keyof typeof CLIENTECONTRATO_MOTIVOINCLUSAO_LABELS;
+
+export type ClienteContratoOrigemCancelamento =
+	keyof typeof CLIENTECONTRATO_ORIGEMCANCELAMENTO_LABELS;
+
+export type ClienteContratoRenovacaoAutomatica =
+	keyof typeof CLIENTECONTRATO_RENOVACAOAUTOMATICA_LABELS;
+
+export type ClienteContratoRestricaoAutoDesbloqueio =
+	keyof typeof CLIENTECONTRATO_RESTRICAOAUTODESBLOQUEIO_LABELS;
+
+export type ClienteContratoRestricaoAutoLiberaSuspParcial =
+	keyof typeof CLIENTECONTRATO_RESTRICAOAUTOLIBERASUSPPARCIAL_LABELS;
+
+export type ClienteContratoSelfiePhoto =
+	keyof typeof CLIENTECONTRATO_SELFIEPHOTO_LABELS;
+
+export type ClienteContratoStatus = keyof typeof CLIENTECONTRATO_STATUS_LABELS;
+
+export type ClienteContratoStatusInternet =
+	keyof typeof CLIENTECONTRATO_STATUSINTERNET_LABELS;
+
+export type ClienteContratoStatusRecorrencia =
+	keyof typeof CLIENTECONTRATO_STATUSRECORRENCIA_LABELS;
+
+export type ClienteContratoStatusVelocidade =
+	keyof typeof CLIENTECONTRATO_STATUSVELOCIDADE_LABELS;
+
+export type ClienteContratoTipo = keyof typeof CLIENTECONTRATO_TIPO_LABELS;
+
+export type ClienteContratoTipoCobranca =
+	keyof typeof CLIENTECONTRATO_TIPOCOBRANCA_LABELS;
+
+export type ClienteContratoTipoLocalidade =
+	keyof typeof CLIENTECONTRATO_TIPOLOCALIDADE_LABELS;
+
+export type ClienteContratoUtilizandoAutoLiberaSuspParc =
+	keyof typeof CLIENTECONTRATO_UTILIZANDOAUTOLIBERASUSPPARC_LABELS;
 
 export interface ClienteContrato {
 	id: number;
@@ -447,351 +561,3 @@ export interface ClienteContratoRelations {
 }
 
 export type ClienteContratoRelationKey = keyof ClienteContratoRelations;
-
-export const CLIENTECONTRATO_AGRUPARFINANCEIROCONTRATO_LABELS: Record<
-	ClienteContratoAgruparFinanceiroContrato,
-	string
-> = {
-	[ClienteContratoAgruparFinanceiroContrato.S]: "Sim",
-	[ClienteContratoAgruparFinanceiroContrato.N]: "Não",
-	[ClienteContratoAgruparFinanceiroContrato.P]: "Padrão",
-};
-
-export const CLIENTECONTRATO_APLICARDESCONTOTEMPOBLOQUEIO_LABELS: Record<
-	ClienteContratoAplicarDescontoTempoBloqueio,
-	string
-> = {
-	[ClienteContratoAplicarDescontoTempoBloqueio.S]: "Sim",
-	[ClienteContratoAplicarDescontoTempoBloqueio.N]: "Não",
-	[ClienteContratoAplicarDescontoTempoBloqueio.P]: "Padrão",
-};
-
-export const CLIENTECONTRATO_ASSINATURADIGITAL_LABELS: Record<
-	ClienteContratoAssinaturaDigital,
-	string
-> = {
-	[ClienteContratoAssinaturaDigital.S]: "Sim",
-	[ClienteContratoAssinaturaDigital.N]: "Não",
-	[ClienteContratoAssinaturaDigital.P]: "Padrão",
-};
-
-export const CLIENTECONTRATO_AVISOATRASO_LABELS: Record<
-	ClienteContratoAvisoAtraso,
-	string
-> = {
-	[ClienteContratoAvisoAtraso.S]: "Sim",
-	[ClienteContratoAvisoAtraso.N]: "Não",
-};
-
-export const CLIENTECONTRATO_BASEGERACAOTIPODOC_LABELS: Record<
-	ClienteContratoBaseGeracaoTipoDoc,
-	string
-> = {
-	[ClienteContratoBaseGeracaoTipoDoc.Opc]: "Documento opcional do contrato",
-	[ClienteContratoBaseGeracaoTipoDoc.Prod]: "Documento do produto do contrato",
-	[ClienteContratoBaseGeracaoTipoDoc.P]: "Padrão",
-};
-
-export const CLIENTECONTRATO_BLOQUEIOAUTOMATICO_LABELS: Record<
-	ClienteContratoBloqueioAutomatico,
-	string
-> = {
-	[ClienteContratoBloqueioAutomatico.S]: "Sim",
-	[ClienteContratoBloqueioAutomatico.N]: "Não",
-};
-
-export const CLIENTECONTRATO_CCPREVISAO_LABELS: Record<
-	ClienteContratoCcPrevisao,
-	string
-> = {
-	[ClienteContratoCcPrevisao.P]: "Configuração padrão (Parâmetros)",
-	[ClienteContratoCcPrevisao.N]: "Competência (Previsão não)",
-	[ClienteContratoCcPrevisao.S]: "Caixa (Previsão sim)",
-	[ClienteContratoCcPrevisao.M]: "Manual",
-};
-
-export const CLIENTECONTRATO_CONTRATORECORRENCIA_LABELS: Record<
-	ClienteContratoContratoRecorrencia,
-	string
-> = {
-	[ClienteContratoContratoRecorrencia.Pix]: "Pix automático",
-	[ClienteContratoContratoRecorrencia.Credit]: "Cartão de crédito",
-	[ClienteContratoContratoRecorrencia.N]: "Sem recorrência ativa",
-};
-
-export const CLIENTECONTRATO_CONTRATOSUSPENSO_LABELS: Record<
-	ClienteContratoContratoSuspenso,
-	string
-> = {
-	[ClienteContratoContratoSuspenso.S]: "Sim",
-	[ClienteContratoContratoSuspenso.N]: "Não",
-};
-
-export const CLIENTECONTRATO_DESBLOQUEIOCONFIANCA_LABELS: Record<
-	ClienteContratoDesbloqueioConfianca,
-	string
-> = {
-	[ClienteContratoDesbloqueioConfianca.S]: "Habilitado",
-	[ClienteContratoDesbloqueioConfianca.N]: "Desabilitado",
-	[ClienteContratoDesbloqueioConfianca.P]: "Padrão",
-};
-
-export const CLIENTECONTRATO_DESBLOQUEIOCONFIANCAATIVO_LABELS: Record<
-	ClienteContratoDesbloqueioConfiancaAtivo,
-	string
-> = {
-	[ClienteContratoDesbloqueioConfiancaAtivo.S]: "Sim",
-	[ClienteContratoDesbloqueioConfiancaAtivo.N]: "Não",
-};
-
-export const CLIENTECONTRATO_DOCUMENTPHOTO_LABELS: Record<
-	ClienteContratoDocumentPhoto,
-	string
-> = {
-	[ClienteContratoDocumentPhoto.S]: "Sim",
-	[ClienteContratoDocumentPhoto.N]: "Não",
-	[ClienteContratoDocumentPhoto.P]: "Padrão",
-};
-
-export const CLIENTECONTRATO_ESTRATOSOCIALCOL_LABELS: Record<
-	ClienteContratoEstratoSocialCol,
-	string
-> = {
-	[ClienteContratoEstratoSocialCol.Value1]: "1",
-	[ClienteContratoEstratoSocialCol.Value2]: "2",
-	[ClienteContratoEstratoSocialCol.Value3]: "3",
-	[ClienteContratoEstratoSocialCol.Value4]: "4",
-	[ClienteContratoEstratoSocialCol.Value5]: "5",
-	[ClienteContratoEstratoSocialCol.Value6]: "6",
-};
-
-export const CLIENTECONTRATO_GERARFINANASSINDIGITALCONTRATO_LABELS: Record<
-	ClienteContratoGerarFinanAssinDigitalContrato,
-	string
-> = {
-	[ClienteContratoGerarFinanAssinDigitalContrato.S]: "Sim",
-	[ClienteContratoGerarFinanAssinDigitalContrato.N]: "Não",
-	[ClienteContratoGerarFinanAssinDigitalContrato.P]: "Padrão",
-};
-
-export const CLIENTECONTRATO_IMPBKP_LABELS: Record<
-	ClienteContratoImpBkp,
-	string
-> = {
-	[ClienteContratoImpBkp.S]: "Realizado",
-	[ClienteContratoImpBkp.N]: "Em Andamento",
-};
-
-export const CLIENTECONTRATO_IMPCARTEIRA_LABELS: Record<
-	ClienteContratoImpCarteira,
-	string
-> = {
-	[ClienteContratoImpCarteira.S]: "Realizada",
-	[ClienteContratoImpCarteira.N]: "Em Andamento",
-};
-
-export const CLIENTECONTRATO_IMPIMPORTACAO_LABELS: Record<
-	ClienteContratoImpImportacao,
-	string
-> = {
-	[ClienteContratoImpImportacao.S]: "Realizada",
-	[ClienteContratoImpImportacao.N]: "Em Andamento",
-};
-
-export const CLIENTECONTRATO_IMPREALIZADO_LABELS: Record<
-	ClienteContratoImpRealizado,
-	string
-> = {
-	[ClienteContratoImpRealizado.S]: "Sim",
-	[ClienteContratoImpRealizado.N]: "Não",
-};
-
-export const CLIENTECONTRATO_IMPREDE_LABELS: Record<
-	ClienteContratoImpRede,
-	string
-> = {
-	[ClienteContratoImpRede.S]: "Realizada",
-	[ClienteContratoImpRede.N]: "Em Andamento",
-};
-
-export const CLIENTECONTRATO_IMPSTATUS_LABELS: Record<
-	ClienteContratoImpStatus,
-	string
-> = {
-	[ClienteContratoImpStatus.F]: "Finalizada",
-	[ClienteContratoImpStatus.A]: "Em Andamento",
-};
-
-export const CLIENTECONTRATO_IMPTREINAMENTO_LABELS: Record<
-	ClienteContratoImpTreinamento,
-	string
-> = {
-	[ClienteContratoImpTreinamento.S]: "Realizado",
-	[ClienteContratoImpTreinamento.N]: "Em Andamento",
-};
-
-export const CLIENTECONTRATO_INTEGRACAOASSINATURADIGITAL_LABELS: Record<
-	ClienteContratoIntegracaoAssinaturaDigital,
-	string
-> = {
-	[ClienteContratoIntegracaoAssinaturaDigital.S]: "Sim",
-	[ClienteContratoIntegracaoAssinaturaDigital.N]: "Não",
-	[ClienteContratoIntegracaoAssinaturaDigital.P]: "Padrão",
-};
-
-export const CLIENTECONTRATO_ISENTARCONTRATO_LABELS: Record<
-	ClienteContratoIsentarContrato,
-	string
-> = {
-	[ClienteContratoIsentarContrato.S]: "Sim",
-	[ClienteContratoIsentarContrato.N]: "Não",
-};
-
-export const CLIENTECONTRATO_LIBERACAOBLOQUEIOMANUAL_LABELS: Record<
-	ClienteContratoLiberacaoBloqueioManual,
-	string
-> = {
-	[ClienteContratoLiberacaoBloqueioManual.S]: "Sim",
-	[ClienteContratoLiberacaoBloqueioManual.N]: "Não",
-	[ClienteContratoLiberacaoBloqueioManual.P]: "Padrão",
-};
-
-export const CLIENTECONTRATO_LIBERACAOSUSPENSAOPARCIAL_LABELS: Record<
-	ClienteContratoLiberacaoSuspensaoParcial,
-	string
-> = {
-	[ClienteContratoLiberacaoSuspensaoParcial.H]: "Habilitado",
-	[ClienteContratoLiberacaoSuspensaoParcial.D]: "Desabilitado",
-	[ClienteContratoLiberacaoSuspensaoParcial.P]: "Padrão",
-};
-
-export const CLIENTECONTRATO_MOTIVOINCLUSAO_LABELS: Record<
-	ClienteContratoMotivoInclusao,
-	string
-> = {
-	[ClienteContratoMotivoInclusao.I]: "Instalação",
-	[ClienteContratoMotivoInclusao.U]: "Upgrade",
-	[ClienteContratoMotivoInclusao.D]: "Downgrade",
-	[ClienteContratoMotivoInclusao.M]: "Mudança de Endereço",
-	[ClienteContratoMotivoInclusao.T]: "Mudança de Tecnologia",
-	[ClienteContratoMotivoInclusao.L]: "Mudança de titularidade",
-	[ClienteContratoMotivoInclusao.N]: "Negociação",
-	[ClienteContratoMotivoInclusao.R]: "Reativação",
-};
-
-export const CLIENTECONTRATO_ORIGEMCANCELAMENTO_LABELS: Record<
-	ClienteContratoOrigemCancelamento,
-	string
-> = {
-	[ClienteContratoOrigemCancelamento.M]: "Manual",
-	[ClienteContratoOrigemCancelamento.A]: "Automático",
-};
-
-export const CLIENTECONTRATO_RENOVACAOAUTOMATICA_LABELS: Record<
-	ClienteContratoRenovacaoAutomatica,
-	string
-> = {
-	[ClienteContratoRenovacaoAutomatica.S]: "Sim",
-	[ClienteContratoRenovacaoAutomatica.N]: "Não",
-};
-
-export const CLIENTECONTRATO_RESTRICAOAUTODESBLOQUEIO_LABELS: Record<
-	ClienteContratoRestricaoAutoDesbloqueio,
-	string
-> = {
-	[ClienteContratoRestricaoAutoDesbloqueio.S]: "Sim",
-	[ClienteContratoRestricaoAutoDesbloqueio.N]: "Não",
-};
-
-export const CLIENTECONTRATO_RESTRICAOAUTOLIBERASUSPPARCIAL_LABELS: Record<
-	ClienteContratoRestricaoAutoLiberaSuspParcial,
-	string
-> = {
-	[ClienteContratoRestricaoAutoLiberaSuspParcial.S]: "Sim",
-	[ClienteContratoRestricaoAutoLiberaSuspParcial.N]: "Não",
-};
-
-export const CLIENTECONTRATO_SELFIEPHOTO_LABELS: Record<
-	ClienteContratoSelfiePhoto,
-	string
-> = {
-	[ClienteContratoSelfiePhoto.S]: "Sim",
-	[ClienteContratoSelfiePhoto.N]: "Não",
-	[ClienteContratoSelfiePhoto.P]: "Padrão",
-};
-
-export const CLIENTECONTRATO_STATUS_LABELS: Record<
-	ClienteContratoStatus,
-	string
-> = {
-	[ClienteContratoStatus.P]: "Pré-contrato",
-	[ClienteContratoStatus.A]: "Ativo",
-	[ClienteContratoStatus.I]: "Inativo",
-	[ClienteContratoStatus.N]: "Negativado",
-	[ClienteContratoStatus.D]: "Desistiu",
-};
-
-export const CLIENTECONTRATO_STATUSINTERNET_LABELS: Record<
-	ClienteContratoStatusInternet,
-	string
-> = {
-	[ClienteContratoStatusInternet.A]: "Ativo",
-	[ClienteContratoStatusInternet.D]: "Desativado",
-	[ClienteContratoStatusInternet.Cm]: "Bloqueio Manual",
-	[ClienteContratoStatusInternet.Ca]: "Bloqueio Automático",
-	[ClienteContratoStatusInternet.Fa]: "Financeiro em atraso",
-	[ClienteContratoStatusInternet.Aa]: "Aguardando Assinatura",
-};
-
-export const CLIENTECONTRATO_STATUSRECORRENCIA_LABELS: Record<
-	ClienteContratoStatusRecorrencia,
-	string
-> = {
-	[ClienteContratoStatusRecorrencia.AguardandoAprovacao]:
-		"Aguardando aprovação",
-	[ClienteContratoStatusRecorrencia.Aprovada]: "Aprovada",
-	[ClienteContratoStatusRecorrencia.Rejeitada]: "Rejeitada",
-	[ClienteContratoStatusRecorrencia.Expirada]: "Expirada",
-	[ClienteContratoStatusRecorrencia.Cancelada]: "Cancelada",
-};
-
-export const CLIENTECONTRATO_STATUSVELOCIDADE_LABELS: Record<
-	ClienteContratoStatusVelocidade,
-	string
-> = {
-	[ClienteContratoStatusVelocidade.N]: "Normal",
-	[ClienteContratoStatusVelocidade.R]: "Reduzida",
-};
-
-export const CLIENTECONTRATO_TIPO_LABELS: Record<ClienteContratoTipo, string> =
-	{
-		[ClienteContratoTipo.I]: "Internet",
-		[ClienteContratoTipo.T]: "Telefonia",
-		[ClienteContratoTipo.S]: "Serviços",
-		[ClienteContratoTipo.Sva]: "SVA",
-	};
-
-export const CLIENTECONTRATO_TIPOCOBRANCA_LABELS: Record<
-	ClienteContratoTipoCobranca,
-	string
-> = {
-	[ClienteContratoTipoCobranca.P]: "Configuração padrão",
-	[ClienteContratoTipoCobranca.I]: "Impresso",
-	[ClienteContratoTipoCobranca.E]: "E-mail",
-};
-
-export const CLIENTECONTRATO_TIPOLOCALIDADE_LABELS: Record<
-	ClienteContratoTipoLocalidade,
-	string
-> = {
-	[ClienteContratoTipoLocalidade.R]: "Zona Rural",
-	[ClienteContratoTipoLocalidade.U]: "Zona Urbana",
-};
-
-export const CLIENTECONTRATO_UTILIZANDOAUTOLIBERASUSPPARC_LABELS: Record<
-	ClienteContratoUtilizandoAutoLiberaSuspParc,
-	string
-> = {
-	[ClienteContratoUtilizandoAutoLiberaSuspParc.S]: "Sim",
-	[ClienteContratoUtilizandoAutoLiberaSuspParc.N]: "Não",
-};

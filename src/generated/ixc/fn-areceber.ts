@@ -7,174 +7,235 @@ import type { Cliente } from "./cliente";
 
 export const FN_ARECEBER_TABLE_NAME = "fn_areceber";
 
-export enum FnAreceberAguardandoConfirmacaoPagamento {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_AGUARDANDOCONFIRMACAOPAGAMENTO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum FnAreceberArquivoRemessaBaixado {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_ARQUIVOREMESSABAIXADO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum FnAreceberEmCobranca {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_EMCOBRANCA_LABELS = {
+	S: "SIm",
+	N: "Não",
+} as const;
 
-export enum FnAreceberEstornado {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_ESTORNADO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum FnAreceberEtapaEnvioRegua {
-	Lp = "LP",
-	Cv = "CV",
-	Ac = "AC",
-	Ip = "IP",
-	Ap = "AP",
-	Cap = "CAP",
-	Nc = "NC",
-	Rca = "RCA",
-	Cca = "CCA",
-	Rcb = "RCB",
-	Rn = "RN",
-}
+export const FNARECEBER_ETAPAENVIOREGUA_LABELS = {
+	LP: "Lembrete de pagamento",
+	CV: "No vencimento",
+	AC: "Aviso de cobrança",
+	IP: "Informativo de pendência",
+	AP: "Agendar pagamento",
+	CAP: "Cobrança automática e presencial",
+	NC: "Negativar clientes",
+	RCA: "Recebimento de contas a receber",
+	CCA: "Cancelamento de contas a receber",
+	RCB: "Renegociação de contas a receber",
+	RN: "Remover negativações",
+} as const;
 
-export enum FnAreceberFormaRecebimento {
-	M = "M",
-	R = "R",
-}
+export const FNARECEBER_FORMARECEBIMENTO_LABELS = {
+	M: "Recebido de forma manual",
+	R: "Recebido automaticamente",
+} as const;
 
-export enum FnAreceberImpresso {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_IMPRESSO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum FnAreceberLiberaPeriodo {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_LIBERAPERIODO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum FnAreceberMotivoAlteracao {
-	Value08 = "08",
-	Value15 = "15",
-	Value16 = "16",
-	Value17 = "17",
-	Value03 = "03",
-	Value04 = "04",
-	Value05 = "05",
-	Value06 = "06",
-	Value07 = "07",
-	Value09 = "09",
-	Value10 = "10",
-	Value11 = "11",
-	Value12 = "12",
-	Value13 = "13",
-	Value14 = "14",
-	Value18 = "18",
-	Value19 = "19",
-	Value20 = "20",
-	Value21 = "21",
-	Value22 = "22",
-	Value23 = "23",
-	Value24 = "24",
-	Value30 = "30",
-	Value31 = "31",
-	Value33 = "33",
-	Value34 = "34",
-	Value35 = "35",
-	Value40 = "40",
-	Value41 = "41",
-	Value42 = "42",
-	Value43 = "43",
-	Value44 = "44",
-	Value45 = "45",
-	Value46 = "46",
-	Value49 = "49",
-}
+export const FNARECEBER_MOTIVOALTERACAO_LABELS = {
+	Value08: "Cancelamento de Desconto",
+	"15": "Dispensar Cobrança de Multa",
+	"16": "Alteração do Valor de Desconto",
+	"17": "Não conceder Desconto",
+	Value03: "Protesto para Fins Falimentares",
+	Value04: "Concessão de Abatimento",
+	Value05: "Cancelamento de Abatimento",
+	Value06: "Alteração de Vencimento",
+	Value07: "Concessão de Desconto",
+	Value09: "Protestar",
+	"10": "Sustar Protesto e Baixar Título",
+	"11": "Sustar Protesto e Manter em Carteira",
+	"12": "Alteração de Juros de Mora",
+	"13": "Dispensar Cobrança de Juros de Mora",
+	"14": "Alteração de Valor/Percentual de Multa",
+	"18": "Alteração do Valor de Abatimento",
+	"19": "Prazo Limite de Recebimento ? Alterar",
+	"20": "Prazo Limite de Recebimento ? Dispensar",
+	"21": "Alterar número do título dado pelo beneficiario",
+	"22": "Alterar número do título dado pelo beneficiario",
+	"23": "Alterar dados do Pagador",
+	"24": "Alterar dados do Sacador/Avalista",
+	"30": "Recusa da Alegação do Pagador",
+	"31": "Alteração de Outros Dados",
+	"33": "Alteração dos Dados do Rateio de Crédito",
+	"34": "Pedido de Cancelamento dos Dados do Rateio de Crédito",
+	"35": "Pedido de Desagendamento do Débito Automático",
+	"40": "Alteração de Carteira",
+	"41": "Cancelar protesto",
+	"42": "Alteração de Espécie de Título",
+	"43": "Transferência de carteira/modalidade de cobrança",
+	"44": "Alteração de contrato de cobrança",
+	"45": "Negativação Sem Protesto",
+	"46": "Solicitação de Baixa de Título Negativado Sem Protesto",
+	"49": "Alteração de dados extras multa",
+} as const;
 
-export enum FnAreceberParceladoCartao {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_PARCELADOCARTAO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum FnAreceberPixStatusRecorrente {
-	Criada = "CRIADA",
-	Ativa = "ATIVA",
-	Concluida = "CONCLUIDA",
-	Expirada = "EXPIRADA",
-	Rejeitada = "REJEITADA",
-	Cancelada = "CANCELADA",
-}
+export const FNARECEBER_PIXSTATUSRECORRENTE_LABELS = {
+	CRIADA: "Criado",
+	ATIVA: "Ativo",
+	CONCLUIDA: "Concluído",
+	EXPIRADA: "Expirado",
+	REJEITADA: "Rejeitado",
+	CANCELADA: "Cancelado",
+} as const;
 
-export enum FnAreceberPrevisao {
-	N = "N",
-	S = "S",
-	M = "M",
-}
+export const FNARECEBER_PREVISAO_LABELS = {
+	N: "Competência (Previsão NÃO)",
+	S: "Caixa (Previsão SIM)",
+	M: "Manual",
+} as const;
 
-export enum FnAreceberRecebidoPorRecorrencia {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_RECEBIDOPORRECORRENCIA_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum FnAreceberRecebidoViaPix {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_RECEBIDOVIAPIX_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum FnAreceberStatus {
-	A = "A",
-	R = "R",
-	P = "P",
-	C = "C",
-}
+export const FNARECEBER_STATUS_LABELS = {
+	A: "A receber",
+	R: "Recebido",
+	P: "Parcial",
+	C: "Cancelado",
+} as const;
 
-export enum FnAreceberStatusCobrancaRegua {
-	A = "A",
-	F = "F",
-}
+export const FNARECEBER_STATUSCOBRANCAREGUA_LABELS = {
+	A: "Aberta",
+	F: "Finalizada",
+} as const;
 
-export enum FnAreceberTipoCobranca {
-	P = "P",
-	I = "I",
-	E = "E",
-}
+export const FNARECEBER_TIPOCOBRANCA_LABELS = {
+	P: "Padrão",
+	I: "Impresso",
+	E: "E-mail",
+} as const;
 
-export enum FnAreceberTipoCobrancaPix {
-	ComVencimento = "COM_VENCIMENTO",
-	Imediata = "IMEDIATA",
-}
+export const FNARECEBER_TIPOCOBRANCAPIX_LABELS = {
+	COM_VENCIMENTO: "Com vencimento",
+	IMEDIATA: "Imediata",
+} as const;
 
-export enum FnAreceberTipoRecebimento {
-	Boleto = "Boleto",
-	Cheque = "Cheque",
-	CartaO = "CartÃ£o",
-	Dinheiro = "Dinheiro",
-	DepaSito = "DepÃ³sito",
-	Gateway = "Gateway",
-	DaBito = "DÃ©bito",
-	Fatura = "Fatura",
-	Arrecadacaorecebimento = "ArrecadacaoRecebimento",
-	Transferencia = "Transferencia",
-	Pix = "Pix",
-}
+export const FNARECEBER_TIPORECEBIMENTO_LABELS = {
+	Boleto: "Boleto",
+	Cheque: "Cheque",
+	CartaO: "Cartão de crédito",
+	Dinheiro: "Dinheiro",
+	DepaSito: "Depósito",
+	Gateway: "Gateway",
+	DaBito: "Débito em conta",
+	Fatura: "Fatura",
+	ArrecadacaoRecebimento: "Arrecadação/Recebimento",
+	Transferencia: "Transferência",
+	Pix: "Pix",
+} as const;
 
-export enum FnAreceberTituloImportado {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_TITULOIMPORTADO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum FnAreceberTituloProtestado {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_TITULOPROTESTADO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
 
-export enum FnAreceberTituloRenegociado {
-	S = "S",
-	N = "N",
-}
+export const FNARECEBER_TITULORENEGOCIADO_LABELS = {
+	S: "Sim",
+	N: "Não",
+} as const;
+
+export type FnAreceberAguardandoConfirmacaoPagamento =
+	keyof typeof FNARECEBER_AGUARDANDOCONFIRMACAOPAGAMENTO_LABELS;
+
+export type FnAreceberArquivoRemessaBaixado =
+	keyof typeof FNARECEBER_ARQUIVOREMESSABAIXADO_LABELS;
+
+export type FnAreceberEmCobranca = keyof typeof FNARECEBER_EMCOBRANCA_LABELS;
+
+export type FnAreceberEstornado = keyof typeof FNARECEBER_ESTORNADO_LABELS;
+
+export type FnAreceberEtapaEnvioRegua =
+	keyof typeof FNARECEBER_ETAPAENVIOREGUA_LABELS;
+
+export type FnAreceberFormaRecebimento =
+	keyof typeof FNARECEBER_FORMARECEBIMENTO_LABELS;
+
+export type FnAreceberImpresso = keyof typeof FNARECEBER_IMPRESSO_LABELS;
+
+export type FnAreceberLiberaPeriodo =
+	keyof typeof FNARECEBER_LIBERAPERIODO_LABELS;
+
+export type FnAreceberMotivoAlteracao =
+	keyof typeof FNARECEBER_MOTIVOALTERACAO_LABELS;
+
+export type FnAreceberParceladoCartao =
+	keyof typeof FNARECEBER_PARCELADOCARTAO_LABELS;
+
+export type FnAreceberPixStatusRecorrente =
+	keyof typeof FNARECEBER_PIXSTATUSRECORRENTE_LABELS;
+
+export type FnAreceberPrevisao = keyof typeof FNARECEBER_PREVISAO_LABELS;
+
+export type FnAreceberRecebidoPorRecorrencia =
+	keyof typeof FNARECEBER_RECEBIDOPORRECORRENCIA_LABELS;
+
+export type FnAreceberRecebidoViaPix =
+	keyof typeof FNARECEBER_RECEBIDOVIAPIX_LABELS;
+
+export type FnAreceberStatus = keyof typeof FNARECEBER_STATUS_LABELS;
+
+export type FnAreceberStatusCobrancaRegua =
+	keyof typeof FNARECEBER_STATUSCOBRANCAREGUA_LABELS;
+
+export type FnAreceberTipoCobranca =
+	keyof typeof FNARECEBER_TIPOCOBRANCA_LABELS;
+
+export type FnAreceberTipoCobrancaPix =
+	keyof typeof FNARECEBER_TIPOCOBRANCAPIX_LABELS;
+
+export type FnAreceberTipoRecebimento =
+	keyof typeof FNARECEBER_TIPORECEBIMENTO_LABELS;
+
+export type FnAreceberTituloImportado =
+	keyof typeof FNARECEBER_TITULOIMPORTADO_LABELS;
+
+export type FnAreceberTituloProtestado =
+	keyof typeof FNARECEBER_TITULOPROTESTADO_LABELS;
+
+export type FnAreceberTituloRenegociado =
+	keyof typeof FNARECEBER_TITULORENEGOCIADO_LABELS;
 
 export interface FnAreceber {
 	id: number;
@@ -300,235 +361,3 @@ export interface FnAreceberRelations {
 }
 
 export type FnAreceberRelationKey = keyof FnAreceberRelations;
-
-export const FNARECEBER_AGUARDANDOCONFIRMACAOPAGAMENTO_LABELS: Record<
-	FnAreceberAguardandoConfirmacaoPagamento,
-	string
-> = {
-	[FnAreceberAguardandoConfirmacaoPagamento.S]: "Sim",
-	[FnAreceberAguardandoConfirmacaoPagamento.N]: "Não",
-};
-
-export const FNARECEBER_ARQUIVOREMESSABAIXADO_LABELS: Record<
-	FnAreceberArquivoRemessaBaixado,
-	string
-> = {
-	[FnAreceberArquivoRemessaBaixado.S]: "Sim",
-	[FnAreceberArquivoRemessaBaixado.N]: "Não",
-};
-
-export const FNARECEBER_EMCOBRANCA_LABELS: Record<
-	FnAreceberEmCobranca,
-	string
-> = {
-	[FnAreceberEmCobranca.S]: "SIm",
-	[FnAreceberEmCobranca.N]: "Não",
-};
-
-export const FNARECEBER_ESTORNADO_LABELS: Record<FnAreceberEstornado, string> =
-	{
-		[FnAreceberEstornado.S]: "Sim",
-		[FnAreceberEstornado.N]: "Não",
-	};
-
-export const FNARECEBER_ETAPAENVIOREGUA_LABELS: Record<
-	FnAreceberEtapaEnvioRegua,
-	string
-> = {
-	[FnAreceberEtapaEnvioRegua.Lp]: "Lembrete de pagamento",
-	[FnAreceberEtapaEnvioRegua.Cv]: "No vencimento",
-	[FnAreceberEtapaEnvioRegua.Ac]: "Aviso de cobrança",
-	[FnAreceberEtapaEnvioRegua.Ip]: "Informativo de pendência",
-	[FnAreceberEtapaEnvioRegua.Ap]: "Agendar pagamento",
-	[FnAreceberEtapaEnvioRegua.Cap]: "Cobrança automática e presencial",
-	[FnAreceberEtapaEnvioRegua.Nc]: "Negativar clientes",
-	[FnAreceberEtapaEnvioRegua.Rca]: "Recebimento de contas a receber",
-	[FnAreceberEtapaEnvioRegua.Cca]: "Cancelamento de contas a receber",
-	[FnAreceberEtapaEnvioRegua.Rcb]: "Renegociação de contas a receber",
-	[FnAreceberEtapaEnvioRegua.Rn]: "Remover negativações",
-};
-
-export const FNARECEBER_FORMARECEBIMENTO_LABELS: Record<
-	FnAreceberFormaRecebimento,
-	string
-> = {
-	[FnAreceberFormaRecebimento.M]: "Recebido de forma manual",
-	[FnAreceberFormaRecebimento.R]: "Recebido automaticamente",
-};
-
-export const FNARECEBER_IMPRESSO_LABELS: Record<FnAreceberImpresso, string> = {
-	[FnAreceberImpresso.S]: "Sim",
-	[FnAreceberImpresso.N]: "Não",
-};
-
-export const FNARECEBER_LIBERAPERIODO_LABELS: Record<
-	FnAreceberLiberaPeriodo,
-	string
-> = {
-	[FnAreceberLiberaPeriodo.S]: "Sim",
-	[FnAreceberLiberaPeriodo.N]: "Não",
-};
-
-export const FNARECEBER_MOTIVOALTERACAO_LABELS: Record<
-	FnAreceberMotivoAlteracao,
-	string
-> = {
-	[FnAreceberMotivoAlteracao.Value08]: "Cancelamento de Desconto",
-	[FnAreceberMotivoAlteracao.Value15]: "Dispensar Cobrança de Multa",
-	[FnAreceberMotivoAlteracao.Value16]: "Alteração do Valor de Desconto",
-	[FnAreceberMotivoAlteracao.Value17]: "Não conceder Desconto",
-	[FnAreceberMotivoAlteracao.Value03]: "Protesto para Fins Falimentares",
-	[FnAreceberMotivoAlteracao.Value04]: "Concessão de Abatimento",
-	[FnAreceberMotivoAlteracao.Value05]: "Cancelamento de Abatimento",
-	[FnAreceberMotivoAlteracao.Value06]: "Alteração de Vencimento",
-	[FnAreceberMotivoAlteracao.Value07]: "Concessão de Desconto",
-	[FnAreceberMotivoAlteracao.Value09]: "Protestar",
-	[FnAreceberMotivoAlteracao.Value10]: "Sustar Protesto e Baixar Título",
-	[FnAreceberMotivoAlteracao.Value11]: "Sustar Protesto e Manter em Carteira",
-	[FnAreceberMotivoAlteracao.Value12]: "Alteração de Juros de Mora",
-	[FnAreceberMotivoAlteracao.Value13]: "Dispensar Cobrança de Juros de Mora",
-	[FnAreceberMotivoAlteracao.Value14]: "Alteração de Valor/Percentual de Multa",
-	[FnAreceberMotivoAlteracao.Value18]: "Alteração do Valor de Abatimento",
-	[FnAreceberMotivoAlteracao.Value19]: "Prazo Limite de Recebimento ? Alterar",
-	[FnAreceberMotivoAlteracao.Value20]:
-		"Prazo Limite de Recebimento ? Dispensar",
-	[FnAreceberMotivoAlteracao.Value21]:
-		"Alterar número do título dado pelo beneficiario",
-	[FnAreceberMotivoAlteracao.Value22]:
-		"Alterar número do título dado pelo beneficiario",
-	[FnAreceberMotivoAlteracao.Value23]: "Alterar dados do Pagador",
-	[FnAreceberMotivoAlteracao.Value24]: "Alterar dados do Sacador/Avalista",
-	[FnAreceberMotivoAlteracao.Value30]: "Recusa da Alegação do Pagador",
-	[FnAreceberMotivoAlteracao.Value31]: "Alteração de Outros Dados",
-	[FnAreceberMotivoAlteracao.Value33]:
-		"Alteração dos Dados do Rateio de Crédito",
-	[FnAreceberMotivoAlteracao.Value34]:
-		"Pedido de Cancelamento dos Dados do Rateio de Crédito",
-	[FnAreceberMotivoAlteracao.Value35]:
-		"Pedido de Desagendamento do Débito Automático",
-	[FnAreceberMotivoAlteracao.Value40]: "Alteração de Carteira",
-	[FnAreceberMotivoAlteracao.Value41]: "Cancelar protesto",
-	[FnAreceberMotivoAlteracao.Value42]: "Alteração de Espécie de Título",
-	[FnAreceberMotivoAlteracao.Value43]:
-		"Transferência de carteira/modalidade de cobrança",
-	[FnAreceberMotivoAlteracao.Value44]: "Alteração de contrato de cobrança",
-	[FnAreceberMotivoAlteracao.Value45]: "Negativação Sem Protesto",
-	[FnAreceberMotivoAlteracao.Value46]:
-		"Solicitação de Baixa de Título Negativado Sem Protesto",
-	[FnAreceberMotivoAlteracao.Value49]: "Alteração de dados extras multa",
-};
-
-export const FNARECEBER_PARCELADOCARTAO_LABELS: Record<
-	FnAreceberParceladoCartao,
-	string
-> = {
-	[FnAreceberParceladoCartao.S]: "Sim",
-	[FnAreceberParceladoCartao.N]: "Não",
-};
-
-export const FNARECEBER_PIXSTATUSRECORRENTE_LABELS: Record<
-	FnAreceberPixStatusRecorrente,
-	string
-> = {
-	[FnAreceberPixStatusRecorrente.Criada]: "Criado",
-	[FnAreceberPixStatusRecorrente.Ativa]: "Ativo",
-	[FnAreceberPixStatusRecorrente.Concluida]: "Concluído",
-	[FnAreceberPixStatusRecorrente.Expirada]: "Expirado",
-	[FnAreceberPixStatusRecorrente.Rejeitada]: "Rejeitado",
-	[FnAreceberPixStatusRecorrente.Cancelada]: "Cancelado",
-};
-
-export const FNARECEBER_PREVISAO_LABELS: Record<FnAreceberPrevisao, string> = {
-	[FnAreceberPrevisao.N]: "Competência (Previsão NÃO)",
-	[FnAreceberPrevisao.S]: "Caixa (Previsão SIM)",
-	[FnAreceberPrevisao.M]: "Manual",
-};
-
-export const FNARECEBER_RECEBIDOPORRECORRENCIA_LABELS: Record<
-	FnAreceberRecebidoPorRecorrencia,
-	string
-> = {
-	[FnAreceberRecebidoPorRecorrencia.S]: "Sim",
-	[FnAreceberRecebidoPorRecorrencia.N]: "Não",
-};
-
-export const FNARECEBER_RECEBIDOVIAPIX_LABELS: Record<
-	FnAreceberRecebidoViaPix,
-	string
-> = {
-	[FnAreceberRecebidoViaPix.S]: "Sim",
-	[FnAreceberRecebidoViaPix.N]: "Não",
-};
-
-export const FNARECEBER_STATUS_LABELS: Record<FnAreceberStatus, string> = {
-	[FnAreceberStatus.A]: "A receber",
-	[FnAreceberStatus.R]: "Recebido",
-	[FnAreceberStatus.P]: "Parcial",
-	[FnAreceberStatus.C]: "Cancelado",
-};
-
-export const FNARECEBER_STATUSCOBRANCAREGUA_LABELS: Record<
-	FnAreceberStatusCobrancaRegua,
-	string
-> = {
-	[FnAreceberStatusCobrancaRegua.A]: "Aberta",
-	[FnAreceberStatusCobrancaRegua.F]: "Finalizada",
-};
-
-export const FNARECEBER_TIPOCOBRANCA_LABELS: Record<
-	FnAreceberTipoCobranca,
-	string
-> = {
-	[FnAreceberTipoCobranca.P]: "Padrão",
-	[FnAreceberTipoCobranca.I]: "Impresso",
-	[FnAreceberTipoCobranca.E]: "E-mail",
-};
-
-export const FNARECEBER_TIPOCOBRANCAPIX_LABELS: Record<
-	FnAreceberTipoCobrancaPix,
-	string
-> = {
-	[FnAreceberTipoCobrancaPix.ComVencimento]: "Com vencimento",
-	[FnAreceberTipoCobrancaPix.Imediata]: "Imediata",
-};
-
-export const FNARECEBER_TIPORECEBIMENTO_LABELS: Record<
-	FnAreceberTipoRecebimento,
-	string
-> = {
-	[FnAreceberTipoRecebimento.Boleto]: "Boleto",
-	[FnAreceberTipoRecebimento.Cheque]: "Cheque",
-	[FnAreceberTipoRecebimento.CartaO]: "Cartão de crédito",
-	[FnAreceberTipoRecebimento.Dinheiro]: "Dinheiro",
-	[FnAreceberTipoRecebimento.DepaSito]: "Depósito",
-	[FnAreceberTipoRecebimento.Gateway]: "Gateway",
-	[FnAreceberTipoRecebimento.DaBito]: "Débito em conta",
-	[FnAreceberTipoRecebimento.Fatura]: "Fatura",
-	[FnAreceberTipoRecebimento.Arrecadacaorecebimento]: "Arrecadação/Recebimento",
-	[FnAreceberTipoRecebimento.Transferencia]: "Transferência",
-	[FnAreceberTipoRecebimento.Pix]: "Pix",
-};
-
-export const FNARECEBER_TITULOIMPORTADO_LABELS: Record<
-	FnAreceberTituloImportado,
-	string
-> = {
-	[FnAreceberTituloImportado.S]: "Sim",
-	[FnAreceberTituloImportado.N]: "Não",
-};
-
-export const FNARECEBER_TITULOPROTESTADO_LABELS: Record<
-	FnAreceberTituloProtestado,
-	string
-> = {
-	[FnAreceberTituloProtestado.S]: "Sim",
-	[FnAreceberTituloProtestado.N]: "Não",
-};
-
-export const FNARECEBER_TITULORENEGOCIADO_LABELS: Record<
-	FnAreceberTituloRenegociado,
-	string
-> = {
-	[FnAreceberTituloRenegociado.S]: "Sim",
-	[FnAreceberTituloRenegociado.N]: "Não",
-};

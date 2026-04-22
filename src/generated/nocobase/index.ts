@@ -81,121 +81,164 @@ export type FFkOrigemTiposRelations = Record<string, never>;
 
 export type FFkOrigemTiposRelationKey = keyof FFkOrigemTiposRelations;
 
-export enum FFuncionariosAtivo {
-	Sim = "Sim",
-	Nao = "Não",
-}
+export const FFUNCIONARIOS_ATIVO_LABELS = {
+	Sim: "Sim",
+	Nao: "Não",
+} as const;
 
-export enum FFuncionariosChecklistAdmissional {
-	AsoAdmissional = "aso-admissional",
-	Rg = "rg",
-	ECnh = "e-cnh",
-	ComprovanteResidencia = "comprovante-residencia",
-	CertidaoCasamentoUniaoEstavel = "certidao-casamento-uniao-estavel",
-	ETituloEleitoral = "e-titulo-eleitoral",
-	CertificadoDeReservista = "certificado-de-reservista",
-	RgCertidaoNascimentoFilhos = "rg-certidao-nascimento-filhos",
-	Nr10Nr35 = "nr10-nr35",
-	TermosResponsabilidade = "termos-responsabilidade",
-}
+export const FFUNCIONARIOS_CHECKLISTADMISSIONAL_LABELS = {
+	AsoAdmissional: "ASO Admissional",
+	rg: "RG",
+	ECnh: "e-CNH",
+	ComprovanteResidencia: "Comprovante de Residência",
+	CertidaoCasamentoUniaoEstavel: "Certidão de Casamento / União Estável",
+	ETituloEleitoral: "e-Título Eleitoral",
+	CertificadoDeReservista: "Certificado de Reservista",
+	RgCertidaoNascimentoFilhos:
+		"RG ou Certidão de Nascimento dos filhos menores de 21 anos",
+	Nr10Nr35: "Certificado NR 10 e NR 35 (Opcional)",
+	TermosResponsabilidade: "Termos de Responsabilidade",
+} as const;
 
-export enum FFuncionariosEmpresa {
-	Atplus = "ATPlus",
-	Platon = "Platon",
-}
+export const FFUNCIONARIOS_EMPRESA_LABELS = {
+	ATPlus: "ATPlus",
+	Platon: "Platon",
+} as const;
 
-export enum FFuncionariosEpiCalcado {
-	Value35 = "35",
-	Value36 = "36",
-	Value37 = "37",
-	Value38 = "38",
-	Value39 = "39",
-	Value40 = "40",
-	Value41 = "41",
-	Value42 = "42",
-	Value43 = "43",
-	Value44 = "44",
-}
+export const FFUNCIONARIOS_EPICALCADO_LABELS = {
+	"35": "35",
+	"36": "36",
+	"37": "37",
+	"38": "38",
+	"39": "39",
+	"40": "40",
+	"41": "41",
+	"42": "42",
+	"43": "43",
+	"44": "44",
+} as const;
 
-export enum FFuncionariosEscolaridade {
-	EnsinoMedio = "Ensino Médio",
-	Superior = "Superior",
-	PosMba = "Pós, MBA",
-	Mestrado = "Mestrado",
-	Doutorado = "Doutorado",
-}
+export const FFUNCIONARIOS_ESCOLARIDADE_LABELS = {
+	EnsinoMedio: "Ensino Médio",
+	Superior: "Superior",
+	PosMba: "Pós, MBA",
+	Mestrado: "Mestrado",
+	Doutorado: "Doutorado",
+} as const;
 
-export enum FFuncionariosEstadoCivil {
-	Solteiro = "Solteiro",
-	Casado = "Casado",
-	UniaoEstavel = "União Estável",
-	Viuvo = "Viúvo",
-	Divorciado = "Divorciado",
-	Separado = "Separado",
-}
+export const FFUNCIONARIOS_ESTADOCIVIL_LABELS = {
+	Solteiro: "Solteiro",
+	Casado: "Casado",
+	UniaoEstavel: "União Estável",
+	Viuvo: "Viúvo",
+	Divorciado: "Divorciado",
+	Separado: "Separado",
+} as const;
 
-export enum FFuncionariosGenero {
-	Masculino = "Masculino",
-	Feminino = "Feminino",
-}
+export const FFUNCIONARIOS_GENERO_LABELS = {
+	Masculino: "Masculino",
+	Feminino: "Feminino",
+} as const;
 
-export enum FFuncionariosMobilidade {
-	ValeTransporteTransul = "Vale Transporte (Transul)",
-	MobilidadeCartaoBeneficios = "Mobilidade (Cartão Benefícios)",
-}
+export const FFUNCIONARIOS_MOBILIDADE_LABELS = {
+	ValeTransporteTransul: "Vale Transporte (Transul)",
+	MobilidadeCartaoBeneficios: "Mobilidade (Cartão Benefícios)",
+} as const;
 
-export enum FFuncionariosPcd {
-	Sim = "Sim",
-	Nao = "Não",
-}
+export const FFUNCIONARIOS_PCD_LABELS = {
+	Sim: "Sim",
+	Nao: "Não",
+} as const;
 
-export enum FFuncionariosReservista {
-	Sim = "Sim",
-	Nao = "Não",
-}
+export const FFUNCIONARIOS_RESERVISTA_LABELS = {
+	Sim: "Sim",
+	Nao: "Não",
+} as const;
 
-export enum FFuncionariosSituacaoEscolaridade {
-	Completo = "Completo",
-	Cursando = "Cursando",
-	Trancado = "Trancado",
-}
+export const FFUNCIONARIOS_SITUACAOESCOLARIDADE_LABELS = {
+	Completo: "Completo",
+	Cursando: "Cursando",
+	Trancado: "Trancado",
+} as const;
 
-export enum FFuncionariosTerceiro {
-	Sim = "Sim",
-	Nao = "Não",
-}
+export const FFUNCIONARIOS_TERCEIRO_LABELS = {
+	Sim: "Sim",
+	Nao: "Não",
+} as const;
 
-export enum FFuncionariosTipoContrato {
-	Clt = "CLT",
-	PrestadorDeServicos = "Prestador de Serviços",
-	Estagiario = "Estagiário",
-	JovemAprendiz = "Jovem Aprendiz",
-	Socio = "Sócio",
-	Temporario = "Temporário",
-	CltComissao = "CLT + Comissão",
-}
+export const FFUNCIONARIOS_TIPOCONTRATO_LABELS = {
+	CLT: "CLT",
+	PrestadorDeServicos: "Prestador de Serviços",
+	Estagiario: "Estagiário",
+	JovemAprendiz: "Jovem Aprendiz",
+	Socio: "Sócio",
+	Temporario: "Temporário",
+	CltComissao: "CLT + Comissão",
+} as const;
 
-export enum FFuncionariosUnidade {
-	Matriz = "Matriz",
-	LojaCentroLages = "Loja Centro Lages",
-	LojaCuritibanos = "Loja Curitibanos",
-	Platon = "Platon",
-}
+export const FFUNCIONARIOS_UNIDADE_LABELS = {
+	Matriz: "Matriz",
+	LojaCentroLages: "Loja Centro Lages",
+	LojaCuritibanos: "Loja Curitibanos",
+	Platon: "Platon",
+} as const;
 
-export enum FFuncionariosUniversidade {
-	Ifsc = "IFSC",
-	Uniplac = "UNIPLAC",
-	Ciee = "CIEE",
-	Unifacvest = "UNIFACVEST",
-	Outros = "Outros",
-}
+export const FFUNCIONARIOS_UNIVERSIDADE_LABELS = {
+	IFSC: "IFSC",
+	UNIPLAC: "UNIPLAC",
+	CIEE: "CIEE",
+	UNIFACVEST: "UNIFACVEST",
+	Outros: "Outros",
+} as const;
 
-export enum FFuncionariosVinculoComColaborador {
-	Pais = "Pais",
-	FilhoAOuEnteadoA = "Filho(a) ou Enteado(a)",
-	Avos = "Avós",
-	Conjuge = "Conjuge",
-}
+export const FFUNCIONARIOS_VINCULOCOMCOLABORADOR_LABELS = {
+	Pais: "Pais",
+	FilhoAOuEnteadoA: "Filho(a) ou Enteado(a)",
+	Avos: "Avós",
+	Conjuge: "Conjuge",
+} as const;
+
+export type FFuncionariosAtivo = keyof typeof FFUNCIONARIOS_ATIVO_LABELS;
+
+export type FFuncionariosChecklistAdmissional =
+	keyof typeof FFUNCIONARIOS_CHECKLISTADMISSIONAL_LABELS;
+
+export type FFuncionariosEmpresa = keyof typeof FFUNCIONARIOS_EMPRESA_LABELS;
+
+export type FFuncionariosEpiCalcado =
+	keyof typeof FFUNCIONARIOS_EPICALCADO_LABELS;
+
+export type FFuncionariosEscolaridade =
+	keyof typeof FFUNCIONARIOS_ESCOLARIDADE_LABELS;
+
+export type FFuncionariosEstadoCivil =
+	keyof typeof FFUNCIONARIOS_ESTADOCIVIL_LABELS;
+
+export type FFuncionariosGenero = keyof typeof FFUNCIONARIOS_GENERO_LABELS;
+
+export type FFuncionariosMobilidade =
+	keyof typeof FFUNCIONARIOS_MOBILIDADE_LABELS;
+
+export type FFuncionariosPcd = keyof typeof FFUNCIONARIOS_PCD_LABELS;
+
+export type FFuncionariosReservista =
+	keyof typeof FFUNCIONARIOS_RESERVISTA_LABELS;
+
+export type FFuncionariosSituacaoEscolaridade =
+	keyof typeof FFUNCIONARIOS_SITUACAOESCOLARIDADE_LABELS;
+
+export type FFuncionariosTerceiro = keyof typeof FFUNCIONARIOS_TERCEIRO_LABELS;
+
+export type FFuncionariosTipoContrato =
+	keyof typeof FFUNCIONARIOS_TIPOCONTRATO_LABELS;
+
+export type FFuncionariosUnidade = keyof typeof FFUNCIONARIOS_UNIDADE_LABELS;
+
+export type FFuncionariosUniversidade =
+	keyof typeof FFUNCIONARIOS_UNIVERSIDADE_LABELS;
+
+export type FFuncionariosVinculoComColaborador =
+	keyof typeof FFUNCIONARIOS_VINCULOCOMCOLABORADOR_LABELS;
 
 export interface FFuncionarios {
 	id: number;
@@ -285,170 +328,6 @@ export interface FFuncionariosRelations {
 
 export type FFuncionariosRelationKey = keyof FFuncionariosRelations;
 
-export const FFUNCIONARIOS_ATIVO_LABELS: Record<FFuncionariosAtivo, string> = {
-	[FFuncionariosAtivo.Sim]: "Sim",
-	[FFuncionariosAtivo.Nao]: "Não",
-};
-
-export const FFUNCIONARIOS_CHECKLISTADMISSIONAL_LABELS: Record<
-	FFuncionariosChecklistAdmissional,
-	string
-> = {
-	[FFuncionariosChecklistAdmissional.AsoAdmissional]: "ASO Admissional",
-	[FFuncionariosChecklistAdmissional.Rg]: "RG",
-	[FFuncionariosChecklistAdmissional.ECnh]: "e-CNH",
-	[FFuncionariosChecklistAdmissional.ComprovanteResidencia]:
-		"Comprovante de Residência",
-	[FFuncionariosChecklistAdmissional.CertidaoCasamentoUniaoEstavel]:
-		"Certidão de Casamento / União Estável",
-	[FFuncionariosChecklistAdmissional.ETituloEleitoral]: "e-Título Eleitoral",
-	[FFuncionariosChecklistAdmissional.CertificadoDeReservista]:
-		"Certificado de Reservista",
-	[FFuncionariosChecklistAdmissional.RgCertidaoNascimentoFilhos]:
-		"RG ou Certidão de Nascimento dos filhos menores de 21 anos",
-	[FFuncionariosChecklistAdmissional.Nr10Nr35]:
-		"Certificado NR 10 e NR 35 (Opcional)",
-	[FFuncionariosChecklistAdmissional.TermosResponsabilidade]:
-		"Termos de Responsabilidade",
-};
-
-export const FFUNCIONARIOS_EMPRESA_LABELS: Record<
-	FFuncionariosEmpresa,
-	string
-> = {
-	[FFuncionariosEmpresa.Atplus]: "ATPlus",
-	[FFuncionariosEmpresa.Platon]: "Platon",
-};
-
-export const FFUNCIONARIOS_EPICALCADO_LABELS: Record<
-	FFuncionariosEpiCalcado,
-	string
-> = {
-	[FFuncionariosEpiCalcado.Value35]: "35",
-	[FFuncionariosEpiCalcado.Value36]: "36",
-	[FFuncionariosEpiCalcado.Value37]: "37",
-	[FFuncionariosEpiCalcado.Value38]: "38",
-	[FFuncionariosEpiCalcado.Value39]: "39",
-	[FFuncionariosEpiCalcado.Value40]: "40",
-	[FFuncionariosEpiCalcado.Value41]: "41",
-	[FFuncionariosEpiCalcado.Value42]: "42",
-	[FFuncionariosEpiCalcado.Value43]: "43",
-	[FFuncionariosEpiCalcado.Value44]: "44",
-};
-
-export const FFUNCIONARIOS_ESCOLARIDADE_LABELS: Record<
-	FFuncionariosEscolaridade,
-	string
-> = {
-	[FFuncionariosEscolaridade.EnsinoMedio]: "Ensino Médio",
-	[FFuncionariosEscolaridade.Superior]: "Superior",
-	[FFuncionariosEscolaridade.PosMba]: "Pós, MBA",
-	[FFuncionariosEscolaridade.Mestrado]: "Mestrado",
-	[FFuncionariosEscolaridade.Doutorado]: "Doutorado",
-};
-
-export const FFUNCIONARIOS_ESTADOCIVIL_LABELS: Record<
-	FFuncionariosEstadoCivil,
-	string
-> = {
-	[FFuncionariosEstadoCivil.Solteiro]: "Solteiro",
-	[FFuncionariosEstadoCivil.Casado]: "Casado",
-	[FFuncionariosEstadoCivil.UniaoEstavel]: "União Estável",
-	[FFuncionariosEstadoCivil.Viuvo]: "Viúvo",
-	[FFuncionariosEstadoCivil.Divorciado]: "Divorciado",
-	[FFuncionariosEstadoCivil.Separado]: "Separado",
-};
-
-export const FFUNCIONARIOS_GENERO_LABELS: Record<FFuncionariosGenero, string> =
-	{
-		[FFuncionariosGenero.Masculino]: "Masculino",
-		[FFuncionariosGenero.Feminino]: "Feminino",
-	};
-
-export const FFUNCIONARIOS_MOBILIDADE_LABELS: Record<
-	FFuncionariosMobilidade,
-	string
-> = {
-	[FFuncionariosMobilidade.ValeTransporteTransul]: "Vale Transporte (Transul)",
-	[FFuncionariosMobilidade.MobilidadeCartaoBeneficios]:
-		"Mobilidade (Cartão Benefícios)",
-};
-
-export const FFUNCIONARIOS_PCD_LABELS: Record<FFuncionariosPcd, string> = {
-	[FFuncionariosPcd.Sim]: "Sim",
-	[FFuncionariosPcd.Nao]: "Não",
-};
-
-export const FFUNCIONARIOS_RESERVISTA_LABELS: Record<
-	FFuncionariosReservista,
-	string
-> = {
-	[FFuncionariosReservista.Sim]: "Sim",
-	[FFuncionariosReservista.Nao]: "Não",
-};
-
-export const FFUNCIONARIOS_SITUACAOESCOLARIDADE_LABELS: Record<
-	FFuncionariosSituacaoEscolaridade,
-	string
-> = {
-	[FFuncionariosSituacaoEscolaridade.Completo]: "Completo",
-	[FFuncionariosSituacaoEscolaridade.Cursando]: "Cursando",
-	[FFuncionariosSituacaoEscolaridade.Trancado]: "Trancado",
-};
-
-export const FFUNCIONARIOS_TERCEIRO_LABELS: Record<
-	FFuncionariosTerceiro,
-	string
-> = {
-	[FFuncionariosTerceiro.Sim]: "Sim",
-	[FFuncionariosTerceiro.Nao]: "Não",
-};
-
-export const FFUNCIONARIOS_TIPOCONTRATO_LABELS: Record<
-	FFuncionariosTipoContrato,
-	string
-> = {
-	[FFuncionariosTipoContrato.Clt]: "CLT",
-	[FFuncionariosTipoContrato.PrestadorDeServicos]: "Prestador de Serviços",
-	[FFuncionariosTipoContrato.Estagiario]: "Estagiário",
-	[FFuncionariosTipoContrato.JovemAprendiz]: "Jovem Aprendiz",
-	[FFuncionariosTipoContrato.Socio]: "Sócio",
-	[FFuncionariosTipoContrato.Temporario]: "Temporário",
-	[FFuncionariosTipoContrato.CltComissao]: "CLT + Comissão",
-};
-
-export const FFUNCIONARIOS_UNIDADE_LABELS: Record<
-	FFuncionariosUnidade,
-	string
-> = {
-	[FFuncionariosUnidade.Matriz]: "Matriz",
-	[FFuncionariosUnidade.LojaCentroLages]: "Loja Centro Lages",
-	[FFuncionariosUnidade.LojaCuritibanos]: "Loja Curitibanos",
-	[FFuncionariosUnidade.Platon]: "Platon",
-};
-
-export const FFUNCIONARIOS_UNIVERSIDADE_LABELS: Record<
-	FFuncionariosUniversidade,
-	string
-> = {
-	[FFuncionariosUniversidade.Ifsc]: "IFSC",
-	[FFuncionariosUniversidade.Uniplac]: "UNIPLAC",
-	[FFuncionariosUniversidade.Ciee]: "CIEE",
-	[FFuncionariosUniversidade.Unifacvest]: "UNIFACVEST",
-	[FFuncionariosUniversidade.Outros]: "Outros",
-};
-
-export const FFUNCIONARIOS_VINCULOCOMCOLABORADOR_LABELS: Record<
-	FFuncionariosVinculoComColaborador,
-	string
-> = {
-	[FFuncionariosVinculoComColaborador.Pais]: "Pais",
-	[FFuncionariosVinculoComColaborador.FilhoAOuEnteadoA]:
-		"Filho(a) ou Enteado(a)",
-	[FFuncionariosVinculoComColaborador.Avos]: "Avós",
-	[FFuncionariosVinculoComColaborador.Conjuge]: "Conjuge",
-};
-
 export interface FRecursosFilho {
 	f_7q4zyk2d0kz: number;
 	f_cn2m4i1kpqo: number;
@@ -533,11 +412,13 @@ export interface _902ctke5dhqRelations {
 
 export type _902ctke5dhqRelationKey = keyof _902ctke5dhqRelations;
 
-export enum AcessosTipo {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-}
+export const ACESSOS_TIPO_LABELS = {
+	"1": "Ponta A",
+	"2": "Ponta B",
+	"3": "Entrega",
+} as const;
+
+export type AcessosTipo = keyof typeof ACESSOS_TIPO_LABELS;
 
 export interface Acessos {
 	id: number;
@@ -561,26 +442,27 @@ export interface AcessosRelations {
 
 export type AcessosRelationKey = keyof AcessosRelations;
 
-export const ACESSOS_TIPO_LABELS: Record<AcessosTipo, string> = {
-	[AcessosTipo.Value1]: "Ponta A",
-	[AcessosTipo.Value2]: "Ponta B",
-	[AcessosTipo.Value3]: "Entrega",
-};
+export const AEGIS_STATUSDESBLOQUEIOCONFIACA_LABELS = {
+	success: "Desbloqueio de Confiança Efetuado por 2 Dias",
+	error: "Erro ao Realizar Desbloqueio de Confiança",
+} as const;
 
-export enum AegisStatusdesbloqueioconfiaca {
-	Success = "success",
-	Error = "error",
-}
+export const AEGIS_STATUSLOGIN_LABELS = {
+	success: "Sucesso ao Desconectar Login",
+	error: "Erro ao Desconectar Login",
+} as const;
 
-export enum AegisStatuslogin {
-	Success = "success",
-	Error = "error",
-}
+export const AEGIS_STATUSMAC_LABELS = {
+	success: "Sucesso ao Limpar MAC",
+	error: "Erro ao Limpar MAC",
+} as const;
 
-export enum AegisStatusmac {
-	Success = "success",
-	Error = "error",
-}
+export type AegisStatusdesbloqueioconfiaca =
+	keyof typeof AEGIS_STATUSDESBLOQUEIOCONFIACA_LABELS;
+
+export type AegisStatuslogin = keyof typeof AEGIS_STATUSLOGIN_LABELS;
+
+export type AegisStatusmac = keyof typeof AEGIS_STATUSMAC_LABELS;
 
 export interface Aegis {
 	id: number;
@@ -600,26 +482,6 @@ export interface AegisRelations {
 }
 
 export type AegisRelationKey = keyof AegisRelations;
-
-export const AEGIS_STATUSDESBLOQUEIOCONFIACA_LABELS: Record<
-	AegisStatusdesbloqueioconfiaca,
-	string
-> = {
-	[AegisStatusdesbloqueioconfiaca.Success]:
-		"Desbloqueio de Confiança Efetuado por 2 Dias",
-	[AegisStatusdesbloqueioconfiaca.Error]:
-		"Erro ao Realizar Desbloqueio de Confiança",
-};
-
-export const AEGIS_STATUSLOGIN_LABELS: Record<AegisStatuslogin, string> = {
-	[AegisStatuslogin.Success]: "Sucesso ao Desconectar Login",
-	[AegisStatuslogin.Error]: "Erro ao Desconectar Login",
-};
-
-export const AEGIS_STATUSMAC_LABELS: Record<AegisStatusmac, string> = {
-	[AegisStatusmac.Success]: "Sucesso ao Limpar MAC",
-	[AegisStatusmac.Error]: "Erro ao Limpar MAC",
-};
 
 export interface AnexosNegociacoes {
 	id: number;
@@ -672,12 +534,14 @@ export interface AnexosTrocaTitularidadeRelations {
 export type AnexosTrocaTitularidadeRelationKey =
 	keyof AnexosTrocaTitularidadeRelations;
 
-export enum AniversariosStatus {
-	Novo = "novo",
-	EmProcesso = "em-processo",
-	Concluido = "concluido",
-	Erro = "erro",
-}
+export const ANIVERSARIOS_STATUS_LABELS = {
+	novo: "Novo",
+	EmProcesso: "Em processo",
+	concluido: "Concluído",
+	erro: "Erro",
+} as const;
+
+export type AniversariosStatus = keyof typeof ANIVERSARIOS_STATUS_LABELS;
 
 export interface Aniversarios {
 	id: number;
@@ -697,13 +561,6 @@ export interface AniversariosRelations {
 }
 
 export type AniversariosRelationKey = keyof AniversariosRelations;
-
-export const ANIVERSARIOS_STATUS_LABELS: Record<AniversariosStatus, string> = {
-	[AniversariosStatus.Novo]: "Novo",
-	[AniversariosStatus.EmProcesso]: "Em processo",
-	[AniversariosStatus.Concluido]: "Concluído",
-	[AniversariosStatus.Erro]: "Erro",
-};
 
 export interface ArquivosFuncionarios {
 	id: number;
@@ -760,90 +617,105 @@ export interface AsosRelations {
 
 export type AsosRelationKey = keyof AsosRelations;
 
-export enum AtendimentosIxcAssunto {
-	Value88 = "88",
-	Value89 = "89",
-	Value90 = "90",
-	Value78 = "78",
-}
+export const ATENDIMENTOSIXC_ASSUNTO_LABELS = {
+	"88": "Reparo",
+	"89": "Serviço",
+	"90": "Manutenção Preventiva",
+	"78": "Atendimento Financeiro",
+} as const;
 
-export enum AtendimentosIxcDiagnosticos {
-	Value95 = "95",
-	Value96 = "96",
-	Value97 = "97",
-	Value99 = "99",
-	Value100 = "100",
-	Value101 = "101",
-	Value105 = "105",
-	Value106 = "106",
-	Value107 = "107",
-	Value110 = "110",
-	Value111 = "111",
-	Value246 = "246",
-	Value248 = "248",
-	Value147 = "147",
-	Value264 = "264",
-	Value265 = "265",
-	Value266 = "266",
-	Value255 = "255",
-	Value267 = "267",
-	Value268 = "268",
-	Value269 = "269",
-	Value270 = "270",
-	Value271 = "271",
-	Value272 = "272",
-	Value273 = "273",
-	Value274 = "274",
-}
+export const ATENDIMENTOSIXC_DIAGNOSTICOS_LABELS = {
+	"95": "1000 - Defeito Rede interna do cliente",
+	"96": "1001 - Defeito no equipamento do cliente",
+	"97": "1002 - Defeito em outra operadora",
+	"99": "1004 - Falha Massiva",
+	"100": "1005 - Encaminhado para agendamento",
+	"101": "1006 - Encontrado OK",
+	"105": "1010 - Configuração ONT/Roteador",
+	"106": "1011 - SVA - Plataformas",
+	"107": "1012 - Outros",
+	"110": "1013 - Encaminhado para N2",
+	"111": "1014 - Reboot na ONT/Roteador",
+	"246": "1015 - Sem contato com o cliente",
+	"248": "1016 - Abertura indevida",
+	"147": "1017 - Encaminhado para CS",
+	"264": "1100 - Executado",
+	"265": "1101 - Pendência",
+	"266": "1102 - Cancelamento",
+	"255": "1200 - Defeito Rede interna do cliente",
+	"267": "1201 - Defeito no equipamento do cliente",
+	"268": "1202 - Defeito em outra operadora",
+	"269": "1204 - Falha Massiva",
+	"270": "1205 - Encaminhado para agendamento",
+	"271": "1206 - Encontrado OK",
+	"272": "1210 - Configuração ONT/Roteador",
+	"273": "1211 - SVA - Plataformas",
+	"274": "1212 - Outros",
+} as const;
 
-export enum AtendimentosIxcPrioridade {
-	B = "B",
-	N = "N",
-	A = "A",
-	C = "C",
-}
+export const ATENDIMENTOSIXC_PRIORIDADE_LABELS = {
+	B: "Baixa",
+	N: "Normal",
+	A: "Alta",
+	C: "Crítica",
+} as const;
 
-export enum AtendimentosIxcProcesso {
-	Value33 = "33",
-	Value36 = "36",
-	Value34 = "34",
-	Value40 = "40",
-}
+export const ATENDIMENTOSIXC_PROCESSO_LABELS = {
+	"33": "Reparo",
+	"36": "Serviço",
+	"34": "Manutenção Preventiva",
+	"40": "Atendimento Financeiro",
+} as const;
 
-export enum AtendimentosIxcTarefas {
-	Value158 = "158",
-	Value159 = "159",
-	Value160 = "160",
-	Value164 = "164",
-	Value382 = "382",
-	Value412 = "412",
-	Value305 = "305",
-	Value306 = "306",
-	Value307 = "307",
-	Value311 = "311",
-	Value393 = "393",
-	Value316 = "316",
-	Value317 = "317",
-	Value320 = "320",
-	Value321 = "321",
-	Value395 = "395",
-	Value170 = "170",
-	Value171 = "171",
-	Value174 = "174",
-	Value175 = "175",
-	Value375 = "375",
-	Value414 = "414",
-	Value228 = "228",
-	Value229 = "229",
-	Value230 = "230",
-	Value234 = "234",
-	Value384 = "384",
-	Value240 = "240",
-	Value241 = "241",
-	Value244 = "244",
-	Value245 = "245",
-	Value386 = "386",
-}
+export const ATENDIMENTOSIXC_TAREFAS_LABELS = {
+	"158": "REPARO - Encaminhar O.S para Agendamento",
+	"159": "REPARO - Encaminhar O.S para o Customer Success",
+	"160": "REPARO - Escalona O.S para SN2 - Banda Larga",
+	"164": "REPARO - Escalona O.S para SN2 - Telefonia",
+	"382": "REPARO - Encaminhar O.S para Financeiro",
+	"412": "REPARO - Escalona O.S para SN2 - MVNO",
+	"305": "SERVIÇO - Encaminhar O.S para Agendamento",
+	"306": "SERVIÇO - Encaminhar O.S para Customer Success",
+	"307": "SERVIÇO - Escalona O.S para SN2 - Banda Larga",
+	"311": "SERVIÇO - Escalona O.S para SN2 - Telefonia",
+	"393": "SERVIÇO - Encaminhar O.S para Financeiro",
+	"316": "SERVIÇO (2) - Encaminhar O.S para Agendamento",
+	"317": "SERVIÇO (2) - Encaminhar O.S para Customer Success",
+	"320": "SERVIÇO (2) - Escalona O.S para SN2 - Banda Larga",
+	"321": "SERVIÇO (2) - Escalona O.S para SN2 - Telefonia",
+	"395": "SERVIÇO (2) - Encaminhar O.S para Financeiro",
+	"170": "REPARO (2) - Encaminhar O.S para Agendamento",
+	"171": "REPARO (2) - Encaminhar O.S para o Customer Success",
+	"174": "REPARO (2) - Escalona O.S para SN2 - Banda Larga",
+	"175": "REPARO (2) - Escalona O.S para SN2 - Telefonia",
+	"375": "REPARO (2) - Encaminhar O.S para Financeiro",
+	"414": "REPARO (2) - Escalona O.S para SN2 - MVNO",
+	"228": "MANUN. PREV. - Encaminhar O.S para Agendamento",
+	"229": "MANUN. PREV. - Encaminhar O.S para Customer Success",
+	"230": "MANUN. PREV. - Escalona O.S para SN2 - Banda Larga",
+	"234": "MANUN. PREV. - Escalona O.S para SN2 - Telefonia",
+	"384": "MANUN. PREV. - Encaminhar O.S para Financeiro",
+	"240": "MANUN. PREV. (2) - Encaminhar O.S para Agendamento",
+	"241": "MANUN. PREV. (2) - Encaminhar O.S para Customer Success",
+	"244": "MANUN. PREV. (2) - Escalona O.S para SN2 - Banda Larga",
+	"245": "MANUN. PREV. (2) - Escalona O.S para SN2 - Telefonia",
+	"386": "MANUN. PREV. (2) - Encaminhar O.S para Financeiro",
+} as const;
+
+export type AtendimentosIxcAssunto =
+	keyof typeof ATENDIMENTOSIXC_ASSUNTO_LABELS;
+
+export type AtendimentosIxcDiagnosticos =
+	keyof typeof ATENDIMENTOSIXC_DIAGNOSTICOS_LABELS;
+
+export type AtendimentosIxcPrioridade =
+	keyof typeof ATENDIMENTOSIXC_PRIORIDADE_LABELS;
+
+export type AtendimentosIxcProcesso =
+	keyof typeof ATENDIMENTOSIXC_PROCESSO_LABELS;
+
+export type AtendimentosIxcTarefas =
+	keyof typeof ATENDIMENTOSIXC_TAREFAS_LABELS;
 
 export interface AtendimentosIxc {
 	id: number;
@@ -876,138 +748,6 @@ export interface AtendimentosIxcRelations {
 }
 
 export type AtendimentosIxcRelationKey = keyof AtendimentosIxcRelations;
-
-export const ATENDIMENTOSIXC_ASSUNTO_LABELS: Record<
-	AtendimentosIxcAssunto,
-	string
-> = {
-	[AtendimentosIxcAssunto.Value88]: "Reparo",
-	[AtendimentosIxcAssunto.Value89]: "Serviço",
-	[AtendimentosIxcAssunto.Value90]: "Manutenção Preventiva",
-	[AtendimentosIxcAssunto.Value78]: "Atendimento Financeiro",
-};
-
-export const ATENDIMENTOSIXC_DIAGNOSTICOS_LABELS: Record<
-	AtendimentosIxcDiagnosticos,
-	string
-> = {
-	[AtendimentosIxcDiagnosticos.Value95]:
-		"1000 - Defeito Rede interna do cliente",
-	[AtendimentosIxcDiagnosticos.Value96]:
-		"1001 - Defeito no equipamento do cliente",
-	[AtendimentosIxcDiagnosticos.Value97]: "1002 - Defeito em outra operadora",
-	[AtendimentosIxcDiagnosticos.Value99]: "1004 - Falha Massiva",
-	[AtendimentosIxcDiagnosticos.Value100]: "1005 - Encaminhado para agendamento",
-	[AtendimentosIxcDiagnosticos.Value101]: "1006 - Encontrado OK",
-	[AtendimentosIxcDiagnosticos.Value105]: "1010 - Configuração ONT/Roteador",
-	[AtendimentosIxcDiagnosticos.Value106]: "1011 - SVA - Plataformas",
-	[AtendimentosIxcDiagnosticos.Value107]: "1012 - Outros",
-	[AtendimentosIxcDiagnosticos.Value110]: "1013 - Encaminhado para N2",
-	[AtendimentosIxcDiagnosticos.Value111]: "1014 - Reboot na ONT/Roteador",
-	[AtendimentosIxcDiagnosticos.Value246]: "1015 - Sem contato com o cliente",
-	[AtendimentosIxcDiagnosticos.Value248]: "1016 - Abertura indevida",
-	[AtendimentosIxcDiagnosticos.Value147]: "1017 - Encaminhado para CS",
-	[AtendimentosIxcDiagnosticos.Value264]: "1100 - Executado",
-	[AtendimentosIxcDiagnosticos.Value265]: "1101 - Pendência",
-	[AtendimentosIxcDiagnosticos.Value266]: "1102 - Cancelamento",
-	[AtendimentosIxcDiagnosticos.Value255]:
-		"1200 - Defeito Rede interna do cliente",
-	[AtendimentosIxcDiagnosticos.Value267]:
-		"1201 - Defeito no equipamento do cliente",
-	[AtendimentosIxcDiagnosticos.Value268]: "1202 - Defeito em outra operadora",
-	[AtendimentosIxcDiagnosticos.Value269]: "1204 - Falha Massiva",
-	[AtendimentosIxcDiagnosticos.Value270]: "1205 - Encaminhado para agendamento",
-	[AtendimentosIxcDiagnosticos.Value271]: "1206 - Encontrado OK",
-	[AtendimentosIxcDiagnosticos.Value272]: "1210 - Configuração ONT/Roteador",
-	[AtendimentosIxcDiagnosticos.Value273]: "1211 - SVA - Plataformas",
-	[AtendimentosIxcDiagnosticos.Value274]: "1212 - Outros",
-};
-
-export const ATENDIMENTOSIXC_PRIORIDADE_LABELS: Record<
-	AtendimentosIxcPrioridade,
-	string
-> = {
-	[AtendimentosIxcPrioridade.B]: "Baixa",
-	[AtendimentosIxcPrioridade.N]: "Normal",
-	[AtendimentosIxcPrioridade.A]: "Alta",
-	[AtendimentosIxcPrioridade.C]: "Crítica",
-};
-
-export const ATENDIMENTOSIXC_PROCESSO_LABELS: Record<
-	AtendimentosIxcProcesso,
-	string
-> = {
-	[AtendimentosIxcProcesso.Value33]: "Reparo",
-	[AtendimentosIxcProcesso.Value36]: "Serviço",
-	[AtendimentosIxcProcesso.Value34]: "Manutenção Preventiva",
-	[AtendimentosIxcProcesso.Value40]: "Atendimento Financeiro",
-};
-
-export const ATENDIMENTOSIXC_TAREFAS_LABELS: Record<
-	AtendimentosIxcTarefas,
-	string
-> = {
-	[AtendimentosIxcTarefas.Value158]: "REPARO - Encaminhar O.S para Agendamento",
-	[AtendimentosIxcTarefas.Value159]:
-		"REPARO - Encaminhar O.S para o Customer Success",
-	[AtendimentosIxcTarefas.Value160]:
-		"REPARO - Escalona O.S para SN2 - Banda Larga",
-	[AtendimentosIxcTarefas.Value164]:
-		"REPARO - Escalona O.S para SN2 - Telefonia",
-	[AtendimentosIxcTarefas.Value382]: "REPARO - Encaminhar O.S para Financeiro",
-	[AtendimentosIxcTarefas.Value412]: "REPARO - Escalona O.S para SN2 - MVNO",
-	[AtendimentosIxcTarefas.Value305]:
-		"SERVIÇO - Encaminhar O.S para Agendamento",
-	[AtendimentosIxcTarefas.Value306]:
-		"SERVIÇO - Encaminhar O.S para Customer Success",
-	[AtendimentosIxcTarefas.Value307]:
-		"SERVIÇO - Escalona O.S para SN2 - Banda Larga",
-	[AtendimentosIxcTarefas.Value311]:
-		"SERVIÇO - Escalona O.S para SN2 - Telefonia",
-	[AtendimentosIxcTarefas.Value393]: "SERVIÇO - Encaminhar O.S para Financeiro",
-	[AtendimentosIxcTarefas.Value316]:
-		"SERVIÇO (2) - Encaminhar O.S para Agendamento",
-	[AtendimentosIxcTarefas.Value317]:
-		"SERVIÇO (2) - Encaminhar O.S para Customer Success",
-	[AtendimentosIxcTarefas.Value320]:
-		"SERVIÇO (2) - Escalona O.S para SN2 - Banda Larga",
-	[AtendimentosIxcTarefas.Value321]:
-		"SERVIÇO (2) - Escalona O.S para SN2 - Telefonia",
-	[AtendimentosIxcTarefas.Value395]:
-		"SERVIÇO (2) - Encaminhar O.S para Financeiro",
-	[AtendimentosIxcTarefas.Value170]:
-		"REPARO (2) - Encaminhar O.S para Agendamento",
-	[AtendimentosIxcTarefas.Value171]:
-		"REPARO (2) - Encaminhar O.S para o Customer Success",
-	[AtendimentosIxcTarefas.Value174]:
-		"REPARO (2) - Escalona O.S para SN2 - Banda Larga",
-	[AtendimentosIxcTarefas.Value175]:
-		"REPARO (2) - Escalona O.S para SN2 - Telefonia",
-	[AtendimentosIxcTarefas.Value375]:
-		"REPARO (2) - Encaminhar O.S para Financeiro",
-	[AtendimentosIxcTarefas.Value414]:
-		"REPARO (2) - Escalona O.S para SN2 - MVNO",
-	[AtendimentosIxcTarefas.Value228]:
-		"MANUN. PREV. - Encaminhar O.S para Agendamento",
-	[AtendimentosIxcTarefas.Value229]:
-		"MANUN. PREV. - Encaminhar O.S para Customer Success",
-	[AtendimentosIxcTarefas.Value230]:
-		"MANUN. PREV. - Escalona O.S para SN2 - Banda Larga",
-	[AtendimentosIxcTarefas.Value234]:
-		"MANUN. PREV. - Escalona O.S para SN2 - Telefonia",
-	[AtendimentosIxcTarefas.Value384]:
-		"MANUN. PREV. - Encaminhar O.S para Financeiro",
-	[AtendimentosIxcTarefas.Value240]:
-		"MANUN. PREV. (2) - Encaminhar O.S para Agendamento",
-	[AtendimentosIxcTarefas.Value241]:
-		"MANUN. PREV. (2) - Encaminhar O.S para Customer Success",
-	[AtendimentosIxcTarefas.Value244]:
-		"MANUN. PREV. (2) - Escalona O.S para SN2 - Banda Larga",
-	[AtendimentosIxcTarefas.Value245]:
-		"MANUN. PREV. (2) - Escalona O.S para SN2 - Telefonia",
-	[AtendimentosIxcTarefas.Value386]:
-		"MANUN. PREV. (2) - Encaminhar O.S para Financeiro",
-};
 
 export interface AuditoriaAutomatica {
 	id: number;
@@ -1128,12 +868,14 @@ export interface ComprasProdutosRelations {
 
 export type ComprasProdutosRelationKey = keyof ComprasProdutosRelations;
 
-export enum ConfiguracoesEscopo {
-	Ixc = "IXC",
-	Geral = "GERAL",
-	Spc = "SPC",
-	Zapsign = "ZAPSIGN",
-}
+export const CONFIGURACOES_ESCOPO_LABELS = {
+	IXC: "IXCSoft",
+	GERAL: "GERAL",
+	SPC: "SPCBRASIL",
+	ZAPSIGN: "ZAPSIGN",
+} as const;
+
+export type ConfiguracoesEscopo = keyof typeof CONFIGURACOES_ESCOPO_LABELS;
 
 export interface Configuracoes {
 	id: number;
@@ -1153,19 +895,14 @@ export interface ConfiguracoesRelations {
 
 export type ConfiguracoesRelationKey = keyof ConfiguracoesRelations;
 
-export const CONFIGURACOES_ESCOPO_LABELS: Record<ConfiguracoesEscopo, string> =
-	{
-		[ConfiguracoesEscopo.Ixc]: "IXCSoft",
-		[ConfiguracoesEscopo.Geral]: "GERAL",
-		[ConfiguracoesEscopo.Spc]: "SPCBRASIL",
-		[ConfiguracoesEscopo.Zapsign]: "ZAPSIGN",
-	};
+export const CONSULTASPF_STATUSCONSULTA_LABELS = {
+	"1": "Aprovado",
+	"2": "Aprovado com Alertas",
+	"9": "Negado",
+} as const;
 
-export enum ConsultasPfStatusConsulta {
-	Value1 = "1",
-	Value2 = "2",
-	Value9 = "9",
-}
+export type ConsultasPfStatusConsulta =
+	keyof typeof CONSULTASPF_STATUSCONSULTA_LABELS;
 
 export interface ConsultasPf {
 	id: number;
@@ -1185,20 +922,14 @@ export interface ConsultasPfRelations {
 
 export type ConsultasPfRelationKey = keyof ConsultasPfRelations;
 
-export const CONSULTASPF_STATUSCONSULTA_LABELS: Record<
-	ConsultasPfStatusConsulta,
-	string
-> = {
-	[ConsultasPfStatusConsulta.Value1]: "Aprovado",
-	[ConsultasPfStatusConsulta.Value2]: "Aprovado com Alertas",
-	[ConsultasPfStatusConsulta.Value9]: "Negado",
-};
+export const CONSULTASPJ_STATUSCONSULTA_LABELS = {
+	"1": "Aprovado",
+	"2": "Aprovado com Alertas",
+	"9": "Negado",
+} as const;
 
-export enum ConsultasPjStatusConsulta {
-	Value1 = "1",
-	Value2 = "2",
-	Value9 = "9",
-}
+export type ConsultasPjStatusConsulta =
+	keyof typeof CONSULTASPJ_STATUSCONSULTA_LABELS;
 
 export interface ConsultasPj {
 	id: number;
@@ -1217,15 +948,6 @@ export interface ConsultasPjRelations {
 }
 
 export type ConsultasPjRelationKey = keyof ConsultasPjRelations;
-
-export const CONSULTASPJ_STATUSCONSULTA_LABELS: Record<
-	ConsultasPjStatusConsulta,
-	string
-> = {
-	[ConsultasPjStatusConsulta.Value1]: "Aprovado",
-	[ConsultasPjStatusConsulta.Value2]: "Aprovado com Alertas",
-	[ConsultasPjStatusConsulta.Value9]: "Negado",
-};
 
 export interface ContratoIxcItens {
 	id: number;
@@ -1288,23 +1010,30 @@ export interface ContratosIxcRelations {
 
 export type ContratosIxcRelationKey = keyof ContratosIxcRelations;
 
-export enum CuponsDescontoStatus {
-	Value0 = "0",
-	Value1 = "1",
-}
+export const CUPONSDESCONTO_STATUS_LABELS = {
+	"0": "Inativo",
+	"1": "Ativo",
+} as const;
 
-export enum CuponsDescontoTipo {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-}
+export const CUPONSDESCONTO_TIPO_LABELS = {
+	"1": "Baseado no Endereço",
+	"2": "Geral",
+	"3": "Upgrade para para contratos abaixo de R$ 100",
+	"4": "Contratação de Segundo Plano",
+} as const;
 
-export enum CuponsDescontoTipoNegociacao {
-	Value1 = "1",
-	Value2 = "2",
-	S = "S",
-}
+export const CUPONSDESCONTO_TIPONEGOCIACAO_LABELS = {
+	"1": "Upgrade",
+	"2": "Venda Nova",
+	S: "Segunda Contratação",
+} as const;
+
+export type CuponsDescontoStatus = keyof typeof CUPONSDESCONTO_STATUS_LABELS;
+
+export type CuponsDescontoTipo = keyof typeof CUPONSDESCONTO_TIPO_LABELS;
+
+export type CuponsDescontoTipoNegociacao =
+	keyof typeof CUPONSDESCONTO_TIPONEGOCIACAO_LABELS;
 
 export interface CuponsDesconto {
 	id: number;
@@ -1336,43 +1065,25 @@ export interface CuponsDescontoRelations {
 
 export type CuponsDescontoRelationKey = keyof CuponsDescontoRelations;
 
-export const CUPONSDESCONTO_STATUS_LABELS: Record<
-	CuponsDescontoStatus,
-	string
-> = {
-	[CuponsDescontoStatus.Value0]: "Inativo",
-	[CuponsDescontoStatus.Value1]: "Ativo",
-};
+export const DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS = {
+	carne: "Carnê",
+	boleto: "Boleto",
+	recorrencia: "Recorrência",
+} as const;
 
-export const CUPONSDESCONTO_TIPO_LABELS: Record<CuponsDescontoTipo, string> = {
-	[CuponsDescontoTipo.Value1]: "Baseado no Endereço",
-	[CuponsDescontoTipo.Value2]: "Geral",
-	[CuponsDescontoTipo.Value3]: "Upgrade para para contratos abaixo de R$ 100",
-	[CuponsDescontoTipo.Value4]: "Contratação de Segundo Plano",
-};
+export const DADOSADICIONAISCLIENTECONTRATO_PERFILDEUSO_LABELS = {
+	trabalho: "Trabalho",
+	estudo: "Estudo",
+	jogos: "Jogos",
+	streaming: "Streaming",
+	pesquisa: "Pesquisa (Google)",
+} as const;
 
-export const CUPONSDESCONTO_TIPONEGOCIACAO_LABELS: Record<
-	CuponsDescontoTipoNegociacao,
-	string
-> = {
-	[CuponsDescontoTipoNegociacao.Value1]: "Upgrade",
-	[CuponsDescontoTipoNegociacao.Value2]: "Venda Nova",
-	[CuponsDescontoTipoNegociacao.S]: "Segunda Contratação",
-};
+export type DadosAdicionaisClienteContratoFormaDePagamento =
+	keyof typeof DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS;
 
-export enum DadosAdicionaisClienteContratoFormaDePagamento {
-	Carne = "carne",
-	Boleto = "boleto",
-	Recorrencia = "recorrencia",
-}
-
-export enum DadosAdicionaisClienteContratoPerfilDeUso {
-	Trabalho = "trabalho",
-	Estudo = "estudo",
-	Jogos = "jogos",
-	Streaming = "streaming",
-	Pesquisa = "pesquisa",
-}
+export type DadosAdicionaisClienteContratoPerfilDeUso =
+	keyof typeof DADOSADICIONAISCLIENTECONTRATO_PERFILDEUSO_LABELS;
 
 export interface DadosAdicionaisClienteContrato {
 	id: number;
@@ -1393,48 +1104,37 @@ export interface DadosAdicionaisClienteContratoRelations {
 export type DadosAdicionaisClienteContratoRelationKey =
 	keyof DadosAdicionaisClienteContratoRelations;
 
-export const DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS: Record<
-	DadosAdicionaisClienteContratoFormaDePagamento,
-	string
-> = {
-	[DadosAdicionaisClienteContratoFormaDePagamento.Carne]: "Carnê",
-	[DadosAdicionaisClienteContratoFormaDePagamento.Boleto]: "Boleto",
-	[DadosAdicionaisClienteContratoFormaDePagamento.Recorrencia]: "Recorrência",
-};
+export const DATACENTERMEMORIAS_CAPACIDADE_LABELS = {
+	"2": "2 GB",
+	"4": "4 GB",
+	"8": "8 GB",
+	"16": "16 GB",
+	"32": "32 GB",
+	"64": "64 GB",
+	"128": "128 GB",
+} as const;
 
-export const DADOSADICIONAISCLIENTECONTRATO_PERFILDEUSO_LABELS: Record<
-	DadosAdicionaisClienteContratoPerfilDeUso,
-	string
-> = {
-	[DadosAdicionaisClienteContratoPerfilDeUso.Trabalho]: "Trabalho",
-	[DadosAdicionaisClienteContratoPerfilDeUso.Estudo]: "Estudo",
-	[DadosAdicionaisClienteContratoPerfilDeUso.Jogos]: "Jogos",
-	[DadosAdicionaisClienteContratoPerfilDeUso.Streaming]: "Streaming",
-	[DadosAdicionaisClienteContratoPerfilDeUso.Pesquisa]: "Pesquisa (Google)",
-};
+export const DATACENTERMEMORIAS_STATUS_LABELS = {
+	"0": "Descartado",
+	"1": "Disponivel",
+	"2": "Alocado para Servidor",
+	"3": "Manutenção",
+} as const;
 
-export enum DatacenterMemoriasCapacidade {
-	Value2 = "2",
-	Value4 = "4",
-	Value8 = "8",
-	Value16 = "16",
-	Value32 = "32",
-	Value64 = "64",
-	Value128 = "128",
-}
+export const DATACENTERMEMORIAS_TIPO_LABELS = {
+	"3": "DDR 3",
+	"4": "DDR 4",
+	"2": "DDR 2",
+} as const;
 
-export enum DatacenterMemoriasStatus {
-	Value0 = "0",
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-}
+export type DatacenterMemoriasCapacidade =
+	keyof typeof DATACENTERMEMORIAS_CAPACIDADE_LABELS;
 
-export enum DatacenterMemoriasTipo {
-	Value3 = "3",
-	Value4 = "4",
-	Value2 = "2",
-}
+export type DatacenterMemoriasStatus =
+	keyof typeof DATACENTERMEMORIAS_STATUS_LABELS;
+
+export type DatacenterMemoriasTipo =
+	keyof typeof DATACENTERMEMORIAS_TIPO_LABELS;
 
 export interface DatacenterMemorias {
 	id: number;
@@ -1457,52 +1157,25 @@ export interface DatacenterMemoriasRelations {
 
 export type DatacenterMemoriasRelationKey = keyof DatacenterMemoriasRelations;
 
-export const DATACENTERMEMORIAS_CAPACIDADE_LABELS: Record<
-	DatacenterMemoriasCapacidade,
-	string
-> = {
-	[DatacenterMemoriasCapacidade.Value2]: "2 GB",
-	[DatacenterMemoriasCapacidade.Value4]: "4 GB",
-	[DatacenterMemoriasCapacidade.Value8]: "8 GB",
-	[DatacenterMemoriasCapacidade.Value16]: "16 GB",
-	[DatacenterMemoriasCapacidade.Value32]: "32 GB",
-	[DatacenterMemoriasCapacidade.Value64]: "64 GB",
-	[DatacenterMemoriasCapacidade.Value128]: "128 GB",
-};
+export const DCSERVIDORES_FABRICANTE_LABELS = {
+	"1": "DELL",
+	"2": "HPE",
+	"3": "IBM",
+	"4": "Supermicro",
+	"5": "Outro",
+} as const;
 
-export const DATACENTERMEMORIAS_STATUS_LABELS: Record<
-	DatacenterMemoriasStatus,
-	string
-> = {
-	[DatacenterMemoriasStatus.Value0]: "Descartado",
-	[DatacenterMemoriasStatus.Value1]: "Disponivel",
-	[DatacenterMemoriasStatus.Value2]: "Alocado para Servidor",
-	[DatacenterMemoriasStatus.Value3]: "Manutenção",
-};
+export const DCSERVIDORES_STATUS_LABELS = {
+	"1": "Disponivel",
+	"2": "Alocado para Cliente",
+	"3": "Manutenção",
+	"4": "Descartado",
+} as const;
 
-export const DATACENTERMEMORIAS_TIPO_LABELS: Record<
-	DatacenterMemoriasTipo,
-	string
-> = {
-	[DatacenterMemoriasTipo.Value3]: "DDR 3",
-	[DatacenterMemoriasTipo.Value4]: "DDR 4",
-	[DatacenterMemoriasTipo.Value2]: "DDR 2",
-};
+export type DcServidoresFabricante =
+	keyof typeof DCSERVIDORES_FABRICANTE_LABELS;
 
-export enum DcServidoresFabricante {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-}
-
-export enum DcServidoresStatus {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-}
+export type DcServidoresStatus = keyof typeof DCSERVIDORES_STATUS_LABELS;
 
 export interface DcServidores {
 	id: number;
@@ -1527,39 +1200,30 @@ export interface DcServidoresRelations {
 
 export type DcServidoresRelationKey = keyof DcServidoresRelations;
 
-export const DCSERVIDORES_FABRICANTE_LABELS: Record<
-	DcServidoresFabricante,
-	string
-> = {
-	[DcServidoresFabricante.Value1]: "DELL",
-	[DcServidoresFabricante.Value2]: "HPE",
-	[DcServidoresFabricante.Value3]: "IBM",
-	[DcServidoresFabricante.Value4]: "Supermicro",
-	[DcServidoresFabricante.Value5]: "Outro",
-};
+export const DEMANDASVIABILIDADES_FORMAATENDIMENTO_LABELS = {
+	"1": "Rede Própria",
+	"2": "Ultima Milha de Terceiros",
+} as const;
 
-export const DCSERVIDORES_STATUS_LABELS: Record<DcServidoresStatus, string> = {
-	[DcServidoresStatus.Value1]: "Disponivel",
-	[DcServidoresStatus.Value2]: "Alocado para Cliente",
-	[DcServidoresStatus.Value3]: "Manutenção",
-	[DcServidoresStatus.Value4]: "Descartado",
-};
+export const DEMANDASVIABILIDADES_SERVICOPRETENDIDO_LABELS = {
+	"1": "Link Dedicado",
+	"2": "E-Line",
+} as const;
 
-export enum DemandasViabilidadesFormaAtendimento {
-	Value1 = "1",
-	Value2 = "2",
-}
+export const DEMANDASVIABILIDADES_STATUS_LABELS = {
+	"1": "Aguardando",
+	"2": "Viável",
+	"3": "Não Viável",
+} as const;
 
-export enum DemandasViabilidadesServicoPretendido {
-	Value1 = "1",
-	Value2 = "2",
-}
+export type DemandasViabilidadesFormaAtendimento =
+	keyof typeof DEMANDASVIABILIDADES_FORMAATENDIMENTO_LABELS;
 
-export enum DemandasViabilidadesStatus {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-}
+export type DemandasViabilidadesServicoPretendido =
+	keyof typeof DEMANDASVIABILIDADES_SERVICOPRETENDIDO_LABELS;
+
+export type DemandasViabilidadesStatus =
+	keyof typeof DEMANDASVIABILIDADES_STATUS_LABELS;
 
 export interface DemandasViabilidades {
 	id: number;
@@ -1584,31 +1248,6 @@ export interface DemandasViabilidadesRelations {
 export type DemandasViabilidadesRelationKey =
 	keyof DemandasViabilidadesRelations;
 
-export const DEMANDASVIABILIDADES_FORMAATENDIMENTO_LABELS: Record<
-	DemandasViabilidadesFormaAtendimento,
-	string
-> = {
-	[DemandasViabilidadesFormaAtendimento.Value1]: "Rede Própria",
-	[DemandasViabilidadesFormaAtendimento.Value2]: "Ultima Milha de Terceiros",
-};
-
-export const DEMANDASVIABILIDADES_SERVICOPRETENDIDO_LABELS: Record<
-	DemandasViabilidadesServicoPretendido,
-	string
-> = {
-	[DemandasViabilidadesServicoPretendido.Value1]: "Link Dedicado",
-	[DemandasViabilidadesServicoPretendido.Value2]: "E-Line",
-};
-
-export const DEMANDASVIABILIDADES_STATUS_LABELS: Record<
-	DemandasViabilidadesStatus,
-	string
-> = {
-	[DemandasViabilidadesStatus.Value1]: "Aguardando",
-	[DemandasViabilidadesStatus.Value2]: "Viável",
-	[DemandasViabilidadesStatus.Value3]: "Não Viável",
-};
-
 export interface Departamentos {
 	id: number;
 	f_fk_funcionarios: number;
@@ -1625,29 +1264,33 @@ export interface DepartamentosRelations {
 
 export type DepartamentosRelationKey = keyof DepartamentosRelations;
 
-export enum DiscosCapacidade {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-	Value7 = "7",
-	Value8 = "8",
-	Value9 = "9",
-	Value10 = "10",
-	Value11 = "11",
-	Value12 = "12",
-}
+export const DISCOS_CAPACIDADE_LABELS = {
+	"1": "480 GB",
+	"2": "960 GB",
+	"3": "240 GB",
+	"4": "1920 GB",
+	"5": "3840 GB",
+	"6": "7868 GB",
+	"7": "120 GB",
+	"8": "100 GB",
+	"9": "500 GB",
+	"10": "1000 GB",
+	"11": "2000 GB",
+	"12": "4000 GB",
+} as const;
 
-export enum DiscosTipo {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-}
+export const DISCOS_TIPO_LABELS = {
+	"1": "SSD SATA",
+	"2": "SSD SAS",
+	"3": "HDD SAS 10k",
+	"4": "HDD SAS 15k",
+	"5": "HDD NLSAS",
+	"6": "HDD SATA",
+} as const;
+
+export type DiscosCapacidade = keyof typeof DISCOS_CAPACIDADE_LABELS;
+
+export type DiscosTipo = keyof typeof DISCOS_TIPO_LABELS;
 
 export interface Discos {
 	id: number;
@@ -1670,30 +1313,6 @@ export interface DiscosRelations {
 }
 
 export type DiscosRelationKey = keyof DiscosRelations;
-
-export const DISCOS_CAPACIDADE_LABELS: Record<DiscosCapacidade, string> = {
-	[DiscosCapacidade.Value1]: "480 GB",
-	[DiscosCapacidade.Value2]: "960 GB",
-	[DiscosCapacidade.Value3]: "240 GB",
-	[DiscosCapacidade.Value4]: "1920 GB",
-	[DiscosCapacidade.Value5]: "3840 GB",
-	[DiscosCapacidade.Value6]: "7868 GB",
-	[DiscosCapacidade.Value7]: "120 GB",
-	[DiscosCapacidade.Value8]: "100 GB",
-	[DiscosCapacidade.Value9]: "500 GB",
-	[DiscosCapacidade.Value10]: "1000 GB",
-	[DiscosCapacidade.Value11]: "2000 GB",
-	[DiscosCapacidade.Value12]: "4000 GB",
-};
-
-export const DISCOS_TIPO_LABELS: Record<DiscosTipo, string> = {
-	[DiscosTipo.Value1]: "SSD SATA",
-	[DiscosTipo.Value2]: "SSD SAS",
-	[DiscosTipo.Value3]: "HDD SAS 10k",
-	[DiscosTipo.Value4]: "HDD SAS 15k",
-	[DiscosTipo.Value5]: "HDD NLSAS",
-	[DiscosTipo.Value6]: "HDD SATA",
-};
 
 export interface Equipamentos {
 	id: number;
@@ -1840,10 +1459,13 @@ export type Ij93gv1hx9mRelations = Record<string, never>;
 
 export type Ij93gv1hx9mRelationKey = keyof Ij93gv1hx9mRelations;
 
-export enum InfoArquivosArquivoExterno {
-	Sim = "sim",
-	Nao = "não",
-}
+export const INFOARQUIVOS_ARQUIVOEXTERNO_LABELS = {
+	sim: "Sim",
+	Nao: "Não",
+} as const;
+
+export type InfoArquivosArquivoExterno =
+	keyof typeof INFOARQUIVOS_ARQUIVOEXTERNO_LABELS;
 
 export interface InfoArquivos {
 	id: number;
@@ -1863,27 +1485,23 @@ export interface InfoArquivosRelations {
 
 export type InfoArquivosRelationKey = keyof InfoArquivosRelations;
 
-export const INFOARQUIVOS_ARQUIVOEXTERNO_LABELS: Record<
-	InfoArquivosArquivoExterno,
-	string
-> = {
-	[InfoArquivosArquivoExterno.Sim]: "Sim",
-	[InfoArquivosArquivoExterno.Nao]: "Não",
-};
+export const INFOASO_INFORMADO_LABELS = {
+	nao: "Não",
+	sim: "Sim",
+} as const;
 
-export enum InfoAsoInformado {
-	Nao = "nao",
-	Sim = "sim",
-}
+export const INFOASO_TIPOEXAME_LABELS = {
+	ExameAdmissional: "Exame Admissional",
+	ExamePeriodico: "Exame Periódico",
+	AtestadoMedico: "Atestado Médico",
+	RetornoTrabalho: "Retorno ao Trabalho",
+	MudancaFuncao: "Mudança de Função",
+	outros: "Outros",
+} as const;
 
-export enum InfoAsoTipoExame {
-	ExameAdmissional = "exame-admissional",
-	ExamePeriodico = "exame-periodico",
-	AtestadoMedico = "atestado-medico",
-	RetornoTrabalho = "retorno-trabalho",
-	MudancaFuncao = "mudanca-funcao",
-	Outros = "outros",
-}
+export type InfoAsoInformado = keyof typeof INFOASO_INFORMADO_LABELS;
+
+export type InfoAsoTipoExame = keyof typeof INFOASO_TIPOEXAME_LABELS;
 
 export interface InfoAso {
 	id: number;
@@ -1908,36 +1526,27 @@ export interface InfoAsoRelations {
 
 export type InfoAsoRelationKey = keyof InfoAsoRelations;
 
-export const INFOASO_INFORMADO_LABELS: Record<InfoAsoInformado, string> = {
-	[InfoAsoInformado.Nao]: "Não",
-	[InfoAsoInformado.Sim]: "Sim",
-};
+export const ITENSPACOTES_TIPOIXC_LABELS = {
+	I: "INTERNET",
+	SMP: "MVNO/SMP",
+	TV: "TV/STREAMING",
+	S: "SERVICO",
+	T: "STFC/TELEFONE",
+	SVA: "SVA",
+} as const;
 
-export const INFOASO_TIPOEXAME_LABELS: Record<InfoAsoTipoExame, string> = {
-	[InfoAsoTipoExame.ExameAdmissional]: "Exame Admissional",
-	[InfoAsoTipoExame.ExamePeriodico]: "Exame Periódico",
-	[InfoAsoTipoExame.AtestadoMedico]: "Atestado Médico",
-	[InfoAsoTipoExame.RetornoTrabalho]: "Retorno ao Trabalho",
-	[InfoAsoTipoExame.MudancaFuncao]: "Mudança de Função",
-	[InfoAsoTipoExame.Outros]: "Outros",
-};
+export const ITENSPACOTES_TIPOPRODUTO_LABELS = {
+	SVA: "SVA",
+	INTERNET: "INTERNET",
+	STFC: "STFC",
+	MVNO: "MVNO",
+	TV: "TV",
+} as const;
 
-export enum ItensPacotesTipoIxc {
-	I = "I",
-	Smp = "SMP",
-	Tv = "TV",
-	S = "S",
-	T = "T",
-	Sva = "SVA",
-}
+export type ItensPacotesTipoIxc = keyof typeof ITENSPACOTES_TIPOIXC_LABELS;
 
-export enum ItensPacotesTipoProduto {
-	Sva = "SVA",
-	Internet = "INTERNET",
-	Stfc = "STFC",
-	Mvno = "MVNO",
-	Tv = "TV",
-}
+export type ItensPacotesTipoProduto =
+	keyof typeof ITENSPACOTES_TIPOPRODUTO_LABELS;
 
 export interface ItensPacotes {
 	id: number;
@@ -1962,34 +1571,16 @@ export interface ItensPacotesRelations {
 
 export type ItensPacotesRelationKey = keyof ItensPacotesRelations;
 
-export const ITENSPACOTES_TIPOIXC_LABELS: Record<ItensPacotesTipoIxc, string> =
-	{
-		[ItensPacotesTipoIxc.I]: "INTERNET",
-		[ItensPacotesTipoIxc.Smp]: "MVNO/SMP",
-		[ItensPacotesTipoIxc.Tv]: "TV/STREAMING",
-		[ItensPacotesTipoIxc.S]: "SERVICO",
-		[ItensPacotesTipoIxc.T]: "STFC/TELEFONE",
-		[ItensPacotesTipoIxc.Sva]: "SVA",
-	};
+export const LANCAMENTOSFERIAS_STATUS_LABELS = {
+	cancelada: "Cancelada",
+	planejada: "Planejada",
+	EmAndamento: "Em andamento",
+	aprovada: "Aprovada",
+	concluida: "Concluída",
+} as const;
 
-export const ITENSPACOTES_TIPOPRODUTO_LABELS: Record<
-	ItensPacotesTipoProduto,
-	string
-> = {
-	[ItensPacotesTipoProduto.Sva]: "SVA",
-	[ItensPacotesTipoProduto.Internet]: "INTERNET",
-	[ItensPacotesTipoProduto.Stfc]: "STFC",
-	[ItensPacotesTipoProduto.Mvno]: "MVNO",
-	[ItensPacotesTipoProduto.Tv]: "TV",
-};
-
-export enum LancamentosFeriasStatus {
-	Cancelada = "cancelada",
-	Planejada = "planejada",
-	EmAndamento = "em-andamento",
-	Aprovada = "aprovada",
-	Concluida = "concluida",
-}
+export type LancamentosFeriasStatus =
+	keyof typeof LANCAMENTOSFERIAS_STATUS_LABELS;
 
 export interface LancamentosFerias {
 	id: number;
@@ -2012,21 +1603,12 @@ export interface LancamentosFeriasRelations {
 
 export type LancamentosFeriasRelationKey = keyof LancamentosFeriasRelations;
 
-export const LANCAMENTOSFERIAS_STATUS_LABELS: Record<
-	LancamentosFeriasStatus,
-	string
-> = {
-	[LancamentosFeriasStatus.Cancelada]: "Cancelada",
-	[LancamentosFeriasStatus.Planejada]: "Planejada",
-	[LancamentosFeriasStatus.EmAndamento]: "Em andamento",
-	[LancamentosFeriasStatus.Aprovada]: "Aprovada",
-	[LancamentosFeriasStatus.Concluida]: "Concluída",
-};
+export const LINHACORPORATIVA_TIPO_LABELS = {
+	"1": "Chip Corporativo",
+	"2": "DID Fixo",
+} as const;
 
-export enum LinhaCorporativaTipo {
-	Value1 = "1",
-	Value2 = "2",
-}
+export type LinhaCorporativaTipo = keyof typeof LINHACORPORATIVA_TIPO_LABELS;
 
 export interface LinhaCorporativa {
 	id: number;
@@ -2046,20 +1628,14 @@ export interface LinhaCorporativaRelations {
 
 export type LinhaCorporativaRelationKey = keyof LinhaCorporativaRelations;
 
-export const LINHACORPORATIVA_TIPO_LABELS: Record<
-	LinhaCorporativaTipo,
-	string
-> = {
-	[LinhaCorporativaTipo.Value1]: "Chip Corporativo",
-	[LinhaCorporativaTipo.Value2]: "DID Fixo",
-};
+export const LOGS_LOGLEVEL_LABELS = {
+	info: "Info",
+	warning: "Warning",
+	alert: "Alert",
+	error: "Error",
+} as const;
 
-export enum LogsLogLevel {
-	Info = "info",
-	Warning = "warning",
-	Alert = "alert",
-	Error = "error",
-}
+export type LogsLogLevel = keyof typeof LOGS_LOGLEVEL_LABELS;
 
 export interface Logs {
 	id: number;
@@ -2076,13 +1652,6 @@ export interface LogsRelations {
 }
 
 export type LogsRelationKey = keyof LogsRelations;
-
-export const LOGS_LOGLEVEL_LABELS: Record<LogsLogLevel, string> = {
-	[LogsLogLevel.Info]: "Info",
-	[LogsLogLevel.Warning]: "Warning",
-	[LogsLogLevel.Alert]: "Alert",
-	[LogsLogLevel.Error]: "Error",
-};
 
 export interface LogsCargos {
 	id: number;
@@ -2123,17 +1692,23 @@ export type Na4eifobeszRelations = Record<string, never>;
 
 export type Na4eifobeszRelationKey = keyof Na4eifobeszRelations;
 
-export enum NegociacoesComentariosInsereAtendimentoIxc {
-	Value0 = "0",
-	Value1 = "1",
-}
+export const NEGOCIACOESCOMENTARIOS_INSEREATENDIMENTOIXC_LABELS = {
+	"0": "Não",
+	"1": "Sim",
+} as const;
 
-export enum NegociacoesComentariosSetorParaObs {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-}
+export const NEGOCIACOESCOMENTARIOS_SETORPARAOBS_LABELS = {
+	"1": "Equipe de Campo",
+	"2": "Suporte Nível 1",
+	"3": "Suporte Nível 2",
+	"4": "Telefonia (Ativações e/ou Portabilidades)",
+} as const;
+
+export type NegociacoesComentariosInsereAtendimentoIxc =
+	keyof typeof NEGOCIACOESCOMENTARIOS_INSEREATENDIMENTOIXC_LABELS;
+
+export type NegociacoesComentariosSetorParaObs =
+	keyof typeof NEGOCIACOESCOMENTARIOS_SETORPARAOBS_LABELS;
 
 export interface NegociacoesComentarios {
 	id: number;
@@ -2153,37 +1728,24 @@ export interface NegociacoesComentariosRelations {
 export type NegociacoesComentariosRelationKey =
 	keyof NegociacoesComentariosRelations;
 
-export const NEGOCIACOESCOMENTARIOS_INSEREATENDIMENTOIXC_LABELS: Record<
-	NegociacoesComentariosInsereAtendimentoIxc,
-	string
-> = {
-	[NegociacoesComentariosInsereAtendimentoIxc.Value0]: "Não",
-	[NegociacoesComentariosInsereAtendimentoIxc.Value1]: "Sim",
-};
+export const NEGOCIACOESITENS_RELACAO_LABELS = {
+	COMBO: "COMBO",
+	ADICIONAL: "ADICIONAL",
+} as const;
 
-export const NEGOCIACOESCOMENTARIOS_SETORPARAOBS_LABELS: Record<
-	NegociacoesComentariosSetorParaObs,
-	string
-> = {
-	[NegociacoesComentariosSetorParaObs.Value1]: "Equipe de Campo",
-	[NegociacoesComentariosSetorParaObs.Value2]: "Suporte Nível 1",
-	[NegociacoesComentariosSetorParaObs.Value3]: "Suporte Nível 2",
-	[NegociacoesComentariosSetorParaObs.Value4]:
-		"Telefonia (Ativações e/ou Portabilidades)",
-};
+export const NEGOCIACOESITENS_TIPOPRODUTO_LABELS = {
+	SVA: "SVA",
+	INTERNET: "INTERNET",
+	STFC: "STFC",
+	MVNO: "MVNO",
+	TV: "TV",
+} as const;
 
-export enum NegociacoesItensRelacao {
-	Combo = "COMBO",
-	Adicional = "ADICIONAL",
-}
+export type NegociacoesItensRelacao =
+	keyof typeof NEGOCIACOESITENS_RELACAO_LABELS;
 
-export enum NegociacoesItensTipoProduto {
-	Sva = "SVA",
-	Internet = "INTERNET",
-	Stfc = "STFC",
-	Mvno = "MVNO",
-	Tv = "TV",
-}
+export type NegociacoesItensTipoProduto =
+	keyof typeof NEGOCIACOESITENS_TIPOPRODUTO_LABELS;
 
 export interface NegociacoesItens {
 	id: number;
@@ -2210,25 +1772,6 @@ export interface NegociacoesItensRelations {
 
 export type NegociacoesItensRelationKey = keyof NegociacoesItensRelations;
 
-export const NEGOCIACOESITENS_RELACAO_LABELS: Record<
-	NegociacoesItensRelacao,
-	string
-> = {
-	[NegociacoesItensRelacao.Combo]: "COMBO",
-	[NegociacoesItensRelacao.Adicional]: "ADICIONAL",
-};
-
-export const NEGOCIACOESITENS_TIPOPRODUTO_LABELS: Record<
-	NegociacoesItensTipoProduto,
-	string
-> = {
-	[NegociacoesItensTipoProduto.Sva]: "SVA",
-	[NegociacoesItensTipoProduto.Internet]: "INTERNET",
-	[NegociacoesItensTipoProduto.Stfc]: "STFC",
-	[NegociacoesItensTipoProduto.Mvno]: "MVNO",
-	[NegociacoesItensTipoProduto.Tv]: "TV",
-};
-
 export interface Nukww9tmq83 {
 	f_fk1_setor_tipos: number;
 	f_fk2_setor_tipos: number;
@@ -2238,16 +1781,21 @@ export type Nukww9tmq83Relations = Record<string, never>;
 
 export type Nukww9tmq83RelationKey = keyof Nukww9tmq83Relations;
 
-export enum OeQualirunProcedimento {
-	Value1776052314044ff9B78615a4b0d7a3e2 = "17760523-1404-4ff9-b786-15a4b0d7a3e2",
-}
+export const OEQUALIRUN_PROCEDIMENTO_LABELS = {
+	Value1776052314044ff9B78615a4b0d7a3e2: "Assinatura via GOV",
+} as const;
 
-export enum OeQualirunStatus {
-	Cancelado = "cancelado",
-	Novo = "novo",
-	Pendente = "pendente",
-	Concluido = "concluido",
-}
+export const OEQUALIRUN_STATUS_LABELS = {
+	cancelado: "Cancelado",
+	novo: "Novo",
+	pendente: "Pendente",
+	concluido: "Concluído",
+} as const;
+
+export type OeQualirunProcedimento =
+	keyof typeof OEQUALIRUN_PROCEDIMENTO_LABELS;
+
+export type OeQualirunStatus = keyof typeof OEQUALIRUN_STATUS_LABELS;
 
 export interface OeQualirun {
 	id: number;
@@ -2268,25 +1816,13 @@ export interface OeQualirunRelations {
 
 export type OeQualirunRelationKey = keyof OeQualirunRelations;
 
-export const OEQUALIRUN_PROCEDIMENTO_LABELS: Record<
-	OeQualirunProcedimento,
-	string
-> = {
-	[OeQualirunProcedimento.Value1776052314044ff9B78615a4b0d7a3e2]:
-		"Assinatura via GOV",
-};
+export const OPCOESSMP_PORTABILIDADE_LABELS = {
+	"0": "NÃO",
+	"1": "SIM",
+} as const;
 
-export const OEQUALIRUN_STATUS_LABELS: Record<OeQualirunStatus, string> = {
-	[OeQualirunStatus.Cancelado]: "Cancelado",
-	[OeQualirunStatus.Novo]: "Novo",
-	[OeQualirunStatus.Pendente]: "Pendente",
-	[OeQualirunStatus.Concluido]: "Concluído",
-};
-
-export enum OpcoesSmpPortabilidade {
-	Value0 = "0",
-	Value1 = "1",
-}
+export type OpcoesSmpPortabilidade =
+	keyof typeof OPCOESSMP_PORTABILIDADE_LABELS;
 
 export interface OpcoesSmp {
 	id: number;
@@ -2312,14 +1848,6 @@ export interface OpcoesSmpRelations {
 
 export type OpcoesSmpRelationKey = keyof OpcoesSmpRelations;
 
-export const OPCOESSMP_PORTABILIDADE_LABELS: Record<
-	OpcoesSmpPortabilidade,
-	string
-> = {
-	[OpcoesSmpPortabilidade.Value0]: "NÃO",
-	[OpcoesSmpPortabilidade.Value1]: "SIM",
-};
-
 export interface OpcoesSmpTemplate {
 	id: number;
 	f_fk_smp_produtos: number;
@@ -2342,10 +1870,13 @@ export interface OpcoesSmpTemplateRelations {
 
 export type OpcoesSmpTemplateRelationKey = keyof OpcoesSmpTemplateRelations;
 
-export enum OpcoesStfcPortabilidade {
-	Sim = "SIM",
-	Nao = "NAO",
-}
+export const OPCOESSTFC_PORTABILIDADE_LABELS = {
+	SIM: "SIM",
+	NAO: "NÃO",
+} as const;
+
+export type OpcoesStfcPortabilidade =
+	keyof typeof OPCOESSTFC_PORTABILIDADE_LABELS;
 
 export interface OpcoesStfc {
 	id: number;
@@ -2366,18 +1897,13 @@ export interface OpcoesStfcRelations {
 
 export type OpcoesStfcRelationKey = keyof OpcoesStfcRelations;
 
-export const OPCOESSTFC_PORTABILIDADE_LABELS: Record<
-	OpcoesStfcPortabilidade,
-	string
-> = {
-	[OpcoesStfcPortabilidade.Sim]: "SIM",
-	[OpcoesStfcPortabilidade.Nao]: "NÃO",
-};
+export const OPCOESSTFCTEMPLATE_PORTABILIDADE_LABELS = {
+	"0": "NÃO",
+	"1": "SIM",
+} as const;
 
-export enum OpcoesStfcTemplatePortabilidade {
-	Value0 = "0",
-	Value1 = "1",
-}
+export type OpcoesStfcTemplatePortabilidade =
+	keyof typeof OPCOESSTFCTEMPLATE_PORTABILIDADE_LABELS;
 
 export interface OpcoesStfcTemplate {
 	id: number;
@@ -2398,14 +1924,6 @@ export interface OpcoesStfcTemplateRelations {
 
 export type OpcoesStfcTemplateRelationKey = keyof OpcoesStfcTemplateRelations;
 
-export const OPCOESSTFCTEMPLATE_PORTABILIDADE_LABELS: Record<
-	OpcoesStfcTemplatePortabilidade,
-	string
-> = {
-	[OpcoesStfcTemplatePortabilidade.Value0]: "NÃO",
-	[OpcoesStfcTemplatePortabilidade.Value1]: "SIM",
-};
-
 export interface P10scfhrhkw {
 	id: number;
 	f_m7vet8zixc9: number;
@@ -2421,30 +1939,43 @@ export interface P10scfhrhkwRelations {
 
 export type P10scfhrhkwRelationKey = keyof P10scfhrhkwRelations;
 
-export enum PacotesAbreAtendimento {
-	Value0 = "0",
-	Value1 = "1",
-}
+export const PACOTES_ABREATENDIMENTO_LABELS = {
+	"0": "NAO",
+	"1": "SIM",
+} as const;
 
-export enum PacotesPacoteAdicional {
-	Value0 = "0",
-	Value1 = "1",
-}
+export const PACOTES_PACOTEADICIONAL_LABELS = {
+	"0": "NAO",
+	"1": "SIM",
+} as const;
 
-export enum PacotesPacotePrincipal {
-	Value0 = "0",
-	Value1 = "1",
-}
+export const PACOTES_PACOTEPRINCIPAL_LABELS = {
+	"0": "NAO",
+	"1": "SIM",
+} as const;
 
-export enum PacotesStatus {
-	Value1 = "1",
-	Value2 = "2",
-}
+export const PACOTES_STATUS_LABELS = {
+	"1": "Ativo",
+	"2": "Inativo",
+} as const;
 
-export enum PacotesVenderPara {
-	Pf = "PF",
-	Pj = "PJ",
-}
+export const PACOTES_VENDERPARA_LABELS = {
+	PF: "Pessoa Física",
+	PJ: "Pessoa Jurídica",
+} as const;
+
+export type PacotesAbreAtendimento =
+	keyof typeof PACOTES_ABREATENDIMENTO_LABELS;
+
+export type PacotesPacoteAdicional =
+	keyof typeof PACOTES_PACOTEADICIONAL_LABELS;
+
+export type PacotesPacotePrincipal =
+	keyof typeof PACOTES_PACOTEPRINCIPAL_LABELS;
+
+export type PacotesStatus = keyof typeof PACOTES_STATUS_LABELS;
+
+export type PacotesVenderPara = keyof typeof PACOTES_VENDERPARA_LABELS;
 
 export interface Pacotes {
 	id: number;
@@ -2470,40 +2001,6 @@ export interface PacotesRelations {
 
 export type PacotesRelationKey = keyof PacotesRelations;
 
-export const PACOTES_ABREATENDIMENTO_LABELS: Record<
-	PacotesAbreAtendimento,
-	string
-> = {
-	[PacotesAbreAtendimento.Value0]: "NAO",
-	[PacotesAbreAtendimento.Value1]: "SIM",
-};
-
-export const PACOTES_PACOTEADICIONAL_LABELS: Record<
-	PacotesPacoteAdicional,
-	string
-> = {
-	[PacotesPacoteAdicional.Value0]: "NAO",
-	[PacotesPacoteAdicional.Value1]: "SIM",
-};
-
-export const PACOTES_PACOTEPRINCIPAL_LABELS: Record<
-	PacotesPacotePrincipal,
-	string
-> = {
-	[PacotesPacotePrincipal.Value0]: "NAO",
-	[PacotesPacotePrincipal.Value1]: "SIM",
-};
-
-export const PACOTES_STATUS_LABELS: Record<PacotesStatus, string> = {
-	[PacotesStatus.Value1]: "Ativo",
-	[PacotesStatus.Value2]: "Inativo",
-};
-
-export const PACOTES_VENDERPARA_LABELS: Record<PacotesVenderPara, string> = {
-	[PacotesVenderPara.Pf]: "Pessoa Física",
-	[PacotesVenderPara.Pj]: "Pessoa Jurídica",
-};
-
 export interface Parentesco {
 	id: number;
 	f_fk_funcionarios: number;
@@ -2522,15 +2019,20 @@ export interface ParentescoRelations {
 
 export type ParentescoRelationKey = keyof ParentescoRelations;
 
-export enum PatrimonioEstadoUso {
-	Novo = "NOVO",
-	UsadoEmEstadoDeNovo = "USADO, EM ESTADO DE NOVO",
-	UsadoComMarcasDeUso = "USADO, COM MARCAS DE USO",
-}
+export const PATRIMONIO_ESTADOUSO_LABELS = {
+	NOVO: "NOVO",
+	UsadoEmEstadoDeNovo: "USADO, EM ESTADO DE NOVO",
+	UsadoComMarcasDeUso: "USADO, COM MARCAS DE USO",
+} as const;
 
-export enum PatrimonioTipoPatrimonio {
-	Value1 = "1",
-}
+export const PATRIMONIO_TIPOPATRIMONIO_LABELS = {
+	"1": "Equipamento",
+} as const;
+
+export type PatrimonioEstadoUso = keyof typeof PATRIMONIO_ESTADOUSO_LABELS;
+
+export type PatrimonioTipoPatrimonio =
+	keyof typeof PATRIMONIO_TIPOPATRIMONIO_LABELS;
 
 export interface Patrimonio {
 	id: number;
@@ -2559,27 +2061,16 @@ export interface PatrimonioRelations {
 
 export type PatrimonioRelationKey = keyof PatrimonioRelations;
 
-export const PATRIMONIO_ESTADOUSO_LABELS: Record<PatrimonioEstadoUso, string> =
-	{
-		[PatrimonioEstadoUso.Novo]: "NOVO",
-		[PatrimonioEstadoUso.UsadoEmEstadoDeNovo]: "USADO, EM ESTADO DE NOVO",
-		[PatrimonioEstadoUso.UsadoComMarcasDeUso]: "USADO, COM MARCAS DE USO",
-	};
+export const PERIODOSFERIAS_STATUSPERIODO_LABELS = {
+	cancelada: "Cancelada",
+	planejada: "Planejada",
+	EmAndamento: "Em andamento",
+	aprovada: "Aprovada",
+	concluida: "Concluída",
+} as const;
 
-export const PATRIMONIO_TIPOPATRIMONIO_LABELS: Record<
-	PatrimonioTipoPatrimonio,
-	string
-> = {
-	[PatrimonioTipoPatrimonio.Value1]: "Equipamento",
-};
-
-export enum PeriodosFeriasStatusPeriodo {
-	Cancelada = "cancelada",
-	Planejada = "planejada",
-	EmAndamento = "em-andamento",
-	Aprovada = "aprovada",
-	Concluida = "concluida",
-}
+export type PeriodosFeriasStatusPeriodo =
+	keyof typeof PERIODOSFERIAS_STATUSPERIODO_LABELS;
 
 export interface PeriodosFerias {
 	id: number;
@@ -2603,33 +2094,26 @@ export interface PeriodosFeriasRelations {
 
 export type PeriodosFeriasRelationKey = keyof PeriodosFeriasRelations;
 
-export const PERIODOSFERIAS_STATUSPERIODO_LABELS: Record<
-	PeriodosFeriasStatusPeriodo,
-	string
-> = {
-	[PeriodosFeriasStatusPeriodo.Cancelada]: "Cancelada",
-	[PeriodosFeriasStatusPeriodo.Planejada]: "Planejada",
-	[PeriodosFeriasStatusPeriodo.EmAndamento]: "Em andamento",
-	[PeriodosFeriasStatusPeriodo.Aprovada]: "Aprovada",
-	[PeriodosFeriasStatusPeriodo.Concluida]: "Concluída",
-};
+export const PRODUTOS_TIPOIXC_LABELS = {
+	I: "INTERNET",
+	SMP: "SMP/MVNO",
+	TV: "TV/STREAMING",
+	S: "SERVICO",
+	T: "STFC/TELEFONE",
+	SVA: "SVA",
+} as const;
 
-export enum ProdutosTipoIxc {
-	I = "I",
-	Smp = "SMP",
-	Tv = "TV",
-	S = "S",
-	T = "T",
-	Sva = "SVA",
-}
+export const PRODUTOS_TIPOPRODUTO_LABELS = {
+	SVA: "SVA",
+	INTERNET: "INTERNET",
+	STFC: "STFC",
+	MVNO: "MVNO",
+	TV: "TV",
+} as const;
 
-export enum ProdutosTipoProduto {
-	Sva = "SVA",
-	Internet = "INTERNET",
-	Stfc = "STFC",
-	Mvno = "MVNO",
-	Tv = "TV",
-}
+export type ProdutosTipoIxc = keyof typeof PRODUTOS_TIPOIXC_LABELS;
+
+export type ProdutosTipoProduto = keyof typeof PRODUTOS_TIPOPRODUTO_LABELS;
 
 export interface Produtos {
 	id: number;
@@ -2652,24 +2136,6 @@ export interface ProdutosRelations {
 }
 
 export type ProdutosRelationKey = keyof ProdutosRelations;
-
-export const PRODUTOS_TIPOIXC_LABELS: Record<ProdutosTipoIxc, string> = {
-	[ProdutosTipoIxc.I]: "INTERNET",
-	[ProdutosTipoIxc.Smp]: "SMP/MVNO",
-	[ProdutosTipoIxc.Tv]: "TV/STREAMING",
-	[ProdutosTipoIxc.S]: "SERVICO",
-	[ProdutosTipoIxc.T]: "STFC/TELEFONE",
-	[ProdutosTipoIxc.Sva]: "SVA",
-};
-
-export const PRODUTOS_TIPOPRODUTO_LABELS: Record<ProdutosTipoProduto, string> =
-	{
-		[ProdutosTipoProduto.Sva]: "SVA",
-		[ProdutosTipoProduto.Internet]: "INTERNET",
-		[ProdutosTipoProduto.Stfc]: "STFC",
-		[ProdutosTipoProduto.Mvno]: "MVNO",
-		[ProdutosTipoProduto.Tv]: "TV",
-	};
 
 export interface QualirunAssinaturaGov {
 	id: number;
@@ -2696,32 +2162,44 @@ export interface QualirunAssinaturaGovRelations {
 export type QualirunAssinaturaGovRelationKey =
 	keyof QualirunAssinaturaGovRelations;
 
-export enum QualirunInfoAdicionaisGrauEscolaridade {
-	EnsinoMedio = "Ensino Médio",
-	Superior = "Superior",
-	PosMba = "Pós, MBA",
-	Mestrado = "Mestrado",
-	Doutorado = "Doutorado",
-}
+export const QUALIRUNINFOADICIONAIS_GRAUESCOLARIDADE_LABELS = {
+	EnsinoMedio: "Ensino Médio",
+	Superior: "Superior",
+	PosMba: "Pós, MBA",
+	Mestrado: "Mestrado",
+	Doutorado: "Doutorado",
+} as const;
 
-export enum QualirunInfoAdicionaisSituacaoCurso {
-	Trancado = "Trancado",
-	Cursando = "Cursando",
-	Completo = "Completo",
-}
+export const QUALIRUNINFOADICIONAIS_SITUACAOCURSO_LABELS = {
+	Trancado: "Trancado",
+	Cursando: "Cursando",
+	Completo: "Completo",
+} as const;
 
-export enum QualirunInfoAdicionaisStatus {
-	Recusado = "recusado",
-	Aprovado = "aprovado",
-	Aguardando = "aguardando",
-}
+export const QUALIRUNINFOADICIONAIS_STATUS_LABELS = {
+	recusado: "Recusado",
+	aprovado: "Aprovado",
+	aguardando: "Aguardando",
+} as const;
 
-export enum QualirunInfoAdicionaisVinculoContatoEmergencia {
-	Pais = "Pais",
-	FilhoAOuEnteadoA = "Filho(a) ou Enteado(a)",
-	Avos = "Avós",
-	Conjuge = "Conjuge",
-}
+export const QUALIRUNINFOADICIONAIS_VINCULOCONTATOEMERGENCIA_LABELS = {
+	Pais: "Pais",
+	FilhoAOuEnteadoA: "Filho(a) ou Enteado(a)",
+	Avos: "Avós",
+	Conjuge: "Conjuge",
+} as const;
+
+export type QualirunInfoAdicionaisGrauEscolaridade =
+	keyof typeof QUALIRUNINFOADICIONAIS_GRAUESCOLARIDADE_LABELS;
+
+export type QualirunInfoAdicionaisSituacaoCurso =
+	keyof typeof QUALIRUNINFOADICIONAIS_SITUACAOCURSO_LABELS;
+
+export type QualirunInfoAdicionaisStatus =
+	keyof typeof QUALIRUNINFOADICIONAIS_STATUS_LABELS;
+
+export type QualirunInfoAdicionaisVinculoContatoEmergencia =
+	keyof typeof QUALIRUNINFOADICIONAIS_VINCULOCONTATOEMERGENCIA_LABELS;
 
 export interface QualirunInfoAdicionais {
 	id: number;
@@ -2753,67 +2231,40 @@ export interface QualirunInfoAdicionaisRelations {
 export type QualirunInfoAdicionaisRelationKey =
 	keyof QualirunInfoAdicionaisRelations;
 
-export const QUALIRUNINFOADICIONAIS_GRAUESCOLARIDADE_LABELS: Record<
-	QualirunInfoAdicionaisGrauEscolaridade,
-	string
-> = {
-	[QualirunInfoAdicionaisGrauEscolaridade.EnsinoMedio]: "Ensino Médio",
-	[QualirunInfoAdicionaisGrauEscolaridade.Superior]: "Superior",
-	[QualirunInfoAdicionaisGrauEscolaridade.PosMba]: "Pós, MBA",
-	[QualirunInfoAdicionaisGrauEscolaridade.Mestrado]: "Mestrado",
-	[QualirunInfoAdicionaisGrauEscolaridade.Doutorado]: "Doutorado",
-};
+export const QUALIRUNPROCESSOS_DETALHESPROCEDIMENTO_LABELS = {
+	"1": "Utilizado para novos colaboradores preencherem os dados e a documentação de admissão, que serão utilizados no CRM, aba de Colaboradores.",
+	"2": "Utilizado para novos colaboradores assinarem os termos de Confidencialidade, LGPD e Uso Voz e Imagem.",
+} as const;
 
-export const QUALIRUNINFOADICIONAIS_SITUACAOCURSO_LABELS: Record<
-	QualirunInfoAdicionaisSituacaoCurso,
-	string
-> = {
-	[QualirunInfoAdicionaisSituacaoCurso.Trancado]: "Trancado",
-	[QualirunInfoAdicionaisSituacaoCurso.Cursando]: "Cursando",
-	[QualirunInfoAdicionaisSituacaoCurso.Completo]: "Completo",
-};
+export const QUALIRUNPROCESSOS_IDPROCEDIMENTOQUALIRUN_LABELS = {
+	C03f166dA4d742b7Ae73A4c287e171ac: "Complemento de Informações e Documentos",
+	Value0a3d75b429084bc285a664667ec60477: "Assinatura com Identidade Verificada",
+} as const;
 
-export const QUALIRUNINFOADICIONAIS_STATUS_LABELS: Record<
-	QualirunInfoAdicionaisStatus,
-	string
-> = {
-	[QualirunInfoAdicionaisStatus.Recusado]: "Recusado",
-	[QualirunInfoAdicionaisStatus.Aprovado]: "Aprovado",
-	[QualirunInfoAdicionaisStatus.Aguardando]: "Aguardando",
-};
+export const QUALIRUNPROCESSOS_PROCEDIMENTO_LABELS = {
+	ComplementoInformacoesDocumentos: "Complemento de Informações e Documentos",
+	ConfidencialidadeLgpdVozImagem:
+		"Assinatura de Termos (LGPD, Voz e Imagem e Confidencialidade)",
+} as const;
 
-export const QUALIRUNINFOADICIONAIS_VINCULOCONTATOEMERGENCIA_LABELS: Record<
-	QualirunInfoAdicionaisVinculoContatoEmergencia,
-	string
-> = {
-	[QualirunInfoAdicionaisVinculoContatoEmergencia.Pais]: "Pais",
-	[QualirunInfoAdicionaisVinculoContatoEmergencia.FilhoAOuEnteadoA]:
-		"Filho(a) ou Enteado(a)",
-	[QualirunInfoAdicionaisVinculoContatoEmergencia.Avos]: "Avós",
-	[QualirunInfoAdicionaisVinculoContatoEmergencia.Conjuge]: "Conjuge",
-};
+export const QUALIRUNPROCESSOS_STATUS_LABELS = {
+	novo: "Novo",
+	pendente: "Pendente",
+	concluido: "Concluído",
+	cancelado: "Cancelado",
+} as const;
 
-export enum QualirunProcessosDetalhesProcedimento {
-	Value1 = "1",
-	Value2 = "2",
-}
+export type QualirunProcessosDetalhesProcedimento =
+	keyof typeof QUALIRUNPROCESSOS_DETALHESPROCEDIMENTO_LABELS;
 
-export enum QualirunProcessosIdProcedimentoQualirun {
-	C03f166dA4d742b7Ae73A4c287e171ac = "c03f166d-a4d7-42b7-ae73-a4c287e171ac",
-	Value0a3d75b429084bc285a664667ec60477 = "0a3d75b4-2908-4bc2-85a6-64667ec60477",
-}
+export type QualirunProcessosIdProcedimentoQualirun =
+	keyof typeof QUALIRUNPROCESSOS_IDPROCEDIMENTOQUALIRUN_LABELS;
 
-export enum QualirunProcessosProcedimento {
-	ComplementoInformacoesDocumentos = "complemento-informacoes-documentos",
-	ConfidencialidadeLgpdVozImagem = "confidencialidade-lgpd-voz-imagem",
-}
+export type QualirunProcessosProcedimento =
+	keyof typeof QUALIRUNPROCESSOS_PROCEDIMENTO_LABELS;
 
-export enum QualirunProcessosStatus {
-	Novo = "novo",
-	Pendente = "pendente",
-	Concluido = "concluido",
-	Cancelado = "cancelado",
-}
+export type QualirunProcessosStatus =
+	keyof typeof QUALIRUNPROCESSOS_STATUS_LABELS;
 
 export interface QualirunProcessos {
 	id: number;
@@ -2836,58 +2287,24 @@ export interface QualirunProcessosRelations {
 
 export type QualirunProcessosRelationKey = keyof QualirunProcessosRelations;
 
-export const QUALIRUNPROCESSOS_DETALHESPROCEDIMENTO_LABELS: Record<
-	QualirunProcessosDetalhesProcedimento,
-	string
-> = {
-	[QualirunProcessosDetalhesProcedimento.Value1]:
-		"Utilizado para novos colaboradores preencherem os dados e a documentação de admissão, que serão utilizados no CRM, aba de Colaboradores.",
-	[QualirunProcessosDetalhesProcedimento.Value2]:
-		"Utilizado para novos colaboradores assinarem os termos de Confidencialidade, LGPD e Uso Voz e Imagem.",
-};
+export const RECURSOSVIAGEM_DESTINOVIAGEM_LABELS = {
+	"1": "Curitibanos",
+	"2": "Florianópolis",
+	"3": "Florianópolis",
+} as const;
 
-export const QUALIRUNPROCESSOS_IDPROCEDIMENTOQUALIRUN_LABELS: Record<
-	QualirunProcessosIdProcedimentoQualirun,
-	string
-> = {
-	[QualirunProcessosIdProcedimentoQualirun.C03f166dA4d742b7Ae73A4c287e171ac]:
-		"Complemento de Informações e Documentos",
-	[QualirunProcessosIdProcedimentoQualirun.Value0a3d75b429084bc285a664667ec60477]:
-		"Assinatura com Identidade Verificada",
-};
+export const RECURSOSVIAGEM_MEIOTRANSPORTE_LABELS = {
+	"1": "Kwid ATPlus",
+	"2": "Fiorino ATPlus",
+	"3": "Carro Particular",
+	"4": "Outro",
+} as const;
 
-export const QUALIRUNPROCESSOS_PROCEDIMENTO_LABELS: Record<
-	QualirunProcessosProcedimento,
-	string
-> = {
-	[QualirunProcessosProcedimento.ComplementoInformacoesDocumentos]:
-		"Complemento de Informações e Documentos",
-	[QualirunProcessosProcedimento.ConfidencialidadeLgpdVozImagem]:
-		"Assinatura de Termos (LGPD, Voz e Imagem e Confidencialidade)",
-};
+export type RecursosViagemDestinoViagem =
+	keyof typeof RECURSOSVIAGEM_DESTINOVIAGEM_LABELS;
 
-export const QUALIRUNPROCESSOS_STATUS_LABELS: Record<
-	QualirunProcessosStatus,
-	string
-> = {
-	[QualirunProcessosStatus.Novo]: "Novo",
-	[QualirunProcessosStatus.Pendente]: "Pendente",
-	[QualirunProcessosStatus.Concluido]: "Concluído",
-	[QualirunProcessosStatus.Cancelado]: "Cancelado",
-};
-
-export enum RecursosViagemDestinoViagem {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-}
-
-export enum RecursosViagemMeioTransporte {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-}
+export type RecursosViagemMeioTransporte =
+	keyof typeof RECURSOSVIAGEM_MEIOTRANSPORTE_LABELS;
 
 export interface RecursosViagem {
 	id: number;
@@ -2907,25 +2324,6 @@ export interface RecursosViagemRelations {
 
 export type RecursosViagemRelationKey = keyof RecursosViagemRelations;
 
-export const RECURSOSVIAGEM_DESTINOVIAGEM_LABELS: Record<
-	RecursosViagemDestinoViagem,
-	string
-> = {
-	[RecursosViagemDestinoViagem.Value1]: "Curitibanos",
-	[RecursosViagemDestinoViagem.Value2]: "Florianópolis",
-	[RecursosViagemDestinoViagem.Value3]: "Florianópolis",
-};
-
-export const RECURSOSVIAGEM_MEIOTRANSPORTE_LABELS: Record<
-	RecursosViagemMeioTransporte,
-	string
-> = {
-	[RecursosViagemMeioTransporte.Value1]: "Kwid ATPlus",
-	[RecursosViagemMeioTransporte.Value2]: "Fiorino ATPlus",
-	[RecursosViagemMeioTransporte.Value3]: "Carro Particular",
-	[RecursosViagemMeioTransporte.Value4]: "Outro",
-};
-
 export interface Rguxtr9p91d {
 	f_fk_ponta_a_interface: number;
 	f_fk_ponta_a_interface2: number;
@@ -2935,20 +2333,24 @@ export type Rguxtr9p91dRelations = Record<string, never>;
 
 export type Rguxtr9p91dRelationKey = keyof Rguxtr9p91dRelations;
 
-export enum ServicosStatus {
-	Value0 = "0",
-	Value1 = "1",
-	Value2 = "2",
-}
+export const SERVICOS_STATUS_LABELS = {
+	"0": "Cancelado",
+	"1": "Aguardando Ativação",
+	"2": "Ativo",
+} as const;
 
-export enum ServicosTipo {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-}
+export const SERVICOS_TIPO_LABELS = {
+	"1": "Link IP",
+	"2": "PTP",
+	"3": "PTMP",
+	"4": "OUTRO",
+	"5": "Lastmile",
+	"6": "Colocation",
+} as const;
+
+export type ServicosStatus = keyof typeof SERVICOS_STATUS_LABELS;
+
+export type ServicosTipo = keyof typeof SERVICOS_TIPO_LABELS;
 
 export interface Servicos {
 	id: number;
@@ -2978,21 +2380,6 @@ export interface ServicosRelations {
 }
 
 export type ServicosRelationKey = keyof ServicosRelations;
-
-export const SERVICOS_STATUS_LABELS: Record<ServicosStatus, string> = {
-	[ServicosStatus.Value0]: "Cancelado",
-	[ServicosStatus.Value1]: "Aguardando Ativação",
-	[ServicosStatus.Value2]: "Ativo",
-};
-
-export const SERVICOS_TIPO_LABELS: Record<ServicosTipo, string> = {
-	[ServicosTipo.Value1]: "Link IP",
-	[ServicosTipo.Value2]: "PTP",
-	[ServicosTipo.Value3]: "PTMP",
-	[ServicosTipo.Value4]: "OUTRO",
-	[ServicosTipo.Value5]: "Lastmile",
-	[ServicosTipo.Value6]: "Colocation",
-};
 
 export interface ServicosXServicos {
 	f_8n72gqelvp5: number;
@@ -3039,17 +2426,21 @@ export interface SistemasAcessosRelations {
 
 export type SistemasAcessosRelationKey = keyof SistemasAcessosRelations;
 
-export enum SitesStatus {
-	Repnmsclnb8 = "repnmsclnb8",
-	X2lk2z9p2ds = "x2lk2z9p2ds",
-	Qw3vjvimoae = "qw3vjvimoae",
-}
+export const SITES_STATUS_LABELS = {
+	repnmsclnb8: "Planejado",
+	x2lk2z9p2ds: "Ativo",
+	qw3vjvimoae: "Desativado",
+} as const;
 
-export enum SitesTipo {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-}
+export const SITES_TIPO_LABELS = {
+	"1": "ATPLUS",
+	"2": "FORNECEDOR",
+	"3": "CLIENTE",
+} as const;
+
+export type SitesStatus = keyof typeof SITES_STATUS_LABELS;
+
+export type SitesTipo = keyof typeof SITES_TIPO_LABELS;
 
 export interface Sites {
 	id: number;
@@ -3081,18 +2472,6 @@ export interface SitesRelations {
 
 export type SitesRelationKey = keyof SitesRelations;
 
-export const SITES_STATUS_LABELS: Record<SitesStatus, string> = {
-	[SitesStatus.Repnmsclnb8]: "Planejado",
-	[SitesStatus.X2lk2z9p2ds]: "Ativo",
-	[SitesStatus.Qw3vjvimoae]: "Desativado",
-};
-
-export const SITES_TIPO_LABELS: Record<SitesTipo, string> = {
-	[SitesTipo.Value1]: "ATPLUS",
-	[SitesTipo.Value2]: "FORNECEDOR",
-	[SitesTipo.Value3]: "CLIENTE",
-};
-
 export interface Siurxeb1juy {
 	f_stgjevi19lg: number;
 	f_vazo5n0bhe5: number;
@@ -3102,66 +2481,84 @@ export type Siurxeb1juyRelations = Record<string, never>;
 
 export type Siurxeb1juyRelationKey = keyof Siurxeb1juyRelations;
 
-export enum SolicitacaoComprasCategoria {
-	Produto = "Produto",
-	Servico = "Serviço",
-}
+export const SOLICITACAOCOMPRAS_CATEGORIA_LABELS = {
+	Produto: "Produto",
+	Servico: "Serviço",
+} as const;
 
-export enum SolicitacaoComprasDepartamento {
-	Almox = "Almox",
-	Comercial = "Comercial",
-	Financeiro = "Financeiro",
-	Infraestrutura = "Infraestrutura",
-	LaboratorioTecnico = "Laboratório Técnico",
-	Marketing = "Marketing",
-	Noc = "NOC",
-	Operacional = "Operacional",
-	Platon = "Platon",
-	Processos = "Processos",
-	Projetos = "Projetos",
-	Rh = "RH",
-	ServicosGerais = "Serviços Gerais",
-}
+export const SOLICITACAOCOMPRAS_DEPARTAMENTO_LABELS = {
+	Almox: "Almox",
+	Comercial: "Comercial",
+	Financeiro: "Financeiro",
+	Infraestrutura: "Infraestrutura",
+	LaboratorioTecnico: "Laboratório Técnico",
+	Marketing: "Marketing",
+	NOC: "NOC",
+	Operacional: "Operacional",
+	Platon: "Platon",
+	Processos: "Processos",
+	Projetos: "Projetos",
+	RH: "RH",
+	ServicosGerais: "Serviços Gerais",
+} as const;
 
-export enum SolicitacaoComprasMetodoDePagamento {
-	ADefinir = "Á definir",
-	Pix = "Pix",
-	Boleto = "Boleto",
-	Cartao = "Cartão",
-}
+export const SOLICITACAOCOMPRAS_METODODEPAGAMENTO_LABELS = {
+	ADefinir: "Á definir",
+	Pix: "Pix",
+	Boleto: "Boleto",
+	Cartao: "Cartão",
+} as const;
 
-export enum SolicitacaoComprasPrazo {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-	Value7 = "7",
-	Value8 = "8",
-	Value9 = "9",
-	Value10 = "10",
-	Value11 = "11",
-	Value12 = "12",
-	Value13 = "13",
-	Value14 = "14",
-}
+export const SOLICITACAOCOMPRAS_PRAZO_LABELS = {
+	"1": "Á definir",
+	"2": "Á vista",
+	"3": "1x",
+	"4": "2x",
+	"5": "3x",
+	"6": "4x",
+	"7": "5x",
+	"8": "6x",
+	"9": "7x",
+	"10": "8x",
+	"11": "9x",
+	"12": "10x",
+	"13": "11x",
+	"14": "12x",
+} as const;
 
-export enum SolicitacaoComprasStatus {
-	CaixaDeEntrada = "Caixa de Entrada",
-	AprovacaoDaGestao = "Aprovação da Gestão",
-	PedidoDeCompra = "Pedido de Compra",
-	ProcessamentoFinanceiro = "Processamento Financeiro",
-	FilaDeEntrega = "Fila de Entrega",
-	Concluido = "Concluído",
-	Rejeitado = "Rejeitado",
-	Standby = "Standby",
-}
+export const SOLICITACAOCOMPRAS_STATUS_LABELS = {
+	CaixaDeEntrada: "Caixa de Entrada",
+	AprovacaoDaGestao: "Aprovação da Gestão",
+	PedidoDeCompra: "Pedido de Compra",
+	ProcessamentoFinanceiro: "Processamento Financeiro",
+	FilaDeEntrega: "Fila de Entrega",
+	Concluido: "Concluído",
+	Rejeitado: "Rejeitado",
+	Standby: "Standby",
+} as const;
 
-export enum SolicitacaoComprasTipo {
-	Value1 = "1",
-	Value2 = "2",
-}
+export const SOLICITACAOCOMPRAS_TIPO_LABELS = {
+	"1": "Pedido de Compra",
+	"2": "Cotação",
+} as const;
+
+export type SolicitacaoComprasCategoria =
+	keyof typeof SOLICITACAOCOMPRAS_CATEGORIA_LABELS;
+
+export type SolicitacaoComprasDepartamento =
+	keyof typeof SOLICITACAOCOMPRAS_DEPARTAMENTO_LABELS;
+
+export type SolicitacaoComprasMetodoDePagamento =
+	keyof typeof SOLICITACAOCOMPRAS_METODODEPAGAMENTO_LABELS;
+
+export type SolicitacaoComprasPrazo =
+	keyof typeof SOLICITACAOCOMPRAS_PRAZO_LABELS;
+
+export type SolicitacaoComprasStatus =
+	keyof typeof SOLICITACAOCOMPRAS_STATUS_LABELS;
+
+export type SolicitacaoComprasTipo =
+	keyof typeof SOLICITACAOCOMPRAS_TIPO_LABELS;
 
 export interface SolicitacaoCompras {
 	id: number;
@@ -3197,93 +2594,16 @@ export interface SolicitacaoComprasRelations {
 
 export type SolicitacaoComprasRelationKey = keyof SolicitacaoComprasRelations;
 
-export const SOLICITACAOCOMPRAS_CATEGORIA_LABELS: Record<
-	SolicitacaoComprasCategoria,
-	string
-> = {
-	[SolicitacaoComprasCategoria.Produto]: "Produto",
-	[SolicitacaoComprasCategoria.Servico]: "Serviço",
-};
+export const SUSPENSAOCONTRATO_STATUS_LABELS = {
+	"0": "Nova Solicitação",
+	"1": "Aguardando Assinatura",
+	"2": "Assinatura Concluída",
+	"3": "Concluído",
+	"4": "Cancelado",
+} as const;
 
-export const SOLICITACAOCOMPRAS_DEPARTAMENTO_LABELS: Record<
-	SolicitacaoComprasDepartamento,
-	string
-> = {
-	[SolicitacaoComprasDepartamento.Almox]: "Almox",
-	[SolicitacaoComprasDepartamento.Comercial]: "Comercial",
-	[SolicitacaoComprasDepartamento.Financeiro]: "Financeiro",
-	[SolicitacaoComprasDepartamento.Infraestrutura]: "Infraestrutura",
-	[SolicitacaoComprasDepartamento.LaboratorioTecnico]: "Laboratório Técnico",
-	[SolicitacaoComprasDepartamento.Marketing]: "Marketing",
-	[SolicitacaoComprasDepartamento.Noc]: "NOC",
-	[SolicitacaoComprasDepartamento.Operacional]: "Operacional",
-	[SolicitacaoComprasDepartamento.Platon]: "Platon",
-	[SolicitacaoComprasDepartamento.Processos]: "Processos",
-	[SolicitacaoComprasDepartamento.Projetos]: "Projetos",
-	[SolicitacaoComprasDepartamento.Rh]: "RH",
-	[SolicitacaoComprasDepartamento.ServicosGerais]: "Serviços Gerais",
-};
-
-export const SOLICITACAOCOMPRAS_METODODEPAGAMENTO_LABELS: Record<
-	SolicitacaoComprasMetodoDePagamento,
-	string
-> = {
-	[SolicitacaoComprasMetodoDePagamento.ADefinir]: "Á definir",
-	[SolicitacaoComprasMetodoDePagamento.Pix]: "Pix",
-	[SolicitacaoComprasMetodoDePagamento.Boleto]: "Boleto",
-	[SolicitacaoComprasMetodoDePagamento.Cartao]: "Cartão",
-};
-
-export const SOLICITACAOCOMPRAS_PRAZO_LABELS: Record<
-	SolicitacaoComprasPrazo,
-	string
-> = {
-	[SolicitacaoComprasPrazo.Value1]: "Á definir",
-	[SolicitacaoComprasPrazo.Value2]: "Á vista",
-	[SolicitacaoComprasPrazo.Value3]: "1x",
-	[SolicitacaoComprasPrazo.Value4]: "2x",
-	[SolicitacaoComprasPrazo.Value5]: "3x",
-	[SolicitacaoComprasPrazo.Value6]: "4x",
-	[SolicitacaoComprasPrazo.Value7]: "5x",
-	[SolicitacaoComprasPrazo.Value8]: "6x",
-	[SolicitacaoComprasPrazo.Value9]: "7x",
-	[SolicitacaoComprasPrazo.Value10]: "8x",
-	[SolicitacaoComprasPrazo.Value11]: "9x",
-	[SolicitacaoComprasPrazo.Value12]: "10x",
-	[SolicitacaoComprasPrazo.Value13]: "11x",
-	[SolicitacaoComprasPrazo.Value14]: "12x",
-};
-
-export const SOLICITACAOCOMPRAS_STATUS_LABELS: Record<
-	SolicitacaoComprasStatus,
-	string
-> = {
-	[SolicitacaoComprasStatus.CaixaDeEntrada]: "Caixa de Entrada",
-	[SolicitacaoComprasStatus.AprovacaoDaGestao]: "Aprovação da Gestão",
-	[SolicitacaoComprasStatus.PedidoDeCompra]: "Pedido de Compra",
-	[SolicitacaoComprasStatus.ProcessamentoFinanceiro]:
-		"Processamento Financeiro",
-	[SolicitacaoComprasStatus.FilaDeEntrega]: "Fila de Entrega",
-	[SolicitacaoComprasStatus.Concluido]: "Concluído",
-	[SolicitacaoComprasStatus.Rejeitado]: "Rejeitado",
-	[SolicitacaoComprasStatus.Standby]: "Standby",
-};
-
-export const SOLICITACAOCOMPRAS_TIPO_LABELS: Record<
-	SolicitacaoComprasTipo,
-	string
-> = {
-	[SolicitacaoComprasTipo.Value1]: "Pedido de Compra",
-	[SolicitacaoComprasTipo.Value2]: "Cotação",
-};
-
-export enum SuspensaoContratoStatus {
-	Value0 = "0",
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-}
+export type SuspensaoContratoStatus =
+	keyof typeof SUSPENSAOCONTRATO_STATUS_LABELS;
 
 export interface SuspensaoContrato {
 	id: number;
@@ -3316,17 +2636,6 @@ export interface SuspensaoContratoRelations {
 }
 
 export type SuspensaoContratoRelationKey = keyof SuspensaoContratoRelations;
-
-export const SUSPENSAOCONTRATO_STATUS_LABELS: Record<
-	SuspensaoContratoStatus,
-	string
-> = {
-	[SuspensaoContratoStatus.Value0]: "Nova Solicitação",
-	[SuspensaoContratoStatus.Value1]: "Aguardando Assinatura",
-	[SuspensaoContratoStatus.Value2]: "Assinatura Concluída",
-	[SuspensaoContratoStatus.Value3]: "Concluído",
-	[SuspensaoContratoStatus.Value4]: "Cancelado",
-};
 
 export interface TabelaGeral {
 	id: number;
@@ -3369,11 +2678,14 @@ export interface TelecomAnexosRelations {
 
 export type TelecomAnexosRelationKey = keyof TelecomAnexosRelations;
 
-export enum TelecomColocationOpcoesEnergia {
-	Value0nqbw68srah = "0nqbw68srah",
-	E5b3lklfpq4 = "e5b3lklfpq4",
-	Mra46p506xo = "mra46p506xo",
-}
+export const TELECOMCOLOCATIONOPCOES_ENERGIA_LABELS = {
+	Value0nqbw68srah: "AC 220",
+	e5b3lklfpq4: "AC 110",
+	mra46p506xo: "DC -48",
+} as const;
+
+export type TelecomColocationOpcoesEnergia =
+	keyof typeof TELECOMCOLOCATIONOPCOES_ENERGIA_LABELS;
 
 export interface TelecomColocationOpcoes {
 	id: number;
@@ -3393,15 +2705,6 @@ export interface TelecomColocationOpcoesRelations {
 
 export type TelecomColocationOpcoesRelationKey =
 	keyof TelecomColocationOpcoesRelations;
-
-export const TELECOMCOLOCATIONOPCOES_ENERGIA_LABELS: Record<
-	TelecomColocationOpcoesEnergia,
-	string
-> = {
-	[TelecomColocationOpcoesEnergia.Value0nqbw68srah]: "AC 220",
-	[TelecomColocationOpcoesEnergia.E5b3lklfpq4]: "AC 110",
-	[TelecomColocationOpcoesEnergia.Mra46p506xo]: "DC -48",
-};
 
 export interface TelecomContratos {
 	id: number;
@@ -3439,21 +2742,26 @@ export interface TelecomFilaRelations {
 
 export type TelecomFilaRelationKey = keyof TelecomFilaRelations;
 
-export enum TelecomInterfacesConfiguracao {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-}
+export const TELECOMINTERFACES_CONFIGURACAO_LABELS = {
+	"1": "Acesso",
+	"2": "Tronco",
+	"3": "Hibrida",
+} as const;
 
-export enum TelecomInterfacesTipo {
-	Value1 = "1",
-	Value3 = "3",
-	Value2 = "2",
-	Value4 = "4",
-	Value5 = "5",
-	Value6 = "6",
-	Value7 = "7",
-}
+export const TELECOMINTERFACES_TIPO_LABELS = {
+	"1": "SFP",
+	"3": "METALICA",
+	"2": "SFP+",
+	"4": "QSFP",
+	"5": "VLAN",
+	"6": "VPN",
+	"7": "ETH-TRUNK (LAG)",
+} as const;
+
+export type TelecomInterfacesConfiguracao =
+	keyof typeof TELECOMINTERFACES_CONFIGURACAO_LABELS;
+
+export type TelecomInterfacesTipo = keyof typeof TELECOMINTERFACES_TIPO_LABELS;
 
 export interface TelecomInterfaces {
 	id: number;
@@ -3481,32 +2789,13 @@ export interface TelecomInterfacesRelations {
 
 export type TelecomInterfacesRelationKey = keyof TelecomInterfacesRelations;
 
-export const TELECOMINTERFACES_CONFIGURACAO_LABELS: Record<
-	TelecomInterfacesConfiguracao,
-	string
-> = {
-	[TelecomInterfacesConfiguracao.Value1]: "Acesso",
-	[TelecomInterfacesConfiguracao.Value2]: "Tronco",
-	[TelecomInterfacesConfiguracao.Value3]: "Hibrida",
-};
+export const TELECOMIPSFIXOS_POSSUIIPFIXO_LABELS = {
+	"0": "Não",
+	"1": "Sim",
+} as const;
 
-export const TELECOMINTERFACES_TIPO_LABELS: Record<
-	TelecomInterfacesTipo,
-	string
-> = {
-	[TelecomInterfacesTipo.Value1]: "SFP",
-	[TelecomInterfacesTipo.Value3]: "METALICA",
-	[TelecomInterfacesTipo.Value2]: "SFP+",
-	[TelecomInterfacesTipo.Value4]: "QSFP",
-	[TelecomInterfacesTipo.Value5]: "VLAN",
-	[TelecomInterfacesTipo.Value6]: "VPN",
-	[TelecomInterfacesTipo.Value7]: "ETH-TRUNK (LAG)",
-};
-
-export enum TelecomIpsFixosPossuiIpFixo {
-	Value0 = "0",
-	Value1 = "1",
-}
+export type TelecomIpsFixosPossuiIpFixo =
+	keyof typeof TELECOMIPSFIXOS_POSSUIIPFIXO_LABELS;
 
 export interface TelecomIpsFixos {
 	id: number;
@@ -3525,14 +2814,6 @@ export interface TelecomIpsFixosRelations {
 }
 
 export type TelecomIpsFixosRelationKey = keyof TelecomIpsFixosRelations;
-
-export const TELECOMIPSFIXOS_POSSUIIPFIXO_LABELS: Record<
-	TelecomIpsFixosPossuiIpFixo,
-	string
-> = {
-	[TelecomIpsFixosPossuiIpFixo.Value0]: "Não",
-	[TelecomIpsFixosPossuiIpFixo.Value1]: "Sim",
-};
 
 export interface TelecomOpcoesL2l {
 	id: number;
@@ -3576,35 +2857,42 @@ export interface TelecomRacksRelations {
 
 export type TelecomRacksRelationKey = keyof TelecomRacksRelations;
 
-export enum TelecomRecursosFinalidade {
-	Value3 = "3",
-	Value2 = "2",
-	Value4 = "4",
-	Value1 = "1",
-}
+export const TELECOMRECURSOS_FINALIDADE_LABELS = {
+	"3": "Insumo para Serviço",
+	"2": "Serviço",
+	"4": "Facilidade",
+	"1": "Acesso",
+} as const;
 
-export enum TelecomRecursosStatus {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-}
+export const TELECOMRECURSOS_STATUS_LABELS = {
+	"1": "Planejado",
+	"2": "Ativo",
+	"3": "Desativado",
+} as const;
 
-export enum TelecomRecursosTipo {
-	Value1 = "1",
-	Value13 = "13",
-	Value6 = "6",
-	Value4 = "4",
-	Value2 = "2",
-	Value7 = "7",
-	Value5 = "5",
-	Value8 = "8",
-	Value3 = "3",
-	Value9 = "9",
-	Value10 = "10",
-	Value11 = "11",
-	Value12 = "12",
-	Value14 = "14",
-}
+export const TELECOMRECURSOS_TIPO_LABELS = {
+	"1": "L2 - PTP",
+	"13": "L3 - PTP",
+	"6": "L2 - P2MP",
+	"4": "L2 - Last Mile",
+	"2": "L3 - Link IP",
+	"7": "L3 - Banda Larga",
+	"5": "L1 - Fibra Apagada",
+	"8": "L1 - Canal DWDM",
+	"3": "Colocation",
+	"9": "VPN",
+	"10": "Trunk Flex",
+	"11": "Transito IP Internet ",
+	"12": "Transito IP CDN",
+	"14": "Contrato",
+} as const;
+
+export type TelecomRecursosFinalidade =
+	keyof typeof TELECOMRECURSOS_FINALIDADE_LABELS;
+
+export type TelecomRecursosStatus = keyof typeof TELECOMRECURSOS_STATUS_LABELS;
+
+export type TelecomRecursosTipo = keyof typeof TELECOMRECURSOS_TIPO_LABELS;
 
 export interface TelecomRecursos {
 	id: number;
@@ -3652,43 +2940,6 @@ export interface TelecomRecursosRelations {
 
 export type TelecomRecursosRelationKey = keyof TelecomRecursosRelations;
 
-export const TELECOMRECURSOS_FINALIDADE_LABELS: Record<
-	TelecomRecursosFinalidade,
-	string
-> = {
-	[TelecomRecursosFinalidade.Value3]: "Insumo para Serviço",
-	[TelecomRecursosFinalidade.Value2]: "Serviço",
-	[TelecomRecursosFinalidade.Value4]: "Facilidade",
-	[TelecomRecursosFinalidade.Value1]: "Acesso",
-};
-
-export const TELECOMRECURSOS_STATUS_LABELS: Record<
-	TelecomRecursosStatus,
-	string
-> = {
-	[TelecomRecursosStatus.Value1]: "Planejado",
-	[TelecomRecursosStatus.Value2]: "Ativo",
-	[TelecomRecursosStatus.Value3]: "Desativado",
-};
-
-export const TELECOMRECURSOS_TIPO_LABELS: Record<TelecomRecursosTipo, string> =
-	{
-		[TelecomRecursosTipo.Value1]: "L2 - PTP",
-		[TelecomRecursosTipo.Value13]: "L3 - PTP",
-		[TelecomRecursosTipo.Value6]: "L2 - P2MP",
-		[TelecomRecursosTipo.Value4]: "L2 - Last Mile",
-		[TelecomRecursosTipo.Value2]: "L3 - Link IP",
-		[TelecomRecursosTipo.Value7]: "L3 - Banda Larga",
-		[TelecomRecursosTipo.Value5]: "L1 - Fibra Apagada",
-		[TelecomRecursosTipo.Value8]: "L1 - Canal DWDM",
-		[TelecomRecursosTipo.Value3]: "Colocation",
-		[TelecomRecursosTipo.Value9]: "VPN",
-		[TelecomRecursosTipo.Value10]: "Trunk Flex",
-		[TelecomRecursosTipo.Value11]: "Transito IP Internet ",
-		[TelecomRecursosTipo.Value12]: "Transito IP CDN",
-		[TelecomRecursosTipo.Value14]: "Contrato",
-	};
-
 export interface TelecomSalas {
 	id: number;
 	f_fk_salas: number;
@@ -3722,103 +2973,148 @@ export interface TelecomTransitoOpcoesRelations {
 export type TelecomTransitoOpcoesRelationKey =
 	keyof TelecomTransitoOpcoesRelations;
 
-export enum TemplatesAtendimentoN1AcessaPelaRedeDaAtplus {
-	Sim = "Sim",
-	Nao = "Não",
-}
+export const TEMPLATESATENDIMENTON1_ACESSAPELAREDEDAATPLUS_LABELS = {
+	Sim: "Sim",
+	Nao: "Nao",
+} as const;
 
-export enum TemplatesAtendimentoN1Alteracoes {
-	SomenteONome = "Somente o nome",
-	SomenteASenha = "Somente a senha",
-	NomeESenha = "Nome e senha",
-}
+export const TEMPLATESATENDIMENTON1_ALTERACOES_LABELS = {
+	SomenteONome: "Somente o nome",
+	SomenteASenha: "Somente a senha",
+	NomeESenha: "Nome e senha",
+} as const;
 
-export enum TemplatesAtendimentoN1Aplicativo {
-	Deezer = "Deezer",
-	WatchBr = "Watch BR",
-	Paramount = "Paramount+",
-	HboMax = "HBO Max",
-	ViaLivros = "Via Livros",
-	OleTv = "Olé TV",
-	TodosOsAplicativos = "Todos os aplicativos",
-}
+export const TEMPLATESATENDIMENTON1_APLICATIVO_LABELS = {
+	Deezer: "Deezer",
+	WatchBr: "Watch BR",
+	Paramount: "Paramount+",
+	HboMax: "HBO Max",
+	ViaLivros: "Via Livros",
+	OleTv: "Olé TV",
+	TodosOsAplicativos: "Todos os aplicativos",
+} as const;
 
-export enum TemplatesAtendimentoN1AplicativoEspecifico {
-	Sim = "Sim",
-	Nao = "Não",
-}
+export const TEMPLATESATENDIMENTON1_APLICATIVOESPECIFICO_LABELS = {
+	Sim: "Sim",
+	Nao: "Não",
+} as const;
 
-export enum TemplatesAtendimentoN1ApnPreenchida {
-	Sim = "Sim",
-	Nao = "Não",
-	NaoSoubeDizer = "Não soube dizer",
-}
+export const TEMPLATESATENDIMENTON1_APNPREENCHIDA_LABELS = {
+	Sim: "Sim",
+	Nao: "Não",
+	NaoSoubeDizer: "Não soube dizer",
+} as const;
 
-export enum TemplatesAtendimentoN1Fabricante {
-	Samsung = "Samsung",
-	Apple = "Apple",
-	Motorola = "Motorola",
-	Xiomi = "Xiomi",
-	Asus = "Asus",
-	Outro = "Outro",
-}
+export const TEMPLATESATENDIMENTON1_FABRICANTE_LABELS = {
+	Samsung: "Samsung",
+	Apple: "Apple",
+	Motorola: "Motorola",
+	Xiomi: "Xiomi",
+	Asus: "Asus",
+	Outro: "Outro",
+} as const;
 
-export enum TemplatesAtendimentoN1Los {
-	Sim = "Sim",
-	Nao = "Não",
-}
+export const TEMPLATESATENDIMENTON1_LOS_LABELS = {
+	Sim: "Sim",
+	Nao: "Não",
+} as const;
 
-export enum TemplatesAtendimentoN1QualApnConfigurada {
-	EaiBr = "eai.br",
-	M2mArqiaBr = "m2m.arqia.br",
-	InternetBr = "internet.br",
-}
+export const TEMPLATESATENDIMENTON1_QUALAPNCONFIGURADA_LABELS = {
+	EaiBr: "eai.br",
+	M2mArqiaBr: "m2m.arqia.br",
+	InternetBr: "internet.br",
+} as const;
 
-export enum TemplatesAtendimentoN1QuantidadeDeDispositivos {
-	UmDispositivo = "Um dispositivo",
-	TodosOsDispositivos = "Todos os dispositivos",
-}
+export const TEMPLATESATENDIMENTON1_QUANTIDADEDEDISPOSITIVOS_LABELS = {
+	UmDispositivo: "Um dispositivo",
+	TodosOsDispositivos: "Todos os dispositivos",
+} as const;
 
-export enum TemplatesAtendimentoN1StatusDoCircuito {
-	Online = "Online",
-	Offline = "Offline",
-}
+export const TEMPLATESATENDIMENTON1_STATUSDOCIRCUITO_LABELS = {
+	Online: "Online",
+	Offline: "Offline",
+} as const;
 
-export enum TemplatesAtendimentoN1TelefoniaTipoDeProblema {
-	NaoRecebeLigacoes = "Não recebe ligações",
-	NaoEfetuaLigacoes = "Não efetua ligações",
-	QuedasNasLigacoes = "Quedas nas ligações",
-	ChiadoVozRobotica = "Chiado / Voz robótica",
-	MudoSemTom = "Mudo / Sem tom",
-}
+export const TEMPLATESATENDIMENTON1_TELEFONIATIPODEPROBLEMA_LABELS = {
+	NaoRecebeLigacoes: "Não recebe ligações",
+	NaoEfetuaLigacoes: "Não efetua ligações",
+	QuedasNasLigacoes: "Quedas nas ligações",
+	ChiadoVozRobotica: "Chiado / Voz robótica",
+	MudoSemTom: "Mudo / Sem tom",
+} as const;
 
-export enum TemplatesAtendimentoN1TipoDeAtendimento {
-	Lentidao = "Lentidão",
-	SemConexao = "Sem conexão",
-	SiteEspecifico = "Site específico",
-	Telefonia = "Telefonia",
-	AberturaDePortas = "Abertura de portas",
-	TrocaDeNomeSenha = "Troca de nome/senha",
-	Sva = "SVA",
-	Mvno = "MVNO",
-	Outro = "Outro",
-}
+export const TEMPLATESATENDIMENTON1_TIPODEATENDIMENTO_LABELS = {
+	Lentidao: "Lentidão/Quedas",
+	SemConexao: "Sem conexão",
+	SiteEspecifico: "Site específico",
+	Telefonia: "Telefonia",
+	AberturaDePortas: "Abertura de portas",
+	TrocaDeNomeSenha: "Troca de nome/senha",
+	SVA: "SVA",
+	MVNO: "MVNO",
+	Outro: "Outro",
+} as const;
 
-export enum TemplatesAtendimentoN1TipoDeConexaoDoDispositivo {
-	WiFi = "Wi-Fi",
-	CaboDeRede = "Cabo de rede",
-}
+export const TEMPLATESATENDIMENTON1_TIPODECONEXAODODISPOSITIVO_LABELS = {
+	WiFi: "Wi-Fi",
+	CaboDeRede: "Cabo de rede",
+} as const;
 
-export enum TemplatesAtendimentoN1TipoDeProblemaMvno {
-	NaoRecebeLigacoes = "Não recebe ligações",
-	NaoEfetuaLigacoes = "Não efetua ligações",
-	DadosMoveisNaoFuncionam = "Dados móveis não funcionam",
-}
+export const TEMPLATESATENDIMENTON1_TIPODEPROBLEMAMVNO_LABELS = {
+	NaoRecebeLigacoes: "Não recebe ligações",
+	NaoEfetuaLigacoes: "Não efetua ligações",
+	DadosMoveisNaoFuncionam: "Dados móveis não funcionam",
+} as const;
 
-export enum TemplatesAtendimentoN1TorreRede {
-	ComSinal = "Com sinal",
-	SemSinal = "Sem sinal",
-}
+export const TEMPLATESATENDIMENTON1_TORREREDE_LABELS = {
+	ComSinal: "Com sinal",
+	SemSinal: "Sem sinal",
+} as const;
+
+export type TemplatesAtendimentoN1AcessaPelaRedeDaAtplus =
+	keyof typeof TEMPLATESATENDIMENTON1_ACESSAPELAREDEDAATPLUS_LABELS;
+
+export type TemplatesAtendimentoN1Alteracoes =
+	keyof typeof TEMPLATESATENDIMENTON1_ALTERACOES_LABELS;
+
+export type TemplatesAtendimentoN1Aplicativo =
+	keyof typeof TEMPLATESATENDIMENTON1_APLICATIVO_LABELS;
+
+export type TemplatesAtendimentoN1AplicativoEspecifico =
+	keyof typeof TEMPLATESATENDIMENTON1_APLICATIVOESPECIFICO_LABELS;
+
+export type TemplatesAtendimentoN1ApnPreenchida =
+	keyof typeof TEMPLATESATENDIMENTON1_APNPREENCHIDA_LABELS;
+
+export type TemplatesAtendimentoN1Fabricante =
+	keyof typeof TEMPLATESATENDIMENTON1_FABRICANTE_LABELS;
+
+export type TemplatesAtendimentoN1Los =
+	keyof typeof TEMPLATESATENDIMENTON1_LOS_LABELS;
+
+export type TemplatesAtendimentoN1QualApnConfigurada =
+	keyof typeof TEMPLATESATENDIMENTON1_QUALAPNCONFIGURADA_LABELS;
+
+export type TemplatesAtendimentoN1QuantidadeDeDispositivos =
+	keyof typeof TEMPLATESATENDIMENTON1_QUANTIDADEDEDISPOSITIVOS_LABELS;
+
+export type TemplatesAtendimentoN1StatusDoCircuito =
+	keyof typeof TEMPLATESATENDIMENTON1_STATUSDOCIRCUITO_LABELS;
+
+export type TemplatesAtendimentoN1TelefoniaTipoDeProblema =
+	keyof typeof TEMPLATESATENDIMENTON1_TELEFONIATIPODEPROBLEMA_LABELS;
+
+export type TemplatesAtendimentoN1TipoDeAtendimento =
+	keyof typeof TEMPLATESATENDIMENTON1_TIPODEATENDIMENTO_LABELS;
+
+export type TemplatesAtendimentoN1TipoDeConexaoDoDispositivo =
+	keyof typeof TEMPLATESATENDIMENTON1_TIPODECONEXAODODISPOSITIVO_LABELS;
+
+export type TemplatesAtendimentoN1TipoDeProblemaMvno =
+	keyof typeof TEMPLATESATENDIMENTON1_TIPODEPROBLEMAMVNO_LABELS;
+
+export type TemplatesAtendimentoN1TorreRede =
+	keyof typeof TEMPLATESATENDIMENTON1_TORREREDE_LABELS;
 
 export interface TemplatesAtendimentoN1 {
 	id: number;
@@ -3868,173 +3164,24 @@ export interface TemplatesAtendimentoN1Relations {
 export type TemplatesAtendimentoN1RelationKey =
 	keyof TemplatesAtendimentoN1Relations;
 
-export const TEMPLATESATENDIMENTON1_ACESSAPELAREDEDAATPLUS_LABELS: Record<
-	TemplatesAtendimentoN1AcessaPelaRedeDaAtplus,
-	string
-> = {
-	[TemplatesAtendimentoN1AcessaPelaRedeDaAtplus.Sim]: "Sim",
-	[TemplatesAtendimentoN1AcessaPelaRedeDaAtplus.Nao]: "Nao",
-};
+export const TROCAENDERECO_STATUS_LABELS = {
+	"1": "Atendimento Gerado",
+	"2": "Atendimento Concluído",
+	"3": "Atendimento para Campo",
+	"4": "Atendimento para CR",
+	"0": "Erro na Integração",
+} as const;
 
-export const TEMPLATESATENDIMENTON1_ALTERACOES_LABELS: Record<
-	TemplatesAtendimentoN1Alteracoes,
-	string
-> = {
-	[TemplatesAtendimentoN1Alteracoes.SomenteONome]: "Somente o nome",
-	[TemplatesAtendimentoN1Alteracoes.SomenteASenha]: "Somente a senha",
-	[TemplatesAtendimentoN1Alteracoes.NomeESenha]: "Nome e senha",
-};
+export const TROCAENDERECO_TAXAINSTALACAO_LABELS = {
+	"0": "Não",
+	"1": "R$ 80,00 à vista",
+	"2": "R$ 80,00 em 2 vezes",
+} as const;
 
-export const TEMPLATESATENDIMENTON1_APLICATIVO_LABELS: Record<
-	TemplatesAtendimentoN1Aplicativo,
-	string
-> = {
-	[TemplatesAtendimentoN1Aplicativo.Deezer]: "Deezer",
-	[TemplatesAtendimentoN1Aplicativo.WatchBr]: "Watch BR",
-	[TemplatesAtendimentoN1Aplicativo.Paramount]: "Paramount+",
-	[TemplatesAtendimentoN1Aplicativo.HboMax]: "HBO Max",
-	[TemplatesAtendimentoN1Aplicativo.ViaLivros]: "Via Livros",
-	[TemplatesAtendimentoN1Aplicativo.OleTv]: "Olé TV",
-	[TemplatesAtendimentoN1Aplicativo.TodosOsAplicativos]: "Todos os aplicativos",
-};
+export type TrocaEnderecoStatus = keyof typeof TROCAENDERECO_STATUS_LABELS;
 
-export const TEMPLATESATENDIMENTON1_APLICATIVOESPECIFICO_LABELS: Record<
-	TemplatesAtendimentoN1AplicativoEspecifico,
-	string
-> = {
-	[TemplatesAtendimentoN1AplicativoEspecifico.Sim]: "Sim",
-	[TemplatesAtendimentoN1AplicativoEspecifico.Nao]: "Não",
-};
-
-export const TEMPLATESATENDIMENTON1_APNPREENCHIDA_LABELS: Record<
-	TemplatesAtendimentoN1ApnPreenchida,
-	string
-> = {
-	[TemplatesAtendimentoN1ApnPreenchida.Sim]: "Sim",
-	[TemplatesAtendimentoN1ApnPreenchida.Nao]: "Não",
-	[TemplatesAtendimentoN1ApnPreenchida.NaoSoubeDizer]: "Não soube dizer",
-};
-
-export const TEMPLATESATENDIMENTON1_FABRICANTE_LABELS: Record<
-	TemplatesAtendimentoN1Fabricante,
-	string
-> = {
-	[TemplatesAtendimentoN1Fabricante.Samsung]: "Samsung",
-	[TemplatesAtendimentoN1Fabricante.Apple]: "Apple",
-	[TemplatesAtendimentoN1Fabricante.Motorola]: "Motorola",
-	[TemplatesAtendimentoN1Fabricante.Xiomi]: "Xiomi",
-	[TemplatesAtendimentoN1Fabricante.Asus]: "Asus",
-	[TemplatesAtendimentoN1Fabricante.Outro]: "Outro",
-};
-
-export const TEMPLATESATENDIMENTON1_LOS_LABELS: Record<
-	TemplatesAtendimentoN1Los,
-	string
-> = {
-	[TemplatesAtendimentoN1Los.Sim]: "Sim",
-	[TemplatesAtendimentoN1Los.Nao]: "Não",
-};
-
-export const TEMPLATESATENDIMENTON1_QUALAPNCONFIGURADA_LABELS: Record<
-	TemplatesAtendimentoN1QualApnConfigurada,
-	string
-> = {
-	[TemplatesAtendimentoN1QualApnConfigurada.EaiBr]: "eai.br",
-	[TemplatesAtendimentoN1QualApnConfigurada.M2mArqiaBr]: "m2m.arqia.br",
-	[TemplatesAtendimentoN1QualApnConfigurada.InternetBr]: "internet.br",
-};
-
-export const TEMPLATESATENDIMENTON1_QUANTIDADEDEDISPOSITIVOS_LABELS: Record<
-	TemplatesAtendimentoN1QuantidadeDeDispositivos,
-	string
-> = {
-	[TemplatesAtendimentoN1QuantidadeDeDispositivos.UmDispositivo]:
-		"Um dispositivo",
-	[TemplatesAtendimentoN1QuantidadeDeDispositivos.TodosOsDispositivos]:
-		"Todos os dispositivos",
-};
-
-export const TEMPLATESATENDIMENTON1_STATUSDOCIRCUITO_LABELS: Record<
-	TemplatesAtendimentoN1StatusDoCircuito,
-	string
-> = {
-	[TemplatesAtendimentoN1StatusDoCircuito.Online]: "Online",
-	[TemplatesAtendimentoN1StatusDoCircuito.Offline]: "Offline",
-};
-
-export const TEMPLATESATENDIMENTON1_TELEFONIATIPODEPROBLEMA_LABELS: Record<
-	TemplatesAtendimentoN1TelefoniaTipoDeProblema,
-	string
-> = {
-	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.NaoRecebeLigacoes]:
-		"Não recebe ligações",
-	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.NaoEfetuaLigacoes]:
-		"Não efetua ligações",
-	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.QuedasNasLigacoes]:
-		"Quedas nas ligações",
-	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.ChiadoVozRobotica]:
-		"Chiado / Voz robótica",
-	[TemplatesAtendimentoN1TelefoniaTipoDeProblema.MudoSemTom]: "Mudo / Sem tom",
-};
-
-export const TEMPLATESATENDIMENTON1_TIPODEATENDIMENTO_LABELS: Record<
-	TemplatesAtendimentoN1TipoDeAtendimento,
-	string
-> = {
-	[TemplatesAtendimentoN1TipoDeAtendimento.Lentidao]: "Lentidão/Quedas",
-	[TemplatesAtendimentoN1TipoDeAtendimento.SemConexao]: "Sem conexão",
-	[TemplatesAtendimentoN1TipoDeAtendimento.SiteEspecifico]: "Site específico",
-	[TemplatesAtendimentoN1TipoDeAtendimento.Telefonia]: "Telefonia",
-	[TemplatesAtendimentoN1TipoDeAtendimento.AberturaDePortas]:
-		"Abertura de portas",
-	[TemplatesAtendimentoN1TipoDeAtendimento.TrocaDeNomeSenha]:
-		"Troca de nome/senha",
-	[TemplatesAtendimentoN1TipoDeAtendimento.Sva]: "SVA",
-	[TemplatesAtendimentoN1TipoDeAtendimento.Mvno]: "MVNO",
-	[TemplatesAtendimentoN1TipoDeAtendimento.Outro]: "Outro",
-};
-
-export const TEMPLATESATENDIMENTON1_TIPODECONEXAODODISPOSITIVO_LABELS: Record<
-	TemplatesAtendimentoN1TipoDeConexaoDoDispositivo,
-	string
-> = {
-	[TemplatesAtendimentoN1TipoDeConexaoDoDispositivo.WiFi]: "Wi-Fi",
-	[TemplatesAtendimentoN1TipoDeConexaoDoDispositivo.CaboDeRede]: "Cabo de rede",
-};
-
-export const TEMPLATESATENDIMENTON1_TIPODEPROBLEMAMVNO_LABELS: Record<
-	TemplatesAtendimentoN1TipoDeProblemaMvno,
-	string
-> = {
-	[TemplatesAtendimentoN1TipoDeProblemaMvno.NaoRecebeLigacoes]:
-		"Não recebe ligações",
-	[TemplatesAtendimentoN1TipoDeProblemaMvno.NaoEfetuaLigacoes]:
-		"Não efetua ligações",
-	[TemplatesAtendimentoN1TipoDeProblemaMvno.DadosMoveisNaoFuncionam]:
-		"Dados móveis não funcionam",
-};
-
-export const TEMPLATESATENDIMENTON1_TORREREDE_LABELS: Record<
-	TemplatesAtendimentoN1TorreRede,
-	string
-> = {
-	[TemplatesAtendimentoN1TorreRede.ComSinal]: "Com sinal",
-	[TemplatesAtendimentoN1TorreRede.SemSinal]: "Sem sinal",
-};
-
-export enum TrocaEnderecoStatus {
-	Value1 = "1",
-	Value2 = "2",
-	Value3 = "3",
-	Value4 = "4",
-	Value0 = "0",
-}
-
-export enum TrocaEnderecoTaxaInstalacao {
-	Value0 = "0",
-	Value1 = "1",
-	Value2 = "2",
-}
+export type TrocaEnderecoTaxaInstalacao =
+	keyof typeof TROCAENDERECO_TAXAINSTALACAO_LABELS;
 
 export interface TrocaEndereco {
 	id: number;
@@ -4063,24 +3210,6 @@ export interface TrocaEnderecoRelations {
 }
 
 export type TrocaEnderecoRelationKey = keyof TrocaEnderecoRelations;
-
-export const TROCAENDERECO_STATUS_LABELS: Record<TrocaEnderecoStatus, string> =
-	{
-		[TrocaEnderecoStatus.Value1]: "Atendimento Gerado",
-		[TrocaEnderecoStatus.Value2]: "Atendimento Concluído",
-		[TrocaEnderecoStatus.Value3]: "Atendimento para Campo",
-		[TrocaEnderecoStatus.Value4]: "Atendimento para CR",
-		[TrocaEnderecoStatus.Value0]: "Erro na Integração",
-	};
-
-export const TROCAENDERECO_TAXAINSTALACAO_LABELS: Record<
-	TrocaEnderecoTaxaInstalacao,
-	string
-> = {
-	[TrocaEnderecoTaxaInstalacao.Value0]: "Não",
-	[TrocaEnderecoTaxaInstalacao.Value1]: "R$ 80,00 à vista",
-	[TrocaEnderecoTaxaInstalacao.Value2]: "R$ 80,00 em 2 vezes",
-};
 
 export interface TrocasdetitularidadeComentarios {
 	id: number;
@@ -4113,38 +3242,49 @@ export interface TurnosRelations {
 
 export type TurnosRelationKey = keyof TurnosRelations;
 
-export enum ViagemSolicitacaoDestinoViagem {
-	BocainaDoSul = "Bocaina do Sul",
-	CampoBeloDoSul = "Campo Belo do Sul",
-	CapaoAlto = "Capão Alto",
-	CerroNegro = "Cerro Negro",
-	CorreiaPinto = "Correia Pinto",
-	Curitibanos = "Curitibanos",
-	Florianopolis = "Florianópolis",
-	Painel = "Painel",
-	Outros = "Outros",
-}
+export const VIAGEMSOLICITACAO_DESTINOVIAGEM_LABELS = {
+	BocainaDoSul: "Bocaina do Sul",
+	CampoBeloDoSul: "Campo Belo do Sul",
+	CapaoAlto: "Capão Alto",
+	CerroNegro: "Cerro Negro",
+	CorreiaPinto: "Correia Pinto",
+	Curitibanos: "Curitibanos",
+	Florianopolis: "Florianópolis",
+	Painel: "Painel",
+	Outros: "Outros",
+} as const;
 
-export enum ViagemSolicitacaoDiaria {
-	Value5 = "5",
-	Value10 = "10",
-}
+export const VIAGEMSOLICITACAO_DIARIA_LABELS = {
+	"5": "8h",
+	"10": "Acima de 8h",
+} as const;
 
-export enum ViagemSolicitacaoFase {
-	CaixaDeEntrada = "Caixa de Entrada",
-	ProcessamentoFinanceiro = "Processamento Financeiro",
-	Concluido = "Concluído",
-	Arquivado = "Arquivado",
-}
+export const VIAGEMSOLICITACAO_FASE_LABELS = {
+	CaixaDeEntrada: "Caixa de Entrada",
+	ProcessamentoFinanceiro: "Processamento Financeiro",
+	Concluido: "Concluído",
+	Arquivado: "Arquivado",
+} as const;
 
-export enum ViagemSolicitacaoMeioTransporte {
-	KwidAtplus = "Kwid ATPlus",
-	FiorinoAtplus = "Fiorino ATPlus",
-	FiorinoFhortec = "Fiorino Fhortec",
-	UnoAtplus = "Uno ATPlus",
-	CarroParticular = "Carro Particular",
-	Outro = "Outro",
-}
+export const VIAGEMSOLICITACAO_MEIOTRANSPORTE_LABELS = {
+	KwidAtplus: "Kwid ATPlus",
+	FiorinoAtplus: "Fiorino ATPlus",
+	FiorinoFhortec: "Fiorino Fhortec",
+	UnoAtplus: "Uno ATPlus",
+	CarroParticular: "Carro Particular",
+	Outro: "Outro",
+} as const;
+
+export type ViagemSolicitacaoDestinoViagem =
+	keyof typeof VIAGEMSOLICITACAO_DESTINOVIAGEM_LABELS;
+
+export type ViagemSolicitacaoDiaria =
+	keyof typeof VIAGEMSOLICITACAO_DIARIA_LABELS;
+
+export type ViagemSolicitacaoFase = keyof typeof VIAGEMSOLICITACAO_FASE_LABELS;
+
+export type ViagemSolicitacaoMeioTransporte =
+	keyof typeof VIAGEMSOLICITACAO_MEIOTRANSPORTE_LABELS;
 
 export interface ViagemSolicitacao {
 	id: number;
@@ -4176,51 +3316,6 @@ export interface ViagemSolicitacaoRelations {
 }
 
 export type ViagemSolicitacaoRelationKey = keyof ViagemSolicitacaoRelations;
-
-export const VIAGEMSOLICITACAO_DESTINOVIAGEM_LABELS: Record<
-	ViagemSolicitacaoDestinoViagem,
-	string
-> = {
-	[ViagemSolicitacaoDestinoViagem.BocainaDoSul]: "Bocaina do Sul",
-	[ViagemSolicitacaoDestinoViagem.CampoBeloDoSul]: "Campo Belo do Sul",
-	[ViagemSolicitacaoDestinoViagem.CapaoAlto]: "Capão Alto",
-	[ViagemSolicitacaoDestinoViagem.CerroNegro]: "Cerro Negro",
-	[ViagemSolicitacaoDestinoViagem.CorreiaPinto]: "Correia Pinto",
-	[ViagemSolicitacaoDestinoViagem.Curitibanos]: "Curitibanos",
-	[ViagemSolicitacaoDestinoViagem.Florianopolis]: "Florianópolis",
-	[ViagemSolicitacaoDestinoViagem.Painel]: "Painel",
-	[ViagemSolicitacaoDestinoViagem.Outros]: "Outros",
-};
-
-export const VIAGEMSOLICITACAO_DIARIA_LABELS: Record<
-	ViagemSolicitacaoDiaria,
-	string
-> = {
-	[ViagemSolicitacaoDiaria.Value5]: "8h",
-	[ViagemSolicitacaoDiaria.Value10]: "Acima de 8h",
-};
-
-export const VIAGEMSOLICITACAO_FASE_LABELS: Record<
-	ViagemSolicitacaoFase,
-	string
-> = {
-	[ViagemSolicitacaoFase.CaixaDeEntrada]: "Caixa de Entrada",
-	[ViagemSolicitacaoFase.ProcessamentoFinanceiro]: "Processamento Financeiro",
-	[ViagemSolicitacaoFase.Concluido]: "Concluído",
-	[ViagemSolicitacaoFase.Arquivado]: "Arquivado",
-};
-
-export const VIAGEMSOLICITACAO_MEIOTRANSPORTE_LABELS: Record<
-	ViagemSolicitacaoMeioTransporte,
-	string
-> = {
-	[ViagemSolicitacaoMeioTransporte.KwidAtplus]: "Kwid ATPlus",
-	[ViagemSolicitacaoMeioTransporte.FiorinoAtplus]: "Fiorino ATPlus",
-	[ViagemSolicitacaoMeioTransporte.FiorinoFhortec]: "Fiorino Fhortec",
-	[ViagemSolicitacaoMeioTransporte.UnoAtplus]: "Uno ATPlus",
-	[ViagemSolicitacaoMeioTransporte.CarroParticular]: "Carro Particular",
-	[ViagemSolicitacaoMeioTransporte.Outro]: "Outro",
-};
 
 export interface VlanTags {
 	id: number;

@@ -84,9 +84,31 @@ pnpm typecheck
 ### ✅ CORRECT - Use generated type
 
 ```typescript
+import { PESSOAS_SEXO_LABELS } from "#/generated/nocobase/pessoas";
+
+// Type is inferred: "M" | "F" | "Masculino" | "Feminino"
+type Sexo = keyof typeof PESSOAS_SEXO_LABELS;
+
+// Use string literals directly
+const sexo: Sexo = "M";
+
+// Get label from constant object
+const label = PESSOAS_SEXO_LABELS[sexo]; // "MASCULINO"
+```
+
+### ✅ CORRECT - Use in components
+
+```typescript
+import { PESSOAS_SEXO_LABELS } from "#/generated/nocobase/pessoas";
 import type { Pessoas } from "#/generated/nocobase/pessoas";
 
-export type PessoaFisica = Pessoas;
+function PessoaBadge({ pessoa }: { pessoa: Pessoas }) {
+  return (
+    <Badge>
+      {PESSOAS_SEXO_LABELS[pessoa.f_sexo]}
+    </Badge>
+  );
+}
 ```
 
 ### ✅ CORRECT - Extend with Pick
@@ -97,15 +119,37 @@ import type { Pessoas } from "#/generated/nocobase/pessoas";
 export type PessoaListItem = Pick<Pessoas, "id" | "f_nome" | "f_email">;
 ```
 
+### ✅ CORRECT - Filter with string literals
+
+```typescript
+import { buildFilter } from "#/lib/filter-builder";
+
+// Use string literals directly in filters
+const filter = buildFilter()
+  .eq("f_sexo", "M") // ✅ Type-safe: "M" | "F" | "Masculino" | "Feminino"
+  .build();
+```
+
 ### ❌ WRONG - Manual duplication
 
 ```typescript
-// NEVER DO THIS
+// NEVER DO THIS - types are auto-generated
 export interface Pessoas {
   id: number;
   f_nome: string;
   // ...
 }
+```
+
+### ❌ WRONG - Old enum pattern (deprecated)
+
+```typescript
+// OLD PATTERN - NO LONGER GENERATED
+import { PessoasSexo } from "#/generated/nocobase/pessoas";
+const sexo = PessoasSexo.M; // DON'T USE
+
+// NEW PATTERN - USE STRING LITERALS
+const sexo: keyof typeof PESSOAS_SEXO_LABELS = "M"; // ✅
 ```
 
 <!-- AGENTS-GENERATED:END usage-examples -->

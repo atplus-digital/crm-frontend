@@ -7,16 +7,20 @@ import type { Users } from "./users";
 
 export const T_EMPRESAS_TABLE_NAME = "t_empresas";
 
-export enum EmpresasAnaliseIxc {
-	Value0 = "0",
-	Value1 = "1",
-}
+export const EMPRESAS_ANALISEIXC_LABELS = {
+	"0": "Com Pendências",
+	"1": "Sem Pendências",
+} as const;
 
-export enum EmpresasCredito {
-	Value1 = "1",
-	Value2 = "2",
-	Value9 = "9",
-}
+export const EMPRESAS_CREDITO_LABELS = {
+	"1": "Aprovado",
+	"2": "Aprovado com Atenção",
+	"9": "Negado",
+} as const;
+
+export type EmpresasAnaliseIxc = keyof typeof EMPRESAS_ANALISEIXC_LABELS;
+
+export type EmpresasCredito = keyof typeof EMPRESAS_CREDITO_LABELS;
 
 export interface Empresas {
 	id: number;
@@ -40,14 +44,3 @@ export interface EmpresasRelations {
 }
 
 export type EmpresasRelationKey = keyof EmpresasRelations;
-
-export const EMPRESAS_ANALISEIXC_LABELS: Record<EmpresasAnaliseIxc, string> = {
-	[EmpresasAnaliseIxc.Value0]: "Com Pendências",
-	[EmpresasAnaliseIxc.Value1]: "Sem Pendências",
-};
-
-export const EMPRESAS_CREDITO_LABELS: Record<EmpresasCredito, string> = {
-	[EmpresasCredito.Value1]: "Aprovado",
-	[EmpresasCredito.Value2]: "Aprovado com Atenção",
-	[EmpresasCredito.Value9]: "Negado",
-};

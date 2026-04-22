@@ -2,13 +2,46 @@ import type { EnumOption } from "@scripts/generate-types/src/@types/generation";
 import { describe, expect, it } from "vitest";
 
 async function getToEnumMemberName() {
+	const module = await import(
+		"@scripts/generate-types/src/generation/enum-inference"
+	);
+	return module;
+}
+
+async function getGenerateEnumDefinition() {
 	const module = await import("@scripts/generate-types/src/generation/content");
 	return module;
 }
 
-describe("toEnumMemberName (via generateEnumDefinition)", () => {
+describe("generateEnumMemberName", () => {
 	it("deve converter valores com acentos para PascalCase sem acentos", async () => {
-		const { generateEnumDefinition } = await getToEnumMemberName();
+		const { generateEnumMemberName } = await getToEnumMemberName();
+
+		expect(generateEnumMemberName("União Estável")).toBe("UniaoEstavel");
+		expect(generateEnumMemberName("Viúvo")).toBe("Viuvo");
+		expect(generateEnumMemberName("Solteiro")).toBe("Solteiro");
+	});
+
+	it("deve converter valores numéricos para PascalCase", async () => {
+		const { generateEnumMemberName } = await getToEnumMemberName();
+
+		expect(generateEnumMemberName("3")).toBe("Value3");
+		expect(generateEnumMemberName("4")).toBe("Value4");
+		expect(generateEnumMemberName("5")).toBe("Value5");
+	});
+
+	it("deve converter valores com espaços e caracteres especiais", async () => {
+		const { generateEnumMemberName } = await getToEnumMemberName();
+
+		expect(generateEnumMemberName("Pessoa Física")).toBe("PessoaFisica");
+		expect(generateEnumMemberName("Pessoa Jurídica")).toBe("PessoaJuridica");
+		expect(generateEnumMemberName("Outros @#$")).toBe("Outros");
+	});
+});
+
+describe("generateEnumDefinition integration", () => {
+	it("deve gerar type alias com nome correto para valores com acentos", async () => {
+		const { generateEnumDefinition } = await getGenerateEnumDefinition();
 
 		const enumOptions: EnumOption[] = [
 			{ value: "União Estável", label: "União Estável" },
@@ -18,16 +51,13 @@ describe("toEnumMemberName (via generateEnumDefinition)", () => {
 
 		const result = generateEnumDefinition("t_teste", "status", enumOptions);
 
-		expect(result).toContain("UniaoEstavel");
-		expect(result).toContain("Viuvo");
-		expect(result).toContain("Solteiro");
-
-		expect(result).toContain('= "União Estável"');
-		expect(result).toContain('= "Viúvo"');
+		expect(result).toBe(
+			"export type TesteStatus = keyof typeof TESTE_STATUS_LABELS;",
+		);
 	});
 
-	it("deve converter valores numéricos para PascalCase", async () => {
-		const { generateEnumDefinition } = await getToEnumMemberName();
+	it("deve gerar type alias com nome correto para valores numéricos", async () => {
+		const { generateEnumDefinition } = await getGenerateEnumDefinition();
 
 		const enumOptions: EnumOption[] = [
 			{ value: "3", label: "Ruim" },
@@ -41,24 +71,24 @@ describe("toEnumMemberName (via generateEnumDefinition)", () => {
 			enumOptions,
 		);
 
-		expect(result).toContain("Value3");
-		expect(result).toContain("Value4");
-		expect(result).toContain("Value5");
+		expect(result).toBe(
+			"export type TesteGrauSatisfacao = keyof typeof TESTE_GRAUSATISFACAO_LABELS;",
+		);
 	});
 
-	it("deve converter valores com espaços e caracteres especiais", async () => {
-		const { generateEnumDefinition } = await getToEnumMemberName();
+	it("deve gerar type alias com nome correto para valores com espaços", async () => {
+		const { generateEnumDefinition } = await getGenerateEnumDefinition();
 
 		const enumOptions: EnumOption[] = [
 			{ value: "Pessoa Física", label: "Pessoa Física" },
 			{ value: "Pessoa Jurídica", label: "Pessoa Jurídica" },
-			{ value: "Outros @#$", label: "Outros" },
+			{ value: "Outros", label: "Outros" },
 		];
 
 		const result = generateEnumDefinition("t_teste", "tipo", enumOptions);
 
-		expect(result).toContain("PessoaFisica");
-		expect(result).toContain("PessoaJuridica");
-		expect(result).toContain("Outros");
+		expect(result).toBe(
+			"export type TesteTipo = keyof typeof TESTE_TIPO_LABELS;",
+		);
 	});
 });

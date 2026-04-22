@@ -6,29 +6,41 @@
 
 export const VD_CONTRATOS_PRODUTOS_TABLE_NAME = "vd_contratos_produtos";
 
-export enum VdContratosProdutosFixarIp {
-	Value1 = "1",
-	Value0 = "0",
-}
+export const VDCONTRATOSPRODUTOS_FIXARIP_LABELS = {
+	"1": "Sim",
+	"0": "Não",
+} as const;
 
-export enum VdContratosProdutosRepetir {
-	V = "V",
-	S = "S",
-}
+export const VDCONTRATOSPRODUTOS_REPETIR_LABELS = {
+	V: "Quantidade",
+	S: "Sempre",
+} as const;
 
-export enum VdContratosProdutosTipo {
-	I = "I",
-	T = "T",
-	S = "S",
-	Sva = "SVA",
-	Tv = "TV",
-	Smp = "SMP",
-}
+export const VDCONTRATOSPRODUTOS_TIPO_LABELS = {
+	I: "Internet",
+	T: "Telefonia",
+	S: "Serviços",
+	SVA: "SVA",
+	TV: "TV",
+	SMP: "MVNO/Telefonia Móvel",
+} as const;
 
-export enum VdContratosProdutosTipoDesconto {
-	V = "V",
-	P = "P",
-}
+export const VDCONTRATOSPRODUTOS_TIPODESCONTO_LABELS = {
+	V: "Valor",
+	P: "Percentual",
+} as const;
+
+export type VdContratosProdutosFixarIp =
+	keyof typeof VDCONTRATOSPRODUTOS_FIXARIP_LABELS;
+
+export type VdContratosProdutosRepetir =
+	keyof typeof VDCONTRATOSPRODUTOS_REPETIR_LABELS;
+
+export type VdContratosProdutosTipo =
+	keyof typeof VDCONTRATOSPRODUTOS_TIPO_LABELS;
+
+export type VdContratosProdutosTipoDesconto =
+	keyof typeof VDCONTRATOSPRODUTOS_TIPODESCONTO_LABELS;
 
 export interface VdContratosProdutos {
 	id: number;
@@ -73,39 +85,3 @@ export interface VdContratosProdutosRelations {
 }
 
 export type VdContratosProdutosRelationKey = keyof VdContratosProdutosRelations;
-
-export const VDCONTRATOSPRODUTOS_FIXARIP_LABELS: Record<
-	VdContratosProdutosFixarIp,
-	string
-> = {
-	[VdContratosProdutosFixarIp.Value1]: "Sim",
-	[VdContratosProdutosFixarIp.Value0]: "Não",
-};
-
-export const VDCONTRATOSPRODUTOS_REPETIR_LABELS: Record<
-	VdContratosProdutosRepetir,
-	string
-> = {
-	[VdContratosProdutosRepetir.V]: "Quantidade",
-	[VdContratosProdutosRepetir.S]: "Sempre",
-};
-
-export const VDCONTRATOSPRODUTOS_TIPO_LABELS: Record<
-	VdContratosProdutosTipo,
-	string
-> = {
-	[VdContratosProdutosTipo.I]: "Internet",
-	[VdContratosProdutosTipo.T]: "Telefonia",
-	[VdContratosProdutosTipo.S]: "Serviços",
-	[VdContratosProdutosTipo.Sva]: "SVA",
-	[VdContratosProdutosTipo.Tv]: "TV",
-	[VdContratosProdutosTipo.Smp]: "MVNO/Telefonia Móvel",
-};
-
-export const VDCONTRATOSPRODUTOS_TIPODESCONTO_LABELS: Record<
-	VdContratosProdutosTipoDesconto,
-	string
-> = {
-	[VdContratosProdutosTipoDesconto.V]: "Valor",
-	[VdContratosProdutosTipoDesconto.P]: "Percentual",
-};

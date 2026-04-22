@@ -1,46 +1,47 @@
 import { describe, expect, it } from "vitest";
 import type { GeneratedTypes } from "../src/@types/generation";
 import {
+	generateCollectionEnumMaps,
 	generateCollectionEnums,
 	generateEnumDefinition,
 	generateEnumLabelMap,
 } from "../src/generation/content";
 
 describe("generateEnumDefinition", () => {
-	it("should generate TypeScript enum for string values", () => {
+	it("should generate type alias using keyof typeof for string values", () => {
 		const result = generateEnumDefinition("t_pessoas", "f_status", [
 			{ value: "ativo", label: "Ativo" },
 			{ value: "inativo", label: "Inativo" },
 			{ value: "pendente", label: "Pendente" },
 		]);
 
-		expect(result).toContain("export enum PessoasStatus {");
-		expect(result).toContain('Ativo = "ativo"');
-		expect(result).toContain('Inativo = "inativo"');
-		expect(result).toContain('Pendente = "pendente"');
+		expect(result).toBe(
+			"export type PessoasStatus = keyof typeof PESSOAS_STATUS_LABELS;",
+		);
 	});
 
-	it("should remove f_ prefix from enum name", () => {
+	it("should remove f_ prefix from type name", () => {
 		const result = generateEnumDefinition("t_pessoas", "f_tipo_pessoa", [
 			{ value: "pf", label: "Pessoa Física" },
 			{ value: "pj", label: "Pessoa Jurídica" },
 		]);
 
-		expect(result).toContain("export enum PessoasTipoPessoa {");
+		expect(result).toBe(
+			"export type PessoasTipoPessoa = keyof typeof PESSOAS_TIPOPESSOA_LABELS;",
+		);
 		expect(result).not.toContain("PessoasFTipoPessoa");
 	});
 
-	it("should generate TypeScript enum for integer values", () => {
+	it("should generate type alias for integer values", () => {
 		const result = generateEnumDefinition("t_negociacoes", "f_prioridade", [
 			{ value: 1, label: "Baixa" },
 			{ value: 2, label: "Média" },
 			{ value: 3, label: "Alta" },
 		]);
 
-		expect(result).toContain("export enum NegociacoesPrioridade {");
-		expect(result).toContain("Value1 = 1");
-		expect(result).toContain("Value2 = 2");
-		expect(result).toContain("Value3 = 3");
+		expect(result).toBe(
+			"export type NegociacoesPrioridade = keyof typeof NEGOCIACOES_PRIORIDADE_LABELS;",
+		);
 	});
 
 	it("should handle mixed string and number values", () => {
@@ -50,9 +51,9 @@ describe("generateEnumDefinition", () => {
 			{ value: "fechado", label: "Fechado" },
 		]);
 
-		expect(result).toContain('Aberto = "aberto"');
-		expect(result).toContain("Value0 = 0");
-		expect(result).toContain('Fechado = "fechado"');
+		expect(result).toBe(
+			"export type TesteStatus = keyof typeof TESTE_STATUS_LABELS;",
+		);
 	});
 
 	it("should handle string values that start with numbers", () => {
@@ -61,12 +62,12 @@ describe("generateEnumDefinition", () => {
 			{ value: "1", label: "1" },
 		]);
 
-		expect(result).toContain("export enum EmpresasAnaliseIxc {");
-		expect(result).toContain('Value0 = "0"');
-		expect(result).toContain('Value1 = "1"');
+		expect(result).toBe(
+			"export type EmpresasAnaliseIxc = keyof typeof EMPRESAS_ANALISEIXC_LABELS;",
+		);
 	});
 
-	it("should sanitize UUID-like values with hyphens", () => {
+	it("should handle UUID-like values with hyphens", () => {
 		const result = generateEnumDefinition("t_teste", "procedimento", [
 			{
 				value: "17760523-1404-4ff9-b786-15a4b0d7a3e2",
@@ -74,50 +75,46 @@ describe("generateEnumDefinition", () => {
 			},
 		]);
 
-		expect(result).toContain("export enum TesteProcedimento {");
-		expect(result).toContain(
-			'Value1776052314044ff9B78615a4b0d7a3e2 = "17760523-1404-4ff9-b786-15a4b0d7a3e2"',
+		expect(result).toBe(
+			"export type TesteProcedimento = keyof typeof TESTE_PROCEDIMENTO_LABELS;",
 		);
 	});
 
-	it("should sanitize values with special characters", () => {
+	it("should handle values with special characters", () => {
 		const result = generateEnumDefinition("t_teste", "campo", [
 			{ value: "a.b.c", label: "ABC" },
 			{ value: "x@y#z", label: "XYZ" },
 		]);
 
-		expect(result).toContain('ABC = "a.b.c"');
-		expect(result).toContain('XYZ = "x@y#z"');
+		expect(result).toBe(
+			"export type TesteCampo = keyof typeof TESTE_CAMPO_LABELS;",
+		);
 	});
 });
 
 describe("generateEnumLabelMap", () => {
-	it("should generate typed label map using enum members", () => {
+	it("should generate constant object with as const", () => {
 		const result = generateEnumLabelMap("t_pessoas", "f_status", [
 			{ value: "ativo", label: "Ativo" },
 			{ value: "inativo", label: "Inativo" },
 		]);
 
-		expect(result).toContain(
-			"export const PESSOAS_STATUS_LABELS: Record<PessoasStatus, string>",
-		);
-		expect(result).toContain('[PessoasStatus.Ativo]: "Ativo"');
-		expect(result).toContain('[PessoasStatus.Inativo]: "Inativo"');
+		expect(result).toContain("export const PESSOAS_STATUS_LABELS = {");
+		expect(result).toContain('"ativo": "Ativo"');
+		expect(result).toContain('"inativo": "Inativo"');
+		expect(result).toContain("} as const;");
 	});
 
-	it("should use enum member names (not values) as keys", () => {
+	it("should use raw values as keys", () => {
 		const result = generateEnumLabelMap("t_teste", "f_tipo_pessoa", [
 			{ value: "pessoa_fisica", label: "Pessoa Física" },
 			{ value: "pessoa_juridica", label: "Pessoa Jurídica" },
 		]);
 
-		expect(result).toContain(
-			"export const TESTE_TIPOPESSOA_LABELS: Record<TesteTipoPessoa, string>",
-		);
-		expect(result).toContain('[TesteTipoPessoa.PessoaFisica]: "Pessoa Física"');
-		expect(result).toContain(
-			'[TesteTipoPessoa.PessoaJuridica]: "Pessoa Jurídica"',
-		);
+		expect(result).toContain("export const TESTE_TIPOPESSOA_LABELS = {");
+		expect(result).toContain('"pessoa_fisica": "Pessoa Física"');
+		expect(result).toContain('"pessoa_juridica": "Pessoa Jurídica"');
+		expect(result).toContain("} as const;");
 	});
 
 	it("should handle integer enum values", () => {
@@ -126,16 +123,36 @@ describe("generateEnumLabelMap", () => {
 			{ value: 2, label: "Média" },
 		]);
 
-		expect(result).toContain(
-			"export const NEGOCIACOES_PRIORIDADE_LABELS: Record<NegociacoesPrioridade, string>",
-		);
-		expect(result).toContain('[NegociacoesPrioridade.Value1]: "Baixa"');
-		expect(result).toContain('[NegociacoesPrioridade.Value2]: "Média"');
+		expect(result).toContain("export const NEGOCIACOES_PRIORIDADE_LABELS = {");
+		expect(result).toContain('"1": "Baixa"');
+		expect(result).toContain('"2": "Média"');
+		expect(result).toContain("} as const;");
+	});
+
+	it("should deduplicate by value first", () => {
+		const result = generateEnumLabelMap("t_teste", "status", [
+			{ value: "ativo", label: "Ativo" },
+			{ value: "ativo", label: "Ativo (dup)" },
+			{ value: "inativo", label: "Inativo" },
+		]);
+
+		expect(result).toContain('"ativo": "Ativo"');
+		expect(result).not.toContain("Ativo (dup)");
+	});
+
+	it("should keep both entries when values differ", () => {
+		const result = generateEnumLabelMap("t_teste", "status", [
+			{ value: "M", label: "Masculino" },
+			{ value: "MASCULINO", label: "Masculino" },
+		]);
+
+		expect(result).toContain('"M": "Masculino"');
+		expect(result).toContain('"MASCULINO": "Masculino"');
 	});
 });
 
 describe("generateCollectionEnums", () => {
-	it("should generate all enums for a collection", () => {
+	it("should generate all type aliases for a collection", () => {
 		const types: GeneratedTypes = {
 			scalars: new Map(),
 			relations: new Map(),
@@ -160,11 +177,12 @@ describe("generateCollectionEnums", () => {
 
 		const result = generateCollectionEnums("t_pessoas", types);
 
-		expect(result).toContain("export enum PessoasStatus {");
-		expect(result).toContain("export enum PessoasTipoPessoa {");
-		expect(result).toContain('Ativo = "ativo"');
-		expect(result).toContain('Pf = "pf"');
-		expect(result).toContain('Pj = "pj"');
+		expect(result).toContain(
+			"export type PessoasStatus = keyof typeof PESSOAS_STATUS_LABELS;",
+		);
+		expect(result).toContain(
+			"export type PessoasTipoPessoa = keyof typeof PESSOAS_TIPOPESSOA_LABELS;",
+		);
 	});
 
 	it("should return empty string when no enums", () => {
@@ -196,6 +214,72 @@ describe("generateCollectionEnums", () => {
 		const alfaIndex = result.indexOf("TesteAlfa");
 		const betaIndex = result.indexOf("TesteBeta");
 		const zebraIndex = result.indexOf("TesteZebra");
+
+		expect(alfaIndex).toBeLessThan(betaIndex);
+		expect(betaIndex).toBeLessThan(zebraIndex);
+	});
+});
+
+describe("generateCollectionEnumMaps", () => {
+	it("should generate all constant objects for a collection", () => {
+		const types: GeneratedTypes = {
+			scalars: new Map(),
+			relations: new Map(),
+			enums: new Map([
+				[
+					"f_status",
+					[
+						{ value: "ativo", label: "Ativo" },
+						{ value: "inativo", label: "Inativo" },
+					],
+				],
+				[
+					"f_tipo_pessoa",
+					[
+						{ value: "pf", label: "Pessoa Física" },
+						{ value: "pj", label: "Pessoa Jurídica" },
+					],
+				],
+			]),
+			schemaAvailable: true,
+		};
+
+		const result = generateCollectionEnumMaps("t_pessoas", types);
+
+		expect(result).toContain("export const PESSOAS_STATUS_LABELS = {");
+		expect(result).toContain("export const PESSOAS_TIPOPESSOA_LABELS = {");
+		expect(result).toContain("} as const;");
+	});
+
+	it("should return empty string when no enums", () => {
+		const types: GeneratedTypes = {
+			scalars: new Map([["id", "number"]]),
+			relations: new Map(),
+			enums: new Map(),
+			schemaAvailable: true,
+		};
+
+		const result = generateCollectionEnumMaps("t_pessoas", types);
+		expect(result).toBe("");
+	});
+
+	it("should sort enum maps alphabetically by field name", () => {
+		const types: GeneratedTypes = {
+			scalars: new Map(),
+			relations: new Map(),
+			enums: new Map([
+				["zebra", [{ value: "z", label: "Z" }]],
+				["alfa", [{ value: "a", label: "A" }]],
+				["beta", [{ value: "b", label: "B" }]],
+			]),
+			schemaAvailable: true,
+		};
+
+		const result = generateCollectionEnumMaps("t_teste", types);
+
+		const alfaIndex = result.indexOf("TESTE_ALFA_LABELS");
+		const betaIndex = result.indexOf("TESTE_BETA_LABELS");
+		const zebraIndex = result.indexOf("TESTE_ZEBRA_LABELS");
 
 		expect(alfaIndex).toBeLessThan(betaIndex);
 		expect(betaIndex).toBeLessThan(zebraIndex);
