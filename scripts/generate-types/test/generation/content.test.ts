@@ -1,3 +1,7 @@
+import type {
+	EnumOption,
+	GeneratedTypes,
+} from "@scripts/generate-types/src/@types/generation";
 import {
 	generateCollectionBaseInterface,
 	generateCollectionRelationKeyType,
@@ -62,6 +66,25 @@ describe("content", () => {
 				suffix: "Dto",
 			});
 			expect(result).toContain("export interface IUsersDto {");
+		});
+
+		it("uses named enum type for fields with enum values", () => {
+			const enumOptions: EnumOption[] = [
+				{ value: "0", label: "Com Pendências" },
+				{ value: "1", label: "Sem Pendências" },
+			];
+			const types: GeneratedTypes = {
+				scalars: new Map([
+					["id", "number"],
+					["f_analise_ixc", '"0" | "1"'],
+				]),
+				relations: new Map(),
+				enums: new Map([["f_analise_ixc", enumOptions]]),
+				schemaAvailable: true,
+			};
+			const result = generateCollectionBaseInterface("empresas", types);
+			expect(result).toContain("f_analise_ixc: EmpresasAnaliseIxc;");
+			expect(result).not.toContain('f_analise_ixc: "0" | "1"');
 		});
 	});
 

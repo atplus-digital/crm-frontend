@@ -7,7 +7,6 @@ import { toValidIdentifier } from "@scripts/generate-types/src/utils/naming";
 import {
 	generateCollectionEnumMaps,
 	generateCollectionEnums,
-	getScalarFieldType,
 } from "./content-enums";
 import {
 	generateCollectionBaseInterface,

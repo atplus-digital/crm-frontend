@@ -19,7 +19,7 @@ Automation scripts for development workflow — type generation, build helpers, 
 | `generate-types/index.ts`              | Main type generation script for NocoBase/IXC collections        |
 | `generate-types/datasources.config.ts` | Configuration for data sources and collection filtering         |
 | `generate-types/src/`                  | Generation logic (field mapping, type extraction, code writing) |
-| `generate-types/test/`                 | Test suite for generation utilities (21 test files)             |
+| `generate-types/test/`                 | Test suite for generation utilities (23 test files)             |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

@@ -14,19 +14,40 @@ Type generation pipeline — fetches NocoBase + IXC schemas via API, generates T
 
 ## Key Files
 
-| File                                 | Purpose                                                                               |
-| ------------------------------------ | ------------------------------------------------------------------------------------- |
-| `datasources.config.ts`              | **CRITICAL**: Datasource definitions (NocoBase + IXC), collection lists, split config |
-| `src/generate-types.ts`              | Main entry point — orchestrates fetch, generate, write, cleanup                       |
-| `src/api-client.ts`                  | NocoBase API client with retry logic                                                  |
-| `src/generation/field-mapper.ts`     | NocoBase field → TypeScript type mapping                                              |
-| `src/generation/enum-extractor.ts`   | Extracts enums from select/radio/multi-select fields                                  |
-| `src/generation/type-generator.ts`   | Generates TypeScript interfaces from schemas                                          |
-| `src/generation/writer.ts`           | Writes generated files to `src/generated/`                                            |
-| `src/generation/workspace-locker.ts` | Prevents concurrent type generation                                                   |
-| `src/utils/logger.ts`                | Structured logger with levels                                                         |
-| `src/utils/config.ts`                | Config loader with env validation                                                     |
-| `test/`                              | 22 test files (comprehensive coverage)                                                |
+| File                                          | Purpose                                                                                |
+| --------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `datasources.config.ts`                       | **CRITICAL**: Datasource definitions (NocoBase + IXC), collection lists, split config  |
+| `src/generate-types.ts`                       | Main entry point — orchestrates fetch, generate, write, cleanup                        |
+| `src/generation/client.ts`                    | NocoBase API client with retry logic                                                   |
+| `src/generation/field-mapper.ts`              | NocoBase field → TypeScript type mapping                                               |
+| `src/generation/content.ts`                   | Barrel — re-exports from content-{sorting,enums,interfaces,assembly}                   |
+| `src/generation/content-assembly.ts`          | Collection assembly + file content generation                                          |
+| `src/generation/content-enums.ts`             | Enum definition + label map generation                                                 |
+| `src/generation/content-interfaces.ts`        | Interface/relation type generation                                                     |
+| `src/generation/content-sorting.ts`           | Field sorting and categorization                                                       |
+| `src/generation/enum-inference.ts`            | Barrel — re-exports from enum-inference-{config,heuristics,analysis,merge,corrections} |
+| `src/generation/enum-inference-config.ts`     | Enum inference configuration                                                           |
+| `src/generation/enum-inference-heuristics.ts` | Label inference heuristics                                                             |
+| `src/generation/enum-inference-analysis.ts`   | Distinct value extraction + inference from sample data                                 |
+| `src/generation/enum-inference-merge.ts`      | Enum merging + adapter conversion                                                      |
+| `src/generation/enum-inference-corrections.ts | Enum correction rules                                                                  |
+| `src/utils/writer.ts`                         | Writes generated files to `src/generated/`                                             |
+| `src/utils/file-cleanup.ts`                   | Stale file cleanup + directory management                                              |
+| `src/utils/enum-cache.ts`                     | Enum value caching                                                                     |
+| `src/utils/wiki-parser.ts`                    | Wiki table HTML parsing for IXC enums                                                  |
+| `src/utils/naming.ts`                         | Shared naming utilities (normalizeCollectionNames, removeAccents)                      |
+| `src/utils/workspace-locker.ts`               | Prevents concurrent type generation                                                    |
+| `src/utils/config.ts`                         | Config loader with env validation                                                      |
+| `src/utils/logger.ts`                         | Structured logger with levels                                                          |
+| `src/adapters/ixc-relations-adapter.ts`       | Barrel — re-exports from ixc-relations-data                                            |
+| `src/adapters/ixc-relations-data.ts`          | IXC relation mappings data + factory functions                                         |
+| `src/@types/script.ts`                        | Barrel — re-exports from script-{config,data-source,results,adapters}                  |
+| `src/@types/script-config.ts`                 | Script + datasource config types                                                       |
+| `src/@types/script-data-source.ts`            | DataSource client/field/collection types                                               |
+| `src/@types/script-results.ts`                | Generation result types                                                                |
+| `src/@types/script-adapters.ts`               | Adapter + correction config types                                                      |
+| `src/pipeline/`                               | Pipeline orchestration (context, stages, types)                                        |
+| `test/`                                       | 23 test files (comprehensive coverage)                                                 |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -47,13 +68,15 @@ Type generation pipeline — fetches NocoBase + IXC schemas via API, generates T
 
 ## Golden Samples
 
-| Pattern                      | Reference file                     |
-| ---------------------------- | ---------------------------------- |
-| API client with retry        | `src/api-client.ts`                |
-| Field mapper (NocoBase → TS) | `src/generation/field-mapper.ts`   |
-| Enum extractor               | `src/generation/enum-extractor.ts` |
-| Test factory helpers         | `test/setup.ts`                    |
-| Config mocking pattern       | `test/utils/config.test.ts`        |
+| Pattern                      | Reference file                                      |
+| ---------------------------- | --------------------------------------------------- |
+| Field mapper (NocoBase → TS) | `src/generation/field-mapper.ts`                    |
+| Content generation barrel    | `src/generation/content.ts` (barrel pattern)        |
+| Enum inference barrel        | `src/generation/enum-inference.ts` (barrel pattern) |
+| Types barrel                 | `src/@types/script.ts` (barrel pattern)             |
+| Adapter barrel               | `src/adapters/ixc-relations-adapter.ts` (barrel)    |
+| Test factory helpers         | `test/setup.ts`                                     |
+| Config mocking pattern       | `test/utils/config.test.ts`                         |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
 
@@ -209,16 +232,22 @@ pnpm test scripts/generate-types  # Run all script tests
 1. Load config (datasources.config.ts)
 2. Acquire workspace lock (prevent concurrent runs)
 3. For each datasource:
-   a. Connect via API client
+   a. Connect via API client (generation/client.ts)
    b. Fetch collection schemas
-   c. Map fields → TypeScript types (field-mapper.ts)
-   d. Extract enums (enum-extractor.ts)
-   e. Generate interfaces (type-generator.ts)
-   f. Write files (writer.ts)
-4. Auto-cleanup (remove stale collection files)
+   c. Map fields → TypeScript types (generation/field-mapper.ts)
+   d. Infer enums from sample data (generation/enum-inference-*.ts)
+   e. Generate content (generation/content-*.ts)
+   f. Write files (utils/writer.ts)
+4. Auto-cleanup stale files (utils/file-cleanup.ts)
 5. Run Biome auto-fix
 6. Release lock
 ```
+
+**Module Organization:**
+
+- **Barrel pattern**: Large modules (`content`, `enum-inference`, `@types/script`, `ixc-relations-adapter`) use barrel files that re-export from focused sub-modules
+- **Sub-module naming**: `<module>-<concern>.ts` (e.g., `content-enums.ts`, `enum-inference-merge.ts`)
+- **Shared utilities**: `utils/naming.ts` holds cross-cutting naming helpers (deduplicated)
 
 **Field Mapping:**
 

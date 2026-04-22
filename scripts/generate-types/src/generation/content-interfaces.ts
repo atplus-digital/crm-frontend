@@ -8,6 +8,7 @@ import {
 	toCollectionBaseTypeName,
 	toCollectionTypeName,
 } from "@scripts/generate-types/src/utils/naming";
+import { getScalarFieldType } from "./content-enums";
 import { _sortMapEntries, _sortScalarEntries } from "./content-sorting";
 import { getRelationCardinality, renderRelationValueType } from "./relations";
 
@@ -39,7 +40,13 @@ export function generateCollectionBaseInterface(
 
 	lines.push(`export interface ${typeName} {`);
 	for (const [fieldName, fieldType] of scalarEntries) {
-		lines.push(`\t${formatKey(fieldName)}: ${fieldType};`);
+		const resolvedType = getScalarFieldType(
+			fieldName,
+			fieldType,
+			types,
+			collectionName,
+		);
+		lines.push(`\t${formatKey(fieldName)}: ${resolvedType};`);
 	}
 	lines.push("}");
 
