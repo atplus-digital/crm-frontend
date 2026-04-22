@@ -41,12 +41,12 @@ Feature modules by domain; each folder in `src/features/` owns its contracts, se
 
 ## Golden Samples
 
-| Pattern                           | Reference file                                   |
-| --------------------------------- | ------------------------------------------------ |
-| Feature with `components/` folder | `src/features/cs/components/contratos-table.tsx` |
-| Feature public API barrel         | `src/features/auth/index.ts`                     |
-| Feature hook wrapper              | `src/features/custom-requests/hooks.ts`          |
-| Feature guard/store pattern       | `src/features/auth/permissions/guards.ts`        |
-| Scoped feature docs               | `src/features/cs/AGENTS.md`                      |
+| Pattern                        | Reference file                                  |
+| ------------------------------ | ----------------------------------------------- |
+| Feature with components folder | `src/features/cs/contratos/contratos-table.tsx` |
+| Feature public API barrel      | `src/features/auth/index.ts`                    |
+| Feature hook wrapper           | `src/features/custom-requests/hooks.ts`         |
+| Feature guard/store pattern    | `src/features/auth/permissions/guards.ts`       |
+| Scoped feature docs            | `src/features/cs/AGENTS.md`                     |
 
 <!-- AGENTS-GENERATED:END golden-samples -->

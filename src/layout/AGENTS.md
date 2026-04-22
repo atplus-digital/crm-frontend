@@ -41,10 +41,10 @@ Application shell layout — shared header, sidebar, and dashboard frame used by
 
 ## Golden Samples
 
-| Pattern                           | Reference file                                             |
-| --------------------------------- | ---------------------------------------------------------- |
-| Shell composition                 | `src/components/layout/dashboard-layout.tsx`               |
-| Section-driven sidebar navigation | `src/components/layout/app-sidebar/sidebar-navigation.tsx` |
-| Header + shared top navigation    | `src/components/layout/app-header.tsx`                     |
+| Pattern                           | Reference file                                  |
+| --------------------------------- | ----------------------------------------------- |
+| Shell composition                 | `src/layout/dashboard-layout.tsx`               |
+| Section-driven sidebar navigation | `src/layout/app-sidebar/sidebar-navigation.tsx` |
+| Header + shared top navigation    | `src/layout/app-header.tsx`                     |
 
 <!-- AGENTS-GENERATED:END golden-samples -->

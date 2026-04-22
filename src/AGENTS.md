@@ -43,13 +43,13 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 
 ## Golden Samples
 
-| Pattern                   | Reference file                         |
-| ------------------------- | -------------------------------------- |
-| Router configuration      | `src/routes/router.tsx`                |
-| Protected route loader    | `src/routes/dashboard.tsx`             |
-| Public auth route loader  | `src/routes/auth/login.tsx`            |
-| Auth module barrel export | `src/features/auth/index.ts`           |
-| Shared repository usage   | `src/features/cs/contratos-service.ts` |
+| Pattern                   | Reference file                                   |
+| ------------------------- | ------------------------------------------------ |
+| Router configuration      | `src/routes/router.tsx`                          |
+| Protected route loader    | `src/routes/dashboard/index.tsx`                 |
+| Public auth route loader  | `src/routes/auth/login/index.tsx`                |
+| Auth module barrel export | `src/features/auth/index.ts`                     |
+| Shared repository usage   | `src/features/cs/contratos/contratos-service.ts` |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
 
@@ -58,7 +58,7 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 <!-- AGENTS-GENERATED:START scope-index -->
 
 - `./src/components/AGENTS.md` — Shared UI building blocks and app-level reusable components
-- `./src/components/layout/AGENTS.md` — Authenticated app shell layout and navigation composition
+- `./src/layout/AGENTS.md` — Authenticated app shell layout and navigation composition
 - `./src/features/AGENTS.md` — Cross-feature conventions and folder structure for domain modules
 - `./src/features/auth/AGENTS.md` — Authentication module
 - `./src/features/cs/AGENTS.md` — Customer Success domain (contratos, negociações, pessoas)
@@ -68,6 +68,7 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 - `./src/hooks/AGENTS.md` — Shared cross-feature hooks
 - `./src/lib/AGENTS.md` — Pure utilities and formatting/filter/logging helpers
 - `./src/repositories/AGENTS.md` — NocoBase/IXC data access layer
+- `./src/routes/AGENTS.md` — React Router v7 route definitions and guard patterns
 
 <!-- AGENTS-GENERATED:END scope-index -->
 

@@ -50,7 +50,7 @@ Authentication module — NocoBase SDK client, auth store, service operations, a
 | Guard implementation              | `src/features/auth/guard.ts`                  |
 | Service + permissions integration | `src/features/auth/service.ts`                |
 | Auth form flow                    | `src/features/auth/components/login-form.tsx` |
-| Protected route usage             | `src/routes/dashboard.tsx`                    |
+| Protected route usage             | `src/routes/dashboard/index.tsx`              |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
 

@@ -83,11 +83,11 @@ const filter = buildFilter([
 
 ## Golden Samples
 
-| Pattern          | Reference file                       |
-| ---------------- | ------------------------------------ |
-| Logger usage     | `src/features/auth/guard.ts`         |
-| Utility function | `src/lib/utils.ts`                   |
-| Filter builder   | `src/features/cs/pessoas-service.ts` |
+| Pattern          | Reference file                               |
+| ---------------- | -------------------------------------------- |
+| Logger usage     | `src/features/auth/guard.ts`                 |
+| Utility function | `src/lib/utils.ts`                           |
+| Filter builder   | `src/features/cs/pessoas/pessoas-service.ts` |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
 

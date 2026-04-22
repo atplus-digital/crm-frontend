@@ -30,7 +30,7 @@ features.
 **Scoped Docs:**
 
 - `ui/AGENTS.md` — shadcn/ui component reference and customization guide
-- `layout/AGENTS.md` — App shell composition and sidebar patterns
+- `../layout/AGENTS.md` — App shell composition and sidebar patterns
 
 <!-- AGENTS-GENERATED:END filemap -->
 

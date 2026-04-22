@@ -1,78 +1,91 @@
-# AGENTS.md — Troca de Titularidade
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
 
-**Domain:** Customer Success (CS) - Gerenciamento de Transferência de Titularidade
+# AGENTS.md — cs/troca-titularidade
+
+<!-- AGENTS-GENERATED:START overview -->
 
 ## Overview
 
-Funcionalidade de Transferência de Titularidade para permitir a mudança de titularidade de contratos entre clientes. Permite o acompanhamento completo do processo de transferência com status, documentos e histórico.
+Ownership transfer feature — manages contract titularidade change requests between clients (cedente → cessionário) with ZapSign integration, status/substatus workflow, and full audit trail.
 
-## File Map
+<!-- AGENTS-GENERATED:END overview -->
 
-| File                                        | Purpose                                              |
-| ------------------------------------------- | ---------------------------------------------------- |
-| `components/troca-titularidade-details.tsx` | Página de detalhes com todas as informações da troca |
-| `components/troca-titularidade-list.tsx`    | Lista de solicitações de troca de titularidade       |
-| `troca-titularidade-hooks.ts`               | Hooks para operações de dados                        |
-| `index.ts`                                  | Barrel export dos componentes públicos               |
+<!-- AGENTS-GENERATED:START filemap -->
 
-## Collection Schema
+## Key Files
 
-- **Collection:** `t_crm_troca_titularidade`
-- **Primary Keys:** `id`, `f_status`, `f_substatus`
-- **Key Fields:**
-  - `f_cedente` / `f_cedente_documento` - Dados do cedente
-  - `f_cessionario` / `f_cessionario_documento` - Dados do cessionário
-  - `f_id_contrato` - ID do contrato associado
-  - `f_link_assinatura_cedente` / `f_link_assinatura_cessionario` - Links ZapSign
-  - `f_endereco`, `f_numero`, `f_bairro`, `f_cidade`, `f_estado`, `f_cep` - Endereço
+| File                                        | Purpose                                      |
+| ------------------------------------------- | -------------------------------------------- |
+| `index.ts`                                  | Barrel export for hooks and types            |
+| `troca-titularidade-hooks.ts`               | React Query hooks for list/detail operations |
+| `components/troca-titularidade-list.tsx`    | Paginated list with status filtering         |
+| `components/troca-titularidade-details.tsx` | Detail page with all transfer sections       |
 
-## Key Enums
+<!-- AGENTS-GENERATED:END filemap -->
 
-### Status Options
+## Collection
 
-- `Value0` (Novo)
-- `Value1` (Aguardando assinatura)
-- `Value2` (Aguardando Auditoria)
-- `Value3` (Concluído)
-- `Value9` (Cancelado)
+**NocoBase:** `t_crm_troca_titularidade`
 
-### Substatus Options
+**Key fields:**
 
-- `Value0` (NA)
-- `Value1` (APROVADO - Aguardando inserção no IXC)
-- `Value2` (APROVADO - Erro na integração com o IXC)
-- `Value3` (APROVADO - Concluído)
-- `Value4` (REPROVADO - Divergência de Dados)
-- `Value5` (REPROVADO - Financeiro em Atraso)
-- `Value6` (AGUARDANDO - Auditoria)
+- `f_status` / `f_substatus` — workflow status
+- `f_cedente` / `f_cedente_documento` — cedente name + document
+- `f_cessionario` / `f_cessionario_documento` — cessionário name + document
+- `f_id_contrato` — associated contract ID
+- `f_link_assinatura_cedente` / `f_link_assinatura_cessionario` — ZapSign links
+- `f_endereco`, `f_numero`, `f_bairro`, `f_cidade`, `f_estado`, `f_cep` — address
+- `f_anexos[]` — attachments relation
+- `f_comentarios[]` — comments relation
+- `f_pessoa_pf` / `f_pessoa_pj` — person relations (optional)
+- `f_vendedor` — responsible seller
 
-## Relations
+**Relations:** `f_anexos`, `f_comentarios`, `f_pessoa_pf`, `f_pessoa_pj`, `f_vendedor`
 
-- `f_anexos[]` - Anexos da troca de titularidade
-- `f_comentarios[]` - Comentários registrados
-- `f_pessoa_pf` - Pessoa física associada (opcional)
-- `f_pessoa_pj` - Pessoa jurídica associada (opcional)
-- `f_vendedor` - Usuário vendedor responsável
+<!-- AGENTS-GENERATED:START status -->
 
-## UI Components
+## Status Values
 
-### Detail Sections
+| Value | Label                 |
+| ----- | --------------------- |
+| `0`   | Novo                  |
+| `1`   | Aguardando assinatura |
+| `2`   | Aguardando Auditoria  |
+| `3`   | Concluído             |
+| `9`   | Cancelado             |
 
-1. **Dados da Transferência** - ID, Status, Substatus, datas
-2. **Cedente** - Informações do cedente com link de assinatura
-3. **Cessionário** - Informações do cessionário com link de assinatura
-4. **Endereço** - Localização completa
-5. **Contrato** - ID do contrato associado
-6. **Anexos** - Documentos com links para download
-7. **Comentários** - Histórico de observações
+## Substatus Values
+
+| Value | Label                                   |
+| ----- | --------------------------------------- |
+| `0`   | NA                                      |
+| `1`   | APROVADO — Aguardando inserção no IXC   |
+| `2`   | APROVADO — Erro na integração com o IXC |
+| `3`   | APROVADO — Concluído                    |
+| `4`   | REPROVADO — Divergência de Dados        |
+| `5`   | REPROVADO — Financeiro em Atraso        |
+| `6`   | AGUARDANDO — Auditoria                  |
+
+<!-- AGENTS-GENERATED:END status -->
 
 ## Routes
 
-- **List:** `/troca-titularidade` - Lista de todas as transferências
-- **Detail:** `/troca-titularidade/:id` - Detalhes de transferência específica
+| Path                         | Page        |
+| ---------------------------- | ----------- |
+| `/troca-de-titularidade`     | List page   |
+| `/troca-de-titularidade/:id` | Detail page |
 
-## Dependencies
+<!-- AGENTS-GENERATED:START patterns -->
 
-- **Repository:** `#/repositories/nocobase-repository.ts`
-- **Types:** `#/generated/nocobase/crm-troca-titularidade.ts`
-- **Components:** `#/components/ui/*`, `#/components/detail/*`
+## Patterns
+
+- List page uses `DataTableWithPagination` with status/substatus filter predicates.
+- Detail page renders sections: Dados da Transferência, Cedente, Cessionário, Endereço, Contrato, Anexos, Comentários.
+- ZapSign links (`f_link_assinatura_cedente`, `f_link_assinatura_cessionario`) render as external links.
+- All repository calls use `nocobaseRepository` with generated types from `#/generated/nocobase/crm-troca-titularidade`.
+
+<!-- AGENTS-GENERATED:END patterns -->
+
+## When instructions conflict
+
+The nearest `AGENTS.md` wins. See `src/features/cs/AGENTS.md` for domain patterns.
