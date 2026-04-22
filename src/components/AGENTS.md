@@ -16,16 +16,16 @@ features.
 
 ## Key Files
 
-| File                                   | Purpose                                            |
-| -------------------------------------- | -------------------------------------------------- |
-| `ui/`                                  | shadcn/ui primitives and styled base components    |
-| `table/data-table.tsx`                 | Base TanStack table renderer + `useDataTable` hook |
-| `table/data-table-with-pagination.tsx` | Standard reusable paginated table wrapper          |
-| `table/empty-table.tsx`                | Empty-state table placeholder with headers         |
-| `filters/filter-actions.tsx`           | Reusable `Filtrar`/`Limpar` action group           |
-| `feedback/inline-error-alert.tsx`      | Reusable inline destructive feedback block         |
-| `theme-provider.tsx`                   | Theme context/provider used by the app shell       |
-| `error-boundary.tsx`                   | Global render error boundary fallback UI           |
+| File                              | Purpose                                            |
+| --------------------------------- | -------------------------------------------------- |
+| `ui/`                             | shadcn/ui primitives and styled base components    |
+| `table/data-table.tsx`            | Base TanStack table renderer + `useDataTable` hook |
+| `table/data-table-container.tsx`  | Standard reusable paginated table wrapper          |
+| `table/empty-table.tsx`           | Empty-state table placeholder with headers         |
+| `filters/filter-actions.tsx`      | Reusable `Filtrar`/`Limpar` action group           |
+| `feedback/inline-error-alert.tsx` | Reusable inline destructive feedback block         |
+| `theme-provider.tsx`              | Theme context/provider used by the app shell       |
+| `error-boundary.tsx`              | Global render error boundary fallback UI           |
 
 **Scoped Docs:**
 
@@ -45,7 +45,7 @@ features.
   beside their owning module under `src/features/*`.
 - Prefer composing from `ui/*` primitives instead of duplicating classes across
   pages.
-- For tabular data, default to `DataTableWithPagination`; use `EmptyTable` for
+- For tabular data, default to `DataTableContainer`; use `EmptyTable` for
   header + empty-message placeholders.
 - Reusable feedback/actions (`feedback/*`, `filters/*`) should stay stateless
   and receive behavior via props.
@@ -57,10 +57,10 @@ features.
 
 ## Golden Samples
 
-| Pattern                             | Reference file                                        |
-| ----------------------------------- | ----------------------------------------------------- |
-| Generic paginated table composition | `src/components/table/data-table-with-pagination.tsx` |
-| Shared filter action row            | `src/components/filters/filter-actions.tsx`           |
-| Shared inline error feedback        | `src/components/feedback/inline-error-alert.tsx`      |
+| Pattern                             | Reference file                                   |
+| ----------------------------------- | ------------------------------------------------ |
+| Generic paginated table composition | `src/components/table/data-table-container.tsx`  |
+| Shared filter action row            | `src/components/filters/filter-actions.tsx`      |
+| Shared inline error feedback        | `src/components/feedback/inline-error-alert.tsx` |
 
 <!-- AGENTS-GENERATED:END golden-samples -->

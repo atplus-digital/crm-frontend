@@ -4,13 +4,14 @@ import type {
 	SortingState,
 } from "@tanstack/react-table";
 import type { ReactNode } from "react";
+import { DEFAULT_DATA_TABLE_EMPTY_MESSAGE } from "#/components/table/constants";
 import { DataTable } from "#/components/table/data-table";
 import type { TableFilters } from "#/components/table/data-table-context";
 import { DataTableProvider } from "#/components/table/data-table-context";
 import { DataTablePagination } from "#/components/table/data-table-pagination";
 import { useDataTableController } from "#/components/table/hooks/use-data-table-controller";
 
-interface DataTableWithPaginationProps<
+interface DataTableContainerProps<
 	TData,
 	TFilters extends TableFilters = TableFilters,
 > {
@@ -40,7 +41,7 @@ interface DataTableWithPaginationProps<
 	children?: ReactNode;
 }
 
-export function DataTableWithPagination<
+export function DataTableContainer<
 	TData,
 	TFilters extends TableFilters = TableFilters,
 >({
@@ -48,7 +49,7 @@ export function DataTableWithPagination<
 	data,
 	total,
 	totalPages,
-	emptyMessage = "Nenhum registro encontrado",
+	emptyMessage = DEFAULT_DATA_TABLE_EMPTY_MESSAGE,
 	onPageChange,
 	onPageSizeChange,
 	initialPage = 1,
@@ -62,7 +63,7 @@ export function DataTableWithPagination<
 	onFiltersClear,
 	showPagination = true,
 	children,
-}: DataTableWithPaginationProps<TData, TFilters>) {
+}: DataTableContainerProps<TData, TFilters>) {
 	const controller = useDataTableController<TData, TFilters>({
 		columns,
 		data,

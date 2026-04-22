@@ -1,7 +1,7 @@
+import { TableEmptyRow } from "#/components/table/table-empty-row";
 import {
 	Table,
 	TableBody,
-	TableCell,
 	TableHead,
 	TableHeader,
 	TableRow,
@@ -26,14 +26,7 @@ export function EmptyTable({
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				<TableRow>
-					<TableCell
-						colSpan={columns.length}
-						className="h-24 text-center text-muted-foreground"
-					>
-						{message}
-					</TableCell>
-				</TableRow>
+				<TableEmptyRow colSpan={columns.length} message={message} />
 			</TableBody>
 		</Table>
 	);

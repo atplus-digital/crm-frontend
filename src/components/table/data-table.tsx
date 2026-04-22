@@ -10,7 +10,9 @@ import {
 	getCoreRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import { useOptionalDataTableContext } from "#/components/table/data-table-context";
+import { DEFAULT_DATA_TABLE_EMPTY_MESSAGE } from "#/components/table/constants";
+import { useResolvedDataTable } from "#/components/table/data-table-context";
+import { TableEmptyRow } from "#/components/table/table-empty-row";
 import {
 	TableBody,
 	TableCell,
@@ -29,16 +31,12 @@ export function DataTable<TData>({
 	table: tableProp,
 	emptyMessage,
 }: DataTableProps<TData>) {
-	const context = useOptionalDataTableContext<TData>();
-	const table = tableProp ?? context?.table;
+	const { context, table } = useResolvedDataTable({
+		table: tableProp,
+		componentName: "DataTable",
+	});
 	const resolvedEmptyMessage =
-		emptyMessage ?? context?.emptyMessage ?? "Nenhum registro encontrado";
-
-	if (!table) {
-		throw new Error(
-			"DataTable requires a `table` prop or DataTableProvider context.",
-		);
-	}
+		emptyMessage ?? context?.emptyMessage ?? DEFAULT_DATA_TABLE_EMPTY_MESSAGE;
 
 	const columnCount = table.getVisibleLeafColumns().length;
 
@@ -73,14 +71,10 @@ export function DataTable<TData>({
 							</TableRow>
 						))
 					) : (
-						<TableRow>
-							<TableCell
-								colSpan={columnCount}
-								className="h-24 text-center text-muted-foreground"
-							>
-								{resolvedEmptyMessage}
-							</TableCell>
-						</TableRow>
+						<TableEmptyRow
+							colSpan={columnCount}
+							message={resolvedEmptyMessage}
+						/>
 					)}
 				</TableBody>
 			</TablePrimitive>

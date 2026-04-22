@@ -1,5 +1,6 @@
 import type { OnChangeFn, PaginationState } from "@tanstack/react-table";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { resolveStateUpdater } from "#/components/table/hooks/resolve-state-updater";
 
 interface UsePaginationOptions {
 	/** Initial page number (1-indexed). Default: 1 */
@@ -66,21 +67,24 @@ export function usePagination(
 	const page = pagination.pageIndex + 1;
 	const pageSize = pagination.pageSize;
 
-	const onPaginationChange: OnChangeFn<PaginationState> = (updater) => {
-		const newPagination =
-			typeof updater === "function" ? updater(pagination) : updater;
+	const onPaginationChange = useCallback<OnChangeFn<PaginationState>>(
+		(updater) => {
+			setPagination((previousPagination) => {
+				const nextPagination = resolveStateUpdater(updater, previousPagination);
 
-		// Call callbacks if page changed
-		if (newPagination.pageIndex !== pagination.pageIndex && onPageChange) {
-			onPageChange(newPagination.pageIndex + 1);
-		}
+				if (nextPagination.pageIndex !== previousPagination.pageIndex) {
+					onPageChange?.(nextPagination.pageIndex + 1);
+				}
 
-		if (newPagination.pageSize !== pagination.pageSize && onPageSizeChange) {
-			onPageSizeChange(newPagination.pageSize);
-		}
+				if (nextPagination.pageSize !== previousPagination.pageSize) {
+					onPageSizeChange?.(nextPagination.pageSize);
+				}
 
-		setPagination(newPagination);
-	};
+				return nextPagination;
+			});
+		},
+		[onPageChange, onPageSizeChange],
+	);
 
 	return {
 		pagination,

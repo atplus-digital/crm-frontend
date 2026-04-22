@@ -4,11 +4,13 @@ import type {
 	SortingState,
 } from "@tanstack/react-table";
 import { useCallback, useRef, useState } from "react";
+import { DEFAULT_DATA_TABLE_EMPTY_MESSAGE } from "#/components/table/constants";
 import { useDataTable } from "#/components/table/data-table";
 import type {
 	DataTableController,
 	TableFilters,
 } from "#/components/table/data-table-context";
+import { resolveStateUpdater } from "#/components/table/hooks/resolve-state-updater";
 import { usePagination } from "#/components/table/hooks/use-pagination";
 
 interface PaginationSnapshot {
@@ -38,15 +40,6 @@ interface UseDataTableControllerOptions<
 	onFiltersClear?: (filters: TFilters, pagination: PaginationSnapshot) => void;
 }
 
-function getNextState<TState>(
-	updater: TState | ((previous: TState) => TState),
-	previous: TState,
-) {
-	return typeof updater === "function"
-		? (updater as (previous: TState) => TState)(previous)
-		: updater;
-}
-
 export function useDataTableController<
 	TData,
 	TFilters extends TableFilters = TableFilters,
@@ -63,6 +56,15 @@ export function useDataTableController<
 	const filters = (
 		isFiltersControlled ? options.filters : internalFilters
 	) as TFilters;
+	const {
+		total,
+		emptyMessage,
+		sorting,
+		onSortingChange,
+		onFiltersChange,
+		onFiltersApply,
+		onFiltersClear,
+	} = options;
 
 	const { pagination, onPaginationChange, page, pageSize } = usePagination({
 		initialPage: options.initialPage,
@@ -77,25 +79,25 @@ export function useDataTableController<
 		pageCount: options.totalPages,
 		pagination,
 		onPaginationChange,
-		...(options.sorting !== undefined
+		...(sorting !== undefined
 			? {
-					sorting: options.sorting,
-					onSortingChange: options.onSortingChange,
+					sorting,
+					onSortingChange,
 				}
 			: {}),
 	});
 
 	const setFilters = useCallback(
 		(updater: TFilters | ((previous: TFilters) => TFilters)) => {
-			const nextFilters = getNextState(updater, filters);
+			const nextFilters = resolveStateUpdater(updater, filters);
 
 			if (!isFiltersControlled) {
 				setInternalFilters(nextFilters);
 			}
 
-			options.onFiltersChange?.(nextFilters);
+			onFiltersChange?.(nextFilters);
 		},
-		[filters, isFiltersControlled, options],
+		[filters, isFiltersControlled, onFiltersChange],
 	);
 
 	const setFilter = useCallback(
@@ -137,11 +139,11 @@ export function useDataTableController<
 			pageIndex: 0,
 		}));
 
-		options.onFiltersApply?.(filters, {
+		onFiltersApply?.(filters, {
 			page: 1,
 			pageSize,
 		});
-	}, [filters, onPaginationChange, options, pageSize]);
+	}, [filters, onFiltersApply, onPaginationChange, pageSize]);
 
 	const clearFilters = useCallback(() => {
 		const resetFilters = initialFiltersRef.current;
@@ -152,16 +154,16 @@ export function useDataTableController<
 			pageIndex: 0,
 		}));
 
-		options.onFiltersClear?.(resetFilters, {
+		onFiltersClear?.(resetFilters, {
 			page: 1,
 			pageSize,
 		});
-	}, [onPaginationChange, options, pageSize, setFilters]);
+	}, [onFiltersClear, onPaginationChange, pageSize, setFilters]);
 
 	return {
 		table,
-		total: options.total,
-		emptyMessage: options.emptyMessage ?? "Nenhum registro encontrado",
+		total,
+		emptyMessage: emptyMessage ?? DEFAULT_DATA_TABLE_EMPTY_MESSAGE,
 		pagination,
 		page,
 		pageSize,
@@ -172,7 +174,7 @@ export function useDataTableController<
 		setFilter,
 		applyFilters,
 		clearFilters,
-		sorting: options.sorting,
-		onSortingChange: options.onSortingChange,
+		sorting,
+		onSortingChange,
 	};
 }

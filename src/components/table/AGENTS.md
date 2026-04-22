@@ -15,16 +15,20 @@ composition, rendering, and pagination building blocks.
 
 ## Key Files
 
-| File                                 | Purpose                                                              |
-| ------------------------------------ | -------------------------------------------------------------------- |
-| `data-table.tsx`                     | Base table renderer and low-level `useDataTable` factory             |
-| `data-table-pagination.tsx`          | Shared pagination UI wired to TanStack pagination state              |
-| `data-table-with-pagination.tsx`     | Default composed wrapper (provider + table + optional pagination)    |
-| `data-table-context.tsx`             | Context contract/provider for shared table controller state/actions  |
-| `data-table-column-header.tsx`       | Sortable column header primitive used in feature column definitions  |
-| `empty-table.tsx`                    | Table-shaped empty placeholder with header skeleton                  |
-| `hooks/use-pagination.ts`            | Generic pagination state hook with page/pageSize callbacks           |
-| `hooks/use-data-table-controller.ts` | High-level table controller hook (pagination, filters, table object) |
+| File                                 | Purpose                                                                  |
+| ------------------------------------ | ------------------------------------------------------------------------ |
+| `data-table.tsx`                     | Base table renderer and low-level `useDataTable` factory                 |
+| `data-table-pagination.tsx`          | Shared pagination UI wired to TanStack pagination state                  |
+| `data-table-container.tsx`           | Default composed wrapper (provider + table + optional pagination)        |
+| `data-table-context.tsx`             | Context contract/provider for shared table controller state/actions      |
+| `data-table-column-header.tsx`       | Sortable column header primitive used in feature column definitions      |
+| `detail-table-presets.tsx`           | Shared cell/header presets for detail tables (id/date/money/text/action) |
+| `empty-table.tsx`                    | Table-shaped empty placeholder with header skeleton                      |
+| `table-empty-row.tsx`                | Reusable empty-state table row shared by `DataTable` and `EmptyTable`    |
+| `constants.ts`                       | Shared defaults and options for table empty-state and page sizes         |
+| `hooks/use-pagination.ts`            | Generic pagination state hook with page/pageSize callbacks               |
+| `hooks/resolve-state-updater.ts`     | Shared updater resolver for controlled/uncontrolled table state          |
+| `hooks/use-data-table-controller.ts` | High-level table controller hook (pagination, filters, table object)     |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -32,10 +36,15 @@ composition, rendering, and pagination building blocks.
 
 ## Patterns
 
-- Prefer `DataTableWithPagination` for standard list screens; inject custom
+- Prefer `DataTableContainer` for standard list screens; inject custom
   toolbars/filters as `children` and consume controller via `useDataTableContext`.
 - Keep `DataTable`/`DataTablePagination` backward-compatible: they may receive
   explicit props or derive state from `DataTableProvider`.
+- Centralize shared table defaults and state-updater helpers in local utilities
+  (`constants.ts`, `hooks/resolve-state-updater.ts`) to avoid copy/paste logic.
+- For detail tabs, prefer `detail-table-presets.tsx` helpers (`detailIdCell`,
+  `detailDateCell`, `detailMoneyCell`, `detailShortTextCell`, `detailLongTextCell`,
+  `detailActionCell`) over ad-hoc per-column class names.
 - New cross-table behavior (filters, reset/apply flow, pagination adapters)
   belongs in `use-data-table-controller.ts`, not in feature-level pages.
 
@@ -47,7 +56,7 @@ composition, rendering, and pagination building blocks.
 
 | Pattern                          | Reference file                                            |
 | -------------------------------- | --------------------------------------------------------- |
-| Context-driven table composition | `src/components/table/data-table-with-pagination.tsx`     |
+| Context-driven table composition | `src/components/table/data-table-container.tsx`           |
 | Generic controller hook contract | `src/components/table/hooks/use-data-table-controller.ts` |
 | Stateless pagination view        | `src/components/table/data-table-pagination.tsx`          |
 

@@ -1,5 +1,7 @@
 import type { Table } from "@tanstack/react-table";
-import { useOptionalDataTableContext } from "#/components/table/data-table-context";
+import type { MouseEventHandler } from "react";
+import { DATA_TABLE_PAGE_SIZE_OPTIONS } from "#/components/table/constants";
+import { useResolvedDataTable } from "#/components/table/data-table-context";
 import {
 	Pagination,
 	PaginationContent,
@@ -20,6 +22,15 @@ import {
 interface DataTablePaginationProps<TData> {
 	table?: Table<TData>;
 	total?: number;
+}
+
+function withPreventDefault(
+	action: () => void,
+): MouseEventHandler<HTMLAnchorElement> {
+	return (event) => {
+		event.preventDefault();
+		action();
+	};
 }
 
 function getPageNumbers(
@@ -56,15 +67,11 @@ export function DataTablePagination<TData>({
 	table: tableProp,
 	total: totalProp,
 }: DataTablePaginationProps<TData>) {
-	const context = useOptionalDataTableContext<TData>();
-	const table = tableProp ?? context?.table;
+	const { context, table } = useResolvedDataTable({
+		table: tableProp,
+		componentName: "DataTablePagination",
+	});
 	const total = totalProp ?? context?.total;
-
-	if (!table) {
-		throw new Error(
-			"DataTablePagination requires a `table` prop or DataTableProvider context.",
-		);
-	}
 
 	const { pageIndex, pageSize } = table.getState().pagination;
 	const totalPages = table.getPageCount();
@@ -87,10 +94,7 @@ export function DataTablePagination<TData>({
 					<PaginationItem>
 						<PaginationPrevious
 							href="#"
-							onClick={(e) => {
-								e.preventDefault();
-								table.previousPage();
-							}}
+							onClick={withPreventDefault(() => table.previousPage())}
 							className={
 								!table.getCanPreviousPage()
 									? "pointer-events-none opacity-50"
@@ -113,10 +117,7 @@ export function DataTablePagination<TData>({
 								<PaginationLink
 									href="#"
 									isActive={p === currentPage}
-									onClick={(e) => {
-										e.preventDefault();
-										table.setPageIndex(p - 1);
-									}}
+									onClick={withPreventDefault(() => table.setPageIndex(p - 1))}
 								>
 									{p}
 								</PaginationLink>
@@ -127,10 +128,7 @@ export function DataTablePagination<TData>({
 					<PaginationItem>
 						<PaginationNext
 							href="#"
-							onClick={(e) => {
-								e.preventDefault();
-								table.nextPage();
-							}}
+							onClick={withPreventDefault(() => table.nextPage())}
 							className={
 								!table.getCanNextPage() ? "pointer-events-none opacity-50" : ""
 							}
@@ -151,10 +149,14 @@ export function DataTablePagination<TData>({
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent>
-						<SelectItem value="10">10</SelectItem>
-						<SelectItem value="20">20</SelectItem>
-						<SelectItem value="50">50</SelectItem>
-						<SelectItem value="100">100</SelectItem>
+						{DATA_TABLE_PAGE_SIZE_OPTIONS.map((pageSizeOption) => (
+							<SelectItem
+								key={pageSizeOption}
+								value={pageSizeOption.toString()}
+							>
+								{pageSizeOption}
+							</SelectItem>
+						))}
 					</SelectContent>
 				</Select>
 			</div>

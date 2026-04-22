@@ -92,14 +92,14 @@ export interface PessoaFisica {
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 
-| For                 | Reference                                           | Key patterns                                             |
-| ------------------- | --------------------------------------------------- | -------------------------------------------------------- |
-| Route (protected)   | `src/routes/dashboard/index.tsx`                    | `requireAuth` in `loader`, `Component` export            |
-| Route (public auth) | `src/routes/auth/login/index.tsx`                   | `requireGuest` in `loader`, `Component` export           |
-| Router config       | `src/routes/router.tsx`                             | `createBrowserRouter`, lazy route imports, nested routes |
-| Auth module         | `src/features/auth/index.ts`                        | barrel export pattern                                    |
-| Error handling      | `src/components/error-boundary.tsx`                 | React Error Boundary pattern with user-friendly UI       |
-| Component structure | `src/features/auth/components/profile-details.tsx`  | Separate business logic from presentation in dashboard   |
+| For                 | Reference                                          | Key patterns                                             |
+| ------------------- | -------------------------------------------------- | -------------------------------------------------------- |
+| Route (protected)   | `src/routes/dashboard/index.tsx`                   | `requireAuth` in `loader`, `Component` export            |
+| Route (public auth) | `src/routes/auth/login/index.tsx`                  | `requireGuest` in `loader`, `Component` export           |
+| Router config       | `src/routes/router.tsx`                            | `createBrowserRouter`, lazy route imports, nested routes |
+| Auth module         | `src/features/auth/index.ts`                       | barrel export pattern                                    |
+| Error handling      | `src/components/error-boundary.tsx`                | React Error Boundary pattern with user-friendly UI       |
+| Component structure | `src/features/auth/components/profile-details.tsx` | Separate business logic from presentation in dashboard   |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
 
@@ -115,7 +115,7 @@ export interface PessoaFisica {
 | Unsure about pattern          | Check Golden Samples above or `src/AGENTS.md`                          |
 | File naming                   | Use `kebab-case.tsx` for components/routes                             |
 | Import paths                  | Prefer `#/` alias over relative paths                                  |
-| Table with pagination         | Use `DataTableWithPagination` component                                |
+| Table with pagination         | Use `DataTableContainer` component                                     |
 | Filter for NocoBase/IXC       | Use `filter-builder.ts` helpers                                        |
 | Pagination state              | Use `usePagination` hook                                               |
 | Date formatting               | Use `formatDatePtBR()` from utils                                      |

@@ -43,6 +43,11 @@ interface DataTableProviderProps<
 	children: ReactNode;
 }
 
+interface UseResolvedDataTableOptions<TData> {
+	table?: Table<TData>;
+	componentName: string;
+}
+
 export function DataTableProvider<
 	TData,
 	TFilters extends TableFilters = TableFilters,
@@ -79,4 +84,23 @@ export function useDataTableContext<
 	}
 
 	return context;
+}
+
+export function useResolvedDataTable<TData>({
+	table: tableProp,
+	componentName,
+}: UseResolvedDataTableOptions<TData>) {
+	const context = useOptionalDataTableContext<TData>();
+	const table = tableProp ?? context?.table;
+
+	if (!table) {
+		throw new Error(
+			`${componentName} requires a \`table\` prop or DataTableProvider context.`,
+		);
+	}
+
+	return {
+		context,
+		table,
+	};
 }
