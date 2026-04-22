@@ -14,13 +14,15 @@ Ownership transfer feature — manages contract titularidade change requests bet
 
 ## Key Files
 
-| File                                        | Purpose                                             |
-| ------------------------------------------- | --------------------------------------------------- |
-| `index.ts`                                  | Barrel export for hooks and types                   |
-| `troca-titularidade-hooks.ts`               | React Query hooks for list/detail operations        |
-| `detail-section.tsx`                        | Local card wrapper for the transfer detail sections |
-| `components/troca-titularidade-list.tsx`    | Paginated list with status filtering                |
-| `components/troca-titularidade-details.tsx` | Detail page with all transfer sections              |
+| File                                        | Purpose                                                    |
+| ------------------------------------------- | ---------------------------------------------------------- |
+| `index.ts`                                  | Barrel export for hooks and components                     |
+| `troca-titularidade-types.ts`               | Filter options, badge variants, `TrocaTitularidadeFilters` |
+| `troca-titularidade-hooks.ts`               | React Query hooks + `buildTrocaTitularidadeFilter()`       |
+| `troca-titularidade-filters.tsx`            | `TrocaTitularidadeFilterBar` — 8-field filter UI           |
+| `detail-section.tsx`                        | Local card wrapper for the transfer detail sections        |
+| `components/troca-titularidade-list.tsx`    | Paginated list with sorting                                |
+| `components/troca-titularidade-details.tsx` | Detail page with sectioned layout                          |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -31,6 +33,7 @@ Ownership transfer feature — manages contract titularidade change requests bet
 **Key fields:**
 
 - `f_status` / `f_substatus` — workflow status
+- `f_tipo_pessoa` — PF/PJ classification
 - `f_cedente` / `f_cedente_documento` — cedente name + document
 - `f_cessionario` / `f_cessionario_documento` — cessionário name + document
 - `f_id_contrato` — associated contract ID
@@ -41,7 +44,7 @@ Ownership transfer feature — manages contract titularidade change requests bet
 - `f_pessoa_pf` / `f_pessoa_pj` — person relations (optional)
 - `f_vendedor` — responsible seller
 
-**Relations:** `f_anexos`, `f_comentarios`, `f_pessoa_pf`, `f_pessoa_pj`, `f_vendedor`
+**Relations:** `f_anexos`, `f_comentarios`, `f_pessoa_pf`, `f_pessoa_pj`, `f_vendedor`, `f_trocadetitularidade_contrato`
 
 <!-- AGENTS-GENERATED:START status -->
 
@@ -71,21 +74,36 @@ Ownership transfer feature — manages contract titularidade change requests bet
 
 ## Routes
 
-| Path                         | Page        |
-| ---------------------------- | ----------- |
-| `/troca-de-titularidade`     | List page   |
-| `/troca-de-titularidade/:id` | Detail page |
+| Path                            | Page        |
+| ------------------------------- | ----------- |
+| `/cs/troca-de-titularidade`     | List page   |
+| `/cs/troca-de-titularidade/:id` | Detail page |
 
 <!-- AGENTS-GENERATED:START patterns -->
 
 ## Patterns
 
-- List page uses `DataTableWithPagination` with status/substatus filter predicates.
-- Detail page renders sections: Dados da Transferência, Cedente, Cessionário, Endereço, Contrato, Anexos, Comentários.
-- ZapSign links (`f_link_assinatura_cedente`, `f_link_assinatura_cessionario`) render as external links.
+- Filter options and badge variants derive from generated labels (`CRMTROCATITULARIDADE_STATUS_LABELS` etc.) — never redefine manually.
+- List page uses `DataTableWithPagination` with `TrocaTitularidadeFilterBar` for 8-field filtering (status, substatus, estado selects + cidade, contrato, cedente, cessionário text + date).
+- Hook `buildTrocaTitularidadeFilter()` maps typed filters to NocoBase `$eq`/`$includes`/`$gte` via `filter-builder` helpers.
+- Detail page renders sections in order: Identificação, Cedente, Cessionário, Endereço, Assinaturas, Relacionamentos, Anexos, Comentários.
+- ZapSign links render as external `<a>` tags (off-site URLs — correct usage).
 - All repository calls use `nocobaseRepository` with generated types from `#/generated/nocobase/crm-troca-titularidade`.
 
 <!-- AGENTS-GENERATED:END patterns -->
+
+<!-- AGENTS-GENERATED:START golden-samples -->
+
+## Golden Samples
+
+| Pattern                    | Reference file                              |
+| -------------------------- | ------------------------------------------- |
+| Filter options from labels | `troca-titularidade-types.ts`               |
+| Filter bar UI              | `troca-titularidade-filters.tsx`            |
+| Filter builder in hooks    | `troca-titularidade-hooks.ts`               |
+| Detail sectioned layout    | `components/troca-titularidade-details.tsx` |
+
+<!-- AGENTS-GENERATED:END golden-samples -->
 
 ## When instructions conflict
 

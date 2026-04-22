@@ -2,11 +2,14 @@ import { useState } from "react";
 import { useSearchParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { TrocaTitularidadeList } from "#/features/cs/troca-titularidade";
+import { TrocaTitularidadeFilterBar } from "#/features/cs/troca-titularidade/troca-titularidade-filters";
 import { useTrocaTitularidade } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
+import type { TrocaTitularidadeFilters as FilterValues } from "#/features/cs/troca-titularidade/troca-titularidade-types";
 
 export function TrocaTitularidadePage() {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [sort, setSort] = useState<string[]>([]);
+	const [filters, setFilters] = useState<FilterValues>({});
 
 	const page = Number(searchParams.get("page")) || 1;
 	const pageSize = Number(searchParams.get("pageSize")) || 20;
@@ -36,6 +39,7 @@ export function TrocaTitularidadePage() {
 		page,
 		pageSize,
 		sort,
+		filters,
 	});
 
 	function handleSort(field: string) {
@@ -59,6 +63,9 @@ export function TrocaTitularidadePage() {
 						Solicitações de troca de titularidade
 					</p>
 				</div>
+
+				<TrocaTitularidadeFilterBar filters={filters} onFilter={setFilters} />
+
 				{error ? (
 					<InlineErrorAlert>
 						Erro ao carregar transferências de titularidade:{" "}

@@ -7,20 +7,10 @@ import { DataTableColumnHeader } from "#/components/table/data-table-column-head
 import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Button } from "#/components/ui/button";
 import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
+import { TROCA_STATUS_VARIANTS } from "#/features/cs/troca-titularidade/troca-titularidade-types";
 import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/nocobase/crm-troca-titularidade";
 import { formatDatePtBR } from "#/lib/utils";
 import { buildRoute } from "#/routes/route-paths";
-
-const TROCA_STATUS_VARIANTS: Record<
-	string,
-	"default" | "secondary" | "destructive" | "outline"
-> = {
-	"0": "secondary",
-	"1": "default",
-	"2": "outline",
-	"3": "default",
-	"9": "destructive",
-};
 
 interface PaginationInfo {
 	page: number;
