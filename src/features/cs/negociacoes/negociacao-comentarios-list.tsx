@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import type { ReactNode } from "react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { CommentSkeleton } from "./comment-skeleton";
+import { CommentSkeleton } from "./negociacao-comentarios-skeleton";
 
 interface CommentItem {
 	id: number;

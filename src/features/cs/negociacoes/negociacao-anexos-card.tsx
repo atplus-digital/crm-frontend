@@ -9,7 +9,7 @@ import {
 	CardTitle,
 } from "#/components/ui/card";
 import { formatDatePtBR, formatFileSize } from "#/lib/utils";
-import { getFileIcon, getFileTypeBadge } from "./utils";
+import { getFileIcon, getFileTypeBadge } from "./negociacao-anexos-utils";
 
 interface AttachmentCardProps {
 	filename: string;

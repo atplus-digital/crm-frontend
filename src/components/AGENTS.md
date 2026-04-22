@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-16 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
 
 # AGENTS.md — components
 
@@ -24,12 +24,13 @@ features.
 | `table/empty-table.tsx`                | Empty-state table placeholder with headers         |
 | `filters/filter-actions.tsx`           | Reusable `Filtrar`/`Limpar` action group           |
 | `feedback/inline-error-alert.tsx`      | Reusable inline destructive feedback block         |
-| `layout/dashboard-layout.tsx`          | App layout scaffold with sidebar + content area    |
+| `theme-provider.tsx`                   | Theme context/provider used by the app shell       |
 | `error-boundary.tsx`                   | Global render error boundary fallback UI           |
 
 **Scoped Docs:**
 
 - `ui/AGENTS.md` — shadcn/ui component reference and customization guide
+- `table/AGENTS.md` — Shared TanStack table controller/context and table composition patterns
 - `../layout/AGENTS.md` — App shell composition and sidebar patterns
 
 <!-- AGENTS-GENERATED:END filemap -->
@@ -40,6 +41,8 @@ features.
 
 - Keep components in `src/components` framework-agnostic when possible; domain
   rules stay in `src/features/*`.
+- Only keep cross-feature primitives here; feature-owned cards/sections belong
+  beside their owning module under `src/features/*`.
 - Prefer composing from `ui/*` primitives instead of duplicating classes across
   pages.
 - For tabular data, default to `DataTableWithPagination`; use `EmptyTable` for

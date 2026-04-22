@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-16 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
 
 # AGENTS.md — auth
 
@@ -23,6 +23,8 @@ Authentication module — NocoBase SDK client, auth store, service operations, a
 | `store.ts`                       | TanStack Store state (`user`, `token`, `isAuthenticated`) and state updaters           |
 | `types.ts`                       | Auth types and Zod schemas (`authUserSchema`, `authResponseSchema`)                    |
 | `components/login-form.tsx`      | Login form with React Hook Form + Zod and redirect handling                            |
+| `components/detail-item.tsx`     | Small label/value row used by the profile details view                                 |
+| `components/info-card.tsx`       | Compact summary card used by the profile details view                                  |
 | `components/profile-details.tsx` | Profile presentation component for authenticated user data                             |
 | `components/auth-layout.tsx`     | Shared guest/auth page shell                                                           |
 

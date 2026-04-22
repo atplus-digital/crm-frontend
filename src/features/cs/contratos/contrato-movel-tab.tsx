@@ -1,4 +1,3 @@
-import { ContractTabWrapper } from "#/components/contract/contract-tab-wrapper";
 import {
 	Table,
 	TableBody,
@@ -7,6 +6,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "#/components/ui/table";
+import { ContractTabWrapper } from "#/features/cs/contract-tab-wrapper";
 import { useContratoMovel } from "#/features/cs/contratos/contratos-hooks";
 
 const MOVEL_COLUMNS = [

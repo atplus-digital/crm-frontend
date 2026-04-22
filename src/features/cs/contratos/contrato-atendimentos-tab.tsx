@@ -1,6 +1,6 @@
 import { Eye } from "lucide-react";
-import { ContractTabWrapper } from "#/components/contract/contract-tab-wrapper";
 import { Button } from "#/components/ui/button";
+import { ContractTabWrapper } from "#/features/cs/contract-tab-wrapper";
 import { useContratoAtendimentos } from "#/features/cs/contratos/contratos-hooks";
 import type { AtendimentoIXC } from "#/features/cs/contratos/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";

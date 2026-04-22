@@ -1,7 +1,7 @@
 import { Paperclip } from "lucide-react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { AttachmentCard } from "./attachment-card";
-import { AttachmentSkeleton } from "./attachment-skeleton";
+import { AttachmentCard } from "./negociacao-anexos-card";
+import { AttachmentSkeleton } from "./negociacao-anexos-skeleton";
 
 interface Attachment {
 	id: number | string;

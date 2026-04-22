@@ -14,12 +14,13 @@ Ownership transfer feature — manages contract titularidade change requests bet
 
 ## Key Files
 
-| File                                        | Purpose                                      |
-| ------------------------------------------- | -------------------------------------------- |
-| `index.ts`                                  | Barrel export for hooks and types            |
-| `troca-titularidade-hooks.ts`               | React Query hooks for list/detail operations |
-| `components/troca-titularidade-list.tsx`    | Paginated list with status filtering         |
-| `components/troca-titularidade-details.tsx` | Detail page with all transfer sections       |
+| File                                        | Purpose                                             |
+| ------------------------------------------- | --------------------------------------------------- |
+| `index.ts`                                  | Barrel export for hooks and types                   |
+| `troca-titularidade-hooks.ts`               | React Query hooks for list/detail operations        |
+| `detail-section.tsx`                        | Local card wrapper for the transfer detail sections |
+| `components/troca-titularidade-list.tsx`    | Paginated list with status filtering                |
+| `components/troca-titularidade-details.tsx` | Detail page with all transfer sections              |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

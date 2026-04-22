@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-16 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
 
 # AGENTS.md — cs
 
@@ -29,6 +29,11 @@ Customer Success domain module — contracts, negotiations, and people flows (ty
 | `pessoas/pessoas-types.ts`           | Person (PF/PJ) entities and filtering/pagination types      |
 | `pessoas/pessoas-service.ts`         | CRUD/list services for PF/PJ using NocoBase repositories    |
 | `pessoas/pessoas-hooks.ts`           | React Query hooks for PF/PJ lists and details               |
+| `back-button.tsx`                    | Cross-CS back navigation helper for detail pages            |
+| `detail-field.tsx`                   | Read-only label/value primitive for CS detail screens       |
+| `detail-skeleton.tsx`                | Shared skeletons for CS detail sections and cards           |
+| `contract-tab-wrapper.tsx`           | Shared card wrapper for contract/negotiation tab bodies     |
+| `contract-tab-skeleton.tsx`          | Skeleton body used by the shared contract tab wrapper       |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -44,6 +49,8 @@ Customer Success domain module — contracts, negotiations, and people flows (ty
 - Services must call repositories with generated interfaces (`#/generated/**`) as source-of-truth; never redefine repository collection schemas manually.
 - If an interface is missing for a collection, prefer updating the type generator config and regenerating before introducing any manual type.
 - Relationship/appends typing (for example `f_nc_cliente`) must be derived from generated interfaces using `Pick`/`Omit`, never manually re-declared.
+- Shared CS presentation primitives live at the feature root and are imported
+  from `#/features/cs/*`; keep subdomain-specific UI next to the owning flow.
 
 <!-- AGENTS-GENERATED:END patterns -->
 

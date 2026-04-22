@@ -1,4 +1,3 @@
-import { CardSectionSkeleton } from "#/components/detail/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { EmptyTable } from "#/components/table/empty-table";
 import { Button } from "#/components/ui/button";
@@ -11,6 +10,7 @@ import {
 } from "#/components/ui/card";
 import { Skeleton } from "#/components/ui/skeleton";
 import { useContratoTrocasTitularidade } from "#/features/cs/contratos/contratos-hooks";
+import { CardSectionSkeleton } from "#/features/cs/detail-skeleton";
 import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 

@@ -1,12 +1,11 @@
 import { Calendar, FileText, MapPin, User } from "lucide-react";
 import { useParams } from "react-router";
 import { StatusBadge as SharedStatusBadge } from "#/components/badges/status-badge";
-import { BackButton } from "#/components/detail/back-button";
-import { DetailField } from "#/components/detail/detail-field";
-import { DetailSection } from "#/components/detail/detail-section";
-import { CardSectionSkeleton } from "#/components/detail/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Skeleton } from "#/components/ui/skeleton";
+import { BackButton } from "#/features/cs/back-button";
+import { DetailField } from "#/features/cs/detail-field";
+import { CardSectionSkeleton } from "#/features/cs/detail-skeleton";
 import { useTrocaTitularidadeById } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import {
 	CRMTROCATITULARIDADE_STATUS_LABELS,
@@ -14,6 +13,7 @@ import {
 } from "#/generated/nocobase/crm-troca-titularidade";
 import { formatDatePtBR, formatPhone } from "#/lib/utils";
 import { routePaths } from "#/routes/route-paths";
+import { DetailSection } from "../detail-section";
 
 export function TrocaTitularidadeDetailPage() {
 	const { id } = useParams<{ id: string }>();

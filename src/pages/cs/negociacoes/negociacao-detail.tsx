@@ -6,14 +6,14 @@ import {
 	Smartphone,
 } from "lucide-react";
 import { useParams } from "react-router";
-import { BackButton } from "#/components/detail/back-button";
-import { DetailField } from "#/components/detail/detail-field";
-import { DetailSkeleton } from "#/components/detail/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Badge } from "#/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { Skeleton } from "#/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
+import { BackButton } from "#/features/cs/back-button";
+import { DetailField } from "#/features/cs/detail-field";
+import { DetailSkeleton } from "#/features/cs/detail-skeleton";
 import { NegociacaoAnexosTab } from "#/features/cs/negociacoes/negociacao-anexos-tab";
 import {
 	PontosAtencaoBadge,

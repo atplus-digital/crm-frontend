@@ -1,5 +1,5 @@
-import { AttachmentGrid } from "#/components/attachments/attachment-grid";
 import { useNegociacaoAnexos } from "#/features/cs/negociacoes/negociacoes-hooks";
+import { AttachmentGrid } from "./negociacao-anexos-grid";
 
 export function NegociacaoAnexosTab({
 	negociacaoId,
