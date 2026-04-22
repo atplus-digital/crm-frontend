@@ -3,12 +3,17 @@ import type {
 	OnChangeFn,
 	SortingState,
 } from "@tanstack/react-table";
-
-import { DataTable, useDataTable } from "#/components/table/data-table";
+import type { ReactNode } from "react";
+import { DataTable } from "#/components/table/data-table";
+import type { TableFilters } from "#/components/table/data-table-context";
+import { DataTableProvider } from "#/components/table/data-table-context";
 import { DataTablePagination } from "#/components/table/data-table-pagination";
-import { usePagination } from "#/components/table/hooks/use-pagination";
+import { useDataTableController } from "#/components/table/hooks/use-data-table-controller";
 
-interface DataTableWithPaginationProps<TData> {
+interface DataTableWithPaginationProps<
+	TData,
+	TFilters extends TableFilters = TableFilters,
+> {
 	columns: ColumnDef<TData, unknown>[];
 	data: TData[];
 	total?: number;
@@ -20,9 +25,25 @@ interface DataTableWithPaginationProps<TData> {
 	initialPageSize?: number;
 	sorting?: SortingState;
 	onSortingChange?: OnChangeFn<SortingState>;
+	initialFilters?: TFilters;
+	filters?: TFilters;
+	onFiltersChange?: (filters: TFilters) => void;
+	onFiltersApply?: (
+		filters: TFilters,
+		pagination: { page: number; pageSize: number },
+	) => void;
+	onFiltersClear?: (
+		filters: TFilters,
+		pagination: { page: number; pageSize: number },
+	) => void;
+	showPagination?: boolean;
+	children?: ReactNode;
 }
 
-export function DataTableWithPagination<TData>({
+export function DataTableWithPagination<
+	TData,
+	TFilters extends TableFilters = TableFilters,
+>({
 	columns,
 	data,
 	total,
@@ -34,27 +55,40 @@ export function DataTableWithPagination<TData>({
 	initialPageSize = 20,
 	sorting,
 	onSortingChange,
-}: DataTableWithPaginationProps<TData>) {
-	const { pagination, onPaginationChange } = usePagination({
+	initialFilters,
+	filters,
+	onFiltersChange,
+	onFiltersApply,
+	onFiltersClear,
+	showPagination = true,
+	children,
+}: DataTableWithPaginationProps<TData, TFilters>) {
+	const controller = useDataTableController<TData, TFilters>({
+		columns,
+		data,
+		total,
+		totalPages,
+		emptyMessage,
 		initialPage,
 		initialPageSize,
 		onPageChange,
 		onPageSizeChange,
-	});
-
-	const table = useDataTable({
-		columns,
-		data,
-		pageCount: totalPages,
-		pagination,
-		onPaginationChange,
-		...(sorting && { sorting, onSortingChange }),
+		sorting,
+		onSortingChange,
+		initialFilters,
+		filters,
+		onFiltersChange,
+		onFiltersApply,
+		onFiltersClear,
 	});
 
 	return (
-		<div className="flex flex-col gap-4">
-			<DataTable table={table} emptyMessage={emptyMessage} />
-			<DataTablePagination table={table} total={total} />
-		</div>
+		<DataTableProvider value={controller}>
+			<div className="flex flex-col gap-4">
+				{children}
+				<DataTable />
+				{showPagination ? <DataTablePagination /> : null}
+			</div>
+		</DataTableProvider>
 	);
 }

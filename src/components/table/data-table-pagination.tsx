@@ -1,5 +1,5 @@
 import type { Table } from "@tanstack/react-table";
-
+import { useOptionalDataTableContext } from "#/components/table/data-table-context";
 import {
 	Pagination,
 	PaginationContent,
@@ -18,7 +18,7 @@ import {
 } from "#/components/ui/select";
 
 interface DataTablePaginationProps<TData> {
-	table: Table<TData>;
+	table?: Table<TData>;
 	total?: number;
 }
 
@@ -53,9 +53,19 @@ function getPageNumbers(
 }
 
 export function DataTablePagination<TData>({
-	table,
-	total,
+	table: tableProp,
+	total: totalProp,
 }: DataTablePaginationProps<TData>) {
+	const context = useOptionalDataTableContext<TData>();
+	const table = tableProp ?? context?.table;
+	const total = totalProp ?? context?.total;
+
+	if (!table) {
+		throw new Error(
+			"DataTablePagination requires a `table` prop or DataTableProvider context.",
+		);
+	}
+
 	const { pageIndex, pageSize } = table.getState().pagination;
 	const totalPages = table.getPageCount();
 

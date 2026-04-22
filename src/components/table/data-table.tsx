@@ -10,7 +10,7 @@ import {
 	getCoreRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-
+import { useOptionalDataTableContext } from "#/components/table/data-table-context";
 import {
 	TableBody,
 	TableCell,
@@ -21,14 +21,25 @@ import {
 } from "#/components/ui/table";
 
 interface DataTableProps<TData> {
-	table: Table<TData>;
+	table?: Table<TData>;
 	emptyMessage?: string;
 }
 
 export function DataTable<TData>({
-	table,
-	emptyMessage = "Nenhum registro encontrado",
+	table: tableProp,
+	emptyMessage,
 }: DataTableProps<TData>) {
+	const context = useOptionalDataTableContext<TData>();
+	const table = tableProp ?? context?.table;
+	const resolvedEmptyMessage =
+		emptyMessage ?? context?.emptyMessage ?? "Nenhum registro encontrado";
+
+	if (!table) {
+		throw new Error(
+			"DataTable requires a `table` prop or DataTableProvider context.",
+		);
+	}
+
 	const columnCount = table.getVisibleLeafColumns().length;
 
 	return (
@@ -67,7 +78,7 @@ export function DataTable<TData>({
 								colSpan={columnCount}
 								className="h-24 text-center text-muted-foreground"
 							>
-								{emptyMessage}
+								{resolvedEmptyMessage}
 							</TableCell>
 						</TableRow>
 					)}
