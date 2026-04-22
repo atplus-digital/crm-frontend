@@ -1,4 +1,5 @@
 import type { DataSourceCollection } from "../../@types/script";
+import { normalizeCollectionNames } from "../../utils/naming";
 import type { InitContext, PipelineStage } from "../types";
 
 /**
@@ -30,15 +31,3 @@ export const fetchCollections: PipelineStage<InitContext> = async (ctx) => {
 
 	return { ...ctx, collections };
 };
-
-function normalizeCollectionNames(
-	collectionNames: string[] | undefined,
-): string[] {
-	if (!collectionNames) {
-		return [];
-	}
-
-	return [...new Set(collectionNames)]
-		.map((name) => name.trim())
-		.filter((name) => name.length > 0);
-}

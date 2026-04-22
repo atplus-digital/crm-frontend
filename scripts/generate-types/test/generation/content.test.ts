@@ -7,7 +7,6 @@ import {
 	generateContentForCollections,
 	generateFileHeader,
 	generateSplitFiles,
-	generateTypeDefinitions,
 } from "@scripts/generate-types/src/generation/content";
 import { describe, expect, it } from "vitest";
 import {
@@ -262,17 +261,6 @@ describe("content", () => {
 			const content = result.get("users") ?? "";
 			expect(content).toContain("Arquivo gerado automaticamente");
 			expect(content).toContain("USERS_TABLE_NAME");
-		});
-	});
-
-	describe("generateTypeDefinitions (deprecated)", () => {
-		it("delegates to generateContentForCollections with includeHeader=false", () => {
-			const collections = createMockCollectionTypesMap({
-				users: { scalars: { id: "number" } },
-			});
-			const result = generateTypeDefinitions(collections);
-			expect(result).not.toContain("Arquivo gerado automaticamente");
-			expect(result).toContain("export interface UsersBase");
 		});
 	});
 

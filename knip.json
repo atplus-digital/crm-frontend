@@ -3,7 +3,7 @@
 	"tags": ["-lintignore"],
 
 	"entry": ["src/routes/router.tsx", "scripts/**/index.ts"],
-	"project": ["src/**/*.ts", "src/**/*.tsx", "scripts/**/*.ts", "src/**/*.css"],
+	"project": ["src/**/*.ts", "src/**/*.tsx", "scripts/**/*.ts"],
 	"rules": {
 		"exports": "warn",
 		"types": "warn",

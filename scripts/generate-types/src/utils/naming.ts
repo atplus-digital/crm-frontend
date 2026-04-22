@@ -3,6 +3,14 @@ import type { BaseInterfaceNamingConfig } from "@scripts/generate-types/src/@typ
 const VALID_IDENTIFIER = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
 
 /**
+ * Remove apenas acentos de uma string, mantendo espaços e outros caracteres.
+ * Usado para gerar nomes de enums válidos em TypeScript.
+ */
+export function removeAccents(str: string): string {
+	return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+/**
  * Nome usado quando uma collection chega sem identificador válido.
  * Usa um sentinel improvável de colidir com nomes reais.
  */
@@ -170,4 +178,19 @@ export function toFileName(collectionName: string): string {
 		.filter(Boolean)
 		.map((part) => part.toLowerCase())
 		.join("-");
+}
+
+/**
+ * Normaliza array de nomes de collections: remove duplicatas, trim e filtra vazios.
+ */
+export function normalizeCollectionNames(
+	collectionNames: string[] | undefined,
+): string[] {
+	if (!collectionNames) {
+		return [];
+	}
+
+	return [...new Set(collectionNames)]
+		.map((collectionName) => collectionName.trim())
+		.filter((collectionName) => collectionName.length > 0);
 }

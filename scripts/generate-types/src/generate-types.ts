@@ -11,19 +11,10 @@ import { createInitialContext } from "./pipeline/context-builder";
 import { defaultPipeline } from "./pipeline/default-pipeline";
 import { runPostPipeline } from "./pipeline/post-pipeline";
 import { logger } from "./utils/logger";
+import { normalizeCollectionNames } from "./utils/naming";
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 
-export function normalizeCollectionNames(
-	collectionNames: string[] | undefined,
-): string[] {
-	if (!collectionNames) {
-		return [];
-	}
-
-	return [...new Set(collectionNames)]
-		.map((collectionName) => collectionName.trim())
-		.filter((collectionName) => collectionName.length > 0);
-}
+export { normalizeCollectionNames } from "./utils/naming";
 
 export function resolveDataSourceConfigs(): DataSourceGenerationConfig[] {
 	return (config.datasources ?? []).filter(

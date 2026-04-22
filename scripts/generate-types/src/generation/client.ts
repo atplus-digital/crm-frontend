@@ -8,7 +8,6 @@ import type {
 	DataSourceClient,
 	DataSourceCollection,
 	DataSourceField,
-	InferredEnumsMap,
 	RejectedFieldsMap,
 } from "@scripts/generate-types/src/@types/script";
 import { inferEnumsFromSample } from "./enum-inference";
