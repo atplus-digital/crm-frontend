@@ -95,19 +95,6 @@ export async function fetchPessoasFisicas(
 	}
 }
 
-export async function fetchPessoaFisicaById(id: number): Promise<PessoaFisica> {
-	try {
-		const response = await nocobaseRepository.get("t_pessoas", id);
-
-		return response as Pessoas;
-	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
-		log.error("Failed to fetch pessoa física by ID", { id, error: message });
-		throw error;
-	}
-}
-
 export async function fetchPessoasJuridicas(
 	params: PessoaJuridicaListParams = {},
 ): Promise<PessoaJuridicaResponse> {
@@ -138,21 +125,6 @@ export async function fetchPessoasJuridicas(
 		const message =
 			error instanceof Error ? error.message : "Erro desconhecido";
 		log.error("Failed to fetch pessoas jurídicas", { error: message });
-		throw error;
-	}
-}
-
-export async function fetchPessoaJuridicaById(
-	id: number,
-): Promise<PessoaJuridica> {
-	try {
-		const response = await nocobaseRepository.get("t_empresas", id);
-
-		return response as Empresas;
-	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
-		log.error("Failed to fetch pessoa jurídica by ID", { id, error: message });
 		throw error;
 	}
 }

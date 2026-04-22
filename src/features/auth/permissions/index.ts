@@ -10,11 +10,6 @@ export {
 	useRoleNames,
 } from "./hooks";
 export {
-	filterNavByPermissions,
-	filterNavSectionsByPermissions,
-} from "./nav-permissions";
-
-export {
 	permissionsStore,
 	resetPermissions,
 	setPermissionsFromRoles,

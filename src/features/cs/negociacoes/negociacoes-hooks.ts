@@ -67,17 +67,6 @@ export function useNegociacaoComentarios(negociacaoId: number) {
 	return useQuery(negociacaoComentariosQueryOptions(negociacaoId));
 }
 
-export const negociacaoPacotesQueryOptions = (negociacaoId: number) =>
-	queryOptions({
-		queryKey: ["cs", "negociacoes", "pacotes", negociacaoId] as const,
-		queryFn: () => fetchNegociacaoPacotes(negociacaoId),
-		staleTime: 30_000,
-	});
-
-export function useNegociacaoPacotes(negociacaoId: number) {
-	return useQuery(negociacaoPacotesQueryOptions(negociacaoId));
-}
-
 // Hooks para mutações (criar, atualizar, deletar)
 // Nota: Estes hooks são simplificados - em produção, considere usar useMutation do TanStack Query
 export {
