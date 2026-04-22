@@ -5,6 +5,7 @@ import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Skeleton } from "#/components/ui/skeleton";
 import { BackButton } from "#/features/cs/back-button";
 import { DetailField } from "#/features/cs/detail-field";
+import { DetailSection } from "#/features/cs/detail-section";
 import { CardSectionSkeleton } from "#/features/cs/detail-skeleton";
 import { useTrocaTitularidadeById } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import {
@@ -14,7 +15,6 @@ import {
 } from "#/generated/nocobase/crm-troca-titularidade";
 import { formatDatePtBR, formatPhone } from "#/lib/utils";
 import { routePaths } from "#/routes/route-paths";
-import { DetailSection } from "../detail-section";
 
 export function TrocaTitularidadeDetailPage() {
 	const { id } = useParams<{ id: string }>();

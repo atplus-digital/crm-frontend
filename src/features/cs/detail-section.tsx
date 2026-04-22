@@ -7,7 +7,7 @@ import {
 	CardTitle,
 } from "#/components/ui/card";
 
-interface DetailSectionProps {
+export interface DetailSectionProps {
 	title: string;
 	description?: string;
 	icon?: ReactNode;

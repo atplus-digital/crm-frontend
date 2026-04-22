@@ -7,6 +7,7 @@ import { Skeleton } from "#/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { BackButton } from "#/features/cs/back-button";
 import { DetailField } from "#/features/cs/detail-field";
+import { DetailSection } from "#/features/cs/detail-section";
 import { CardSectionSkeleton } from "#/features/cs/detail-skeleton";
 import { useSuspensaoContratoById } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks";
 import { SUSPENSAO_CONTRATO_STATUS_LABELS } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
@@ -14,7 +15,6 @@ import type { ComentariosSuspensaoDeContrato } from "#/generated/nocobase/coment
 import type { Contratos } from "#/generated/nocobase/index";
 import { formatDatePtBR, formatPhone } from "#/lib/utils";
 import { routePaths } from "#/routes/route-paths";
-import { DetailSection } from "../detail-section";
 
 export function SuspensaoContratoDetailPage() {
 	const { id } = useParams<{ id: string }>();

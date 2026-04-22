@@ -1,18 +1,11 @@
 import { FileText, MapPin, MessageSquare, Phone } from "lucide-react";
-import type { ReactNode } from "react";
 import { useParams } from "react-router";
 import { StatusBadge as SharedStatusBadge } from "#/components/badges/status-badge";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "#/components/ui/card";
 import { Skeleton } from "#/components/ui/skeleton";
 import { BackButton } from "#/features/cs/back-button";
 import { DetailField } from "#/features/cs/detail-field";
+import { DetailSection } from "#/features/cs/detail-section";
 import { CardSectionSkeleton } from "#/features/cs/detail-skeleton";
 import { useTrocaEnderecoById } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
 import {
@@ -21,35 +14,6 @@ import {
 } from "#/generated/nocobase/troca-endereco";
 import { formatDatePtBR, formatPhone } from "#/lib/utils";
 import { routePaths } from "#/routes/route-paths";
-
-interface DetailSectionProps {
-	title: string;
-	description?: string;
-	icon?: ReactNode;
-	children: ReactNode;
-	className?: string;
-}
-
-function DetailSection({
-	title,
-	description,
-	icon,
-	children,
-	className,
-}: DetailSectionProps) {
-	return (
-		<Card className={className}>
-			<CardHeader>
-				<CardTitle className="flex items-center gap-2">
-					{icon}
-					{title}
-				</CardTitle>
-				{description && <CardDescription>{description}</CardDescription>}
-			</CardHeader>
-			<CardContent>{children}</CardContent>
-		</Card>
-	);
-}
 
 export function TrocaEnderecoDetailPage() {
 	const { id } = useParams<{ id: string }>();
