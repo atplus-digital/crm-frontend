@@ -6,7 +6,7 @@ import { StatusBadge } from "#/components/badges/status-badge";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
 import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Button } from "#/components/ui/button";
-import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks";
+import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import {
 	SUSPENSAO_CONTRATO_STATUS_LABELS,
 	SUSPENSAO_CONTRATO_STATUS_VARIANTS,

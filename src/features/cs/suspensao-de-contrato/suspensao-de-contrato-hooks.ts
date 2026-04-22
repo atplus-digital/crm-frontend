@@ -1,22 +1,11 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import type {
-	SuspensaoContrato,
-	SuspensaoContratoRelations,
-} from "#/generated/nocobase/suspensao-contrato";
 import { buildFilter, eq, gte, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
-import type { SuspensaoContratoFilters } from "./suspensao-de-contrato-types";
-
-export interface SuspensaoContratoListParams {
-	page?: number;
-	pageSize?: number;
-	sort?: string[];
-	filters?: SuspensaoContratoFilters;
-	appends?: (keyof SuspensaoContratoRelations)[];
-}
-
-export type SuspensaoContratoWithRelations = SuspensaoContrato &
-	SuspensaoContratoRelations;
+import type {
+	SuspensaoContratoFilters,
+	SuspensaoContratoListParams,
+	SuspensaoContratoWithRelations,
+} from "./suspensao-de-contrato-types";
 
 function buildSuspensaoContratoFilter(
 	filters?: SuspensaoContratoFilters,

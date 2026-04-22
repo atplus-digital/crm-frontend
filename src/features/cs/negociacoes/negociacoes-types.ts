@@ -4,7 +4,10 @@
 import type { Empresas } from "#/generated/nocobase/empresas";
 import type {
 	Negociacoes,
+	NegociacoesFidelidade,
+	NegociacoesPontosAtencao,
 	NegociacoesRelations,
+	NegociacoesTipoPessoa,
 } from "#/generated/nocobase/negociacoes";
 import type { Pessoas } from "#/generated/nocobase/pessoas";
 import type { Users } from "#/generated/nocobase/users";
@@ -81,69 +84,6 @@ export const MotivoRenegociacao = {
 
 export type MotivoRenegociacao =
 	(typeof MotivoRenegociacao)[keyof typeof MotivoRenegociacao];
-
-// ---------------------------------------------------------------------------
-// Enums de Domínio - Tipos e Opções
-// ---------------------------------------------------------------------------
-
-export const TipoPessoa = {
-	Fisica: "PF",
-	Juridica: "PJ",
-} as const;
-
-export type TipoPessoa = (typeof TipoPessoa)[keyof typeof TipoPessoa];
-
-export const FidelidadeMeses = {
-	Zero: "0",
-	Doze: "12",
-	VinteQuatro: "24",
-	TrintaSeis: "36",
-	QuarentaOito: "48",
-	Sessenta: "60",
-} as const;
-
-export type FidelidadeMeses =
-	(typeof FidelidadeMeses)[keyof typeof FidelidadeMeses];
-
-export const DataVencimento = {
-	Dia01: "1",
-	Dia05: "5",
-	Dia10: "10",
-	Dia15: "15",
-	Dia20: "20",
-	Dia25: "25",
-} as const;
-
-export type DataVencimento =
-	(typeof DataVencimento)[keyof typeof DataVencimento];
-
-export const PontosAtencao = {
-	Zero: "0",
-	Um: "1",
-	Dois: "2",
-	Tres: "3",
-	Quatro: "4",
-	Cinco: "5",
-	Seis: "6",
-} as const;
-
-export type PontosAtencao = (typeof PontosAtencao)[keyof typeof PontosAtencao];
-
-export const ConfissaoDivida = {
-	Sim: "Sim",
-	Nao: "Nao",
-} as const;
-
-export type ConfissaoDivida =
-	(typeof ConfissaoDivida)[keyof typeof ConfissaoDivida];
-
-export const EnderecoCobrancaDiferente = {
-	Sim: "1",
-	Nao: "0",
-} as const;
-
-export type EnderecoCobrancaDiferente =
-	(typeof EnderecoCobrancaDiferente)[keyof typeof EnderecoCobrancaDiferente];
 
 // ---------------------------------------------------------------------------
 // Tipos derivados dos gerados
@@ -297,7 +237,7 @@ export interface NegociacaoFilters {
 	substatus?: string;
 
 	// Tipo de Pessoa
-	tipoPessoa?: TipoPessoa;
+	tipoPessoa?: NegociacoesTipoPessoa;
 	cpfCnpj?: string;
 	nomeFantasia?: string;
 	nomeRazao?: string;
@@ -329,7 +269,7 @@ export interface NegociacaoFilters {
 	multaJurosGte?: number;
 	multaJurosLte?: number;
 	parcelasMensais?: number;
-	fidelidade?: FidelidadeMeses;
+	fidelidade?: NegociacoesFidelidade;
 
 	// Vendedor
 	vendedorId?: number;
@@ -339,7 +279,7 @@ export interface NegociacaoFilters {
 	criadoEmFim?: string;
 
 	// Pontos de Atenção
-	pontosAtencao?: PontosAtencao;
+	pontosAtencao?: NegociacoesPontosAtencao;
 
 	// Assinatura
 	zapsign?: boolean;

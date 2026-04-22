@@ -5,15 +5,10 @@ import type {
 } from "#/generated/nocobase/crm-troca-titularidade";
 import { buildFilter, eq, gte, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
-import type { TrocaTitularidadeFilters } from "./troca-titularidade-types";
-
-export interface TrocaTitularidadeListParams {
-	page?: number;
-	pageSize?: number;
-	sort?: string[];
-	filters?: TrocaTitularidadeFilters;
-	appends?: (keyof CrmTrocaTitularidadeRelations)[];
-}
+import type {
+	TrocaTitularidadeFilters,
+	TrocaTitularidadeListParams,
+} from "./troca-titularidade-types";
 
 export type CrmTrocaTitularidadeWithRelations = CrmTrocaTitularidade &
 	CrmTrocaTitularidadeRelations;
