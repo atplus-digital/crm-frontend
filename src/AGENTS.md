@@ -65,6 +65,7 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 - `./src/features/cs/AGENTS.md` — Customer Success domain (contratos, negociações, pessoas)
 - `./src/features/cs/contratos/AGENTS.md` — Contratos subdomain (IXC contracts list/detail and contract UI)
 - `./src/features/cs/negociacoes/AGENTS.md` — Negociações subdomain (kanban/list, filters, export and detail tabs)
+- `./src/features/cs/suspensao-de-contrato/AGENTS.md` — Suspensão de Contrato subdomain (list/detail, filters, status lifecycle, ZapSign integration)
 - `./src/features/custom-requests/AGENTS.md` — Custom request registry/services/hooks
 - `./src/features/auth/permissions/AGENTS.md` — Permissions, actions/snippets and navigation guards
 - `./src/generated/AGENTS.md` — Auto-generated TypeScript types from NocoBase/IXC schemas
