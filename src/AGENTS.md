@@ -58,10 +58,13 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 <!-- AGENTS-GENERATED:START scope-index -->
 
 - `./src/components/AGENTS.md` — Shared UI building blocks and app-level reusable components
+- `./src/components/table/AGENTS.md` — Shared TanStack-based table primitives and controller context
 - `./src/layout/AGENTS.md` — Authenticated app shell layout and navigation composition
 - `./src/features/AGENTS.md` — Cross-feature conventions and folder structure for domain modules
 - `./src/features/auth/AGENTS.md` — Authentication module
 - `./src/features/cs/AGENTS.md` — Customer Success domain (contratos, negociações, pessoas)
+- `./src/features/cs/contratos/AGENTS.md` — Contratos subdomain (IXC contracts list/detail and contract UI)
+- `./src/features/cs/negociacoes/AGENTS.md` — Negociações subdomain (kanban/list, filters, export and detail tabs)
 - `./src/features/custom-requests/AGENTS.md` — Custom request registry/services/hooks
 - `./src/features/auth/permissions/AGENTS.md` — Permissions, actions/snippets and navigation guards
 - `./src/generated/AGENTS.md` — Auto-generated TypeScript types from NocoBase/IXC schemas
