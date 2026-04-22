@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
 					},
 					{
 						path: "profile",
-						lazy: () => import("./profile/index"),
+						lazy: () => import("./dashboard/profile/index"),
 					},
 					{
 						path: "cs/pessoas",
