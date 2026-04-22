@@ -2,9 +2,9 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type { SingleFileResult } from "@scripts/generate-types/src/@types/script";
+import { logger } from "@scripts/generate-types/src/utils/logger";
+import { toFileName } from "@scripts/generate-types/src/utils/naming";
 import { isFileBeingEdited } from "./file-editor-check";
-import { logger } from "./logger";
-import { toFileName } from "./naming";
 
 const MAIN_OUTPUT_FILE = "index.ts";
 

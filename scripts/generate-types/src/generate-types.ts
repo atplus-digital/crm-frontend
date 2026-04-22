@@ -4,8 +4,8 @@ import type {
 	DataSourceGenerationConfig,
 	GenerateTypesResult,
 } from "./@types/script";
-import { createInitialContext } from "./pipeline/context-builder";
-import { defaultPipeline } from "./pipeline/default-pipeline";
+import { createInitialContext } from "./pipeline/core/context-builder";
+import { defaultPipeline } from "./pipeline/core/default-pipeline";
 import { runPostPipeline } from "./pipeline/post-pipeline";
 import { resolveDataSourceConfigs } from "./utils/config";
 import { createDataSourceClient } from "./utils/create-dataSource-client";

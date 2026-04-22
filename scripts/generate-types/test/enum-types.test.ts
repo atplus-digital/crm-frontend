@@ -5,7 +5,7 @@ import {
 	generateCollectionEnums,
 	generateEnumDefinition,
 	generateEnumLabelMap,
-} from "../src/generation/content";
+} from "../src/pipeline/stages/generate-content/content";
 
 describe("generateEnumDefinition", () => {
 	it("should generate type alias using keyof typeof for string values", () => {

@@ -1,8 +1,8 @@
 import type {
 	RejectedFieldsMap,
 	EnumInferenceConfig as ScriptEnumInferenceConfig,
-} from "../@types/script";
-import type { EnumOrigin } from "../pipeline/types";
+} from "../../../@types/script";
+import type { EnumOrigin } from "../../core/types";
 import type { EnumInferenceConfig } from "./enum-inference-config";
 import { buildEnumInferenceConfig } from "./enum-inference-config";
 import { inferLabel } from "./enum-inference-heuristics";

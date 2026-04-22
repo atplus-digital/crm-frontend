@@ -1,4 +1,4 @@
-import { generateIndexFileWithReexports } from "@scripts/generate-types/src/generation/split-index";
+import { generateIndexFileWithReexports } from "@scripts/generate-types/src/pipeline/stages/generate-content/split-index";
 import { describe, expect, it } from "vitest";
 
 describe("split-index", () => {

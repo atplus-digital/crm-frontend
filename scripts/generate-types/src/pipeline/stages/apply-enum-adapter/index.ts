@@ -1,23 +1,10 @@
+import { logger } from "../../../utils/logger";
+import type { BuildTypesContext, PipelineStage } from "../../core/types";
 import {
 	adapterEnumsToInferredEnums,
 	mergeEnums,
-} from "../../generation/enum-inference";
-import { logger } from "../../utils/logger";
-import type { BuildTypesContext, PipelineStage } from "../types";
+} from "../../stages/infer-enums/enum-inference";
 
-/**
- * Pipeline stage: apply enum adapter to fetch enums from pre-configured adapter.
- *
- * Extracted from generate-types.ts lines 188-243.
- *
- * If `ctx.dataSource.preEnumAdapter` exists:
- * - For each collection in `ctx.collectionTypes`:
- *   - Try `adapter.fetchEnums(collectionName)`
- *   - If success: convert via `adapterEnumsToInferredEnums()`
- *   - Merge with existing API enums via `mergeEnums()`
- *   - Track origin as "adapter" in `ctx.enumOrigins`
- * - If adapter fails per-collection: log debug, skip (fallback to inference later)
- */
 export const applyEnumAdapter: PipelineStage<BuildTypesContext> = async (
 	ctx,
 ) => {
@@ -57,7 +44,6 @@ export const applyEnumAdapter: PipelineStage<BuildTypesContext> = async (
 		if (hasAdapterEnum) {
 			const adapterInferred = adapterEnumsToInferredEnums(adapterEnums);
 
-			// Track origin of adapter enums
 			for (const fieldName of Object.keys(adapterInferred)) {
 				originsForCollection.set(fieldName, { origin: "adapter" });
 			}

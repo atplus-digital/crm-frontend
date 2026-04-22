@@ -3,7 +3,7 @@ import {
 	createBaseTypeIndex,
 	withMainFileImports,
 	withSplitFileImports,
-} from "@scripts/generate-types/src/generation/import-injector";
+} from "@scripts/generate-types/src/pipeline/stages/generate-content/import-injector";
 import { describe, expect, it } from "vitest";
 
 function createEmptyCollectionTypesMap(

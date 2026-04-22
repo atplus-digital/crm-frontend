@@ -1,7 +1,7 @@
 import {
 	extractRelationInfo,
 	mapFieldType,
-} from "@scripts/generate-types/src/generation/field-mapper";
+} from "@scripts/generate-types/src/pipeline/stages/generate-content/field-mapper";
 import { createMockField } from "@scripts/generate-types/test/setup";
 import { describe, expect, it } from "vitest";
 

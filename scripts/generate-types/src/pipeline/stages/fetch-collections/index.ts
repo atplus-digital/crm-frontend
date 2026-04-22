@@ -1,15 +1,7 @@
-import type { DataSourceCollection } from "../../@types/script";
-import { normalizeCollectionNames } from "../../utils/naming";
-import type { InitContext, PipelineStage } from "../types";
+import type { DataSourceCollection } from "../../../@types/script";
+import { normalizeCollectionNames } from "../../../utils/naming";
+import type { InitContext, PipelineStage } from "../../core/types";
 
-/**
- * Pipeline stage: fetch collections from the data source.
- *
- * Extracted from resolveCollectionsForDataSource() in generate-types.ts (lines 77-96)
- *
- * If collections are explicitly configured, uses those names.
- * Otherwise fetches from the API (NocoBase only).
- */
 export const fetchCollections: PipelineStage<InitContext> = async (ctx) => {
 	const { client, dataSource } = ctx;
 

@@ -1,21 +1,7 @@
-import {
-	type InferredEnumsMap,
-	mergeEnums,
-} from "../../generation/enum-inference";
-import { logger } from "../../utils/logger";
-import type { BuildTypesContext, PipelineStage } from "../types";
+import { logger } from "../../../utils/logger";
+import type { BuildTypesContext, PipelineStage } from "../../core/types";
+import { type InferredEnumsMap, mergeEnums } from "./enum-inference";
 
-/**
- * Pipeline stage: infer enums from data sampling when no schema or adapter enums available.
- *
- * Extracted from generate-types.ts lines 208-232.
- *
- * For each collection where `!types.schemaAvailable` AND no adapter enums:
- * - Use `client.inferEnumsFromData()` with config thresholds
- * - Merge inferred enums with existing API enums via `mergeEnums()`
- * - Track origin as "inferencia"
- * No-op on inference errors (try/catch that logs but doesn't throw)
- */
 export const inferEnums: PipelineStage<BuildTypesContext> = async (ctx) => {
 	const { client, collectionTypes, enumOrigins } = ctx;
 
@@ -27,7 +13,6 @@ export const inferEnums: PipelineStage<BuildTypesContext> = async (ctx) => {
 			updatedEnumOrigins.get(collectionName) ??
 			new Map<string, { origin: "api" | "adapter" | "inferencia" }>();
 
-		// Check if we already have adapter enums for this collection
 		const hasAdapterEnum = originsForCollection.size > 0;
 
 		if (!types.schemaAvailable && !hasAdapterEnum) {
@@ -45,7 +30,6 @@ export const inferEnums: PipelineStage<BuildTypesContext> = async (ctx) => {
 					scalarFieldNames,
 				);
 
-				// Track origin of inferred enums
 				for (const fieldName of Object.keys(inferredEnums)) {
 					originsForCollection.set(fieldName, { origin: "inferencia" });
 				}
@@ -60,7 +44,6 @@ export const inferEnums: PipelineStage<BuildTypesContext> = async (ctx) => {
 				);
 				types.enums = mergedEnums;
 			} catch {
-				// No-op: inference errors are silently ignored
 				logger.debug(`[${collectionName}] Enum inference failed — skipping`);
 			}
 		}

@@ -11,7 +11,7 @@ import type {
 	InferredEnumsMap,
 	RejectedFieldsMap,
 } from "@scripts/generate-types/src/@types/script";
-import { inferEnumsFromSample } from "./enum-inference";
+import { inferEnumsFromSample } from "../pipeline/stages/infer-enums/enum-inference";
 
 interface ListSampleResponse {
 	data?: Array<Record<string, unknown>>;

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { NocoBaseField } from "../src/@types/nocobase";
-import { mapFieldType } from "../src/generation/field-mapper";
+import { mapFieldType } from "../src/pipeline/stages/generate-content/field-mapper";
 
 describe("mapFieldType - Enum Extraction", () => {
 	it("should generate union type from uiSchema.enum for select field", () => {

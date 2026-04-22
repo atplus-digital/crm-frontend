@@ -5,7 +5,7 @@ import {
 	validateTypeScriptDirectory,
 	writeGeneratedFile,
 	writeMultipleFiles,
-} from "@scripts/generate-types/src/utils/writer";
+} from "@scripts/generate-types/src/pipeline/post-pipeline/writer";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("node:fs", () => ({
@@ -17,9 +17,12 @@ vi.mock("node:fs", () => ({
 	readdirSync: vi.fn(),
 }));
 
-vi.mock("@scripts/generate-types/src/utils/file-editor-check", () => ({
-	isFileBeingEdited: vi.fn().mockReturnValue(false),
-}));
+vi.mock(
+	"@scripts/generate-types/src/pipeline/post-pipeline/file-editor-check",
+	() => ({
+		isFileBeingEdited: vi.fn().mockReturnValue(false),
+	}),
+);
 
 vi.mock("@scripts/generate-types/config", () => ({
 	config: {

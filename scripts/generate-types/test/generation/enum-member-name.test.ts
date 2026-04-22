@@ -2,7 +2,9 @@ import type { EnumOption } from "@scripts/generate-types/src/@types/generation";
 import { describe, expect, it } from "vitest";
 
 async function getGenerateEnumDefinition() {
-	const module = await import("@scripts/generate-types/src/generation/content");
+	const module = await import(
+		"@scripts/generate-types/src/pipeline/stages/generate-content/content"
+	);
 	return module;
 }
 

@@ -1,5 +1,8 @@
 import type { BaseInterfaceNamingConfig } from "@scripts/generate-types/src/@types/script";
-import { toCollectionBaseTypeName, toFileName } from "../utils/naming";
+import {
+	toCollectionBaseTypeName,
+	toFileName,
+} from "@scripts/generate-types/src/utils/naming";
 import { generateFileHeader } from "./content";
 
 function deriveExportedTypeName(

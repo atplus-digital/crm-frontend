@@ -1,10 +1,10 @@
-import type { CollectionTypesMap } from "../@types/generation";
+import type { CollectionTypesMap } from "../../@types/generation";
 import type {
 	DataSourceClient,
 	DataSourceCollection,
 	DataSourceGenerationConfig,
 	RuntimeConfig,
-} from "../@types/script";
+} from "../../@types/script";
 
 // ──────────────────────────────────────────────
 // File write result (local to pipeline, mirrors writer.ts output)

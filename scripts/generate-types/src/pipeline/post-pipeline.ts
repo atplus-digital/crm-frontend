@@ -1,8 +1,8 @@
 import { config } from "@scripts/generate-types/config";
-import { runLinterFix } from "../utils/linter-runner";
-import { logger } from "../utils/logger";
-import { validateTypeScriptDirectory } from "../utils/writer";
-import type { GeneratedFileWrite } from "./types";
+import { logger } from "@scripts/generate-types/src/utils/logger";
+import type { GeneratedFileWrite } from "./core/types";
+import { runLinterFix } from "./post-pipeline/linter-runner";
+import { validateTypeScriptDirectory } from "./post-pipeline/writer";
 
 export async function runPostPipeline(
 	outputDirs: string[],

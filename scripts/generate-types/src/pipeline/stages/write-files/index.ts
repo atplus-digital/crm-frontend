@@ -1,6 +1,6 @@
 import * as path from "node:path";
-import { writeGeneratedFile } from "../../utils/writer";
-import type { GeneratedFileWrite, PipelineContext } from "../types";
+import type { GeneratedFileWrite, PipelineContext } from "../../core/types";
+import { writeGeneratedFile } from "../../post-pipeline/writer";
 
 export async function writeFiles(
 	ctx: Readonly<PipelineContext & { fileContents: Map<string, string> }>,

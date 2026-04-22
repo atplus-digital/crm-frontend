@@ -11,7 +11,7 @@ import {
 	generateContentForCollections,
 	generateFileHeader,
 	generateSplitFiles,
-} from "@scripts/generate-types/src/generation/content";
+} from "@scripts/generate-types/src/pipeline/stages/generate-content/content";
 import { describe, expect, it } from "vitest";
 import {
 	createMockCollectionTypesMap,
@@ -339,7 +339,7 @@ describe("content", () => {
 	describe("generateEnumDefinition", () => {
 		it("generates type alias with keyof typeof", async () => {
 			const { generateEnumDefinition } = await import(
-				"@scripts/generate-types/src/generation/content"
+				"@scripts/generate-types/src/pipeline/stages/generate-content/content"
 			);
 			const result = generateEnumDefinition("users", "f_status", [
 				{ value: "active", label: "Active" },
@@ -352,7 +352,7 @@ describe("content", () => {
 
 		it("generates type alias for number values", async () => {
 			const { generateEnumDefinition } = await import(
-				"@scripts/generate-types/src/generation/content"
+				"@scripts/generate-types/src/pipeline/stages/generate-content/content"
 			);
 			const result = generateEnumDefinition("users", "f_priority", [
 				{ value: 1, label: "Low" },
@@ -365,7 +365,7 @@ describe("content", () => {
 
 		it("removes f_ prefix from type name", async () => {
 			const { generateEnumDefinition } = await import(
-				"@scripts/generate-types/src/generation/content"
+				"@scripts/generate-types/src/pipeline/stages/generate-content/content"
 			);
 			const result = generateEnumDefinition("t_pessoas", "f_status", [
 				{ value: "active", label: "Active" },
@@ -377,7 +377,7 @@ describe("content", () => {
 
 		it("removes t_ prefix from collection name", async () => {
 			const { generateEnumDefinition } = await import(
-				"@scripts/generate-types/src/generation/content"
+				"@scripts/generate-types/src/pipeline/stages/generate-content/content"
 			);
 			const result = generateEnumDefinition("t_empresas", "status", [
 				{ value: "active", label: "Active" },
@@ -391,7 +391,7 @@ describe("content", () => {
 	describe("generateCollectionEnumMaps", () => {
 		it("generates constant object with as const", async () => {
 			const { generateCollectionEnumMaps } = await import(
-				"@scripts/generate-types/src/generation/content"
+				"@scripts/generate-types/src/pipeline/stages/generate-content/content"
 			);
 			const types = createMockGeneratedTypes({
 				f_status: "string",
@@ -410,7 +410,7 @@ describe("content", () => {
 
 		it("generates constant object with single entry", async () => {
 			const { generateCollectionEnumMaps } = await import(
-				"@scripts/generate-types/src/generation/content"
+				"@scripts/generate-types/src/pipeline/stages/generate-content/content"
 			);
 			const types = createMockGeneratedTypes({
 				f_status: "string",
@@ -427,7 +427,7 @@ describe("content", () => {
 	describe("generateCollectionTypeWithEnum", () => {
 		it("includes constant object and type alias when field has enum", async () => {
 			const { generateCollectionTypes } = await import(
-				"@scripts/generate-types/src/generation/content"
+				"@scripts/generate-types/src/pipeline/stages/generate-content/content"
 			);
 			const types = createMockCollectionTypesMap({
 				users: {
@@ -459,7 +459,7 @@ describe("content", () => {
 
 		it("includes source table const when includeSourceTableConst is true", async () => {
 			const { generateCollectionTypes } = await import(
-				"@scripts/generate-types/src/generation/content"
+				"@scripts/generate-types/src/pipeline/stages/generate-content/content"
 			);
 			const types = createMockCollectionTypesMap({
 				users: {
@@ -480,7 +480,7 @@ describe("content", () => {
 
 		it("excludes source table const when includeSourceTableConst is false", async () => {
 			const { generateCollectionTypes } = await import(
-				"@scripts/generate-types/src/generation/content"
+				"@scripts/generate-types/src/pipeline/stages/generate-content/content"
 			);
 			const types = createMockCollectionTypesMap({
 				users: {

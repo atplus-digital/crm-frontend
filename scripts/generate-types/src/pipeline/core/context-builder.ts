@@ -2,7 +2,7 @@ import type {
 	DataSourceClient,
 	DataSourceGenerationConfig,
 	RuntimeConfig,
-} from "../@types/script";
+} from "../../@types/script";
 import type { InitContext } from "./types";
 
 export function createInitialContext(

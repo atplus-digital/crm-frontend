@@ -1,5 +1,5 @@
 import { execFile } from "node:child_process";
-import { logInfo, logVerbose } from "./logger";
+import { logInfo, logVerbose } from "@scripts/generate-types/src/utils/logger";
 
 export async function runLinterFix(dirs: string[]): Promise<void> {
 	if (dirs.length === 0) return;

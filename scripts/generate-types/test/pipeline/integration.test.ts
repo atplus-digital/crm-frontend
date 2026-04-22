@@ -34,15 +34,18 @@ vi.mock("@scripts/generate-types/config", () => ({
 
 const mockDefaultPipeline = vi.hoisted(() => vi.fn());
 
-vi.mock("@scripts/generate-types/src/pipeline/default-pipeline", () => ({
+vi.mock("@scripts/generate-types/src/pipeline/core/default-pipeline", () => ({
 	defaultPipeline: mockDefaultPipeline,
 }));
 
 const mockLinterRunBiome = vi.hoisted(() => vi.fn());
 
-vi.mock("@scripts/generate-types/src/utils/linter-runner", () => ({
-	runLinterFix: mockLinterRunBiome,
-}));
+vi.mock(
+	"@scripts/generate-types/src/pipeline/post-pipeline/linter-runner",
+	() => ({
+		runLinterFix: mockLinterRunBiome,
+	}),
+);
 
 describe("Pipeline End-to-End", () => {
 	beforeEach(() => {

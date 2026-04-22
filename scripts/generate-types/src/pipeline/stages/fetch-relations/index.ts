@@ -1,5 +1,5 @@
-import type { ManualRelationMapping } from "../../@types/script";
-import type { FetchCollectionsContext, PipelineStage } from "../types";
+import type { ManualRelationMapping } from "../../../@types/script";
+import type { FetchCollectionsContext, PipelineStage } from "../../core/types";
 
 export const fetchRelations: PipelineStage<
 	FetchCollectionsContext & {
@@ -21,7 +21,6 @@ export const fetchRelations: PipelineStage<
 					...manualRelations,
 				};
 			} catch {
-				// Graceful fallback — use manual relations only
 				relations[collection.name] =
 					dataSource.relationsMapping?.[collection.name] ?? {};
 			}

@@ -1,14 +1,14 @@
 import type {
 	CollectionTypesMap,
 	GeneratedTypes,
-} from "../../@types/generation";
-import type { ManualRelationMapping } from "../../@types/script";
+} from "../../../@types/generation";
+import type { ManualRelationMapping } from "../../../@types/script";
+import { mapWithConcurrency } from "../../../utils/concurrency";
+import type { FetchCollectionsContext, PipelineStage } from "../../core/types";
 import {
 	extractRelationInfo,
 	mapFieldType,
-} from "../../generation/field-mapper";
-import { mapWithConcurrency } from "../../utils/concurrency";
-import type { FetchCollectionsContext, PipelineStage } from "../types";
+} from "../../stages/generate-content/field-mapper";
 
 export const buildTypes: PipelineStage<
 	FetchCollectionsContext & {
@@ -59,7 +59,6 @@ export const buildTypes: PipelineStage<
 				}
 			}
 
-			// Add manual relations that don't exist as fields
 			if (manualRelations) {
 				for (const [fieldName, relation] of Object.entries(manualRelations)) {
 					if (!generated.relations.has(fieldName)) {

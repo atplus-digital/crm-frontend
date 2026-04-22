@@ -1,5 +1,5 @@
 import type { NocoBaseCredentials } from "@scripts/generate-types/src/@types/nocobase";
-import { NocoBaseDataSourceClient } from "@scripts/generate-types/src/generation/client";
+import { NocoBaseDataSourceClient } from "@scripts/generate-types/src/utils/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("NocoBaseDataSourceClient", () => {

@@ -1,4 +1,4 @@
-import type { EnumCorrectionRule } from "../@types/script";
+import type { EnumCorrectionRule } from "../../../@types/script";
 
 export function applyEnumCorrections(
 	collectionTypes: Record<

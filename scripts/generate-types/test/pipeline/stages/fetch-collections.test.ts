@@ -1,5 +1,5 @@
 import type { DataSourceClient } from "@scripts/generate-types/src/@types/script";
-import type { InitContext } from "@scripts/generate-types/src/pipeline/types";
+import type { InitContext } from "@scripts/generate-types/src/pipeline/core/types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockFetchCollections = vi.fn();

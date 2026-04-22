@@ -1,7 +1,7 @@
 import { config } from "../../config";
 import type { DataSourceGenerationConfig } from "../@types/script-config";
 import type { DataSourceClient } from "../@types/script-data-source";
-import { NocoBaseDataSourceClient } from "../generation/client";
+import { NocoBaseDataSourceClient } from "./client";
 
 export function createDataSourceClient(
 	dataSource: DataSourceGenerationConfig,

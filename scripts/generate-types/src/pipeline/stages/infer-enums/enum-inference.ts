@@ -1,5 +1,5 @@
-export type { EnumOrigin } from "../pipeline/types";
-export { removeAccents } from "../utils/naming";
+export { removeAccents } from "@scripts/generate-types/src/utils/naming";
+export type { EnumOrigin } from "../../core/types";
 export type {
 	InferredEnumInfo,
 	InferredEnumsMap,

@@ -4,7 +4,7 @@ import {
 	generateCollectionRelationsMapInterface,
 	generateCollectionsConst,
 	generateCollectionsFile,
-} from "@scripts/generate-types/src/generation/collections-index";
+} from "@scripts/generate-types/src/pipeline/stages/generate-content/collections-index";
 import { createMockCollectionTypesMap } from "@scripts/generate-types/test/setup";
 import { describe, expect, it } from "vitest";
 

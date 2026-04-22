@@ -1,5 +1,5 @@
 import { config } from "@scripts/generate-types/config";
-import type { EnumInferenceConfig as ScriptEnumInferenceConfig } from "../@types/script";
+import type { EnumInferenceConfig as ScriptEnumInferenceConfig } from "../../../@types/script";
 
 export interface EnumInferenceConfig {
 	cardinalityThreshold: number;

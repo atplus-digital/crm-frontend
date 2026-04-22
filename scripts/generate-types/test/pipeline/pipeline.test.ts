@@ -1,9 +1,9 @@
-import { pipeAsync } from "@scripts/generate-types/src/pipeline/pipe";
+import { pipeAsync } from "@scripts/generate-types/src/pipeline/core/pipe";
 import type {
 	PipelineContext,
 	PipelineStage,
-} from "@scripts/generate-types/src/pipeline/types";
-import { createPipeline } from "@scripts/generate-types/src/pipeline/types";
+} from "@scripts/generate-types/src/pipeline/core/types";
+import { createPipeline } from "@scripts/generate-types/src/pipeline/core/types";
 import { describe, expect, it } from "vitest";
 
 function makeContext(overrides?: Record<string, unknown>): PipelineContext {

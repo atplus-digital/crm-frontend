@@ -1,13 +1,13 @@
 import type {
 	CollectionTypesMap,
 	GeneratedTypes,
-} from "../../@types/generation";
+} from "../../../@types/generation";
+import { mapWithConcurrency } from "../../../utils/concurrency";
+import type { FetchCollectionsContext, PipelineStage } from "../../core/types";
 import {
 	extractRelationInfo,
 	mapFieldType,
-} from "../../generation/field-mapper";
-import { mapWithConcurrency } from "../../utils/concurrency";
-import type { FetchCollectionsContext, PipelineStage } from "../types";
+} from "../generate-content/field-mapper";
 
 export const fetchSchemas: PipelineStage<FetchCollectionsContext> = async (
 	ctx,

@@ -3,7 +3,7 @@ import {
 	renderRelationValueType,
 	resolveRelationByType,
 	resolveRelationInterface,
-} from "@scripts/generate-types/src/generation/relations";
+} from "@scripts/generate-types/src/pipeline/stages/generate-content/relations";
 import { describe, expect, it } from "vitest";
 
 describe("resolveRelationInterface", () => {

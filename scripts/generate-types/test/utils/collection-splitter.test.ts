@@ -1,4 +1,4 @@
-import { splitCollectionsByConfig } from "@scripts/generate-types/src/utils/collection-splitter";
+import { splitCollectionsByConfig } from "@scripts/generate-types/src/pipeline/stages/split-collections/collection-splitter";
 import { createMockCollectionTypesMap } from "@scripts/generate-types/test/setup";
 import { describe, expect, it } from "vitest";
 

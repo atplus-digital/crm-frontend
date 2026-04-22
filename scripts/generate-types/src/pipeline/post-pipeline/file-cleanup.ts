@@ -3,9 +3,9 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type { MultiFileResult } from "@scripts/generate-types/src/@types/script";
+import { logger } from "@scripts/generate-types/src/utils/logger";
+import { toFileName } from "@scripts/generate-types/src/utils/naming";
 import { isFileBeingEdited } from "./file-editor-check";
-import { logger } from "./logger";
-import { toFileName } from "./naming";
 
 function readExistingContent(filePath: string): string {
 	if (!fs.existsSync(filePath)) {
@@ -15,12 +15,6 @@ function readExistingContent(filePath: string): string {
 	return fs.readFileSync(filePath, "utf-8");
 }
 
-/**
- * Valida todos os arquivos TypeScript em um diretório usando tsc --noEmit.
- * Executa validação em nível de diretório para resolver imports cruzados entre arquivos gerados.
- *
- * @returns `true` se a validação passou, `false` se falhou (nunca lança erro)
- */
 export function validateTypeScriptDirectory(dirPath: string): boolean {
 	if (!config.validateTypes) {
 		return true;
@@ -68,9 +62,6 @@ export function validateTypeScriptDirectory(dirPath: string): boolean {
 	}
 }
 
-/**
- * Escreve múltiplos arquivos TypeScript gerados.
- */
 export function writeMultipleFiles(
 	filesMap: Map<string, string>,
 	outputDir: string = config.outputDir,
@@ -145,12 +136,6 @@ export function writeMultipleFiles(
 	};
 }
 
-/**
- * Identifica arquivos .ts na pasta de destino que não estão na lista de arquivos gerados.
- * @param generatedFiles - Array de caminhos de arquivos que serão gerados
- * @param outputDir - Diretório base
- * @returns Array de caminhos de arquivos não utilizados
- */
 export function getUnusedFiles(
 	generatedFiles: string[],
 	outputDir: string = config.outputDir,
@@ -171,11 +156,6 @@ export function getUnusedFiles(
 		.map((file) => path.join(resolvedOutputDir, file));
 }
 
-/**
- * Remove arquivos não utilizados da pasta de destino.
- * @param unusedFiles - Array de caminhos de arquivos para remover
- * @returns Array de arquivos removidos
- */
 export function cleanOutputDirectory(unusedFiles: string[]): string[] {
 	const removed: string[] = [];
 

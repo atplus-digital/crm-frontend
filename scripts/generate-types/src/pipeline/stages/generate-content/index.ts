@@ -1,28 +1,18 @@
-import type { CollectionTypesMap } from "../../@types/generation";
-import { generateCollectionsFile } from "../../generation/collections-index";
-import { generateContent, generateSplitFiles } from "../../generation/content";
+import type { CollectionTypesMap } from "../../../@types/generation";
+import {
+	resolveBaseInterfaceNamingConfig,
+	toFileName,
+} from "../../../utils/naming";
+import type { PipelineContext } from "../../core/types";
+import { generateCollectionsFile } from "./collections-index";
+import { generateContent, generateSplitFiles } from "./content";
 import {
 	createBaseTypeIndex,
 	withMainFileImports,
 	withSplitFileImports,
-} from "../../generation/import-injector";
-import { generateIndexFileWithReexports } from "../../generation/split-index";
-import {
-	resolveBaseInterfaceNamingConfig,
-	toFileName,
-} from "../../utils/naming";
-import type { PipelineContext } from "../types";
+} from "./import-injector";
+import { generateIndexFileWithReexports } from "./split-index";
 
-/**
- * Stage: Generate TypeScript content for all output files.
- *
- * Input context requires:
- * - mainCollections: CollectionTypesMap
- * - splitCollections: Map<string, CollectionTypesMap>
- *
- * Output context adds:
- * - fileContents: Map<string, string> — file path (relative to outputDir) → content
- */
 export async function generateContentStage(
 	ctx: Readonly<
 		PipelineContext & {
