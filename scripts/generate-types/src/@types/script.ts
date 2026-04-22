@@ -86,6 +86,14 @@ export interface MultiFileResult {
 
 export type GenerateTypesResult = SingleFileResult | MultiFileResult;
 
+export interface DataSourceFilesResult {
+	writeFiles: Array<{
+		outputPath: string;
+		changed: boolean;
+		skipped?: boolean;
+	}>;
+}
+
 export interface BaseInterfaceNamingConfig {
 	prefix: string;
 	suffix: string;
