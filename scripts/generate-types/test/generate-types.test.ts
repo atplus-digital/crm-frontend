@@ -134,7 +134,7 @@ describe("generate-types", () => {
 	});
 });
 
-describe("runGenerateTypesForDataSources", () => {
+describe("runGenerateTypes", () => {
 	it("deve lançar erro quando nenhum datasource está configurado", async () => {
 		mockConfigFactory.mockReturnValue({
 			outputDir: "/tmp/test-generated",
@@ -151,9 +151,9 @@ describe("runGenerateTypesForDataSources", () => {
 			timeoutMs: 30_000,
 		} as RuntimeConfig);
 
-		await expect(
-			generateTypesModule.runGenerateTypesForDataSources(),
-		).rejects.toThrow("Nenhum datasource configurado para geração de tipos");
+		await expect(generateTypesModule.runGenerateTypes()).rejects.toThrow(
+			"Nenhum datasource configurado para geração de tipos",
+		);
 	});
 });
 

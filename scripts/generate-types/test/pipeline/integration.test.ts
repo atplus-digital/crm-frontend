@@ -111,11 +111,11 @@ describe("Pipeline End-to-End", () => {
 			timeoutMs: 30_000,
 		} as RuntimeConfig);
 
-		const { runGenerateTypesForDataSources } = await import(
+		const { runGenerateTypes } = await import(
 			"@scripts/generate-types/src/generate-types"
 		);
 
-		const result = await runGenerateTypesForDataSources();
+		const result = await runGenerateTypes();
 
 		expect(mockDefaultPipeline).toHaveBeenCalledOnce();
 		expect(result).toMatchObject({
@@ -150,11 +150,11 @@ describe("Pipeline End-to-End", () => {
 			timeoutMs: 30_000,
 		} as RuntimeConfig);
 
-		const { runGenerateTypesForDataSources } = await import(
+		const { runGenerateTypes } = await import(
 			"@scripts/generate-types/src/generate-types"
 		);
 
-		await runGenerateTypesForDataSources();
+		await runGenerateTypes();
 
 		expect(mockDefaultPipeline).toHaveBeenCalledOnce();
 		expect(mockDefaultPipeline.mock.calls[0][0].dataSource.collections).toEqual(
@@ -165,11 +165,11 @@ describe("Pipeline End-to-End", () => {
 	it("deve propagar falha do pipeline como erro agregado", async () => {
 		mockDefaultPipeline.mockRejectedValueOnce(new Error("pipeline failed"));
 
-		const { runGenerateTypesForDataSources } = await import(
+		const { runGenerateTypes } = await import(
 			"@scripts/generate-types/src/generate-types"
 		);
 
-		await expect(runGenerateTypesForDataSources()).rejects.toThrow(
+		await expect(runGenerateTypes()).rejects.toThrow(
 			"Todos os datasources falharam: test",
 		);
 	});
