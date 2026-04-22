@@ -4,14 +4,14 @@ import { ProfileSettings } from "#/pages/dashboard/profile/profile";
 
 const log = createLogger("auth");
 
-export async function loader() {
+export async function loader({ request }: { request: Request }) {
 	log.debug("Profile loader, validating auth");
 	const state = authStore.state;
 	if (state.token && !state.user) {
 		log.debug("Token exists but no user, validating token");
 		await validateTokenOnInit();
 	}
-	requireAuth("/profile");
+	requireAuth(new URL(request.url).pathname);
 }
 
 export function Component() {

@@ -1,4 +1,5 @@
 import { redirect } from "react-router";
+import { routePaths } from "#/routes/route-paths";
 import { hasGrantedAction, hasGrantedSnippet } from "./matchers";
 import { permissionsStore } from "./store";
 
@@ -14,7 +15,7 @@ export function requireSnippet(snippet: string): void {
 
 	if (hasGrantedSnippet(effectiveSnippets, snippet)) return;
 
-	throw redirect("/forbidden");
+	throw redirect(routePaths.forbidden);
 }
 
 /**
@@ -26,5 +27,5 @@ export function requireAction(action: string): void {
 
 	if (hasGrantedAction(effectiveActions, action)) return;
 
-	throw redirect("/forbidden");
+	throw redirect(routePaths.forbidden);
 }

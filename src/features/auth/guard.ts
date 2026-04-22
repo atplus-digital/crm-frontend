@@ -4,6 +4,7 @@ import {
 	setPermissionsFromRoles,
 } from "#/features/auth/permissions";
 import { createLogger } from "#/lib/logger";
+import { routePaths } from "#/routes/route-paths";
 import { checkAuth } from "./service";
 import { authStore, reset, setUser } from "./store";
 
@@ -18,7 +19,8 @@ export function requireAuth(pathname: string): Response {
 	const state = authStore.state;
 	if (!state.isAuthenticated || !state.token) {
 		log.info("Redirecting unauthenticated user to login", { pathname });
-		throw redirect(`/login?returnTo=${encodeURIComponent(pathname)}`);
+		const loginPath = routePaths.login;
+		throw redirect(`${loginPath}?returnTo=${encodeURIComponent(pathname)}`);
 	}
 	return new Response(null);
 }
@@ -31,7 +33,7 @@ export function requireGuest(): Response {
 	const state = authStore.state;
 	if (state.isAuthenticated && state.token) {
 		log.info("Redirecting authenticated user to home");
-		throw redirect("/");
+		throw redirect(routePaths.home);
 	}
 	return new Response(null);
 }

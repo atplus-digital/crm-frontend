@@ -7,6 +7,7 @@ import { Button } from "#/components/ui/button";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { NEGOCIACAO_STATUS_LABELS } from "#/features/cs/negociacoes/negociacoes-types";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
+import { buildRoute } from "#/routes/route-paths";
 
 const negociacaoStatusColorClasses: Record<string, string> = {
 	"1": "bg-blue-500/10 text-blue-600 border-blue-500/20 hover:bg-blue-500/20",
@@ -49,7 +50,7 @@ const columns: ColumnDef<NegociacaoItem>[] = [
 		cell: ({ row }) => (
 			<Button variant="ghost" size="icon-xs" className="size-6" asChild>
 				<Link
-					to={`/cs/negociacoes/${row.original.id}`}
+					to={buildRoute("cs_negociacoes_id", { id: row.original.id })}
 					title="Acessar negociação"
 				>
 					<ExternalLink className="size-4" />

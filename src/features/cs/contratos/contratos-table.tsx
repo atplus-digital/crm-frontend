@@ -11,6 +11,7 @@ import {
 } from "#/features/cs/contratos/contrato-status-badge";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";
+import { buildRoute } from "#/routes/route-paths";
 
 interface PaginationInfo {
 	page: number;
@@ -36,7 +37,7 @@ function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 			cell: ({ row }) => (
 				<Button variant="ghost" size="sm" asChild>
 					<Link
-						to={`/cs/contratos/${row.original.id}`}
+						to={buildRoute("cs_contratos_id", { id: row.original.id })}
 						onClick={(e) => e.stopPropagation()}
 					>
 						<ArrowRight className="size-4" />

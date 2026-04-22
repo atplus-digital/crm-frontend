@@ -31,6 +31,7 @@ import {
 	TIPO_PESSOA_LABELS,
 } from "#/features/cs/negociacoes/negociacoes-types";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
+import { routePaths } from "#/routes/route-paths";
 
 // ---------------------------------------------------------------------------
 // Enum Label Helpers
@@ -58,7 +59,7 @@ export function NegociacaoDetailPage() {
 			<div className="mx-auto max-w-400 p-4">
 				{/* Header */}
 				<div className="flex items-center gap-4 mb-6">
-					<BackButton fallbackTo="/cs/negociacoes" />
+					<BackButton fallbackTo={routePaths.cs_negociacoes} />
 					<div>
 						{isLoading ? (
 							<>

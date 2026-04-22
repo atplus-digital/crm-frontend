@@ -14,6 +14,7 @@ import {
 import { Input } from "#/components/ui/input";
 import { confirmPasswordReset } from "#/features/auth";
 import { extractNocoBaseError } from "#/lib/api-errors";
+import { routePaths } from "#/routes/route-paths";
 
 const schema = z
 	.object({
@@ -48,7 +49,7 @@ export function ResetPasswordConfirmPage({
 				password: values.password,
 				confirmPassword: values.confirmPassword,
 			});
-			navigate("/login");
+			navigate(routePaths.login);
 		} catch (err: unknown) {
 			const msg = extractNocoBaseError(
 				err,

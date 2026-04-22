@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { Button } from "#/components/ui/button";
+import { routePaths } from "#/routes/route-paths";
 
 export function Component() {
 	return (
@@ -10,7 +11,7 @@ export function Component() {
 				Você não tem permissão para acessar esta página.
 			</p>
 			<Button asChild>
-				<Link to="/">Voltar ao início</Link>
+				<Link to={routePaths.home}>Voltar ao início</Link>
 			</Button>
 		</div>
 	);

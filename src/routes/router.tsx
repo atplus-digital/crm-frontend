@@ -3,10 +3,11 @@ import { App } from "#/app";
 import { authStore, validateTokenOnInit } from "#/features/auth";
 import { DashboardLayout } from "#/layout/dashboard-layout";
 import { NotFoundPage } from "#/pages/not-found/not-found";
+import { routePaths, toRouterPath } from "#/routes/route-paths";
 
 export const router = createBrowserRouter([
 	{
-		path: "/",
+		path: routePaths.home,
 		element: <App />,
 		hydrateFallbackElement: <App />,
 		loader: async () => {
@@ -29,53 +30,53 @@ export const router = createBrowserRouter([
 						lazy: () => import("./dashboard/index"),
 					},
 					{
-						path: "profile",
+						path: toRouterPath(routePaths.profile),
 						lazy: () => import("./dashboard/profile/index"),
 					},
 					{
-						path: "cs/pessoas",
+						path: toRouterPath(routePaths.cs_pessoas),
 						lazy: () => import("./cs/pessoas/index"),
 					},
 					{
-						path: "cs/negociacoes",
+						path: toRouterPath(routePaths.cs_negociacoes),
 						lazy: () => import("./cs/negociacoes/index"),
 					},
 					{
-						path: "cs/negociacoes/:id",
+						path: toRouterPath(routePaths.cs_negociacoes_id),
 						lazy: () => import("./cs/negociacoes/$id"),
 					},
 					{
-						path: "cs/contratos",
+						path: toRouterPath(routePaths.cs_contratos),
 						lazy: () => import("./cs/contratos/index"),
 					},
 					{
-						path: "cs/contratos/:id",
+						path: toRouterPath(routePaths.cs_contratos_id),
 						lazy: () => import("./cs/contratos/$id"),
 					},
 					{
-						path: "cs/troca-de-titularidade",
+						path: toRouterPath(routePaths.cs_troca_de_titularidade),
 						lazy: () => import("./cs/troca-de-titularidade/index"),
 					},
 					{
-						path: "cs/troca-de-titularidade/:id",
+						path: toRouterPath(routePaths.cs_troca_de_titularidade_id),
 						lazy: () => import("./cs/troca-de-titularidade/$id"),
 					},
 				],
 			},
 			{
-				path: "login",
+				path: toRouterPath(routePaths.login),
 				lazy: () => import("./auth/login/index"),
 			},
 			{
-				path: "forbidden",
+				path: toRouterPath(routePaths.forbidden),
 				lazy: () => import("./forbidden/index"),
 			},
 			{
-				path: "reset-password",
+				path: toRouterPath(routePaths.reset_password),
 				lazy: () => import("./auth/reset-password/index"),
 			},
 			{
-				path: "reset-password-confirm",
+				path: toRouterPath(routePaths.reset_password_confirm),
 				lazy: () => import("./auth/reset-password-confirm/index"),
 			},
 			{

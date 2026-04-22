@@ -8,6 +8,7 @@ import {
 	SidebarRail,
 } from "#/components/ui/sidebar";
 import { authStore, signOut } from "#/features/auth";
+import { routePaths } from "#/routes/route-paths";
 import { SidebarHeaderComponent } from "./sidebar-header";
 import { SidebarNavigation } from "./sidebar-navigation";
 import { SidebarUserMenu } from "./sidebar-user-menu";
@@ -21,7 +22,7 @@ export function AppSidebar() {
 
 	async function handleLogout() {
 		await signOut();
-		window.location.href = "/login";
+		window.location.href = routePaths.login;
 	}
 
 	return (

@@ -4,6 +4,7 @@ import { requireGuest } from "#/features/auth";
 import { GuestLayout } from "#/features/auth/components/auth-layout";
 import { createLogger } from "#/lib/logger";
 import { ResetPasswordPage } from "#/pages/auth/reset-password";
+import { routePaths } from "#/routes/route-paths";
 
 const log = createLogger("auth");
 
@@ -12,7 +13,7 @@ export function loader() {
 	requireGuest();
 	if (env.VITE_DISABLE_FORGOT_PASSWORD) {
 		log.info("Password reset disabled, redirecting to login");
-		throw redirect("/login");
+		throw redirect(routePaths.login);
 	}
 }
 

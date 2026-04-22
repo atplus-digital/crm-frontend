@@ -14,22 +14,22 @@ React Router v7 route definitions — thin wrappers with `loader` guards + lazy-
 
 ## Key Files
 
-| File                                    | Purpose                                      |
-| --------------------------------------- | -------------------------------------------- |
-| `router.tsx`                            | Root route tree with `createBrowserRouter()` |
-| `dashboard/index.tsx`                   | Protected dashboard route (requires auth)    |
-| `profile/index.tsx`                     | User profile settings route                  |
-| `forbidden/index.tsx`                   | 403 Access Denied page                       |
-| `auth/login/index.tsx`                  | Public login route (requires guest)          |
-| `auth/reset-password/index.tsx`         | Password reset request                       |
-| `auth/reset-password-confirm/index.tsx` | Password reset confirmation                  |
-| `cs/pessoas/index.tsx`                  | People (PF/PJ) list route                    |
-| `cs/negociacoes/index.tsx`              | Negotiations list route                      |
-| `cs/negociacoes/$id.tsx`                | Negotiation detail route                     |
-| `cs/contratos/index.tsx`                | Contracts list route                         |
-| `cs/contratos/$id.tsx`                  | Contract detail route                        |
-| `cs/troca-de-titularidade/index.tsx`    | Ownership transfer list route                |
-| `cs/troca-de-titularidade/$id.tsx`      | Ownership transfer detail route              |
+| File                                                        | Purpose                                      |
+| ----------------------------------------------------------- | -------------------------------------------- |
+| `router.tsx`                                                | Root route tree with `createBrowserRouter()` |
+| `dashboard/index.tsx`                                       | Protected dashboard route (requires auth)    |
+| `profile/index.tsx`                                         | User profile settings route                  |
+| `forbidden/index.tsx`                                       | 403 Access Denied page                       |
+| `auth/login/index.tsx`                                      | Public login route (requires guest)          |
+| `auth/reset-password/index.tsx`                             | Password reset request                       |
+| `auth/reset-password-confirm/index.tsx`                     | Password reset confirmation                  |
+| `cs/pessoas/index.tsx`                                      | People (PF/PJ) list route                    |
+| `cs/negociacoes/index.tsx`                                  | Negotiations list route                      |
+| `cs/negociacoes/negociacoes-detail.tsx`                     | Negotiation detail route                     |
+| `cs/contratos/index.tsx`                                    | Contracts list route                         |
+| `cs/contratos/contratos-detail.tsx`                         | Contract detail route                        |
+| `cs/troca-de-titularidade/index.tsx`                        | Ownership transfer list route                |
+| `cs/troca-de-titularidade/troca-de-titularidade-detail.tsx` | Ownership transfer detail route              |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

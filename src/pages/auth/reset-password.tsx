@@ -14,6 +14,7 @@ import {
 } from "#/components/ui/form";
 import { Input } from "#/components/ui/input";
 import { requestPasswordReset } from "#/features/auth";
+import { routePaths } from "#/routes/route-paths";
 
 const schema = z.object({
 	email: z.string().min(1, "Obrigatório").email("E-mail inválido"),
@@ -47,7 +48,10 @@ export function ResetPasswordPage() {
 					Se o e-mail estiver cadastrado, você receberá as instruções para
 					redefinir sua senha.
 				</p>
-				<Link to="/login" className="text-sm text-primary hover:underline">
+				<Link
+					to={routePaths.login}
+					className="text-sm text-primary hover:underline"
+				>
 					Voltar para o login
 				</Link>
 			</div>
@@ -73,7 +77,7 @@ export function ResetPasswordPage() {
 			</Button>
 			<div className="text-center">
 				<Link
-					to="/login"
+					to={routePaths.login}
 					className="text-sm text-muted-foreground hover:text-primary underline"
 				>
 					Voltar para o login

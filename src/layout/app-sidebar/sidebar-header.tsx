@@ -5,6 +5,7 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "#/components/ui/sidebar";
+import { routePaths } from "#/routes/route-paths";
 
 export function SidebarHeaderComponent() {
 	return (
@@ -12,7 +13,7 @@ export function SidebarHeaderComponent() {
 			<SidebarMenu>
 				<SidebarMenuItem>
 					<SidebarMenuButton size="lg" asChild>
-						<Link to="/">
+						<Link to={routePaths.home}>
 							<div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground text-sm font-bold">
 								AT
 							</div>

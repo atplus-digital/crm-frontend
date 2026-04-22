@@ -15,6 +15,7 @@ import { Input } from "#/components/ui/input";
 import { env } from "#/env";
 import { signIn } from "#/features/auth";
 import { extractNocoBaseError } from "#/lib/api-errors";
+import { routePaths } from "#/routes/route-paths";
 
 const loginSchema = z.object({
 	email: z.email("E-mail inválido"),
@@ -35,7 +36,7 @@ export function LoginForm() {
 		try {
 			await signIn({ email: values.email, password: values.password });
 			const search = new URLSearchParams(window.location.search);
-			const returnTo = search.get("returnTo") || "/";
+			const returnTo = search.get("returnTo") || routePaths.home;
 			await navigate(returnTo);
 		} catch (err: unknown) {
 			toast.error(extractNocoBaseError(err, "E-mail ou senha inválidos"));
@@ -78,7 +79,7 @@ export function LoginForm() {
 			{!env.VITE_DISABLE_FORGOT_PASSWORD && (
 				<div className="text-center">
 					<Link
-						to="/reset-password"
+						to={routePaths.reset_password}
 						className="text-sm text-muted-foreground hover:text-primary underline"
 					>
 						Esqueceu sua senha?

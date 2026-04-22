@@ -92,16 +92,14 @@ export interface PessoaFisica {
 
 <!-- AGENTS-GENERATED:START golden-samples -->
 
-<!-- AGENTS-GENERATED:START golden-samples -->
-
-| For                 | Reference                                          | Key patterns                                             |
-| ------------------- | -------------------------------------------------- | -------------------------------------------------------- |
-| Route (protected)   | `src/routes/dashboard.tsx`                         | `requireAuth` in `loader`, `Component` export            |
-| Route (public auth) | `src/routes/auth/login.tsx`                        | `requireGuest` in `loader`, `Component` export           |
-| Router config       | `src/routes/router.tsx`                            | `createBrowserRouter`, lazy route imports, nested routes |
-| Auth module         | `src/features/auth/index.ts`                       | barrel export pattern                                    |
-| Error handling      | `src/components/error-boundary.tsx`                | React Error Boundary pattern with user-friendly UI       |
-| Component structure | `src/features/auth/components/profile-details.tsx` | Separate business logic from presentation in dashboard   |
+| For                 | Reference                                           | Key patterns                                             |
+| ------------------- | --------------------------------------------------- | -------------------------------------------------------- |
+| Route (protected)   | `src/routes/dashboard/index.tsx`                    | `requireAuth` in `loader`, `Component` export            |
+| Route (public auth) | `src/routes/auth/login/index.tsx`                   | `requireGuest` in `loader`, `Component` export           |
+| Router config       | `src/routes/router.tsx`                             | `createBrowserRouter`, lazy route imports, nested routes |
+| Auth module         | `src/features/auth/index.ts`                        | barrel export pattern                                    |
+| Error handling      | `src/components/error-boundary.tsx`                 | React Error Boundary pattern with user-friendly UI       |
+| Component structure | `src/features/auth/components/profile-details.tsx`  | Separate business logic from presentation in dashboard   |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
 
@@ -200,9 +198,9 @@ export interface PessoaFisica {
 
 <!-- AGENTS-GENERATED:START scope-index -->
 
-- `./src/AGENTS.md` — Frontend application (TypeScript/React/Vue)
+- `./src/AGENTS.md` — Frontend application (TypeScript/React)
 - `./src/components/AGENTS.md` — Shared UI building blocks and app-level reusable components
-- `./src/components/layout/AGENTS.md` — Authenticated app shell layout and navigation composition
+- `./src/layout/AGENTS.md` — Authenticated app shell layout and navigation composition
 - `./src/features/AGENTS.md` — Cross-feature conventions and folder structure for domain modules
 - `./src/features/auth/AGENTS.md` — Authentication module
 - `./src/features/cs/AGENTS.md` — Customer Success domain (contratos, negociações, pessoas)
@@ -212,7 +210,7 @@ export interface PessoaFisica {
 - `./src/hooks/AGENTS.md` — Shared cross-feature hooks
 - `./src/lib/AGENTS.md` — Pure utilities and formatting/filter/logging helpers
 - `./src/repositories/AGENTS.md` — NocoBase/IXC data access layer
-- `./scripts/AGENTS.md` — Automation scripts (type generation, build helpers)
+- `./src/routes/AGENTS.md` — React Router v7 route definitions and guard patterns
 - `./.github/workflows/AGENTS.md` — GitHub Actions workflows and CI/CD automation
 <!-- AGENTS-GENERATED:END scope-index -->
 

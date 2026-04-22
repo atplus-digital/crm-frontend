@@ -1,5 +1,10 @@
 import { House, Users } from "lucide-react";
 import type { ReactNode } from "react";
+import type { AppRoutePath } from "#/routes/route-paths";
+import { routePaths } from "#/routes/route-paths";
+
+const CS_SECTION_PREFIX =
+	routePaths.cs_pessoas.match(/^\/[^/]+/)?.[0] ?? routePaths.home;
 
 export type NavIconName = "fileText" | "handshake" | "home" | "user" | "users";
 
@@ -12,7 +17,7 @@ export interface NavItem {
 	/** Icon name rendered by the app shell. Optional. */
 	icon?: NavIconName;
 	/** TanStack Router `to` path. */
-	to: string;
+	to: AppRoutePath;
 	/** Snippet required to see this item. If omitted, item is always visible. */
 	requiresSnippet?: string;
 	/** Action required to see this item. If omitted, item is always visible. */
@@ -29,7 +34,7 @@ export interface NavSection {
 	label: string;
 	/** Optional JSX icon rendered next to the section label. */
 	icon?: ReactNode;
-	to: string;
+	to: AppRoutePath;
 	/** Additional path prefixes used to mark the section as active. */
 	matches?: string[];
 	items: NavItem[];
@@ -39,53 +44,53 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 	{
 		label: "Home",
 		icon: <House className="size-4" />,
-		to: "/",
-		matches: ["/", "/profile"],
+		to: routePaths.home,
+		matches: [routePaths.home, routePaths.profile],
 		items: [
 			{
 				label: "Dashboard",
 				icon: "home",
-				to: "/",
+				to: routePaths.home,
 			},
 			{
 				label: "Perfil",
 				icon: "user",
-				to: "/profile",
+				to: routePaths.profile,
 			},
 		],
 	},
 	{
 		label: "Customer Success",
 		icon: <Users className="size-4" />,
-		to: "/cs/pessoas",
-		matches: ["/cs"],
+		to: routePaths.cs_pessoas,
+		matches: [CS_SECTION_PREFIX],
 		items: [
 			{
 				label: "Pessoas",
 				icon: "users",
-				to: "/cs/pessoas",
+				to: routePaths.cs_pessoas,
 			},
 			{
 				label: "Negociações",
 				icon: "handshake",
-				to: "/cs/negociacoes",
+				to: routePaths.cs_negociacoes,
 			},
 			{
 				label: "Contratos",
 				icon: "fileText",
-				to: "/cs/contratos",
+				to: routePaths.cs_contratos,
 			},
 			{
 				label: "Troca de Titularidade",
 				icon: "fileText",
-				to: "/cs/troca-de-titularidade",
+				to: routePaths.cs_troca_de_titularidade,
 			},
 		],
 	},
 ];
 
 export function isNavPathActive(pathname: string, to: string): boolean {
-	if (to === "/") return pathname === "/";
+	if (to === routePaths.home) return pathname === routePaths.home;
 	return pathname === to || pathname.startsWith(`${to}/`);
 }
 

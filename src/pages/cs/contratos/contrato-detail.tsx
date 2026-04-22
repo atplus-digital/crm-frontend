@@ -39,6 +39,7 @@ import type {
 	ProdutoContrato,
 } from "#/features/cs/contratos/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";
+import { routePaths } from "#/routes/route-paths";
 
 export function ContratoDetailPage() {
 	const { id } = useParams<{ id: string }>();
@@ -75,7 +76,7 @@ export function ContratoDetailPage() {
 			<div className="mx-auto max-w-400 p-4">
 				{/* Header */}
 				<div className="flex items-center gap-4 mb-6">
-					<BackButton fallbackTo="/cs/contratos" />
+					<BackButton fallbackTo={routePaths.cs_contratos} />
 					<div>
 						{isLoading ? (
 							<>

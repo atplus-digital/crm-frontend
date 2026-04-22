@@ -13,6 +13,7 @@ import {
 	CRMTROCATITULARIDADE_SUBSTATUS_LABELS,
 } from "#/generated/nocobase/crm-troca-titularidade";
 import { formatDatePtBR, formatPhone } from "#/lib/utils";
+import { routePaths } from "#/routes/route-paths";
 
 export function TrocaTitularidadeDetailPage() {
 	const { id } = useParams<{ id: string }>();
@@ -41,7 +42,7 @@ export function TrocaTitularidadeDetailPage() {
 		<div className="flex-1 overflow-auto bg-background">
 			<div className="mx-auto max-w-400 p-4">
 				<div className="flex items-center gap-4 mb-6">
-					<BackButton fallbackTo="/troca-titularidade" />
+					<BackButton fallbackTo={routePaths.cs_troca_de_titularidade} />
 					<div>
 						{isLoading ? (
 							<>

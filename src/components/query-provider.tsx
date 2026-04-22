@@ -2,6 +2,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { reset } from "#/features/auth";
 import { extractNocoBaseError } from "#/lib/api-errors";
+import { routePaths } from "#/routes/route-paths";
 
 function isUnauthorizedError(
 	error: unknown,
@@ -41,7 +42,7 @@ export function getQueryContext() {
 			queryClient.clear();
 			// Use setTimeout to avoid redirect during render
 			setTimeout(() => {
-				window.location.href = "/login";
+				window.location.href = routePaths.login;
 				isRedirecting = false;
 			}, 0);
 		} else {

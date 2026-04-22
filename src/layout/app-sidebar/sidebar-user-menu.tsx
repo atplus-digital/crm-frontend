@@ -11,6 +11,7 @@ import {
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
 import { SidebarMenuButton } from "#/components/ui/sidebar";
+import { routePaths } from "#/routes/route-paths";
 
 interface SidebarUserMenuProps {
 	userInitials: string;
@@ -70,7 +71,7 @@ export function SidebarUserMenu({
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem asChild>
-					<Link to="/profile" className="cursor-pointer">
+					<Link to={routePaths.profile} className="cursor-pointer">
 						<User />
 						Perfil
 					</Link>

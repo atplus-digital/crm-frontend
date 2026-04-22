@@ -4,6 +4,7 @@ import { Badge } from "#/components/ui/badge";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import type { NegociacoesStatus } from "#/generated/nocobase/negociacoes";
 import { cn, formatCurrency } from "#/lib/utils";
+import { buildRoute } from "#/routes/route-paths";
 
 // Map generated enum values to status keys
 const STATUS_ENUM_TO_KEY: Record<NegociacoesStatus, StatusKey | null> = {
@@ -76,13 +77,13 @@ function KanbanCardComponent({ card }: KanbanCardProps) {
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		navigate(`/cs/negociacoes/${card.id}`);
+		navigate(buildRoute("cs_negociacoes_id", { id: card.id }));
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter" || e.key === " ") {
 			e.preventDefault();
-			navigate(`/cs/negociacoes/${card.id}`);
+			navigate(buildRoute("cs_negociacoes_id", { id: card.id }));
 		}
 	};
 
