@@ -52,6 +52,11 @@ export function SuspensaoContratoPage() {
 		setPage(1);
 	}
 
+	function handleFilterChange(newFilters: FilterValues) {
+		setFilters(newFilters);
+		setPage(1);
+	}
+
 	return (
 		<div className="flex-1 overflow-auto bg-background">
 			<div className="mx-auto max-w-400 space-y-6 p-4">
@@ -64,7 +69,7 @@ export function SuspensaoContratoPage() {
 					</p>
 				</div>
 
-				<FilterBar filters={filters} onFilter={setFilters} />
+				<FilterBar filters={filters} onFilter={handleFilterChange} />
 
 				{error ? (
 					<InlineErrorAlert>
