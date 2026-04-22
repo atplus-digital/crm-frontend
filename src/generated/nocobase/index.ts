@@ -816,22 +816,6 @@ export interface ComentariosComprasRelations {
 
 export type ComentariosComprasRelationKey = keyof ComentariosComprasRelations;
 
-export interface ComentariosSuspensaoDeContrato {
-	id: number;
-	f_fk_suspensao: number;
-	f_comentario: string;
-	updatedAt: string;
-	createdAt: string;
-}
-
-export interface ComentariosSuspensaoDeContratoRelations {
-	createdBy?: Users | null;
-	updatedBy?: Users | null;
-}
-
-export type ComentariosSuspensaoDeContratoRelationKey =
-	keyof ComentariosSuspensaoDeContratoRelations;
-
 export interface ComprasFornecedores {
 	id: number;
 	f_contato: string;
@@ -2595,49 +2579,6 @@ export interface SolicitacaoComprasRelations {
 
 export type SolicitacaoComprasRelationKey = keyof SolicitacaoComprasRelations;
 
-export const SUSPENSAOCONTRATO_STATUS_LABELS = {
-	"0": "Nova Solicitação",
-	"1": "Aguardando Assinatura",
-	"2": "Assinatura Concluída",
-	"3": "Concluído",
-	"4": "Cancelado",
-} as const;
-
-export type SuspensaoContratoStatus =
-	keyof typeof SUSPENSAOCONTRATO_STATUS_LABELS;
-
-export interface SuspensaoContrato {
-	id: number;
-	f_fk_pessoas: number;
-	f_fk_pessoas_pj: number;
-	f_fk_responsavel: number;
-	f_cpf: string;
-	f_dias_suspensao: string;
-	f_email: string;
-	f_final_suspensao: string;
-	f_id_contrato: string;
-	f_inicio_suspensao: string;
-	f_link_assinatura: string;
-	f_status: SuspensaoContratoStatus;
-	f_telefone: string;
-	f_teste: number;
-	f_titulo: string;
-	updatedAt: string;
-	createdAt: string;
-}
-
-export interface SuspensaoContratoRelations {
-	createdBy?: Users | null;
-	f_comentarios?: ComentariosSuspensaoDeContrato[];
-	f_contratos?: Contratos[];
-	f_pessoas?: Pessoas | null;
-	f_pessoas_pj?: Empresas | null;
-	f_responsavel?: Users | null;
-	updatedBy?: Users | null;
-}
-
-export type SuspensaoContratoRelationKey = keyof SuspensaoContratoRelations;
-
 export interface TabelaGeral {
 	id: number;
 	updatedAt: string;
@@ -3164,53 +3105,6 @@ export interface TemplatesAtendimentoN1Relations {
 
 export type TemplatesAtendimentoN1RelationKey =
 	keyof TemplatesAtendimentoN1Relations;
-
-export const TROCAENDERECO_STATUS_LABELS = {
-	"1": "Atendimento Gerado",
-	"2": "Atendimento Concluído",
-	"3": "Atendimento para Campo",
-	"4": "Atendimento para CR",
-	"0": "Erro na Integração",
-} as const;
-
-export const TROCAENDERECO_TAXAINSTALACAO_LABELS = {
-	"0": "Não",
-	"1": "R$ 80,00 à vista",
-	"2": "R$ 80,00 em 2 vezes",
-} as const;
-
-export type TrocaEnderecoStatus = keyof typeof TROCAENDERECO_STATUS_LABELS;
-
-export type TrocaEnderecoTaxaInstalacao =
-	keyof typeof TROCAENDERECO_TAXAINSTALACAO_LABELS;
-
-export interface TrocaEndereco {
-	id: number;
-	f_bairro: string;
-	f_cep: string;
-	f_cliente: string;
-	f_endereco: string;
-	f_endereco_cidade: string;
-	f_endereco_complemento: string;
-	f_endereco_estado: string;
-	f_endereco_numero: string;
-	f_endereco_referencia: string;
-	f_id_atendimento: string;
-	f_id_contrato: string;
-	f_obs: string;
-	f_status: TrocaEnderecoStatus;
-	f_taxa_instalacao: TrocaEnderecoTaxaInstalacao;
-	f_telefone_contato: string;
-	updatedAt: string;
-	createdAt: string;
-}
-
-export interface TrocaEnderecoRelations {
-	createdBy?: Users | null;
-	updatedBy?: Users | null;
-}
-
-export type TrocaEnderecoRelationKey = keyof TrocaEnderecoRelations;
 
 export interface TrocasdetitularidadeComentarios {
 	id: number;
