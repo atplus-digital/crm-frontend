@@ -7,8 +7,7 @@ import { DataTableColumnHeader } from "#/components/table/data-table-column-head
 import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Button } from "#/components/ui/button";
 import type { TrocaEnderecoWithRelations } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
-import { TROCA_STATUS_VARIANTS } from "#/features/cs/troca-de-endereco/troca-endereco-types";
-import { TROCAENDERECO_STATUS_DISPLAY_LABELS } from "#/generated/nocobase/troca-endereco";
+import { TROCAENDERECO_STATUS_LABELS } from "#/generated/nocobase/troca-endereco";
 import { formatDatePtBR } from "#/lib/utils";
 import { buildRoute } from "#/routes/route-paths";
 
@@ -85,13 +84,12 @@ function getColumns(): ColumnDef<TrocaEnderecoWithRelations, unknown>[] {
 			),
 			cell: ({ row }) => {
 				const displayLabel =
-					row.original.f_status_display ||
-					TROCAENDERECO_STATUS_DISPLAY_LABELS[row.original.f_status] ||
+					TROCAENDERECO_STATUS_LABELS[row.original.f_status] ||
 					row.original.f_status;
 				return (
 					<StatusBadge
 						value={displayLabel}
-						labels={TROCAENDERECO_STATUS_DISPLAY_LABELS}
+						labels={TROCAENDERECO_STATUS_LABELS}
 						colorClasses={{
 							[displayLabel]:
 								"bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",

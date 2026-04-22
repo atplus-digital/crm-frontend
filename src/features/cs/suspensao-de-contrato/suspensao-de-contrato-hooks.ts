@@ -2,7 +2,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 import type {
 	SuspensaoContrato,
 	SuspensaoContratoRelations,
-} from "#/generated/nocobase/index";
+} from "#/generated/nocobase/suspensao-contrato";
 import { buildFilter, eq, gte, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
 import type { SuspensaoContratoFilters } from "./suspensao-de-contrato-types";

@@ -11,7 +11,6 @@ import { createInitialContext } from "./pipeline/context-builder";
 import { defaultPipeline } from "./pipeline/default-pipeline";
 import { runPostPipeline } from "./pipeline/post-pipeline";
 import { logger } from "./utils/logger";
-import { normalizeCollectionNames } from "./utils/naming";
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 
 export { normalizeCollectionNames } from "./utils/naming";

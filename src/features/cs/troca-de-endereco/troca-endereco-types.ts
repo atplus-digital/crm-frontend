@@ -4,7 +4,7 @@ import type {
 } from "#/generated/nocobase/troca-endereco";
 import {
 	TROCAENDERECO_STATUS_LABELS,
-	TROCAENDERECO_TAXA_INSTALACAO_LABELS,
+	TROCAENDERECO_TAXAINSTALACAO_LABELS,
 } from "#/generated/nocobase/troca-endereco";
 
 export const TROCA_STATUS_FILTER_OPTIONS: {
@@ -12,16 +12,16 @@ export const TROCA_STATUS_FILTER_OPTIONS: {
 	label: string;
 }[] = Object.entries(TROCAENDERECO_STATUS_LABELS).map(([value, label]) => ({
 	value: value as TrocaEnderecoStatus,
-	label,
+	label: label as string,
 }));
 
 export const TROCA_TAXA_INSTALACAO_FILTER_OPTIONS: {
 	value: TrocaEnderecoTaxaInstalacao;
 	label: string;
-}[] = Object.entries(TROCAENDERECO_TAXA_INSTALACAO_LABELS).map(
+}[] = Object.entries(TROCAENDERECO_TAXAINSTALACAO_LABELS).map(
 	([value, label]) => ({
 		value: value as TrocaEnderecoTaxaInstalacao,
-		label,
+		label: label as string,
 	}),
 );
 

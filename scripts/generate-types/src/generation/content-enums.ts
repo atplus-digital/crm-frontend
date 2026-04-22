@@ -3,7 +3,6 @@ import type {
 	GeneratedTypes,
 } from "@scripts/generate-types/src/@types/generation";
 import {
-	formatKey,
 	removeAccents,
 	toCollectionTypeName,
 } from "@scripts/generate-types/src/utils/naming";

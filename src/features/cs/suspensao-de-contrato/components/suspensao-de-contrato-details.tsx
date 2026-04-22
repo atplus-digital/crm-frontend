@@ -10,6 +10,8 @@ import { DetailField } from "#/features/cs/detail-field";
 import { CardSectionSkeleton } from "#/features/cs/detail-skeleton";
 import { useSuspensaoContratoById } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks";
 import { SUSPENSAO_CONTRATO_STATUS_LABELS } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
+import type { ComentariosSuspensaoDeContrato } from "#/generated/nocobase/comentarios-suspensao-de-contrato";
+import type { Contratos } from "#/generated/nocobase/index";
 import { formatDatePtBR, formatPhone } from "#/lib/utils";
 import { routePaths } from "#/routes/route-paths";
 import { DetailSection } from "../detail-section";
@@ -154,22 +156,26 @@ export function SuspensaoContratoDetailPage() {
 										icon={<FileText className="size-4" />}
 									>
 										<div className="space-y-4">
-											{suspensaoContrato.f_comentarios.map((comentario) => (
-												<div
-													key={comentario.id}
-													className="border-b pb-3 last:border-b-0"
-												>
-													<div className="flex justify-between items-start">
-														<p className="text-sm">{comentario.f_comentario}</p>
-														<span className="text-xs text-muted-foreground ml-2">
-															{formatDatePtBR(comentario.createdAt)}
-														</span>
+											{suspensaoContrato.f_comentarios.map(
+												(comentario: ComentariosSuspensaoDeContrato) => (
+													<div
+														key={comentario.id}
+														className="border-b pb-3 last:border-b-0"
+													>
+														<div className="flex justify-between items-start">
+															<p className="text-sm">
+																{comentario.f_comentario}
+															</p>
+															<span className="text-xs text-muted-foreground ml-2">
+																{formatDatePtBR(comentario.createdAt)}
+															</span>
+														</div>
+														<div className="text-xs text-muted-foreground mt-1">
+															Por: Usuário
+														</div>
 													</div>
-													<div className="text-xs text-muted-foreground mt-1">
-														Por: Usuário
-													</div>
-												</div>
-											))}
+												),
+											)}
 										</div>
 									</DetailSection>
 								)}
@@ -218,18 +224,20 @@ export function SuspensaoContratoDetailPage() {
 										{suspensaoContrato.f_contratos &&
 										suspensaoContrato.f_contratos.length > 0 ? (
 											<div className="space-y-2">
-												{suspensaoContrato.f_contratos.map((contrato) => (
-													<div key={contrato.id}>
-														<a
-															href={contrato.url || "#"}
-															target="_blank"
-															rel="noopener noreferrer"
-															className="text-blue-600 hover:underline"
-														>
-															{contrato.title || `Contrato ${contrato.id}`}
-														</a>
-													</div>
-												))}
+												{suspensaoContrato.f_contratos.map(
+													(contrato: Contratos) => (
+														<div key={contrato.id}>
+															<a
+																href={contrato.url || "#"}
+																target="_blank"
+																rel="noopener noreferrer"
+																className="text-blue-600 hover:underline"
+															>
+																{contrato.title || `Contrato ${contrato.id}`}
+															</a>
+														</div>
+													),
+												)}
 											</div>
 										) : (
 											"Após assinado o contrato irá aparecer aqui."

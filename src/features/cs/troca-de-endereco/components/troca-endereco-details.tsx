@@ -17,7 +17,7 @@ import { CardSectionSkeleton } from "#/features/cs/detail-skeleton";
 import { useTrocaEnderecoById } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
 import {
 	TROCAENDERECO_STATUS_LABELS,
-	TROCAENDERECO_TAXA_INSTALACAO_LABELS,
+	TROCAENDERECO_TAXAINSTALACAO_LABELS,
 } from "#/generated/nocobase/troca-endereco";
 import { formatDatePtBR, formatPhone } from "#/lib/utils";
 import { routePaths } from "#/routes/route-paths";
@@ -136,7 +136,7 @@ export function TrocaEnderecoDetailPage() {
 								</DetailField>
 								<DetailField label="Taxa de Instalação">
 									{trocaEndereco.f_taxa_instalacao
-										? (TROCAENDERECO_TAXA_INSTALACAO_LABELS[
+										? (TROCAENDERECO_TAXAINSTALACAO_LABELS[
 												trocaEndereco.f_taxa_instalacao
 											] ?? trocaEndereco.f_taxa_instalacao)
 										: "—"}

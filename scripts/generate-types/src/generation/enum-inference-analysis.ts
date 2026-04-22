@@ -1,5 +1,4 @@
 import type {
-	EnumCorrectionRule,
 	RejectedFieldsMap,
 	EnumInferenceConfig as ScriptEnumInferenceConfig,
 } from "../@types/script";

@@ -71,7 +71,7 @@ export interface EnumInferenceConfig {
 	patternThreshold?: number;
 }
 
-interface BaseDataSourceGenerationConfig {
+export interface BaseDataSourceGenerationConfig {
 	name: string;
 	type: "nocobase" | "rest";
 	dataSource: string;
@@ -147,6 +147,11 @@ export interface ScriptConfig {
 	 * @default false
 	 */
 	dryRun?: boolean;
+	/**
+	 * Tempo de vida do cache de enums em milissegundos.
+	 * @default 86400000 (24 horas)
+	 */
+	cacheTtlMs?: number;
 	/**
 	 * Valida tipos TypeScript após geração usando tsc --noEmit.
 	 * @default true

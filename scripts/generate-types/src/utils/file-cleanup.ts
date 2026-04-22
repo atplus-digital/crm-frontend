@@ -7,21 +7,6 @@ import { isFileBeingEdited } from "./file-editor-check";
 import { logger } from "./logger";
 import { toFileName } from "./naming";
 
-const MAIN_OUTPUT_FILE = "index.ts";
-
-function resolveOutputPath(
-	outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE),
-): string {
-	return path.resolve(process.cwd(), outputPath);
-}
-
-function ensureDirectoryExists(filePath: string) {
-	const directoryPath = path.dirname(filePath);
-	if (!fs.existsSync(directoryPath)) {
-		fs.mkdirSync(directoryPath, { recursive: true });
-	}
-}
-
 function readExistingContent(filePath: string): string {
 	if (!fs.existsSync(filePath)) {
 		return "";
