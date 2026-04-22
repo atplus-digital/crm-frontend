@@ -2233,7 +2233,7 @@ export type QualirunInfoAdicionaisRelationKey =
 
 export const QUALIRUNPROCESSOS_DETALHESPROCEDIMENTO_LABELS = {
 	"1": "Utilizado para novos colaboradores preencherem os dados e a documentação de admissão, que serão utilizados no CRM, aba de Colaboradores.",
-	"2": "Utilizado para novos colaboradores assinarem os termos de Confidencialidade, LGPD e Uso Voz e Imagem.",
+	"2": "Utilizado para novos colaboradores assinarem os termos padrões (Confidencialidade, LGPD e Uso Voz/Imagem) e outros que se enquadram conforme dados do contrato.",
 } as const;
 
 export const QUALIRUNPROCESSOS_IDPROCEDIMENTOQUALIRUN_LABELS = {
@@ -2252,6 +2252,7 @@ export const QUALIRUNPROCESSOS_STATUS_LABELS = {
 	pendente: "Pendente",
 	concluido: "Concluído",
 	cancelado: "Cancelado",
+	erroapi: "Erro na API",
 } as const;
 
 export type QualirunProcessosDetalhesProcedimento =

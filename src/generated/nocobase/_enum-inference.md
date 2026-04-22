@@ -539,7 +539,7 @@
 | f_detalhes_procedimento    | API    | 2     | ✅     | 1, 2                                                  |
 | f_id_procedimento_qualirun | API    | 2     | ✅     | c03f166d-a4d7-42b7-ae73-a4c287e171ac, 0a3d75b4-290... |
 | f_procedimento             | API    | 2     | ✅     | complemento-informacoes-documentos, confidencialid... |
-| f_status                   | API    | 4     | ✅     | novo, pendente, concluido, cancelado                  |
+| f_status                   | API    | 5     | ✅     | novo, pendente, concluido, cancelado, erroapi         |
 
 ---
 
