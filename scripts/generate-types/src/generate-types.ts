@@ -1,63 +1,18 @@
 import { config } from "@scripts/generate-types/config";
-import type { CollectionTypesMap } from "./@types/generation";
 import type {
-	DataSourceClient,
 	DataSourceFilesResult,
 	DataSourceGenerationConfig,
 	GenerateTypesResult,
 } from "./@types/script";
-import { NocoBaseDataSourceClient } from "./generation/client";
 import { createInitialContext } from "./pipeline/context-builder";
 import { defaultPipeline } from "./pipeline/default-pipeline";
 import { runPostPipeline } from "./pipeline/post-pipeline";
+import { resolveDataSourceConfigs } from "./utils/config";
+import { createDataSourceClient } from "./utils/create-dataSource-client";
 import { logger } from "./utils/logger";
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 
 export { normalizeCollectionNames } from "./utils/naming";
-
-export function resolveDataSourceConfigs(): DataSourceGenerationConfig[] {
-	return (config.datasources ?? []).filter(
-		(datasource) => datasource.outputDir.trim().length > 0,
-	);
-}
-
-export function mergeCollectionTypeMaps(
-	collectionMaps: Iterable<CollectionTypesMap>,
-): CollectionTypesMap {
-	const merged: CollectionTypesMap = {};
-	for (const collectionMap of collectionMaps) {
-		Object.assign(merged, collectionMap);
-	}
-	return merged;
-}
-
-function createDataSourceClient(
-	dataSource: DataSourceGenerationConfig,
-): DataSourceClient {
-	switch (dataSource.type) {
-		case "nocobase":
-			return new NocoBaseDataSourceClient(
-				{
-					baseUrl: config.baseUrl,
-					token: config.token,
-					timeoutMs: config.requestTimeoutMs,
-				},
-				{
-					requestHeaders: {
-						"X-Data-Source": dataSource.dataSource,
-					},
-				},
-			);
-		case "rest":
-			throw new Error(
-				`Datasource REST ainda não implementado. DataSource: '${dataSource.name}'`,
-			);
-		default:
-			throw new Error(
-				`Tipo de datasource desconhecido: '${(dataSource as DataSourceGenerationConfig).type}'. Esperado: 'nocobase' | 'rest'`,
-			);
-	}
-}
 
 async function runGenerateTypesForDataSource(
 	dataSource: DataSourceGenerationConfig,
