@@ -303,7 +303,7 @@ export interface ScriptConfig {
 	enumInference?: EnumInferenceConfig;
 	/**
 	 * Habilita cache para adapters de enum (ex: IXC Wiki).
-	 * Cache é armazenado em .cache/ixc-wiki/ com TTL de 24h.
+	 * Cache persiste indefinidamente até ser deletado manualmente.
 	 * @default true
 	 */
 	cacheEnums?: boolean;
@@ -312,11 +312,6 @@ export interface ScriptConfig {
 	 * @default ".cache/ixc-wiki"
 	 */
 	cacheDir?: string;
-	/**
-	 * TTL do cache em milissegundos.
-	 * @default 86400000 (24 horas)
-	 */
-	cacheTtlMs?: number;
 	/**
 	 * Modo dry-run — não escreve arquivos, apenas mostra o que seria feito.
 	 * @default false

@@ -1,21 +1,10 @@
-import {
-	existsSync,
-	mkdirSync,
-	readFileSync,
-	statSync,
-	writeFileSync,
-} from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type { EnumAdapterFieldEnum } from "../@types/script";
 import { logVerbose } from "./logger";
 
-interface CacheMetadata {
-	entries: Record<string, number>;
-}
-
 interface CachedEntry {
-	fetchedAt: number;
 	url: string;
 	enums: Record<string, EnumAdapterFieldEnum>;
 }
@@ -43,22 +32,22 @@ function getMetadataFilePath(): string {
 	return path.join(getCacheDir(), METADATA_FILE);
 }
 
-function loadMetadata(): CacheMetadata {
+function loadMetadata(): Record<string, number> {
 	const metadataFile = getMetadataFilePath();
 
 	if (!existsSync(metadataFile)) {
-		return { entries: {} };
+		return {};
 	}
 
 	try {
 		const content = readFileSync(metadataFile, "utf-8");
-		return JSON.parse(content) as CacheMetadata;
+		return JSON.parse(content) as Record<string, number>;
 	} catch {
-		return { entries: {} };
+		return {};
 	}
 }
 
-function saveMetadata(metadata: CacheMetadata): void {
+function saveMetadata(metadata: Record<string, number>): void {
 	const metadataFile = getMetadataFilePath();
 	writeFileSync(metadataFile, JSON.stringify(metadata, null, 2));
 }
@@ -168,27 +157,17 @@ export async function fetchWithCache(
 	}
 
 	const cacheFile = getCacheFilePath(collectionName);
-	const ttlMs = config.cacheTtlMs ?? 86400000;
 
 	if (existsSync(cacheFile)) {
 		try {
-			const stat = statSync(cacheFile);
-			const age = Date.now() - stat.mtimeMs;
-
-			if (age < ttlMs) {
-				const cached = JSON.parse(
-					readFileSync(cacheFile, "utf-8"),
-				) as CachedEntry;
-				logVerbose(
-					`[Cache] HIT: ${collectionName} (${Math.round(age / 1000)}s old)`,
-				);
-				return cached.enums;
-			}
-
-			logVerbose(
-				`[Cache] EXPIRED: ${collectionName} (${Math.round(age / 1000)}s > ${ttlMs / 1000}s)`,
-			);
-		} catch {}
+			const cached = JSON.parse(
+				readFileSync(cacheFile, "utf-8"),
+			) as CachedEntry;
+			logVerbose(`[Cache] HIT: ${collectionName}`);
+			return cached.enums;
+		} catch {
+			// corrupted cache — fall through to fetch
+		}
 	}
 
 	logVerbose(`[Cache] MISS — fetching from ${url}`);
@@ -196,11 +175,11 @@ export async function fetchWithCache(
 	const enums = parseWikiText(html);
 
 	try {
-		const entry: CachedEntry = { fetchedAt: Date.now(), url, enums };
+		const entry: CachedEntry = { url, enums };
 		writeFileSync(cacheFile, JSON.stringify(entry, null, 2));
 
 		const metadata = loadMetadata();
-		metadata.entries[collectionName] = Date.now();
+		metadata[collectionName] = Date.now();
 		saveMetadata(metadata);
 
 		logVerbose(
@@ -227,51 +206,4 @@ async function fetchFromWiki(url: string): Promise<string> {
 	const buffer = await response.arrayBuffer();
 	const decoder = new TextDecoder("iso-8859-1");
 	return decoder.decode(buffer);
-}
-
-export function clearCache(collectionName?: string): void {
-	const cacheDir = getCacheDir();
-
-	if (collectionName) {
-		const cacheFile = getCacheFilePath(collectionName);
-		if (existsSync(cacheFile)) {
-			require("node:fs").unlinkSync(cacheFile);
-			logVerbose(`[Cache] CLEARED: ${collectionName}`);
-		}
-	} else {
-		const files = existsSync(cacheDir)
-			? require("node:fs").readdirSync(cacheDir)
-			: [];
-
-		for (const file of files) {
-			if (file.endsWith(".json") || file === METADATA_FILE) {
-				require("node:fs").unlinkSync(path.join(cacheDir, file));
-			}
-		}
-
-		logVerbose("[Cache] CLEARED: all");
-	}
-}
-
-export function getCacheStats(): { totalEntries: number; totalSize: number } {
-	const metadata = loadMetadata();
-	const cacheDir = getCacheDir();
-
-	let totalSize = 0;
-
-	if (existsSync(cacheDir)) {
-		const files = require("node:fs").readdirSync(cacheDir);
-		for (const file of files) {
-			if (file.endsWith(".json")) {
-				try {
-					totalSize += statSync(path.join(cacheDir, file)).size;
-				} catch {}
-			}
-		}
-	}
-
-	return {
-		totalEntries: Object.keys(metadata.entries).length,
-		totalSize,
-	};
 }
