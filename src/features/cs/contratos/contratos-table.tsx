@@ -1,5 +1,6 @@
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { ArrowRight } from "lucide-react";
+import type { ReactNode } from "react";
 import { useMemo } from "react";
 import { Link } from "react-router";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
@@ -9,7 +10,15 @@ import {
 	ContratoStatusBadge,
 	InternetStatusBadge,
 } from "#/features/cs/contratos/contrato-status-badge";
-import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
+import {
+	type ContratosTableFilters,
+	DEFAULT_CONTRATOS_TABLE_FILTERS,
+	toContratoFilters,
+} from "#/features/cs/contratos/contratos-filters";
+import type {
+	ContratoFilters,
+	ContratoWithCliente,
+} from "#/features/cs/contratos/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";
 import { buildRoute } from "#/routes/route-paths";
 
@@ -27,6 +36,8 @@ interface ContratosTableProps {
 	pagination: PaginationInfo;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
+	onFilterChange: (filters: ContratoFilters) => void;
+	children?: ReactNode;
 }
 
 function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
@@ -107,6 +118,8 @@ export function ContratosTable({
 	pagination,
 	onPageChange,
 	onPageSizeChange,
+	onFilterChange,
+	children,
 }: ContratosTableProps) {
 	const sorting = useMemo<SortingState>(() => {
 		const field = sort[0];
@@ -139,8 +152,19 @@ export function ContratosTable({
 			emptyMessage="Nenhum contrato encontrado"
 			onPageChange={onPageChange}
 			onPageSizeChange={onPageSizeChange}
+			initialPage={pagination.page}
+			initialPageSize={pagination.pageSize}
+			initialFilters={DEFAULT_CONTRATOS_TABLE_FILTERS}
+			onFiltersApply={(filters: ContratosTableFilters) => {
+				onFilterChange(toContratoFilters(filters));
+			}}
+			onFiltersClear={() => {
+				onFilterChange({});
+			}}
 			sorting={sorting.length > 0 ? sorting : undefined}
 			onSortingChange={onSortingChange}
-		/>
+		>
+			{children}
+		</DataTableWithPagination>
 	);
 }

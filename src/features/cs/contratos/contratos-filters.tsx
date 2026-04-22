@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { FilterActions } from "#/components/filters/filter-actions";
+import { useDataTableContext } from "#/components/table/data-table-context";
 import { Input } from "#/components/ui/input";
 import {
 	Select,
@@ -12,9 +12,8 @@ import {
 	CONTRATO_STATUS_LABELS,
 	type ContratoFilters,
 } from "#/features/cs/contratos/contratos-types";
-import { useFilterState } from "#/hooks/use-filter-state";
 
-interface FilterFormState {
+export interface ContratosTableFilters {
 	[key: string]: string;
 	cpfCnpj: string;
 	nome: string;
@@ -22,45 +21,35 @@ interface FilterFormState {
 	contratoId: string;
 }
 
-interface ContratosFiltersProps {
-	onFilter: (filters: ContratoFilters) => void;
-	currentFilters: ContratoFilters;
+export const DEFAULT_CONTRATOS_TABLE_FILTERS: ContratosTableFilters = {
+	cpfCnpj: "",
+	nome: "",
+	status: "all",
+	contratoId: "",
+};
+
+export function toContratoFilters(
+	filters: ContratosTableFilters,
+): ContratoFilters {
+	return {
+		cpfCnpj: filters.cpfCnpj || undefined,
+		nome: filters.nome || undefined,
+		status: (filters.status === "all"
+			? undefined
+			: filters.status) as ContratoFilters["status"],
+		contratoId: filters.contratoId ? Number(filters.contratoId) : undefined,
+	};
 }
 
-export function ContratosFilters({
-	onFilter,
-	currentFilters,
-}: ContratosFiltersProps) {
-	const { filters, setFilter, setFilters, clearFilters, canClear } =
-		useFilterState<FilterFormState>({
-			cpfCnpj: currentFilters.cpfCnpj ?? "",
-			nome: currentFilters.nome ?? "",
-			status: currentFilters.status ?? "",
-			contratoId: currentFilters.contratoId?.toString() ?? "",
-		});
+export function ContratosFilters() {
+	const { filters, setFilter, applyFilters, clearFilters } =
+		useDataTableContext<unknown, ContratosTableFilters>();
 
-	useEffect(() => {
-		setFilters({
-			cpfCnpj: currentFilters.cpfCnpj ?? "",
-			nome: currentFilters.nome ?? "",
-			status: currentFilters.status ?? "",
-			contratoId: currentFilters.contratoId?.toString() ?? "",
-		});
-	}, [currentFilters, setFilters]);
-
-	function handleFilter() {
-		onFilter({
-			cpfCnpj: filters.cpfCnpj || undefined,
-			nome: filters.nome || undefined,
-			status: (filters.status || undefined) as ContratoFilters["status"],
-			contratoId: filters.contratoId ? Number(filters.contratoId) : undefined,
-		});
-	}
-
-	function handleClear() {
-		clearFilters();
-		onFilter({});
-	}
+	const canClear =
+		Boolean(filters.cpfCnpj) ||
+		Boolean(filters.nome) ||
+		Boolean(filters.contratoId) ||
+		filters.status !== "all";
 
 	return (
 		<div className="rounded-lg border bg-card p-4">
@@ -100,8 +89,8 @@ export function ContratosFilters({
 			</div>
 			<FilterActions
 				className="mt-4"
-				onApply={handleFilter}
-				onClear={handleClear}
+				onApply={applyFilters}
+				onClear={clearFilters}
 				canClear={canClear}
 			/>
 		</div>

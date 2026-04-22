@@ -54,7 +54,6 @@ export function ContratosPage() {
 
 	function handleFilter(newFilters: ContratoFilters) {
 		setFilters(newFilters);
-		setPage(1);
 	}
 
 	return (
@@ -64,7 +63,6 @@ export function ContratosPage() {
 					<h1 className="text-2xl font-bold tracking-tight">Contratos</h1>
 					<p className="text-muted-foreground">Contratos encontrados no IXC</p>
 				</div>
-				<ContratosFilters onFilter={handleFilter} currentFilters={filters} />
 				{error ? (
 					<InlineErrorAlert>
 						Erro ao carregar contratos: {(error as Error).message}
@@ -82,7 +80,10 @@ export function ContratosPage() {
 						}}
 						onPageChange={setPage}
 						onPageSizeChange={handlePageSizeChange}
-					/>
+						onFilterChange={handleFilter}
+					>
+						<ContratosFilters />
+					</ContratosTable>
 				)}
 			</div>
 		</div>

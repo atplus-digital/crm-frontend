@@ -166,6 +166,8 @@ export function TrocaTitularidadeList({
 			emptyMessage="Nenhuma transferência de titularidade encontrada"
 			onPageChange={onPageChange}
 			onPageSizeChange={onPageSizeChange}
+			initialPage={pagination.page}
+			initialPageSize={pagination.pageSize}
 			sorting={sorting.length > 0 ? sorting : undefined}
 			onSortingChange={onSortingChange}
 		/>

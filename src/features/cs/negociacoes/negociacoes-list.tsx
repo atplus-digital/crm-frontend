@@ -165,7 +165,12 @@ export function NegociacoesList({
 	onExport,
 }: NegociacoesListProps) {
 	return (
-		<div className="space-y-4">
+		<DataTableWithPagination
+			columns={columns}
+			data={negociacoes}
+			total={totalCount}
+			emptyMessage="Nenhuma negociação encontrada"
+		>
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<Button
@@ -191,13 +196,6 @@ export function NegociacoesList({
 					Total de {totalCount} itens
 				</span>
 			</div>
-
-			<DataTableWithPagination
-				columns={columns}
-				data={negociacoes}
-				total={totalCount}
-				emptyMessage="Nenhuma negociação encontrada"
-			/>
-		</div>
+		</DataTableWithPagination>
 	);
 }
