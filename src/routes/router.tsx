@@ -61,6 +61,22 @@ export const router = createBrowserRouter([
 						path: toRouterPath(routePaths.cs_troca_de_titularidade_id),
 						lazy: () => import("./cs/troca-de-titularidade/$id"),
 					},
+					{
+						path: toRouterPath(routePaths.cs_troca_de_endereco),
+						lazy: () => import("./cs/troca-de-endereco/index"),
+					},
+					{
+						path: toRouterPath(routePaths.cs_troca_de_endereco_id),
+						lazy: () => import("./cs/troca-de-endereco/$id"),
+					},
+					{
+						path: toRouterPath(routePaths.cs_suspensao_de_contrato),
+						lazy: () => import("./cs/suspensao-de-contrato/index"),
+					},
+					{
+						path: toRouterPath(routePaths.cs_suspensao_de_contrato_id),
+						lazy: () => import("./cs/suspensao-de-contrato/$id"),
+					},
 				],
 			},
 			{

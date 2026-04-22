@@ -85,6 +85,16 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 				icon: "fileText",
 				to: routePaths.cs_troca_de_titularidade,
 			},
+			{
+				label: "Troca de Endereço",
+				icon: "fileText",
+				to: routePaths.cs_troca_de_endereco,
+			},
+			{
+				label: "Suspensão de Contrato",
+				icon: "fileText",
+				to: routePaths.cs_suspensao_de_contrato,
+			},
 		],
 	},
 ];
