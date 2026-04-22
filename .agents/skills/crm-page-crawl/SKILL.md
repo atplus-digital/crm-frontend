@@ -1,7 +1,7 @@
 ---
 name: crm-page-crawl
 description: 'Crawl CRM/NocoBase admin pages end-to-end and extract a replication-ready package: UI schema, fields, filters, actions, datasource/collection mapping, API contracts, and list/detail behavior. Use this skill whenever the user asks to copy, rebuild, mirror, or reverse-engineer a CRM page, tab, popup, modal, or record flow from URLs/screenshots, even if they do not explicitly ask to "crawl".'
-argument-hint: "Module/page to replicate + list URL + detail URL(s) or screenshot + desired output path"
+argument-hint: "Module/page to replicate + list URL + detail URL(s) or screenshot"
 user-invocable: true
 disable-model-invocation: false
 ---
@@ -14,13 +14,15 @@ Deliver a replication-ready spec for a CRM/NocoBase screen so another engineer c
 
 ## Primary Deliverables
 
-Always produce both outputs:
+Always save outputs under `/crawl/[nome-da-pagina]/` and produce:
 
-1. `replication-report.md`
-2. `replication-spec.json`
-3. `evidence/screenshots/` (visual proof of crawled screens)
+1. `/crawl/[nome-da-pagina]/replication-report.md`
+2. `/crawl/[nome-da-pagina]/replication-spec.json`
+3. `/crawl/[nome-da-pagina]/evidence/screenshots/` (visual proof of crawled screens)
 
 Default depth is `complete` (full extraction + validation).
+
+Use kebab-case for `[nome-da-pagina]` (example: `transferencia-titularidade`).
 
 ## When To Use
 
@@ -41,7 +43,7 @@ Capture or confirm these inputs before crawling:
 1. Target module/page name.
 2. List URL.
 3. Detail URL template or sample record URL.
-4. Output path (if not provided, use current workspace root).
+4. Output folder name slug (`[nome-da-pagina]` in kebab-case).
 5. Extraction depth (`complete` by default; `fast` only if user asks).
 6. Auth method preference:
 
@@ -64,6 +66,15 @@ If any mandatory input is missing, ask a concise clarification question first.
 - Redact sensitive information in screenshots before exporting deliverables.
 
 ## Procedure
+
+### 0. Prepare output folder
+
+- Create `/crawl/[nome-da-pagina]/` before crawling.
+- Ensure this structure exists:
+  - `/crawl/[nome-da-pagina]/replication-report.md`
+  - `/crawl/[nome-da-pagina]/replication-spec.json`
+  - `/crawl/[nome-da-pagina]/evidence/screenshots/`
+- Never write crawl artifacts outside this folder.
 
 ### 1. Validate scope and access
 
@@ -96,7 +107,7 @@ If any mandatory input is missing, ask a concise clarification question first.
 
 ### 5. Capture screenshot evidence
 
-- Create `evidence/screenshots/` and save screenshots using deterministic names.
+- Create `/crawl/[nome-da-pagina]/evidence/screenshots/` and save screenshots using deterministic names.
 - Mandatory screenshots:
   - `list-default.png`
   - `list-filters-open.png`
@@ -130,7 +141,7 @@ If any mandatory input is missing, ask a concise clarification question first.
 
 ### 8. Produce replication package
 
-- Write `replication-report.md` with:
+- Write `/crawl/[nome-da-pagina]/replication-report.md` with:
   - page inventory
   - UI schema
   - field dictionary
@@ -139,7 +150,7 @@ If any mandatory input is missing, ask a concise clarification question first.
   - behavior rules and edge cases
   - screenshot evidence map
   - implementation checklist
-- Export `replication-spec.json` with machine-readable sections:
+- Export `/crawl/[nome-da-pagina]/replication-spec.json` with machine-readable sections:
   - `scope`
   - `pages.list`
   - `pages.detail`
@@ -242,7 +253,7 @@ Use this skeleton:
   "evidence": {
     "screenshots": [
       {
-        "file": "evidence/screenshots/list-default.png",
+        "file": "/crawl/[nome-da-pagina]/evidence/screenshots/list-default.png",
         "page": "list|detail|popup",
         "state": "",
         "supports": ["column-mapping", "filter-behavior"],
