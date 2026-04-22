@@ -1,13 +1,12 @@
+import type { ColumnDef } from "@tanstack/react-table";
+import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "#/components/ui/table";
+	detailIdCell,
+	detailShortTextCell,
+} from "#/components/table/detail-table-presets";
 import { ContractTabWrapper } from "#/features/cs/contract-tab-wrapper";
 import { useContratoMovel } from "#/features/cs/contratos/contratos-hooks";
+import type { LinhaMovel } from "#/features/cs/contratos/contratos-types";
 
 const MOVEL_COLUMNS = [
 	"DDD",
@@ -18,6 +17,39 @@ const MOVEL_COLUMNS = [
 	"SIMCARD",
 ];
 
+const movelTableColumns: ColumnDef<LinhaMovel, unknown>[] = [
+	{
+		accessorKey: "ddd_telefone",
+		header: "DDD",
+		cell: ({ row }) => detailShortTextCell(row.original.ddd_telefone),
+	},
+	{
+		accessorKey: "numero_telefone",
+		header: "Número",
+		cell: ({ row }) => detailIdCell(row.original.numero_telefone),
+	},
+	{
+		accessorKey: "id_contrato",
+		header: "ID Contrato",
+		cell: ({ row }) => detailIdCell(row.original.id_contrato),
+	},
+	{
+		accessorKey: "dia_recorrencia",
+		header: "Dia Recorrência",
+		cell: ({ row }) => detailShortTextCell(row.original.dia_recorrencia),
+	},
+	{
+		accessorKey: "portabilidade",
+		header: "Portabilidade",
+		cell: ({ row }) => detailShortTextCell(row.original.portabilidade),
+	},
+	{
+		accessorKey: "simcard",
+		header: "SIMCARD",
+		cell: ({ row }) => detailShortTextCell(row.original.simcard),
+	},
+];
+
 interface ContratoMovelTabProps {
 	contratoId: number;
 }
@@ -25,6 +57,10 @@ interface ContratoMovelTabProps {
 export function ContratoMovelTab({ contratoId }: ContratoMovelTabProps) {
 	const { data, isLoading, error } = useContratoMovel(contratoId);
 	const linhas = data?.data ?? [];
+	const table = useDataTable({
+		columns: movelTableColumns,
+		data: linhas,
+	});
 
 	return (
 		<ContractTabWrapper
@@ -36,29 +72,7 @@ export function ContratoMovelTab({ contratoId }: ContratoMovelTabProps) {
 			emptyMessage="Nenhuma linha móvel encontrada"
 			emptyColumns={MOVEL_COLUMNS}
 		>
-			<div className="overflow-x-auto">
-				<Table>
-					<TableHeader>
-						<TableRow>
-							{MOVEL_COLUMNS.map((col) => (
-								<TableHead key={col}>{col}</TableHead>
-							))}
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{linhas.map((linha) => (
-							<TableRow key={linha.id}>
-								<TableCell>{linha.ddd_telefone}</TableCell>
-								<TableCell>{linha.numero_telefone}</TableCell>
-								<TableCell>{linha.id_contrato}</TableCell>
-								<TableCell>{linha.dia_recorrencia}</TableCell>
-								<TableCell>{linha.portabilidade}</TableCell>
-								<TableCell>{linha.simcard}</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</div>
+			<DataTable table={table} />
 		</ContractTabWrapper>
 	);
 }

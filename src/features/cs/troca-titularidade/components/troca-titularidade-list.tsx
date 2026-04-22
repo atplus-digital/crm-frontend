@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { Link } from "react-router";
 import { StatusBadge } from "#/components/badges/status-badge";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
-import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
+import { DataTableContainer } from "#/components/table/data-table-container";
 import { Button } from "#/components/ui/button";
 import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import { TROCA_STATUS_VARIANTS } from "#/features/cs/troca-titularidade/troca-titularidade-types";
@@ -148,7 +148,7 @@ export function TrocaTitularidadeList({
 	const columns = useMemo(() => getColumns(), []);
 
 	return (
-		<DataTableWithPagination
+		<DataTableContainer
 			columns={columns}
 			data={trocasTitularidade}
 			total={pagination.total}

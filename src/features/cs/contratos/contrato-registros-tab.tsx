@@ -1,14 +1,14 @@
+import type { ColumnDef } from "@tanstack/react-table";
 import { StatusBadge } from "#/components/badges/status-badge";
+import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "#/components/ui/table";
+	detailDateCell,
+	detailLongTextCell,
+	detailShortTextCell,
+} from "#/components/table/detail-table-presets";
 import { ContractTabWrapper } from "#/features/cs/contract-tab-wrapper";
 import { useContratoRegistros } from "#/features/cs/contratos/contratos-hooks";
+import type { RegistroContato } from "#/features/cs/contratos/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";
 
 const REGISTROS_COLUMNS = [
@@ -27,6 +27,52 @@ const BOOLEAN_COLOR_CLASSES: Record<string, string> = {
 	false: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
 };
 
+const registrosTableColumns: ColumnDef<RegistroContato, unknown>[] = [
+	{
+		accessorKey: "categoria",
+		header: "Categoria",
+		cell: ({ row }) => detailShortTextCell(row.original.categoria),
+	},
+	{
+		accessorKey: "motivo_contato",
+		header: "Motivo do Contato",
+		cell: ({ row }) => detailLongTextCell(row.original.motivo_contato),
+	},
+	{
+		accessorKey: "nota_vendas",
+		header: "Nota Vendas",
+		cell: ({ row }) => detailShortTextCell(row.original.nota_vendas),
+	},
+	{
+		accessorKey: "nota_tecnico",
+		header: "Nota Técnico",
+		cell: ({ row }) => detailShortTextCell(row.original.nota_tecnico),
+	},
+	{
+		id: "pendencia",
+		header: "Há Pendência?",
+		cell: ({ row }) => (
+			<StatusBadge
+				value={row.original.pendencia ? "true" : "false"}
+				labels={BOOLEAN_LABELS}
+				colorClasses={BOOLEAN_COLOR_CLASSES}
+				variant="inline"
+			/>
+		),
+	},
+	{
+		accessorKey: "data_criacao",
+		header: "Criado em",
+		cell: ({ row }) =>
+			detailDateCell(row.original.data_criacao, formatDatePtBR),
+	},
+	{
+		accessorKey: "criado_por",
+		header: "Criado por",
+		cell: ({ row }) => detailShortTextCell(row.original.criado_por),
+	},
+];
+
 interface ContratoRegistrosTabProps {
 	contratoId: number;
 }
@@ -36,6 +82,10 @@ export function ContratoRegistrosTab({
 }: ContratoRegistrosTabProps) {
 	const { data, isLoading, error } = useContratoRegistros(contratoId);
 	const registros = data?.data ?? [];
+	const table = useDataTable({
+		columns: registrosTableColumns,
+		data: registros,
+	});
 
 	return (
 		<ContractTabWrapper
@@ -47,41 +97,7 @@ export function ContratoRegistrosTab({
 			emptyMessage="Nenhum registro encontrado"
 			emptyColumns={REGISTROS_COLUMNS}
 		>
-			<div className="overflow-x-auto">
-				<Table>
-					<TableHeader>
-						<TableRow>
-							<TableHead>Categoria</TableHead>
-							<TableHead>Motivo do Contato</TableHead>
-							<TableHead>Nota Vendas</TableHead>
-							<TableHead>Nota Técnico</TableHead>
-							<TableHead>Há Pendência?</TableHead>
-							<TableHead>Criado em</TableHead>
-							<TableHead>Criado por</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{registros.map((registro) => (
-							<TableRow key={registro.id}>
-								<TableCell>{registro.categoria || "—"}</TableCell>
-								<TableCell>{registro.motivo_contato || "—"}</TableCell>
-								<TableCell>{registro.nota_vendas || "—"}</TableCell>
-								<TableCell>{registro.nota_tecnico || "—"}</TableCell>
-								<TableCell>
-									<StatusBadge
-										value={registro.pendencia ? "true" : "false"}
-										labels={BOOLEAN_LABELS}
-										colorClasses={BOOLEAN_COLOR_CLASSES}
-										variant="inline"
-									/>
-								</TableCell>
-								<TableCell>{formatDatePtBR(registro.data_criacao)}</TableCell>
-								<TableCell>{registro.criado_por || "—"}</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</div>
+			<DataTable table={table} />
 		</ContractTabWrapper>
 	);
 }

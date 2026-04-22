@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { useMemo } from "react";
 import { Link } from "react-router";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
-import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
+import { DataTableContainer } from "#/components/table/data-table-container";
 import { Button } from "#/components/ui/button";
 import {
 	ContratoStatusBadge,
@@ -144,7 +144,7 @@ export function ContratosTable({
 	const columns = useMemo(() => getColumns(), []);
 
 	return (
-		<DataTableWithPagination
+		<DataTableContainer
 			columns={columns}
 			data={contratos}
 			total={pagination.total}
@@ -165,6 +165,6 @@ export function ContratosTable({
 			onSortingChange={onSortingChange}
 		>
 			{children}
-		</DataTableWithPagination>
+		</DataTableContainer>
 	);
 }

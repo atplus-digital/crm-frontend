@@ -1,13 +1,13 @@
+import type { ColumnDef } from "@tanstack/react-table";
+import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "#/components/ui/table";
+	detailHeader,
+	detailLongTextCell,
+	detailMoneyCell,
+} from "#/components/table/detail-table-presets";
 import { ContractTabWrapper } from "#/features/cs/contract-tab-wrapper";
 import { useNegociacaoItens } from "#/features/cs/negociacoes/negociacoes-hooks";
+import type { NegociacoesItens } from "#/generated/nocobase/index";
 import { formatCurrency } from "#/lib/utils";
 import { RelacaoBadge, TipoProdutoBadge } from "./negociacao-badges";
 
@@ -20,9 +20,48 @@ const ITENS_COLUMNS = [
 	"Observações",
 ];
 
+const itensTableColumns: ColumnDef<NegociacoesItens, unknown>[] = [
+	{
+		accessorKey: "f_nome_produto",
+		header: "Produto",
+		cell: ({ row }) => detailLongTextCell(row.original.f_nome_produto),
+	},
+	{
+		id: "f_tipo_produto",
+		header: "Tipo",
+		cell: ({ row }) => <TipoProdutoBadge tipo={row.original.f_tipo_produto} />,
+	},
+	{
+		accessorKey: "f_mensalidade_com_desconto",
+		header: () => detailHeader("Mensalidade c/ Desconto", "right"),
+		cell: ({ row }) =>
+			detailMoneyCell(row.original.f_mensalidade_com_desconto, formatCurrency),
+	},
+	{
+		accessorKey: "f_mensalidade_sem_desconto",
+		header: () => detailHeader("Mensalidade s/ Desconto", "right"),
+		cell: ({ row }) =>
+			detailMoneyCell(row.original.f_mensalidade_sem_desconto, formatCurrency),
+	},
+	{
+		id: "f_relacao",
+		header: "Relação",
+		cell: ({ row }) => <RelacaoBadge relacao={row.original.f_relacao} />,
+	},
+	{
+		accessorKey: "f_observacoes",
+		header: "Observações",
+		cell: ({ row }) => detailLongTextCell(row.original.f_observacoes),
+	},
+];
+
 export function NegociacaoItensTab({ negociacaoId }: { negociacaoId: number }) {
 	const { data: response, isLoading, error } = useNegociacaoItens(negociacaoId);
 	const itens = response?.data ?? [];
+	const table = useDataTable({
+		columns: itensTableColumns,
+		data: itens,
+	});
 
 	return (
 		<ContractTabWrapper
@@ -34,48 +73,7 @@ export function NegociacaoItensTab({ negociacaoId }: { negociacaoId: number }) {
 			emptyMessage="Nenhum item encontrado"
 			emptyColumns={ITENS_COLUMNS}
 		>
-			<div className="overflow-x-auto">
-				<Table>
-					<TableHeader>
-						<TableRow>
-							<TableHead>Produto</TableHead>
-							<TableHead>Tipo</TableHead>
-							<TableHead className="text-right">
-								Mensalidade c/ Desconto
-							</TableHead>
-							<TableHead className="text-right">
-								Mensalidade s/ Desconto
-							</TableHead>
-							<TableHead>Relação</TableHead>
-							<TableHead>Observações</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{itens.map((item) => (
-							<TableRow key={item.id}>
-								<TableCell className="font-medium">
-									{item.f_nome_produto}
-								</TableCell>
-								<TableCell>
-									<TipoProdutoBadge tipo={item.f_tipo_produto} />
-								</TableCell>
-								<TableCell className="text-right">
-									{formatCurrency(item.f_mensalidade_com_desconto)}
-								</TableCell>
-								<TableCell className="text-right">
-									{formatCurrency(item.f_mensalidade_sem_desconto)}
-								</TableCell>
-								<TableCell>
-									<RelacaoBadge relacao={item.f_relacao} />
-								</TableCell>
-								<TableCell className="max-w-xs truncate">
-									{item.f_observacoes || "—"}
-								</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</div>
+			<DataTable table={table} />
 		</ContractTabWrapper>
 	);
 }

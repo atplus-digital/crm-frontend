@@ -84,7 +84,7 @@ Ownership transfer feature — manages contract titularidade change requests bet
 ## Patterns
 
 - Filter options and badge variants derive from generated labels (`CRMTROCATITULARIDADE_STATUS_LABELS` etc.) — never redefine manually.
-- List page uses `DataTableWithPagination` with `TrocaTitularidadeFilterBar` for 8-field filtering (status, substatus, estado selects + cidade, contrato, cedente, cessionário text + date).
+- List page uses `DataTableContainer` with `TrocaTitularidadeFilterBar` for 8-field filtering (status, substatus, estado selects + cidade, contrato, cedente, cessionário text + date).
 - Hook `buildTrocaTitularidadeFilter()` maps typed filters to NocoBase `$eq`/`$includes`/`$gte` via `filter-builder` helpers.
 - Detail page renders sections in order: Identificação, Cedente, Cessionário, Endereço, Assinaturas, Relacionamentos, Anexos, Comentários.
 - ZapSign links render as external `<a>` tags (off-site URLs — correct usage).

@@ -2,7 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Download, ExternalLink, RefreshCw } from "lucide-react";
 import { Link } from "react-router";
 import { StatusBadge } from "#/components/badges/status-badge";
-import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
+import { DataTableContainer } from "#/components/table/data-table-container";
 import { Button } from "#/components/ui/button";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { NEGOCIACAO_STATUS_LABELS } from "#/features/cs/negociacoes/negociacoes-types";
@@ -165,7 +165,7 @@ export function NegociacoesList({
 	onExport,
 }: NegociacoesListProps) {
 	return (
-		<DataTableWithPagination
+		<DataTableContainer
 			columns={columns}
 			data={negociacoes}
 			total={totalCount}
@@ -196,6 +196,6 @@ export function NegociacoesList({
 					Total de {totalCount} itens
 				</span>
 			</div>
-		</DataTableWithPagination>
+		</DataTableContainer>
 	);
 }

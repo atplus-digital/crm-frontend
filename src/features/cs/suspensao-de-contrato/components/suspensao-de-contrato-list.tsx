@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { Link } from "react-router";
 import { StatusBadge } from "#/components/badges/status-badge";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
-import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
+import { DataTableContainer } from "#/components/table/data-table-container";
 import { Button } from "#/components/ui/button";
 import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import {
@@ -134,7 +134,7 @@ export function SuspensaoContratoList({
 	const columns = useMemo(() => getColumns(), []);
 
 	return (
-		<DataTableWithPagination
+		<DataTableContainer
 			columns={columns}
 			data={suspensaoContratos}
 			total={pagination.total}

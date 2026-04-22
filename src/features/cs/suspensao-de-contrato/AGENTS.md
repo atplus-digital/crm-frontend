@@ -20,7 +20,7 @@ Contract suspension feature — manages suspension requests with ZapSign digital
 | `suspensao-de-contrato-hooks.ts`               | React Query hooks for list/detail via `nocobaseRepository`                               |
 | `suspensao-de-contrato-filters.tsx`            | Filter bar component (Status, Título, dates, Criado por)                                 |
 | `detail-section.tsx`                           | Card wrapper for detail page sections                                                    |
-| `components/suspensao-de-contrato-list.tsx`    | DataTableWithPagination with 8 columns                                                   |
+| `components/suspensao-de-contrato-list.tsx`    | DataTableContainer with 8 columns                                                        |
 | `components/suspensao-de-contrato-details.tsx` | Detail page with 2 tabs (Detalhes + Contrato)                                            |
 | `index.ts`                                     | Barrel export for hooks and components                                                   |
 

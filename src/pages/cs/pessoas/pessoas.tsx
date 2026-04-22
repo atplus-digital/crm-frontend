@@ -2,8 +2,8 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useSearchParams } from "react-router";
 import { FilterActions } from "#/components/filters/filter-actions";
+import { DataTableContainer } from "#/components/table/data-table-container";
 import { useDataTableContext } from "#/components/table/data-table-context";
-import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
 import { Button } from "#/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { Input } from "#/components/ui/input";
@@ -246,7 +246,7 @@ export function CSPessoasPage() {
 							<CardTitle className="text-lg">Pessoas Físicas</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-4">
-							<DataTableWithPagination<Pessoas, PessoaFisicaTableFilters>
+							<DataTableContainer<Pessoas, PessoaFisicaTableFilters>
 								columns={pfColumns}
 								data={(pfData?.data as unknown as Pessoas[]) ?? []}
 								total={pfData?.meta?.total ?? 0}
@@ -266,7 +266,7 @@ export function CSPessoasPage() {
 								}}
 							>
 								<PessoasFisicasFilters />
-							</DataTableWithPagination>
+							</DataTableContainer>
 						</CardContent>
 					</Card>
 				</TabsContent>
@@ -277,7 +277,7 @@ export function CSPessoasPage() {
 							<CardTitle className="text-lg">Pessoas Jurídicas</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-4">
-							<DataTableWithPagination<Empresas, PessoaJuridicaTableFilters>
+							<DataTableContainer<Empresas, PessoaJuridicaTableFilters>
 								columns={pjColumns}
 								data={(pjData?.data as unknown as Empresas[]) ?? []}
 								total={pjData?.meta?.total ?? 0}
@@ -299,7 +299,7 @@ export function CSPessoasPage() {
 								}}
 							>
 								<PessoasJuridicasFilters />
-							</DataTableWithPagination>
+							</DataTableContainer>
 						</CardContent>
 					</Card>
 				</TabsContent>

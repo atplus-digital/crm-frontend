@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { Link } from "react-router";
 import { StatusBadge } from "#/components/badges/status-badge";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
-import { DataTableWithPagination } from "#/components/table/data-table-with-pagination";
+import { DataTableContainer } from "#/components/table/data-table-container";
 import { Button } from "#/components/ui/button";
 import type { TrocaEnderecoWithRelations } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
 import { TROCAENDERECO_STATUS_LABELS } from "#/generated/nocobase/troca-endereco";
@@ -140,7 +140,7 @@ export function TrocaEnderecoList({
 	const columns = useMemo(() => getColumns(), []);
 
 	return (
-		<DataTableWithPagination
+		<DataTableContainer
 			columns={columns}
 			data={trocasEndereco}
 			total={pagination.total}
