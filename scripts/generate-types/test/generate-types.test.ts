@@ -1,5 +1,5 @@
 import type { RuntimeConfig } from "@scripts/generate-types/src/@types/script";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 const mockConfigFactory = vi.hoisted(() => {
 	return vi.fn().mockReturnValue({
@@ -87,49 +87,6 @@ describe("generate-types", () => {
 				"posts",
 			]);
 			expect(result).toEqual(["users", "users", "posts"]);
-		});
-	});
-
-	describe("resolveDataSourceConfigs", () => {
-		beforeEach(() => {
-			mockConfigFactory.mockReturnValue({
-				outputDir: "/tmp/test-generated",
-				splitCollections: [],
-				logLevel: "info" as const,
-				defaultEnvPath: ".env.local",
-				requestTimeoutMs: 15_000,
-				requestConcurrency: 5,
-				maxConcurrency: 5,
-				baseInterfaceNaming: { prefix: "", suffix: "Base" },
-				datasources: [
-					{
-						name: "valid-ds",
-						type: "nocobase",
-						dataSource: "main",
-						outputDir: "/tmp/output1",
-						splitCollections: [],
-					},
-					{
-						name: "empty-ds",
-						dataSource: "secondary",
-						outputDir: "   ",
-						splitCollections: [],
-					},
-					{
-						name: "another-valid",
-						dataSource: "third",
-						outputDir: "/tmp/output2",
-						splitCollections: [],
-					},
-				],
-				baseUrl: "https://example.com/api",
-				token: "test-token",
-				timeoutMs: 30_000,
-			} as RuntimeConfig);
-		});
-
-		afterEach(() => {
-			vi.restoreAllMocks();
 		});
 	});
 });

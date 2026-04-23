@@ -72,16 +72,6 @@ export function includes(
 }
 
 /**
- * Helper to create a greater than filter condition.
- */
-export function gt(
-	field: string,
-	value: number | string,
-): Record<string, unknown> {
-	return { [field]: { $gt: value } };
-}
-
-/**
  * Helper to create a greater than or equal filter condition.
  */
 export function gte(
@@ -89,16 +79,6 @@ export function gte(
 	value: number | string,
 ): Record<string, unknown> {
 	return { [field]: { $gte: value } };
-}
-
-/**
- * Helper to create a less than filter condition.
- */
-export function lt(
-	field: string,
-	value: number | string,
-): Record<string, unknown> {
-	return { [field]: { $lt: value } };
 }
 
 /**

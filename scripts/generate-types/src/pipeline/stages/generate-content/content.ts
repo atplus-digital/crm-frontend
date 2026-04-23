@@ -24,7 +24,6 @@ export {
 
 // Interface functions
 export {
-	_toCollectionSourceConstName,
 	generateCollectionBaseInterface,
 	generateCollectionRelationKeyType,
 	generateCollectionRelationsInterface,

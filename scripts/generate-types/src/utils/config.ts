@@ -1,9 +1,4 @@
-import { config } from "@scripts/generate-types/config";
-import type {
-	DataSourceGenerationConfig,
-	RuntimeConfig,
-	ScriptConfig,
-} from "../@types/script";
+import type { RuntimeConfig, ScriptConfig } from "../@types/script";
 import { resolveEnvConfig } from "./load-config";
 
 const defaultConfig: ScriptConfig = {
@@ -142,9 +137,4 @@ export function parseConfig(
 	};
 
 	return config;
-}
-export function resolveDataSourceConfigs(): DataSourceGenerationConfig[] {
-	return (config.datasources ?? []).filter(
-		(datasource) => datasource.outputDir.trim().length > 0,
-	);
 }

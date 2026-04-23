@@ -1,14 +1,7 @@
 // export { Can } from "./components/can";
 // export { PermissionField } from "./components/permission-field";
 export { mergeActions, mergeSnippets } from "./compute";
-export { requireAction, requireSnippet } from "./guards";
-export {
-	useCan,
-	useCanEdit,
-	useHasSnippet,
-	useIsAdmin,
-	useRoleNames,
-} from "./hooks";
+export { useCan } from "./hooks";
 export {
 	permissionsStore,
 	resetPermissions,

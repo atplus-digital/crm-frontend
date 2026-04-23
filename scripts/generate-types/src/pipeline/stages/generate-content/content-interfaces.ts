@@ -98,15 +98,3 @@ export function generateCollectionRelationKeyType(
 	lines.push(`\tkeyof ${typeName}Relations;`);
 	return lines.join("\n");
 }
-
-function _toCollectionSourceConstName(collectionName: string): string {
-	const normalized = collectionName
-		.trim()
-		.toUpperCase()
-		.replace(/[^A-Z0-9_$]+/g, "_")
-		.replace(/^_+|_+$/g, "");
-	const identifier = normalized || "UNKNOWN";
-	return `${identifier}_TABLE_NAME`;
-}
-
-export { _toCollectionSourceConstName };

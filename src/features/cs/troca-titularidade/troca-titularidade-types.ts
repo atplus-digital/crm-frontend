@@ -59,19 +59,6 @@ export const TROCA_STATUS_VARIANTS: Record<
 	"9": "destructive",
 };
 
-export const TROCA_SUBSTATUS_VARIANTS: Record<
-	string,
-	"default" | "secondary" | "destructive" | "outline"
-> = {
-	"0": "secondary",
-	"1": "default",
-	"2": "destructive",
-	"3": "default",
-	"4": "destructive",
-	"5": "destructive",
-	"6": "outline",
-};
-
 // ---------------------------------------------------------------------------
 // Filters
 // ---------------------------------------------------------------------------

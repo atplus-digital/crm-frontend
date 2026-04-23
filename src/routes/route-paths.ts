@@ -36,8 +36,6 @@ export type RouteParams<K extends AppRouteKey> = {
 	[P in ExtractRouteParamKeys<(typeof routePaths)[K]>]: string | number;
 };
 
-export const appRoutes = Object.values(routePaths) as AppRoutePath[];
-
 export function buildRoute<K extends AppRouteKey>(
 	route: K,
 	...[params]: keyof RouteParams<K> extends never
