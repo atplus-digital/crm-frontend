@@ -1,4 +1,4 @@
-import type { GenerateTypesResult } from "./@types/script";
+import type { GenerateTypesResult, RuntimeConfig } from "./@types/script";
 import { runGenerationPipelineFactory } from "./pipeline/orchestration";
 import { normalizeCollectionNames } from "./utils/naming";
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
@@ -6,7 +6,7 @@ import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 export { normalizeCollectionNames };
 
 export async function runGenerateTypes(
-	overrideConfig?: Partial<import("./@types/script").RuntimeConfig>,
+	overrideConfig?: Partial<RuntimeConfig>,
 ): Promise<GenerateTypesResult> {
 	applyWorkspaceLockIfNeeded();
 
