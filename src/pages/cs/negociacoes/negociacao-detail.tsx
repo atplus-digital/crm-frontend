@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Skeleton } from "#/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { BackButton } from "#/features/cs/back-button";
+import { BackButton } from "#/features/cs/components/back-button";
 import { NegociacaoAnexosTab } from "#/features/cs/negociacoes/negociacao-anexos-tab";
 import { NegociacaoComentariosTab } from "#/features/cs/negociacoes/negociacao-comentarios-tab";
 import { NegociacaoDetalhesTab } from "#/features/cs/negociacoes/negociacao-detalhes-tab";
