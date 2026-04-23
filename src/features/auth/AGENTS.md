@@ -17,11 +17,11 @@ Authentication module — NocoBase SDK client, auth store, service operations, a
 | File                             | Purpose                                                                                |
 | -------------------------------- | -------------------------------------------------------------------------------------- |
 | `index.ts`                       | Public barrel exports for client, guards, services, store actions, and auth types      |
-| `client.ts`                      | NocoBase `APIClient` singleton configured from `env`                                   |
-| `guard.ts`                       | Route guards (`requireAuth`, `requireGuest`) + token bootstrap (`validateTokenOnInit`) |
-| `service.ts`                     | Auth flows (`signIn`, `signOut`, `checkAuth`, reset-password, profile update)          |
-| `store.ts`                       | TanStack Store state (`user`, `token`, `isAuthenticated`) and state updaters           |
-| `types.ts`                       | Auth types and Zod schemas (`authUserSchema`, `authResponseSchema`)                    |
+| `utils/client.ts`                | NocoBase `APIClient` singleton configured from `env`                                   |
+| `utils/guard.ts`                 | Route guards (`requireAuth`, `requireGuest`) + token bootstrap (`validateTokenOnInit`) |
+| `utils/service.ts`               | Auth flows (`signIn`, `signOut`, `checkAuth`, reset-password, profile update)          |
+| `utils/store.ts`                 | TanStack Store state (`user`, `token`, `isAuthenticated`) and state updaters           |
+| `utils/types.ts`                 | Auth types and Zod schemas (`authUserSchema`, `authResponseSchema`)                    |
 | `components/login-form.tsx`      | Login form with React Hook Form + Zod and redirect handling                            |
 | `components/detail-item.tsx`     | Small label/value row used by the profile details view                                 |
 | `components/info-card.tsx`       | Compact summary card used by the profile details view                                  |
@@ -49,8 +49,8 @@ Authentication module — NocoBase SDK client, auth store, service operations, a
 
 | Pattern                           | Reference file                                |
 | --------------------------------- | --------------------------------------------- |
-| Guard implementation              | `src/features/auth/guard.ts`                  |
-| Service + permissions integration | `src/features/auth/service.ts`                |
+| Guard implementation              | `src/features/auth/utils/guard.ts`            |
+| Service + permissions integration | `src/features/auth/utils/service.ts`          |
 | Auth form flow                    | `src/features/auth/components/login-form.tsx` |
 | Protected route usage             | `src/routes/dashboard/index.tsx`              |
 
@@ -60,7 +60,7 @@ Authentication module — NocoBase SDK client, auth store, service operations, a
 
 ## Main Functions & API
 
-### Guards (`guard.ts`)
+### Guards (`utils/guard.ts`)
 
 | Function              | Signature                        | Purpose                                                                   |
 | --------------------- | -------------------------------- | ------------------------------------------------------------------------- |

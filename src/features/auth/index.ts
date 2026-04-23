@@ -1,5 +1,5 @@
-export { nocobaseClient } from "./client";
-export { requireAuth, requireGuest, validateTokenOnInit } from "./guard";
+export { nocobaseClient } from "./utils/client";
+export { requireAuth, requireGuest, validateTokenOnInit } from "./utils/guard";
 export {
 	checkAuth,
 	confirmPasswordReset,
@@ -7,13 +7,13 @@ export {
 	signIn,
 	signOut,
 	updateProfile,
-} from "./service";
+} from "./utils/service";
 export {
 	authStore,
 	reset,
 	setToken,
 	setUser,
-} from "./store";
+} from "./utils/store";
 export type {
 	AuthState,
 	AuthUser,
@@ -21,9 +21,9 @@ export type {
 	ResetPasswordConfirm,
 	ResetPasswordRequest,
 	UpdateProfilePayload,
-} from "./types";
+} from "./utils/types";
 export {
 	AuthValidationError,
 	authResponseSchema,
 	authUserSchema,
-} from "./types";
+} from "./utils/types";

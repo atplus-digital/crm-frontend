@@ -1,4 +1,4 @@
-import type { AuthUser } from "#/features/auth/types";
+import type { AuthUser } from "#/features/auth";
 
 export function useUserInitials(user: AuthUser | null): string {
 	if (!user) return "U";

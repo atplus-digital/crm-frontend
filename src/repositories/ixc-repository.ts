@@ -1,4 +1,4 @@
-import { nocobaseClient } from "#/features/auth/client";
+import { nocobaseClient } from "#/features/auth";
 import { createLogger } from "#/lib/logger";
 import type { ApiRequestConfig, ListParams, PaginatedResponse } from "./types";
 

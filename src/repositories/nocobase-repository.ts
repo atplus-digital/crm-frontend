@@ -1,5 +1,5 @@
 import type { APIClient } from "@nocobase/sdk";
-import { nocobaseClient } from "#/features/auth/client";
+import { nocobaseClient } from "#/features/auth";
 import type {
 	CollectionMap,
 	CollectionName,
