@@ -1,5 +1,5 @@
 import type { GenerateTypesResult } from "./@types/script";
-import { runGenerationPipelineFactory } from "./generation-pipeline";
+import { runGenerationPipelineFactory } from "./pipeline/orchestration";
 import { normalizeCollectionNames } from "./utils/naming";
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 

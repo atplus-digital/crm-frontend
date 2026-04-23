@@ -1,4 +1,4 @@
-import type { RuntimeConfig } from "../@types/script";
+import type { RuntimeConfig } from "../../@types/script";
 import {
 	formatResultStage,
 	loadConfigStage,

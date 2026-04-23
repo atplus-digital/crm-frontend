@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
@@ -28,25 +28,39 @@ export function validateTypeScriptDirectory(dirPath: string): boolean {
 	}
 
 	try {
-		const stdout = execSync(
-			"./node_modules/.bin/tsc --noEmit --pretty false 2>&1 || true",
-			{ stdio: "pipe", timeout: 120000, encoding: "utf-8", cwd: process.cwd() },
-		);
+		const tscPath = "./node_modules/.bin/tsc";
+		const args = [
+			"--noEmit",
+			"--pretty",
+			"false",
+			"--skipLibCheck",
+			"--target",
+			"ES2020",
+			"--module",
+			"NodeNext",
+			"--moduleResolution",
+			"NodeNext",
+		];
+
+		const stdout = execFileSync(tscPath, args, {
+			stdio: "pipe",
+			timeout: 120000,
+			encoding: "utf-8",
+			cwd: resolvedDir,
+		});
 
 		const generatedDirPrefix = resolvedDir.replace(/\\/g, "/");
-		const hasGeneratedErrors = stdout
+		const errorsInDir = stdout
 			.split("\n")
-			.some((line) => line.startsWith(generatedDirPrefix));
+			.filter((line) => line.includes(generatedDirPrefix));
 
-		if (hasGeneratedErrors) {
-			const generatedErrors = stdout
-				.split("\n")
-				.filter((line) => line.startsWith(generatedDirPrefix))
-				.join("\n");
+		if (errorsInDir.length > 0) {
 			logger.warn(
 				`⚠️  TypeScript inválido em: ${path.relative(process.cwd(), resolvedDir)}/`,
 			);
-			logger.debug(generatedErrors);
+			for (const err of errorsInDir.slice(0, 10)) {
+				logger.debug(err);
+			}
 			return false;
 		}
 
@@ -54,7 +68,7 @@ export function validateTypeScriptDirectory(dirPath: string): boolean {
 			`✓ TypeScript válido: ${path.relative(process.cwd(), resolvedDir)}/`,
 		);
 		return true;
-	} catch {
+	} catch (execError) {
 		logger.warn(
 			`⚠️  Falha ao executar validação TypeScript para: ${path.relative(process.cwd(), resolvedDir)}/`,
 		);

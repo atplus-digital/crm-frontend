@@ -1,4 +1,4 @@
-import { runPostPipeline } from "../../pipeline/post-pipeline";
+import { runPostPipeline } from "../../../pipeline/post-pipeline";
 import type { GenerationContext, GenerationStage } from "../types";
 
 export function runPostPipelineStage(): GenerationStage {

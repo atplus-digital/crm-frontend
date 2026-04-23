@@ -1,5 +1,6 @@
 import type { RelationInfo } from "@scripts/generate-types/src/@types/generation";
 import type { DataSourceField } from "@scripts/generate-types/src/@types/script";
+import { logger } from "@scripts/generate-types/src/utils/logger";
 import { resolveRelationByType, resolveRelationInterface } from "./relations";
 
 /**
@@ -267,5 +268,12 @@ export function mapFieldType(field: DataSourceField): string {
 	}
 
 	// 4. Mapeia pelo field type ou retorna unknown se não reconhecido
-	return FIELD_TYPE_MAP[field.type] ?? "unknown";
+	const tsType = FIELD_TYPE_MAP[field.type];
+	if (!tsType) {
+		logger.warn(
+			`Tipo de campo desconhecido: '${field.type}' no campo '${field.name}' — mapeando para 'unknown'`,
+		);
+		return "unknown";
+	}
+	return tsType;
 }

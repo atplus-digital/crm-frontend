@@ -8,6 +8,8 @@ const scriptConfig: Partial<ScriptConfig> = {
 	lockWorkspaceFolder: true,
 	logLevel: "debug",
 	maxConcurrency: 3,
+	// dryRun é controlado pelo argv + overrideConfig — não defina aqui
+	// requestConcurrency foi removido (nunca utilizado pelo cliente HTTP)
 
 	// Configuração global de inferência de enums
 	enumInference: {
@@ -92,9 +94,7 @@ const scriptConfig: Partial<ScriptConfig> = {
 	cacheDir: ".cache/ixc-wiki",
 	cacheTtlMs: 86400000, // 24 horas
 
-	// Validação e dry-run
 	validateTypes: true,
-	dryRun: process.argv.includes("--dry-run"),
 } as const;
 
 export const config = parseConfig(scriptConfig);

@@ -3,7 +3,7 @@ import type {
 	DataSourceGenerationConfig,
 	GenerateTypesResult,
 	RuntimeConfig,
-} from "../@types/script";
+} from "../../@types/script";
 
 // ──────────────────────────────────────────────
 // Generation pipeline context

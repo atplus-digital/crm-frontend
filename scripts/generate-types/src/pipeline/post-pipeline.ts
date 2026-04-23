@@ -8,9 +8,14 @@ export async function runPostPipeline(
 	outputDirs: string[],
 	_writeResults: GeneratedFileWrite[],
 ): Promise<void> {
-	logger.debug("Iniciando etapa de pós-processamento...");
+	logger.info("Iniciando pós-processamento...", { stage: "post-pipeline" });
+
 	for (const outputDir of outputDirs) {
 		if (config.validateTypes) {
+			logger.debug(`Validando TypeScript em: ${outputDir}`, {
+				stage: "post-pipeline",
+				dir: outputDir,
+			});
 			validateTypeScriptDirectory(outputDir);
 		}
 	}

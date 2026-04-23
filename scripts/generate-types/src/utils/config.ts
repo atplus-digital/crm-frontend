@@ -98,10 +98,11 @@ function validateMergedConfig(mergedConfig: Partial<ScriptConfig>): void {
 
 		if (
 			dataSource.type !== "nocobase" &&
-			(!dataSource.collections || dataSource.collections.length === 0)
+			(!dataSource.collections || dataSource.collections.length === 0) &&
+			(!dataSource.splitCollections || dataSource.splitCollections.length === 0)
 		) {
 			errors.push(
-				`dataSource '${dataSource.name}' (type: '${dataSource.type}') deve definir collections explicitamente`,
+				`DataSource '${dataSource.name}' (type: '${dataSource.type}') deve definir 'collections' ou 'splitCollections'`,
 			);
 		}
 	}
@@ -114,11 +115,14 @@ function validateMergedConfig(mergedConfig: Partial<ScriptConfig>): void {
 }
 
 export function parseConfig(
-	scriptConfig: Partial<ScriptConfig>,
+	overrideConfig: Partial<ScriptConfig> = {},
+	options: { cliDryRun?: boolean } = {},
 ): RuntimeConfig {
+	const cliDryRun = options.cliDryRun ?? process.argv.includes("--dry-run");
+
 	const mergedConfig = {
 		...defaultConfig,
-		...scriptConfig,
+		...overrideConfig,
 	};
 
 	const normalizedConfig = {
@@ -133,6 +137,8 @@ export function parseConfig(
 	const config: RuntimeConfig = {
 		...normalizedConfig,
 		...envConfig,
+		dryRun:
+			overrideConfig.dryRun !== undefined ? overrideConfig.dryRun : cliDryRun,
 	};
 
 	return config;

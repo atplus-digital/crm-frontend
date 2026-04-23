@@ -5,9 +5,9 @@ import type { InitContext, PipelineStage } from "../../core/types";
 export const fetchCollections: PipelineStage<InitContext> = async (ctx) => {
 	const { client, dataSource } = ctx;
 
-	const configuredCollectionNames = normalizeCollectionNames(
-		dataSource.collections,
-	);
+	const rawCollections =
+		dataSource.collections ?? dataSource.splitCollections ?? [];
+	const configuredCollectionNames = normalizeCollectionNames(rawCollections);
 
 	let collections: DataSourceCollection[];
 

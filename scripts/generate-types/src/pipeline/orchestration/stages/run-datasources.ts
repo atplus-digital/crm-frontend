@@ -1,8 +1,8 @@
-import type { DataSourceFilesResult } from "../../@types/script";
-import { createInitialContext } from "../../pipeline/core/context-builder";
-import { defaultPipeline } from "../../pipeline/core/default-pipeline";
-import { createDataSourceClient } from "../../utils/create-dataSource-client";
-import { logger } from "../../utils/logger";
+import type { DataSourceFilesResult } from "../../../@types/script";
+import { createInitialContext } from "../../../pipeline/core/context-builder";
+import { defaultPipeline } from "../../../pipeline/core/default-pipeline";
+import { createDataSourceClient } from "../../../utils/create-dataSource-client";
+import { logger } from "../../../utils/logger";
 import type {
 	DatasourceRunResult,
 	GenerationContext,
@@ -13,11 +13,18 @@ async function runSingleDatasource(
 	config: GenerationContext["config"],
 	dataSource: GenerationContext["dataSourceConfigs"][number],
 ): Promise<DataSourceFilesResult> {
+	logger.info(`▶  Processando datasource: ${dataSource.name}`, {
+		datasource: dataSource.name,
+		stage: "run-datasources",
+	});
+
 	const client = createDataSourceClient(dataSource);
 	const ctx = createInitialContext(config, dataSource, client);
 	const result = await defaultPipeline(ctx);
 
-	logger.info(`✅ Datasource '${dataSource.name}' processado com sucesso`);
+	logger.info(`✅ Datasource '${dataSource.name}' processado com sucesso`, {
+		datasource: dataSource.name,
+	});
 
 	return { writeFiles: result.writeResults ?? [] };
 }

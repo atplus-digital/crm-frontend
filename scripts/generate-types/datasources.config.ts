@@ -27,14 +27,6 @@ export const dataSourceConfigs = [
 		type: "nocobase",
 		dataSource: "d_db_ixcsoft",
 		outputDir: "src/generated/ixc",
-		collections: [
-			"cliente",
-			"cliente_contrato",
-			"linha_mvno",
-			"vd_contratos_produtos",
-			"fn_areceber",
-			"su_ticket",
-		],
 		splitCollections: [
 			"cliente",
 			"cliente_contrato",
@@ -47,6 +39,6 @@ export const dataSourceConfigs = [
 		relationsAdapter: createIXCRelationsAdapter(),
 		enumCorrection: [],
 		generateEnumReport: true,
-		inferRelationsByName: true, // Habilita inferência por convenção como fallback
+		inferRelationsByName: true,
 	},
 ] satisfies DataSourceGenerationConfig[];

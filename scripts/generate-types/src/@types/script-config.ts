@@ -116,15 +116,15 @@ export interface BaseDataSourceGenerationConfig {
 export type DataSourceGenerationConfig = BaseDataSourceGenerationConfig;
 
 export interface ScriptConfig {
-	outputDir: string; // Diretório de saída (ex: "src/@types/generated") — split usa esta pasta; não-split usa <outputDir>/index.ts
-	splitCollections: string[]; // Collections que serão salvas em arquivos individuais
+	outputDir: string;
+	splitCollections: string[];
 	datasources?: DataSourceGenerationConfig[];
 	logLevel: "debug" | "info" | "error";
 	defaultEnvPath: string;
 	requestTimeoutMs: number;
 	requestConcurrency: number;
-	maxConcurrency: number; // Concorrência máxima para operações paralelas
-	lockWorkspaceFolder?: boolean; // Quando ativado, verifica .vscode/settings.json e bloqueia acesso de escrita à pasta de interfaces
+	maxConcurrency: number;
+	lockWorkspaceFolder?: boolean;
 	baseInterfaceNaming: BaseInterfaceNamingConfig;
 	/**
 	 * Configuração global de inferência de enums.

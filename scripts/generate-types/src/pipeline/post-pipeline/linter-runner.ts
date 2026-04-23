@@ -7,7 +7,9 @@ export async function runLinterFix(dirs: string[]): Promise<void> {
 	const biomeCmd = "biome";
 	const biomeArgs = ["check", "--write", ...dirs];
 
-	logInfo(`🔧 Rodando linter nos diretórios gerados: ${dirs.join(", ")}`);
+	logInfo(`🔧 Rodando Biome nos diretórios gerados: ${dirs.join(", ")}`, {
+		stage: "linter",
+	});
 
 	await new Promise<void>((resolve) => {
 		execFile(biomeCmd, biomeArgs, (error, stdout, stderr) => {

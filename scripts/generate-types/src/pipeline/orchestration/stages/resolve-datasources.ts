@@ -1,4 +1,4 @@
-import type { DataSourceGenerationConfig } from "../../@types/script";
+import type { DataSourceGenerationConfig } from "../../../@types/script";
 import type { GenerationContext, GenerationStage } from "../types";
 
 export function resolveDatasourcesStage(): GenerationStage {
