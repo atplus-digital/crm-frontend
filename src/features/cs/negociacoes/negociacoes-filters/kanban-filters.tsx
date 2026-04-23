@@ -1,15 +1,10 @@
-import { Calendar } from "lucide-react";
 import { useId, useState } from "react";
-import { FilterActions } from "#/components/filters/filter-actions";
-import { Button } from "#/components/ui/button";
-import { Input } from "#/components/ui/input";
 import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "#/components/ui/select";
+	FilterActions,
+	FilterDateField,
+	FilterSelectField,
+} from "#/components/filters";
+import { Button } from "#/components/ui/button";
 import type {
 	NegociacaoFilters,
 	NegociacaoStatus,
@@ -56,17 +51,11 @@ export function KanbanFilters({ filters, onFilter }: KanbanFiltersProps) {
 		<div className="space-y-4">
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-start">
 				<div className="flex-1 space-y-2">
-					<div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-						<Calendar className="size-3.5" aria-hidden="true" />
-						<span>Criado depois de</span>
-					</div>
-					<Input
-						type="date"
-						className="h-8 w-full sm:w-40"
+					<FilterDateField
+						id="kanban-created-after"
+						label="Criado depois de"
 						value={filters.criadoEmInicio || ""}
-						onChange={(e) =>
-							onFilter({ ...filters, criadoEmInicio: e.target.value })
-						}
+						onChange={(v) => onFilter({ ...filters, criadoEmInicio: v })}
 					/>
 				</div>
 
@@ -94,34 +83,17 @@ export function KanbanFilters({ filters, onFilter }: KanbanFiltersProps) {
 				</div>
 
 				<div className="space-y-2 sm:w-48">
-					<label
-						htmlFor={substatusId}
-						className="text-xs font-medium text-muted-foreground"
-					>
-						Substatus
-					</label>
-					<Select
+					<FilterSelectField<string>
+						id={substatusId}
+						label="Substatus"
 						value={substatus}
-						onValueChange={(value) => {
-							setSubstatus(value);
-							onFilter({
-								...filters,
-								substatus: value === "all" ? undefined : value,
-							});
+						placeholder="Selecione o substatus"
+						options={NEGOCIACAO_SUBSTATUS_FILTER_OPTIONS}
+						onChange={(v) => {
+							setSubstatus(v ?? "all");
+							onFilter({ ...filters, substatus: v });
 						}}
-					>
-						<SelectTrigger id={substatusId} className="h-8">
-							<SelectValue placeholder="Selecione o substatus" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="all">Todos</SelectItem>
-							{NEGOCIACAO_SUBSTATUS_FILTER_OPTIONS.map((opt) => (
-								<SelectItem key={opt.value} value={opt.value}>
-									{opt.label}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
+					/>
 				</div>
 			</div>
 

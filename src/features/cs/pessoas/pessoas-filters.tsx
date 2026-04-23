@@ -1,13 +1,9 @@
-import { FilterActions } from "#/components/filters/filter-actions";
-import { useDataTableContext } from "#/components/table/data-table-context";
-import { Input } from "#/components/ui/input";
 import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "#/components/ui/select";
+	FilterActions,
+	FilterInputField,
+	FilterSelectField,
+} from "#/components/filters";
+import { useDataTableContext } from "#/components/table/data-table-context";
 import {
 	DEFAULT_PESSOA_FISICA_TABLE_FILTERS,
 	type PessoaFisicaTableFilters,
@@ -21,38 +17,42 @@ export function PessoasFisicasFilters() {
 	return (
 		<div className="flex flex-wrap items-end gap-3">
 			<div className="flex-1 min-w-50">
-				<Input
+				<FilterInputField
+					id="filter-pf-nome"
+					label="Nome"
 					placeholder="Filtrar por nome..."
 					value={filters.f_nome}
-					onChange={(e) => setFilter("f_nome", e.target.value)}
+					onChange={(v) => setFilter("f_nome", v)}
 				/>
 			</div>
 			<div className="w-50">
-				<Input
+				<FilterInputField
+					id="filter-pf-cpf"
+					label="CPF"
 					placeholder="Filtrar por CPF..."
 					value={filters.f_cpf}
-					onChange={(e) => setFilter("f_cpf", e.target.value)}
+					onChange={(v) => setFilter("f_cpf", v)}
 				/>
 			</div>
 			<div className="w-50">
-				<Select
+				<FilterSelectField<string>
+					id="filter-pf-analise"
+					label="Análise IXC"
 					value={filters.f_analise_ixc}
-					onValueChange={(value) => {
-						const analise = (
-							value === "all" ? "all" : value
-						) as PessoaFisicaTableFilters["f_analise_ixc"];
-						setFilter("f_analise_ixc", analise);
-					}}
-				>
-					<SelectTrigger>
-						<SelectValue placeholder="Análise IXC" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="all">Todos</SelectItem>
-						<SelectItem value="1">Sem Pendências</SelectItem>
-						<SelectItem value="0">Com Pendências</SelectItem>
-					</SelectContent>
-				</Select>
+					placeholder="Análise IXC"
+					options={[
+						{ value: "1", label: "Sem Pendências" },
+						{ value: "0", label: "Com Pendências" },
+					]}
+					onChange={(v) =>
+						setFilter(
+							"f_analise_ixc",
+							(v === undefined
+								? "all"
+								: v) as PessoaFisicaTableFilters["f_analise_ixc"],
+						)
+					}
+				/>
 			</div>
 			<FilterActions
 				onApply={applyFilters}
@@ -77,17 +77,21 @@ export function PessoasJuridicasFilters() {
 	return (
 		<div className="flex flex-wrap items-end gap-3">
 			<div className="flex-1 min-w-50">
-				<Input
+				<FilterInputField
+					id="filter-pj-razao-social"
+					label="Razão Social"
 					placeholder="Filtrar por razão social..."
 					value={filters.f_razao_social}
-					onChange={(e) => setFilter("f_razao_social", e.target.value)}
+					onChange={(v) => setFilter("f_razao_social", v)}
 				/>
 			</div>
 			<div className="w-50">
-				<Input
+				<FilterInputField
+					id="filter-pj-cnpj"
+					label="CNPJ"
 					placeholder="Filtrar por CNPJ..."
 					value={filters.f_cnpj}
-					onChange={(e) => setFilter("f_cnpj", e.target.value)}
+					onChange={(v) => setFilter("f_cnpj", v)}
 				/>
 			</div>
 			<FilterActions

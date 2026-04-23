@@ -9,6 +9,10 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 
+// ---------------------------------------------------------------------------
+// FilterSelectField — label + select with "Todos" option
+// ---------------------------------------------------------------------------
+
 export interface FilterSelectFieldProps<T extends string> {
 	id: string;
 	label: string;
@@ -51,6 +55,10 @@ export function FilterSelectField<T extends string>({
 	);
 }
 
+// ---------------------------------------------------------------------------
+// FilterInputField — label + text input
+// ---------------------------------------------------------------------------
+
 export interface FilterInputFieldProps {
 	id: string;
 	label: string;
@@ -82,9 +90,13 @@ export function FilterInputField({
 	);
 }
 
+// ---------------------------------------------------------------------------
+// FilterDateField — label (with calendar icon) + date input
+// ---------------------------------------------------------------------------
+
 export interface FilterDateFieldProps {
 	id: string;
-	label: ReactNode;
+	label: string;
 	value: string;
 	icon?: ReactNode;
 	onChange: (value: string) => void;

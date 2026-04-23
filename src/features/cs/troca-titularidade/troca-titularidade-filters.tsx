@@ -1,9 +1,9 @@
-import { FilterActions } from "#/components/filters/filter-actions";
 import {
+	FilterActions,
 	FilterDateField,
 	FilterInputField,
 	FilterSelectField,
-} from "#/features/cs/troca-titularidade/components/troca-titularidade-filter-fields";
+} from "#/components/filters";
 import {
 	TROCA_ESTADO_FILTER_OPTIONS,
 	TROCA_STATUS_FILTER_OPTIONS,

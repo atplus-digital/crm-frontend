@@ -1,13 +1,9 @@
-import { FilterActions } from "#/components/filters/filter-actions";
-import { useDataTableContext } from "#/components/table/data-table-context";
-import { Input } from "#/components/ui/input";
 import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "#/components/ui/select";
+	FilterActions,
+	FilterInputField,
+	FilterSelectField,
+} from "#/components/filters";
+import { useDataTableContext } from "#/components/table/data-table-context";
 import {
 	CONTRATO_STATUS_LABELS,
 	type ContratosTableFilters,
@@ -26,37 +22,39 @@ export function ContratosFilters() {
 	return (
 		<div className="rounded-lg border bg-card p-4">
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-				<Input
+				<FilterInputField
+					id="filter-contratos-cpfCnpj"
+					label="CPF/CNPJ"
 					placeholder="000.000.000-00"
 					value={filters.cpfCnpj}
-					onChange={(e) => setFilter("cpfCnpj", e.target.value)}
+					onChange={(v) => setFilter("cpfCnpj", v)}
 				/>
-				<Input
+				<FilterInputField
+					id="filter-contratos-nome"
+					label="Nome"
 					placeholder="Buscar por nome..."
 					value={filters.nome}
-					onChange={(e) => setFilter("nome", e.target.value)}
+					onChange={(v) => setFilter("nome", v)}
 				/>
-				<Select
+				<FilterSelectField<string>
+					id="filter-contratos-status"
+					label="Status"
 					value={filters.status}
-					onValueChange={(value) => setFilter("status", value)}
-				>
-					<SelectTrigger className="w-full">
-						<SelectValue placeholder="Status do Contrato" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="all">Todos</SelectItem>
-						{Object.entries(CONTRATO_STATUS_LABELS).map(([value, label]) => (
-							<SelectItem key={value} value={value}>
-								{label}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
-				<Input
-					type="number"
+					placeholder="Status do Contrato"
+					options={Object.entries(CONTRATO_STATUS_LABELS).map(
+						([value, label]) => ({
+							value,
+							label,
+						}),
+					)}
+					onChange={(v) => setFilter("status", v ?? "all")}
+				/>
+				<FilterInputField
+					id="filter-contratos-id"
+					label="ID Contrato"
 					placeholder="ID do contrato"
 					value={filters.contratoId}
-					onChange={(e) => setFilter("contratoId", e.target.value)}
+					onChange={(v) => setFilter("contratoId", v)}
 				/>
 			</div>
 			<FilterActions
