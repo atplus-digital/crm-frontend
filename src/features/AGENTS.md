@@ -28,12 +28,38 @@ Feature modules by domain; each folder in `src/features/` owns its contracts, se
 
 ## Patterns
 
-- Each feature must have a scoped `AGENTS.md` and should expose its public API through `index.ts`.
-- Keep domain logic at feature root (`types.ts`, `service.ts`, `schemas.ts`, `store.ts`, `guards.ts`) and move files by concern into subfolders.
-- `components/` is optional, but when a feature has UI components they must live in `components/`.
-- `hooks/` is optional, but when a feature has React hooks they must live in `hooks/` (avoid mixing hook files at feature root in new code).
-- Recommended optional folders as complexity grows: `services/`, `types/`, `schemas/`, `utils/`, and `__tests__/`.
-- External imports should use `#/features/<feature>`; avoid deep imports from sub-files.
+### Mandatory Folder Structure
+
+Every feature **must** conform to this structure. Only create subfolders that are actually needed.
+
+```
+<feature>/
+├── AGENTS.md
+├── index.ts                    # Barrel export — public API only
+├── components/                 # UI components (React) — ONLY if present
+│   ├── *.tsx
+│   └── *.ts (colocated helpers)
+├── hooks/                      # React hooks — ONLY if present
+│   └── *.ts
+├── utils/                      # Pure utility functions, helpers — ONLY if present
+│   └── *.ts
+└── __tests__/                 # Co-located tests — ONLY if present
+    └── *.test.ts
+```
+
+**Rules:**
+
+1. **No files at feature root** except `AGENTS.md` and `index.ts`.
+2. All `.ts`/`.tsx` files with business logic, types, services, stores, guards, schemas, or hooks **must** live inside the appropriate subfolder.
+3. **Never** mix different concerns at feature root (e.g., `service.ts` + `hooks.ts` + `types.ts` all at root is forbidden).
+4. `components/`, `hooks/`, `utils/`, and `__tests__/` only exist **if needed** — do not create empty folders.
+5. For nested subdomains (e.g., `cs/contratos/`, `cs/negociacoes/`), the same rules apply recursively.
+
+### Import Convention
+
+- External modules import from `#/features/<feature>` (barrel only).
+- Internal subfolder imports use `#/features/<feature>/<subfolder>`.
+- **Never** deep-import from `#/features/<feature>/components/X` outside the feature itself.
 
 <!-- AGENTS-GENERATED:END patterns -->
 
