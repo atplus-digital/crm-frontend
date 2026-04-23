@@ -1,5 +1,5 @@
 import { DataTable, useDataTable } from "#/components/table/data-table";
-import { ContractTabWrapper } from "#/features/cs/contract-tab-wrapper";
+import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import {
 	TROCAS_TITULARIDADE_COLUMNS,
 	trocasTitularidadeTableColumns,

@@ -5,7 +5,7 @@ import {
 	detailLongTextCell,
 	detailMoneyCell,
 } from "#/components/table/detail-table-presets";
-import { ContractTabWrapper } from "#/features/cs/contract-tab-wrapper";
+import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useNegociacaoItens } from "#/features/cs/negociacoes/negociacoes-hooks";
 import type { NegociacoesItens } from "#/generated/nocobase/index";
 import { formatCurrency } from "#/lib/utils";

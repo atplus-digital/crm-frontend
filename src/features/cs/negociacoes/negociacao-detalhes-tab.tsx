@@ -2,8 +2,8 @@ import { Calendar } from "lucide-react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Badge } from "#/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
-import { DetailField } from "#/features/cs/detail-field";
-import { DetailSkeleton } from "#/features/cs/detail-skeleton";
+import { DetailField } from "#/features/cs/components/detail-field";
+import { DetailSkeleton } from "#/features/cs/components/detail-skeleton";
 import {
 	PontosAtencaoBadge,
 	StatusBadge,

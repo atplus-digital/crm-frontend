@@ -3,7 +3,7 @@ import {
 	NEGOCIACOES_STATUS_LABELS,
 } from "#/generated/nocobase/negociacoes";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
-import type { NegociacaoWithRelations } from "./negociacoes-types";
+import type { NegociacaoWithRelations } from "../negociacoes-types";
 
 interface CsvColumn {
 	key: string;

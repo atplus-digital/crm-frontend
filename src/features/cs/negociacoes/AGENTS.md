@@ -27,7 +27,8 @@ and detail-tab composition for negotiation lifecycle data.
 | `negociacao-anexos-tab.tsx`      | Detail tab for attachments                                  |
 | `negociacao-comentarios-tab.tsx` | Detail tab for comments                                     |
 | `negociacao-itens-tab.tsx`       | Detail tab for negotiated items                             |
-| `export-csv.ts`                  | CSV formatting utility used by negotiation export flow      |
+| `utils/export-csv.ts`            | CSV formatting utility used by negotiation export flow      |
+| `utils/negociacao-anexos-utils.tsx`| File type badge helpers and icons for attachments           |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

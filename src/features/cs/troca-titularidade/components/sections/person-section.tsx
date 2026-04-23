@@ -1,6 +1,6 @@
 import { User } from "lucide-react";
-import { DetailField } from "#/features/cs/detail-field";
-import { DetailSection } from "#/features/cs/detail-section";
+import { DetailField } from "#/features/cs/components/detail-field";
+import { DetailSection } from "#/features/cs/components/detail-section";
 import { formatPhone } from "#/lib/utils";
 import type { CrmTrocaTitularidadeWithRelations } from "../../troca-titularidade-hooks";
 

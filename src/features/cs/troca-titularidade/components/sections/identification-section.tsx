@@ -1,7 +1,7 @@
 import { FileText } from "lucide-react";
 import { StatusBadge as SharedStatusBadge } from "#/components/badges/status-badge";
-import { DetailField } from "#/features/cs/detail-field";
-import { DetailSection } from "#/features/cs/detail-section";
+import { DetailField } from "#/features/cs/components/detail-field";
+import { DetailSection } from "#/features/cs/components/detail-section";
 import {
 	CRMTROCATITULARIDADE_STATUS_LABELS,
 	CRMTROCATITULARIDADE_SUBSTATUS_LABELS,

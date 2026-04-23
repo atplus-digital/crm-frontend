@@ -1,5 +1,5 @@
 import { MessageSquare } from "lucide-react";
-import { DetailSection } from "#/features/cs/detail-section";
+import { DetailSection } from "#/features/cs/components/detail-section";
 import { formatDatePtBR } from "#/lib/utils";
 
 /** Common shape for all NocoBase comment types */

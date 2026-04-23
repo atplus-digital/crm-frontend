@@ -1,4 +1,4 @@
-import { CommentsList } from "#/features/cs/comments-list";
+import { CommentsList } from "#/features/cs/components/comments-list";
 import type { CrmTrocaTitularidadeWithRelations } from "../../troca-titularidade-hooks";
 
 interface CommentsSectionProps {

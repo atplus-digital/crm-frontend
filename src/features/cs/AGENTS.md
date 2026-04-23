@@ -29,12 +29,12 @@ Customer Success domain module — contracts, negotiations, and people flows (ty
 | `pessoas/pessoas-types.ts`           | Person (PF/PJ) entities and filtering/pagination types      |
 | `pessoas/pessoas-service.ts`         | CRUD/list services for PF/PJ using NocoBase repositories    |
 | `pessoas/pessoas-hooks.ts`           | React Query hooks for PF/PJ lists and details               |
-| `back-button.tsx`                    | Cross-CS back navigation helper for detail pages            |
-| `detail-field.tsx`                   | Read-only label/value primitive for CS detail screens       |
-| `detail-skeleton/`                   | Shared skeletons for CS detail sections and cards (folder)  |
-| `contract-tab-wrapper.tsx`           | Shared card wrapper for contract/negotiation tab bodies     |
-| `contract-tab-skeleton.tsx`          | Skeleton body used by the shared contract tab wrapper       |
-| `comments-list.tsx`                  | Generic shared comments list for detail pages               |
+| `components/back-button.tsx`                    | Cross-CS back navigation helper for detail pages            |
+| `components/detail-field.tsx`                   | Read-only label/value primitive for CS detail screens       |
+| `components/detail-skeleton/`                   | Shared skeletons for CS detail sections and cards (folder)  |
+| `components/contract-tab-wrapper.tsx`           | Shared card wrapper for contract/negotiation tab bodies     |
+| `components/contract-tab-skeleton.tsx`          | Skeleton body used by the shared contract tab wrapper       |
+| `components/comments-list.tsx`                  | Generic shared comments list for detail pages               |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

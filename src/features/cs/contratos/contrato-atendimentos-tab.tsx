@@ -9,7 +9,7 @@ import {
 	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
 import { Button } from "#/components/ui/button";
-import { ContractTabWrapper } from "#/features/cs/contract-tab-wrapper";
+import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useContratoAtendimentos } from "#/features/cs/contratos/contratos-hooks";
 import type { AtendimentoIXC } from "#/features/cs/contratos/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";

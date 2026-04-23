@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Skeleton } from "#/components/ui/skeleton";
-import { BackButton } from "#/features/cs/back-button";
-import { CardSectionSkeleton } from "#/features/cs/detail-skeleton";
+import { BackButton } from "#/features/cs/components/back-button";
+import { CardSectionSkeleton } from "#/features/cs/components/detail-skeleton";
 import { useSuspensaoContratoById } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks";
 import { routePaths } from "#/routes/route-paths";
 import { SuspensaoContratoTabs } from "./sections/suspensao-contrato-tabs";

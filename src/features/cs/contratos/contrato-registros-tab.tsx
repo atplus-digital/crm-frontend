@@ -6,7 +6,7 @@ import {
 	detailLongTextCell,
 	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
-import { ContractTabWrapper } from "#/features/cs/contract-tab-wrapper";
+import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useContratoRegistros } from "#/features/cs/contratos/contratos-hooks";
 import type { RegistroContato } from "#/features/cs/contratos/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";

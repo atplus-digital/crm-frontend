@@ -1,10 +1,10 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { DetailSkeleton } from "#/features/cs/components/detail-skeleton";
 import type {
 	ContratoWithCliente,
 	Fatura,
 	ProdutoContrato,
 } from "#/features/cs/contratos/contratos-types";
-import { DetailSkeleton } from "#/features/cs/detail-skeleton";
 import { ClienteInfoCard } from "./cliente-info-card";
 import { ContratoInfoCard } from "./contrato-info-card";
 import { EnderecoCard } from "./endereco-card";

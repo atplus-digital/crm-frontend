@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
+import { DetailField } from "#/features/cs/components/detail-field";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
-import { DetailField } from "#/features/cs/detail-field";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 
 interface ContratoInfoCardProps {

@@ -1,9 +1,9 @@
 import { Clock, FileText, Link2, Mail, User } from "lucide-react";
 import { StatusBadge as SharedStatusBadge } from "#/components/badges/status-badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { CommentsList } from "#/features/cs/comments-list";
-import { DetailField } from "#/features/cs/detail-field";
-import { DetailSection } from "#/features/cs/detail-section";
+import { CommentsList } from "#/features/cs/components/comments-list";
+import { DetailField } from "#/features/cs/components/detail-field";
+import { DetailSection } from "#/features/cs/components/detail-section";
 import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { SUSPENSAO_CONTRATO_STATUS_LABELS } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import type { Contratos } from "#/generated/nocobase/index";
