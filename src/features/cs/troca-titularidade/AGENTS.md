@@ -14,15 +14,16 @@ Ownership transfer feature — manages contract titularidade change requests bet
 
 ## Key Files
 
-| File                                        | Purpose                                                    |
-| ------------------------------------------- | ---------------------------------------------------------- |
-| `index.ts`                                  | Barrel export for hooks and components                     |
-| `troca-titularidade-types.ts`               | Filter options, badge variants, `TrocaTitularidadeFilters` |
-| `troca-titularidade-hooks.ts`               | React Query hooks + `buildTrocaTitularidadeFilter()`       |
-| `troca-titularidade-filters.tsx`            | `TrocaTitularidadeFilterBar` — 8-field filter UI           |
-| `detail-section.tsx`                        | Local card wrapper for the transfer detail sections        |
-| `components/troca-titularidade-list.tsx`    | Paginated list with sorting                                |
-| `components/troca-titularidade-details.tsx` | Detail page with sectioned layout                          |
+| File                                        | Purpose                                                                                                 |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `index.ts`                                  | Barrel export for hooks and components                                                                  |
+| `troca-titularidade-types.ts`               | Filter options, badge variants, `TrocaTitularidadeFilters`                                              |
+| `troca-titularidade-hooks.ts`               | React Query hooks + `buildTrocaTitularidadeFilter()`                                                    |
+| `troca-titularidade-filters.tsx`            | `TrocaTitularidadeFilterBar` — 8-field filter UI                                                        |
+| `detail-section.tsx`                        | Local card wrapper for the transfer detail sections                                                     |
+| `components/troca-titularidade-list.tsx`    | Paginated list with sorting                                                                             |
+| `components/troca-titularidade-details.tsx` | Detail page with sectioned layout                                                                       |
+| `components/sections/`                      | Detail page sections (identification, person, address, signature, relationships, attachments, comments) |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

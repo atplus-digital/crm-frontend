@@ -1,18 +1,15 @@
-import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { EmptyTable } from "#/components/table/empty-table";
-import { Button } from "#/components/ui/button";
+import { DataTable, useDataTable } from "#/components/table/data-table";
+import { ContractTabWrapper } from "#/features/cs/contract-tab-wrapper";
 import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "#/components/ui/card";
-import { Skeleton } from "#/components/ui/skeleton";
+	TROCAS_TITULARIDADE_COLUMNS,
+	trocasTitularidadeTableColumns,
+} from "#/features/cs/contratos/contrato-negociacoes-columns";
 import { useContratoTrocasTitularidade } from "#/features/cs/contratos/contratos-hooks";
-import { CardSectionSkeleton } from "#/features/cs/detail-skeleton";
 import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
-import { formatCurrency, formatDatePtBR } from "#/lib/utils";
+import {
+	RENOVACOES_COLUMNS,
+	renovacoesTableColumns,
+} from "./contrato-negociacoes-columns";
 
 interface ContratoNegociacoesTabProps {
 	contratoId: number;
@@ -22,189 +19,60 @@ export function ContratoNegociacoesTab({
 	contratoId,
 }: ContratoNegociacoesTabProps) {
 	const {
-		data: trocasTitularidadeData,
+		data: trocasData,
 		isLoading: isLoadingTrocas,
-		isError: isErrorTrocas,
-		refetch: refetchTrocas,
+		error: errorTrocas,
 	} = useContratoTrocasTitularidade(contratoId);
 	const {
 		data: negociacoesData,
 		isLoading: isLoadingNegociacoes,
-		isError: isErrorNegociacoes,
-		refetch: refetchNegociacoes,
+		error: errorNegociacoes,
 	} = useNegociacoes({
 		page: 1,
 		pageSize: 50,
 		filters: { contratoId },
 	});
 
-	const trocas = trocasTitularidadeData?.data ?? [];
+	const trocas = trocasData?.data ?? [];
 	const negociacoes = negociacoesData?.data ?? [];
 
-	const isLoading = isLoadingTrocas || isLoadingNegociacoes;
-	const isError = isErrorTrocas || isErrorNegociacoes;
+	const trocasTable = useDataTable({
+		columns: trocasTitularidadeTableColumns,
+		data: trocas,
+	});
 
-	if (isError) {
-		return (
-			<InlineErrorAlert>
-				<div className="flex flex-col gap-2">
-					<span>Erro ao carregar negociações.</span>
-					<Button
-						variant="outline"
-						size="sm"
-						onClick={() => {
-							refetchTrocas();
-							refetchNegociacoes();
-						}}
-					>
-						Tentar novamente
-					</Button>
-				</div>
-			</InlineErrorAlert>
-		);
-	}
-
-	if (isLoading) {
-		return (
-			<div className="flex flex-col gap-6">
-				<CardSectionSkeleton />
-				<CardSectionSkeleton />
-			</div>
-		);
-	}
+	const negociacoesTable = useDataTable({
+		columns: renovacoesTableColumns,
+		data: negociacoes,
+	});
 
 	return (
 		<div className="flex flex-col gap-6">
-			<Card>
-				<CardHeader>
-					<CardTitle>Troca de Titularidade</CardTitle>
-					<CardDescription>
-						Trocas de titularidade para este contrato
-					</CardDescription>
-				</CardHeader>
-				<CardContent>
-					{isLoadingTrocas ? (
-						<div className="space-y-2">
-							<Skeleton className="h-4 w-full" />
-							<Skeleton className="h-4 w-full" />
-							<Skeleton className="h-4 w-full" />
-						</div>
-					) : trocas.length === 0 ? (
-						<EmptyTable
-							columns={[
-								"Cedente",
-								"Documento Cedente",
-								"Cessionário",
-								"Documento Cessionário",
-								"Status",
-								"Contrato",
-							]}
-							message="Nenhuma troca de titularidade encontrada"
-						/>
-					) : (
-						<div className="overflow-x-auto">
-							<table className="w-full">
-								<thead className="bg-muted">
-									<tr>
-										<th className="px-4 py-2 text-left">Cedente</th>
-										<th className="px-4 py-2 text-left">Documento</th>
-										<th className="px-4 py-2 text-left">Cessionário</th>
-										<th className="px-4 py-2 text-left">Documento</th>
-										<th className="px-4 py-2 text-left">Status</th>
-										<th className="px-4 py-2 text-left">Contrato</th>
-									</tr>
-								</thead>
-								<tbody>
-									{trocas.map((troca) => (
-										<tr key={troca.id} className="border-b">
-											<td className="px-4 py-2">{troca.cedente || "—"}</td>
-											<td className="px-4 py-2">
-												{troca.documento_cedente || "—"}
-											</td>
-											<td className="px-4 py-2">{troca.cessionario || "—"}</td>
-											<td className="px-4 py-2">
-												{troca.documento_cessionario || "—"}
-											</td>
-											<td className="px-4 py-2">{troca.status || "—"}</td>
-											<td className="px-4 py-2">{troca.id_contrato || "—"}</td>
-										</tr>
-									))}
-								</tbody>
-							</table>
-						</div>
-					)}
-				</CardContent>
-			</Card>
+			<ContractTabWrapper
+				title="Troca de Titularidade"
+				description="Trocas de titularidade para este contrato"
+				isLoading={isLoadingTrocas}
+				error={errorTrocas}
+				errorMessage="Erro ao carregar trocas de titularidade"
+				isEmpty={trocas.length === 0}
+				emptyMessage="Nenhuma troca de titularidade encontrada"
+				emptyColumns={TROCAS_TITULARIDADE_COLUMNS}
+			>
+				<DataTable table={trocasTable} />
+			</ContractTabWrapper>
 
-			<Card>
-				<CardHeader>
-					<CardTitle>Renovações</CardTitle>
-					<CardDescription>Renovações para este contrato</CardDescription>
-				</CardHeader>
-				<CardContent>
-					{negociacoes && negociacoes.length > 0 ? (
-						<div className="overflow-x-auto">
-							<table className="w-full text-sm">
-								<thead className="bg-muted">
-									<tr>
-										<th className="px-4 py-2 text-left font-medium">Título</th>
-										<th className="px-4 py-2 text-left font-medium">
-											Valor Mensal
-										</th>
-										<th className="px-4 py-2 text-left font-medium">
-											Criado em
-										</th>
-										<th className="px-4 py-2 text-left font-medium">
-											Vendedor
-										</th>
-										<th className="px-4 py-2 text-left font-medium">Status</th>
-										<th className="px-4 py-2 text-left font-medium">
-											Contrato
-										</th>
-										<th className="px-4 py-2 text-left font-medium">
-											Itens Negociação
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									{negociacoes.map((neg) => (
-										<tr key={neg.id} className="border-t">
-											<td className="px-4 py-2">{neg.f_titulo ?? "—"}</td>
-											<td className="px-4 py-2">
-												{neg.f_valor_mensal
-													? formatCurrency(neg.f_valor_mensal)
-													: "—"}
-											</td>
-											<td className="px-4 py-2">
-												{formatDatePtBR(neg.createdAt)}
-											</td>
-											<td className="px-4 py-2">
-												{neg.f_vendedor?.nickname ?? "—"}
-											</td>
-											<td className="px-4 py-2">{neg.f_status ?? "—"}</td>
-											<td className="px-4 py-2">{neg.f_contrato_ixc ?? "—"}</td>
-											<td className="px-4 py-2">—</td>
-										</tr>
-									))}
-								</tbody>
-							</table>
-						</div>
-					) : (
-						<EmptyTable
-							columns={[
-								"Título",
-								"Valor Mensal",
-								"Criado em",
-								"Vendedor",
-								"Status",
-								"Contrato",
-								"Itens Negociação",
-							]}
-							message="Nenhuma renovação encontrada"
-						/>
-					)}
-				</CardContent>
-			</Card>
+			<ContractTabWrapper
+				title="Renovações"
+				description="Renovações para este contrato"
+				isLoading={isLoadingNegociacoes}
+				error={errorNegociacoes}
+				errorMessage="Erro ao carregar renovações"
+				isEmpty={negociacoes.length === 0}
+				emptyMessage="Nenhuma renovação encontrada"
+				emptyColumns={RENOVACOES_COLUMNS}
+			>
+				<DataTable table={negociacoesTable} />
+			</ContractTabWrapper>
 		</div>
 	);
 }

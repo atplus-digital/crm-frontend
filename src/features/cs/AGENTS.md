@@ -34,6 +34,7 @@ Customer Success domain module — contracts, negotiations, and people flows (ty
 | `detail-skeleton/`                   | Shared skeletons for CS detail sections and cards (folder)  |
 | `contract-tab-wrapper.tsx`           | Shared card wrapper for contract/negotiation tab bodies     |
 | `contract-tab-skeleton.tsx`          | Skeleton body used by the shared contract tab wrapper       |
+| `comments-list.tsx`                  | Generic shared comments list for detail pages               |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

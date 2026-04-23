@@ -1,4 +1,8 @@
 export {
+	MotivoBadge,
+	type MotivoBadgeProps,
+} from "./motivo-badge";
+export {
 	PontosAtencaoBadge,
 	type PontosAtencaoBadgeProps,
 } from "./pontos-atencao-badge";

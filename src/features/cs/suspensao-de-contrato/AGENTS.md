@@ -22,6 +22,7 @@ Contract suspension feature — manages suspension requests with ZapSign digital
 | `detail-section.tsx`                           | Card wrapper for detail page sections                                                    |
 | `components/suspensao-de-contrato-list.tsx`    | DataTableContainer with 8 columns                                                        |
 | `components/suspensao-de-contrato-details.tsx` | Detail page with 2 tabs (Detalhes + Contrato)                                            |
+| `components/sections/`                         | Detail page sections (tabs, actions)                                                     |
 | `index.ts`                                     | Barrel export for hooks and components                                                   |
 
 <!-- AGENTS-GENERATED:END filemap -->

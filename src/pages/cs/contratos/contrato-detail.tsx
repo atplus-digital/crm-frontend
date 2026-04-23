@@ -7,38 +7,19 @@ import {
 } from "lucide-react";
 import { useParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { EmptyTable } from "#/components/table/empty-table";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "#/components/ui/card";
-import { Separator } from "#/components/ui/separator";
 import { Skeleton } from "#/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { BackButton } from "#/features/cs/back-button";
 import { ContratoAtendimentosTab } from "#/features/cs/contratos/contrato-atendimentos-tab";
+import { ContratoDetalhesTab } from "#/features/cs/contratos/contrato-detalhes-tab";
 import { ContratoMovelTab } from "#/features/cs/contratos/contrato-movel-tab";
 import { ContratoNegociacoesTab } from "#/features/cs/contratos/contrato-negociacoes-tab";
 import { ContratoRegistrosTab } from "#/features/cs/contratos/contrato-registros-tab";
-import {
-	ContratoStatusBadge,
-	InternetStatusBadge,
-} from "#/features/cs/contratos/contrato-status-badge";
 import {
 	useContratoById,
 	useContratoFaturas,
 	useContratoProdutos,
 } from "#/features/cs/contratos/contratos-hooks";
-import type {
-	Fatura,
-	ProdutoContrato,
-} from "#/features/cs/contratos/contratos-types";
-import { DetailField } from "#/features/cs/detail-field";
-import { DetailSkeleton } from "#/features/cs/detail-skeleton";
-import { formatDatePtBR } from "#/lib/utils";
 import { routePaths } from "#/routes/route-paths";
 
 export function ContratoDetailPage() {
@@ -56,8 +37,8 @@ export function ContratoDetailPage() {
 		error: faturasError,
 	} = useContratoFaturas(contratoId);
 
-	const produtos: ProdutoContrato[] = produtosData?.data ?? [];
-	const faturas: Fatura[] = faturasData?.data ?? [];
+	const produtos = produtosData?.data ?? [];
+	const faturas = faturasData?.data ?? [];
 
 	if (error) {
 		return (
@@ -125,261 +106,16 @@ export function ContratoDetailPage() {
 
 					{/* Tab: Detalhes */}
 					<TabsContent value="detalhes" className="mt-6">
-						{isLoading ? (
-							<DetailSkeleton />
-						) : contrato ? (
-							<div className="flex flex-col gap-6">
-								{/* Dados do Cliente */}
-								<Card>
-									<CardHeader>
-										<CardTitle>Dados do Cliente</CardTitle>
-									</CardHeader>
-									<CardContent>
-										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-											<DetailField label="Nome/Razão Social">
-												{contrato.f_nc_cliente?.razao ?? "—"}
-											</DetailField>
-											<DetailField label="CPF/CNPJ">
-												{contrato.f_nc_cliente?.cnpj_cpf ?? "—"}
-											</DetailField>
-											<DetailField label="Status Contrato">
-												<ContratoStatusBadge status={contrato.status} />
-											</DetailField>
-											<DetailField label="Status Serviço">
-												<InternetStatusBadge
-													status={contrato.status_internet}
-												/>
-											</DetailField>
-										</div>
-									</CardContent>
-								</Card>
-
-								{/* Dados do Contrato */}
-								<Card>
-									<CardHeader>
-										<CardTitle>Dados do Contrato</CardTitle>
-									</CardHeader>
-									<CardContent>
-										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-											<DetailField label="ID Contrato IXC">
-												{contrato.id}
-											</DetailField>
-											<DetailField label="Data de Ativação">
-												{formatDatePtBR(contrato.data_ativacao ?? "")}
-											</DetailField>
-											<DetailField label="Descrição Contrato IXC">
-												{contrato.contrato}
-											</DetailField>
-											<DetailField label="Fidelidade">
-												{contrato.fidelidade
-													? `${contrato.fidelidade} meses`
-													: "—"}
-											</DetailField>
-											<DetailField label="Data Expiração">
-												{formatDatePtBR(contrato.data_validade ?? "")}
-											</DetailField>
-											<DetailField label="Valor Unitário">
-												{contrato.valor_unitario
-													? Number(contrato.valor_unitario).toLocaleString(
-															"pt-BR",
-															{
-																style: "currency",
-																currency: "BRL",
-															},
-														)
-													: "—"}
-											</DetailField>
-										</div>
-									</CardContent>
-								</Card>
-
-								{/* Dados do Endereço */}
-								<Card>
-									<CardHeader>
-										<CardTitle>Dados do Endereço</CardTitle>
-									</CardHeader>
-									<CardContent>
-										<div className="flex flex-col gap-6">
-											<div>
-												<h4 className="text-sm font-semibold mb-3">
-													Endereço do Contrato
-												</h4>
-												<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-													<DetailField label="Endereço">
-														{contrato.endereco ?? "—"}
-													</DetailField>
-													<DetailField label="Número">
-														{contrato.numero ?? "—"}
-													</DetailField>
-													<DetailField label="Bairro">
-														{contrato.bairro ?? "—"}
-													</DetailField>
-													<DetailField label="CEP">
-														{contrato.cep ?? "—"}
-													</DetailField>
-												</div>
-											</div>
-											<Separator />
-											{contrato.f_nc_cliente && (
-												<div>
-													<h4 className="text-sm font-semibold mb-3">
-														Endereço do Cliente
-													</h4>
-													<p className="text-sm text-muted-foreground">
-														Endereço cadastrado do cliente
-													</p>
-												</div>
-											)}
-										</div>
-									</CardContent>
-								</Card>
-
-								{/* Produtos */}
-								<Card>
-									<CardHeader>
-										<CardTitle>Produtos</CardTitle>
-										<CardDescription>
-											Produtos vinculados ao contrato
-										</CardDescription>
-									</CardHeader>
-									<CardContent>
-										{isLoadingProdutos ? (
-											<Skeleton className="h-32 w-full" />
-										) : produtosError ? (
-											<InlineErrorAlert>
-												Erro ao carregar produtos:{" "}
-												{(produtosError as Error).message}
-											</InlineErrorAlert>
-										) : produtos.length === 0 ? (
-											<EmptyTable
-												columns={["Descrição", "Valor", "Quantidade"]}
-												message="Nenhum produto encontrado"
-											/>
-										) : (
-											<div className="overflow-x-auto">
-												<table className="w-full text-sm">
-													<thead className="bg-muted/50">
-														<tr>
-															<th className="px-4 py-3 text-left font-medium">
-																Descrição
-															</th>
-															<th className="px-4 py-3 text-left font-medium">
-																Valor
-															</th>
-															<th className="px-4 py-3 text-left font-medium">
-																Quantidade
-															</th>
-														</tr>
-													</thead>
-													<tbody className="divide-y divide-border">
-														{produtos.map((produto) => (
-															<tr key={produto.id}>
-																<td className="px-4 py-3">
-																	{produto.descricao || "—"}
-																</td>
-																<td className="px-4 py-3">
-																	{produto.valor_unit
-																		? Number(produto.valor_unit).toLocaleString(
-																				"pt-BR",
-																				{
-																					style: "currency",
-																					currency: "BRL",
-																				},
-																			)
-																		: "—"}
-																</td>
-																<td className="px-4 py-3">
-																	{produto.qtde ?? "—"}
-																</td>
-															</tr>
-														))}
-													</tbody>
-												</table>
-											</div>
-										)}
-									</CardContent>
-								</Card>
-
-								{/* Últimas Faturas */}
-								<Card>
-									<CardHeader>
-										<CardTitle>Últimas Faturas</CardTitle>
-										<CardDescription>
-											Últimas faturas geradas para este contrato
-										</CardDescription>
-									</CardHeader>
-									<CardContent>
-										{isLoadingFaturas ? (
-											<Skeleton className="h-32 w-full" />
-										) : faturasError ? (
-											<InlineErrorAlert>
-												Erro ao carregar faturas:{" "}
-												{(faturasError as Error).message}
-											</InlineErrorAlert>
-										) : faturas.length === 0 ? (
-											<EmptyTable
-												columns={[
-													"Status",
-													"Valor",
-													"Data de Vencimento",
-													"Data de Pagamento",
-												]}
-												message="Nenhuma fatura encontrada"
-											/>
-										) : (
-											<div className="overflow-x-auto">
-												<table className="w-full text-sm">
-													<thead className="bg-muted/50">
-														<tr>
-															<th className="px-4 py-3 text-left font-medium">
-																Status
-															</th>
-															<th className="px-4 py-3 text-left font-medium">
-																Valor
-															</th>
-															<th className="px-4 py-3 text-left font-medium">
-																Data de Vencimento
-															</th>
-															<th className="px-4 py-3 text-left font-medium">
-																Data de Pagamento
-															</th>
-														</tr>
-													</thead>
-													<tbody className="divide-y divide-border">
-														{faturas.map((fatura) => (
-															<tr key={fatura.id}>
-																<td className="px-4 py-3">
-																	{fatura.status || "—"}
-																</td>
-																<td className="px-4 py-3">
-																	{fatura.valor
-																		? Number(fatura.valor).toLocaleString(
-																				"pt-BR",
-																				{
-																					style: "currency",
-																					currency: "BRL",
-																				},
-																			)
-																		: "—"}
-																</td>
-																<td className="px-4 py-3">
-																	{formatDatePtBR(fatura.data_vencimento ?? "")}
-																</td>
-																<td className="px-4 py-3">
-																	{formatDatePtBR(fatura.data_pagamento ?? "")}
-																</td>
-															</tr>
-														))}
-													</tbody>
-												</table>
-											</div>
-										)}
-									</CardContent>
-								</Card>
-							</div>
-						) : (
-							<InlineErrorAlert>Contrato não encontrado</InlineErrorAlert>
-						)}
+						<ContratoDetalhesTab
+							contrato={contrato ?? null}
+							isLoading={isLoading}
+							produtos={produtos}
+							isLoadingProdutos={isLoadingProdutos}
+							produtosError={produtosError}
+							faturas={faturas}
+							isLoadingFaturas={isLoadingFaturas}
+							faturasError={faturasError}
+						/>
 					</TabsContent>
 
 					{/* Tab: Móvel */}
