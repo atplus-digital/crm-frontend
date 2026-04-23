@@ -14,6 +14,8 @@ export const routePaths = {
 	cs_troca_de_endereco_id: "/cs/troca-de-endereco/:id",
 	cs_suspensao_de_contrato: "/cs/suspensao-de-contrato",
 	cs_suspensao_de_contrato_id: "/cs/suspensao-de-contrato/:id",
+	cs_vendas: "/cs/vendas",
+	cs_vendas_id: "/cs/vendas/:id",
 	login: "/login",
 	forbidden: "/forbidden",
 	reset_password: "/reset-password",

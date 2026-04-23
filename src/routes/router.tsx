@@ -77,6 +77,14 @@ export const router = createBrowserRouter([
 						path: toRouterPath(routePaths.cs_suspensao_de_contrato_id),
 						lazy: () => import("./cs/suspensao-de-contrato/$id"),
 					},
+					{
+						path: toRouterPath(routePaths.cs_vendas),
+						lazy: () => import("./cs/vendas/index"),
+					},
+					{
+						path: toRouterPath(routePaths.cs_vendas_id),
+						lazy: () => import("./cs/vendas/$id"),
+					},
 				],
 			},
 			{
