@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-16 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
 
 # AGENTS.md — hooks
 
@@ -16,14 +16,12 @@ Shared cross-feature hooks for responsive behavior and standardized pagination s
 
 ### Current Hook Inventory
 
-| Hook             | Type        | Returns                             | Dependencies  | Used By                           |
-| ---------------- | ----------- | ----------------------------------- | ------------- | --------------------------------- |
-| `useIsMobile`    | Media query | `boolean`                           | `usehooks-ts` | Layout/components with responsive |
-| `useFilterState` | State hook  | Filter state + setters + predicates | `react`       | Filter components across features |
+| Hook          | Type        | Returns   | Dependencies  | Used By                           |
+| ------------- | ----------- | --------- | ------------- | --------------------------------- |
+| `useIsMobile` | Media query | `boolean` | `usehooks-ts` | Layout/components with responsive |
 
 ### State Management Integration
 
-- `usePagination` manages local UI pagination state and emits callback hooks for server fetch updates.
 - Global auth/permissions state lives in feature modules (`src/features/auth`, `src/features/permissions`), not in this folder.
 
 ### When to Add Hooks Here
@@ -36,10 +34,9 @@ Add hooks here when they are generic and reused across modules. Keep domain-spec
 
 ## Key Files
 
-| File                  | Purpose                                                                            |
-| --------------------- | ---------------------------------------------------------------------------------- |
-| `use-mobile.ts`       | `useIsMobile()` helper with a fixed mobile breakpoint (`<768px`)                   |
-| `use-filter-state.ts` | `useFilterState<T>()` for generic filter state management with apply/clear support |
+| File            | Purpose                                                          |
+| --------------- | ---------------------------------------------------------------- |
+| `use-mobile.ts` | `useIsMobile()` helper with a fixed mobile breakpoint (`<768px`) |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -65,43 +62,6 @@ import { useIsMobile } from "#/hooks/use-mobile";
 const isMobile = useIsMobile();
 ```
 
-### Filter state hook
-
-```typescript
-import { useFilterState } from "#/hooks/use-filter-state";
-
-interface ContratoFilters {
-  cpfCnpj?: string;
-  nome?: string;
-  status?: string;
-  contratoId?: number;
-}
-
-function ContratosFilters() {
-  const { filters, setFilter, setFilters, clearFilters, applyFilters, hasFilters } =
-    useFilterState<ContratoFilters>(
-      {},
-      (appliedFilters) => {
-        // Callback chamado ao aplicar filtros (ex: recarregar tabela)
-        refetch(appliedFilters);
-      }
-    );
-
-  return (
-    <div>
-      <Input
-        value={filters.cpfCnpj || ""}
-        onChange={(e) => setFilter("cpfCnpj", e.target.value)}
-      />
-      <Button onClick={applyFilters}>Aplicar</Button>
-      <Button onClick={clearFilters} disabled={!hasFilters}>
-        Limpar
-      </Button>
-    </div>
-  );
-}
-```
-
 <!-- AGENTS-GENERATED:END usage-patterns -->
 
 <!-- AGENTS-GENERATED:START best-practices -->
@@ -119,9 +79,8 @@ function ContratosFilters() {
 
 ## Golden Samples
 
-| Pattern           | Reference file                  |
-| ----------------- | ------------------------------- |
-| Responsive hook   | `src/hooks/use-mobile.ts`       |
-| Filter state hook | `src/hooks/use-filter-state.ts` |
+| Pattern         | Reference file            |
+| --------------- | ------------------------- |
+| Responsive hook | `src/hooks/use-mobile.ts` |
 
 <!-- AGENTS-GENERATED:END golden-samples -->

@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-16 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
 
 # AGENTS.md — permissions
 
@@ -44,12 +44,12 @@ Permissions/RBAC module — role normalization, effective actions/snippets calcu
 
 ## Golden Samples
 
-| Pattern                           | Reference file                         |
-| --------------------------------- | -------------------------------------- |
-| Permission merge rules            | `src/features/permissions/compute.ts`  |
-| Shared permission matchers        | `src/features/permissions/matchers.ts` |
-| Hook-based permission checks      | `src/features/permissions/hooks.ts`    |
-| Guard-based enforcement           | `src/features/permissions/guards.ts`   |
-| Auth integration with permissions | `src/features/auth/service.ts`         |
+| Pattern                           | Reference file                              |
+| --------------------------------- | ------------------------------------------- |
+| Permission merge rules            | `src/features/auth/permissions/compute.ts`  |
+| Shared permission matchers        | `src/features/auth/permissions/matchers.ts` |
+| Hook-based permission checks      | `src/features/auth/permissions/hooks.ts`    |
+| Guard-based enforcement           | `src/features/auth/permissions/guards.ts`   |
+| Auth integration with permissions | `src/features/auth/service.ts`              |
 
 <!-- AGENTS-GENERATED:END golden-samples -->

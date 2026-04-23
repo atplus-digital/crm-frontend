@@ -1,6 +1,6 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-04-16 | Last verified: 2026-04-16 -->
+<!-- Last updated: 2026-04-22 | Last verified: 2026-04-22 -->
 
 # AGENTS.md — CRM AT+
 
@@ -130,7 +130,7 @@ export interface PessoaFisica {
 <!-- AGENTS-GENERATED:START repo-settings -->
 
 - **Default branch:** `main`
-- **Merge strategy:** squash, merge, rebase
+- **Merge strategy:** squash and merge
 <!-- AGENTS-GENERATED:END repo-settings -->
 
 <!-- AGENTS-GENERATED:START ci-rules -->
@@ -206,6 +206,7 @@ export interface PessoaFisica {
 - `./src/features/cs/AGENTS.md` — Customer Success domain (contratos, negociações, pessoas)
 - `./src/features/cs/contratos/AGENTS.md` — Contratos subdomain (IXC contracts list/detail and contract UI)
 - `./src/features/cs/negociacoes/AGENTS.md` — Negociações subdomain (kanban/list, filters, export and detail tabs)
+- `./src/features/cs/pessoas/AGENTS.md` — Pessoas subdomain (PF/PJ list, types, service, columns)
 - `./src/features/custom-requests/AGENTS.md` — Custom request registry/services/hooks
 - `./src/features/auth/permissions/AGENTS.md` — Permissions, actions/snippets and navigation guards
 - `./src/generated/AGENTS.md` — Auto-generated TypeScript types from NocoBase/IXC schemas
@@ -223,6 +224,10 @@ export interface PessoaFisica {
 <!-- intent-skills:start -->
 
 - { task: "Creating or updating feature AGENTS.md files", load: ".agents/skills/feature-agents-md/SKILL.md" }
+- { task: "IXC API integration, endpoints, authentication", load: ".agents/skills/ixc-docs/SKILL.md" }
+- { task: "NocoBase collections, API, schema exploration", load: ".agents/skills/nocobase-docs/SKILL.md" }
+- { task: "Tailwind CSS v4 + shadcn/ui setup, theming, dark mode", load: ".agents/skills/tailwind-v4-shadcn/SKILL.md" }
+- { task: "Adding, fixing, or debugging shadcn/ui components", load: ".agents/skills/shadcn/SKILL.md" }
 <!-- intent-skills:end -->
 
 ## When instructions conflict

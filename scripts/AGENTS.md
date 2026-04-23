@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-17 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
 
 # AGENTS.md — scripts
 
@@ -99,7 +99,7 @@ export const datasources = {
 
 **Framework:** Vitest
 **Location:** `scripts/generate-types/test/`
-**Files:** 21 test files covering generation logic and utilities
+**Files:** 23 test files covering generation logic and utilities
 
 **Test utilities:**
 
