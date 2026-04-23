@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { customRequestsRegistry } from "./registry";
+import { customRequestsRegistry } from "../registry";
+import type { CustomRequestKey, SendCustomRequestResult } from "../types";
 import {
 	getRequestsByCollection,
 	type SendCustomRequestOptions,
 	sendCustomRequest,
-} from "./service";
-import type { CustomRequestKey, SendCustomRequestResult } from "./types";
+} from "../utils/service";
 
 interface UseCollectionRequestsResult {
 	requests: Array<{ key: CustomRequestKey; name: string; collection: string }>;
