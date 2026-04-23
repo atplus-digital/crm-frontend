@@ -1,6 +1,7 @@
 import {
 	FilterActions,
 	FilterInputField,
+	FilterLayout,
 	FilterSelectField,
 } from "#/components/filters";
 import { useDataTableContext } from "#/components/table/data-table-context";
@@ -15,8 +16,24 @@ export function PessoasFisicasFilters() {
 		useDataTableContext<unknown, PessoaFisicaTableFilters>();
 
 	return (
-		<div className="flex flex-wrap items-end gap-3">
-			<div className="flex-1 min-w-50">
+		<FilterLayout
+			fieldsClassName="lg:grid-cols-4"
+			actions={
+				<FilterActions
+					onApply={applyFilters}
+					onClear={clearFilters}
+					canClear={
+						Boolean(filters.f_nome) ||
+						Boolean(filters.f_cpf) ||
+						filters.f_analise_ixc !==
+							DEFAULT_PESSOA_FISICA_TABLE_FILTERS.f_analise_ixc
+					}
+					applyVariant="outline"
+					clearVariant="ghost"
+				/>
+			}
+		>
+			<div className="lg:col-span-2">
 				<FilterInputField
 					id="filter-pf-nome"
 					label="Nome"
@@ -25,7 +42,7 @@ export function PessoasFisicasFilters() {
 					onChange={(v) => setFilter("f_nome", v)}
 				/>
 			</div>
-			<div className="w-50">
+			<div>
 				<FilterInputField
 					id="filter-pf-cpf"
 					label="CPF"
@@ -34,7 +51,7 @@ export function PessoasFisicasFilters() {
 					onChange={(v) => setFilter("f_cpf", v)}
 				/>
 			</div>
-			<div className="w-50">
+			<div>
 				<FilterSelectField<string>
 					id="filter-pf-analise"
 					label="Análise IXC"
@@ -54,19 +71,7 @@ export function PessoasFisicasFilters() {
 					}
 				/>
 			</div>
-			<FilterActions
-				onApply={applyFilters}
-				onClear={clearFilters}
-				canClear={
-					Boolean(filters.f_nome) ||
-					Boolean(filters.f_cpf) ||
-					filters.f_analise_ixc !==
-						DEFAULT_PESSOA_FISICA_TABLE_FILTERS.f_analise_ixc
-				}
-				applyVariant="outline"
-				clearVariant="ghost"
-			/>
-		</div>
+		</FilterLayout>
 	);
 }
 
@@ -75,8 +80,19 @@ export function PessoasJuridicasFilters() {
 		useDataTableContext<unknown, PessoaJuridicaTableFilters>();
 
 	return (
-		<div className="flex flex-wrap items-end gap-3">
-			<div className="flex-1 min-w-50">
+		<FilterLayout
+			fieldsClassName="lg:grid-cols-2"
+			actions={
+				<FilterActions
+					onApply={applyFilters}
+					onClear={clearFilters}
+					canClear={Boolean(filters.f_razao_social || filters.f_cnpj)}
+					applyVariant="outline"
+					clearVariant="ghost"
+				/>
+			}
+		>
+			<div>
 				<FilterInputField
 					id="filter-pj-razao-social"
 					label="Razão Social"
@@ -85,7 +101,7 @@ export function PessoasJuridicasFilters() {
 					onChange={(v) => setFilter("f_razao_social", v)}
 				/>
 			</div>
-			<div className="w-50">
+			<div>
 				<FilterInputField
 					id="filter-pj-cnpj"
 					label="CNPJ"
@@ -94,13 +110,6 @@ export function PessoasJuridicasFilters() {
 					onChange={(v) => setFilter("f_cnpj", v)}
 				/>
 			</div>
-			<FilterActions
-				onApply={applyFilters}
-				onClear={clearFilters}
-				canClear={Boolean(filters.f_razao_social || filters.f_cnpj)}
-				applyVariant="outline"
-				clearVariant="ghost"
-			/>
-		</div>
+		</FilterLayout>
 	);
 }

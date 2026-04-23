@@ -16,7 +16,7 @@ Pure utility functions with no React dependency — shared helpers used across t
 
 | File                | Purpose                                                                                                                               |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `utils.ts`          | General utilities: `cn()`, `formatDateInPortuguese()`, `formatDatePtBR()`, `formatPhone()`, `formatCurrency()`, `getInitials()`       |
+| `utils.ts`          | General utilities: `cn()`, `formatDatePtBR()`, `formatPhone()`, `formatCurrency()`, `formatFileSize()`                                |
 | `logger.ts`         | Structured logger factory `createLogger(module)` with env-based level gating                                                          |
 | `filter-builder.ts` | Generic NocoBase/IXC filter helpers: `buildFilter()`, `eq()`, `includes()`, `gt()`, `gte()`, `lt()`, `lte()`, `or()`, `nestedField()` |
 | `api-errors.ts`     | Helper to extract user-facing messages from NocoBase/HTTP error payloads                                                              |
@@ -138,21 +138,5 @@ formatCurrency(0); // Returns: "-"
 - Price display in tables
 - Monetary values from API
 - Contract values, deal amounts, etc.
-
-### General Utilities
-
-```typescript
-import { cn, getInitials, formatDateInPortuguese } from "#/lib/utils";
-
-// Classname merging (Tailwind + conditional classes)
-cn("base-class", isActive && "active-class");
-
-// Get first letter as uppercase
-getInitials("John"); // Returns: "J"
-
-// Full date in Portuguese (for headers, titles)
-formatDateInPortuguese(new Date());
-// Returns: "Terça-feira, 14 de abril de 2026"
-```
 
 <!-- AGENTS-GENERATED:END formatting -->

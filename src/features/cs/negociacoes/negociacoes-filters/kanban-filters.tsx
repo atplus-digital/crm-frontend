@@ -2,6 +2,7 @@ import { useId, useState } from "react";
 import {
 	FilterActions,
 	FilterDateField,
+	FilterLayout,
 	FilterSelectField,
 } from "#/components/filters";
 import { Button } from "#/components/ui/button";
@@ -48,7 +49,17 @@ export function KanbanFilters({ filters, onFilter }: KanbanFiltersProps) {
 	const substatusId = useId();
 
 	return (
-		<div className="space-y-4">
+		<FilterLayout
+			fieldsClassName="sm:grid-cols-1 lg:grid-cols-1"
+			actions={
+				<FilterActions
+					onApply={() => onFilter(filters)}
+					onClear={clearFilters}
+					canClear={Boolean(hasFilters)}
+					clearVariant="ghost"
+				/>
+			}
+		>
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-start">
 				<div className="flex-1 space-y-2">
 					<FilterDateField
@@ -96,13 +107,6 @@ export function KanbanFilters({ filters, onFilter }: KanbanFiltersProps) {
 					/>
 				</div>
 			</div>
-
-			<FilterActions
-				onApply={() => onFilter(filters)}
-				onClear={clearFilters}
-				canClear={Boolean(hasFilters)}
-				clearVariant="ghost"
-			/>
-		</div>
+		</FilterLayout>
 	);
 }

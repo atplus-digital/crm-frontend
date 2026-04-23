@@ -1,6 +1,6 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-04-22 | Last verified: 2026-04-22 -->
+<!-- Last updated: 2026-04-23 | Last verified: 2026-04-23 -->
 
 # AGENTS.md — CRM AT+
 
@@ -200,6 +200,7 @@ export interface PessoaFisica {
 
 - `./src/AGENTS.md` — Frontend application (TypeScript/React)
 - `./src/components/AGENTS.md` — Shared UI building blocks and app-level reusable components
+- `./src/components/filters/AGENTS.md` — Shared filter primitives (field controls, layout, and actions)
 - `./src/layout/AGENTS.md` — Authenticated app shell layout and navigation composition
 - `./src/features/AGENTS.md` — Cross-feature conventions and folder structure for domain modules
 - `./src/features/auth/AGENTS.md` — Authentication module
@@ -207,7 +208,9 @@ export interface PessoaFisica {
 - `./src/features/cs/contratos/AGENTS.md` — Contratos subdomain (IXC contracts list/detail and contract UI)
 - `./src/features/cs/negociacoes/AGENTS.md` — Negociações subdomain (kanban/list, filters, export and detail tabs)
 - `./src/features/cs/pessoas/AGENTS.md` — Pessoas subdomain (PF/PJ list, types, service, columns)
+- `./src/features/cs/troca-de-endereco/AGENTS.md` — Troca de Endereço subdomain (list/detail, hooks, and filters)
 - `./src/features/custom-requests/AGENTS.md` — Custom request registry/services/hooks
+- `./src/features/cs/vendas/AGENTS.md` — Vendas subdomain (sellers lookup, list columns, and filters)
 - `./src/features/auth/permissions/AGENTS.md` — Permissions, actions/snippets and navigation guards
 - `./src/generated/AGENTS.md` — Auto-generated TypeScript types from NocoBase/IXC schemas
 - `./src/hooks/AGENTS.md` — Shared cross-feature hooks

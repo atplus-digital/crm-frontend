@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-23 -->
 
 # AGENTS.md — src
 
@@ -59,6 +59,7 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 <!-- AGENTS-GENERATED:START scope-index -->
 
 - `./src/components/AGENTS.md` — Shared UI building blocks and app-level reusable components
+- `./src/components/filters/AGENTS.md` — Shared filter primitives (field controls, layout, and actions)
 - `./src/components/table/AGENTS.md` — Shared TanStack-based table primitives and controller context
 - `./src/layout/AGENTS.md` — Authenticated app shell layout and navigation composition
 - `./src/features/AGENTS.md` — Cross-feature conventions and folder structure for domain modules
@@ -68,6 +69,8 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 - `./src/features/cs/negociacoes/AGENTS.md` — Negociações subdomain (kanban/list, filters, export and detail tabs)
 - `./src/features/cs/pessoas/AGENTS.md` — Pessoas subdomain (PF/PJ list, types, service, columns)
 - `./src/features/cs/suspensao-de-contrato/AGENTS.md` — Suspensão de Contrato subdomain (list/detail, filters, status lifecycle, ZapSign integration)
+- `./src/features/cs/troca-de-endereco/AGENTS.md` — Troca de Endereço subdomain (list/detail, hooks, and filters)
+- `./src/features/cs/vendas/AGENTS.md` — Vendas subdomain (sellers lookup, list columns, and filters)
 - `./src/features/custom-requests/AGENTS.md` — Custom request registry/services/hooks
 - `./src/features/auth/permissions/AGENTS.md` — Permissions, actions/snippets and navigation guards
 - `./src/generated/AGENTS.md` — Auto-generated TypeScript types from NocoBase/IXC schemas

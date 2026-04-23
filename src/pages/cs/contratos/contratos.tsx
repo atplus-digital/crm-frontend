@@ -1,39 +1,20 @@
-import { useState } from "react";
-import { useSearchParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { ContratosFilters } from "#/features/cs/contratos/contratos-filters";
 import { useContratos } from "#/features/cs/contratos/contratos-hooks";
 import { ContratosTable } from "#/features/cs/contratos/contratos-table";
-import type { ContratoFilters } from "#/features/cs/contratos/contratos-types";
+import { useListPage } from "#/hooks/use-list-page";
 
 export function ContratosPage() {
-	const [searchParams, setSearchParams] = useSearchParams();
-	const [filters, setFilters] = useState<ContratoFilters>({});
-	const [sort, setSort] = useState<string[]>([]);
-
-	const page = Number(searchParams.get("page")) || 1;
-	const pageSize = Number(searchParams.get("pageSize")) || 20;
-
-	const setPage = (newPage: number) => {
-		setSearchParams(
-			(prev) => {
-				prev.set("page", String(newPage));
-				return prev;
-			},
-			{ replace: true },
-		);
-	};
-
-	const handlePageSizeChange = (size: number) => {
-		setSearchParams(
-			(prev) => {
-				prev.set("pageSize", String(size));
-				prev.set("page", "1");
-				return prev;
-			},
-			{ replace: true },
-		);
-	};
+	const {
+		page,
+		pageSize,
+		sort,
+		filters,
+		setPage,
+		setPageSize,
+		handleSort,
+		handleFilterChange,
+	} = useListPage();
 
 	const { data, error } = useContratos({
 		page,
@@ -41,20 +22,6 @@ export function ContratosPage() {
 		filters,
 		sort,
 	});
-
-	function handleSort(field: string) {
-		setSort((prev) => {
-			const currentField = prev[0]?.replace("-", "") ?? "";
-			const isDesc = prev[0]?.startsWith("-") ?? false;
-			if (currentField === field && !isDesc) return [`-${field}`];
-			return [field];
-		});
-		setPage(1);
-	}
-
-	function handleFilter(newFilters: ContratoFilters) {
-		setFilters(newFilters);
-	}
 
 	return (
 		<div className="flex-1 overflow-auto bg-background">
@@ -79,8 +46,8 @@ export function ContratosPage() {
 							totalPages: data?.meta.totalPage ?? 1,
 						}}
 						onPageChange={setPage}
-						onPageSizeChange={handlePageSizeChange}
-						onFilterChange={handleFilter}
+						onPageSizeChange={setPageSize}
+						onFilterChange={handleFilterChange}
 					>
 						<ContratosFilters />
 					</ContratosTable>

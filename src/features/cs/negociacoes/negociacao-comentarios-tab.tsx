@@ -1,5 +1,5 @@
 import { useNegociacaoComentarios } from "#/features/cs/negociacoes/negociacoes-hooks";
-import { formatCommentDate } from "#/lib/utils";
+import { formatDatePtBR } from "#/lib/utils";
 import { CommentCard } from "./negociacao-comentarios-card";
 import { CommentList } from "./negociacao-comentarios-list";
 
@@ -25,7 +25,7 @@ export function NegociacaoComentariosTab({
 				<CommentCard
 					authorName="Usuario do Sistema"
 					avatarFallback="U"
-					timestamp={formatCommentDate(comentario.createdAt)}
+					timestamp={formatDatePtBR(comentario.createdAt)}
 					badge={
 						comentario.f_insere_atendimento_ixc === "1" ? (
 							<span className="inline-flex items-center rounded-md bg-green-500/15 px-2 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">

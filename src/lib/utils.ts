@@ -7,10 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
-export function getInitials(name: string): string {
-	return name.charAt(0).toUpperCase();
-}
-
 /**
  * Format a phone number to Brazilian format.
  * Handles 10-digit (landline) and 11-digit (mobile) numbers.
@@ -66,16 +62,6 @@ export function formatCurrency(value: number | null | undefined): string {
 		style: "currency",
 		currency: "BRL",
 	});
-}
-
-export function formatCommentDate(dateString: string): string {
-	return new Intl.DateTimeFormat("pt-BR", {
-		day: "2-digit",
-		month: "2-digit",
-		year: "numeric",
-		hour: "2-digit",
-		minute: "2-digit",
-	}).format(new Date(dateString));
 }
 
 /**

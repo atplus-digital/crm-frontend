@@ -2,14 +2,13 @@ import { CalendarIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { Avatar, AvatarFallback } from "#/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "#/components/ui/card";
-import { getInitials } from "#/lib/utils";
 
 interface CommentCardProps {
 	authorName: string;
 	avatarFallback?: string;
-	timestamp: string; // already formatted
+	timestamp: string;
 	children: ReactNode;
-	badge?: ReactNode; // optional badge, e.g., "Enviado ao IXC"
+	badge?: ReactNode;
 	className?: string;
 }
 
@@ -21,7 +20,7 @@ export function CommentCard({
 	badge,
 	className,
 }: CommentCardProps) {
-	const initials = avatarFallback || getInitials(authorName);
+	const initials = avatarFallback || authorName.charAt(0).toUpperCase();
 
 	return (
 		<Card className={className}>

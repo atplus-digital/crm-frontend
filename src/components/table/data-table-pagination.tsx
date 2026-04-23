@@ -94,7 +94,7 @@ export function DataTablePagination<TData>({
 					<PaginationItem>
 						<PaginationPrevious
 							href="#"
-							onClick={withPreventDefault(() => table.previousPage())}
+							onClick={withPreventDefault(() => context?.setPage(pageIndex))}
 							className={
 								!table.getCanPreviousPage()
 									? "pointer-events-none opacity-50"
@@ -117,7 +117,7 @@ export function DataTablePagination<TData>({
 								<PaginationLink
 									href="#"
 									isActive={p === currentPage}
-									onClick={withPreventDefault(() => table.setPageIndex(p - 1))}
+									onClick={withPreventDefault(() => context?.setPage(p))}
 								>
 									{p}
 								</PaginationLink>
@@ -128,7 +128,9 @@ export function DataTablePagination<TData>({
 					<PaginationItem>
 						<PaginationNext
 							href="#"
-							onClick={withPreventDefault(() => table.nextPage())}
+							onClick={withPreventDefault(() =>
+								context?.setPage(currentPage + 1),
+							)}
 							className={
 								!table.getCanNextPage() ? "pointer-events-none opacity-50" : ""
 							}
@@ -143,7 +145,7 @@ export function DataTablePagination<TData>({
 				</span>
 				<Select
 					value={pageSize.toString()}
-					onValueChange={(value) => table.setPageSize(Number(value))}
+					onValueChange={(value) => context?.setPageSize(Number(value))}
 				>
 					<SelectTrigger className="w-20">
 						<SelectValue />

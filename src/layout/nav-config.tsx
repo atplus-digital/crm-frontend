@@ -1,4 +1,11 @@
-import { House, Users } from "lucide-react";
+import {
+	FileText,
+	Handshake,
+	Home,
+	House,
+	UserRound,
+	Users,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import type { AppRoutePath } from "#/routes/route-paths";
 import { routePaths } from "#/routes/route-paths";
@@ -6,16 +13,14 @@ import { routePaths } from "#/routes/route-paths";
 const CS_SECTION_PREFIX =
 	routePaths.cs_pessoas.match(/^\/[^/]+/)?.[0] ?? routePaths.home;
 
-export type NavIconName = "fileText" | "handshake" | "home" | "user" | "users";
-
 /**
  * A single navigation item in the app shell.
  * Children are rendered as nested sub-items.
  */
 export interface NavItem {
 	label: string;
-	/** Icon name rendered by the app shell. Optional. */
-	icon?: NavIconName;
+	/** Optional JSX icon rendered by the app shell. */
+	icon?: ReactNode;
 	/** TanStack Router `to` path. */
 	to: AppRoutePath;
 	/** Snippet required to see this item. If omitted, item is always visible. */
@@ -49,12 +54,12 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 		items: [
 			{
 				label: "Dashboard",
-				icon: "home",
+				icon: <Home />,
 				to: routePaths.home,
 			},
 			{
 				label: "Perfil",
-				icon: "user",
+				icon: <UserRound />,
 				to: routePaths.profile,
 			},
 		],
@@ -67,32 +72,37 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 		items: [
 			{
 				label: "Pessoas",
-				icon: "users",
+				icon: <Users />,
 				to: routePaths.cs_pessoas,
 			},
 			{
 				label: "Negociações",
-				icon: "handshake",
+				icon: <Handshake />,
 				to: routePaths.cs_negociacoes,
 			},
 			{
 				label: "Contratos",
-				icon: "fileText",
+				icon: <FileText />,
 				to: routePaths.cs_contratos,
 			},
 			{
+				label: "Vendas",
+				icon: <Users />,
+				to: routePaths.cs_vendas,
+			},
+			{
 				label: "Troca de Titularidade",
-				icon: "fileText",
+				icon: <FileText />,
 				to: routePaths.cs_troca_de_titularidade,
 			},
 			{
 				label: "Troca de Endereço",
-				icon: "fileText",
+				icon: <FileText />,
 				to: routePaths.cs_troca_de_endereco,
 			},
 			{
 				label: "Suspensão de Contrato",
-				icon: "fileText",
+				icon: <FileText />,
 				to: routePaths.cs_suspensao_de_contrato,
 			},
 		],

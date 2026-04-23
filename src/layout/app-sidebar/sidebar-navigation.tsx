@@ -1,4 +1,3 @@
-import { FileText, Handshake, Home, UserRound, Users } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import {
 	SidebarGroup,
@@ -13,14 +12,6 @@ import {
 	getActiveNavSection,
 	isNavPathActive,
 } from "#/layout/nav-config";
-
-const iconByName = {
-	fileText: FileText,
-	handshake: Handshake,
-	home: Home,
-	user: UserRound,
-	users: Users,
-} as const;
 
 export function SidebarNavigation() {
 	const location = useLocation();
@@ -37,7 +28,6 @@ export function SidebarNavigation() {
 			<SidebarGroupContent>
 				<SidebarMenu>
 					{activeSection.items.map((item) => {
-						const Icon = item.icon ? iconByName[item.icon] : undefined;
 						const isActive = isNavPathActive(location.pathname, item.to);
 
 						return (
@@ -48,7 +38,7 @@ export function SidebarNavigation() {
 									tooltip={item.label}
 								>
 									<Link to={item.to}>
-										{Icon ? <Icon /> : null}
+										{item.icon ?? null}
 										<span>{item.label}</span>
 									</Link>
 								</SidebarMenuButton>

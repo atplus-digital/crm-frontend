@@ -1,4 +1,5 @@
 import { nocobaseClient } from "#/features/auth";
+import { buildFilter, eq, includes, nestedField } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import type { ApiRequestConfig, ListParams, PaginatedResponse } from "./types";
 
@@ -142,28 +143,26 @@ export class IxcRepository {
 		const conditions: Record<string, unknown>[] = [];
 
 		if (filters.cpfCnpj) {
-			conditions.push({
-				f_nc_cliente: { cnpj_cpf: { $includes: filters.cpfCnpj } },
-			});
+			conditions.push(
+				nestedField("f_nc_cliente", includes("cnpj_cpf", filters.cpfCnpj)),
+			);
 		}
 
 		if (filters.nome) {
-			conditions.push({
-				f_nc_cliente: { razao: { $includes: filters.nome } },
-			});
+			conditions.push(
+				nestedField("f_nc_cliente", includes("razao", filters.nome)),
+			);
 		}
 
 		if (filters.status) {
-			conditions.push({ status: { $eq: filters.status } });
+			conditions.push(eq("status", filters.status));
 		}
 
 		if (filters.contratoId) {
-			conditions.push({ id: { $eq: filters.contratoId } });
+			conditions.push(eq("id", filters.contratoId));
 		}
 
-		if (conditions.length === 0) return undefined;
-		if (conditions.length === 1) return conditions[0];
-		return { $and: conditions };
+		return buildFilter(conditions);
 	}
 }
 

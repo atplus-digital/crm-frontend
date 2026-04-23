@@ -9,3 +9,4 @@ export {
 	FilterInputField,
 	FilterSelectField,
 } from "./filter-fields";
+export { FilterLayout } from "./filter-layout";

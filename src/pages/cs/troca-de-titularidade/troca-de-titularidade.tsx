@@ -1,39 +1,20 @@
-import { useState } from "react";
-import { useSearchParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { TrocaTitularidadeList } from "#/features/cs/troca-titularidade";
 import { TrocaTitularidadeFilterBar } from "#/features/cs/troca-titularidade/troca-titularidade-filters";
 import { useTrocaTitularidade } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
-import type { TrocaTitularidadeFilters as FilterValues } from "#/features/cs/troca-titularidade/troca-titularidade-types";
+import { useListPage } from "#/hooks/use-list-page";
 
 export function TrocaTitularidadePage() {
-	const [searchParams, setSearchParams] = useSearchParams();
-	const [sort, setSort] = useState<string[]>([]);
-	const [filters, setFilters] = useState<FilterValues>({});
-
-	const page = Number(searchParams.get("page")) || 1;
-	const pageSize = Number(searchParams.get("pageSize")) || 20;
-
-	const setPage = (newPage: number) => {
-		setSearchParams(
-			(prev) => {
-				prev.set("page", String(newPage));
-				return prev;
-			},
-			{ replace: true },
-		);
-	};
-
-	const handlePageSizeChange = (size: number) => {
-		setSearchParams(
-			(prev) => {
-				prev.set("pageSize", String(size));
-				prev.set("page", "1");
-				return prev;
-			},
-			{ replace: true },
-		);
-	};
+	const {
+		page,
+		pageSize,
+		sort,
+		filters,
+		setPage,
+		setPageSize,
+		handleSort,
+		handleFilterChange,
+	} = useListPage();
 
 	const { data, error } = useTrocaTitularidade({
 		page,
@@ -41,21 +22,6 @@ export function TrocaTitularidadePage() {
 		sort,
 		filters,
 	});
-
-	function handleSort(field: string) {
-		setSort((prev) => {
-			const currentField = prev[0]?.replace("-", "") ?? "";
-			const isDesc = prev[0]?.startsWith("-") ?? false;
-			if (currentField === field && !isDesc) return [`-${field}`];
-			return [field];
-		});
-		setPage(1);
-	}
-
-	function handleFilterChange(newFilters: FilterValues) {
-		setFilters(newFilters);
-		setPage(1);
-	}
 
 	return (
 		<div className="flex-1 overflow-auto bg-background">
@@ -91,7 +57,7 @@ export function TrocaTitularidadePage() {
 							totalPages: data?.meta.totalPage ?? 1,
 						}}
 						onPageChange={setPage}
-						onPageSizeChange={handlePageSizeChange}
+						onPageSizeChange={setPageSize}
 					/>
 				)}
 			</div>
