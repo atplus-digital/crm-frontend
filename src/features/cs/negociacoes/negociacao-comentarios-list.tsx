@@ -1,6 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import type { ReactNode } from "react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { cn } from "#/lib/utils";
 import { CommentSkeleton } from "./negociacao-comentarios-skeleton";
 
 interface CommentItem {
@@ -31,7 +32,7 @@ export function CommentList<T extends CommentItem>({
 }: CommentListProps<T>) {
 	if (isLoading) {
 		return (
-			<div className={`flex flex-col gap-4 ${className}`}>
+			<div className={cn("flex flex-col gap-4", className)}>
 				<CommentSkeleton />
 				<CommentSkeleton />
 				<CommentSkeleton />
@@ -62,7 +63,7 @@ export function CommentList<T extends CommentItem>({
 	);
 
 	return (
-		<div className={`flex flex-col gap-4 ${className}`}>
+		<div className={cn("flex flex-col gap-4", className)}>
 			{sortedComments.map((comment) => (
 				<div key={comment.id}>{renderComment(comment)}</div>
 			))}

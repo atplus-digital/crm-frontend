@@ -49,6 +49,7 @@ features.
   header + empty-message placeholders.
 - Reusable feedback/actions (`feedback/*`, `filters/*`) should stay stateless
   and receive behavior via props.
+- **Always use `cn()` from `#/lib/utils` for className interpolation.** Never use template literals or string concatenation for class merging — `cn()` handles deduplication, falsy values, and Tailwind conflict resolution.
 - **Use `<Link to="...">` from `react-router` for all internal navigation.** Never use bare `<a href="...">` for app routes — it bypasses the SPA router and causes full-page reloads. Reserve `<a>` for external/off-site URLs only.
 
 <!-- AGENTS-GENERATED:END patterns -->

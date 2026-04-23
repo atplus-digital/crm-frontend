@@ -1,5 +1,6 @@
 import { Paperclip } from "lucide-react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { cn } from "#/lib/utils";
 import { AttachmentCard } from "./negociacao-anexos-card";
 import { AttachmentSkeleton } from "./negociacao-anexos-skeleton";
 
@@ -44,7 +45,7 @@ export function AttachmentGrid({
 
 	if (isLoading) {
 		return (
-			<div className={`${gridClasses} gap-4 ${className}`}>
+			<div className={cn(gridClasses, "gap-4", className)}>
 				{Array.from({ length: 6 }).map((_, i) => (
 					// biome-ignore lint/suspicious/noArrayIndexKey: Only used for skeleton loading state
 					<AttachmentSkeleton key={i} />
@@ -65,7 +66,7 @@ export function AttachmentGrid({
 	}
 
 	return (
-		<div className={`${gridClasses} gap-4 ${className}`}>
+		<div className={cn(gridClasses, "gap-4", className)}>
 			{attachments.map((attachment) => (
 				<AttachmentCard
 					key={`${attachment.id}-${attachment.filename}`}

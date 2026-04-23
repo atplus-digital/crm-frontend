@@ -31,6 +31,7 @@ Pure utility functions with no React dependency — shared helpers used across t
 - Use `#/` alias for imports (e.g., `import { isDev } from "#/env"`).
 - `createLogger(module)` returns a scoped logger with `[module]` prefix; never use raw `console.*` in application code.
 - Logger levels: `debug` (dev only), `info`, `warn`, `error` — gated by `isDev` from `#/env`.
+- **`cn()` is the mandatory utility for className interpolation across the entire app.** All React components must import `cn` from `#/lib/utils` and use it instead of template literals, string concatenation, or manual class merging.
 
 ### Filter Builder Pattern
 

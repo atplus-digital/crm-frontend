@@ -1,4 +1,5 @@
 import { Badge, type BadgeVariant } from "#/components/ui/badge";
+import { cn } from "#/lib/utils";
 import { getColorClass, getStatusVariant } from "./utils";
 
 /**
@@ -71,7 +72,11 @@ export function StatusBadge({
 		const colorClass = getColorClass(value, colorClasses, defaultClass);
 		return (
 			<span
-				className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${colorClass}${className ? ` ${className}` : ""}`}
+				className={cn(
+					"inline-flex items-center px-2 py-0.5 rounded text-xs font-medium",
+					colorClass,
+					className,
+				)}
 			>
 				{label}
 			</span>
@@ -83,10 +88,7 @@ export function StatusBadge({
 	const colorClass = getColorClass(value, colorClasses, defaultClass);
 
 	return (
-		<Badge
-			variant={badgeVariant}
-			className={`${colorClass}${className ? ` ${className}` : ""}`}
-		>
+		<Badge variant={badgeVariant} className={cn(colorClass, className)}>
 			{label}
 		</Badge>
 	);
@@ -141,7 +143,7 @@ export function StatusBadgeGroup({
 	className,
 }: StatusBadgeGroupProps) {
 	return (
-		<div className={`flex flex-wrap gap-2${className ? ` ${className}` : ""}`}>
+		<div className={cn("flex flex-wrap gap-2", className)}>
 			<StatusBadge
 				value={status}
 				labels={statusLabels}
