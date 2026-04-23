@@ -10,36 +10,8 @@ import {
 } from "#/components/ui/select";
 import {
 	CONTRATO_STATUS_LABELS,
-	type ContratoFilters,
+	type ContratosTableFilters,
 } from "#/features/cs/contratos/contratos-types";
-
-export interface ContratosTableFilters {
-	[key: string]: string;
-	cpfCnpj: string;
-	nome: string;
-	status: string;
-	contratoId: string;
-}
-
-export const DEFAULT_CONTRATOS_TABLE_FILTERS: ContratosTableFilters = {
-	cpfCnpj: "",
-	nome: "",
-	status: "all",
-	contratoId: "",
-};
-
-export function toContratoFilters(
-	filters: ContratosTableFilters,
-): ContratoFilters {
-	return {
-		cpfCnpj: filters.cpfCnpj || undefined,
-		nome: filters.nome || undefined,
-		status: (filters.status === "all"
-			? undefined
-			: filters.status) as ContratoFilters["status"],
-		contratoId: filters.contratoId ? Number(filters.contratoId) : undefined,
-	};
-}
 
 export function ContratosFilters() {
 	const { filters, setFilter, applyFilters, clearFilters } =

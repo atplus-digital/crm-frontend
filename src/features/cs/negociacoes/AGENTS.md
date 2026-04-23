@@ -22,7 +22,7 @@ and detail-tab composition for negotiation lifecycle data.
 | `negociacoes-hooks.ts`           | React Query hooks and query keys                            |
 | `negociacoes-list.tsx`           | Tabular list for all negotiations                           |
 | `negociacoes-kanban.tsx`         | Kanban board grouped by workflow status                     |
-| `negociacoes-filters.tsx`        | Kanban/list filter UIs and action controls                  |
+| `negociacoes-filters/`           | Kanban/list filter UIs (kanban-filters, lista-filters)      |
 | `negociacao-badges.tsx`          | Shared badges for status/substatus/metadata                 |
 | `negociacao-anexos-tab.tsx`      | Detail tab for attachments                                  |
 | `negociacao-comentarios-tab.tsx` | Detail tab for comments                                     |
@@ -48,10 +48,10 @@ and detail-tab composition for negotiation lifecycle data.
 
 ## Golden Samples
 
-| Pattern                         | Reference file                                        |
-| ------------------------------- | ----------------------------------------------------- |
-| Negotiation hook/query contract | `src/features/cs/negociacoes/negociacoes-hooks.ts`    |
-| List table composition          | `src/features/cs/negociacoes/negociacoes-list.tsx`    |
-| Filter UI parity (kanban/list)  | `src/features/cs/negociacoes/negociacoes-filters.tsx` |
+| Pattern                         | Reference file                                             |
+| ------------------------------- | ---------------------------------------------------------- |
+| Negotiation hook/query contract | `src/features/cs/negociacoes/negociacoes-hooks.ts`         |
+| List table composition          | `src/features/cs/negociacoes/negociacoes-list.tsx`         |
+| Filter UI parity (kanban/list)  | `src/features/cs/negociacoes/negociacoes-filters/index.ts` |
 
 <!-- AGENTS-GENERATED:END golden-samples -->

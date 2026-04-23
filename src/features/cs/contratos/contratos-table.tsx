@@ -10,14 +10,14 @@ import {
 	ContratoStatusBadge,
 	InternetStatusBadge,
 } from "#/features/cs/contratos/contrato-status-badge";
-import {
-	type ContratosTableFilters,
-	DEFAULT_CONTRATOS_TABLE_FILTERS,
-	toContratoFilters,
-} from "#/features/cs/contratos/contratos-filters";
 import type {
 	ContratoFilters,
+	ContratosTableFilters,
 	ContratoWithCliente,
+} from "#/features/cs/contratos/contratos-types";
+import {
+	DEFAULT_CONTRATOS_TABLE_FILTERS,
+	toContratoFilters,
 } from "#/features/cs/contratos/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";
 import { buildRoute } from "#/routes/route-paths";

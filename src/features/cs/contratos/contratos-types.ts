@@ -173,3 +173,35 @@ export type Fatura = Pick<
 > & {
 	data_pagamento: FnAreceber["pagamento_data"] | null;
 };
+
+// ---------------------------------------------------------------------------
+// Table Filters (UI-facing types)
+// ---------------------------------------------------------------------------
+
+export interface ContratosTableFilters {
+	[key: string]: string;
+	cpfCnpj: string;
+	nome: string;
+	status: string;
+	contratoId: string;
+}
+
+export const DEFAULT_CONTRATOS_TABLE_FILTERS: ContratosTableFilters = {
+	cpfCnpj: "",
+	nome: "",
+	status: "all",
+	contratoId: "",
+};
+
+export function toContratoFilters(
+	filters: ContratosTableFilters,
+): ContratoFilters {
+	return {
+		cpfCnpj: filters.cpfCnpj || undefined,
+		nome: filters.nome || undefined,
+		status: (filters.status === "all"
+			? undefined
+			: filters.status) as ContratoFilters["status"],
+		contratoId: filters.contratoId ? Number(filters.contratoId) : undefined,
+	};
+}

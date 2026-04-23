@@ -31,7 +31,7 @@ Customer Success domain module — contracts, negotiations, and people flows (ty
 | `pessoas/pessoas-hooks.ts`           | React Query hooks for PF/PJ lists and details               |
 | `back-button.tsx`                    | Cross-CS back navigation helper for detail pages            |
 | `detail-field.tsx`                   | Read-only label/value primitive for CS detail screens       |
-| `detail-skeleton.tsx`                | Shared skeletons for CS detail sections and cards           |
+| `detail-skeleton/`                   | Shared skeletons for CS detail sections and cards (folder)  |
 | `contract-tab-wrapper.tsx`           | Shared card wrapper for contract/negotiation tab bodies     |
 | `contract-tab-skeleton.tsx`          | Skeleton body used by the shared contract tab wrapper       |
 
