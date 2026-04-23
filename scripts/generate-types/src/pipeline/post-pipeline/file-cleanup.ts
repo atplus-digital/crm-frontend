@@ -68,7 +68,7 @@ export function validateTypeScriptDirectory(dirPath: string): boolean {
 			`✓ TypeScript válido: ${path.relative(process.cwd(), resolvedDir)}/`,
 		);
 		return true;
-	} catch (execError) {
+	} catch (_execError) {
 		logger.warn(
 			`⚠️  Falha ao executar validação TypeScript para: ${path.relative(process.cwd(), resolvedDir)}/`,
 		);
