@@ -40,7 +40,7 @@ export function CSPessoasPage() {
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const page = Number(searchParams.get("page")) || 1;
-	const pageSize = Number(searchParams.get("pageSize")) || 20;
+	const pageSize = Number(searchParams.get("pageSize")) || 15;
 
 	const handlePageChange = (newPage: number) => {
 		setSearchParams(

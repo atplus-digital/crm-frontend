@@ -26,7 +26,7 @@ export const suspensaoContratoQueryOptions = (
 ) => {
 	const {
 		page = 1,
-		pageSize = 20,
+		pageSize = 15,
 		sort = ["-createdAt"],
 		filters,
 		appends = ["createdBy"],

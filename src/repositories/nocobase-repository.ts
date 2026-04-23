@@ -36,7 +36,7 @@ class TypedNocoBaseClient {
 			method: "GET",
 			params: {
 				page: params?.page || 1,
-				pageSize: params?.pageSize || 20,
+				pageSize: params?.pageSize || 15,
 				...(params?.sort && params.sort.length > 0 && { sort: params.sort }),
 				...(params?.filter && { filter: JSON.stringify(params.filter) }),
 				...(params?.appends && { appends: params.appends }),

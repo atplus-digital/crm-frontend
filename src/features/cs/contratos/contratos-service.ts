@@ -57,7 +57,7 @@ export async function fetchContratos(
 	params: ContratoListParams = {},
 ): Promise<PaginatedResponse<ContratoWithCliente>> {
 	try {
-		const { page = 1, pageSize = 20, sort, filters } = params;
+		const { page = 1, pageSize = 15, sort, filters } = params;
 		const filter = buildContratoFilter(filters);
 
 		const response = await ixcRepository.list<ClienteContrato>(

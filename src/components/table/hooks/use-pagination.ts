@@ -5,7 +5,7 @@ import { resolveStateUpdater } from "#/components/table/hooks/resolve-state-upda
 interface UsePaginationOptions {
 	/** Initial page number (1-indexed). Default: 1 */
 	initialPage?: number;
-	/** Initial page size. Default: 20 */
+	/** Initial page size. Default: 15 */
 	initialPageSize?: number;
 	/** Callback when page changes */
 	onPageChange?: (page: number) => void;
@@ -54,7 +54,7 @@ export function usePagination(
 ): UsePaginationReturn {
 	const {
 		initialPage = 1,
-		initialPageSize = 20,
+		initialPageSize = 15,
 		onPageChange,
 		onPageSizeChange,
 	} = options;

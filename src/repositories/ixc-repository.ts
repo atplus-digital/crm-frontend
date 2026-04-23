@@ -44,7 +44,7 @@ export class IxcRepository {
 			method: "GET",
 			params: {
 				page: params?.page || 1,
-				pageSize: params?.pageSize || 20,
+				pageSize: params?.pageSize || 15,
 				...(params?.sort && params.sort.length > 0 && { sort: params.sort }),
 				...(params?.filter && { filter: JSON.stringify(params.filter) }),
 				...(params?.appends && { appends: params.appends }),
@@ -122,7 +122,7 @@ export class IxcRepository {
 			method: "GET",
 			params: {
 				page: params?.page || 1,
-				pageSize: params?.pageSize || 20,
+				pageSize: params?.pageSize || 15,
 				appends: params?.appends || ["f_nc_cliente"],
 				...(params?.sort && params.sort.length > 0 && { sort: params.sort }),
 				...(filter && { filter: JSON.stringify(filter) }),

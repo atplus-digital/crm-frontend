@@ -67,7 +67,7 @@ export async function fetchPessoasFisicas(
 	try {
 		const {
 			page = 1,
-			pageSize = 20,
+			pageSize = 15,
 			sort = ["-createdAt"],
 			filters,
 			appends = ["createdBy"],
@@ -101,7 +101,7 @@ export async function fetchPessoasJuridicas(
 	try {
 		const {
 			page = 1,
-			pageSize = 20,
+			pageSize = 15,
 			sort = ["-createdAt"],
 			filters,
 			appends = ["createdBy"],

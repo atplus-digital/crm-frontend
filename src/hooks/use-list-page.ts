@@ -26,7 +26,7 @@ export function useListPage<TFilters extends object = object>(
 ): UseListPageReturn<TFilters> {
 	const {
 		defaultFilters = {} as TFilters,
-		defaultPageSize = 20,
+		defaultPageSize = 15,
 		syncSortToUrl = true,
 	} = options;
 

@@ -53,7 +53,7 @@ export function DataTableContainer<
 	onPageChange,
 	onPageSizeChange,
 	initialPage = 1,
-	initialPageSize = 20,
+	initialPageSize = 15,
 	sorting,
 	onSortingChange,
 	initialFilters,

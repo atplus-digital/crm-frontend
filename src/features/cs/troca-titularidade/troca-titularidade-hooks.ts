@@ -38,7 +38,7 @@ export const trocaTitularidadeQueryOptions = (
 ) => {
 	const {
 		page = 1,
-		pageSize = 20,
+		pageSize = 15,
 		sort = ["-createdAt"],
 		filters,
 		appends = ["f_vendedor", "f_pessoa_pf", "f_pessoa_pj"],

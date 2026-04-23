@@ -114,7 +114,7 @@ export async function fetchNegociacoes(
 	try {
 		const {
 			page = 1,
-			pageSize = 20,
+			pageSize = 15,
 			sort = ["-createdAt"],
 			filters,
 			appends = ["f_vendedor", "f_pessoa", "f_negociacao_pessoa_juridica"],
