@@ -1,10 +1,11 @@
-import { useId } from "react";
+import { useId, useRef } from "react";
 import {
 	FilterActions,
 	FilterDateField,
 	FilterInputField,
 	FilterLayout,
 	FilterSelectField,
+	flushFilters,
 } from "#/components/filters";
 import type { SuspensaoContratoStatus } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import {
@@ -21,6 +22,8 @@ export function SuspensaoContratoFilterBar({
 	filters,
 	onFilter,
 }: SuspensaoContratoFilterBarProps) {
+	const containerRef = useRef<HTMLDivElement>(null);
+
 	const hasFilters =
 		filters.status ||
 		filters.titulo ||
@@ -37,55 +40,60 @@ export function SuspensaoContratoFilterBar({
 	const criadoPorId = useId();
 
 	return (
-		<FilterLayout
-			actions={
-				<FilterActions
-					onApply={() => onFilter(filters)}
-					onClear={clearFilters}
-					canClear={Boolean(hasFilters)}
-					clearVariant="ghost"
-				/>
-			}
-		>
-			<FilterSelectField<SuspensaoContratoStatus>
-				id={statusId}
-				label="Status"
-				value={filters.status || "all"}
-				placeholder="Selecione o status"
-				options={SUSPENSAO_CONTRATO_STATUS_FILTER_OPTIONS}
-				onChange={(v) => onFilter({ ...filters, status: v })}
-			/>
-			<FilterInputField
-				id={tituloId}
-				label="Título"
-				placeholder="Buscar por título"
-				value={filters.titulo || ""}
-				onChange={(v) => onFilter({ ...filters, titulo: v })}
-			/>
-			<FilterDateField
-				id={createdAtId}
-				label="Criado em"
-				value={filters.createdAt || ""}
-				onChange={(v) => onFilter({ ...filters, createdAt: v })}
-			/>
-			<FilterDateField
-				id={updatedAtId}
-				label="Atualizado em"
-				value={filters.updatedAt || ""}
-				onChange={(v) => onFilter({ ...filters, updatedAt: v })}
-			/>
-			<FilterInputField
-				id={criadoPorId}
-				label="Criado por"
-				placeholder="Buscar por criador"
-				value={filters.criadoPor?.toString() || ""}
-				onChange={(v) =>
-					onFilter({
-						...filters,
-						criadoPor: Number(v) || undefined,
-					})
+		<div ref={containerRef}>
+			<FilterLayout
+				actions={
+					<FilterActions
+						onApply={() => {
+							flushFilters(containerRef.current);
+							onFilter(filters);
+						}}
+						onClear={clearFilters}
+						canClear={Boolean(hasFilters)}
+						clearVariant="ghost"
+					/>
 				}
-			/>
-		</FilterLayout>
+			>
+				<FilterSelectField<SuspensaoContratoStatus>
+					id={statusId}
+					label="Status"
+					value={filters.status || "all"}
+					placeholder="Selecione o status"
+					options={SUSPENSAO_CONTRATO_STATUS_FILTER_OPTIONS}
+					onChange={(v) => onFilter({ ...filters, status: v })}
+				/>
+				<FilterInputField
+					id={tituloId}
+					label="Título"
+					placeholder="Buscar por título"
+					value={filters.titulo || ""}
+					onChange={(v) => onFilter({ ...filters, titulo: v })}
+				/>
+				<FilterDateField
+					id={createdAtId}
+					label="Criado em"
+					value={filters.createdAt || ""}
+					onChange={(v) => onFilter({ ...filters, createdAt: v })}
+				/>
+				<FilterDateField
+					id={updatedAtId}
+					label="Atualizado em"
+					value={filters.updatedAt || ""}
+					onChange={(v) => onFilter({ ...filters, updatedAt: v })}
+				/>
+				<FilterInputField
+					id={criadoPorId}
+					label="Criado por"
+					placeholder="Buscar por criador"
+					value={filters.criadoPor?.toString() || ""}
+					onChange={(v) =>
+						onFilter({
+							...filters,
+							criadoPor: Number(v) || undefined,
+						})
+					}
+				/>
+			</FilterLayout>
+		</div>
 	);
 }

@@ -16,17 +16,18 @@ features.
 
 ## Key Files
 
-| File                              | Purpose                                             |
-| --------------------------------- | --------------------------------------------------- |
-| `ui/`                             | shadcn/ui primitives and styled base components     |
-| `table/data-table.tsx`            | Base TanStack table renderer + `useDataTable` hook  |
-| `table/data-table-container.tsx`  | Standard reusable paginated table wrapper           |
-| `table/empty-table.tsx`           | Empty-state table placeholder with headers          |
-| `table/columns/view-action.tsx`   | Shared "Ver" action button for table row navigation |
-| `filters/filter-actions.tsx`      | Reusable `Filtrar`/`Limpar` action group            |
-| `feedback/inline-error-alert.tsx` | Reusable inline destructive feedback block          |
-| `theme-provider.tsx`              | Theme context/provider used by the app shell        |
-| `error-boundary.tsx`              | Global render error boundary fallback UI            |
+| File                              | Purpose                                               |
+| --------------------------------- | ----------------------------------------------------- |
+| `ui/`                             | shadcn/ui primitives and styled base components       |
+| `table/data-table.tsx`            | Base TanStack table renderer + `useDataTable` hook    |
+| `table/data-table-container.tsx`  | Standard reusable paginated table wrapper             |
+| `table/empty-table.tsx`           | Empty-state table placeholder with headers            |
+| `table/columns/view-action.tsx`   | Shared "Ver" action button for table row navigation   |
+| `filters/filter-fields.tsx`       | Debounced `FilterInputField` + select/date primitives |
+| `filters/filter-actions.tsx`      | Reusable `Filtrar`/`Limpar` action group              |
+| `feedback/inline-error-alert.tsx` | Reusable inline destructive feedback block            |
+| `theme-provider.tsx`              | Theme context/provider used by the app shell          |
+| `error-boundary.tsx`              | Global render error boundary fallback UI              |
 
 **Scoped Docs:**
 

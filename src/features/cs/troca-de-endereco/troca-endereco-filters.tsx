@@ -1,10 +1,11 @@
-import { useId } from "react";
+import { useId, useRef } from "react";
 import {
 	FilterActions,
 	FilterDateField,
 	FilterInputField,
 	FilterLayout,
 	FilterSelectField,
+	flushFilters,
 } from "#/components/filters";
 import {
 	TROCA_STATUS_FILTER_OPTIONS,
@@ -21,6 +22,8 @@ export function TrocaEnderecoFilterBar({
 	filters,
 	onFilter,
 }: TrocaEnderecoFilterBarProps) {
+	const containerRef = useRef<HTMLDivElement>(null);
+
 	const hasFilters =
 		filters.status ||
 		filters.cliente ||
@@ -37,51 +40,56 @@ export function TrocaEnderecoFilterBar({
 	const criadoEmInicioId = useId();
 
 	return (
-		<FilterLayout
-			actions={
-				<FilterActions
-					onApply={() => onFilter(filters)}
-					onClear={clearFilters}
-					canClear={Boolean(hasFilters)}
-					clearVariant="ghost"
+		<div ref={containerRef}>
+			<FilterLayout
+				actions={
+					<FilterActions
+						onApply={() => {
+							flushFilters(containerRef.current);
+							onFilter(filters);
+						}}
+						onClear={clearFilters}
+						canClear={Boolean(hasFilters)}
+						clearVariant="ghost"
+					/>
+				}
+			>
+				<FilterSelectField<TrocaEnderecoStatus>
+					id={statusId}
+					label="Status"
+					value={filters.status || "all"}
+					placeholder="Selecione o status"
+					options={TROCA_STATUS_FILTER_OPTIONS}
+					onChange={(v) => onFilter({ ...filters, status: v })}
 				/>
-			}
-		>
-			<FilterSelectField<TrocaEnderecoStatus>
-				id={statusId}
-				label="Status"
-				value={filters.status || "all"}
-				placeholder="Selecione o status"
-				options={TROCA_STATUS_FILTER_OPTIONS}
-				onChange={(v) => onFilter({ ...filters, status: v })}
-			/>
-			<FilterInputField
-				id={clienteId}
-				label="Cliente"
-				placeholder="Buscar por cliente"
-				value={filters.cliente || ""}
-				onChange={(v) => onFilter({ ...filters, cliente: v })}
-			/>
-			<FilterInputField
-				id={contratoId}
-				label="ID Contrato"
-				placeholder="Buscar por ID do contrato"
-				value={filters.idContrato || ""}
-				onChange={(v) => onFilter({ ...filters, idContrato: v })}
-			/>
-			<FilterInputField
-				id={atendimentoId}
-				label="ID Atendimento"
-				placeholder="Buscar por ID do atendimento"
-				value={filters.idAtendimento || ""}
-				onChange={(v) => onFilter({ ...filters, idAtendimento: v })}
-			/>
-			<FilterDateField
-				id={criadoEmInicioId}
-				label="Criado depois de"
-				value={filters.criadoEmInicio || ""}
-				onChange={(v) => onFilter({ ...filters, criadoEmInicio: v })}
-			/>
-		</FilterLayout>
+				<FilterInputField
+					id={clienteId}
+					label="Cliente"
+					placeholder="Buscar por cliente"
+					value={filters.cliente || ""}
+					onChange={(v) => onFilter({ ...filters, cliente: v })}
+				/>
+				<FilterInputField
+					id={contratoId}
+					label="ID Contrato"
+					placeholder="Buscar por ID do contrato"
+					value={filters.idContrato || ""}
+					onChange={(v) => onFilter({ ...filters, idContrato: v })}
+				/>
+				<FilterInputField
+					id={atendimentoId}
+					label="ID Atendimento"
+					placeholder="Buscar por ID do atendimento"
+					value={filters.idAtendimento || ""}
+					onChange={(v) => onFilter({ ...filters, idAtendimento: v })}
+				/>
+				<FilterDateField
+					id={criadoEmInicioId}
+					label="Criado depois de"
+					value={filters.criadoEmInicio || ""}
+					onChange={(v) => onFilter({ ...filters, criadoEmInicio: v })}
+				/>
+			</FilterLayout>
+		</div>
 	);
 }
