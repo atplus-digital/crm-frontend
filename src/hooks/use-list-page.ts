@@ -1,6 +1,39 @@
 import type { SortingState } from "@tanstack/react-table";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router";
+
+const FILTER_PREFIX = "filter_";
+
+function serializeFilters(filters: object): Record<string, string> {
+	const params: Record<string, string> = {};
+	for (const [key, value] of Object.entries(filters)) {
+		if (value !== undefined && value !== null && value !== "") {
+			params[`${FILTER_PREFIX}${key}`] = String(value);
+		}
+	}
+	return params;
+}
+
+function clearSerializedFilters(searchParams: URLSearchParams) {
+	for (const key of Array.from(searchParams.keys())) {
+		if (key.startsWith(FILTER_PREFIX)) {
+			searchParams.delete(key);
+		}
+	}
+}
+
+function deserializeFilters<T extends object>(
+	searchParams: URLSearchParams,
+	defaults: T,
+): T {
+	const result = { ...defaults } as Record<string, unknown>;
+	for (const [key, value] of searchParams.entries()) {
+		if (key.startsWith(FILTER_PREFIX)) {
+			result[key.slice(FILTER_PREFIX.length)] = value;
+		}
+	}
+	return result as T;
+}
 
 export interface UseListPageOptions<TFilters extends object = object> {
 	defaultFilters?: TFilters;
@@ -31,7 +64,26 @@ export function useListPage<TFilters extends object = object>(
 	} = options;
 
 	const [searchParams, setSearchParams] = useSearchParams();
-	const [filters, setFiltersState] = useState<TFilters>(defaultFilters);
+
+	const updateSearchParams = useCallback(
+		(updater: (nextSearchParams: URLSearchParams) => void) => {
+			setSearchParams(
+				(prev) => {
+					const next = new URLSearchParams(prev);
+					updater(next);
+					return next;
+				},
+				{ replace: true },
+			);
+		},
+		[setSearchParams],
+	);
+
+	// Read filters from URL, falling back to defaults
+	const filters = useMemo(
+		() => deserializeFilters(searchParams, defaultFilters),
+		[searchParams, defaultFilters],
+	);
 
 	const page = Number(searchParams.get("page")) || 1;
 	const pageSize = Number(searchParams.get("pageSize")) || defaultPageSize;
@@ -51,80 +103,90 @@ export function useListPage<TFilters extends object = object>(
 
 	const setPage = useCallback(
 		(newPage: number) => {
-			setSearchParams(
-				(prev) => {
-					prev.set("page", String(newPage));
-					return prev;
-				},
-				{ replace: true },
-			);
+			updateSearchParams((nextSearchParams) => {
+				nextSearchParams.set("page", String(newPage));
+			});
 		},
-		[setSearchParams],
+		[updateSearchParams],
 	);
 
 	const setPageSize = useCallback(
 		(size: number) => {
-			setSearchParams(
-				(prev) => {
-					prev.set("pageSize", String(size));
-					prev.set("page", "1");
-					return prev;
-				},
-				{ replace: true },
-			);
+			updateSearchParams((nextSearchParams) => {
+				nextSearchParams.set("pageSize", String(size));
+				nextSearchParams.set("page", "1");
+			});
 		},
-		[setSearchParams],
+		[updateSearchParams],
 	);
 
 	const handleSort = useCallback(
 		(field: string) => {
 			if (!syncSortToUrl) return;
-			setSearchParams(
-				(prev) => {
-					const current = prev.get("sort") ?? "";
-					const fields = current.split(",").filter(Boolean);
-					const existingDesc = fields.find(
-						(f) => f === field || f === `-${field}`,
-					);
-					const isDesc = existingDesc?.startsWith("-") ?? false;
+			updateSearchParams((nextSearchParams) => {
+				const current = nextSearchParams.get("sort") ?? "";
+				const fields = current.split(",").filter(Boolean);
+				const existingDesc = fields.find(
+					(f) => f === field || f === `-${field}`,
+				);
+				let nextSort = "";
 
-					if (existingDesc === field && !isDesc) {
-						prev.set(
-							"sort",
-							fields.map((f) => (f === field ? `-${field}` : f)).join(","),
-						);
-					} else if (existingDesc === `-${field}`) {
-						prev.set("sort", fields.filter((f) => f !== `-${field}`).join(","));
-					} else {
-						prev.set("sort", [...fields, field].join(","));
-					}
-					return prev;
-				},
-				{ replace: true },
-			);
-			setPage(1);
+				if (existingDesc === field) {
+					nextSort = fields
+						.map((f) => (f === field ? `-${field}` : f))
+						.join(",");
+				} else if (existingDesc === `-${field}`) {
+					nextSort = fields.filter((f) => f !== `-${field}`).join(",");
+				} else {
+					nextSort = [...fields, field].join(",");
+				}
+
+				if (nextSort) {
+					nextSearchParams.set("sort", nextSort);
+				} else {
+					nextSearchParams.delete("sort");
+				}
+
+				nextSearchParams.set("page", "1");
+			});
 		},
-		[setSearchParams, setPage, syncSortToUrl],
+		[syncSortToUrl, updateSearchParams],
+	);
+
+	const syncFiltersToUrl = useCallback(
+		(nextFilters: TFilters) => {
+			updateSearchParams((nextSearchParams) => {
+				clearSerializedFilters(nextSearchParams);
+
+				for (const [key, value] of Object.entries(
+					serializeFilters(nextFilters),
+				)) {
+					nextSearchParams.set(key, value);
+				}
+
+				nextSearchParams.set("page", "1");
+			});
+		},
+		[updateSearchParams],
 	);
 
 	const handleFilterChange = useCallback(
 		(newFilters: TFilters) => {
-			setFiltersState(newFilters);
-			setPage(1);
+			syncFiltersToUrl(newFilters);
 		},
-		[setPage],
+		[syncFiltersToUrl],
 	);
 
 	const setFilters = useCallback(
 		(updater: TFilters | ((prev: TFilters) => TFilters)) => {
-			setFiltersState((prev) =>
+			const current = deserializeFilters(searchParams, defaultFilters);
+			const next =
 				typeof updater === "function"
-					? (updater as (prev: TFilters) => TFilters)(prev)
-					: updater,
-			);
-			setPage(1);
+					? (updater as (prev: TFilters) => TFilters)(current)
+					: updater;
+			syncFiltersToUrl(next);
 		},
-		[setPage],
+		[searchParams, defaultFilters, syncFiltersToUrl],
 	);
 
 	return {

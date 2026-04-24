@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-24 -->
 
 # AGENTS.md — hooks
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-Shared cross-feature hooks for responsive behavior and standardized pagination state management.
+Shared cross-feature hooks for responsive behavior and URL-synchronized page state (tabs, pagination, sorting, and filters).
 
 <!-- AGENTS-GENERATED:END overview -->
 
@@ -16,9 +16,11 @@ Shared cross-feature hooks for responsive behavior and standardized pagination s
 
 ### Current Hook Inventory
 
-| Hook          | Type        | Returns   | Dependencies  | Used By                           |
-| ------------- | ----------- | --------- | ------------- | --------------------------------- |
-| `useIsMobile` | Media query | `boolean` | `usehooks-ts` | Layout/components with responsive |
+| Hook          | Type        | Returns                         | Dependencies                  | Used By                                           |
+| ------------- | ----------- | ------------------------------- | ----------------------------- | ------------------------------------------------- |
+| `useIsMobile` | Media query | `boolean`                       | `usehooks-ts`                 | Layout/components with responsive behavior        |
+| `usePageTab`  | URL path    | `[string, (v: string) => void]` | `react-router`                | Page layouts with tab state in route path         |
+| `useListPage` | URL query   | `UseListPageReturn<TFilters>`   | `react-router`, `@tanstack/*` | CS list pages with query params for list controls |
 
 ### State Management Integration
 
@@ -34,9 +36,12 @@ Add hooks here when they are generic and reused across modules. Keep domain-spec
 
 ## Key Files
 
-| File            | Purpose                                                          |
-| --------------- | ---------------------------------------------------------------- |
-| `use-mobile.ts` | `useIsMobile()` helper with a fixed mobile breakpoint (`<768px`) |
+| File                     | Purpose                                                                               |
+| ------------------------ | ------------------------------------------------------------------------------------- |
+| `use-mobile.ts`          | `useIsMobile()` helper with a fixed mobile breakpoint (`<768px`)                      |
+| `use-page-tab.ts`        | `usePageTab()` syncs active tab with route path segments                              |
+| `use-list-page.ts`       | `useListPage()` centralizes list query state (`page`, `pageSize`, `sort`, `filter_*`) |
+| `use-list-page.test.tsx` | Regression tests for URL sync behavior in `useListPage()`                             |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -62,6 +67,15 @@ import { useIsMobile } from "#/hooks/use-mobile";
 const isMobile = useIsMobile();
 ```
 
+### List query state hook
+
+```typescript
+const { page, pageSize, filters, handleFilterChange, setPage } =
+  useListPage<MyFilters>({
+    defaultFilters: {},
+  });
+```
+
 <!-- AGENTS-GENERATED:END usage-patterns -->
 
 <!-- AGENTS-GENERATED:START best-practices -->
@@ -79,12 +93,11 @@ const isMobile = useIsMobile();
 
 ## Golden Samples
 
-| Pattern         | Reference file            |
-| --------------- | ------------------------- |
-| Responsive hook | `src/hooks/use-mobile.ts` |
+| Pattern                    | Reference file                     |
+| -------------------------- | ---------------------------------- |
+| Responsive hook            | `src/hooks/use-mobile.ts`          |
+| Route-path tab sync        | `src/hooks/use-page-tab.ts`        |
+| URL query list state logic | `src/hooks/use-list-page.ts`       |
+| URL sync regression tests  | `src/hooks/use-list-page.test.tsx` |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-23 -->
-
-| `usePageTab` | URL state | `[string, (v: string) => void]` | `nuqs` | Page tab synchronization via `?tab=` |
-| `use-page-tab.ts` | `usePageTab()` syncs active tab to URL `?tab=` search param via nuqs |
