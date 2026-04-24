@@ -2,19 +2,20 @@ import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { usePageTab } from "#/hooks/use-page-tab";
 import { cn } from "#/lib/utils";
 import type { PageLayoutProps } from "./page-layout.types";
-import { PageTabContentContext } from "./page-tab-content-context";
 
 /**
  * Standard page layout for app screens.
  *
  * Provides a consistent header (title + optional subtitle + optional action),
- * an optional tab bar (synced to URL via nuqs), and a content area.
+ * an optional tab bar (synced to URL via `usePageTab`), and a content area.
  *
- * When `tabs` is provided, wrap your content in `<PageTabContent value="…">`
- * to show/hide sections per tab.
+ * When `tabs` is provided, use `<Outlet />` as the content and register tab
+ * routes as children in the router. `usePageTab` reads the active tab from the
+ * URL path segment so tabs stay in sync when navigating.
  *
  * @example
  * ```tsx
+ * // Page component (parent route)
  * <PageLayout
  *   title="Pessoas"
  *   sideElement={<Button>Nova Pessoa</Button>}
@@ -24,9 +25,11 @@ import { PageTabContentContext } from "./page-tab-content-context";
  *   ]}
  *   defaultTab="pf"
  * >
- *   <PageTabContent value="pf">…</PageTabContent>
- *   <PageTabContent value="pj">…</PageTabContent>
+ *   <Outlet />
  * </PageLayout>
+ *
+ * // Router (child routes)
+ * { path: "pj", lazy: () => import("./pj") }
  * ```
  */
 export function PageLayout({
@@ -40,7 +43,8 @@ export function PageLayout({
 	className,
 }: PageLayoutProps) {
 	const hasTabs = Boolean(tabs?.length && defaultTab);
-	const [activeTab, setActiveTab] = usePageTab(defaultTab ?? "");
+	const tabValues = (tabs ?? []).map((tab) => tab.value);
+	const [activeTab, setActiveTab] = usePageTab(defaultTab ?? "", tabValues);
 
 	return (
 		<div
@@ -67,38 +71,34 @@ export function PageLayout({
 							{sideElement && <div>{sideElement}</div>}
 						</div>
 
-						<PageTabContentContext.Provider value={hasTabs}>
-							{hasTabs ? (
-								<Tabs
-									value={activeTab}
-									onValueChange={setActiveTab}
-									className="w-full "
-								>
-									<div className="overflow-x-auto pb-4">
-										<TabsList variant="line" className="flex whitespace-nowrap">
-											{(tabs ?? []).map((tab) => (
-												<TabsTrigger key={tab.value} value={tab.value}>
-													{tab.icon && (
-														<span className="flex size-4 items-center">
-															{tab.icon}
-														</span>
-													)}
-													{tab.label}
-												</TabsTrigger>
-											))}
-										</TabsList>
-									</div>
-									{children}
-								</Tabs>
-							) : (
-								children
-							)}
-						</PageTabContentContext.Provider>
+						{hasTabs ? (
+							<Tabs
+								value={activeTab}
+								onValueChange={setActiveTab}
+								className="w-full "
+							>
+								<div className="overflow-x-auto pb-4">
+									<TabsList variant="line" className="flex whitespace-nowrap">
+										{(tabs ?? []).map((tab) => (
+											<TabsTrigger key={tab.value} value={tab.value}>
+												{tab.icon && (
+													<span className="flex size-4 items-center">
+														{tab.icon}
+													</span>
+												)}
+												{tab.label}
+											</TabsTrigger>
+										))}
+									</TabsList>
+								</div>
+								{children}
+							</Tabs>
+						) : (
+							children
+						)}
 					</div>
 				</div>
 			</main>
 		</div>
 	);
 }
-
-export { PageTabContent } from "./page-tab-content";

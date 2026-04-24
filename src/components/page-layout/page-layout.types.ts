@@ -16,9 +16,3 @@ export interface PageLayoutProps {
 	children: ReactNode;
 	className?: string;
 }
-
-export interface PageTabContentProps {
-	value: string;
-	children: ReactNode;
-	className?: string;
-}
