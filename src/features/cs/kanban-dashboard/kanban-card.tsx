@@ -1,10 +1,11 @@
+import { format } from "date-fns";
 import { useNavigate } from "react-router";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/ui/tooltip";
-import { cn, formatDatePtBR } from "#/lib/utils";
+import { cn } from "#/lib/utils";
 import { buildRoute } from "#/routes/route-paths";
 import type {
 	KanbanDashboardCard,
@@ -102,7 +103,9 @@ export function KanbanCard({ card }: KanbanCardProps) {
 			<div className="space-y-1.5">
 				<div className="flex items-center justify-between text-xs">
 					<span className="text-muted-foreground">Data:</span>
-					<span className="font-medium">{formatDatePtBR(card.createdAt)}</span>
+					<span className="font-medium">
+						{format(new Date(card.createdAt), "dd/MM/yy")}
+					</span>
 				</div>
 				<div className="flex items-center justify-between gap-2 text-xs">
 					<span className="text-muted-foreground shrink-0">Responsável:</span>
