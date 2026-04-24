@@ -3,6 +3,7 @@ import {
 	Handshake,
 	Home,
 	House,
+	LayoutDashboard,
 	UserRound,
 	Users,
 } from "lucide-react";
@@ -70,6 +71,11 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 		to: routePaths.cs_pessoas,
 		matches: [CS_SECTION_PREFIX],
 		items: [
+			{
+				label: "Dashboard",
+				icon: <LayoutDashboard />,
+				to: routePaths.cs_dashboard,
+			},
 			{
 				label: "Pessoas",
 				icon: <Users />,
