@@ -45,7 +45,11 @@ export function PersonSection({
 				<DetailField label="Telefone">
 					{telefone ? formatPhone(telefone) : "—"}
 				</DetailField>
-				<DetailField label={responsavelLabel}>{responsavel}</DetailField>
+				<DetailField label={responsavelLabel} gap="2">
+					<span className="block max-w-full truncate text-right">
+						{responsavel}
+					</span>
+				</DetailField>
 			</div>
 		</DetailSection>
 	);

@@ -33,7 +33,7 @@ function groupCardsByStatus(
 			groups[key].push(card);
 		} else {
 			// Safety fallback: if unifiedStatus is somehow not a valid key, put in "Novo"
-			groups["Novo"].push(card);
+			groups.Novo.push(card);
 		}
 	}
 
