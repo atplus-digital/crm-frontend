@@ -11,7 +11,9 @@ export function KanbanDashboardPage() {
 	const [filters, setFilters] = useState<FiltersType>({});
 	const { cards, isLoading, error } = useKanbanDashboardData(filters);
 
-	const hasFilters = Boolean(filters.searchTerm || filters.sourceCollection);
+	const hasFilters = Boolean(
+		filters.searchTerm || filters.sourceCollection || filters.responsibleName,
+	);
 
 	const handleClearFilters = () => {
 		setFilters({});

@@ -11,7 +11,7 @@ import type {
 	TrocaEndereco,
 	TrocaEnderecoRelations,
 } from "#/generated/nocobase/troca-endereco";
-import { buildFilter, includes } from "#/lib/filter-builder";
+import { buildFilter, includes, nestedField, or } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
 import type {
 	KanbanDashboardCard,
@@ -29,8 +29,8 @@ type CrmTrocaTitularidadeWithVendedor = CrmTrocaTitularidade &
 type TrocaEnderecoWithCreatedBy = TrocaEndereco &
 	Pick<TrocaEnderecoRelations, "createdBy">;
 
-type SuspensaoContratoWithCreatedBy = SuspensaoContrato &
-	Pick<SuspensaoContratoRelations, "createdBy">;
+type SuspensaoContratoWithResponsibles = SuspensaoContrato &
+	Pick<SuspensaoContratoRelations, "createdBy" | "f_responsavel">;
 
 // ────────────────────────────────────────────────────────────────────────────
 // Query options — each collection fetched independently (factory per filter set)
@@ -41,6 +41,12 @@ function trocaTitularidadeQueryOptions(filters: KanbanDashboardFilters) {
 
 	if (filters.searchTerm) {
 		conditions.push(includes("f_cedente", filters.searchTerm));
+	}
+
+	if (filters.responsibleName) {
+		conditions.push(
+			nestedField("f_vendedor", includes("nickname", filters.responsibleName)),
+		);
 	}
 
 	return queryOptions({
@@ -71,6 +77,12 @@ function trocaEnderecoQueryOptions(filters: KanbanDashboardFilters) {
 		conditions.push(includes("f_cliente", filters.searchTerm));
 	}
 
+	if (filters.responsibleName) {
+		conditions.push(
+			nestedField("createdBy", includes("nickname", filters.responsibleName)),
+		);
+	}
+
 	return queryOptions({
 		queryKey: ["kanban-dashboard", "te", filters] as const,
 		queryFn: async () => {
@@ -99,6 +111,18 @@ function suspensaoContratoQueryOptions(filters: KanbanDashboardFilters) {
 		conditions.push(includes("f_titulo", filters.searchTerm));
 	}
 
+	if (filters.responsibleName) {
+		conditions.push(
+			or(
+				nestedField(
+					"f_responsavel",
+					includes("nickname", filters.responsibleName),
+				),
+				nestedField("createdBy", includes("nickname", filters.responsibleName)),
+			),
+		);
+	}
+
 	return queryOptions({
 		queryKey: ["kanban-dashboard", "sc", filters] as const,
 		queryFn: async () => {
@@ -107,12 +131,12 @@ function suspensaoContratoQueryOptions(filters: KanbanDashboardFilters) {
 				{
 					pageSize: 200,
 					sort: ["-createdAt"],
-					appends: ["createdBy"],
+					appends: ["createdBy", "f_responsavel"],
 					...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
 				} as Parameters<typeof nocobaseRepository.list>[1],
 			);
 			return response as unknown as {
-				data: SuspensaoContratoWithCreatedBy[];
+				data: SuspensaoContratoWithResponsibles[];
 				meta: { total: number };
 			};
 		},
@@ -136,6 +160,7 @@ function normalizeTrocaTitularidade(
 		status: record.f_status,
 		unifiedStatus,
 		responsibleName: record.f_vendedor?.nickname ?? null,
+		responsibleId: record.f_vendedor?.id ?? null,
 		source: record as CrmTrocaTitularidade & CrmTrocaTitularidadeRelations,
 	};
 }
@@ -152,16 +177,18 @@ function normalizeTrocaEndereco(
 		status: record.f_status,
 		unifiedStatus,
 		responsibleName: record.createdBy?.nickname ?? null,
+		responsibleId: record.createdBy?.id ?? null,
 		source: record as TrocaEndereco & TrocaEnderecoRelations,
 	};
 }
 
 function normalizeSuspensaoContrato(
-	record: SuspensaoContratoWithCreatedBy,
+	record: SuspensaoContratoWithResponsibles,
 ): KanbanDashboardCard {
 	const status =
 		record.f_status as import("./kanban-dashboard-types").SuspensaoContratoOverrideStatus;
 	const unifiedStatus = mapSuspensaoContratoStatus(status);
+	const responsible = record.f_responsavel ?? record.createdBy ?? null;
 	return {
 		sourceCollection: "sc",
 		id: record.id,
@@ -169,7 +196,8 @@ function normalizeSuspensaoContrato(
 		createdAt: record.createdAt,
 		status,
 		unifiedStatus,
-		responsibleName: record.createdBy?.nickname ?? null,
+		responsibleName: responsible?.nickname ?? null,
+		responsibleId: responsible?.id ?? null,
 		source: record as SuspensaoContrato & SuspensaoContratoRelations,
 	};
 }

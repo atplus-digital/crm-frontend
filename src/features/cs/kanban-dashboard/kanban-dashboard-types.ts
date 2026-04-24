@@ -72,6 +72,7 @@ export type KanbanDashboardCard =
 			status: CrmTrocaTitularidade["f_status"];
 			unifiedStatus: UnifiedStatusKey;
 			responsibleName: string | null;
+			responsibleId: number | null;
 			source: CrmTrocaTitularidade & CrmTrocaTitularidadeRelations;
 	  }
 	| {
@@ -82,6 +83,7 @@ export type KanbanDashboardCard =
 			status: TrocaEndereco["f_status"];
 			unifiedStatus: UnifiedStatusKey;
 			responsibleName: string | null;
+			responsibleId: number | null;
 			source: TrocaEndereco & TrocaEnderecoRelations;
 	  }
 	| {
@@ -92,6 +94,7 @@ export type KanbanDashboardCard =
 			status: SuspensaoContratoOverrideStatus;
 			unifiedStatus: UnifiedStatusKey;
 			responsibleName: string | null;
+			responsibleId: number | null;
 			source: SuspensaoContrato & SuspensaoContratoRelations;
 	  };
 
@@ -159,8 +162,11 @@ export function getCardResponsible(card: KanbanDashboardCard): string | null {
 			return card.source.f_vendedor?.nickname ?? null;
 		case "te":
 			return card.source.createdBy?.nickname ?? null;
-		case "sc":
-			return card.source.createdBy?.nickname ?? null;
+		case "sc": {
+			const scSource = card.source;
+			const responsible = scSource.f_responsavel ?? scSource.createdBy ?? null;
+			return responsible?.nickname ?? null;
+		}
 	}
 }
 
@@ -171,6 +177,7 @@ export function getCardResponsible(card: KanbanDashboardCard): string | null {
 export interface KanbanDashboardFilters {
 	sourceCollection?: SourceCollection;
 	searchTerm?: string;
+	responsibleName?: string;
 }
 
 export const SOURCE_COLLECTION_OPTIONS = [

@@ -31,6 +31,7 @@ export function KanbanDashboardFilterBar({
 
 	const searchId = useId();
 	const sourceId = useId();
+	const responsibleId = useId();
 
 	const handleSearchChange = (value: string) => {
 		setLocalSearch(value);
@@ -42,7 +43,7 @@ export function KanbanDashboardFilterBar({
 
 	return (
 		<FilterLayout
-			fieldsClassName="sm:grid-cols-1 lg:grid-cols-2"
+			fieldsClassName="sm:grid-cols-1 lg:grid-cols-3"
 			actions={
 				<div className="flex items-center gap-2">
 					{/* FilterActions will be composed by the parent page */}
@@ -63,6 +64,15 @@ export function KanbanDashboardFilterBar({
 				placeholder="Buscar por nome..."
 				value={localSearch}
 				onChange={handleSearchChange}
+			/>
+			<FilterInputField
+				id={responsibleId}
+				label="Responsável"
+				placeholder="Buscar por nome do responsável..."
+				value={filters.responsibleName ?? ""}
+				onChange={(value) =>
+					onFilter({ ...filters, responsibleName: value || undefined })
+				}
 			/>
 		</FilterLayout>
 	);
