@@ -51,7 +51,7 @@ export function PageLayout({
 		>
 			<main className="flex-1">
 				<div className="p-4">
-					<div className="space-y-6">
+					<div className="space-y-4 ">
 						<div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
 							<div className="flex items-center gap-4">
 								{prefixElement && <div>{prefixElement}</div>}
@@ -72,9 +72,9 @@ export function PageLayout({
 								<Tabs
 									value={activeTab}
 									onValueChange={setActiveTab}
-									className="w-full"
+									className="w-full "
 								>
-									<div className="overflow-x-auto pb-2">
+									<div className="overflow-x-auto pb-4">
 										<TabsList variant="line" className="flex whitespace-nowrap">
 											{(tabs ?? []).map((tab) => (
 												<TabsTrigger key={tab.value} value={tab.value}>
