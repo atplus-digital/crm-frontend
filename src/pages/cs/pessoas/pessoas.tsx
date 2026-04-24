@@ -5,7 +5,7 @@ import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import {
 	PageLayout,
 	PageTabContent,
-} from "#/components/page-layot/page-layout";
+} from "#/components/page-layout/page-layout";
 import { DataTableContainer } from "#/components/table/data-table-container";
 import { Button } from "#/components/ui/button";
 import { pfColumns, pjColumns } from "#/features/cs/pessoas/pessoas-columns";

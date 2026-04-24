@@ -1,5 +1,5 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { PageLayout } from "#/components/page-layot/page-layout";
+import { PageLayout } from "#/components/page-layout/page-layout";
 import { SuspensaoContratoList } from "#/features/cs/suspensao-de-contrato";
 import { SuspensaoContratoFilterBar as FilterBar } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-filters";
 import { useSuspensaoContrato } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks";

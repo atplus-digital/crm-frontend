@@ -3,7 +3,7 @@ import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import {
 	PageLayout,
 	PageTabContent,
-} from "#/components/page-layot/page-layout";
+} from "#/components/page-layout/page-layout";
 import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
 import { NegociacoesKanban } from "#/features/cs/negociacoes/negociacoes-kanban";
 import { NegociacoesList } from "#/features/cs/negociacoes/negociacoes-list";

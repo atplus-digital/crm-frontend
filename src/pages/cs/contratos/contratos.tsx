@@ -1,5 +1,5 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { PageLayout } from "#/components/page-layot/page-layout";
+import { PageLayout } from "#/components/page-layout/page-layout";
 import { ContratosFilters } from "#/features/cs/contratos/contratos-filters";
 import { useContratos } from "#/features/cs/contratos/contratos-hooks";
 import { ContratosTable } from "#/features/cs/contratos/contratos-table";

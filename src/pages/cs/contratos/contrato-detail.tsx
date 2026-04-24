@@ -10,7 +10,7 @@ import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import {
 	PageLayout,
 	PageTabContent,
-} from "#/components/page-layot/page-layout";
+} from "#/components/page-layout/page-layout";
 import { Skeleton } from "#/components/ui/skeleton";
 import { BackButton } from "#/features/cs/components/back-button";
 import { ContratoAtendimentosTab } from "#/features/cs/contratos/contrato-atendimentos-tab";
