@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { PageLayout, PageTabContent } from "#/components/page-layout";
+import {
+	PageLayout,
+	PageTabContent,
+} from "#/components/page-layot/page-layout";
 import {
 	KanbanFilters,
 	ListaFilters,

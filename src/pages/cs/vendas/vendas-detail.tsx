@@ -1,7 +1,10 @@
 import { Database, FilePlus, FolderOpen, Smartphone } from "lucide-react";
 import { useParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { PageLayout, PageTabContent } from "#/components/page-layout";
+import {
+	PageLayout,
+	PageTabContent,
+} from "#/components/page-layot/page-layout";
 import { Skeleton } from "#/components/ui/skeleton";
 import { BackButton } from "#/features/cs/components/back-button";
 import { NegociacaoAnexosTab } from "#/features/cs/negociacoes/negociacao-anexos-tab";

@@ -60,6 +60,7 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 
 - `./src/components/AGENTS.md` — Shared UI building blocks and app-level reusable components
 - `./src/components/filters/AGENTS.md` — Shared filter primitives (field controls, layout, and actions)
+- `./src/components/page-layot/AGENTS.md` — Reusable page layout with header/tab composition primitives
 - `./src/components/table/AGENTS.md` — Shared TanStack-based table primitives and controller context
 - `./src/layout/AGENTS.md` — Authenticated app shell layout and navigation composition
 - `./src/features/AGENTS.md` — Cross-feature conventions and folder structure for domain modules

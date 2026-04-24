@@ -1,37 +1,8 @@
-import { createContext, type ReactNode, useContext } from "react";
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { usePageTab } from "#/hooks/use-page-tab";
 import { cn } from "#/lib/utils";
-
-// ─── Context ─────────────────────────────────────────────────────────────────
-
-const PageTabContentContext = createContext(false);
-
-function usePageTabContentContext() {
-	return useContext(PageTabContentContext);
-}
-
-// ─── Types ───────────────────────────────────────────────────────────────────
-
-export interface PageTab {
-	value: string;
-	label: string;
-	icon?: ReactNode;
-}
-
-export interface PageLayoutProps {
-	title: ReactNode;
-	subtitle?: ReactNode;
-	prefixElement?: ReactNode;
-	sideElement?: ReactNode;
-	tabs?: PageTab[];
-	defaultTab?: string;
-	children: ReactNode;
-	className?: string;
-}
-
-// ─── PageLayout ──────────────────────────────────────────────────────────────
+import type { PageLayoutProps } from "./page-layout.types";
+import { PageTabContentContext } from "./page-tab-content-context";
 
 /**
  * Standard page layout for app screens.
@@ -81,7 +52,6 @@ export function PageLayout({
 			<main className="flex-1">
 				<div className="p-4">
 					<div className="space-y-6">
-						{/* Header */}
 						<div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
 							<div className="flex items-center gap-4">
 								{prefixElement && <div>{prefixElement}</div>}
@@ -97,7 +67,6 @@ export function PageLayout({
 							{sideElement && <div>{sideElement}</div>}
 						</div>
 
-						{/* Tab bar + content */}
 						<PageTabContentContext.Provider value={hasTabs}>
 							{hasTabs ? (
 								<Tabs
@@ -132,37 +101,4 @@ export function PageLayout({
 	);
 }
 
-// ─── PageTabContent ──────────────────────────────────────────────────────────
-
-interface PageTabContentProps {
-	value: string;
-	children: ReactNode;
-	className?: string;
-}
-
-/**
- * Wrapper for tab content inside `<PageLayout>`.
- *
- * When the parent `PageLayout` has `tabs` + `defaultTab`, renders a
- * `<TabsContent>` (Radix) that shows/hides based on the active tab.
- *
- * When the parent has no tabs, renders a plain `<div>` so the same
- * children work in both modes.
- */
-export function PageTabContent({
-	value,
-	children,
-	className,
-}: PageTabContentProps) {
-	const hasTabs = usePageTabContentContext();
-
-	if (hasTabs) {
-		return (
-			<TabsContent value={value} className={cn("mt-6", className)}>
-				{children}
-			</TabsContent>
-		);
-	}
-
-	return <div className={cn("mt-6", className)}>{children}</div>;
-}
+export { PageTabContent } from "./page-tab-content";

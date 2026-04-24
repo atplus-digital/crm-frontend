@@ -1,0 +1,24 @@
+import type { ReactNode } from "react";
+
+export interface PageTab {
+	value: string;
+	label: string;
+	icon?: ReactNode;
+}
+
+export interface PageLayoutProps {
+	title: ReactNode;
+	subtitle?: ReactNode;
+	prefixElement?: ReactNode;
+	sideElement?: ReactNode;
+	tabs?: PageTab[];
+	defaultTab?: string;
+	children: ReactNode;
+	className?: string;
+}
+
+export interface PageTabContentProps {
+	value: string;
+	children: ReactNode;
+	className?: string;
+}
