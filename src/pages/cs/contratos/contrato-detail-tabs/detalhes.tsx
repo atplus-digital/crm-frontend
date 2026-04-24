@@ -8,8 +8,8 @@ import type { ContratoDetailOutletContext } from "../contrato-detail";
 
 export function ContratoDetalhesTabPage() {
 	const context = useOutletContext<ContratoDetailOutletContext>();
-	// contratoId from context is guaranteed — parent only renders Outlet after loading contrato
-	const contratoId = context.contrato!.id;
+
+	const contratoId = context.contrato?.id ?? 0;
 	const {
 		data: produtosData,
 		isLoading: isLoadingProdutos,
@@ -23,6 +23,11 @@ export function ContratoDetalhesTabPage() {
 
 	const produtos = produtosData?.data ?? [];
 	const faturas = faturasData?.data ?? [];
+
+	// Guard against null contrato during initial load — parent renders Outlet before data arrives
+	if (!context.contrato) {
+		return null;
+	}
 
 	return (
 		<ContratoDetalhesTab
