@@ -1,15 +1,12 @@
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
-import { ArrowRight } from "lucide-react";
 import { useMemo } from "react";
-import { Link } from "react-router";
 import { StatusBadge } from "#/components/badges/status-badge";
+import { ViewActionButton } from "#/components/table/columns/view-action";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
 import { DataTableContainer } from "#/components/table/data-table-container";
-import { Button } from "#/components/ui/button";
 import type { TrocaEnderecoWithRelations } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
 import { TROCAENDERECO_STATUS_LABELS } from "#/generated/nocobase/troca-endereco";
 import { formatDatePtBR } from "#/lib/utils";
-import { buildRoute } from "#/routes/route-paths";
 
 interface PaginationInfo {
 	page: number;
@@ -33,17 +30,10 @@ function getColumns(): ColumnDef<TrocaEnderecoWithRelations, unknown>[] {
 			id: "acoes",
 			header: "Ações",
 			cell: ({ row }) => (
-				<Button variant="ghost" size="sm" asChild>
-					<Link
-						to={buildRoute("cs_troca_de_endereco_id", {
-							id: row.original.id,
-						})}
-						onClick={(e) => e.stopPropagation()}
-					>
-						<ArrowRight className="size-4" />
-						Ver detalhes
-					</Link>
-				</Button>
+				<ViewActionButton
+					routeKey="cs_troca_de_endereco_id"
+					params={{ id: row.original.id }}
+				/>
 			),
 		},
 		{

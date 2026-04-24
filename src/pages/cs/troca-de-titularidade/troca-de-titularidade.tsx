@@ -3,7 +3,10 @@ import { PageLayout } from "#/components/page-layout/page-layout";
 import { TrocaTitularidadeList } from "#/features/cs/troca-titularidade";
 import { TrocaTitularidadeFilterBar } from "#/features/cs/troca-titularidade/troca-titularidade-filters";
 import { useTrocaTitularidade } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
+import type { TrocaTitularidadeFilters } from "#/features/cs/troca-titularidade/troca-titularidade-types";
 import { useListPage } from "#/hooks/use-list-page";
+
+const DEFAULT_FILTERS: TrocaTitularidadeFilters = {};
 
 export function TrocaTitularidadePage() {
 	const {
@@ -15,7 +18,9 @@ export function TrocaTitularidadePage() {
 		setPageSize,
 		handleSort,
 		handleFilterChange,
-	} = useListPage();
+	} = useListPage<TrocaTitularidadeFilters>({
+		defaultFilters: DEFAULT_FILTERS,
+	});
 
 	const { data, error } = useTrocaTitularidade({
 		page,

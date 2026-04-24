@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-24 -->
 
 # AGENTS.md — table
 
@@ -26,6 +26,7 @@ composition, rendering, and pagination building blocks.
 | `empty-table.tsx`                    | Table-shaped empty placeholder with header skeleton                      |
 | `table-empty-row.tsx`                | Reusable empty-state table row shared by `DataTable` and `EmptyTable`    |
 | `constants.ts`                       | Shared defaults and options for table empty-state and page sizes         |
+| `columns/view-action.tsx`            | Shared "Ver" action button for table row navigation                      |
 | `hooks/use-pagination.ts`            | Generic pagination state hook with page/pageSize callbacks               |
 | `hooks/resolve-state-updater.ts`     | Shared updater resolver for controlled/uncontrolled table state          |
 | `hooks/use-data-table-controller.ts` | High-level table controller hook (pagination, filters, table object)     |
@@ -56,6 +57,7 @@ composition, rendering, and pagination building blocks.
 
 | Pattern                          | Reference file                                            |
 | -------------------------------- | --------------------------------------------------------- |
+| Table row view action            | `src/components/table/columns/view-action.tsx`            |
 | Context-driven table composition | `src/components/table/data-table-container.tsx`           |
 | Generic controller hook contract | `src/components/table/hooks/use-data-table-controller.ts` |
 | Stateless pagination view        | `src/components/table/data-table-pagination.tsx`          |

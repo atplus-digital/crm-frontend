@@ -3,7 +3,10 @@ import { PageLayout } from "#/components/page-layout/page-layout";
 import { TrocaEnderecoList } from "#/features/cs/troca-de-endereco";
 import { TrocaEnderecoFilterBar } from "#/features/cs/troca-de-endereco/troca-endereco-filters";
 import { useTrocaEndereco } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
+import type { TrocaEnderecoFilters } from "#/features/cs/troca-de-endereco/troca-endereco-types";
 import { useListPage } from "#/hooks/use-list-page";
+
+const DEFAULT_FILTERS: TrocaEnderecoFilters = {};
 
 export function TrocaDeEnderecoPage() {
 	const {
@@ -15,7 +18,9 @@ export function TrocaDeEnderecoPage() {
 		setPageSize,
 		handleSort,
 		handleFilterChange,
-	} = useListPage();
+	} = useListPage<TrocaEnderecoFilters>({
+		defaultFilters: DEFAULT_FILTERS,
+	});
 
 	const { data, error } = useTrocaEndereco({
 		page,

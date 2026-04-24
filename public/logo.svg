@@ -10,23 +10,9 @@
     </rdf:RDF>
   </metadata>
   <style>
-    #light-icon {
-      display: inline;
-    }
-    #dark-icon {
-      display: none;
-    }
 
-    @media (prefers-color-scheme: dark) {
-      #light-icon {
-        display: none;
-      }
-      #dark-icon {
-        display: inline;
-      }
-    }
   </style>
-  <g id="light-icon">
+  <g id="atp-logo-light-icon">
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
       width="1000" height="1000">
       <g>
@@ -44,7 +30,7 @@
       </g>
     </svg>
   </g>
-  <g id="dark-icon">
+  <g id="atp-logo-dark-icon">
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
       width="1000" height="1000">
       <g>

@@ -30,7 +30,7 @@ class ErrorBoundary extends React.Component<Props, State> {
 	render(): React.ReactNode {
 		if (this.state.hasError) {
 			return (
-				<div className="flex min-h-screen flex-col items-center justify-center bg-background p-6">
+				<div className="flex min-h-screen flex-1 flex-col items-center justify-center bg-background p-6">
 					<div className="w-full max-w-md rounded-lg border bg-card p-6 shadow-sm">
 						<h2 className="mb-4 text-xl font-bold text-destructive">
 							Algo deu errado

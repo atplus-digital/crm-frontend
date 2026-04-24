@@ -1,11 +1,9 @@
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
-import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { useMemo } from "react";
-import { Link } from "react-router";
+import { ViewActionButton } from "#/components/table/columns/view-action";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
 import { DataTableContainer } from "#/components/table/data-table-container";
-import { Button } from "#/components/ui/button";
 import {
 	ContratoStatusBadge,
 	InternetStatusBadge,
@@ -20,7 +18,6 @@ import {
 	toContratoFilters,
 } from "#/features/cs/contratos/contratos-types";
 import { formatDatePtBR } from "#/lib/utils";
-import { buildRoute } from "#/routes/route-paths";
 
 interface PaginationInfo {
 	page: number;
@@ -46,15 +43,10 @@ function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 			id: "acoes",
 			header: "Ações",
 			cell: ({ row }) => (
-				<Button variant="ghost" size="sm" asChild>
-					<Link
-						to={buildRoute("cs_contratos_id", { id: row.original.id })}
-						onClick={(e) => e.stopPropagation()}
-					>
-						<ArrowRight className="size-4" />
-						Ver
-					</Link>
-				</Button>
+				<ViewActionButton
+					routeKey="cs_contratos_id"
+					params={{ id: row.original.id }}
+				/>
 			),
 		},
 		{

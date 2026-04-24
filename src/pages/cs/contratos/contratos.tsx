@@ -3,6 +3,12 @@ import { PageLayout } from "#/components/page-layout/page-layout";
 import { ContratosFilters } from "#/features/cs/contratos/contratos-filters";
 import { useContratos } from "#/features/cs/contratos/contratos-hooks";
 import { ContratosTable } from "#/features/cs/contratos/contratos-table";
+import {
+	type ContratoFilters,
+	type ContratosTableFilters,
+	DEFAULT_CONTRATOS_TABLE_FILTERS,
+	toContratoFilters,
+} from "#/features/cs/contratos/contratos-types";
 import { useListPage } from "#/hooks/use-list-page";
 
 export function ContratosPage() {
@@ -15,12 +21,14 @@ export function ContratosPage() {
 		setPageSize,
 		handleSort,
 		handleFilterChange,
-	} = useListPage();
+	} = useListPage<ContratosTableFilters>({
+		defaultFilters: DEFAULT_CONTRATOS_TABLE_FILTERS,
+	});
 
 	const { data, error } = useContratos({
 		page,
 		pageSize,
-		filters,
+		filters: toContratoFilters(filters),
 		sort,
 	});
 
@@ -43,7 +51,9 @@ export function ContratosPage() {
 					}}
 					onPageChange={setPage}
 					onPageSizeChange={setPageSize}
-					onFilterChange={handleFilterChange}
+					onFilterChange={
+						handleFilterChange as unknown as (f: ContratoFilters) => void
+					}
 				>
 					<ContratosFilters />
 				</ContratosTable>

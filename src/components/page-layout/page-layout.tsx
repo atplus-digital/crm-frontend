@@ -29,7 +29,6 @@ import type { PageLayoutProps } from "./page-layout.types";
  * </PageLayout>
  *
  * // Router (child routes)
- * { path: "pj", lazy: () => import("./pj") }
  * ```
  */
 export function PageLayout({

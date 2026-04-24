@@ -289,6 +289,60 @@ export interface NegociacaoFilters {
 	contratoId?: number;
 }
 
+function parseOptionalNumber(value: unknown): number | undefined {
+	if (value === undefined || value === null || value === "") {
+		return undefined;
+	}
+
+	const parsedValue = Number(value);
+	return Number.isFinite(parsedValue) ? parsedValue : undefined;
+}
+
+function parseOptionalBoolean(value: unknown): boolean | undefined {
+	if (value === undefined || value === null || value === "") {
+		return undefined;
+	}
+
+	if (typeof value === "boolean") {
+		return value;
+	}
+
+	if (value === "true") {
+		return true;
+	}
+
+	if (value === "false") {
+		return false;
+	}
+
+	return undefined;
+}
+
+export function normalizeNegociacaoFilters(
+	filters: NegociacaoFilters,
+): NegociacaoFilters {
+	return {
+		...filters,
+		pacote: parseOptionalNumber(filters.pacote),
+		scm: parseOptionalNumber(filters.scm),
+		smp: parseOptionalNumber(filters.smp),
+		stfc: parseOptionalNumber(filters.stfc),
+		sva: parseOptionalNumber(filters.sva),
+		valorMensal: parseOptionalNumber(filters.valorMensal),
+		valorDevedor: parseOptionalNumber(filters.valorDevedor),
+		valorDevedorGte: parseOptionalNumber(filters.valorDevedorGte),
+		valorDevedorLte: parseOptionalNumber(filters.valorDevedorLte),
+		multaJuros: parseOptionalNumber(filters.multaJuros),
+		multaJurosGte: parseOptionalNumber(filters.multaJurosGte),
+		multaJurosLte: parseOptionalNumber(filters.multaJurosLte),
+		parcelasMensais: parseOptionalNumber(filters.parcelasMensais),
+		vendedorId: parseOptionalNumber(filters.vendedorId),
+		contratoId: parseOptionalNumber(filters.contratoId),
+		zapsign: parseOptionalBoolean(filters.zapsign),
+		assinaturaGov: parseOptionalBoolean(filters.assinaturaGov),
+	};
+}
+
 export type NegociacaoListParams = Omit<ListParams, "filter"> & {
 	filters?: NegociacaoFilters;
 	appends?: Array<keyof NegociacoesRelations>;

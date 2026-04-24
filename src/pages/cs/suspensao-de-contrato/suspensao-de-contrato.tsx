@@ -3,7 +3,10 @@ import { PageLayout } from "#/components/page-layout/page-layout";
 import { SuspensaoContratoList } from "#/features/cs/suspensao-de-contrato";
 import { SuspensaoContratoFilterBar as FilterBar } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-filters";
 import { useSuspensaoContrato } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks";
+import type { SuspensaoContratoFilters } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { useListPage } from "#/hooks/use-list-page";
+
+const DEFAULT_FILTERS: SuspensaoContratoFilters = {};
 
 export function SuspensaoContratoPage() {
 	const {
@@ -15,7 +18,9 @@ export function SuspensaoContratoPage() {
 		setPageSize,
 		handleSort,
 		handleFilterChange,
-	} = useListPage();
+	} = useListPage<SuspensaoContratoFilters>({
+		defaultFilters: DEFAULT_FILTERS,
+	});
 
 	const { data, error } = useSuspensaoContrato({
 		page,

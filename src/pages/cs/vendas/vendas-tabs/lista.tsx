@@ -1,20 +1,30 @@
-import { useState } from "react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
 import { NegociacoesList } from "#/features/cs/negociacoes/negociacoes-list";
 import { exportNegociacoesToCsv } from "#/features/cs/negociacoes/negociacoes-service";
-import type { NegociacaoFilters } from "#/features/cs/negociacoes/negociacoes-types";
+import {
+	type NegociacaoFilters,
+	normalizeNegociacaoFilters,
+} from "#/features/cs/negociacoes/negociacoes-types";
 import { VendasFilters } from "#/features/cs/vendas/vendas-filters";
 import { useVendedores } from "#/features/cs/vendas/vendas-hooks";
+import { useListPage } from "#/hooks/use-list-page";
+
+const DEFAULT_FILTERS: NegociacaoFilters = {};
 
 export function VendasListaTabPage() {
-	const [filters, setFilters] = useState<NegociacaoFilters>({});
+	const { filters, handleFilterChange } = useListPage<NegociacaoFilters>({
+		defaultFilters: DEFAULT_FILTERS,
+		defaultPageSize: 100,
+		syncSortToUrl: false,
+	});
 	const { data: vendedores } = useVendedores();
+	const apiFilters = normalizeNegociacaoFilters(filters);
 
 	const { data, error, refetch } = useNegociacoes({
 		page: 1,
 		pageSize: 100,
-		filters,
+		filters: apiFilters,
 	});
 
 	const negociacoes = data?.data ?? [];
@@ -34,7 +44,7 @@ export function VendasListaTabPage() {
 		<div className="space-y-4">
 			<VendasFilters
 				filters={filters}
-				onFilter={setFilters}
+				onFilter={handleFilterChange}
 				vendedores={vendedores}
 			/>
 			{error ? (

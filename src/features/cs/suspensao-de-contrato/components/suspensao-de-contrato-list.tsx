@@ -1,18 +1,15 @@
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
-import { ArrowRight } from "lucide-react";
 import { useMemo } from "react";
-import { Link } from "react-router";
 import { StatusBadge } from "#/components/badges/status-badge";
+import { ViewActionButton } from "#/components/table/columns/view-action";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
 import { DataTableContainer } from "#/components/table/data-table-container";
-import { Button } from "#/components/ui/button";
 import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import {
 	SUSPENSAO_CONTRATO_STATUS_LABELS,
 	SUSPENSAO_CONTRATO_STATUS_VARIANTS,
 } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { formatDatePtBR } from "#/lib/utils";
-import { buildRoute } from "#/routes/route-paths";
 
 interface PaginationInfo {
 	page: number;
@@ -36,17 +33,10 @@ function getColumns(): ColumnDef<SuspensaoContratoWithRelations, unknown>[] {
 			id: "acoes",
 			header: "Ações",
 			cell: ({ row }) => (
-				<Button variant="ghost" size="sm" asChild>
-					<Link
-						to={buildRoute("cs_suspensao_de_contrato_id", {
-							id: row.original.id,
-						})}
-						onClick={(e) => e.stopPropagation()}
-					>
-						<ArrowRight className="size-4" />
-						Ver detalhes
-					</Link>
-				</Button>
+				<ViewActionButton
+					routeKey="cs_suspensao_de_contrato_id"
+					params={{ id: row.original.id }}
+				/>
 			),
 		},
 		{

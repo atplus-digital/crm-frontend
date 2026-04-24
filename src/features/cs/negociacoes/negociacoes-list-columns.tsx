@@ -1,13 +1,10 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { ExternalLink } from "lucide-react";
-import { Link } from "react-router";
 import { StatusBadge } from "#/components/badges/status-badge";
-import { Button } from "#/components/ui/button";
+import { ViewActionButton } from "#/components/table/columns/view-action";
 import { MotivoBadge } from "#/features/cs/negociacoes/negociacao-badges/motivo-badge";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { NEGOCIACAO_STATUS_LABELS } from "#/features/cs/negociacoes/negociacoes-types";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
-import { buildRoute } from "#/routes/route-paths";
 
 const negociacaoStatusColorClasses: Record<string, string> = {
 	"1": "bg-blue-500/10 text-blue-600 border-blue-500/20 hover:bg-blue-500/20",
@@ -25,14 +22,10 @@ export const columns: ColumnDef<NegociacaoItem>[] = [
 		id: "acessar",
 		header: "Acessar",
 		cell: ({ row }) => (
-			<Button variant="ghost" size="icon-xs" className="size-6" asChild>
-				<Link
-					to={buildRoute("cs_negociacoes_id", { id: row.original.id })}
-					title="Acessar negociação"
-				>
-					<ExternalLink className="size-4" />
-				</Link>
-			</Button>
+			<ViewActionButton
+				routeKey="cs_negociacoes_id"
+				params={{ id: row.original.id }}
+			/>
 		),
 	},
 	{

@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-24 -->
 
 # AGENTS.md — components
 
@@ -16,16 +16,17 @@ features.
 
 ## Key Files
 
-| File                              | Purpose                                            |
-| --------------------------------- | -------------------------------------------------- |
-| `ui/`                             | shadcn/ui primitives and styled base components    |
-| `table/data-table.tsx`            | Base TanStack table renderer + `useDataTable` hook |
-| `table/data-table-container.tsx`  | Standard reusable paginated table wrapper          |
-| `table/empty-table.tsx`           | Empty-state table placeholder with headers         |
-| `filters/filter-actions.tsx`      | Reusable `Filtrar`/`Limpar` action group           |
-| `feedback/inline-error-alert.tsx` | Reusable inline destructive feedback block         |
-| `theme-provider.tsx`              | Theme context/provider used by the app shell       |
-| `error-boundary.tsx`              | Global render error boundary fallback UI           |
+| File                              | Purpose                                             |
+| --------------------------------- | --------------------------------------------------- |
+| `ui/`                             | shadcn/ui primitives and styled base components     |
+| `table/data-table.tsx`            | Base TanStack table renderer + `useDataTable` hook  |
+| `table/data-table-container.tsx`  | Standard reusable paginated table wrapper           |
+| `table/empty-table.tsx`           | Empty-state table placeholder with headers          |
+| `table/columns/view-action.tsx`   | Shared "Ver" action button for table row navigation |
+| `filters/filter-actions.tsx`      | Reusable `Filtrar`/`Limpar` action group            |
+| `feedback/inline-error-alert.tsx` | Reusable inline destructive feedback block          |
+| `theme-provider.tsx`              | Theme context/provider used by the app shell        |
+| `error-boundary.tsx`              | Global render error boundary fallback UI            |
 
 **Scoped Docs:**
 
