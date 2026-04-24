@@ -1,114 +1,168 @@
-import { createLogger } from "#/lib/logger";
-import { nocobaseRepository } from "#/repositories";
-import { customRequestsRegistry } from "../registry";
-import type { CustomRequestPayloads } from "../schemas";
-import type { CustomRequestKey, SendCustomRequestResult } from "../types";
 import {
+	CustomRequestError,
 	CustomRequestErrorCode,
 	CustomRequestNetworkError,
 	CustomRequestValidationError,
-	mapZodErrorToPortuguese,
-} from "./errors";
+} from "../errors";
+import {
+	criarContratoIxcSchema,
+	n8nComprasSchema,
+	qualirunInfoSchema,
+} from "./schemas";
+import type {
+	CustomRequestKey,
+	SendRequestOptions,
+	SendRequestResult,
+	TemplateContext,
+} from "./types";
 
-const log = createLogger("services:custom-requests");
+const REGISTRY: Record<
+	CustomRequestKey,
+	{
+		schema:
+			| typeof criarContratoIxcSchema
+			| typeof qualirunInfoSchema
+			| typeof n8nComprasSchema;
+		method: "GET" | "POST";
+		url: string;
+	}
+> = {
+	criarContratoIxc: {
+		schema: criarContratoIxcSchema,
+		method: "POST",
+		url: "customRequests:send/criarContratoIxc",
+	},
+	qualirunInfo: {
+		schema: qualirunInfoSchema,
+		method: "GET",
+		url: "customRequests:send/qualirunInfo",
+	},
+	n8nCompras: {
+		schema: n8nComprasSchema,
+		method: "POST",
+		url: "customRequests:send/n8nCompras",
+	},
+};
 
-export interface SendCustomRequestOptions<TKey extends CustomRequestKey> {
-	payload?: CustomRequestPayloads[TKey];
-	params?: Record<string, unknown>;
+export function validatePayload<K extends CustomRequestKey>(
+	key: K,
+	payload: unknown,
+) {
+	const config = REGISTRY[key];
+	if (!config) {
+		throw new CustomRequestError(
+			`Unknown request key: ${key}`,
+			CustomRequestErrorCode.NOT_FOUND,
+		);
+	}
+	const result = config.schema.safeParse(payload);
+	if (!result.success) {
+		throw new CustomRequestValidationError(result.error);
+	}
+	return result.data;
 }
 
-/**
- * Send a custom request by key, with Zod payload validation.
- *
- * @example
- * const result = await sendCustomRequest("37yaihkravc", {
- *   payload: { id_contrato: 123, id_vendedor: "ABC" }
- * });
- * if (result.success) {
- *   console.log("Contrato criado:", result.data);
- * } else {
- *   console.error("Erro:", result.error);
- * }
- */
-export async function sendCustomRequest<TKey extends CustomRequestKey>(
-	key: TKey,
-	options?: SendCustomRequestOptions<TKey>,
-): Promise<SendCustomRequestResult> {
-	const config = customRequestsRegistry[key];
+export function buildTemplateContext(
+	record: Record<string, unknown>,
+	user: { id: number; email: string; username: string },
+	time?: string,
+): TemplateContext {
+	return {
+		currentRecord: record,
+		currentUser: user,
+		currentTime: time ?? new Date().toISOString(),
+	};
+}
 
-	log.info("Sending custom request", {
-		key,
-		name: config.name,
-		collection: config.collection,
-		url: config.options.url,
-		method: config.options.method,
-	});
+export function interpolateTemplate(
+	template: string,
+	context: TemplateContext,
+): string {
+	return template
+		.replace(/\{\{currentRecord\.(\w+)\}\}/g, (_, key) =>
+			String(context.currentRecord[key] ?? ""),
+		)
+		.replace(/\{\{currentUser\.(\w+)\}\}/g, (_, key) =>
+			String(
+				context.currentUser[key as keyof typeof context.currentUser] ?? "",
+			),
+		)
+		.replace(/\{\{currentTime\}\}/g, context.currentTime);
+}
 
-	// 1. Validate payload with Zod schema
-	if (options?.payload !== undefined) {
-		const parseResult = config.payloadSchema.safeParse(options.payload);
-		if (!parseResult.success) {
-			const message = mapZodErrorToPortuguese(parseResult.error);
-			log.warn("Payload validation failed", { key, message });
-			throw new CustomRequestValidationError(
-				`Payload inválido: ${message}`,
-				CustomRequestErrorCode.VALIDATION_ERROR,
-				parseResult.error,
-			);
-		}
+export async function sendRequest<K extends CustomRequestKey>(
+	key: K,
+	options: SendRequestOptions<K>,
+): Promise<SendRequestResult<K>> {
+	const config = REGISTRY[key];
+	if (!config) {
+		throw new CustomRequestError(
+			`Unknown request key: ${key}`,
+			CustomRequestErrorCode.NOT_FOUND,
+		);
 	}
 
-	// 2. Call NocoBase API
+	const validatedPayload = validatePayload(key, options.payload);
+
 	try {
-		const url = `customRequests:send/${key}`;
-		const response = await nocobaseRepository.request<unknown>({
-			url,
-			method: config.options.method,
-			data: options?.payload,
-			params: options?.params,
+		const response = await fetch(`/api/${config.url}`, {
+			method: config.method,
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body:
+				config.method === "POST" ? JSON.stringify(validatedPayload) : undefined,
+			signal: options.signal,
 		});
 
-		log.info("Custom request succeeded", {
-			key,
-			collection: config.collection,
-		});
-		return { success: true, data: response };
-	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
-		log.error("Custom request failed", { key, error: message });
-
-		if (
-			error instanceof CustomRequestValidationError ||
-			error instanceof CustomRequestNetworkError
-		) {
-			throw error;
+		if (!response.ok) {
+			throw new CustomRequestNetworkError(
+				`HTTP ${response.status}: ${response.statusText}`,
+				response.status,
+			);
 		}
 
-		throw new CustomRequestNetworkError(
-			`Erro de rede: ${message}`,
-			CustomRequestErrorCode.NETWORK_ERROR,
+		const data = await response.json();
+		return { success: true, data } as SendRequestResult<K>;
+	} catch (error) {
+		if (error instanceof DOMException && error.name === "AbortError") {
+			throw new CustomRequestError(
+				"Request cancelled",
+				CustomRequestErrorCode.UNKNOWN,
+			);
+		}
+		if (error instanceof CustomRequestValidationError) {
+			throw error;
+		}
+		if (error instanceof CustomRequestNetworkError) {
+			throw error;
+		}
+		throw new CustomRequestError(
+			error instanceof Error ? error.message : "Unknown error",
+			CustomRequestErrorCode.UNKNOWN,
 		);
 	}
 }
 
-/**
- * Get all request keys that target a specific collection.
- */
-export function getRequestsByCollection(
-	collection: string,
-): CustomRequestKey[] {
-	return Object.keys(customRequestsRegistry).filter(
-		(key: string) =>
-			customRequestsRegistry[key as CustomRequestKey].collection === collection,
-	) as CustomRequestKey[];
+export function getRequestConfig<K extends CustomRequestKey>(key: K) {
+	const config = REGISTRY[key];
+	if (!config) {
+		throw new CustomRequestError(
+			`Unknown request key: ${key}`,
+			CustomRequestErrorCode.NOT_FOUND,
+		);
+	}
+	return {
+		key,
+		method: config.method,
+		url: config.url,
+	};
 }
 
-/**
- * Get the configuration for a specific request key.
- */
-export function getCustomRequestConfig<TKey extends CustomRequestKey>(
-	key: TKey,
-) {
-	return customRequestsRegistry[key];
+export function getRequestsByCollection(_collection: string) {
+	return Object.entries(REGISTRY).map(([key, config]) => ({
+		key: key as CustomRequestKey,
+		method: config.method,
+		url: config.url,
+	}));
 }

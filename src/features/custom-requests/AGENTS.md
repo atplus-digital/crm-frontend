@@ -1,54 +1,50 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-16 -->
-
-# AGENTS.md — custom-requests
-
-<!-- AGENTS-GENERATED:START overview -->
+# Custom Requests Feature
 
 ## Overview
 
-Custom Requests module — typed registry + Zod validation for dynamic `customRequests:send/<key>` calls, with service wrappers and React Query hooks.
+Feature module for custom request operations. Provides typed wrappers around NocoBase custom request API with Zod validation, error handling, and React Query integration.
 
-<!-- AGENTS-GENERATED:END overview -->
+## Structure
 
-<!-- AGENTS-GENERATED:START filemap -->
+```
+custom-requests/
+├── index.ts                      # Barrel export
+├── errors.ts                     # Error classes
+├── utils/
+│   ├── types.ts                 # Type definitions
+│   ├── schemas.ts               # Zod schemas
+│   └── service.ts               # Service functions
+└── hooks/
+    └── useCustomRequests.ts     # React Query hooks
+```
 
 ## Key Files
 
-| File                                | Purpose                                                                               |
-| ----------------------------------- | ------------------------------------------------------------------------------------- |
-| `index.ts`                          | Barrel export for registry, schemas, service, hooks, errors, and types                |
-| `registry.ts`                       | Canonical map of custom request keys/config/options (core - kept at root)             |
-| `schemas.ts`                        | Payload schemas and inferred payload union for each request key (registry-bound)      |
-| `types.ts`                          | Shared types for keys, collections, payload mapping, and service contracts            |
-| `hooks/hooks.ts`                    | React Query hooks for listing requests and sending mutations                          |
-| `utils/errors.ts`                   | Domain errors and Zod-to-Portuguese message mapping                                   |
-| `utils/service.ts`                  | `sendCustomRequest()` + helpers (`getRequestsByCollection`, `getCustomRequestConfig`) |
-| `__tests__/custom-requests.test.ts` | Baseline test scaffold for this module                                                |
+| File                         | Purpose                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------- |
+| `utils/types.ts`             | Centralized types: CustomRequestKey, payloads, responses, helpers           |
+| `utils/schemas.ts`           | Zod schemas with preserved inference                                        |
+| `utils/service.ts`           | sendRequest, validatePayload, buildTemplateContext                          |
+| `errors.ts`                  | CustomRequestError, CustomRequestValidationError, CustomRequestNetworkError |
+| `hooks/useCustomRequests.ts` | useSendRequest, useRequests, useRequest                                     |
 
-<!-- AGENTS-GENERATED:END filemap -->
+## Usage
 
-<!-- AGENTS-GENERATED:START patterns -->
+```typescript
+import { sendRequest, useSendRequest } from "#/features/custom-requests";
 
-## Patterns
+// Direct call
+const result = await sendRequest("criarContratoIxc", {
+  payload: { id_contrato: 1, id_cliente: 2, produto: "TV" },
+});
 
-- External modules import from `#/features/custom-requests`; avoid sub-file imports.
-- Request payload validation must happen via registry-bound Zod schemas before API calls.
-- API calls go through `nocobaseRepository.request()` with endpoint `customRequests:send/<key>`.
-- Error translation for UI messages should use `mapZodErrorToPortuguese()` and module error classes.
-- React Query hooks in `hooks.ts` are thin wrappers around service/registry logic.
-- `useCustomRequests()` is intentionally placeholder and currently throws `Not implemented`.
+// Hook
+const mutation = useSendRequest();
+mutation.mutate({ key: "criarContratoIxc", payload: { ... } });
+```
 
-<!-- AGENTS-GENERATED:END patterns -->
+## Request Keys
 
-<!-- AGENTS-GENERATED:START golden-samples -->
-
-## Golden Samples
-
-| Pattern                     | Reference file                                  |
-| --------------------------- | ----------------------------------------------- |
-| Registry + schema binding   | `src/features/custom-requests/registry.ts`      |
-| Typed request execution     | `src/features/custom-requests/utils/service.ts` |
-| Mutation/query hook wrapper | `src/features/custom-requests/hooks/hooks.ts`   |
-| Validation error mapping    | `src/features/custom-requests/utils/errors.ts`  |
-
-<!-- AGENTS-GENERATED:END golden-samples -->
+- `criarContratoIxc` - IXC contract creation
+- `qualirunInfo` - Qualirun info lookup
+- `n8nCompras` - N8N compras workflow
