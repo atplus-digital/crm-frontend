@@ -71,7 +71,7 @@ export const trocaEnderecoQueryOptions = (
 				};
 			};
 		},
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 };
 

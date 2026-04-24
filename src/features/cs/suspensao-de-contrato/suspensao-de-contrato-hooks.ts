@@ -57,7 +57,7 @@ export const suspensaoContratoQueryOptions = (
 				};
 			};
 		},
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 };
 

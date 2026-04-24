@@ -15,7 +15,7 @@ export const contratosQueryOptions = (params: ContratoListParams) =>
 	queryOptions({
 		queryKey: ["cs", "contratos", params] as const,
 		queryFn: () => fetchContratos(params),
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 
 export function useContratos(params: ContratoListParams) {
@@ -26,7 +26,7 @@ export const contratoQueryOptions = (id: number) =>
 	queryOptions({
 		queryKey: ["cs", "contratos", id] as const,
 		queryFn: () => fetchContratoById(id),
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 
 export function useContrato(id: number) {
@@ -41,7 +41,7 @@ export const contratoMovelQueryOptions = (id: number) =>
 	queryOptions({
 		queryKey: ["cs", "contratos", "movel", id] as const,
 		queryFn: () => fetchContratoMovel(id),
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 
 export function useContratoMovel(id: number) {
@@ -52,7 +52,7 @@ export const contratoProdutosQueryOptions = (id: number) =>
 	queryOptions({
 		queryKey: ["cs", "contratos", "produtos", id] as const,
 		queryFn: () => fetchContratoProdutos(id),
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 
 export function useContratoProdutos(id: number) {
@@ -63,7 +63,7 @@ export const contratoFaturasQueryOptions = (id: number) =>
 	queryOptions({
 		queryKey: ["cs", "contratos", "faturas", id] as const,
 		queryFn: () => fetchContratoFaturas(id),
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 
 export function useContratoFaturas(id: number) {
@@ -74,7 +74,7 @@ export const contratoTrocasTitularidadeQueryOptions = (id: number) =>
 	queryOptions({
 		queryKey: ["cs", "contratos", "trocas-titularidade", id] as const,
 		queryFn: () => fetchContratoTrocasTitularidade(id),
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 
 export function useContratoTrocasTitularidade(id: number) {
@@ -85,7 +85,7 @@ export const contratoAtendimentosQueryOptions = (id: number) =>
 	queryOptions({
 		queryKey: ["cs", "contratos", "atendimentos", id] as const,
 		queryFn: () => fetchContratoAtendimentos(id),
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 
 export function useContratoAtendimentos(id: number) {
@@ -96,7 +96,7 @@ export const contratoRegistrosQueryOptions = (id: number) =>
 	queryOptions({
 		queryKey: ["cs", "contratos", "registros", id] as const,
 		queryFn: () => fetchContratoRegistros(id),
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 
 export function useContratoRegistros(id: number) {

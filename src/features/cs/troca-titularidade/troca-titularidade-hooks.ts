@@ -69,7 +69,7 @@ export const trocaTitularidadeQueryOptions = (
 				};
 			};
 		},
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 };
 

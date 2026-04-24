@@ -18,7 +18,7 @@ export const pessoasFisicasQueryOptions = (params: PessoaFisicaListParams) =>
 	queryOptions({
 		queryKey: ["cs", "pessoas", "fisicas", params] as const,
 		queryFn: () => fetchPessoasFisicas(params),
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 
 export function usePessoasFisicas(params: PessoaFisicaListParams) {
@@ -31,7 +31,7 @@ export const pessoasJuridicasQueryOptions = (
 	queryOptions({
 		queryKey: ["cs", "pessoas", "juridicas", params] as const,
 		queryFn: () => fetchPessoasJuridicas(params),
-		staleTime: 30_000,
+		staleTime: 10_000,
 	});
 
 export function usePessoasJuridicas(params: PessoaJuridicaListParams) {
