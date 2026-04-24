@@ -1,4 +1,5 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { FilterProvider } from "#/components/filters";
 import { DataTableContainer } from "#/components/table/data-table-container";
 import { pjColumns } from "#/features/cs/pessoas/pessoas-columns";
 import { PessoasJuridicasFilters } from "#/features/cs/pessoas/pessoas-filters";
@@ -51,7 +52,9 @@ export function PessoasJuridicasTabPage() {
 				handleFilterChange(DEFAULT_PESSOA_JURIDICA_TABLE_FILTERS);
 			}}
 		>
-			<PessoasJuridicasFilters />
+			<FilterProvider onFilter={handleFilterChange}>
+				<PessoasJuridicasFilters />
+			</FilterProvider>
 		</DataTableContainer>
 	);
 }

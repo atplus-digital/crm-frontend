@@ -1,4 +1,5 @@
 export { FilterActions } from "./filter-actions";
+export { FilterProvider, useFilterContext } from "./filter-context";
 export type {
 	FilterDateFieldProps,
 	FilterInputFieldProps,

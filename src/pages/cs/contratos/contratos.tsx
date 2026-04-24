@@ -54,6 +54,9 @@ export function ContratosPage() {
 					onFilterChange={
 						handleFilterChange as unknown as (f: ContratoFilters) => void
 					}
+					onFilterProvider={
+						handleFilterChange as (filters: Record<string, unknown>) => void
+					}
 				>
 					<ContratosFilters />
 				</ContratosTable>

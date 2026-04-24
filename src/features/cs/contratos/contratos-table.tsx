@@ -1,6 +1,7 @@
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 import { useMemo } from "react";
+import { FilterProvider } from "#/components/filters";
 import { ViewActionButton } from "#/components/table/columns/view-action";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
 import { DataTableContainer } from "#/components/table/data-table-container";
@@ -34,6 +35,7 @@ interface ContratosTableProps {
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	onFilterChange: (filters: ContratoFilters) => void;
+	onFilterProvider?: (filters: Record<string, unknown>) => void;
 	children?: ReactNode;
 }
 
@@ -111,6 +113,7 @@ export function ContratosTable({
 	onPageChange,
 	onPageSizeChange,
 	onFilterChange,
+	onFilterProvider,
 	children,
 }: ContratosTableProps) {
 	const sorting = useMemo<SortingState>(() => {
@@ -156,7 +159,11 @@ export function ContratosTable({
 			sorting={sorting.length > 0 ? sorting : undefined}
 			onSortingChange={onSortingChange}
 		>
-			{children}
+			{onFilterProvider ? (
+				<FilterProvider onFilter={onFilterProvider}>{children}</FilterProvider>
+			) : (
+				children
+			)}
 		</DataTableContainer>
 	);
 }

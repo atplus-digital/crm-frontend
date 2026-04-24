@@ -1,32 +1,51 @@
+import { useState } from "react";
 import {
 	FilterActions,
 	FilterInputField,
 	FilterLayout,
 	FilterSelectField,
 } from "#/components/filters";
-import { useDataTableContext } from "#/components/table/data-table-context";
+import { useFilterContext } from "#/components/filters/filter-context";
 import {
 	CONTRATO_STATUS_LABELS,
 	type ContratosTableFilters,
+	DEFAULT_CONTRATOS_TABLE_FILTERS,
 } from "#/features/cs/contratos/contratos-types";
 
 export function ContratosFilters() {
-	const { filters, setFilter, applyFilters, clearFilters } =
-		useDataTableContext<unknown, ContratosTableFilters>();
+	const { onFilter } = useFilterContext();
+
+	const [cpfCnpj, setCpfCnpj] = useState(
+		DEFAULT_CONTRATOS_TABLE_FILTERS.cpfCnpj,
+	);
+	const [nome, setNome] = useState(DEFAULT_CONTRATOS_TABLE_FILTERS.nome);
+	const [status, setStatus] = useState<ContratosTableFilters["status"]>(
+		DEFAULT_CONTRATOS_TABLE_FILTERS.status,
+	);
+	const [contratoId, setContratoId] = useState(
+		DEFAULT_CONTRATOS_TABLE_FILTERS.contratoId,
+	);
+
+	const filters: ContratosTableFilters = {
+		cpfCnpj,
+		nome,
+		status,
+		contratoId,
+	};
 
 	const canClear =
-		Boolean(filters.cpfCnpj) ||
-		Boolean(filters.nome) ||
-		Boolean(filters.contratoId) ||
-		filters.status !== "all";
+		Boolean(cpfCnpj) ||
+		Boolean(nome) ||
+		Boolean(contratoId) ||
+		status !== "all";
 
 	return (
 		<FilterLayout
 			fieldsClassName="lg:grid-cols-4"
 			actions={
 				<FilterActions
-					onApply={applyFilters}
-					onClear={clearFilters}
+					onApply={() => onFilter(filters)}
+					onClear={() => onFilter(DEFAULT_CONTRATOS_TABLE_FILTERS)}
 					canClear={canClear}
 					clearVariant="ghost"
 				/>
@@ -36,20 +55,26 @@ export function ContratosFilters() {
 				id="filter-contratos-cpfCnpj"
 				label="CPF/CNPJ"
 				placeholder="000.000.000-00"
-				value={filters.cpfCnpj}
-				onChange={(v) => setFilter("cpfCnpj", v)}
+				value={cpfCnpj}
+				onChange={(v) => {
+					setCpfCnpj(v);
+					onFilter({ ...filters, cpfCnpj: v });
+				}}
 			/>
 			<FilterInputField
 				id="filter-contratos-nome"
 				label="Nome"
 				placeholder="Buscar por nome..."
-				value={filters.nome}
-				onChange={(v) => setFilter("nome", v)}
+				value={nome}
+				onChange={(v) => {
+					setNome(v);
+					onFilter({ ...filters, nome: v });
+				}}
 			/>
 			<FilterSelectField<string>
 				id="filter-contratos-status"
 				label="Status"
-				value={filters.status}
+				value={status}
 				placeholder="Status do Contrato"
 				options={Object.entries(CONTRATO_STATUS_LABELS).map(
 					([value, label]) => ({
@@ -57,14 +82,21 @@ export function ContratosFilters() {
 						label,
 					}),
 				)}
-				onChange={(v) => setFilter("status", v ?? "all")}
+				onChange={(v) => {
+					const newStatus = (v ?? "all") as ContratosTableFilters["status"];
+					setStatus(newStatus);
+					onFilter({ ...filters, status: newStatus });
+				}}
 			/>
 			<FilterInputField
 				id="filter-contratos-id"
 				label="ID Contrato"
 				placeholder="ID do contrato"
-				value={filters.contratoId}
-				onChange={(v) => setFilter("contratoId", v)}
+				value={contratoId}
+				onChange={(v) => {
+					setContratoId(v);
+					onFilter({ ...filters, contratoId: v });
+				}}
 			/>
 		</FilterLayout>
 	);
