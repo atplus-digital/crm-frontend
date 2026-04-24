@@ -2,9 +2,9 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useSearchParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { PageLayout, PageTabContent } from "#/components/page-layout";
 import { DataTableContainer } from "#/components/table/data-table-container";
 import { Button } from "#/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { pfColumns, pjColumns } from "#/features/cs/pessoas/pessoas-columns";
 import {
 	PessoasFisicasFilters,
@@ -26,9 +26,10 @@ import {
 } from "#/features/cs/pessoas/pessoas-types";
 import type { Empresas } from "#/generated/nocobase/empresas";
 import type { Pessoas } from "#/generated/nocobase/pessoas";
+import { usePageTab } from "#/hooks/use-page-tab";
 
 export function CSPessoasPage() {
-	const [activeTab, setActiveTab] = useState<"pf" | "pj">("pf");
+	const [activeTab] = usePageTab("pf");
 
 	const [pfFilters, setPFFilters] = useState<PessoaFisicaFilters>(
 		toPessoaFisicaFilters(DEFAULT_PESSOA_FISICA_TABLE_FILTERS),
@@ -78,79 +79,73 @@ export function CSPessoasPage() {
 	const error = activeTab === "pf" ? pfError : pjError;
 
 	return (
-		<div className="flex min-h-screen flex-col gap-6 bg-background p-4">
-			<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-				<h1 className="font-heading text-2xl font-bold">Pessoas</h1>
+		<PageLayout
+			title="Pessoas"
+			sideElement={
 				<Button size="sm">
 					<Plus className="mr-2 size-4" />
 					Nova Pessoa
 				</Button>
-			</div>
-
+			}
+			tabs={[
+				{ value: "pf", label: "Pessoas Físicas" },
+				{ value: "pj", label: "Pessoas Jurídicas" },
+			]}
+			defaultTab="pf"
+		>
 			{error && (
 				<InlineErrorAlert>
 					Erro ao carregar: {(error as Error).message}
 				</InlineErrorAlert>
 			)}
 
-			<Tabs
-				value={activeTab}
-				onValueChange={(value) => setActiveTab(value as "pf" | "pj")}
-				className="w-full"
-			>
-				<TabsList className="w-fit">
-					<TabsTrigger value="pf">Pessoas Físicas</TabsTrigger>
-					<TabsTrigger value="pj">Pessoas Jurídicas</TabsTrigger>
-				</TabsList>
+			<PageTabContent value="pf">
+				<DataTableContainer<Pessoas, PessoaFisicaTableFilters>
+					columns={pfColumns}
+					data={(pfData?.data as unknown as Pessoas[]) ?? []}
+					total={pfData?.meta?.total ?? 0}
+					totalPages={pfData?.meta?.totalPage ?? 0}
+					onPageChange={handlePageChange}
+					onPageSizeChange={handlePageSizeChange}
+					initialPage={page}
+					initialPageSize={pageSize}
+					initialFilters={DEFAULT_PESSOA_FISICA_TABLE_FILTERS}
+					onFiltersApply={(filters: PessoaFisicaTableFilters) => {
+						setPFFilters(toPessoaFisicaFilters(filters));
+					}}
+					onFiltersClear={() => {
+						setPFFilters(
+							toPessoaFisicaFilters(DEFAULT_PESSOA_FISICA_TABLE_FILTERS),
+						);
+					}}
+				>
+					<PessoasFisicasFilters />
+				</DataTableContainer>
+			</PageTabContent>
 
-				<TabsContent value="pf" className="mt-6">
-					<DataTableContainer<Pessoas, PessoaFisicaTableFilters>
-						columns={pfColumns}
-						data={(pfData?.data as unknown as Pessoas[]) ?? []}
-						total={pfData?.meta?.total ?? 0}
-						totalPages={pfData?.meta?.totalPage ?? 0}
-						onPageChange={handlePageChange}
-						onPageSizeChange={handlePageSizeChange}
-						initialPage={page}
-						initialPageSize={pageSize}
-						initialFilters={DEFAULT_PESSOA_FISICA_TABLE_FILTERS}
-						onFiltersApply={(filters: PessoaFisicaTableFilters) => {
-							setPFFilters(toPessoaFisicaFilters(filters));
-						}}
-						onFiltersClear={() => {
-							setPFFilters(
-								toPessoaFisicaFilters(DEFAULT_PESSOA_FISICA_TABLE_FILTERS),
-							);
-						}}
-					>
-						<PessoasFisicasFilters />
-					</DataTableContainer>
-				</TabsContent>
-
-				<TabsContent value="pj" className="mt-6">
-					<DataTableContainer<Empresas, PessoaJuridicaTableFilters>
-						columns={pjColumns}
-						data={(pjData?.data as unknown as Empresas[]) ?? []}
-						total={pjData?.meta?.total ?? 0}
-						totalPages={pjData?.meta?.totalPage ?? 0}
-						onPageChange={handlePageChange}
-						onPageSizeChange={handlePageSizeChange}
-						initialPage={page}
-						initialPageSize={pageSize}
-						initialFilters={DEFAULT_PESSOA_JURIDICA_TABLE_FILTERS}
-						onFiltersApply={(filters: PessoaJuridicaTableFilters) => {
-							setPJFilters(toPessoaJuridicaFilters(filters));
-						}}
-						onFiltersClear={() => {
-							setPJFilters(
-								toPessoaJuridicaFilters(DEFAULT_PESSOA_JURIDICA_TABLE_FILTERS),
-							);
-						}}
-					>
-						<PessoasJuridicasFilters />
-					</DataTableContainer>
-				</TabsContent>
-			</Tabs>
-		</div>
+			<PageTabContent value="pj">
+				<DataTableContainer<Empresas, PessoaJuridicaTableFilters>
+					columns={pjColumns}
+					data={(pjData?.data as unknown as Empresas[]) ?? []}
+					total={pjData?.meta?.total ?? 0}
+					totalPages={pjData?.meta?.totalPage ?? 0}
+					onPageChange={handlePageChange}
+					onPageSizeChange={handlePageSizeChange}
+					initialPage={page}
+					initialPageSize={pageSize}
+					initialFilters={DEFAULT_PESSOA_JURIDICA_TABLE_FILTERS}
+					onFiltersApply={(filters: PessoaJuridicaTableFilters) => {
+						setPJFilters(toPessoaJuridicaFilters(filters));
+					}}
+					onFiltersClear={() => {
+						setPJFilters(
+							toPessoaJuridicaFilters(DEFAULT_PESSOA_JURIDICA_TABLE_FILTERS),
+						);
+					}}
+				>
+					<PessoasJuridicasFilters />
+				</DataTableContainer>
+			</PageTabContent>
+		</PageLayout>
 	);
 }

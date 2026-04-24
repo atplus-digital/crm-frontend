@@ -1,4 +1,5 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { PageLayout } from "#/components/page-layout";
 import { SuspensaoContratoList } from "#/features/cs/suspensao-de-contrato";
 import { SuspensaoContratoFilterBar as FilterBar } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-filters";
 import { useSuspensaoContrato } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks";
@@ -24,39 +25,31 @@ export function SuspensaoContratoPage() {
 	});
 
 	return (
-		<div className="flex-1 overflow-auto bg-background">
-			<div className="mx-auto max-w-400 space-y-6 p-4">
-				<div>
-					<h1 className="text-2xl font-bold tracking-tight">
-						Suspensão de Contrato
-					</h1>
-					<p className="text-muted-foreground">
-						Todas as Suspensões de Contrato
-					</p>
-				</div>
+		<PageLayout
+			title="Suspensão de Contrato"
+			subtitle="Todas as Suspensões de Contrato"
+		>
+			<FilterBar filters={filters} onFilter={handleFilterChange} />
 
-				<FilterBar filters={filters} onFilter={handleFilterChange} />
-
-				{error ? (
-					<InlineErrorAlert>
-						Erro ao carregar suspensões de contrato: {(error as Error).message}
-					</InlineErrorAlert>
-				) : (
-					<SuspensaoContratoList
-						suspensaoContratos={data?.data ?? []}
-						sort={sort}
-						onSort={handleSort}
-						pagination={{
-							page,
-							pageSize,
-							total: data?.meta.total ?? 0,
-							totalPages: data?.meta.totalPage ?? 1,
-						}}
-						onPageChange={setPage}
-						onPageSizeChange={setPageSize}
-					/>
-				)}
-			</div>
-		</div>
+			{error ? (
+				<InlineErrorAlert>
+					Erro ao carregar suspensões de contrato: {(error as Error).message}
+				</InlineErrorAlert>
+			) : (
+				<SuspensaoContratoList
+					suspensaoContratos={data?.data ?? []}
+					sort={sort}
+					onSort={handleSort}
+					pagination={{
+						page,
+						pageSize,
+						total: data?.meta.total ?? 0,
+						totalPages: data?.meta.totalPage ?? 1,
+					}}
+					onPageChange={setPage}
+					onPageSizeChange={setPageSize}
+				/>
+			)}
+		</PageLayout>
 	);
 }

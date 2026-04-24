@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
+import { PageLayout, PageTabContent } from "#/components/page-layout";
 import {
 	KanbanFilters,
 	ListaFilters,
@@ -10,9 +10,10 @@ import { NegociacoesKanban } from "#/features/cs/negociacoes/negociacoes-kanban"
 import { NegociacoesList } from "#/features/cs/negociacoes/negociacoes-list";
 import { exportNegociacoesToCsv } from "#/features/cs/negociacoes/negociacoes-service";
 import type { NegociacaoFilters } from "#/features/cs/negociacoes/negociacoes-types";
+import { usePageTab } from "#/hooks/use-page-tab";
 
 export function NegociacoesPage() {
-	const [activeTab, setActiveTab] = useState<string>("kanban");
+	const [activeTab] = usePageTab("kanban");
 	const [kanbanFilters, setKanbanFilters] = useState<NegociacaoFilters>({});
 	const [listaFilters, setListaFilters] = useState<NegociacaoFilters>({});
 
@@ -42,70 +43,48 @@ export function NegociacoesPage() {
 	};
 
 	return (
-		<div className="flex flex-1 flex-col overflow-auto">
-			<main className="flex-1">
-				<div className="p-4">
-					<div className="space-y-6">
-						<div>
-							<h1 className="text-2xl font-semibold tracking-tight">
-								Renegociações
-							</h1>
-							<p className="text-sm text-muted-foreground">
-								Gerencie suas negociações de renegociação
-							</p>
-						</div>
-
-						<Tabs value={activeTab} onValueChange={setActiveTab}>
-							<TabsList className="mb-4">
-								<TabsTrigger value="kanban">Kanban (Minhas)</TabsTrigger>
-								<TabsTrigger value="lista">Lista (Todas)</TabsTrigger>
-							</TabsList>
-
-							<div className="rounded-lg border bg-card p-4">
-								<TabsContent value="kanban" className="mt-0">
-									<div className="space-y-4">
-										<KanbanFilters
-											filters={kanbanFilters}
-											onFilter={setKanbanFilters}
-										/>
-										{error ? (
-											<InlineErrorAlert>
-												Erro ao carregar negociações: {(error as Error).message}
-											</InlineErrorAlert>
-										) : (
-											<NegociacoesKanban
-												negociacoes={negociacoes}
-												isLoading={isLoading}
-											/>
-										)}
-									</div>
-								</TabsContent>
-
-								<TabsContent value="lista" className="mt-0">
-									<div className="space-y-4">
-										<ListaFilters
-											filters={listaFilters}
-											onFilter={setListaFilters}
-										/>
-										{error ? (
-											<InlineErrorAlert>
-												Erro ao carregar negociações: {(error as Error).message}
-											</InlineErrorAlert>
-										) : (
-											<NegociacoesList
-												negociacoes={negociacoes}
-												totalCount={totalCount}
-												onRefresh={() => refetch()}
-												onExport={handleExport}
-											/>
-										)}
-									</div>
-								</TabsContent>
-							</div>
-						</Tabs>
-					</div>
+		<PageLayout
+			title="Renegociações"
+			subtitle="Gerencie suas negociações de renegociação"
+			tabs={[
+				{ value: "kanban", label: "Kanban (Minhas)" },
+				{ value: "lista", label: "Lista (Todas)" },
+			]}
+			defaultTab="kanban"
+		>
+			<PageTabContent value="kanban">
+				<div className="space-y-4">
+					<KanbanFilters filters={kanbanFilters} onFilter={setKanbanFilters} />
+					{error ? (
+						<InlineErrorAlert>
+							Erro ao carregar negociações: {(error as Error).message}
+						</InlineErrorAlert>
+					) : (
+						<NegociacoesKanban
+							negociacoes={negociacoes}
+							isLoading={isLoading}
+						/>
+					)}
 				</div>
-			</main>
-		</div>
+			</PageTabContent>
+
+			<PageTabContent value="lista">
+				<div className="space-y-4">
+					<ListaFilters filters={listaFilters} onFilter={setListaFilters} />
+					{error ? (
+						<InlineErrorAlert>
+							Erro ao carregar negociações: {(error as Error).message}
+						</InlineErrorAlert>
+					) : (
+						<NegociacoesList
+							negociacoes={negociacoes}
+							totalCount={totalCount}
+							onRefresh={() => refetch()}
+							onExport={handleExport}
+						/>
+					)}
+				</div>
+			</PageTabContent>
+		</PageLayout>
 	);
 }

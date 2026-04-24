@@ -1,8 +1,8 @@
 import { Database, FilePlus, FolderOpen, Smartphone } from "lucide-react";
 import { useParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { PageLayout, PageTabContent } from "#/components/page-layout";
 import { Skeleton } from "#/components/ui/skeleton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { BackButton } from "#/features/cs/components/back-button";
 import { NegociacaoAnexosTab } from "#/features/cs/negociacoes/negociacao-anexos-tab";
 import { NegociacaoComentariosTab } from "#/features/cs/negociacoes/negociacao-comentarios-tab";
@@ -29,71 +29,62 @@ export function NegociacaoDetailPage() {
 	}
 
 	return (
-		<div className="flex-1 overflow-auto bg-background">
-			<div className="mx-auto max-w-400 p-4">
-				<div className="flex items-center gap-4 mb-6">
-					<BackButton fallbackTo={routePaths.cs_negociacoes} />
-					<div>
-						{isLoading ? (
-							<>
-								<Skeleton className="h-7 w-48 mb-1" />
-								<Skeleton className="h-4 w-64" />
-							</>
-						) : (
-							<>
-								<h1 className="text-2xl font-bold tracking-tight">
-									Renegociação #{negociacao?.id ?? id}
-								</h1>
-								{negociacao?.f_titulo && (
-									<p className="text-muted-foreground">{negociacao.f_titulo}</p>
-								)}
-							</>
-						)}
-					</div>
-				</div>
+		<PageLayout
+			prefixElement={<BackButton fallbackTo={routePaths.cs_negociacoes} />}
+			title={
+				isLoading ? (
+					<Skeleton className="h-7 w-48" />
+				) : (
+					`Renegociação #${negociacao?.id ?? id}`
+				)
+			}
+			subtitle={
+				!isLoading && negociacao?.f_titulo ? negociacao.f_titulo : undefined
+			}
+			tabs={[
+				{
+					value: "detalhes",
+					label: "Detalhes",
+					icon: <Database className="size-4" />,
+				},
+				{
+					value: "itens",
+					label: "Itens",
+					icon: <FolderOpen className="size-4" />,
+				},
+				{
+					value: "anexos",
+					label: "Anexos",
+					icon: <FilePlus className="size-4" />,
+				},
+				{
+					value: "comentarios",
+					label: "Comentários",
+					icon: <Smartphone className="size-4" />,
+				},
+			]}
+			defaultTab="detalhes"
+		>
+			<div className="mx-auto max-w-400">
+				<PageTabContent value="detalhes">
+					<NegociacaoDetalhesTab
+						negociacao={negociacao}
+						isLoading={isLoading}
+					/>
+				</PageTabContent>
 
-				<Tabs defaultValue="detalhes">
-					<div className="overflow-x-auto pb-2">
-						<TabsList variant="line" className="flex whitespace-nowrap">
-							<TabsTrigger value="detalhes">
-								<Database className="size-4" />
-								Detalhes
-							</TabsTrigger>
-							<TabsTrigger value="itens">
-								<FolderOpen className="size-4" />
-								Itens
-							</TabsTrigger>
-							<TabsTrigger value="anexos">
-								<FilePlus className="size-4" />
-								Anexos
-							</TabsTrigger>
-							<TabsTrigger value="comentarios">
-								<Smartphone className="size-4" />
-								Comentários
-							</TabsTrigger>
-						</TabsList>
-					</div>
+				<PageTabContent value="itens">
+					<NegociacaoItensTab negociacaoId={negociacaoId} />
+				</PageTabContent>
 
-					<TabsContent value="detalhes" className="mt-6">
-						<NegociacaoDetalhesTab
-							negociacao={negociacao}
-							isLoading={isLoading}
-						/>
-					</TabsContent>
+				<PageTabContent value="anexos">
+					<NegociacaoAnexosTab negociacaoId={negociacaoId} />
+				</PageTabContent>
 
-					<TabsContent value="itens" className="mt-6">
-						<NegociacaoItensTab negociacaoId={negociacaoId} />
-					</TabsContent>
-
-					<TabsContent value="anexos" className="mt-6">
-						<NegociacaoAnexosTab negociacaoId={negociacaoId} />
-					</TabsContent>
-
-					<TabsContent value="comentarios" className="mt-6">
-						<NegociacaoComentariosTab negociacaoId={negociacaoId} />
-					</TabsContent>
-				</Tabs>
+				<PageTabContent value="comentarios">
+					<NegociacaoComentariosTab negociacaoId={negociacaoId} />
+				</PageTabContent>
 			</div>
-		</div>
+		</PageLayout>
 	);
 }
