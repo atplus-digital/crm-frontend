@@ -9,6 +9,7 @@ import {
 interface NegociacoesListProps {
 	negociacoes?: NegociacaoItem[];
 	totalCount?: number;
+	pageSize?: number;
 	onRefresh?: () => void;
 	onExport?: () => void;
 }
@@ -16,6 +17,7 @@ interface NegociacoesListProps {
 export function NegociacoesList({
 	negociacoes = [],
 	totalCount = 0,
+	pageSize = 15,
 	onRefresh,
 	onExport,
 }: NegociacoesListProps) {
@@ -24,6 +26,7 @@ export function NegociacoesList({
 			columns={columns}
 			data={negociacoes}
 			total={totalCount}
+			initialPageSize={pageSize}
 			emptyMessage="Nenhuma negociação encontrada"
 		>
 			<div className="flex items-center justify-between">

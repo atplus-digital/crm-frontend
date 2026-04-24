@@ -1,18 +1,17 @@
 import { Database, FilePlus, FolderOpen, Smartphone } from "lucide-react";
-import { useParams } from "react-router";
+import { Outlet, useParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import {
-	PageLayout,
-	PageTabContent,
-} from "#/components/page-layout/page-layout";
+import { PageLayout } from "#/components/page-layout/page-layout";
 import { Skeleton } from "#/components/ui/skeleton";
 import { BackButton } from "#/features/cs/components/back-button";
-import { NegociacaoAnexosTab } from "#/features/cs/negociacoes/negociacao-anexos-tab";
-import { NegociacaoComentariosTab } from "#/features/cs/negociacoes/negociacao-comentarios-tab";
-import { NegociacaoDetalhesTab } from "#/features/cs/negociacoes/negociacao-detalhes-tab";
-import { NegociacaoItensTab } from "#/features/cs/negociacoes/negociacao-itens-tab";
 import { useNegociacao } from "#/features/cs/negociacoes/negociacoes-hooks";
+import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { routePaths } from "#/routes/route-paths";
+
+export interface NegociacaoDetailOutletContext {
+	negociacao: NegociacaoWithRelations | undefined;
+	isLoading: boolean;
+}
 
 export function NegociacaoDetailPage() {
 	const { id } = useParams<{ id: string }>();
@@ -69,24 +68,14 @@ export function NegociacaoDetailPage() {
 			defaultTab="detalhes"
 		>
 			<div className="mx-auto max-w-400">
-				<PageTabContent value="detalhes">
-					<NegociacaoDetalhesTab
-						negociacao={negociacao}
-						isLoading={isLoading}
-					/>
-				</PageTabContent>
-
-				<PageTabContent value="itens">
-					<NegociacaoItensTab negociacaoId={negociacaoId} />
-				</PageTabContent>
-
-				<PageTabContent value="anexos">
-					<NegociacaoAnexosTab negociacaoId={negociacaoId} />
-				</PageTabContent>
-
-				<PageTabContent value="comentarios">
-					<NegociacaoComentariosTab negociacaoId={negociacaoId} />
-				</PageTabContent>
+				<Outlet
+					context={
+						{
+							negociacao,
+							isLoading,
+						} satisfies NegociacaoDetailOutletContext
+					}
+				/>
 			</div>
 		</PageLayout>
 	);
