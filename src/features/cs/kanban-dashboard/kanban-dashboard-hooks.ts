@@ -11,8 +11,12 @@ import type {
 	TrocaEndereco,
 	TrocaEnderecoRelations,
 } from "#/generated/nocobase/troca-endereco";
+import { buildFilter, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
-import type { KanbanDashboardCard } from "./kanban-dashboard-types";
+import type {
+	KanbanDashboardCard,
+	KanbanDashboardFilters,
+} from "./kanban-dashboard-types";
 import {
 	mapSuspensaoContratoStatus,
 	mapTrocaEnderecoStatus,
@@ -25,66 +29,96 @@ type CrmTrocaTitularidadeWithVendedor = CrmTrocaTitularidade &
 type TrocaEnderecoWithCreatedBy = TrocaEndereco &
 	Pick<TrocaEnderecoRelations, "createdBy">;
 
-type SuspensaoContratoWithResponsavel = SuspensaoContrato &
-	Pick<SuspensaoContratoRelations, "f_responsavel">;
+type SuspensaoContratoWithCreatedBy = SuspensaoContrato &
+	Pick<SuspensaoContratoRelations, "createdBy">;
 
 // ────────────────────────────────────────────────────────────────────────────
-// Query options — each collection fetched independently
+// Query options — each collection fetched independently (factory per filter set)
 // ────────────────────────────────────────────────────────────────────────────
 
-const trocaTitularidadeQueryOptions = queryOptions({
-	queryKey: ["kanban-dashboard", "tt"] as const,
-	queryFn: async () => {
-		const response = await nocobaseRepository.list("t_crm_troca_titularidade", {
-			pageSize: 200,
-			sort: ["-createdAt"],
-			appends: ["f_vendedor"] as Array<keyof CrmTrocaTitularidadeRelations>,
-		});
-		return response as {
-			data: CrmTrocaTitularidadeWithVendedor[];
-			meta: { total: number };
-		};
-	},
-	staleTime: 10_000,
-});
+function trocaTitularidadeQueryOptions(filters: KanbanDashboardFilters) {
+	const conditions: Record<string, unknown>[] = [];
 
-const trocaEnderecoQueryOptions = queryOptions({
-	queryKey: ["kanban-dashboard", "te"] as const,
-	queryFn: async () => {
-		const response = await nocobaseRepository.list(
-			"t_troca_endereco" as "users",
-			{
-				pageSize: 200,
-				sort: ["-createdAt"],
-				appends: ["createdBy"] as Array<keyof TrocaEnderecoRelations>,
-			},
-		);
-		return response as unknown as {
-			data: TrocaEnderecoWithCreatedBy[];
-			meta: { total: number };
-		};
-	},
-	staleTime: 10_000,
-});
+	if (filters.searchTerm) {
+		conditions.push(includes("f_cedente", filters.searchTerm));
+	}
 
-const suspensaoContratoQueryOptions = queryOptions({
-	queryKey: ["kanban-dashboard", "sc"] as const,
-	queryFn: async () => {
-		const response = await nocobaseRepository.list(
-			"t_suspensao_contrato" as "users",
-			{
-				pageSize: 200,
-				sort: ["-createdAt"],
-				appends: ["f_responsavel"],
-			} as Parameters<typeof nocobaseRepository.list>[1],
-		);
-		return response as unknown as {
-			data: SuspensaoContratoWithResponsavel[];
-			meta: { total: number };
-		};
-	},
-	staleTime: 10_000,
-});
+	return queryOptions({
+		queryKey: ["kanban-dashboard", "tt", filters] as const,
+		queryFn: async () => {
+			const response = await nocobaseRepository.list(
+				"t_crm_troca_titularidade",
+				{
+					pageSize: 200,
+					sort: ["-createdAt"],
+					appends: ["f_vendedor"] as Array<keyof CrmTrocaTitularidadeRelations>,
+					...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
+				},
+			);
+			return response as {
+				data: CrmTrocaTitularidadeWithVendedor[];
+				meta: { total: number };
+			};
+		},
+		staleTime: 10_000,
+	});
+}
+
+function trocaEnderecoQueryOptions(filters: KanbanDashboardFilters) {
+	const conditions: Record<string, unknown>[] = [];
+
+	if (filters.searchTerm) {
+		conditions.push(includes("f_cliente", filters.searchTerm));
+	}
+
+	return queryOptions({
+		queryKey: ["kanban-dashboard", "te", filters] as const,
+		queryFn: async () => {
+			const response = await nocobaseRepository.list(
+				"t_troca_endereco" as "users",
+				{
+					pageSize: 200,
+					sort: ["-createdAt"],
+					appends: ["createdBy"] as Array<keyof TrocaEnderecoRelations>,
+					...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
+				},
+			);
+			return response as unknown as {
+				data: TrocaEnderecoWithCreatedBy[];
+				meta: { total: number };
+			};
+		},
+		staleTime: 10_000,
+	});
+}
+
+function suspensaoContratoQueryOptions(filters: KanbanDashboardFilters) {
+	const conditions: Record<string, unknown>[] = [];
+
+	if (filters.searchTerm) {
+		conditions.push(includes("f_titulo", filters.searchTerm));
+	}
+
+	return queryOptions({
+		queryKey: ["kanban-dashboard", "sc", filters] as const,
+		queryFn: async () => {
+			const response = await nocobaseRepository.list(
+				"t_suspensao_contrato" as "users",
+				{
+					pageSize: 200,
+					sort: ["-createdAt"],
+					appends: ["createdBy"],
+					...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
+				} as Parameters<typeof nocobaseRepository.list>[1],
+			);
+			return response as unknown as {
+				data: SuspensaoContratoWithCreatedBy[];
+				meta: { total: number };
+			};
+		},
+		staleTime: 10_000,
+	});
+}
 
 // ────────────────────────────────────────────────────────────────────────────
 // Normalization helpers
@@ -123,7 +157,7 @@ function normalizeTrocaEndereco(
 }
 
 function normalizeSuspensaoContrato(
-	record: SuspensaoContratoWithResponsavel,
+	record: SuspensaoContratoWithCreatedBy,
 ): KanbanDashboardCard {
 	const status =
 		record.f_status as import("./kanban-dashboard-types").SuspensaoContratoOverrideStatus;
@@ -135,7 +169,7 @@ function normalizeSuspensaoContrato(
 		createdAt: record.createdAt,
 		status,
 		unifiedStatus,
-		responsibleName: record.f_responsavel?.nickname ?? null,
+		responsibleName: record.createdBy?.nickname ?? null,
 		source: record as SuspensaoContrato & SuspensaoContratoRelations,
 	};
 }
@@ -144,12 +178,16 @@ function normalizeSuspensaoContrato(
 // Main hook — parallel fetch + normalization
 // ────────────────────────────────────────────────────────────────────────────
 
-export function useKanbanDashboardData() {
+const EMPTY_FILTERS: KanbanDashboardFilters = {};
+
+export function useKanbanDashboardData(filters: KanbanDashboardFilters = {}) {
+	const activeFilters = filters ?? EMPTY_FILTERS;
+
 	const [ttResult, teResult, scResult] = useQueries({
 		queries: [
-			trocaTitularidadeQueryOptions,
-			trocaEnderecoQueryOptions,
-			suspensaoContratoQueryOptions,
+			trocaTitularidadeQueryOptions(activeFilters),
+			trocaEnderecoQueryOptions(activeFilters),
+			suspensaoContratoQueryOptions(activeFilters),
 		],
 	});
 
@@ -174,6 +212,17 @@ export function useKanbanDashboardData() {
 
 	if (scResult.data) {
 		cards.push(...scResult.data.data.map(normalizeSuspensaoContrato));
+	}
+
+	// Client-side filter: sourceCollection (type filter)
+	if (activeFilters.sourceCollection) {
+		cards.splice(
+			0,
+			cards.length,
+			...cards.filter(
+				(c) => c.sourceCollection === activeFilters.sourceCollection,
+			),
+		);
 	}
 
 	return { cards, isLoading, error };

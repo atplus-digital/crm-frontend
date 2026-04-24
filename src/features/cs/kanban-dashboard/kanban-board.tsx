@@ -9,7 +9,7 @@ import type {
 } from "./kanban-dashboard-types";
 import { UNIFIED_STATUS_COLUMNS } from "./kanban-dashboard-types";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
 
 interface KanbanBoardProps {
 	cards: KanbanDashboardCard[];

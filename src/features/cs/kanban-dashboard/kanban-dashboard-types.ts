@@ -160,6 +160,21 @@ export function getCardResponsible(card: KanbanDashboardCard): string | null {
 		case "te":
 			return card.source.createdBy?.nickname ?? null;
 		case "sc":
-			return card.source.f_responsavel?.nickname ?? null;
+			return card.source.createdBy?.nickname ?? null;
 	}
 }
+
+// ────────────────────────────────────────────────────────────────────────────
+// Filter types
+// ────────────────────────────────────────────────────────────────────────────
+
+export interface KanbanDashboardFilters {
+	sourceCollection?: SourceCollection;
+	searchTerm?: string;
+}
+
+export const SOURCE_COLLECTION_OPTIONS = [
+	{ value: "tt", label: "Troca Titularidade" },
+	{ value: "te", label: "Troca Endereço" },
+	{ value: "sc", label: "Suspensão de Contrato" },
+] as const;
