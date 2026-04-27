@@ -62,7 +62,7 @@ function NavMenuItemWithSubmenu({ item }: { item: NavItemWithChildren }) {
 	return (
 		<SidebarMenuItem key={item.to}>
 			<SidebarMenuButton
-				isActive={isActive}
+				isActive={isExpanded ? false : isActive}
 				tooltip={item.label}
 				onClick={() => setIsExpanded(!isExpanded)}
 				className={cn("cursor-pointer", isExpanded && "bg-sidebar-accent")}
