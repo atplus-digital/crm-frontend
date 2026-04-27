@@ -37,7 +37,7 @@ export function KanbanColumn({ status, cards }: KanbanColumnProps) {
 				<div className="flex items-center gap-2">
 					{showCounter && (
 						<span className="text-xs text-muted-foreground">
-							{visibleCount} de {cards.length}
+							{visibleCount} de
 						</span>
 					)}
 					<Badge variant="secondary" className="h-5 min-w-6 text-xs">

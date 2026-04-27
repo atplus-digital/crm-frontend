@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-24 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-27 -->
 
 # AGENTS.md — cs
 
@@ -20,7 +20,7 @@ Customer Success domain module — contracts, negotiations, and people flows (ty
 | `negociacoes/`                         | Negotiation subdomain (types, service, hooks, kanban, list)              |
 | `pessoas/`                             | Person subdomain (PF/PJ types, service, hooks, columns)                  |
 | `troca-titularidade/`                  | Ownership transfer subdomain (has own `AGENTS.md`)                       |
-| `kanban-dashboard/`                    | Kanban Dashboard subdomain (unified TT/TE/SC board, has own `AGENTS.md`) |
+| `kanban-dashboard/`                    | Kanban Dashboard subdomain (unified TT/TE/SC/NEG board, has own `AGENTS.md`) |
 | `contratos/contratos-types.ts`         | Contract statuses and list/filter params                                 |
 | `contratos/contratos-service.ts`       | Contract fetch/detail using `ixcRepository`                              |
 | `contratos/contratos-hooks.ts`         | React Query query options/hooks for contracts                            |

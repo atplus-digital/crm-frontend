@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-24 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-27 -->
 
 # AGENTS.md — filters
 
@@ -19,6 +19,7 @@ Shared filter primitives for the app — field inputs/selects/date, action butto
 | `filter-select-field.tsx`     | Controlled select field primitive (`FilterSelectField`)     |
 | `filter-input-field.tsx`      | Controlled debounced input field (`FilterInputField`)       |
 | `filter-date-field.tsx`       | Controlled date field primitive (`FilterDateField`)         |
+| `filter-badge-group.tsx`      | Multi-select badge group filter (`FilterBadgeGroup`)        |
 | `filter-actions.tsx`          | Reusable `Filtrar`/`Limpar` action row                      |
 | `filter-layout.tsx`           | Standardized container for fields grid + actions block      |
 | `flush-filters.ts`            | `flushFilters()` utility to apply pending debounced changes |

@@ -4,6 +4,10 @@ import type {
 	CrmTrocaTitularidadeRelations,
 } from "#/generated/nocobase/crm-troca-titularidade";
 import type {
+	Negociacoes,
+	NegociacoesRelations,
+} from "#/generated/nocobase/negociacoes";
+import type {
 	SuspensaoContrato,
 	SuspensaoContratoRelations,
 } from "#/generated/nocobase/suspensao-contrato";
@@ -16,8 +20,10 @@ import { nocobaseRepository } from "#/repositories";
 import type {
 	KanbanDashboardCard,
 	KanbanDashboardFilters,
+	NegociacaoOverrideStatus,
 } from "./kanban-dashboard-types";
 import {
+	mapNegociacaoStatus,
 	mapSuspensaoContratoStatus,
 	mapTrocaEnderecoStatus,
 	mapTrocaTitularidadeStatus,
@@ -31,6 +37,9 @@ type TrocaEnderecoWithCreatedBy = TrocaEndereco &
 
 type SuspensaoContratoWithResponsibles = SuspensaoContrato &
 	Pick<SuspensaoContratoRelations, "createdBy" | "f_responsavel">;
+
+type NegociacoesWithVendedor = Negociacoes &
+	Pick<NegociacoesRelations, "f_vendedor">;
 
 // ────────────────────────────────────────────────────────────────────────────
 // Query options — each collection fetched independently (factory per filter set)
@@ -144,6 +153,37 @@ function suspensaoContratoQueryOptions(filters: KanbanDashboardFilters) {
 	});
 }
 
+function negociacoesQueryOptions(filters: KanbanDashboardFilters) {
+	const conditions: Record<string, unknown>[] = [];
+
+	if (filters.searchTerm) {
+		conditions.push(includes("f_titulo", filters.searchTerm));
+	}
+
+	if (filters.responsibleName) {
+		conditions.push(
+			nestedField("f_vendedor", includes("nickname", filters.responsibleName)),
+		);
+	}
+
+	return queryOptions({
+		queryKey: ["kanban-dashboard", "neg", filters] as const,
+		queryFn: async () => {
+			const response = await nocobaseRepository.list("t_negociacoes", {
+				pageSize: 200,
+				sort: ["-createdAt"],
+				appends: ["f_vendedor"] as Array<keyof NegociacoesRelations>,
+				...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
+			});
+			return response as {
+				data: NegociacoesWithVendedor[];
+				meta: { total: number };
+			};
+		},
+		staleTime: 10_000,
+	});
+}
+
 // ────────────────────────────────────────────────────────────────────────────
 // Normalization helpers
 // ────────────────────────────────────────────────────────────────────────────
@@ -202,6 +242,24 @@ function normalizeSuspensaoContrato(
 	};
 }
 
+function normalizeNegociacao(
+	record: NegociacoesWithVendedor,
+): KanbanDashboardCard {
+	const status = record.f_status as NegociacaoOverrideStatus;
+	const unifiedStatus = mapNegociacaoStatus(status);
+	return {
+		sourceCollection: "neg",
+		id: record.id,
+		displayName: record.f_titulo,
+		createdAt: record.createdAt,
+		status,
+		unifiedStatus,
+		responsibleName: record.f_vendedor?.nickname ?? null,
+		responsibleId: record.f_vendedor?.id ?? null,
+		source: record as Negociacoes & NegociacoesRelations,
+	};
+}
+
 // ────────────────────────────────────────────────────────────────────────────
 // Main hook — parallel fetch + normalization
 // ────────────────────────────────────────────────────────────────────────────
@@ -211,22 +269,29 @@ const EMPTY_FILTERS: KanbanDashboardFilters = {};
 export function useKanbanDashboardData(filters: KanbanDashboardFilters = {}) {
 	const activeFilters = filters ?? EMPTY_FILTERS;
 
-	const [ttResult, teResult, scResult] = useQueries({
+	const [ttResult, teResult, scResult, negResult] = useQueries({
 		queries: [
 			trocaTitularidadeQueryOptions(activeFilters),
 			trocaEnderecoQueryOptions(activeFilters),
 			suspensaoContratoQueryOptions(activeFilters),
+			negociacoesQueryOptions(activeFilters),
 		],
 	});
 
 	const isLoading =
-		ttResult.isLoading || teResult.isLoading || scResult.isLoading;
+		ttResult.isLoading ||
+		teResult.isLoading ||
+		scResult.isLoading ||
+		negResult.isLoading;
 
-	const errors = [ttResult.error, teResult.error, scResult.error].filter(
-		(e) => e !== null && e !== undefined,
-	);
+	const errors = [
+		ttResult.error,
+		teResult.error,
+		scResult.error,
+		negResult.error,
+	].filter((e) => e !== null && e !== undefined);
 	const error =
-		errors.length === 3 ? errors[0] : errors.length > 0 ? errors[0] : null;
+		errors.length === 4 ? errors[0] : errors.length > 0 ? errors[0] : null;
 
 	const cards: KanbanDashboardCard[] = [];
 
@@ -242,15 +307,20 @@ export function useKanbanDashboardData(filters: KanbanDashboardFilters = {}) {
 		cards.push(...scResult.data.data.map(normalizeSuspensaoContrato));
 	}
 
-	// Client-side filter: sourceCollection (type filter)
-	if (activeFilters.sourceCollection) {
-		cards.splice(
-			0,
-			cards.length,
-			...cards.filter(
-				(c) => c.sourceCollection === activeFilters.sourceCollection,
-			),
+	if (negResult.data) {
+		cards.push(...negResult.data.data.map(normalizeNegociacao));
+	}
+
+	// Client-side filter: sourceCollections (array filter)
+	if (
+		activeFilters.sourceCollections &&
+		activeFilters.sourceCollections.length > 0
+	) {
+		const selectedCollections = new Set(activeFilters.sourceCollections);
+		const filteredCards = cards.filter((card) =>
+			selectedCollections.has(card.sourceCollection),
 		);
+		return { cards: filteredCards, isLoading, error };
 	}
 
 	return { cards, isLoading, error };

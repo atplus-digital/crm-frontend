@@ -3,6 +3,10 @@ import type {
 	CrmTrocaTitularidadeRelations,
 } from "#/generated/nocobase/crm-troca-titularidade";
 import type {
+	Negociacoes,
+	NegociacoesRelations,
+} from "#/generated/nocobase/negociacoes";
+import type {
 	SuspensaoContrato,
 	SuspensaoContratoRelations,
 } from "#/generated/nocobase/suspensao-contrato";
@@ -12,7 +16,7 @@ import type {
 } from "#/generated/nocobase/troca-endereco";
 
 // ────────────────────────────────────────────────────────────────────────────
-// Unified Kanban status columns (shared across all 3 source collections)
+// Unified Kanban status columns (shared across all source collections)
 // ────────────────────────────────────────────────────────────────────────────
 
 export const UNIFIED_STATUS_COLUMNS = [
@@ -54,10 +58,87 @@ export type UnifiedStatusKey = (typeof UNIFIED_STATUS_COLUMNS)[number]["key"];
 // Source collection discriminator
 // ────────────────────────────────────────────────────────────────────────────
 
-export type SourceCollection = "tt" | "te" | "sc";
+export type SourceCollection = "tt" | "te" | "sc" | "neg";
 
 // SC actual API values: "0"|"1"|"2"|"3"|"4" (matches generated SuspensaoContratoStatus)
 export type SuspensaoContratoOverrideStatus = "0" | "1" | "2" | "3" | "4";
+
+// Negotiation status type (matches generated NegociacoesStatus)
+export type NegociacaoOverrideStatus = "1" | "2" | "3" | "4" | "5" | "6";
+
+// ────────────────────────────────────────────────────────────────────────────
+// Collection badge colors
+// ────────────────────────────────────────────────────────────────────────────
+
+export const SOURCE_COLLECTION_BADGE: Record<
+	SourceCollection,
+	{ label: string; colorClass: string; bgClass: string }
+> = {
+	tt: {
+		label: "Troca Tit.",
+		colorClass:
+			"bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200",
+		bgClass: "bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200",
+	},
+	te: {
+		label: "Troca End.",
+		colorClass:
+			"bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-200",
+		bgClass:
+			"bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-200",
+	},
+	sc: {
+		label: "Suspensão",
+		colorClass:
+			"bg-orange-100 text-orange-800 dark:bg-orange-900/60 dark:text-orange-200",
+		bgClass:
+			"bg-orange-100 text-orange-800 dark:bg-orange-900/60 dark:text-orange-200",
+	},
+	neg: {
+		label: "Negociação",
+		colorClass:
+			"bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-200",
+		bgClass: "bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-200",
+	},
+};
+
+export const SOURCE_COLLECTION_OPTIONS: BadgeOption<SourceCollection>[] = [
+	{
+		value: "tt",
+		label: "Troca Titularidade",
+		colorClass:
+			"bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200",
+		bgClass: "bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200",
+	},
+	{
+		value: "te",
+		label: "Troca Endereço",
+		colorClass:
+			"bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-200",
+		bgClass:
+			"bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-200",
+	},
+	{
+		value: "sc",
+		label: "Suspensão de Contrato",
+		colorClass:
+			"bg-orange-100 text-orange-800 dark:bg-orange-900/60 dark:text-orange-200",
+		bgClass:
+			"bg-orange-100 text-orange-800 dark:bg-orange-900/60 dark:text-orange-200",
+	},
+	{
+		value: "neg",
+		label: "Negociação",
+		colorClass:
+			"bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-200",
+		bgClass: "bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-200",
+	},
+];
+
+// Re-export BadgeOption for convenience
+import type { BadgeOption } from "#/components/filters";
+
+export type { BadgeOption };
 
 // ────────────────────────────────────────────────────────────────────────────
 // Unified card discriminated union
@@ -96,6 +177,17 @@ export type KanbanDashboardCard =
 			responsibleName: string | null;
 			responsibleId: number | null;
 			source: SuspensaoContrato & SuspensaoContratoRelations;
+	  }
+	| {
+			sourceCollection: "neg";
+			id: number;
+			displayName: string;
+			createdAt: string;
+			status: NegociacaoOverrideStatus;
+			unifiedStatus: UnifiedStatusKey;
+			responsibleName: string | null;
+			responsibleId: number | null;
+			source: Negociacoes & NegociacoesRelations;
 	  };
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -141,6 +233,20 @@ export function mapSuspensaoContratoStatus(
 	return mapping[status] ?? "Novo";
 }
 
+export function mapNegociacaoStatus(
+	status: NegociacaoOverrideStatus,
+): UnifiedStatusKey {
+	const mapping: Record<NegociacaoOverrideStatus, UnifiedStatusKey> = {
+		"1": "Novo",
+		"2": "Em Andamento",
+		"3": "Assinatura",
+		"4": "Assinatura",
+		"5": "Concluido",
+		"6": "Cancelado",
+	};
+	return mapping[status] ?? "Novo";
+}
+
 // ────────────────────────────────────────────────────────────────────────────
 // Helper functions — extract display data from unified card
 // ────────────────────────────────────────────────────────────────────────────
@@ -152,6 +258,8 @@ export function getCardDisplayName(card: KanbanDashboardCard): string {
 		case "te":
 			return card.source.f_cliente;
 		case "sc":
+			return card.source.f_titulo;
+		case "neg":
 			return card.source.f_titulo;
 	}
 }
@@ -167,7 +275,13 @@ export function getCardResponsible(card: KanbanDashboardCard): string | null {
 			const responsible = scSource.f_responsavel ?? scSource.createdBy ?? null;
 			return responsible?.nickname ?? null;
 		}
+		case "neg":
+			return card.source.f_vendedor?.nickname ?? null;
 	}
+}
+
+export function getCardBadgeInfo(card: KanbanDashboardCard) {
+	return SOURCE_COLLECTION_BADGE[card.sourceCollection];
 }
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -175,13 +289,7 @@ export function getCardResponsible(card: KanbanDashboardCard): string | null {
 // ────────────────────────────────────────────────────────────────────────────
 
 export interface KanbanDashboardFilters {
-	sourceCollection?: SourceCollection;
+	sourceCollections?: SourceCollection[];
 	searchTerm?: string;
 	responsibleName?: string;
 }
-
-export const SOURCE_COLLECTION_OPTIONS = [
-	{ value: "tt", label: "Troca Titularidade" },
-	{ value: "te", label: "Troca Endereço" },
-	{ value: "sc", label: "Suspensão de Contrato" },
-] as const;

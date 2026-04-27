@@ -1,4 +1,6 @@
 export { FilterActions } from "./filter-actions";
+export type { BadgeOption } from "./filter-badge-group";
+export { FilterBadgeGroup } from "./filter-badge-group";
 export { FilterProvider, useFilterContext } from "./filter-context";
 export type { FilterDateFieldProps } from "./filter-date-field";
 export { FilterDateField } from "./filter-date-field";

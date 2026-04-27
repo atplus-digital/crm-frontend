@@ -7,45 +7,12 @@ import {
 } from "#/components/ui/tooltip";
 import { cn } from "#/lib/utils";
 import { buildRoute } from "#/routes/route-paths";
-import type {
-	KanbanDashboardCard,
-	SourceCollection,
-} from "./kanban-dashboard-types";
+import type { KanbanDashboardCard } from "./kanban-dashboard-types";
 import {
+	getCardBadgeInfo,
 	getCardDisplayName,
 	getCardResponsible,
 } from "./kanban-dashboard-types";
-
-const CARD_CONFIG: Record<
-	SourceCollection,
-	{
-		label: string;
-		route:
-			| "cs_troca_de_titularidade_id"
-			| "cs_troca_de_endereco_id"
-			| "cs_suspensao_de_contrato_id";
-		colorClass: string;
-	}
-> = {
-	tt: {
-		label: "Troca Tit.",
-		route: "cs_troca_de_titularidade_id",
-		colorClass:
-			"bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200",
-	},
-	te: {
-		label: "Troca End.",
-		route: "cs_troca_de_endereco_id",
-		colorClass:
-			"bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-200",
-	},
-	sc: {
-		label: "Suspensão",
-		route: "cs_suspensao_de_contrato_id",
-		colorClass:
-			"bg-orange-100 text-orange-800 dark:bg-orange-900/60 dark:text-orange-200",
-	},
-};
 
 interface KanbanCardProps {
 	card: KanbanDashboardCard;
@@ -54,16 +21,27 @@ interface KanbanCardProps {
 export function KanbanCard({ card }: KanbanCardProps) {
 	const navigate = useNavigate();
 
-	const config = CARD_CONFIG[card.sourceCollection];
+	const badgeInfo = getCardBadgeInfo(card);
+	const displayName = getCardDisplayName(card);
+	const responsible = getCardResponsible(card);
+
+	const routeConfig = {
+		tt: { route: "cs_troca_de_titularidade_id" as const },
+		te: { route: "cs_troca_de_endereco_id" as const },
+		sc: { route: "cs_suspensao_de_contrato_id" as const },
+		neg: { route: "cs_negociacoes_id" as const },
+	};
+
+	const { route } = routeConfig[card.sourceCollection];
 
 	const handleClick = () => {
-		navigate(buildRoute(config.route, { id: card.id }));
+		navigate(buildRoute(route, { id: card.id }));
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter" || e.key === " ") {
 			e.preventDefault();
-			navigate(buildRoute(config.route, { id: card.id }));
+			navigate(buildRoute(route, { id: card.id }));
 		}
 	};
 
@@ -84,19 +62,19 @@ export function KanbanCard({ card }: KanbanCardProps) {
 				<span
 					className={cn(
 						"inline-block rounded-full px-2 py-0.5 text-xs font-medium",
-						config.colorClass,
+						badgeInfo.bgClass,
 					)}
 				>
-					{config.label}
+					{badgeInfo.label}
 				</span>
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<h4 className="flex-1 truncate text-sm font-medium text-foreground">
-							{getCardDisplayName(card)}
+							{displayName}
 						</h4>
 					</TooltipTrigger>
 					<TooltipContent>
-						<p>{getCardDisplayName(card)}</p>
+						<p>{displayName}</p>
 					</TooltipContent>
 				</Tooltip>
 			</div>
@@ -109,9 +87,7 @@ export function KanbanCard({ card }: KanbanCardProps) {
 				</div>
 				<div className="flex items-center justify-between gap-2 text-xs">
 					<span className="text-muted-foreground shrink-0">Responsável:</span>
-					<span className="truncate font-medium">
-						{getCardResponsible(card) ?? "—"}
-					</span>
+					<span className="truncate font-medium">{responsible ?? "—"}</span>
 				</div>
 			</div>
 		</div>

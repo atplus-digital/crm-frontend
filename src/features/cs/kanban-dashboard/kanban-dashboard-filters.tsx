@@ -1,8 +1,8 @@
 import { useId, useState } from "react";
 import {
+	FilterBadgeGroup,
 	FilterInputField,
 	FilterLayout,
-	FilterSelectField,
 } from "#/components/filters";
 import type {
 	KanbanDashboardFilters,
@@ -30,34 +30,25 @@ export function KanbanDashboardFilterBar({
 	const [localSearch, setLocalSearch] = useState(filters.searchTerm ?? "");
 
 	const searchId = useId();
-	const sourceId = useId();
 	const responsibleId = useId();
 
 	const handleSearchChange = (value: string) => {
 		setLocalSearch(value);
 	};
 
-	const handleSourceChange = (value: SourceCollection | undefined) => {
-		onFilter({ ...filters, sourceCollection: value });
+	const handleSourceChange = (value: SourceCollection[] | undefined) => {
+		onFilter({ ...filters, sourceCollections: value });
 	};
 
 	return (
 		<FilterLayout
-			fieldsClassName="sm:grid-cols-1 lg:grid-cols-3"
+			fieldsClassName="sm:grid-cols-2 lg:grid-cols-4"
 			actions={
 				<div className="flex items-center gap-2">
 					{/* FilterActions will be composed by the parent page */}
 				</div>
 			}
 		>
-			<FilterSelectField<SourceCollection>
-				id={sourceId}
-				label="Tipo de Solicitação"
-				placeholder="Todas"
-				value={filters.sourceCollection ?? "all"}
-				options={SOURCE_COLLECTION_OPTIONS}
-				onChange={(value) => handleSourceChange(value)}
-			/>
 			<FilterInputField
 				id={searchId}
 				label="Nome do Cliente"
@@ -68,12 +59,22 @@ export function KanbanDashboardFilterBar({
 			<FilterInputField
 				id={responsibleId}
 				label="Responsável"
-				placeholder="Buscar por nome do responsável..."
+				placeholder="Buscar por responsável..."
 				value={filters.responsibleName ?? ""}
 				onChange={(value) =>
 					onFilter({ ...filters, responsibleName: value || undefined })
 				}
 			/>
+			<div className="col-span-2 lg:col-span-4">
+				<FilterBadgeGroup<SourceCollection>
+					label="Tipo de Solicitação"
+					options={SOURCE_COLLECTION_OPTIONS}
+					value={filters.sourceCollections}
+					onChange={handleSourceChange}
+					allLabel="Todos"
+					compact
+				/>
+			</div>
 		</FilterLayout>
 	);
 }
