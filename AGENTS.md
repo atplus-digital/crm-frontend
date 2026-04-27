@@ -1,6 +1,6 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-04-23 | Last verified: 2026-04-23 -->
+<!-- Last updated: 2026-04-27 | Last verified: 2026-04-27 -->
 
 # AGENTS.md — CRM AT+
 
@@ -12,16 +12,17 @@
 
 <!-- AGENTS-GENERATED:START commands -->
 
-| Task              | Command                                     | ~Time |
-| ----------------- | ------------------------------------------- | ----- |
-| Dev server        | `pnpm dev`                                  | —     |
-| Typecheck         | `pnpm typecheck` ou `pnpm dlx tsc --noEmit` | ~15s  |
-| Lint + Format     | `pnpm biome:fix`                            | ~5s   |
-| Test              | `pnpm test`                                 | ~30s  |
-| Build             | `pnpm build`                                | ~30s  |
-| Preview build     | `pnpm preview`                              | —     |
-| Generate types    | `pnpm generate-types`                       | ~10s  |
-| Check unused code | `pnpm knip`                                 | ~10s  |
+| Task                     | Command                                     | ~Time |
+| ------------------------ | ------------------------------------------- | ----- |
+| Dev server               | `pnpm dev`                                  | —     |
+| Typecheck                | `pnpm typecheck` ou `pnpm dlx tsc --noEmit` | ~15s  |
+| Lint + Format            | `pnpm biome:fix`                            | ~5s   |
+| Test                     | `pnpm test`                                 | ~30s  |
+| Build                    | `pnpm build`                                | ~30s  |
+| Preview build            | `pnpm preview`                              | —     |
+| Generate types           | `pnpm generate-types`                       | ~10s  |
+| Check unused code        | `pnpm knip`                                 | ~10s  |
+| Generate custom requests | `pnpm generate-custom-requests`             | ~15s  |
 
 <!-- AGENTS-GENERATED:END commands -->
 

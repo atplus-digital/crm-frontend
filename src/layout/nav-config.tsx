@@ -4,7 +4,6 @@ import {
 	Home,
 	House,
 	LayoutDashboard,
-	UserRound,
 	Users,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -58,17 +57,12 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 				icon: <Home />,
 				to: routePaths.home,
 			},
-			{
-				label: "Perfil",
-				icon: <UserRound />,
-				to: routePaths.profile,
-			},
 		],
 	},
 	{
 		label: "Customer Success",
 		icon: <Users className="size-4" />,
-		to: routePaths.cs_pessoas,
+		to: routePaths.cs_dashboard,
 		matches: [CS_SECTION_PREFIX],
 		items: [
 			{
