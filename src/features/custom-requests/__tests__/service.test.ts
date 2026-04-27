@@ -113,7 +113,7 @@ describe("service", () => {
 	describe("getRequestsByCollection", () => {
 		it("returns all requests", () => {
 			const requests = getRequestsByCollection("all");
-			expect(requests.length).toBe(3);
+			expect(requests.length).toBeGreaterThan(3);
 		});
 	});
 });

@@ -4,58 +4,23 @@ import {
 	CustomRequestNetworkError,
 	CustomRequestValidationError,
 } from "../errors";
-import {
-	criarContratoIxcSchema,
-	n8nComprasSchema,
-	qualirunInfoSchema,
-} from "./schemas";
+import { customRequestsRegistry } from "../merged-registry";
 import type {
-	CustomRequestKey,
+	CustomRequestEntry,
 	SendRequestOptions,
 	SendRequestResult,
 	TemplateContext,
 } from "./types";
 
-const REGISTRY: Record<
-	CustomRequestKey,
-	{
-		schema:
-			| typeof criarContratoIxcSchema
-			| typeof qualirunInfoSchema
-			| typeof n8nComprasSchema;
-		method: "GET" | "POST";
-		url: string;
-	}
-> = {
-	criarContratoIxc: {
-		schema: criarContratoIxcSchema,
-		method: "POST",
-		url: "customRequests:send/criarContratoIxc",
-	},
-	qualirunInfo: {
-		schema: qualirunInfoSchema,
-		method: "GET",
-		url: "customRequests:send/qualirunInfo",
-	},
-	n8nCompras: {
-		schema: n8nComprasSchema,
-		method: "POST",
-		url: "customRequests:send/n8nCompras",
-	},
-};
-
-export function validatePayload<K extends CustomRequestKey>(
-	key: K,
-	payload: unknown,
-) {
-	const config = REGISTRY[key];
-	if (!config) {
+export function validatePayload(key: string, payload: unknown) {
+	const entry = customRequestsRegistry[key] as CustomRequestEntry | undefined;
+	if (!entry) {
 		throw new CustomRequestError(
 			`Unknown request key: ${key}`,
 			CustomRequestErrorCode.NOT_FOUND,
 		);
 	}
-	const result = config.schema.safeParse(payload);
+	const result = entry.payloadSchema.safeParse(payload);
 	if (!result.success) {
 		throw new CustomRequestValidationError(result.error);
 	}
@@ -90,12 +55,12 @@ export function interpolateTemplate(
 		.replace(/\{\{currentTime\}\}/g, context.currentTime);
 }
 
-export async function sendRequest<K extends CustomRequestKey>(
-	key: K,
-	options: SendRequestOptions<K>,
-): Promise<SendRequestResult<K>> {
-	const config = REGISTRY[key];
-	if (!config) {
+export async function sendRequest(
+	key: string,
+	options: SendRequestOptions,
+): Promise<SendRequestResult> {
+	const entry = customRequestsRegistry[key] as CustomRequestEntry | undefined;
+	if (!entry) {
 		throw new CustomRequestError(
 			`Unknown request key: ${key}`,
 			CustomRequestErrorCode.NOT_FOUND,
@@ -105,13 +70,15 @@ export async function sendRequest<K extends CustomRequestKey>(
 	const validatedPayload = validatePayload(key, options.payload);
 
 	try {
-		const response = await fetch(`/api/${config.url}`, {
-			method: config.method,
+		const response = await fetch(`/api/${entry.options.url}`, {
+			method: entry.options.method,
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body:
-				config.method === "POST" ? JSON.stringify(validatedPayload) : undefined,
+				entry.options.method === "POST"
+					? JSON.stringify(validatedPayload)
+					: undefined,
 			signal: options.signal,
 		});
 
@@ -123,7 +90,7 @@ export async function sendRequest<K extends CustomRequestKey>(
 		}
 
 		const data = await response.json();
-		return { success: true, data } as SendRequestResult<K>;
+		return { success: true, data };
 	} catch (error) {
 		if (error instanceof DOMException && error.name === "AbortError") {
 			throw new CustomRequestError(
@@ -144,9 +111,9 @@ export async function sendRequest<K extends CustomRequestKey>(
 	}
 }
 
-export function getRequestConfig<K extends CustomRequestKey>(key: K) {
-	const config = REGISTRY[key];
-	if (!config) {
+export function getRequestConfig(key: string) {
+	const entry = customRequestsRegistry[key] as CustomRequestEntry | undefined;
+	if (!entry) {
 		throw new CustomRequestError(
 			`Unknown request key: ${key}`,
 			CustomRequestErrorCode.NOT_FOUND,
@@ -154,15 +121,15 @@ export function getRequestConfig<K extends CustomRequestKey>(key: K) {
 	}
 	return {
 		key,
-		method: config.method,
-		url: config.url,
+		method: entry.options.method,
+		url: entry.options.url,
 	};
 }
 
 export function getRequestsByCollection(_collection: string) {
-	return Object.entries(REGISTRY).map(([key, config]) => ({
-		key: key as CustomRequestKey,
-		method: config.method,
-		url: config.url,
+	return Object.entries(customRequestsRegistry).map(([key, entry]) => ({
+		key,
+		method: entry.options.method,
+		url: entry.options.url,
 	}));
 }

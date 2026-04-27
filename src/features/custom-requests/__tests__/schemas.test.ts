@@ -1,9 +1,7 @@
 import { describe, expect, it } from "vitest";
-import {
-	criarContratoIxcSchema,
-	n8nComprasSchema,
-	qualirunInfoSchema,
-} from "../utils/schemas";
+import { payloadSchema as criarContratoIxcSchema } from "../split/criarContratoIxc";
+import { payloadSchema as n8nComprasSchema } from "../split/n8nCompras";
+import { payloadSchema as qualirunInfoSchema } from "../split/qualirunInfo";
 
 describe("schemas", () => {
 	describe("criarContratoIxcSchema", () => {
