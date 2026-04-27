@@ -84,11 +84,35 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 				label: "Contratos",
 				icon: <FileText />,
 				to: routePaths.cs_contratos,
+				children: [
+					{
+						label: "Listar Contratos",
+						icon: <FileText className="size-4" />,
+						to: routePaths.cs_contratos,
+					},
+					{
+						label: "Criar Contrato",
+						icon: <FileText className="size-4" />,
+						to: routePaths.cs_contratos,
+					},
+				],
 			},
 			{
 				label: "Vendas",
 				icon: <Users />,
 				to: routePaths.cs_vendas,
+				children: [
+					{
+						label: "Lista de Vendas",
+						icon: <Users className="size-4" />,
+						to: routePaths.cs_vendas_lista,
+					},
+					{
+						label: "Relatórios",
+						icon: <FileText className="size-4" />,
+						to: routePaths.cs_vendas,
+					},
+				],
 			},
 			{
 				label: "Troca de Titularidade",
