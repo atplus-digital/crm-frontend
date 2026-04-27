@@ -56,7 +56,7 @@ function NavMenuItemWithoutSubmenu({ item }: { item: NavItem }) {
 
 function NavMenuItemWithSubmenu({ item }: { item: NavItemWithChildren }) {
 	const { pathname } = useLocation();
-	const [isExpanded, setIsExpanded] = useState(false);
+	const [isExpanded, setIsExpanded] = useState(Boolean(item.defaultOpen));
 	const isActive = isNavPathActive(pathname, item.to);
 
 	return (
