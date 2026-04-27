@@ -38,16 +38,25 @@ export function KanbanColumn({
 	// Older cards (after recent)
 	const olderCards = isCancelado ? cards.slice(recent) : [];
 
-	// Paginated display
-	const visibleRecentCards = recentCards.slice(0, visibleCount);
-	const visibleOlderCards = olderCards.slice(
-		0,
-		Math.max(0, visibleCount - recent),
-	);
-	const visibleCards = cards.slice(0, visibleCount);
+	// Visible cards based on current state
+	const visibleCards = showOlder
+		? cards.slice(0, visibleCount)
+		: recentCards.slice(0, visibleCount);
+	const visibleOlderCards = showOlder
+		? olderCards.slice(0, Math.max(0, visibleCount - recent))
+		: [];
 
 	const remaining = cards.length - visibleCards.length;
 	const hasMore = remaining > 0;
+
+	// Show "Ver N mais antigos" if there are hidden older cards and we haven't shown them yet
+	const showExpandOlderButton = isCancelado && hiddenOlder > 0 && !showOlder;
+
+	// Show "Ver mais" for non-Cancelado columns, or for Cancelado when older cards are expanded
+	const showLoadMoreButton = hasMore && (!isCancelado || showOlder);
+
+	// Show "Recolher antigos" if we've expanded older cards
+	const showCollapseButton = isCancelado && hiddenOlder > 0 && showOlder;
 
 	return (
 		<div className="flex w-72 shrink-0 flex-col rounded-xl border border-border bg-muted/30">
@@ -73,29 +82,12 @@ export function KanbanColumn({
 					</div>
 				) : (
 					<>
-						{/* Cards recentes */}
-						{visibleRecentCards.map((card) => (
+						{/* Cards visíveis */}
+						{visibleCards.map((card) => (
 							<KanbanCard key={card.id} card={card} />
 						))}
 
-						{/* Botão para mostrar antigos - posicionado acima dos antigos */}
-						{isCancelado && hiddenOlder > 0 && !showOlder && (
-							<Button
-								variant="ghost"
-								size="sm"
-								className="mt-1 w-full text-xs text-muted-foreground"
-								onClick={() => {
-									setShowOlder(true);
-									setVisibleCount(recent + PAGE_SIZE);
-								}}
-							>
-								<ChevronDown className="mr-1 size-3" />
-								Ver {hiddenOlder} mais antigo{hiddenOlder !== 1 ? "s" : ""} (5
-								dias+)
-							</Button>
-						)}
-
-						{/* Cards antigos */}
+						{/* Cards antigos (só aparece quando expandido) */}
 						{showOlder && visibleOlderCards.length > 0 && (
 							<>
 								<div className="flex items-center gap-2 py-1">
@@ -111,8 +103,25 @@ export function KanbanColumn({
 							</>
 						)}
 
+						{/* Botão para mostrar antigos */}
+						{showExpandOlderButton && (
+							<Button
+								variant="ghost"
+								size="sm"
+								className="mt-1 w-full text-xs text-muted-foreground"
+								onClick={() => {
+									setShowOlder(true);
+									setVisibleCount(recent + PAGE_SIZE);
+								}}
+							>
+								<ChevronDown className="mr-1 size-3" />
+								Ver {hiddenOlder} mais antigo{hiddenOlder !== 1 ? "s" : ""} (5
+								dias+)
+							</Button>
+						)}
+
 						{/* Ver mais */}
-						{hasMore && (
+						{showLoadMoreButton && (
 							<Button
 								variant="ghost"
 								size="sm"
@@ -128,7 +137,7 @@ export function KanbanColumn({
 						)}
 
 						{/* Botão para recolher antigos */}
-						{isCancelado && hiddenOlder > 0 && showOlder && (
+						{showCollapseButton && (
 							<Button
 								variant="ghost"
 								size="sm"

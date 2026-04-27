@@ -19,15 +19,14 @@ export function NavMenuItemWithSubmenu({
 }) {
 	const { pathname } = useLocation();
 	const [isExpanded, setIsExpanded] = useState(Boolean(item.defaultOpen));
-	const isActive = isNavPathActive(pathname, item.to);
 
 	return (
 		<SidebarMenuItem key={item.to}>
 			<SidebarMenuButton
-				isActive={isExpanded ? false : isActive}
+				isActive={false}
 				tooltip={item.label}
 				onClick={() => setIsExpanded(!isExpanded)}
-				className={cn("cursor-pointer", isExpanded && "bg-sidebar-accent")}
+				className="cursor-pointer"
 			>
 				{item.icon ?? <Link2 className="size-4" />}
 				<span>{item.label}</span>
