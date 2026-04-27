@@ -101,6 +101,7 @@ export interface PessoaFisica {
 | Auth module         | `src/features/auth/index.ts`                       | barrel export pattern                                    |
 | Error handling      | `src/components/error-boundary.tsx`                | React Error Boundary pattern with user-friendly UI       |
 | Component structure | `src/features/auth/components/profile-details.tsx` | Separate business logic from presentation in dashboard   |
+| Hierarchical nav    | `src/layout/app-sidebar/sidebar-navigation.tsx`    | NavItem children property enables collapsible submenus   |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
 

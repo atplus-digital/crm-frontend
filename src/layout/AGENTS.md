@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-16 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-27 -->
 
 # AGENTS.md — layout
 
@@ -34,6 +34,7 @@ Application shell layout — shared header, sidebar, and dashboard frame used by
 - Keep app-shell navigation declarative: header and sidebar must derive from `#/features/permissions/nav-config`.
 - Layout components stay presentational; auth and permission state should be read via exported stores/hooks, not ad-hoc local logic.
 - Sidebar item active state must support nested detail routes via shared path-matching helpers instead of exact pathname checks.
+- Navigation items support hierarchical submenus: add `children` array to NavItem to create collapsible submenu sections.
 
 <!-- AGENTS-GENERATED:END patterns -->
 
@@ -46,5 +47,6 @@ Application shell layout — shared header, sidebar, and dashboard frame used by
 | Shell composition                 | `src/layout/dashboard-layout.tsx`               |
 | Section-driven sidebar navigation | `src/layout/app-sidebar/sidebar-navigation.tsx` |
 | Header + shared top navigation    | `src/layout/app-header.tsx`                     |
+| Hierarchical navigation submenus  | `src/layout/app-sidebar/sidebar-navigation.tsx` |
 
 <!-- AGENTS-GENERATED:END golden-samples -->

@@ -8,10 +8,6 @@ export const vendasRoutes = [
 		children: [
 			{
 				index: true,
-				lazy: () => import("./kanban"),
-			},
-			{
-				path: "lista/*",
 				lazy: () => import("./lista"),
 			},
 			{
