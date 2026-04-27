@@ -19,7 +19,9 @@ People (Pessoas) subdomain for CS — handles both physical persons (PF / `t_pes
 | `pessoas-types.ts`    | PF/PJ filter contracts and list params types                                  |
 | `pessoas-service.ts`  | CRUD + list for PF/PJ using `nocobaseRepository`                              |
 | `pessoas-hooks.ts`    | React Query hooks and query keys (`usePessoasFisicas`, `usePessoasJuridicas`) |
-| `pessoas-columns.tsx` | TanStack `ColumnDef` definitions for PF/PJ tables with badges                 |
+| `pessoas-columns.tsx`           | TanStack `ColumnDef` definitions for PF/PJ tables with badges                 |
+| `pessoas-fisicas-filters.tsx`  | Filter bar for physical persons (PF)                                          |
+| `pessoas-juridicas-filters.tsx`| Filter bar for legal entities (PJ)                                            |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

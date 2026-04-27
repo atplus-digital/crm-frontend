@@ -2,7 +2,7 @@ import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { FilterProvider } from "#/components/filters";
 import { DataTableContainer } from "#/components/table/data-table-container";
 import { pfColumns } from "#/features/cs/pessoas/pessoas-columns";
-import { PessoasFisicasFilters } from "#/features/cs/pessoas/pessoas-filters";
+import { PessoasFisicasFilters } from "#/features/cs/pessoas/pessoas-fisicas-filters";
 import { usePessoasFisicas } from "#/features/cs/pessoas/pessoas-hooks";
 import {
 	DEFAULT_PESSOA_FISICA_TABLE_FILTERS,

@@ -23,7 +23,9 @@ features.
 | `table/data-table-container.tsx`  | Standard reusable paginated table wrapper             |
 | `table/empty-table.tsx`           | Empty-state table placeholder with headers            |
 | `table/columns/view-action.tsx`   | Shared "Ver" action button for table row navigation   |
-| `filters/filter-fields.tsx`       | Debounced `FilterInputField` + select/date primitives |
+| `filters/filter-select-field.tsx` | Controlled select field primitive (`FilterSelectField`)  |
+| `filters/filter-input-field.tsx`  | Debounced `FilterInputField` component                   |
+| `filters/filter-date-field.tsx`   | Controlled date field primitive (`FilterDateField`)      |
 | `filters/filter-actions.tsx`      | Reusable `Filtrar`/`Limpar` action group              |
 | `feedback/inline-error-alert.tsx` | Reusable inline destructive feedback block            |
 | `theme-provider.tsx`              | Theme context/provider used by the app shell          |

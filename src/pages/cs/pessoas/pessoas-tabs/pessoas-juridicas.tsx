@@ -2,8 +2,8 @@ import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { FilterProvider } from "#/components/filters";
 import { DataTableContainer } from "#/components/table/data-table-container";
 import { pjColumns } from "#/features/cs/pessoas/pessoas-columns";
-import { PessoasJuridicasFilters } from "#/features/cs/pessoas/pessoas-filters";
 import { usePessoasJuridicas } from "#/features/cs/pessoas/pessoas-hooks";
+import { PessoasJuridicasFilters } from "#/features/cs/pessoas/pessoas-juridicas-filters";
 import {
 	DEFAULT_PESSOA_JURIDICA_TABLE_FILTERS,
 	type PessoaJuridicaTableFilters,

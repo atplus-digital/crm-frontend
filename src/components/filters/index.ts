@@ -1,14 +1,10 @@
 export { FilterActions } from "./filter-actions";
 export { FilterProvider, useFilterContext } from "./filter-context";
-export type {
-	FilterDateFieldProps,
-	FilterInputFieldProps,
-	FilterSelectFieldProps,
-} from "./filter-fields";
-export {
-	FilterDateField,
-	FilterInputField,
-	FilterSelectField,
-} from "./filter-fields";
+export type { FilterDateFieldProps } from "./filter-date-field";
+export { FilterDateField } from "./filter-date-field";
+export type { FilterInputFieldProps } from "./filter-input-field";
+export { FilterInputField } from "./filter-input-field";
 export { FilterLayout } from "./filter-layout";
+export type { FilterSelectFieldProps } from "./filter-select-field";
+export { FilterSelectField } from "./filter-select-field";
 export { flushFilters } from "./flush-filters";

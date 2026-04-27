@@ -23,7 +23,8 @@ and detail-tab composition for negotiation lifecycle data.
 | `negociacoes-list.tsx`           | Tabular list for all negotiations                           |
 | `negociacoes-kanban.tsx`         | Kanban board grouped by workflow status                     |
 | `negociacoes-filters/`           | Kanban/list filter UIs (kanban-filters, lista-filters)      |
-| `negociacao-badges.tsx`          | Shared badges for status/substatus/metadata                 |
+| `negociacao-badges/`             | Shared badges for status/substatus/metadata (folder)        |
+| `negociacao-detalhes-tab/`       | Detail tab decomposed into card components                  |
 | `negociacao-anexos-tab.tsx`      | Detail tab for attachments                                  |
 | `negociacao-comentarios-tab.tsx` | Detail tab for comments                                     |
 | `negociacao-itens-tab.tsx`       | Detail tab for negotiated items                             |

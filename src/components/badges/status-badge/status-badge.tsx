@@ -1,6 +1,6 @@
 import { Badge, type BadgeVariant } from "#/components/ui/badge";
 import { cn } from "#/lib/utils";
-import { getColorClass, getStatusVariant } from "./utils";
+import { getColorClass, getStatusVariant } from "../utils";
 
 /**
  * Componente genérico para exibição de badges de status.
@@ -91,73 +91,5 @@ export function StatusBadge({
 		<Badge variant={badgeVariant} className={cn(colorClass, className)}>
 			{label}
 		</Badge>
-	);
-}
-
-/**
- * Componente para status e substatus lado a lado.
- *
- * @example
- * <StatusBadgeGroup
- *   status="ABERTO"
- *   substatus="EM_ANALISE"
- *   statusLabels={{ ABERTO: "Aberto", FECHADO: "Fechado" }}
- *   substatusLabels={{ EM_ANALISE: "Em análise", APROVADO: "Aprovado" }}
- *   statusVariants={{ ABERTO: "default", FECHADO: "secondary" }}
- *   substatusVariants={{ EM_ANALISE: "secondary", APROVADO: "default" }}
- * />
- */
-export interface StatusBadgeGroupProps {
-	/** Valor do status principal */
-	status: string;
-	/** Valor do substatus (opcional) */
-	substatus?: string;
-	/** Mapeamento status → label */
-	statusLabels: Record<string, string>;
-	/** Mapeamento substatus → label */
-	substatusLabels: Record<string, string>;
-	/** Mapeamento status → variant */
-	statusVariants?: Record<string, BadgeVariant>;
-	/** Mapeamento substatus → variant */
-	substatusVariants?: Record<string, BadgeVariant>;
-	/** Mapeamento status → classes customizadas */
-	statusColorClasses?: Record<string, string>;
-	/** Mapeamento substatus → classes customizadas */
-	substatusColorClasses?: Record<string, string>;
-	/** Classes CSS adicionais */
-	className?: string;
-}
-
-/**
- * Componente StatusBadgeGroup - exibe status e substatus lado a lado.
- */
-export function StatusBadgeGroup({
-	status,
-	substatus,
-	statusLabels,
-	substatusLabels,
-	statusVariants,
-	substatusVariants,
-	statusColorClasses,
-	substatusColorClasses,
-	className,
-}: StatusBadgeGroupProps) {
-	return (
-		<div className={cn("flex flex-wrap gap-2", className)}>
-			<StatusBadge
-				value={status}
-				labels={statusLabels}
-				variants={statusVariants}
-				colorClasses={statusColorClasses}
-			/>
-			{substatus && (
-				<StatusBadge
-					value={substatus}
-					labels={substatusLabels}
-					variants={substatusVariants}
-					colorClasses={substatusColorClasses}
-				/>
-			)}
-		</div>
 	);
 }

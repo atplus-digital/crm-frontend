@@ -19,7 +19,8 @@ Kanban Dashboard subdomain — unified Kanban board combining three NocoBase col
 | `kanban-dashboard-types.ts` | Unified status columns, discriminated card union, status mapping fns  |
 | `kanban-dashboard-hooks.ts` | Parallel `useQueries` fetch for TT/TE/SC + normalization to cards     |
 | `kanban-card.tsx`           | Individual card component with source-collection badge and navigation |
-| `kanban-board.tsx`          | Board layout with grouped status columns and card rendering           |
+| `kanban-column.tsx`         | Single column component with pagination and card rendering            |
+| `kanban-board.tsx`          | Board layout composing columns from grouped status cards              |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

@@ -14,13 +14,15 @@ Shared filter primitives for the app — field inputs/selects/date, action butto
 
 ## Key Files
 
-| File                 | Purpose                                                     |
-| -------------------- | ----------------------------------------------------------- |
-| `filter-fields.tsx`  | Controlled field primitives (`FilterInput/Select/Date`)     |
-| `filter-actions.tsx` | Reusable `Filtrar`/`Limpar` action row                      |
-| `filter-layout.tsx`  | Standardized container for fields grid + actions block      |
-| `flush-filters.ts`   | `flushFilters()` utility to apply pending debounced changes |
-| `index.ts`           | Public exports for filter primitives                        |
+| File                          | Purpose                                                     |
+| ----------------------------- | ----------------------------------------------------------- |
+| `filter-select-field.tsx`     | Controlled select field primitive (`FilterSelectField`)     |
+| `filter-input-field.tsx`      | Controlled debounced input field (`FilterInputField`)       |
+| `filter-date-field.tsx`       | Controlled date field primitive (`FilterDateField`)         |
+| `filter-actions.tsx`          | Reusable `Filtrar`/`Limpar` action row                      |
+| `filter-layout.tsx`           | Standardized container for fields grid + actions block      |
+| `flush-filters.ts`            | `flushFilters()` utility to apply pending debounced changes |
+| `index.ts`                    | Public exports for filter primitives                        |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
