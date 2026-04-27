@@ -23,6 +23,8 @@ export interface NavItem {
 	icon?: ReactNode;
 	/** TanStack Router `to` path. */
 	to: AppRoutePath;
+	/** Whether a submenu should start expanded when rendered. */
+	defaultOpen?: boolean;
 	/** Snippet required to see this item. If omitted, item is always visible. */
 	requiresSnippet?: string;
 	/** Action required to see this item. If omitted, item is always visible. */
@@ -71,63 +73,57 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 				to: routePaths.cs_dashboard,
 			},
 			{
-				label: "Pessoas",
+				label: "Clientes",
 				icon: <Users />,
-				to: routePaths.cs_pessoas,
-			},
-			{
-				label: "Negociações",
-				icon: <Handshake />,
-				to: routePaths.cs_negociacoes,
-			},
-			{
-				label: "Contratos",
-				icon: <FileText />,
 				to: routePaths.cs_contratos,
+				defaultOpen: true,
 				children: [
 					{
-						label: "Listar Contratos",
-						icon: <FileText className="size-4" />,
+						label: "Contratos",
+						icon: <FileText />,
 						to: routePaths.cs_contratos,
 					},
 					{
-						label: "Criar Contrato",
-						icon: <FileText className="size-4" />,
-						to: routePaths.cs_contratos,
-					},
-				],
-			},
-			{
-				label: "Vendas",
-				icon: <Users />,
-				to: routePaths.cs_vendas,
-				children: [
-					{
-						label: "Lista de Vendas",
-						icon: <Users className="size-4" />,
-						to: routePaths.cs_vendas_lista,
+						label: "Pessoas",
+						icon: <Users />,
+						to: routePaths.cs_pessoas,
 					},
 					{
-						label: "Relatórios",
-						icon: <FileText className="size-4" />,
+						label: "Vendas",
+						icon: <Users />,
 						to: routePaths.cs_vendas,
 					},
 				],
 			},
+
 			{
-				label: "Troca de Titularidade",
-				icon: <FileText />,
-				to: routePaths.cs_troca_de_titularidade,
-			},
-			{
-				label: "Troca de Endereço",
-				icon: <FileText />,
-				to: routePaths.cs_troca_de_endereco,
-			},
-			{
-				label: "Suspensão de Contrato",
-				icon: <FileText />,
-				to: routePaths.cs_suspensao_de_contrato,
+				label: "Operações",
+				icon: <Handshake />,
+				to: routePaths.cs_negociacoes,
+				defaultOpen: true,
+				children: [
+					{
+						label: "Negociações",
+						icon: <Handshake />,
+						to: routePaths.cs_negociacoes,
+					},
+
+					{
+						label: "Troca de Titularidade",
+						icon: <FileText />,
+						to: routePaths.cs_troca_de_titularidade,
+					},
+					{
+						label: "Troca de Endereço",
+						icon: <FileText />,
+						to: routePaths.cs_troca_de_endereco,
+					},
+					{
+						label: "Suspensão de Contrato",
+						icon: <FileText />,
+						to: routePaths.cs_suspensao_de_contrato,
+					},
+				],
 			},
 		],
 	},
