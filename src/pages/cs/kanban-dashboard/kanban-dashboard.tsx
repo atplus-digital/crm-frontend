@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { FilterActions } from "#/components/filters";
 import { PageLayout } from "#/components/page-layout/page-layout";
 import { KanbanBoard } from "#/features/cs/kanban-dashboard/kanban-board";
 import { KanbanDashboardFilterBar } from "#/features/cs/kanban-dashboard/kanban-dashboard-filters";
@@ -11,27 +10,12 @@ export function KanbanDashboardPage() {
 	const [filters, setFilters] = useState<FiltersType>({});
 	const { cards, isLoading, error } = useKanbanDashboardData(filters);
 
-	const hasFilters = Boolean(
-		filters.searchTerm ||
-			filters.responsibleName ||
-			(filters.sourceCollections && filters.sourceCollections.length > 0),
-	);
-
-	const handleClearFilters = () => {
-		setFilters({});
-	};
-
 	return (
 		<PageLayout
 			title="Dashboard"
 		>
 			<div className="space-y-4">
 				<KanbanDashboardFilterBar filters={filters} onFilter={setFilters} />
-				<FilterActions
-					onApply={() => setFilters({ ...filters })}
-					onClear={handleClearFilters}
-					canClear={hasFilters}
-				/>
 				{error ? (
 					<InlineErrorAlert>
 						Erro ao carregar dashboard: {(error as Error).message}
