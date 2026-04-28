@@ -200,7 +200,9 @@ describe("import-injector", () => {
 			expect(content).toContain(
 				'import type { EmpresasBase } from "./empresas";',
 			);
-			expect(content).toContain('import type { UsersBase } from "./index";');
+			expect(content).toContain(
+				'import type { UsersBase } from "./other/users";',
+			);
 		});
 
 		it("returns empty map when filesContent is empty", () => {
@@ -310,7 +312,7 @@ describe("import-injector", () => {
 			);
 
 			expect(result.get("t_posts")).toContain(
-				'import type { UsersBase } from "./index";',
+				'import type { UsersBase } from "./other/users";',
 			);
 		});
 	});

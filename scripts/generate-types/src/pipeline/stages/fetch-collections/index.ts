@@ -1,25 +1,19 @@
 import type { DataSourceCollection } from "../../../@types/script";
-import { normalizeCollectionNames } from "../../../utils/naming";
 import type { InitContext, PipelineStage } from "../../core/types";
 
 export const fetchCollections: PipelineStage<InitContext> = async (ctx) => {
 	const { client, dataSource } = ctx;
 
-	const rawCollections =
-		dataSource.collections ?? dataSource.splitCollections ?? [];
-	const configuredCollectionNames = normalizeCollectionNames(rawCollections);
-
 	let collections: DataSourceCollection[];
 
-	if (configuredCollectionNames.length > 0) {
-		collections = configuredCollectionNames.map((name) => ({ name }));
-	} else if (dataSource.type !== "nocobase") {
+	if (dataSource.type !== "nocobase") {
 		throw new Error(
 			`DataSource '${dataSource.name}' (type: '${dataSource.type}') exige collections explícitas em scripts/generate-types/datasources.config.ts`,
 		);
-	} else {
-		collections = await client.fetchCollections();
 	}
+
+	// NocoBase: SEMPRE buscar TODAS as collections da API
+	collections = await client.fetchCollections();
 
 	return { ...ctx, collections };
 };

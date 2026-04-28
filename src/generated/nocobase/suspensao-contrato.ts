@@ -5,7 +5,7 @@
  */
 import type { ComentariosSuspensaoDeContrato } from "./comentarios-suspensao-de-contrato";
 import type { Empresas } from "./empresas";
-import type { Contratos } from "./index";
+import type { Contratos } from "./other/contratos";
 import type { Pessoas } from "./pessoas";
 import type { Users } from "./users";
 

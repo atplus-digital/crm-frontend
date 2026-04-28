@@ -120,18 +120,23 @@ export function generateCollectionsConst(collectionNames: string[]): string {
 
 /**
  * Gera o conteúdo completo do arquivo collections.ts
+ *
+ * @param collectionTypes - Mapa de collection types
+ * @param baseInterfaceNaming - Config de nomenclatura
+ * @param collectionPaths - Mapa de collection → import path (ex: "users" → "./users", "foo" → "./other/foo")
  */
 export function generateCollectionsFile(
 	collectionTypes: CollectionTypesMap,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
-	splitCollectionNames?: string[],
+	collectionPaths?: Map<string, string>,
 ): string {
 	const lines: string[] = [generateFileHeader()];
 
 	const collectionNames = Object.keys(collectionTypes);
 
-	if (splitCollectionNames && splitCollectionNames.length > 0) {
-		const importLines = splitCollectionNames
+	if (collectionPaths && collectionPaths.size > 0) {
+		// Importar todas as collections usando os paths fornecidos
+		const importLines = collectionNames
 			.sort((a, b) => a.localeCompare(b))
 			.map((collectionName) => {
 				const baseTypeName = toCollectionBaseTypeName(
@@ -139,8 +144,10 @@ export function generateCollectionsFile(
 					baseInterfaceNaming,
 				);
 				const typeName = baseTypeName.replace(/Base$/, "");
-				const fileName = toFileName(collectionName);
-				return `import type { ${typeName}, ${typeName}Relations } from "./${fileName}";`;
+				const importPath =
+					collectionPaths.get(collectionName) ??
+					`./${toFileName(collectionName)}`;
+				return `import type { ${typeName}, ${typeName}Relations } from "${importPath}";`;
 			});
 		lines.push(importLines.join("\n"));
 		lines.push("");

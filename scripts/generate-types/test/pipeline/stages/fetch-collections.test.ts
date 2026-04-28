@@ -30,128 +30,8 @@ describe("fetchCollections", () => {
 		vi.clearAllMocks();
 	});
 
-	describe("com collections explícitas configuradas", () => {
-		it("deve usar collections explicitamente configuradas", async () => {
-			const { fetchCollections } = await import(
-				"@scripts/generate-types/src/pipeline/stages/fetch-collections"
-			);
-
-			const ctx = createMockInitContext({
-				dataSource: {
-					name: "test-ds",
-					type: "nocobase",
-					dataSource: "main",
-					outputDir: "/tmp/test",
-					collections: ["users", "posts", "comments"],
-				} as InitContext["dataSource"],
-			});
-
-			const result = await fetchCollections(ctx);
-
-			expect(mockFetchCollections).not.toHaveBeenCalled();
-			expect(result.collections).toEqual([
-				{ name: "users" },
-				{ name: "posts" },
-				{ name: "comments" },
-			]);
-		});
-
-		it("deve deduplicar collections com nomes duplicados", async () => {
-			const { fetchCollections } = await import(
-				"@scripts/generate-types/src/pipeline/stages/fetch-collections"
-			);
-
-			const ctx = createMockInitContext({
-				dataSource: {
-					name: "test-ds",
-					type: "nocobase",
-					dataSource: "main",
-					outputDir: "/tmp/test",
-					collections: ["users", "users", "posts", "users", "posts"],
-				} as InitContext["dataSource"],
-			});
-
-			const result = await fetchCollections(ctx);
-
-			expect(result.collections).toEqual([
-				{ name: "users" },
-				{ name: "posts" },
-			]);
-		});
-
-		it("deve trimar espaços em branco dos nomes das collections", async () => {
-			const { fetchCollections } = await import(
-				"@scripts/generate-types/src/pipeline/stages/fetch-collections"
-			);
-
-			const ctx = createMockInitContext({
-				dataSource: {
-					name: "test-ds",
-					type: "nocobase",
-					dataSource: "main",
-					outputDir: "/tmp/test",
-					collections: ["  users  ", "  posts  ", "comments"],
-				} as InitContext["dataSource"],
-			});
-
-			const result = await fetchCollections(ctx);
-
-			expect(result.collections).toEqual([
-				{ name: "users" },
-				{ name: "posts" },
-				{ name: "comments" },
-			]);
-		});
-
-		it("deve filtrar strings vazias após trim", async () => {
-			const { fetchCollections } = await import(
-				"@scripts/generate-types/src/pipeline/stages/fetch-collections"
-			);
-
-			const ctx = createMockInitContext({
-				dataSource: {
-					name: "test-ds",
-					type: "nocobase",
-					dataSource: "main",
-					outputDir: "/tmp/test",
-					collections: ["users", "", "  ", "posts", ""],
-				} as InitContext["dataSource"],
-			});
-
-			const result = await fetchCollections(ctx);
-
-			expect(result.collections).toEqual([
-				{ name: "users" },
-				{ name: "posts" },
-			]);
-		});
-
-		it("deve retornar array vazio para array de collections vazio", async () => {
-			const { fetchCollections } = await import(
-				"@scripts/generate-types/src/pipeline/stages/fetch-collections"
-			);
-
-			mockFetchCollections.mockResolvedValue([{ name: "users" }]);
-
-			const ctx = createMockInitContext({
-				dataSource: {
-					name: "test-ds",
-					type: "nocobase",
-					dataSource: "main",
-					outputDir: "/tmp/test",
-					collections: [],
-				} as InitContext["dataSource"],
-			});
-
-			const result = await fetchCollections(ctx);
-
-			expect(mockFetchCollections).toHaveBeenCalledOnce();
-			expect(result.collections).toEqual([{ name: "users" }]);
-		});
-	});
-
-	describe("sem collections configuradas (busca da API)", () => {
-		it("deve buscar collections da API para datasource nocobase", async () => {
+	describe("NocoBase - sempre busca da API", () => {
+		it("deve buscar TODAS as collections da API para datasource nocobase", async () => {
 			const { fetchCollections } = await import(
 				"@scripts/generate-types/src/pipeline/stages/fetch-collections"
 			);
@@ -179,23 +59,68 @@ describe("fetchCollections", () => {
 			]);
 		});
 
-		it("deve lançar erro para datasource não-nocobase sem collections", async () => {
+		it("deve buscar da API mesmo com collections configuradas (ignora config)", async () => {
 			const { fetchCollections } = await import(
 				"@scripts/generate-types/src/pipeline/stages/fetch-collections"
 			);
 
+			mockFetchCollections.mockResolvedValue([
+				{ name: "users" },
+				{ name: "posts" },
+				{ name: "comments" },
+			]);
+
 			const ctx = createMockInitContext({
 				dataSource: {
-					name: "custom-ds",
-					type: "custom",
-					dataSource: "custom",
+					name: "test-ds",
+					type: "nocobase",
+					dataSource: "main",
 					outputDir: "/tmp/test",
-				} as unknown as InitContext["dataSource"],
+					// Collections configuradas são IGNORADAS para NocoBase
+					collections: ["users"],
+				} as InitContext["dataSource"],
 			});
 
-			await expect(fetchCollections(ctx)).rejects.toThrow(
-				"DataSource 'custom-ds' (type: 'custom') exige collections explícitas em scripts/generate-types/datasources.config.ts",
+			const result = await fetchCollections(ctx);
+
+			// Deve buscar da API, não usar config
+			expect(mockFetchCollections).toHaveBeenCalledOnce();
+			expect(result.collections).toEqual([
+				{ name: "users" },
+				{ name: "posts" },
+				{ name: "comments" },
+			]);
+		});
+
+		it("deve buscar da API mesmo com splitCollections configuradas", async () => {
+			const { fetchCollections } = await import(
+				"@scripts/generate-types/src/pipeline/stages/fetch-collections"
 			);
+
+			mockFetchCollections.mockResolvedValue([
+				{ name: "users" },
+				{ name: "posts" },
+				{ name: "comments" },
+				{ name: "NegociacoesItens" },
+			]);
+
+			const ctx = createMockInitContext({
+				dataSource: {
+					name: "test-ds",
+					type: "nocobase",
+					dataSource: "main",
+					outputDir: "/tmp/test",
+					// splitCollections só define quais IRÃO PARA ARQUIVOS SEPARADOS
+					splitCollections: ["users"],
+				} as InitContext["dataSource"],
+			});
+
+			const result = await fetchCollections(ctx);
+
+			// Deve buscar TODAS da API
+			expect(mockFetchCollections).toHaveBeenCalledOnce();
+			expect(result.collections).toHaveLength(4);
+			expect(result.collections).toContainEqual({ name: "NegociacoesItens" });
 		});
 
 		it("deve propagar erro da API", async () => {
@@ -218,52 +143,24 @@ describe("fetchCollections", () => {
 		});
 	});
 
-	describe("normalização de collections", () => {
-		it("deve preservar ordem original após deduplicação", async () => {
+	describe("não-NocoBase - exige collections explícitas", () => {
+		it("deve lançar erro para datasource não-nocobase sem collections", async () => {
 			const { fetchCollections } = await import(
 				"@scripts/generate-types/src/pipeline/stages/fetch-collections"
 			);
 
 			const ctx = createMockInitContext({
 				dataSource: {
-					name: "test-ds",
-					type: "nocobase",
-					dataSource: "main",
+					name: "custom-ds",
+					type: "custom",
+					dataSource: "custom",
 					outputDir: "/tmp/test",
-					collections: ["zebra", "apple", "banana", "apple", "zebra"],
-				} as InitContext["dataSource"],
+				} as unknown as InitContext["dataSource"],
 			});
 
-			const result = await fetchCollections(ctx);
-
-			expect(result.collections).toEqual([
-				{ name: "zebra" },
-				{ name: "apple" },
-				{ name: "banana" },
-			]);
-		});
-
-		it("deve manter duplicatas após trim se forem diferentes", async () => {
-			const { fetchCollections } = await import(
-				"@scripts/generate-types/src/pipeline/stages/fetch-collections"
+			await expect(fetchCollections(ctx)).rejects.toThrow(
+				"DataSource 'custom-ds' (type: 'custom') exige collections explícitas em scripts/generate-types/datasources.config.ts",
 			);
-
-			const ctx = createMockInitContext({
-				dataSource: {
-					name: "test-ds",
-					type: "nocobase",
-					dataSource: "main",
-					outputDir: "/tmp/test",
-					collections: ["users", "users", "posts", "posts"],
-				} as InitContext["dataSource"],
-			});
-
-			const result = await fetchCollections(ctx);
-
-			expect(result.collections).toEqual([
-				{ name: "users" },
-				{ name: "posts" },
-			]);
 		});
 	});
 });

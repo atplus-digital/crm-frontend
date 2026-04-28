@@ -4,16 +4,14 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 import type { Empresas } from "./empresas";
-import type {
-	AnexosNegociacoes,
-	Contratos,
-	CuponsDesconto,
-	NegociacoesComentarios,
-	NegociacoesItens,
-	OeQualirun,
-	Pacotes,
-	QualirunAssinaturaGov,
-} from "./index";
+import type { AnexosNegociacoes } from "./other/anexos-negociacoes";
+import type { Contratos } from "./other/contratos";
+import type { CuponsDesconto } from "./other/cupons-desconto";
+import type { NegociacoesComentarios } from "./other/negociacoes-comentarios";
+import type { NegociacoesItens } from "./other/negociacoes-itens";
+import type { OeQualirun } from "./other/oe-qualirun";
+import type { Pacotes } from "./other/pacotes";
+import type { QualirunAssinaturaGov } from "./other/qualirun-assinatura-gov";
 import type { Pessoas } from "./pessoas";
 import type { Users } from "./users";
 
@@ -193,6 +191,7 @@ export interface Negociacoes {
 	f_ordenacao: number;
 	f_parcelas_mensais: number;
 	f_periodo_final: string;
+	f_permuta: boolean;
 	f_pontos_atencao: NegociacoesPontosAtencao;
 	f_responsavel_assinatura: string;
 	f_rg_ie: string;

@@ -3,7 +3,8 @@
  * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
-import type { Departments, Roles } from "./index";
+import type { Departments } from "./other/departments";
+import type { Roles } from "./other/roles";
 
 export const USERS_TABLE_NAME = "users";
 

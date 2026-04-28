@@ -4,11 +4,9 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 import type { Empresas } from "./empresas";
-import type {
-	AnexosTrocaTitularidade,
-	Contratos,
-	TrocasdetitularidadeComentarios,
-} from "./index";
+import type { AnexosTrocaTitularidade } from "./other/anexos-troca-titularidade";
+import type { Contratos } from "./other/contratos";
+import type { TrocasdetitularidadeComentarios } from "./other/trocasdetitularidade-comentarios";
 import type { Pessoas } from "./pessoas";
 import type { Users } from "./users";
 
