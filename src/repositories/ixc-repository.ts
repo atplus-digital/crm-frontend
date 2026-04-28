@@ -5,6 +5,15 @@ import type { ApiRequestConfig, ListParams, PaginatedResponse } from "./types";
 
 const log = createLogger("repositories:ixc");
 
+/**
+ * Normalizes sort array for IXC API.
+ * IXC does not support "-" prefix for descending order.
+ * Strips leading "-" from field names (e.g., "-ultima_atualizacao" -> "ultima_atualizacao").
+ */
+function normalizeSortForIXC(sort: string[]): string[] {
+	return sort.map((field) => field.replace(/^-/, ""));
+}
+
 const IXC_DATASOURCE_HEADER = { "X-Data-Source": "d_db_ixcsoft" } as const;
 
 export class IxcRepository {
@@ -45,7 +54,8 @@ export class IxcRepository {
 			params: {
 				page: params?.page || 1,
 				pageSize: params?.pageSize || 15,
-				...(params?.sort && params.sort.length > 0 && { sort: params.sort }),
+				...(params?.sort &&
+					params.sort.length > 0 && { sort: normalizeSortForIXC(params.sort) }),
 				...(params?.filter && { filter: JSON.stringify(params.filter) }),
 				...(params?.appends && { appends: params.appends }),
 			},
@@ -124,7 +134,8 @@ export class IxcRepository {
 				page: params?.page || 1,
 				pageSize: params?.pageSize || 15,
 				appends: params?.appends || ["f_nc_cliente"],
-				...(params?.sort && params.sort.length > 0 && { sort: params.sort }),
+				...(params?.sort &&
+					params.sort.length > 0 && { sort: normalizeSortForIXC(params.sort) }),
 				...(filter && { filter: JSON.stringify(filter) }),
 			},
 		});
