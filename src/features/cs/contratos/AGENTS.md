@@ -15,18 +15,20 @@ contract-specific table, tabs, filters, and status badges.
 
 ## Key Files
 
-| File                            | Purpose                                                     |
-| ------------------------------- | ----------------------------------------------------------- |
-| `contratos-types.ts`            | Contract entities, filters, sorting, and metadata contracts |
-| `contratos-service.ts`          | IXC list/detail calls and filter mapping                    |
-| `contratos-hooks.ts`            | React Query hooks for list/detail cache keys                |
-| `contratos-table.tsx`           | Main contracts list table composition                       |
-| `contratos-filters.tsx`         | Form filters for cpf/cnpj, nome, status, and contrato ID    |
-| `contrato-status-badge.tsx`     | Status and internet badge renderers                         |
-| `contrato-atendimentos-tab.tsx` | Contract support tickets tab section                        |
-| `contrato-negociacoes-tab.tsx`  | Contract negotiations tab section                           |
-| `contrato-registros-tab.tsx`    | Contract contact/history records tab section                |
-| `contrato-movel-tab.tsx`        | Mobile/line-related contract tab section                    |
+| File                              | Purpose                                                     |
+| --------------------------------- | ----------------------------------------------------------- |
+| `contratos-types.ts`              | Contract entities, filters, sorting, and metadata contracts |
+| `contratos-service.ts`            | IXC list/detail calls and filter mapping                    |
+| `contratos-hooks.ts`              | React Query hooks for list/detail cache keys                |
+| `contratos-table.tsx`             | Main contracts list table composition                       |
+| `contratos-filters.tsx`           | Form filters for cpf/cnpj, nome, status, and contrato ID    |
+| `contrato-status-badge.tsx`       | Status and internet badge renderers                         |
+| `contrato-atendimentos-tab.tsx`   | Contract support tickets tab section                        |
+| `contrato-negociacoes-tab.tsx`    | Contract negotiations tab section                           |
+| `contrato-registros-tab.tsx`      | Contract contact/history records tab section                |
+| `contrato-movel-tab.tsx`          | Mobile/line-related contract tab section                    |
+| `contrato-actions-card.tsx`       | Action buttons card (7 visual placeholders)                 |
+| `informacoes-adicionais-card.tsx` | Informações Adicionais section (4 fields from NocoBase)     |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
