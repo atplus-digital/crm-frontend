@@ -233,6 +233,13 @@ export interface PessoaFisica {
 - { task: "NocoBase collections, API, schema exploration", load: ".agents/skills/nocobase-docs/SKILL.md" }
 - { task: "Tailwind CSS v4 + shadcn/ui setup, theming, dark mode", load: ".agents/skills/tailwind-v4-shadcn/SKILL.md" }
 - { task: "Adding, fixing, or debugging shadcn/ui components", load: ".agents/skills/shadcn/SKILL.md" }
+- { task: "Creating or updating root AGENTS.md or project rules", load: ".agents/skills/agent-rules/SKILL.md" }
+- { task: "Copying, mirroring, or reverse-engineering CRM/NocoBase pages", load: ".agents/skills/crm-page-crawl/SKILL.md" }
+- { task: "Looking up API docs, library references, or technical documentation", load: ".agents/skills/find-docs/SKILL.md" }
+- { task: "Creating or formatting markdown tables", load: ".agents/skills/markdown-tables/SKILL.md" }
+- { task: "Browser testing, automation, form testing, or screenshots", load: ".agents/skills/playwright-skill/SKILL.md" }
+- { task: "Researching React APIs, understanding React behavior or caveats", load: ".agents/skills/react-expert/SKILL.md" }
+- { task: "Implementing React hooks, patterns, performance, or TypeScript best practices", load: ".agents/skills/react-patterns/SKILL.md" }
 <!-- intent-skills:end -->
 
 ## When instructions conflict
