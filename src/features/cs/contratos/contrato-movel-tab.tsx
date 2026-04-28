@@ -7,6 +7,11 @@ import {
 import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useContratoMovel } from "#/features/cs/contratos/contratos-hooks";
 import type { LinhaMovel } from "#/features/cs/contratos/contratos-types";
+import { LINHAMVNO_PORTABILIDADE_LABELS } from "#/generated/ixc/linha-mvno";
+
+function formatPortabilidade(value: LinhaMovel["portabilidade"]): string {
+	return LINHAMVNO_PORTABILIDADE_LABELS[value] ?? String(value);
+}
 
 const MOVEL_COLUMNS = [
 	"DDD",
@@ -41,7 +46,8 @@ const movelTableColumns: ColumnDef<LinhaMovel, unknown>[] = [
 	{
 		accessorKey: "portabilidade",
 		header: "Portabilidade",
-		cell: ({ row }) => detailShortTextCell(row.original.portabilidade),
+		cell: ({ row }) =>
+			detailShortTextCell(formatPortabilidade(row.original.portabilidade)),
 	},
 	{
 		accessorKey: "simcard",

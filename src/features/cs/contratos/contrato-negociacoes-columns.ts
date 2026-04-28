@@ -6,7 +6,19 @@ import {
 } from "#/components/table/detail-table-presets";
 import type { TrocaTitularidade } from "#/features/cs/contratos/contratos-types";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
+import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/nocobase/crm-troca-titularidade";
+import { NEGOCIACOES_STATUS_LABELS } from "#/generated/nocobase/negociacoes";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
+
+function formatTrocaStatus(status: TrocaTitularidade["status"]): string {
+	return CRMTROCATITULARIDADE_STATUS_LABELS[status] ?? String(status);
+}
+
+function formatNegociacaoStatus(
+	status: NegociacaoWithRelations["f_status"],
+): string {
+	return NEGOCIACOES_STATUS_LABELS[status] ?? String(status);
+}
 
 // ---------------------------------------------------------------------------
 // Troca de Titularidade
@@ -48,7 +60,8 @@ export const trocasTitularidadeTableColumns: ColumnDef<
 	{
 		accessorKey: "status",
 		header: "Status",
-		cell: ({ row }) => detailShortTextCell(row.original.status),
+		cell: ({ row }) =>
+			detailShortTextCell(formatTrocaStatus(row.original.status)),
 	},
 	{
 		accessorKey: "id_contrato",
@@ -99,7 +112,8 @@ export const renovacoesTableColumns: ColumnDef<
 	{
 		accessorKey: "f_status",
 		header: "Status",
-		cell: ({ row }) => detailShortTextCell(row.original.f_status),
+		cell: ({ row }) =>
+			detailShortTextCell(formatNegociacaoStatus(row.original.f_status)),
 	},
 	{
 		accessorKey: "f_contrato_ixc",

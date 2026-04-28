@@ -12,7 +12,15 @@ import { Button } from "#/components/ui/button";
 import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useContratoAtendimentos } from "#/features/cs/contratos/contratos-hooks";
 import type { AtendimentoIXC } from "#/features/cs/contratos/contratos-types";
+import { SUTICKET_SUSTATUS_LABELS } from "#/generated/ixc/su-ticket";
 import { formatDatePtBR } from "#/lib/utils";
+
+function formatAtendimentoStatus(status: string): string {
+	return (
+		SUTICKET_SUSTATUS_LABELS[status as keyof typeof SUTICKET_SUSTATUS_LABELS] ??
+		String(status)
+	);
+}
 
 const ATENDIMENTO_COLUMNS = [
 	"ID",
@@ -48,7 +56,8 @@ const atendimentosTableColumns: ColumnDef<AtendimentoIXC, unknown>[] = [
 	{
 		accessorKey: "status",
 		header: "Status",
-		cell: ({ row }) => detailShortTextCell(row.original.status),
+		cell: ({ row }) =>
+			detailShortTextCell(formatAtendimentoStatus(row.original.status)),
 	},
 	{
 		accessorKey: "assunto",

@@ -37,8 +37,8 @@ export function ContratoSummaryCard({ contrato }: ContratoSummaryCardProps) {
 		Number(contrato.valor_unitario) > 0;
 
 	return (
-		<Card className="border-border/50 bg-muted/30">
-			<CardHeader className="pb-4">
+		<Card className=" border-border/50 bg-muted/30 pb-0">
+			<CardHeader>
 				<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 					<div className="flex items-center gap-4">
 						<div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
@@ -68,7 +68,7 @@ export function ContratoSummaryCard({ contrato }: ContratoSummaryCardProps) {
 						</div>
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
-								<Button variant="outline" size="sm" className="gap-1.5">
+								<Button variant="default" size="sm" className="gap-1.5">
 									<MoreHorizontal className="size-4" />
 									<span className="hidden sm:inline">Ações</span>
 								</Button>
@@ -84,7 +84,7 @@ export function ContratoSummaryCard({ contrato }: ContratoSummaryCardProps) {
 					</div>
 				</div>
 			</CardHeader>
-			<CardContent className="border-t bg-background/50 pt-4">
+			<CardContent className="border-t bg-background/70 py-4">
 				<div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-5">
 					<div className="flex items-center gap-2.5">
 						<div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">

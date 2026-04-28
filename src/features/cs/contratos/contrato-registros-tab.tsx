@@ -9,7 +9,24 @@ import {
 import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useContratoRegistros } from "#/features/cs/contratos/contratos-hooks";
 import type { RegistroContato } from "#/features/cs/contratos/contratos-types";
+import {
+	REGISTROSDECONTATO_CATEGORIA_LABELS,
+	REGISTROSDECONTATO_NOTATECNICO_LABELS,
+	REGISTROSDECONTATO_NOTAVENDAS_LABELS,
+} from "#/generated/nocobase/registros-de-contato";
 import { formatDatePtBR } from "#/lib/utils";
+
+function formatCategoria(categoria: RegistroContato["categoria"]): string {
+	return REGISTROSDECONTATO_CATEGORIA_LABELS[categoria] ?? String(categoria);
+}
+
+function formatNota(nota: RegistroContato["nota_vendas"]): string {
+	return REGISTROSDECONTATO_NOTAVENDAS_LABELS[nota] ?? String(nota);
+}
+
+function formatNotaTecnico(nota: RegistroContato["nota_tecnico"]): string {
+	return REGISTROSDECONTATO_NOTATECNICO_LABELS[nota] ?? String(nota);
+}
 
 const REGISTROS_COLUMNS = [
 	"Categoria",
@@ -31,7 +48,8 @@ const registrosTableColumns: ColumnDef<RegistroContato, unknown>[] = [
 	{
 		accessorKey: "categoria",
 		header: "Categoria",
-		cell: ({ row }) => detailShortTextCell(row.original.categoria),
+		cell: ({ row }) =>
+			detailShortTextCell(formatCategoria(row.original.categoria)),
 	},
 	{
 		accessorKey: "motivo_contato",
@@ -41,12 +59,14 @@ const registrosTableColumns: ColumnDef<RegistroContato, unknown>[] = [
 	{
 		accessorKey: "nota_vendas",
 		header: "Nota Vendas",
-		cell: ({ row }) => detailShortTextCell(row.original.nota_vendas),
+		cell: ({ row }) =>
+			detailShortTextCell(formatNota(row.original.nota_vendas)),
 	},
 	{
 		accessorKey: "nota_tecnico",
 		header: "Nota Técnico",
-		cell: ({ row }) => detailShortTextCell(row.original.nota_tecnico),
+		cell: ({ row }) =>
+			detailShortTextCell(formatNotaTecnico(row.original.nota_tecnico)),
 	},
 	{
 		id: "pendencia",

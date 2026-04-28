@@ -7,7 +7,12 @@ import {
 } from "#/components/table/detail-table-presets";
 import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import type { Fatura } from "#/features/cs/contratos/contratos-types";
+import { FNARECEBER_STATUS_LABELS } from "#/generated/ixc/fn-areceber";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
+
+function formatFaturaStatus(status: Fatura["status"]): string {
+	return FNARECEBER_STATUS_LABELS[status] ?? String(status);
+}
 
 interface FaturasTableProps {
 	faturas: Fatura[];
@@ -19,7 +24,8 @@ const FATURA_COLUMNS: ColumnDef<Fatura, unknown>[] = [
 	{
 		accessorKey: "status",
 		header: "Status",
-		cell: ({ row }) => detailShortTextCell(row.original.status),
+		cell: ({ row }) =>
+			detailShortTextCell(formatFaturaStatus(row.original.status)),
 	},
 	{
 		accessorKey: "valor",

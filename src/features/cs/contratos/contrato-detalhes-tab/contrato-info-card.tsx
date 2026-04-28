@@ -2,7 +2,25 @@ import { FileText } from "lucide-react";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
+import {
+	CLIENTECONTRATO_TIPO_LABELS,
+	CLIENTECONTRATO_TIPOCOBRANCA_LABELS,
+} from "#/generated/ixc/cliente-contrato";
 import { formatDatePtBR } from "#/lib/utils";
+
+function formatTipo(tipo: ContratoWithCliente["tipo"]): string {
+	if (!tipo) return "—";
+	return CLIENTECONTRATO_TIPO_LABELS[tipo] ?? String(tipo);
+}
+
+function formatTipoCobranca(
+	tipoCobranca: ContratoWithCliente["tipo_cobranca"],
+): string {
+	if (!tipoCobranca) return "—";
+	return (
+		CLIENTECONTRATO_TIPOCOBRANCA_LABELS[tipoCobranca] ?? String(tipoCobranca)
+	);
+}
 
 interface ContratoInfoCardProps {
 	contrato: ContratoWithCliente;
@@ -20,7 +38,7 @@ export function ContratoInfoCard({ contrato }: ContratoInfoCardProps) {
 				<DetailField label="Descrição Contrato">
 					{contrato.contrato}
 				</DetailField>
-				<DetailField label="Tipo">{contrato.tipo ?? "—"}</DetailField>
+				<DetailField label="Tipo">{formatTipo(contrato.tipo)}</DetailField>
 				<DetailField label="Data de Ativação">
 					{formatDatePtBR(contrato.data_ativacao ?? "")}
 				</DetailField>
@@ -34,7 +52,7 @@ export function ContratoInfoCard({ contrato }: ContratoInfoCardProps) {
 					{contrato.email_cobranca ?? "—"}
 				</DetailField>
 				<DetailField label="Tipo de Cobrança">
-					{contrato.tipo_cobranca ?? "—"}
+					{formatTipoCobranca(contrato.tipo_cobranca)}
 				</DetailField>
 				<DetailField label="Parcelas em Atraso">
 					{contrato.num_parcelas_atraso ?? "—"}

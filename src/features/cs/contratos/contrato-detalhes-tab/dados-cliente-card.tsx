@@ -2,6 +2,15 @@ import { User } from "lucide-react";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
+import { CLIENTE_TIPOPESSOA_LABELS } from "#/generated/ixc/cliente";
+
+function formatTipoPessoa(tipo: string | null | undefined): string {
+	if (!tipo) return "—";
+	return (
+		CLIENTE_TIPOPESSOA_LABELS[tipo as keyof typeof CLIENTE_TIPOPESSOA_LABELS] ??
+		String(tipo)
+	);
+}
 
 interface DadosClienteCardProps {
 	contrato: ContratoWithCliente;
@@ -27,7 +36,7 @@ export function DadosClienteCard({ contrato }: DadosClienteCardProps) {
 					{cliente?.telefone_celular ?? "—"}
 				</DetailField>
 				<DetailField label="Tipo de Pessoa">
-					{cliente?.tipo_pessoa ?? "—"}
+					{formatTipoPessoa(cliente?.tipo_pessoa)}
 				</DetailField>
 			</div>
 		</DetailSection>
