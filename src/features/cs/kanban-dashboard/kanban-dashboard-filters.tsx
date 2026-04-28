@@ -101,7 +101,7 @@ export function KanbanDashboardFilterBar({
 	return (
 		<div ref={containerRef}>
 			<FilterLayout
-				className="space-y-1"
+				className="space-y-4"
 				fieldsClassName="gap-y-2 gap-x-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
 				actions={
 					<FilterActions
@@ -125,18 +125,6 @@ export function KanbanDashboardFilterBar({
 						compact
 					/>
 				</div>
-				<div className="w-full">
-					<FilterBadgeGroupWithMore<NegociacaoMotivo>
-						label="Tipo de Negociação"
-						primaryOptions={PRIMARY_NEGOCIACAO_OPTIONS}
-						extraOptions={EXTRA_NEGOCIACAO_OPTIONS}
-						value={filters.tipoNegociacao}
-						onChange={handleTipoNegociacaoChange}
-						allLabel="Todos"
-						compact
-						disabled={!showNegociacaoFilter}
-					/>
-				</div>
 				<FilterInputField
 					id={searchId}
 					label="Nome do Cliente"
@@ -155,6 +143,18 @@ export function KanbanDashboardFilterBar({
 						onFilter({ ...filters, responsibleName: value || undefined })
 					}
 				/>
+				<div className="w-full">
+					<FilterBadgeGroupWithMore<NegociacaoMotivo>
+						label="Tipo de Negociação"
+						primaryOptions={PRIMARY_NEGOCIACAO_OPTIONS}
+						extraOptions={EXTRA_NEGOCIACAO_OPTIONS}
+						value={filters.tipoNegociacao}
+						onChange={handleTipoNegociacaoChange}
+						allLabel="Todos"
+						compact
+						disabled={!showNegociacaoFilter}
+					/>
+				</div>
 			</FilterLayout>
 		</div>
 	);
