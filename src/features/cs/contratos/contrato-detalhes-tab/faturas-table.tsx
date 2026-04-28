@@ -1,13 +1,11 @@
-import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { EmptyTable } from "#/components/table/empty-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "#/components/ui/card";
-import { Skeleton } from "#/components/ui/skeleton";
+	detailDateCell,
+	detailMoneyCell,
+	detailShortTextCell,
+} from "#/components/table/detail-table-presets";
+import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import type { Fatura } from "#/features/cs/contratos/contratos-types";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 
@@ -17,7 +15,32 @@ interface FaturasTableProps {
 	error: Error | null;
 }
 
-const FATURA_COLUMNS = [
+const FATURA_COLUMNS: ColumnDef<Fatura, unknown>[] = [
+	{
+		accessorKey: "status",
+		header: "Status",
+		cell: ({ row }) => detailShortTextCell(row.original.status),
+	},
+	{
+		accessorKey: "valor",
+		header: "Valor",
+		cell: ({ row }) => detailMoneyCell(row.original.valor, formatCurrency),
+	},
+	{
+		accessorKey: "data_vencimento",
+		header: "Data de Vencimento",
+		cell: ({ row }) =>
+			detailDateCell(row.original.data_vencimento, formatDatePtBR),
+	},
+	{
+		accessorKey: "data_pagamento",
+		header: "Data de Pagamento",
+		cell: ({ row }) =>
+			detailDateCell(row.original.data_pagamento, formatDatePtBR),
+	},
+];
+
+const FATURA_EMPTY_COLUMNS = [
 	"Status",
 	"Valor",
 	"Data de Vencimento",
@@ -25,61 +48,23 @@ const FATURA_COLUMNS = [
 ];
 
 export function FaturasTable({ faturas, isLoading, error }: FaturasTableProps) {
+	const table = useDataTable({
+		columns: FATURA_COLUMNS,
+		data: faturas,
+	});
+
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>Últimas Faturas</CardTitle>
-				<CardDescription>
-					Últimas faturas geradas para este contrato
-				</CardDescription>
-			</CardHeader>
-			<CardContent>
-				{isLoading ? (
-					<Skeleton className="h-32 w-full" />
-				) : error ? (
-					<InlineErrorAlert>
-						Erro ao carregar faturas: {error.message}
-					</InlineErrorAlert>
-				) : faturas.length === 0 ? (
-					<EmptyTable
-						columns={FATURA_COLUMNS}
-						message="Nenhuma fatura encontrada"
-					/>
-				) : (
-					<div className="overflow-x-auto">
-						<table className="w-full text-sm">
-							<thead className="bg-muted/50">
-								<tr>
-									<th className="px-4 py-3 text-left font-medium">Status</th>
-									<th className="px-4 py-3 text-left font-medium">Valor</th>
-									<th className="px-4 py-3 text-left font-medium">
-										Data de Vencimento
-									</th>
-									<th className="px-4 py-3 text-left font-medium">
-										Data de Pagamento
-									</th>
-								</tr>
-							</thead>
-							<tbody className="divide-y divide-border">
-								{faturas.map((fatura) => (
-									<tr key={fatura.id}>
-										<td className="px-4 py-3">{fatura.status || "—"}</td>
-										<td className="px-4 py-3">
-											{formatCurrency(Number(fatura.valor))}
-										</td>
-										<td className="px-4 py-3">
-											{formatDatePtBR(fatura.data_vencimento ?? "")}
-										</td>
-										<td className="px-4 py-3">
-											{formatDatePtBR(fatura.data_pagamento ?? "")}
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				)}
-			</CardContent>
-		</Card>
+		<ContractTabWrapper
+			title="Últimas Faturas"
+			description="Últimas faturas geradas para este contrato"
+			isLoading={isLoading}
+			error={error}
+			errorMessage="Erro ao carregar faturas"
+			isEmpty={faturas.length === 0}
+			emptyMessage="Nenhuma fatura encontrada"
+			emptyColumns={FATURA_EMPTY_COLUMNS}
+		>
+			<DataTable table={table} />
+		</ContractTabWrapper>
 	);
 }

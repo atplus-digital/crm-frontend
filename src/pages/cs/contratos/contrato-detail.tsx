@@ -8,7 +8,6 @@ import {
 import { Outlet, useParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/page-layout/page-layout";
-import { Skeleton } from "#/components/ui/skeleton";
 import { BackButton } from "#/features/cs/components/back-button";
 import { useContratoById } from "#/features/cs/contratos/contratos-hooks";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
@@ -38,17 +37,7 @@ export function ContratoDetailPage() {
 
 	return (
 		<PageLayout
-			prefixElement={<BackButton fallbackTo={routePaths.cs_contratos} />}
-			title={
-				isLoading ? (
-					<Skeleton className="h-7 w-48" />
-				) : (
-					`Contrato #${contrato?.id ?? id}`
-				)
-			}
-			subtitle={
-				!isLoading && contrato?.contrato ? contrato.contrato : undefined
-			}
+			tabsPrefixElement={<BackButton fallbackTo={routePaths.cs_contratos} />}
 			tabs={[
 				{
 					value: "detalhes",

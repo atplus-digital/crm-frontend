@@ -7,12 +7,14 @@ export interface PageTab {
 }
 
 export interface PageLayoutProps {
-	title: ReactNode;
+	title?: ReactNode;
 	subtitle?: ReactNode;
 	prefixElement?: ReactNode;
 	sideElement?: ReactNode;
 	tabs?: PageTab[];
 	defaultTab?: string;
+	/** Element to show next to tabs (e.g., BackButton) */
+	tabsPrefixElement?: ReactNode;
 	children: ReactNode;
 	className?: string;
 }

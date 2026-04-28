@@ -13,6 +13,9 @@ import type { PageLayoutProps } from "./page-layout.types";
  * routes as children in the router. `usePageTab` reads the active tab from the
  * URL path segment so tabs stay in sync when navigating.
  *
+ * When using `tabsPrefixElement` without `title`, the header is hidden and
+ * only tabs with the prefix element are shown (useful for detail pages).
+ *
  * @example
  * ```tsx
  * // Page component (parent route)
@@ -38,10 +41,12 @@ export function PageLayout({
 	sideElement,
 	tabs,
 	defaultTab,
+	tabsPrefixElement,
 	children,
 	className,
 }: PageLayoutProps) {
 	const hasTabs = Boolean(tabs?.length && defaultTab);
+	const hasHeader = Boolean(title || prefixElement);
 	const tabValues = (tabs ?? []).map((tab) => tab.value);
 	const [activeTab, setActiveTab] = usePageTab(defaultTab ?? "", tabValues);
 
@@ -54,29 +59,36 @@ export function PageLayout({
 		>
 			<main className="flex-1">
 				<div className="p-4">
-					<div className="space-y-4 ">
-						<div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-							<div className="flex items-center gap-4">
-								{prefixElement && <div>{prefixElement}</div>}
-								<div>
-									<h1 className="text-2xl font-semibold tracking-tight">
-										{title}
-									</h1>
-									{subtitle && (
-										<p className="text-sm text-muted-foreground">{subtitle}</p>
-									)}
+					<div className="space-y-4">
+						{hasHeader ? (
+							<div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+								<div className="flex items-center gap-4">
+									{prefixElement && <div>{prefixElement}</div>}
+									<div>
+										<h1 className="text-2xl font-semibold tracking-tight">
+											{title}
+										</h1>
+										{subtitle && (
+											<p className="text-sm text-muted-foreground">
+												{subtitle}
+											</p>
+										)}
+									</div>
 								</div>
+								{sideElement && <div>{sideElement}</div>}
 							</div>
-							{sideElement && <div>{sideElement}</div>}
-						</div>
+						) : null}
 
 						{hasTabs ? (
 							<Tabs
 								value={activeTab}
 								onValueChange={setActiveTab}
-								className="w-full "
+								className="w-full"
 							>
-								<div className="overflow-x-auto pb-4">
+								<div className="flex items-center gap-4 overflow-x-auto pb-4">
+									{tabsPrefixElement && (
+										<div className="flex-shrink-0">{tabsPrefixElement}</div>
+									)}
 									<TabsList variant="line" className="flex whitespace-nowrap">
 										{(tabs ?? []).map((tab) => (
 											<TabsTrigger key={tab.value} value={tab.value}>

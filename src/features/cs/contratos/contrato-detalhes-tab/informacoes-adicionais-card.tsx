@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
-import { Skeleton } from "#/components/ui/skeleton";
+import { ClipboardList } from "lucide-react";
 import { DetailField } from "#/features/cs/components/detail-field";
+import { DetailSection } from "#/features/cs/components/detail-section";
 import type { DadosAdicionaisContrato } from "#/features/cs/contratos/contratos-types";
 import {
 	DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS,
@@ -42,44 +42,26 @@ export function InformacoesAdicionaisCard({
 	data,
 	isLoading,
 }: InformacoesAdicionaisCardProps) {
-	if (isLoading) {
-		return (
-			<Card>
-				<CardHeader>
-					<CardTitle>Informações Adicionais</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-						{["origem", "perfil", "pagamento", "pessoas"].map((key) => (
-							<Skeleton key={key} className="h-12" />
-						))}
-					</div>
-				</CardContent>
-			</Card>
-		);
-	}
-
-	if (!data) {
-		return (
-			<Card>
-				<CardHeader>
-					<CardTitle>Informações Adicionais</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<p className="text-sm text-muted-foreground">
-						Nenhum dado adicional disponível.
-					</p>
-				</CardContent>
-			</Card>
-		);
-	}
-
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>Informações Adicionais</CardTitle>
-			</CardHeader>
-			<CardContent>
+		<DetailSection
+			title="Informações Adicionais"
+			icon={<ClipboardList className="size-4 text-primary" />}
+			description="Dados complementares do cliente"
+		>
+			{isLoading ? (
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+					{["origem", "perfil", "pagamento", "pessoas"].map((key) => (
+						<div key={key} className="flex flex-col gap-1">
+							<div className="bg-muted h-3 w-24 animate-pulse rounded" />
+							<div className="bg-muted h-4 w-32 animate-pulse rounded" />
+						</div>
+					))}
+				</div>
+			) : !data ? (
+				<p className="text-sm text-muted-foreground">
+					Nenhum dado adicional disponível.
+				</p>
+			) : (
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
 					<DetailField label="Origem do Cliente">
 						{data.f_origem_cliente || "—"}
@@ -94,7 +76,7 @@ export function InformacoesAdicionaisCard({
 						{data.f_pessoas_na_residencia ?? "—"}
 					</DetailField>
 				</div>
-			</CardContent>
-		</Card>
+			)}
+		</DetailSection>
 	);
 }

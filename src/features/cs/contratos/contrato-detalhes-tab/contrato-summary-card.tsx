@@ -1,0 +1,160 @@
+import { Calendar, DollarSign, Hash, MoreHorizontal, User } from "lucide-react";
+import { Button } from "#/components/ui/button";
+import { Card, CardContent, CardHeader } from "#/components/ui/card";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "#/components/ui/dropdown-menu";
+import {
+	ContratoStatusBadge,
+	InternetStatusBadge,
+} from "#/features/cs/contratos/contrato-status-badge";
+import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
+import { formatCurrency, formatDatePtBR } from "#/lib/utils";
+
+const QUICK_ACTIONS = [
+	{ label: "Nova Contratação" },
+	{ label: "Transferir" },
+	{ label: "Renegociar" },
+	{ label: "Trocar Endereço" },
+	{ label: "Suspender" },
+	{ label: "Reter" },
+] as const;
+
+interface ContratoSummaryCardProps {
+	contrato: ContratoWithCliente;
+}
+
+export function ContratoSummaryCard({ contrato }: ContratoSummaryCardProps) {
+	const clientInitial =
+		contrato.f_nc_cliente?.razao?.charAt(0)?.toUpperCase() ?? "?";
+	const hasValorUnitario =
+		contrato.valor_unitario !== null &&
+		contrato.valor_unitario !== undefined &&
+		contrato.valor_unitario !== "" &&
+		Number(contrato.valor_unitario) > 0;
+
+	return (
+		<Card className="border-border/50 bg-muted/30">
+			<CardHeader className="pb-4">
+				<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+					<div className="flex items-center gap-4">
+						<div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
+							{clientInitial}
+						</div>
+						<div>
+							<h1 className="text-xl font-bold tracking-tight">
+								{contrato.contrato}
+							</h1>
+							<p className="text-sm text-muted-foreground">
+								Contrato IXC #{contrato.id}
+							</p>
+						</div>
+					</div>
+					<div className="flex flex-wrap items-center gap-2">
+						<div className="flex items-center gap-2 rounded-lg bg-background/80 px-3 py-1.5">
+							<span className="text-xs font-medium text-muted-foreground">
+								Status Contrato
+							</span>
+							<ContratoStatusBadge status={contrato.status} />
+						</div>
+						<div className="flex items-center gap-2 rounded-lg bg-background/80 px-3 py-1.5">
+							<span className="text-xs font-medium text-muted-foreground">
+								Status Serviço
+							</span>
+							<InternetStatusBadge status={contrato.status_internet} />
+						</div>
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button variant="outline" size="sm" className="gap-1.5">
+									<MoreHorizontal className="size-4" />
+									<span className="hidden sm:inline">Ações</span>
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="end" className="w-48">
+								{QUICK_ACTIONS.map((action) => (
+									<DropdownMenuItem key={action.label}>
+										{action.label}
+									</DropdownMenuItem>
+								))}
+							</DropdownMenuContent>
+						</DropdownMenu>
+					</div>
+				</div>
+			</CardHeader>
+			<CardContent className="border-t bg-background/50 pt-4">
+				<div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-5">
+					<div className="flex items-center gap-2.5">
+						<div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
+							<User className="size-4 text-primary" />
+						</div>
+						<div className="min-w-0 flex-1">
+							<p className="text-xs font-medium text-muted-foreground">
+								Cliente
+							</p>
+							<p className="truncate text-sm font-semibold">
+								{contrato.f_nc_cliente?.razao ?? "—"}
+							</p>
+						</div>
+					</div>
+					<div className="flex items-center gap-2.5">
+						<div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
+							<Hash className="size-4 text-primary" />
+						</div>
+						<div className="min-w-0 flex-1">
+							<p className="text-xs font-medium text-muted-foreground">
+								CPF/CNPJ
+							</p>
+							<p className="truncate text-sm font-semibold">
+								{contrato.f_nc_cliente?.cnpj_cpf ?? "—"}
+							</p>
+						</div>
+					</div>
+					<div className="flex items-center gap-2.5">
+						<div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
+							<Calendar className="size-4 text-primary" />
+						</div>
+						<div className="min-w-0 flex-1">
+							<p className="text-xs font-medium text-muted-foreground">
+								Ativação
+							</p>
+							<p className="text-sm font-semibold">
+								{formatDatePtBR(contrato.data_ativacao ?? "") || "—"}
+							</p>
+						</div>
+					</div>
+					<div className="flex items-center gap-2.5">
+						<div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
+							<Calendar className="size-4 text-primary" />
+						</div>
+						<div className="min-w-0 flex-1">
+							<p className="text-xs font-medium text-muted-foreground">
+								Validade
+							</p>
+							<p className="text-sm font-semibold">
+								{formatDatePtBR(contrato.data_validade ?? "") || "—"}
+							</p>
+						</div>
+					</div>
+					{hasValorUnitario && (
+						<div className="flex items-center gap-2.5">
+							<div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
+								<DollarSign className="size-4 text-emerald-600 dark:text-emerald-400" />
+							</div>
+							<div className="min-w-0 flex-1">
+								<p className="text-xs font-medium text-muted-foreground">
+									Valor Mensal
+								</p>
+								<p className="truncate text-sm font-bold text-emerald-600 dark:text-emerald-400">
+									{formatCurrency(Number(contrato.valor_unitario))}
+								</p>
+							</div>
+						</div>
+					)}
+				</div>
+			</CardContent>
+		</Card>
+	);
+}

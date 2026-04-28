@@ -1,13 +1,10 @@
-import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { EmptyTable } from "#/components/table/empty-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "#/components/ui/card";
-import { Skeleton } from "#/components/ui/skeleton";
+	detailMoneyCell,
+	detailShortTextCell,
+} from "#/components/table/detail-table-presets";
+import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import type { ProdutoContrato } from "#/features/cs/contratos/contratos-types";
 import { formatCurrency } from "#/lib/utils";
 
@@ -17,58 +14,46 @@ interface ProdutosTableProps {
 	error: Error | null;
 }
 
-const PRODUTO_COLUMNS = ["Descrição", "Valor", "Quantidade"];
+const PRODUTO_COLUMNS: ColumnDef<ProdutoContrato, unknown>[] = [
+	{
+		accessorKey: "descricao",
+		header: "Descrição",
+		cell: ({ row }) => detailShortTextCell(row.original.descricao),
+	},
+	{
+		accessorKey: "valor_unit",
+		header: "Valor",
+		cell: ({ row }) => detailMoneyCell(row.original.valor_unit, formatCurrency),
+	},
+	{
+		accessorKey: "qtde",
+		header: "Quantidade",
+		cell: ({ row }) => detailShortTextCell(row.original.qtde),
+	},
+];
 
 export function ProdutosTable({
 	produtos,
 	isLoading,
 	error,
 }: ProdutosTableProps) {
+	const table = useDataTable({
+		columns: PRODUTO_COLUMNS,
+		data: produtos,
+	});
+
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>Produtos</CardTitle>
-				<CardDescription>Produtos vinculados ao contrato</CardDescription>
-			</CardHeader>
-			<CardContent>
-				{isLoading ? (
-					<Skeleton className="h-32 w-full" />
-				) : error ? (
-					<InlineErrorAlert>
-						Erro ao carregar produtos: {error.message}
-					</InlineErrorAlert>
-				) : produtos.length === 0 ? (
-					<EmptyTable
-						columns={PRODUTO_COLUMNS}
-						message="Nenhum produto encontrado"
-					/>
-				) : (
-					<div className="overflow-x-auto">
-						<table className="w-full text-sm">
-							<thead className="bg-muted/50">
-								<tr>
-									<th className="px-4 py-3 text-left font-medium">Descrição</th>
-									<th className="px-4 py-3 text-left font-medium">Valor</th>
-									<th className="px-4 py-3 text-left font-medium">
-										Quantidade
-									</th>
-								</tr>
-							</thead>
-							<tbody className="divide-y divide-border">
-								{produtos.map((produto) => (
-									<tr key={produto.id}>
-										<td className="px-4 py-3">{produto.descricao || "—"}</td>
-										<td className="px-4 py-3">
-											{formatCurrency(Number(produto.valor_unit))}
-										</td>
-										<td className="px-4 py-3">{produto.qtde ?? "—"}</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				)}
-			</CardContent>
-		</Card>
+		<ContractTabWrapper
+			title="Produtos"
+			description="Produtos vinculados ao contrato"
+			isLoading={isLoading}
+			error={error}
+			errorMessage="Erro ao carregar produtos"
+			isEmpty={produtos.length === 0}
+			emptyMessage="Nenhum produto encontrado"
+			emptyColumns={["Descrição", "Valor", "Quantidade"]}
+		>
+			<DataTable table={table} />
+		</ContractTabWrapper>
 	);
 }
