@@ -23,6 +23,7 @@ export const routePaths = {
 	cs_vendas_id: "/cs/vendas/:id",
 	cs_vendas_lista: "/cs/vendas/lista",
 	cs_vendas_id_tab: "/cs/vendas/:id/:tab/*",
+	cs_propostas: "/cs/propostas",
 	login: "/login",
 	forbidden: "/forbidden",
 	reset_password: "/reset-password",

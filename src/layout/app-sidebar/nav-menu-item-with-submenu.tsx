@@ -8,7 +8,7 @@ import {
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
 } from "#/components/ui/sidebar";
-import { isNavPathActive } from "#/layout/nav-config";
+import { isNavItemActive } from "#/layout/nav-config";
 import { cn } from "#/lib/utils";
 import type { NavItemWithChildren } from "./nav-menu-item";
 
@@ -43,7 +43,7 @@ export function NavMenuItemWithSubmenu({
 						<SidebarMenuSubItem key={child.to}>
 							<SidebarMenuSubButton
 								asChild
-								isActive={isNavPathActive(pathname, child.to)}
+								isActive={isNavItemActive(pathname, child)}
 							>
 								<Link to={child.to}>
 									{child.icon ?? <Link2 className="size-4" />}

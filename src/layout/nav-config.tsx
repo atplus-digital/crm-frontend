@@ -73,6 +73,11 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 						icon: <Users />,
 						to: routePaths.cs_vendas,
 					},
+					{
+						label: "Propostas",
+						icon: <Users />,
+						to: routePaths.cs_propostas,
+					},
 				],
 			},
 
@@ -109,8 +114,20 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 	},
 ];
 
-export function isNavPathActive(pathname: string, to: string): boolean {
-	return pathname === to || pathname.startsWith(`${to}/`);
+/**
+ * Check if a nav item is active for the given pathname.
+ * - Leaf items (no children): exact match only
+ * - Parent items (have children): exact match + child routes
+ */
+export function isNavItemActive(pathname: string, item: NavItem): boolean {
+	const to = item.to;
+	if (pathname === to) return true;
+	if (!pathname.startsWith(to)) return false;
+	// For leaf items (no children), require exact match only
+	if (!item.children?.length) return false;
+	// For parent items, match child routes (must have / after to)
+	const after = pathname.slice(to.length);
+	return after.startsWith("/");
 }
 
 export function getActiveNavSection(
@@ -120,7 +137,9 @@ export function getActiveNavSection(
 	return (
 		sections.find((section) => {
 			const matchers = section.matches?.length ? section.matches : [section.to];
-			return matchers.some((matcher) => isNavPathActive(pathname, matcher));
+			return matchers.some(
+				(matcher) => pathname === matcher || pathname.startsWith(`${matcher}/`),
+			);
 		}) ?? sections[0]
 	);
 }

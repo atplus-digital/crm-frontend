@@ -3,6 +3,7 @@ import { contratosRoutes } from "./contratos/routes";
 import { kanbanDashboardRoutes } from "./kanban-dashboard/routes";
 import { negociacoesRoutes } from "./negociacoes/routes";
 import { pessoasRoutes } from "./pessoas/routes";
+import { propostasRoutes } from "./propostas/routes";
 import { suspensaoDeContratoRoutes } from "./suspensao-de-contrato/routes";
 import { trocaDeEnderecoRoutes } from "./troca-de-endereco/routes";
 import { trocaDeTitularidadeRoutes } from "./troca-de-titularidade/routes";
@@ -16,5 +17,6 @@ export const csRoutes = [
 	...trocaDeTitularidadeRoutes,
 	...trocaDeEnderecoRoutes,
 	...suspensaoDeContratoRoutes,
+	...propostasRoutes,
 	...vendasRoutes,
 ] satisfies RouteObject[];

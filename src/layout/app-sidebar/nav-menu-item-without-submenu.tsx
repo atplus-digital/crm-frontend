@@ -1,11 +1,11 @@
 import { Link2 } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import { SidebarMenuButton, SidebarMenuItem } from "#/components/ui/sidebar";
-import { isNavPathActive, type NavItem } from "#/layout/nav-config";
+import { isNavItemActive, type NavItem } from "#/layout/nav-config";
 
 export function NavMenuItemWithoutSubmenu({ item }: { item: NavItem }) {
 	const { pathname } = useLocation();
-	const isActive = isNavPathActive(pathname, item.to);
+	const isActive = isNavItemActive(pathname, item);
 
 	return (
 		<SidebarMenuItem key={item.to}>
