@@ -61,13 +61,31 @@ export type UnifiedStatusKey = (typeof UNIFIED_STATUS_COLUMNS)[number]["key"];
 // Source collection discriminator
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Note: "neg" is always shown (not in SourceCollection) with a separate
-// "tipo de negociação" filter using f_motivo field
-export type SourceCollection = "tt" | "te" | "sc";
+// Source collections for the "Tipo de Solicitação" filter
+// "neg" (Negociação) is included here and controlled by this filter
+export type SourceCollection = "tt" | "te" | "sc" | "neg";
 
 // Tipo de negociação options derived from f_motivo field
 export { NEGOCIACOES_MOTIVO_LABELS };
 export type NegociacaoMotivo = keyof typeof NEGOCIACOES_MOTIVO_LABELS;
+
+// Primary tipo de negociação options (always visible in filter)
+export const PRIMARY_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacaoMotivo[] = [
+	"M",
+	"N",
+	"L",
+] as const;
+
+// Extra tipo de negociação options (hidden by default, shown in "+" badge)
+export const EXTRA_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacaoMotivo[] = [
+	"I",
+	"D",
+	"U",
+	"R",
+	"T",
+	"S",
+	"P",
+] as const;
 
 // SC actual API values: "0"|"1"|"2"|"3"|"4" (matches generated SuspensaoContratoStatus)
 export type SuspensaoContratoOverrideStatus = "0" | "1" | "2" | "3" | "4";
@@ -81,10 +99,7 @@ export type NegociacaoOverrideStatus = "1" | "2" | "3" | "4" | "5" | "6";
 
 type BadgeStyle = { label: string; colorClass: string; bgClass: string };
 
-export const SOURCE_COLLECTION_BADGE: Record<
-	SourceCollection | "neg",
-	BadgeStyle
-> = {
+export const SOURCE_COLLECTION_BADGE: Record<SourceCollection, BadgeStyle> = {
 	tt: {
 		label: "Troca Tit.",
 		colorClass: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
@@ -195,6 +210,12 @@ export const SOURCE_COLLECTION_OPTIONS: BadgeOption<SourceCollection>[] = [
 			"bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
 		bgClass:
 			"bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
+	},
+	{
+		value: "neg",
+		label: "Negociação",
+		colorClass: "bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200",
+		bgClass: "bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200",
 	},
 ];
 

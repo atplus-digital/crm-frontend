@@ -277,6 +277,7 @@ const EMPTY_FILTERS: KanbanDashboardFilters = {};
 export function useKanbanDashboardData(filters: KanbanDashboardFilters = {}) {
 	const activeFilters = filters ?? EMPTY_FILTERS;
 
+	// Always fetch all 4 collections - filtering is done client-side based on sourceCollections
 	const [ttResult, teResult, scResult, negResult] = useQueries({
 		queries: [
 			trocaTitularidadeQueryOptions(activeFilters),
@@ -303,28 +304,34 @@ export function useKanbanDashboardData(filters: KanbanDashboardFilters = {}) {
 
 	const cards: KanbanDashboardCard[] = [];
 
-	// Client-side filter: sourceCollections (array filter)
-	// Note: "neg" cards are always included; they are filtered by tipoNegociacao instead
+	// Determine which collections to include based on sourceCollections filter
+	const selectedCollections = activeFilters.sourceCollections;
+	const showNegociacoes =
+		!selectedCollections ||
+		selectedCollections.length === 0 ||
+		selectedCollections.includes("neg");
+
+	// Client-side filter: sourceCollections (array filter) based on what's selected
 	if (
 		activeFilters.sourceCollections &&
 		activeFilters.sourceCollections.length > 0
 	) {
-		const selectedCollections = new Set(activeFilters.sourceCollections);
+		const selectedSet = new Set(activeFilters.sourceCollections);
 
-		if (ttResult.data && selectedCollections.has("tt")) {
+		if (ttResult.data && selectedSet.has("tt")) {
 			cards.push(...ttResult.data.data.map(normalizeTrocaTitularidade));
 		}
 
-		if (teResult.data && selectedCollections.has("te")) {
+		if (teResult.data && selectedSet.has("te")) {
 			cards.push(...teResult.data.data.map(normalizeTrocaEndereco));
 		}
 
-		if (scResult.data && selectedCollections.has("sc")) {
+		if (scResult.data && selectedSet.has("sc")) {
 			cards.push(...scResult.data.data.map(normalizeSuspensaoContrato));
 		}
 
-		// Always include neg cards (filtered by tipoNegociacao server-side)
-		if (negResult.data) {
+		// Include neg cards only if "neg" is selected
+		if (showNegociacoes && negResult.data) {
 			cards.push(...negResult.data.data.map(normalizeNegociacao));
 		}
 	} else {

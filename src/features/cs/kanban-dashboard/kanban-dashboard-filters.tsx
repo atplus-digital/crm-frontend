@@ -2,6 +2,7 @@ import { useId, useRef } from "react";
 import {
 	FilterActions,
 	FilterBadgeGroup,
+	FilterBadgeGroupWithMore,
 	FilterInputField,
 	FilterLayout,
 	flushFilters,
@@ -11,7 +12,12 @@ import type {
 	NegociacaoMotivo,
 	SourceCollection,
 } from "./kanban-dashboard-types";
-import { SOURCE_COLLECTION_OPTIONS } from "./kanban-dashboard-types";
+import {
+	EXTRA_NEGOCIACAO_MOTIVO_OPTIONS,
+	NEGOCIACAO_MOTIVO_BADGE,
+	PRIMARY_NEGOCIACAO_MOTIVO_OPTIONS,
+	SOURCE_COLLECTION_OPTIONS,
+} from "./kanban-dashboard-types";
 
 // ---------------------------------------------------------------------------
 // Props
@@ -23,27 +29,22 @@ interface KanbanDashboardFilterBarProps {
 }
 
 // ---------------------------------------------------------------------------
-// Tipo de Negociação options (only the ones requested)
+// Build tipo de negociação options from PRIMARY and EXTRA constants
 // ---------------------------------------------------------------------------
 
-// Filter values for the three allowed types
-const TIPO_NEGOCIACAO_VALUES = ["M", "N", "L"] as const;
-type TipoNegociacaoValue = (typeof TIPO_NEGOCIACAO_VALUES)[number];
+const PRIMARY_NEGOCIACAO_OPTIONS = PRIMARY_NEGOCIACAO_MOTIVO_OPTIONS.map(
+	(value) => ({
+		value,
+		...NEGOCIACAO_MOTIVO_BADGE[value],
+	}),
+);
 
-// Human-readable labels for the allowed values
-const TIPO_NEGOCIACAO_LABELS: Record<TipoNegociacaoValue, string> = {
-	M: "Mudança de Endereço",
-	N: "Renegociação",
-	L: "Mudança de Titularidade",
-};
-
-const TIPO_NEGOCIACAO_OPTIONS = TIPO_NEGOCIACAO_VALUES.map((value) => ({
-	value: value as NegociacaoMotivo,
-	label: TIPO_NEGOCIACAO_LABELS[value],
-	colorClass:
-		"bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-200",
-	bgClass: "bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-200",
-}));
+const EXTRA_NEGOCIACAO_OPTIONS = EXTRA_NEGOCIACAO_MOTIVO_OPTIONS.map(
+	(value) => ({
+		value,
+		...NEGOCIACAO_MOTIVO_BADGE[value],
+	}),
+);
 
 // ---------------------------------------------------------------------------
 // Component
@@ -58,6 +59,12 @@ export function KanbanDashboardFilterBar({
 	const searchId = useId();
 	const responsibleId = useId();
 
+	// Check if "Negociação" is selected in source collections filter
+	const showNegociacaoFilter =
+		!filters.sourceCollections ||
+		filters.sourceCollections.length === 0 ||
+		filters.sourceCollections.includes("neg");
+
 	const hasFilters = Boolean(
 		filters.searchTerm ||
 			filters.responsibleName ||
@@ -70,7 +77,19 @@ export function KanbanDashboardFilterBar({
 	};
 
 	const handleSourceChange = (value: SourceCollection[] | undefined) => {
-		onFilter({ ...filters, sourceCollections: value });
+		// If "Negociação" is being deselected, also clear tipoNegociacao filter
+		const wasNegSelected = filters.sourceCollections?.includes("neg");
+		const isNegSelected = value?.includes("neg");
+
+		if (wasNegSelected && !isNegSelected) {
+			onFilter({
+				...filters,
+				sourceCollections: value,
+				tipoNegociacao: undefined,
+			});
+		} else {
+			onFilter({ ...filters, sourceCollections: value });
+		}
 	};
 
 	const handleTipoNegociacaoChange = (
@@ -107,13 +126,15 @@ export function KanbanDashboardFilterBar({
 					/>
 				</div>
 				<div className="w-full">
-					<FilterBadgeGroup<NegociacaoMotivo>
+					<FilterBadgeGroupWithMore<NegociacaoMotivo>
 						label="Tipo de Negociação"
-						options={TIPO_NEGOCIACAO_OPTIONS}
+						primaryOptions={PRIMARY_NEGOCIACAO_OPTIONS}
+						extraOptions={EXTRA_NEGOCIACAO_OPTIONS}
 						value={filters.tipoNegociacao}
 						onChange={handleTipoNegociacaoChange}
 						allLabel="Todos"
 						compact
+						disabled={!showNegociacaoFilter}
 					/>
 				</div>
 				<FilterInputField
