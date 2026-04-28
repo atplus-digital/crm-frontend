@@ -8,6 +8,7 @@ import {
 } from "#/components/filters";
 import type {
 	KanbanDashboardFilters,
+	NegociacaoMotivo,
 	SourceCollection,
 } from "./kanban-dashboard-types";
 import { SOURCE_COLLECTION_OPTIONS } from "./kanban-dashboard-types";
@@ -20,6 +21,29 @@ interface KanbanDashboardFilterBarProps {
 	filters: KanbanDashboardFilters;
 	onFilter: (filters: KanbanDashboardFilters) => void;
 }
+
+// ---------------------------------------------------------------------------
+// Tipo de Negociação options (only the ones requested)
+// ---------------------------------------------------------------------------
+
+// Filter values for the three allowed types
+const TIPO_NEGOCIACAO_VALUES = ["M", "N", "L"] as const;
+type TipoNegociacaoValue = (typeof TIPO_NEGOCIACAO_VALUES)[number];
+
+// Human-readable labels for the allowed values
+const TIPO_NEGOCIACAO_LABELS: Record<TipoNegociacaoValue, string> = {
+	M: "Mudança de Endereço",
+	N: "Renegociação",
+	L: "Mudança de Titularidade",
+};
+
+const TIPO_NEGOCIACAO_OPTIONS = TIPO_NEGOCIACAO_VALUES.map((value) => ({
+	value: value as NegociacaoMotivo,
+	label: TIPO_NEGOCIACAO_LABELS[value],
+	colorClass:
+		"bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-200",
+	bgClass: "bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-200",
+}));
 
 // ---------------------------------------------------------------------------
 // Component
@@ -37,6 +61,7 @@ export function KanbanDashboardFilterBar({
 	const hasFilters = Boolean(
 		filters.searchTerm ||
 			filters.responsibleName ||
+			(filters.tipoNegociacao && filters.tipoNegociacao.length > 0) ||
 			(filters.sourceCollections && filters.sourceCollections.length > 0),
 	);
 
@@ -46,6 +71,12 @@ export function KanbanDashboardFilterBar({
 
 	const handleSourceChange = (value: SourceCollection[] | undefined) => {
 		onFilter({ ...filters, sourceCollections: value });
+	};
+
+	const handleTipoNegociacaoChange = (
+		value: NegociacaoMotivo[] | undefined,
+	) => {
+		onFilter({ ...filters, tipoNegociacao: value });
 	};
 
 	return (
@@ -71,6 +102,16 @@ export function KanbanDashboardFilterBar({
 						options={SOURCE_COLLECTION_OPTIONS}
 						value={filters.sourceCollections}
 						onChange={handleSourceChange}
+						allLabel="Todos"
+						compact
+					/>
+				</div>
+				<div className="w-full">
+					<FilterBadgeGroup<NegociacaoMotivo>
+						label="Tipo de Negociação"
+						options={TIPO_NEGOCIACAO_OPTIONS}
+						value={filters.tipoNegociacao}
+						onChange={handleTipoNegociacaoChange}
 						allLabel="Todos"
 						compact
 					/>

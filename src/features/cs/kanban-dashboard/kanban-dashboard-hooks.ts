@@ -41,9 +41,9 @@ type SuspensaoContratoWithResponsibles = SuspensaoContrato &
 type NegociacoesWithVendedor = Negociacoes &
 	Pick<NegociacoesRelations, "f_vendedor">;
 
-// ────────────────────────────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
 // Query options — each collection fetched independently (factory per filter set)
-// ────────────────────────────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
 
 function trocaTitularidadeQueryOptions(filters: KanbanDashboardFilters) {
 	const conditions: Record<string, unknown>[] = [];
@@ -166,6 +166,14 @@ function negociacoesQueryOptions(filters: KanbanDashboardFilters) {
 		);
 	}
 
+	// Apply tipo de negociação filter (f_motivo field) using OR for multiple values
+	if (filters.tipoNegociacao && filters.tipoNegociacao.length > 0) {
+		const motivoConditions = filters.tipoNegociacao.map((motivo) =>
+			includes("f_motivo", motivo),
+		);
+		conditions.push(or(...motivoConditions));
+	}
+
 	return queryOptions({
 		queryKey: ["kanban-dashboard", "neg", filters] as const,
 		queryFn: async () => {
@@ -184,9 +192,9 @@ function negociacoesQueryOptions(filters: KanbanDashboardFilters) {
 	});
 }
 
-// ────────────────────────────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
 // Normalization helpers
-// ────────────────────────────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
 
 function normalizeTrocaTitularidade(
 	record: CrmTrocaTitularidadeWithVendedor,
@@ -260,9 +268,9 @@ function normalizeNegociacao(
 	};
 }
 
-// ────────────────────────────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
 // Main hook — parallel fetch + normalization
-// ────────────────────────────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
 
 const EMPTY_FILTERS: KanbanDashboardFilters = {};
 
@@ -295,32 +303,47 @@ export function useKanbanDashboardData(filters: KanbanDashboardFilters = {}) {
 
 	const cards: KanbanDashboardCard[] = [];
 
-	if (ttResult.data) {
-		cards.push(...ttResult.data.data.map(normalizeTrocaTitularidade));
-	}
-
-	if (teResult.data) {
-		cards.push(...teResult.data.data.map(normalizeTrocaEndereco));
-	}
-
-	if (scResult.data) {
-		cards.push(...scResult.data.data.map(normalizeSuspensaoContrato));
-	}
-
-	if (negResult.data) {
-		cards.push(...negResult.data.data.map(normalizeNegociacao));
-	}
-
 	// Client-side filter: sourceCollections (array filter)
+	// Note: "neg" cards are always included; they are filtered by tipoNegociacao instead
 	if (
 		activeFilters.sourceCollections &&
 		activeFilters.sourceCollections.length > 0
 	) {
 		const selectedCollections = new Set(activeFilters.sourceCollections);
-		const filteredCards = cards.filter((card) =>
-			selectedCollections.has(card.sourceCollection),
-		);
-		return { cards: filteredCards, isLoading, error };
+
+		if (ttResult.data && selectedCollections.has("tt")) {
+			cards.push(...ttResult.data.data.map(normalizeTrocaTitularidade));
+		}
+
+		if (teResult.data && selectedCollections.has("te")) {
+			cards.push(...teResult.data.data.map(normalizeTrocaEndereco));
+		}
+
+		if (scResult.data && selectedCollections.has("sc")) {
+			cards.push(...scResult.data.data.map(normalizeSuspensaoContrato));
+		}
+
+		// Always include neg cards (filtered by tipoNegociacao server-side)
+		if (negResult.data) {
+			cards.push(...negResult.data.data.map(normalizeNegociacao));
+		}
+	} else {
+		// No sourceCollections filter — include all tt, te, sc, and neg cards
+		if (ttResult.data) {
+			cards.push(...ttResult.data.data.map(normalizeTrocaTitularidade));
+		}
+
+		if (teResult.data) {
+			cards.push(...teResult.data.data.map(normalizeTrocaEndereco));
+		}
+
+		if (scResult.data) {
+			cards.push(...scResult.data.data.map(normalizeSuspensaoContrato));
+		}
+
+		if (negResult.data) {
+			cards.push(...negResult.data.data.map(normalizeNegociacao));
+		}
 	}
 
 	return { cards, isLoading, error };
