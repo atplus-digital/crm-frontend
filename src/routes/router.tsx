@@ -32,6 +32,10 @@ export const router = createBrowserRouter([
 						loader: () => redirect("/cs"),
 					},
 					...csRoutes,
+					{
+						path: toRouterPath(routePaths.profile),
+						lazy: () => import("./profile/index"),
+					},
 				],
 			},
 			...authRoutes,

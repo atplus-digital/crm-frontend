@@ -4,6 +4,7 @@ import { z } from "zod";
 export const env = createEnv({
 	clientPrefix: "VITE_",
 	client: {
+		VITE_APP_URL: z.string().optional().default("localhost:5173"),
 		VITE_DISABLE_FORGOT_PASSWORD: z.boolean().optional().default(true),
 		VITE_LOCAL_STORAGE_BASE_KEY: z.string().optional().default("crm-atplus"),
 		VITE_LOG_LEVEL: z
