@@ -40,15 +40,26 @@ export function KanbanDashboardFilterBar({
 		onFilter({ ...filters, sourceCollections: value });
 	};
 
-	return (
-		<FilterLayout
-			fieldsClassName="sm:grid-cols-2 lg:grid-cols-4"
-			actions={
-				<div className="flex items-center gap-2">
-					{/* FilterActions will be composed by the parent page */}
-				</div>
-			}
-		>
+		return (
+			<FilterLayout
+				className="space-y-1"
+				fieldsClassName="gap-y-2 gap-x-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+				actions={
+					<div className="flex items-center gap-2">
+						{/* FilterActions will be composed by the parent page */}
+					</div>
+				}
+			>
+			<div className="lg:col-span-1">
+				<FilterBadgeGroup<SourceCollection>
+					label="Tipo de Solicitação"
+					options={SOURCE_COLLECTION_OPTIONS}
+					value={filters.sourceCollections}
+					onChange={handleSourceChange}
+					allLabel="Todos"
+					compact
+				/>
+			</div>
 			<FilterInputField
 				id={searchId}
 				label="Nome do Cliente"
@@ -65,16 +76,6 @@ export function KanbanDashboardFilterBar({
 					onFilter({ ...filters, responsibleName: value || undefined })
 				}
 			/>
-			<div className="col-span-2 lg:col-span-4">
-				<FilterBadgeGroup<SourceCollection>
-					label="Tipo de Solicitação"
-					options={SOURCE_COLLECTION_OPTIONS}
-					value={filters.sourceCollections}
-					onChange={handleSourceChange}
-					allLabel="Todos"
-					compact
-				/>
-			</div>
 		</FilterLayout>
 	);
 }

@@ -24,7 +24,6 @@ export function KanbanDashboardPage() {
 	return (
 		<PageLayout
 			title="Dashboard"
-			subtitle="Visão unificada das solicitações de Troca de Titularidade, Troca de Endereço, Suspensão de Contrato e Negociações"
 		>
 			<div className="space-y-4">
 				<KanbanDashboardFilterBar filters={filters} onFilter={setFilters} />
