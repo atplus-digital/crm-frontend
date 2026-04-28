@@ -2,6 +2,7 @@ import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociac
 import {
 	groupNegociacoesByStatus,
 	KanbanColumn,
+	KanbanSkeleton,
 	STATUS_CONFIG,
 	useHorizontalScroll,
 } from "./kanban";
@@ -20,8 +21,8 @@ export function NegociacoesKanban({
 
 	if (isLoading) {
 		return (
-			<div className="flex items-center justify-center py-12">
-				<div className="text-sm text-muted-foreground">Carregando...</div>
+			<div ref={scrollContainerRef} className="overflow-x-auto pb-2">
+				<KanbanSkeleton />
 			</div>
 		);
 	}

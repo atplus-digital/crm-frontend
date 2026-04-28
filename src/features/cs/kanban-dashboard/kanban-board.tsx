@@ -4,6 +4,7 @@ import type {
 	UnifiedStatusKey,
 } from "./kanban-dashboard-types";
 import { UNIFIED_STATUS_COLUMNS } from "./kanban-dashboard-types";
+import { KanbanSkeleton } from "./kanban-skeleton";
 
 interface KanbanBoardProps {
 	cards: KanbanDashboardCard[];
@@ -75,11 +76,7 @@ function filterCanceladosForDisplay(cancelados: KanbanDashboardCard[]): {
 
 export function KanbanBoard({ cards, isLoading }: KanbanBoardProps) {
 	if (isLoading) {
-		return (
-			<div className="flex items-center justify-center py-12">
-				<div className="text-sm text-muted-foreground">Carregando...</div>
-			</div>
-		);
+		return <KanbanSkeleton />;
 	}
 
 	// Sort all cards by createdAt descending (newest first)
