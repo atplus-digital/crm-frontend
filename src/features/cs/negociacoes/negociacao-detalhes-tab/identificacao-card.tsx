@@ -31,9 +31,6 @@ export function IdentificacaoCard({ negociacao }: IdentificacaoCardProps) {
 							substatus={negociacao.f_substatus}
 						/>
 					</DetailField>
-					<DetailField label="Ordenação">
-						{negociacao.f_ordenacao ?? "—"}
-					</DetailField>
 				</div>
 			</CardContent>
 		</Card>

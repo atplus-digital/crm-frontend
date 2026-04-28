@@ -1,6 +1,7 @@
 import type {
 	AnexosNegociacoes,
 	NegociacoesComentarios,
+	NegociacoesComentariosRelations,
 	NegociacoesItens,
 	Pacotes,
 } from "#/generated/nocobase/index";
@@ -229,9 +230,12 @@ export async function fetchNegociacaoAnexos(
 	}
 }
 
+export type NegociacaoComentarioWithRelations = NegociacoesComentarios &
+	NegociacoesComentariosRelations;
+
 export async function fetchNegociacaoComentarios(
 	negociacaoId: number,
-): Promise<PaginatedResponse<NegociacoesComentarios>> {
+): Promise<PaginatedResponse<NegociacaoComentarioWithRelations>> {
 	try {
 		const response = await nocobaseRepository.list(
 			"t_negociacoes_comentarios" as never,
@@ -239,6 +243,7 @@ export async function fetchNegociacaoComentarios(
 				page: 1,
 				pageSize: 100,
 				filter: eq("f_fk_comentarios_negociacoes", negociacaoId),
+				appends: ["createdBy"],
 			},
 		);
 

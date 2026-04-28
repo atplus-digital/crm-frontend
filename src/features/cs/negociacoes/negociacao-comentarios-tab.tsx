@@ -23,8 +23,8 @@ export function NegociacaoComentariosTab({
 			emptyMessage="Nenhum comentário encontrado"
 			renderComment={(comentario) => (
 				<CommentCard
-					authorName="Usuario do Sistema"
-					avatarFallback="U"
+					authorName={comentario.createdBy?.nickname ?? "Usuário do Sistema"}
+					avatarFallback={comentario.createdBy?.nickname?.[0] ?? "U"}
 					timestamp={formatDatePtBR(comentario.createdAt)}
 					badge={
 						comentario.f_insere_atendimento_ixc === "1" ? (

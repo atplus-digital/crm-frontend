@@ -3,7 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { PontosAtencaoBadge } from "#/features/cs/negociacoes/negociacao-badges";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
-import { CONFISAO_DIVIDA_LABELS } from "#/features/cs/negociacoes/negociacoes-types";
+import {
+	CONFISAO_DIVIDA_LABELS,
+	MOTIVO_PONTOS_LABELS,
+} from "#/features/cs/negociacoes/negociacoes-types";
 
 interface PontosAtencaoCardProps {
 	negociacao: NegociacaoWithRelations;
@@ -29,9 +32,11 @@ export function PontosAtencaoCard({ negociacao }: PontosAtencaoCardProps) {
 						{negociacao.f_motivo_pontos &&
 						Array.isArray(negociacao.f_motivo_pontos) ? (
 							<div className="flex flex-wrap gap-1">
-								{negociacao.f_motivo_pontos.map((motivo) => (
+								{negociacao.f_motivo_pontos.map((motivo: string) => (
 									<Badge key={motivo} variant="outline">
-										{motivo}
+										{MOTIVO_PONTOS_LABELS[
+											motivo as keyof typeof MOTIVO_PONTOS_LABELS
+										] ?? motivo}
 									</Badge>
 								))}
 							</div>
