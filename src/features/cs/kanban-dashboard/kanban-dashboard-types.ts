@@ -71,21 +71,15 @@ export type NegociacaoMotivo = keyof typeof NEGOCIACOES_MOTIVO_LABELS;
 
 // Primary tipo de negociação options (always visible in filter)
 export const PRIMARY_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacaoMotivo[] = [
-	"M",
 	"N",
-	"L",
-] as const;
-
-// Extra tipo de negociação options (hidden by default, shown in "+" badge)
-export const EXTRA_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacaoMotivo[] = [
 	"I",
-	"D",
-	"U",
-	"R",
-	"T",
 	"S",
 	"P",
 ] as const;
+
+// Extra tipo de negociação options (hidden by default, shown in "+" badge)
+export const EXTRA_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacaoMotivo[] =
+	[] as const;
 
 // SC actual API values: "0"|"1"|"2"|"3"|"4" (matches generated SuspensaoContratoStatus)
 export type SuspensaoContratoOverrideStatus = "0" | "1" | "2" | "3" | "4";
