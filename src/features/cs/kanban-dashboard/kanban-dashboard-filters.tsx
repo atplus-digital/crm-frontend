@@ -65,7 +65,7 @@ export function KanbanDashboardFilterBar({
 					/>
 				}
 			>
-				<div className="lg:col-span-1">
+				<div className="w-full">
 					<FilterBadgeGroup<SourceCollection>
 						label="Tipo de Solicitação"
 						options={SOURCE_COLLECTION_OPTIONS}

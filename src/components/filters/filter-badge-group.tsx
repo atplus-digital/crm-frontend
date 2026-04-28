@@ -47,9 +47,9 @@ export function FilterBadgeGroup<T extends string>({
 	const badgeClass = compact ? "px-2 py-0.5 text-xs" : "px-3 py-1 text-sm";
 
 	return (
-		<div className="space-y-1">
+		<div className="space-y-1 w-full min-w-0">
 			<span className="text-sm font-medium text-muted-foreground">{label}</span>
-			<div className="flex flex-wrap items-center gap-1.5">
+			<div className="flex flex-nowrap items-center gap-1.5 overflow-x-auto md:flex-wrap">
 				{/* "All" badge */}
 				<button
 					type="button"
