@@ -1,17 +1,10 @@
-import {
-	FileText,
-	Handshake,
-	Home,
-	House,
-	LayoutDashboard,
-	Users,
-} from "lucide-react";
+import { FileText, Handshake, LayoutDashboard, Users } from "lucide-react";
 import type { ReactNode } from "react";
 import type { AppRoutePath } from "#/routes/route-paths";
 import { routePaths } from "#/routes/route-paths";
 
 const CS_SECTION_PREFIX =
-	routePaths.cs_pessoas.match(/^\/[^/]+/)?.[0] ?? routePaths.home;
+	routePaths.cs_pessoas.match(/^\/[^/]+/)?.[0] ?? routePaths.cs_dashboard;
 
 /**
  * A single navigation item in the app shell.
@@ -48,19 +41,6 @@ export interface NavSection {
 }
 
 export const APP_NAV_SECTIONS: NavSection[] = [
-	{
-		label: "Home",
-		icon: <House className="size-4" />,
-		to: routePaths.home,
-		matches: [routePaths.home, routePaths.profile],
-		items: [
-			{
-				label: "Dashboard",
-				icon: <Home />,
-				to: routePaths.home,
-			},
-		],
-	},
 	{
 		label: "Customer Success",
 		icon: <Users className="size-4" />,
@@ -130,7 +110,6 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 ];
 
 export function isNavPathActive(pathname: string, to: string): boolean {
-	if (to === routePaths.home) return pathname === routePaths.home;
 	return pathname === to || pathname.startsWith(`${to}/`);
 }
 

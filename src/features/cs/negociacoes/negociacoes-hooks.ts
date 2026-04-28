@@ -23,11 +23,11 @@ export function useNegociacoes(params: NegociacaoListParams) {
 	return useQuery(negociacoesQueryOptions(params));
 }
 
+// Detail queries don't use staleTime - always fetch fresh data when navigating
 export const negociacaoQueryOptions = (id: number) =>
 	queryOptions({
 		queryKey: ["cs", "negociacoes", id] as const,
 		queryFn: () => fetchNegociacaoById(id),
-		staleTime: 10_000,
 	});
 
 export function useNegociacao(id: number) {
@@ -38,7 +38,6 @@ export const negociacaoItensQueryOptions = (negociacaoId: number) =>
 	queryOptions({
 		queryKey: ["cs", "negociacoes", "itens", negociacaoId] as const,
 		queryFn: () => fetchNegociacaoItens(negociacaoId),
-		staleTime: 10_000,
 	});
 
 export function useNegociacaoItens(negociacaoId: number) {
@@ -49,7 +48,6 @@ export const negociacaoAnexosQueryOptions = (negociacaoId: number) =>
 	queryOptions({
 		queryKey: ["cs", "negociacoes", "anexos", negociacaoId] as const,
 		queryFn: () => fetchNegociacaoAnexos(negociacaoId),
-		staleTime: 10_000,
 	});
 
 export function useNegociacaoAnexos(negociacaoId: number) {
@@ -60,7 +58,6 @@ export const negociacaoComentariosQueryOptions = (negociacaoId: number) =>
 	queryOptions({
 		queryKey: ["cs", "negociacoes", "comentarios", negociacaoId] as const,
 		queryFn: () => fetchNegociacaoComentarios(negociacaoId),
-		staleTime: 10_000,
 	});
 
 export function useNegociacaoComentarios(negociacaoId: number) {

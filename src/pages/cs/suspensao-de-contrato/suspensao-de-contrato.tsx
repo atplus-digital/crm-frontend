@@ -20,6 +20,7 @@ export function SuspensaoContratoPage() {
 		handleFilterChange,
 	} = useListPage<SuspensaoContratoFilters>({
 		defaultFilters: DEFAULT_FILTERS,
+		defaultSort: ["-createdAt"],
 	});
 
 	const { data, error } = useSuspensaoContrato({

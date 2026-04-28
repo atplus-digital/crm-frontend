@@ -20,6 +20,7 @@ export function TrocaDeEnderecoPage() {
 		handleFilterChange,
 	} = useListPage<TrocaEnderecoFilters>({
 		defaultFilters: DEFAULT_FILTERS,
+		defaultSort: ["-createdAt"],
 	});
 
 	const { data, error } = useTrocaEndereco({

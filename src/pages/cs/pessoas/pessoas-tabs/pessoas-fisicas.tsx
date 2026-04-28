@@ -16,6 +16,7 @@ export function PessoasFisicasTabPage() {
 	const { page, pageSize, filters, setPage, setPageSize, handleFilterChange } =
 		useListPage<PessoaFisicaTableFilters>({
 			defaultFilters: DEFAULT_PESSOA_FISICA_TABLE_FILTERS,
+			defaultSort: ["-createdAt"],
 		});
 
 	const apiFilters = toPessoaFisicaFilters(filters);
@@ -23,6 +24,7 @@ export function PessoasFisicasTabPage() {
 	const { data, error } = usePessoasFisicas({
 		page,
 		pageSize,
+		sort: ["-createdAt"],
 		filters: apiFilters,
 	});
 

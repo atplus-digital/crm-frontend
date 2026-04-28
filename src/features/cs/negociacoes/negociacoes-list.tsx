@@ -6,12 +6,14 @@ import {
 	type NegociacaoItem,
 } from "#/features/cs/negociacoes/negociacoes-list-columns";
 
-interface NegociacoesListProps {
+export interface NegociacoesListProps {
 	negociacoes?: NegociacaoItem[];
 	totalCount?: number;
 	pageSize?: number;
 	onRefresh?: () => void;
 	onExport?: () => void;
+	onPageChange?: (page: number) => void;
+	onPageSizeChange?: (pageSize: number) => void;
 }
 
 export function NegociacoesList({
@@ -20,6 +22,8 @@ export function NegociacoesList({
 	pageSize = 15,
 	onRefresh,
 	onExport,
+	onPageChange,
+	onPageSizeChange,
 }: NegociacoesListProps) {
 	return (
 		<DataTableContainer
@@ -28,6 +32,8 @@ export function NegociacoesList({
 			total={totalCount}
 			initialPageSize={pageSize}
 			emptyMessage="Nenhuma negociação encontrada"
+			onPageChange={onPageChange}
+			onPageSizeChange={onPageSizeChange}
 		>
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">

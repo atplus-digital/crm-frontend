@@ -20,6 +20,7 @@ export function TrocaTitularidadePage() {
 		handleFilterChange,
 	} = useListPage<TrocaTitularidadeFilters>({
 		defaultFilters: DEFAULT_FILTERS,
+		defaultSort: ["-createdAt"],
 	});
 
 	const { data, error } = useTrocaTitularidade({

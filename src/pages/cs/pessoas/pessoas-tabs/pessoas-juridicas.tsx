@@ -16,6 +16,7 @@ export function PessoasJuridicasTabPage() {
 	const { page, pageSize, filters, setPage, setPageSize, handleFilterChange } =
 		useListPage<PessoaJuridicaTableFilters>({
 			defaultFilters: DEFAULT_PESSOA_JURIDICA_TABLE_FILTERS,
+			defaultSort: ["-createdAt"],
 		});
 
 	const apiFilters = toPessoaJuridicaFilters(filters);
@@ -23,6 +24,7 @@ export function PessoasJuridicasTabPage() {
 	const { data, error } = usePessoasJuridicas({
 		page,
 		pageSize,
+		sort: ["-createdAt"],
 		filters: apiFilters,
 	});
 

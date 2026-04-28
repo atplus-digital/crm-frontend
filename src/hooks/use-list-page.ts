@@ -38,6 +38,8 @@ function deserializeFilters<T extends object>(
 export interface UseListPageOptions<TFilters extends object = object> {
 	defaultFilters?: TFilters;
 	defaultPageSize?: number;
+	/** Default sort to use when no sort is specified in URL (e.g., ["-createdAt"] for descending createdAt) */
+	defaultSort?: string[];
 	syncSortToUrl?: boolean;
 }
 
@@ -45,6 +47,7 @@ export interface UseListPageReturn<TFilters extends object = object> {
 	page: number;
 	pageSize: number;
 	sorting: SortingState;
+	/** Sort array for API calls (uses defaultSort if URL has no sort) */
 	sort: string[];
 	filters: TFilters;
 	setPage: (page: number) => void;
@@ -60,6 +63,7 @@ export function useListPage<TFilters extends object = object>(
 	const {
 		defaultFilters = {} as TFilters,
 		defaultPageSize = 15,
+		defaultSort = [],
 		syncSortToUrl = true,
 	} = options;
 
@@ -90,9 +94,10 @@ export function useListPage<TFilters extends object = object>(
 
 	const sortParam = searchParams.get("sort");
 	const sort: string[] = useMemo(() => {
-		if (!sortParam) return [];
-		return sortParam.split(",").filter(Boolean);
-	}, [sortParam]);
+		if (!sortParam) return defaultSort;
+		const urlSort = sortParam.split(",").filter(Boolean);
+		return urlSort.length > 0 ? urlSort : defaultSort;
+	}, [sortParam, defaultSort]);
 
 	const sorting = useMemo<SortingState>(() => {
 		return sort.map((field) => {

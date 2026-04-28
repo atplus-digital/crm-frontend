@@ -1,20 +1,68 @@
-import { Outlet } from "react-router";
+import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/page-layout/page-layout";
+import { ListaFilters } from "#/features/cs/negociacoes/negociacoes-filters";
+import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
+import { NegociacoesList } from "#/features/cs/negociacoes/negociacoes-list";
+import { exportNegociacoesToCsv } from "#/features/cs/negociacoes/negociacoes-service";
+import {
+	type NegociacaoFilters,
+	normalizeNegociacaoFilters,
+} from "#/features/cs/negociacoes/negociacoes-types";
+import { useListPage } from "#/hooks/use-list-page";
+
+const DEFAULT_FILTERS: NegociacaoFilters = {};
 
 export function NegociacoesPage() {
-	const tabs = [
-		{ value: "kanban", label: "Kanban (Minhas)" },
-		{ value: "lista", label: "Lista (Todas)" },
-	];
+	const { filters, handleFilterChange, page, pageSize } =
+		useListPage<NegociacaoFilters>({
+			defaultFilters: DEFAULT_FILTERS,
+			defaultPageSize: 15,
+			defaultSort: ["-createdAt"],
+			syncSortToUrl: false,
+		});
+
+	const apiFilters = normalizeNegociacaoFilters(filters);
+
+	const { data, error, refetch } = useNegociacoes({
+		page,
+		pageSize,
+		filters: apiFilters,
+	});
+
+	const negociacoes = data?.data ?? [];
+
+	const handleExport = () => {
+		const csv = exportNegociacoesToCsv(negociacoes);
+		const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+		const url = URL.createObjectURL(blob);
+		const link = document.createElement("a");
+		link.href = url;
+		link.download = `negociacoes-${new Date().toISOString().split("T")[0]}.csv`;
+		link.click();
+		URL.revokeObjectURL(url);
+	};
 
 	return (
 		<PageLayout
 			title="Renegociações"
 			subtitle="Gerencie suas negociações de renegociação"
-			tabs={tabs}
-			defaultTab="kanban"
 		>
-			<Outlet />
+			<div className="space-y-4">
+				<ListaFilters filters={filters} onFilter={handleFilterChange} />
+				{error ? (
+					<InlineErrorAlert>
+						Erro ao carregar negociações: {(error as Error).message}
+					</InlineErrorAlert>
+				) : (
+					<NegociacoesList
+						negociacoes={negociacoes}
+						totalCount={data?.meta?.total ?? 0}
+						pageSize={pageSize}
+						onRefresh={() => refetch()}
+						onExport={handleExport}
+					/>
+				)}
+			</div>
 		</PageLayout>
 	);
 }

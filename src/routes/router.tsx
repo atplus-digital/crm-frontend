@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet } from "react-router";
+import { createBrowserRouter, Outlet, redirect } from "react-router";
 import { App } from "#/app";
 import { authStore, validateTokenOnInit } from "#/features/auth";
 import { DashboardLayout } from "#/layout/dashboard-layout";
@@ -6,7 +6,6 @@ import { NotFoundPage } from "#/pages/not-found/not-found";
 import { routePaths, toRouterPath } from "#/routes/route-paths";
 import { authRoutes } from "./auth/routes";
 import { csRoutes } from "./cs/routes";
-import { dashboardRoutes } from "./dashboard/routes";
 
 export const router = createBrowserRouter([
 	{
@@ -27,7 +26,13 @@ export const router = createBrowserRouter([
 						<Outlet />
 					</DashboardLayout>
 				),
-				children: [...dashboardRoutes, ...csRoutes],
+				children: [
+					{
+						index: true,
+						loader: () => redirect("/cs"),
+					},
+					...csRoutes,
+				],
 			},
 			...authRoutes,
 			{

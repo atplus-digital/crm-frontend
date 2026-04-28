@@ -15,6 +15,7 @@ export function NegociacoesListaTabPage() {
 	const { filters, handleFilterChange } = useListPage<NegociacaoFilters>({
 		defaultFilters: DEFAULT_FILTERS,
 		defaultPageSize: 100,
+		defaultSort: ["-createdAt"],
 		syncSortToUrl: false,
 	});
 

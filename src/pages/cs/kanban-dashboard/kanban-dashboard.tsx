@@ -11,9 +11,7 @@ export function KanbanDashboardPage() {
 	const { cards, isLoading, error } = useKanbanDashboardData(filters);
 
 	return (
-		<PageLayout
-			title="Dashboard"
-		>
+		<PageLayout title="Dashboard">
 			<div className="space-y-4">
 				<KanbanDashboardFilterBar filters={filters} onFilter={setFilters} />
 				{error ? (
