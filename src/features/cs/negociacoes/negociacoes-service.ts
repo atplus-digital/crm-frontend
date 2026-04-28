@@ -149,7 +149,10 @@ export async function fetchNegociacaoById(
 	id: number,
 ): Promise<NegociacaoWithRelations> {
 	try {
-		const response = await nocobaseRepository.get("t_negociacoes", id, {
+		const response = await nocobaseRepository.list("t_negociacoes", {
+			page: 1,
+			pageSize: 1,
+			filter: eq("id", id),
 			appends: [
 				"f_vendedor",
 				"f_pessoa",
@@ -165,7 +168,11 @@ export async function fetchNegociacaoById(
 			],
 		});
 
-		return response as unknown as NegociacaoWithRelations;
+		const record = response.data[0];
+		if (!record) {
+			throw new Error(`Negociação com ID ${id} não encontrada`);
+		}
+		return record as unknown as NegociacaoWithRelations;
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : "Erro desconhecido";
@@ -183,7 +190,7 @@ export async function fetchNegociacaoItens(
 			{
 				page: 1,
 				pageSize: 100,
-				filter: eq("f_fk_negociacao", negociacaoId),
+				filter: eq("f_fk_id_negociacao", negociacaoId),
 			},
 		);
 

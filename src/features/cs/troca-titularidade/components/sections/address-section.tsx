@@ -1,7 +1,6 @@
 import { MapPin } from "lucide-react";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
-import type { CrmTrocaTitularidadeWithRelations } from "../../troca-titularidade-hooks";
 
 interface AddressSectionProps {
 	trocaTitularidade: CrmTrocaTitularidadeWithRelations;
@@ -29,3 +28,5 @@ export function AddressSection({
 		</DetailSection>
 	);
 }
+
+import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";

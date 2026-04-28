@@ -8,6 +8,7 @@ import {
 	NEGOCIACOES_MOTIVO_LABELS,
 	type Negociacoes,
 	type NegociacoesRelations,
+	type NegociacoesStatus,
 } from "#/generated/nocobase/negociacoes";
 import type {
 	SuspensaoContrato,
@@ -85,7 +86,7 @@ export const EXTRA_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacaoMotivo[] =
 export type SuspensaoContratoOverrideStatus = "0" | "1" | "2" | "3" | "4";
 
 // Negotiation status type (matches generated NegociacoesStatus)
-export type NegociacaoOverrideStatus = "1" | "2" | "3" | "4" | "5" | "6";
+export type NegociacaoOverrideStatus = NegociacoesStatus;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Collection badge colors

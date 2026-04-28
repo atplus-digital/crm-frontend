@@ -1,5 +1,4 @@
 import { CommentsList } from "#/features/cs/components/comments-list";
-import type { CrmTrocaTitularidadeWithRelations } from "../../troca-titularidade-hooks";
 
 interface CommentsSectionProps {
 	trocaTitularidade: CrmTrocaTitularidadeWithRelations;
@@ -14,3 +13,5 @@ export function CommentsSection({ trocaTitularidade }: CommentsSectionProps) {
 		/>
 	);
 }
+
+import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";

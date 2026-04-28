@@ -60,16 +60,16 @@ custom-requests/
 
 ## Key Files
 
-| File                         | Purpose                                                                     |
-| ---------------------------- | --------------------------------------------------------------------------- |
-| `generated-registry.ts`      | Auto-generated entries from NocoBase API                                    |
-| `merged-registry.ts`         | Final registry: generated + manual entries combined                         |
-| `split/*.ts`                 | Manual enhanced schemas (preferred over generated z.any())                  |
-| `utils/types.ts`             | Types: CustomRequestEntry, CustomRequestRegistryKey, payloads, responses    |
-| `utils/schemas.ts`           | Legacy Zod schemas (deprecated — use split/ instead)                        |
-| `utils/service.ts`           | sendRequest, validatePayload, buildTemplateContext                          |
-| `errors.ts`                  | CustomRequestError, CustomRequestValidationError, CustomRequestNetworkError |
-| `hooks/useCustomRequests.ts` | useSendRequest, useRequests, useRequest                                     |
+| File                           | Purpose                                                                     |
+| ------------------------------ | --------------------------------------------------------------------------- |
+| `generated-registry.ts`        | Auto-generated entries from NocoBase API                                    |
+| `merged-registry.ts`           | Final registry: generated + manual entries combined                         |
+| `split/*.ts`                   | Manual enhanced schemas (preferred over generated z.any())                  |
+| `utils/types.ts`               | Types: CustomRequestEntry, CustomRequestRegistryKey, payloads, responses    |
+| `utils/schemas.ts`             | Legacy Zod schemas (deprecated — use split/ instead)                        |
+| `utils/service.ts`             | sendRequest, validatePayload, buildTemplateContext                          |
+| `errors.ts`                    | CustomRequestError, CustomRequestValidationError, CustomRequestNetworkError |
+| `hooks/use-custom-requests.ts` | useSendRequest, useRequests, useRequest                                     |
 
 ## Type Safety Levels
 
@@ -134,3 +134,4 @@ This fetches all custom request configurations from NocoBase and generates `gene
 
 - **Auto-generated entries**: 50+ (from NocoBase)
 - **Manual entries**: 3 (with enhanced type safety)
+  | `hooks/use-custom-requests.ts` | useSendRequest, useRequests, useRequest |

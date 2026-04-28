@@ -8,7 +8,6 @@ import {
 	CRMTROCATITULARIDADE_TIPOPESSOA_LABELS,
 } from "#/generated/nocobase/crm-troca-titularidade";
 import { formatDatePtBR } from "#/lib/utils";
-import type { CrmTrocaTitularidadeWithRelations } from "../../troca-titularidade-hooks";
 
 interface IdentificationSectionProps {
 	trocaTitularidade: CrmTrocaTitularidadeWithRelations;
@@ -53,3 +52,5 @@ export function IdentificationSection({
 		</DetailSection>
 	);
 }
+
+import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";

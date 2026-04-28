@@ -121,8 +121,8 @@ export function KanbanDashboardFilterBar({
 						options={SOURCE_COLLECTION_OPTIONS}
 						value={filters.sourceCollections}
 						onChange={handleSourceChange}
-						allLabel="Todos"
 						compact
+						showAllButton={false}
 					/>
 				</div>
 				<FilterInputField
@@ -150,9 +150,9 @@ export function KanbanDashboardFilterBar({
 						extraOptions={EXTRA_NEGOCIACAO_OPTIONS}
 						value={filters.tipoNegociacao}
 						onChange={handleTipoNegociacaoChange}
-						allLabel="Todos"
 						compact
 						disabled={!showNegociacaoFilter}
+						showAllButton={false}
 					/>
 				</div>
 			</FilterLayout>
