@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { DetailField } from "#/features/cs/components/detail-field";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
-import { formatCurrency, formatDatePtBR } from "#/lib/utils";
+import { formatDatePtBR } from "#/lib/utils";
 
 interface ContratoInfoCardProps {
 	contrato: ContratoWithCliente;
@@ -28,10 +28,8 @@ export function ContratoInfoCard({ contrato }: ContratoInfoCardProps) {
 					<DetailField label="Data Expiração">
 						{formatDatePtBR(contrato.data_validade ?? "")}
 					</DetailField>
-					<DetailField label="Valor Unitário">
-						{contrato.valor_unitario
-							? formatCurrency(Number(contrato.valor_unitario))
-							: "—"}
+					<DetailField label="Parcelas em Atraso">
+						{contrato.num_parcelas_atraso ?? "—"}
 					</DetailField>
 				</div>
 			</CardContent>

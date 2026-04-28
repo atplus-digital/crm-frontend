@@ -8,6 +8,7 @@ import {
 	fetchContratoRegistros,
 	fetchContratos,
 	fetchContratoTrocasTitularidade,
+	fetchDadosAdicionaisContrato,
 } from "./contratos-service";
 import type { ContratoListParams } from "./contratos-types";
 
@@ -101,4 +102,20 @@ export const contratoRegistrosQueryOptions = (id: number) =>
 
 export function useContratoRegistros(id: number) {
 	return useQuery(contratoRegistrosQueryOptions(id));
+}
+
+export const dadosAdicionaisContratoQueryOptions = (id: number) =>
+	queryOptions({
+		queryKey: ["cs", "contratos", "dados-adicionais", id] as const,
+		queryFn: () => fetchDadosAdicionaisContrato(id),
+		staleTime: 10_000,
+	});
+
+export function useDadosAdicionaisContrato(id: number | null) {
+	return useQuery({
+		queryKey: ["cs", "contratos", "dados-adicionais", id] as const,
+		queryFn: () => fetchDadosAdicionaisContrato(id as number),
+		enabled: id != null,
+		staleTime: 10_000,
+	});
 }

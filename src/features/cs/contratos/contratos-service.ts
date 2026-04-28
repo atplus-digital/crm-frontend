@@ -14,6 +14,7 @@ import type {
 	ContratoFilters,
 	ContratoListParams,
 	ContratoWithCliente,
+	DadosAdicionaisContrato,
 	Fatura,
 	LinhaMovel,
 	ProdutoContrato,
@@ -280,6 +281,39 @@ export async function fetchContratoRegistros(
 			error instanceof Error ? error.message : "Erro desconhecido";
 		log.error("Failed to fetch registros de contato", {
 			idContrato,
+			error: message,
+		});
+		throw error;
+	}
+}
+
+export async function fetchDadosAdicionaisContrato(
+	clienteContratoId: number,
+): Promise<DadosAdicionaisContrato | null> {
+	try {
+		const response = await nocobaseRepository.list(
+			"t_dados_adicionais_cliente_contrato",
+			{
+				page: 1,
+				pageSize: 1,
+				filter: eq("f_id_cliente_contrato", clienteContratoId),
+			},
+		);
+
+		const item = response.data[0];
+		if (!item) return null;
+
+		return {
+			f_origem_cliente: item.f_origem_cliente,
+			f_perfil_de_uso: item.f_perfil_de_uso,
+			f_forma_de_pagamento: item.f_forma_de_pagamento,
+			f_pessoas_na_residencia: item.f_pessoas_na_residencia,
+		};
+	} catch (error) {
+		const message =
+			error instanceof Error ? error.message : "Erro desconhecido";
+		log.error("Failed to fetch dados adicionais", {
+			clienteContratoId,
 			error: message,
 		});
 		throw error;

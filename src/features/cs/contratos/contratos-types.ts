@@ -8,6 +8,7 @@ import type { LinhaMvno } from "#/generated/ixc/linha-mvno";
 import type { SuTicket } from "#/generated/ixc/su-ticket";
 import type { VdContratosProdutos } from "#/generated/ixc/vd-contratos-produtos";
 import type { CrmTrocaTitularidade } from "#/generated/nocobase/crm-troca-titularidade";
+import type { DadosAdicionaisClienteContrato } from "#/generated/nocobase/other/dados-adicionais-cliente-contrato";
 import type { RegistrosDeContato } from "#/generated/nocobase/registros-de-contato";
 import type { ListParams } from "#/repositories/types";
 
@@ -80,6 +81,7 @@ export type Contrato = Pick<
 	| "endereco"
 	| "numero"
 	| "complemento"
+	| "num_parcelas_atraso"
 >;
 
 /**
@@ -94,6 +96,12 @@ export type ContratoCliente = Pick<
 	| "email"
 	| "telefone_celular"
 	| "tipo_pessoa"
+	| "endereco"
+	| "numero"
+	| "bairro"
+	| "cidade"
+	| "cep"
+	| "complemento"
 >;
 
 /**
@@ -102,6 +110,23 @@ export type ContratoCliente = Pick<
 export type ContratoWithCliente = Contrato & {
 	f_nc_cliente?: ContratoCliente | null;
 };
+
+// ---------------------------------------------------------------------------
+// Dados Adicionais (NocoBase)
+// ---------------------------------------------------------------------------
+
+export type DadosAdicionaisContrato = Pick<
+	DadosAdicionaisClienteContrato,
+	| "f_origem_cliente"
+	| "f_perfil_de_uso"
+	| "f_forma_de_pagamento"
+	| "f_pessoas_na_residencia"
+>;
+
+export {
+	DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS,
+	DADOSADICIONAISCLIENTECONTRATO_PERFILDEUSO_LABELS,
+} from "#/generated/nocobase/other/dados-adicionais-cliente-contrato";
 
 // ---------------------------------------------------------------------------
 // Filters

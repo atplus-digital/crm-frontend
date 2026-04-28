@@ -3,6 +3,7 @@ import { ContratoDetalhesTab } from "#/features/cs/contratos/contrato-detalhes-t
 import {
 	useContratoFaturas,
 	useContratoProdutos,
+	useDadosAdicionaisContrato,
 } from "#/features/cs/contratos/contratos-hooks";
 import type { ContratoDetailOutletContext } from "../contrato-detail";
 
@@ -20,11 +21,12 @@ export function ContratoDetalhesTabPage() {
 		isLoading: isLoadingFaturas,
 		error: faturasError,
 	} = useContratoFaturas(contratoId);
+	const { data: dadosAdicionais, isLoading: isLoadingDadosAdicionais } =
+		useDadosAdicionaisContrato(context.contrato ? contratoId : null);
 
 	const produtos = produtosData?.data ?? [];
 	const faturas = faturasData?.data ?? [];
 
-	// Guard against null contrato during initial load — parent renders Outlet before data arrives
 	if (!context.contrato) {
 		return null;
 	}
@@ -39,6 +41,8 @@ export function ContratoDetalhesTabPage() {
 			faturas={faturas}
 			isLoadingFaturas={isLoadingFaturas}
 			faturasError={faturasError}
+			dadosAdicionais={dadosAdicionais ?? null}
+			isLoadingDadosAdicionais={isLoadingDadosAdicionais}
 		/>
 	);
 }
