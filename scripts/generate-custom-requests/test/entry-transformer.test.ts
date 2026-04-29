@@ -36,6 +36,7 @@ describe("transformApiEntryToRegistry", () => {
 			method: "POST",
 			url: "/api/test",
 			payloadSchema: "z.any()",
+			payloadData: null,
 		});
 	});
 

@@ -302,6 +302,7 @@ import type {
 	TrocasdetitularidadeComentariosRelations,
 } from "./other/trocasdetitularidade-comentarios";
 import type { Turnos, TurnosRelations } from "./other/turnos";
+import type { UtiliCabos, UtiliCabosRelations } from "./other/utili-cabos";
 import type {
 	VendedorCupons,
 	VendedorCuponsRelations,
@@ -439,6 +440,7 @@ export type CollectionName =
 	| "t_troca_endereco"
 	| "t_trocasdetitularidade_comentarios"
 	| "t_turnos"
+	| "t_utili_cabos"
 	| "t_viagem_solicitacao"
 	| "t_vlan_tags"
 	| "t_ynltolqbwj1"
@@ -558,6 +560,7 @@ export interface CollectionMap {
 	t_troca_endereco: TrocaEndereco;
 	t_trocasdetitularidade_comentarios: TrocasdetitularidadeComentarios;
 	t_turnos: Turnos;
+	t_utili_cabos: UtiliCabos;
 	t_viagem_solicitacao: ViagemSolicitacao;
 	t_vlan_tags: VlanTags;
 	t_ynltolqbwj1: Ynltolqbwj1;
@@ -678,6 +681,7 @@ export interface CollectionRelationsMap {
 	t_troca_endereco: TrocaEnderecoRelations;
 	t_trocasdetitularidade_comentarios: TrocasdetitularidadeComentariosRelations;
 	t_turnos: TurnosRelations;
+	t_utili_cabos: UtiliCabosRelations;
 	t_viagem_solicitacao: ViagemSolicitacaoRelations;
 	t_vlan_tags: VlanTagsRelations;
 	t_ynltolqbwj1: Ynltolqbwj1Relations;
@@ -799,6 +803,7 @@ export const COLLECTIONS = [
 	"t_troca_endereco",
 	"t_trocasdetitularidade_comentarios",
 	"t_turnos",
+	"t_utili_cabos",
 	"t_viagem_solicitacao",
 	"t_vlan_tags",
 	"t_ynltolqbwj1",

@@ -1,6 +1,26 @@
 import type { CustomRequestApiEntry } from "@scripts/generate-custom-requests/src/@types/custom-request-api";
 import type { GeneratedRegistryEntry } from "@scripts/generate-custom-requests/src/@types/generated-registry";
+import { inferPayloadSchema } from "@scripts/generate-custom-requests/src/utils/schema-inference";
 import { logger } from "@scripts/generate-types/src/utils/logger";
+
+/**
+ * Normaliza options.data que pode vir como string JSON ou objeto.
+ */
+function normalizePayloadData(raw: unknown): Record<string, unknown> | null {
+	if (raw == null) return null;
+	if (typeof raw === "object") return raw as Record<string, unknown>;
+	if (typeof raw === "string") {
+		try {
+			const parsed = JSON.parse(raw);
+			if (typeof parsed === "object" && parsed !== null) {
+				return parsed as Record<string, unknown>;
+			}
+		} catch {
+			logger.warn(`options.data é string não-parseável: ${raw.slice(0, 100)}`);
+		}
+	}
+	return null;
+}
 
 /**
  * Transforma uma entrada da API NocoBase em registry entry.
@@ -26,13 +46,16 @@ export function transformApiEntryToRegistry(
 	// API não retorna campo "name" — usa key como fallback
 	const name = entry.name ?? entry.key;
 
+	const payloadData = normalizePayloadData(entry.options.data);
+
 	return {
 		key: entry.key,
 		name,
 		collection: entry.options.collectionName,
 		method: entry.options.method ?? "POST",
 		url: entry.options.url ?? "",
-		payloadSchema: "z.any()",
+		payloadSchema: inferPayloadSchema(payloadData),
+		payloadData,
 	};
 }
 

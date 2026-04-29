@@ -1,10 +1,10 @@
+import { customRequestsRegistry } from "#/generated/custom-requests/merged-registry";
 import {
 	CustomRequestError,
 	CustomRequestErrorCode,
 	CustomRequestNetworkError,
 	CustomRequestValidationError,
 } from "../errors";
-import { customRequestsRegistry } from "../merged-registry";
 import type {
 	CustomRequestEntry,
 	SendRequestOptions,

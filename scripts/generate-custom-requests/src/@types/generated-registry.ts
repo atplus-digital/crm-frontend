@@ -8,6 +8,8 @@ export interface GeneratedRegistryEntry {
 	collection: string;
 	method: string;
 	url: string;
-	/** Marker string — writer will output actual z.any() code */
-	payloadSchema: "z.any()";
+	/** Zod schema string inferred from payloadData shape */
+	payloadSchema: string;
+	/** Dados do payload options.data retornados pela API */
+	payloadData: Record<string, unknown> | null;
 }

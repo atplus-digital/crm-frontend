@@ -13,6 +13,7 @@ function makeEntry(
 		method: "POST",
 		url: "/test",
 		payloadSchema: "z.any()",
+		payloadData: null,
 		...overrides,
 	};
 }

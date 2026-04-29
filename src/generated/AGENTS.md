@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-29 -->
 
 # AGENTS.md — generated
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-Auto-generated TypeScript types from NocoBase and IXC collection schemas — **single source of truth** for all API data structures.
+Auto-generated TypeScript types from NocoBase and IXC collection schemas plus custom request registries — **single source of truth** for all API data structures.
 
 <!-- AGENTS-GENERATED:END overview -->
 
@@ -14,12 +14,14 @@ Auto-generated TypeScript types from NocoBase and IXC collection schemas — **s
 
 ## Key Files
 
-| File                | Purpose                                                                        |
-| ------------------- | ------------------------------------------------------------------------------ |
-| `nocobase/`         | Generated types from NocoBase collections (`t_pessoas`, `t_empresas`, etc.)    |
-| `ixc/`              | Generated types from IXC ERP collections (`cliente`, `cliente_contrato`, etc.) |
-| `nocobase/index.ts` | Barrel export for all NocoBase collection types                                |
-| `ixc/index.ts`      | Barrel export for all IXC collection types                                     |
+| File                     | Purpose                                                                        |
+| ------------------------ | ------------------------------------------------------------------------------ |
+| `nocobase/`              | Generated types from NocoBase collections (`t_pessoas`, `t_empresas`, etc.)    |
+| `ixc/`                   | Generated types from IXC ERP collections (`cliente`, `cliente_contrato`, etc.) |
+| `nocobase/index.ts`      | Barrel export for all NocoBase collection types                                |
+| `ixc/index.ts`           | Barrel export for all IXC collection types                                     |
+| `custom-requests/`       | Generated custom request registry and split files                              |
+| `custom-requests/split/` | Auto-generated split files for enhanced custom request entries                 |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

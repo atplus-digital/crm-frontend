@@ -4,6 +4,7 @@ import { config } from "./config";
 import { CustomRequestsApiClient } from "./src/api/client";
 import { transformAllEntries } from "./src/transformer/entry-transformer";
 import { parseConfig } from "./src/utils/config";
+import { applyWorkspaceLockIfNeeded } from "./src/utils/workspace-locker";
 import { writeGeneratedRegistry } from "./src/writer/registry-writer";
 import { writeAllSplitFiles } from "./src/writer/split-writer";
 
@@ -18,6 +19,8 @@ async function main(): Promise<void> {
 		);
 		process.exit(1);
 	}
+
+	applyWorkspaceLockIfNeeded();
 
 	logger.info("Iniciando geração de custom requests...");
 	const client = new CustomRequestsApiClient(config);

@@ -5,4 +5,5 @@ export interface ScriptConfig {
 	logLevel: "debug" | "info" | "warn" | "error";
 	outputDir: string;
 	splitRequests: string[];
+	lockWorkspaceFolder?: boolean;
 }

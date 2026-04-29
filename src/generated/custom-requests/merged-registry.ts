@@ -1,15 +1,8 @@
-import { payloadSchema as criarContratoIxcSchema } from "./split/criar-contrato-ixc";
-import { payloadSchema as n8nComprasSchema } from "./split/n8n-compras";
-import { payloadSchema as qualirunInfoSchema } from "./split/qualirun-info";
-import type { CustomRequestEntry } from "./utils/types";
-
-let generatedRegistry: Record<string, CustomRequestEntry> = {};
-try {
-	const mod = await import("./generated-registry");
-	if (mod.generatedCustomRequestsRegistry) {
-		generatedRegistry = mod.generatedCustomRequestsRegistry;
-	}
-} catch {}
+import { payloadSchema as criarContratoIxcSchema } from "#/features/custom-requests/split/criar-contrato-ixc";
+import { payloadSchema as n8nComprasSchema } from "#/features/custom-requests/split/n8n-compras";
+import { payloadSchema as qualirunInfoSchema } from "#/features/custom-requests/split/qualirun-info";
+import type { CustomRequestEntry } from "#/features/custom-requests/utils/types";
+import { generatedCustomRequestsRegistry as generatedRegistry } from "./generated-registry";
 
 const manualRegistry: Record<string, CustomRequestEntry> = {
 	criarContratoIxc: {

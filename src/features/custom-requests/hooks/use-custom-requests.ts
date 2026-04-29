@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import type { CustomRequestRegistryKey } from "../merged-registry";
-import { customRequestsRegistry } from "../merged-registry";
+import type { CustomRequestRegistryKey } from "#/generated/custom-requests/merged-registry";
+import { customRequestsRegistry } from "#/generated/custom-requests/merged-registry";
 import { getRequestsByCollection, sendRequest } from "../utils/service";
 import type { CustomRequestEntry } from "../utils/types";
 

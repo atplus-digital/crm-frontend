@@ -92,6 +92,11 @@ export const FFUNCIONARIOS_PCD_LABELS = {
 	Nao: "Não",
 } as const;
 
+export const FFUNCIONARIOS_PRAZOEXPERIENCIA_LABELS = {
+	Value4050: "40 / 50",
+	Value4545: "45 / 45",
+} as const;
+
 export const FFUNCIONARIOS_RESERVISTA_LABELS = {
 	Sim: "Sim",
 	Nao: "Não",
@@ -163,6 +168,9 @@ export type FFuncionariosMobilidade =
 
 export type FFuncionariosPcd = keyof typeof FFUNCIONARIOS_PCD_LABELS;
 
+export type FFuncionariosPrazoExperiencia =
+	keyof typeof FFUNCIONARIOS_PRAZOEXPERIENCIA_LABELS;
+
 export type FFuncionariosReservista =
 	keyof typeof FFUNCIONARIOS_RESERVISTA_LABELS;
 
@@ -227,6 +235,7 @@ export interface FFuncionarios {
 	f_nome_contato_emergencia: string;
 	f_orgao_expedidor: string;
 	f_pcd: FFuncionariosPcd;
+	f_prazo_experiencia: FFuncionariosPrazoExperiencia;
 	f_razao_social: string;
 	f_reservista: FFuncionariosReservista;
 	f_rg: string;

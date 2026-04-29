@@ -511,6 +511,11 @@ export type {
 	TurnosRelations,
 } from "./other/turnos";
 export type {
+	UtiliCabos,
+	UtiliCabosRelationKey,
+	UtiliCabosRelations,
+} from "./other/utili-cabos";
+export type {
 	VendedorCupons,
 	VendedorCuponsRelationKey,
 	VendedorCuponsRelations,

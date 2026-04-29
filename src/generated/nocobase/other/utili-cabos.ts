@@ -6,24 +6,21 @@
 import type { CabosOpticos } from "../other/cabos-opticos";
 import type { Users } from "../users";
 
-export const T_HISTORICO_TABLE_NAME = "t_historico";
+export const T_UTILI_CABOS_TABLE_NAME = "t_utili_cabos";
 
-export interface Historico {
+export interface UtiliCabos {
 	id: number;
 	f_fk_cabos_opticos: number;
-	f_comprimento_estoque_anterior: number;
-	f_comprimento_estoque_atual: number;
 	f_comprimento_utilizado: number;
-	f_observacao: string;
-	f_solicitante: string;
+	f_obs_historico: string;
 	updatedAt: string;
 	createdAt: string;
 }
 
-export interface HistoricoRelations {
+export interface UtiliCabosRelations {
 	createdBy?: Users | null;
 	f_cabos_opticos?: CabosOpticos | null;
 	updatedBy?: Users | null;
 }
 
-export type HistoricoRelationKey = keyof HistoricoRelations;
+export type UtiliCabosRelationKey = keyof UtiliCabosRelations;

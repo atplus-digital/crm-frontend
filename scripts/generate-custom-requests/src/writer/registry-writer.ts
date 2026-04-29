@@ -13,6 +13,14 @@ function escapeString(str: string): string {
 		.replace(/\t/g, "\\t");
 }
 
+function serializePayloadData(data: Record<string, unknown> | null): string {
+	if (!data || Object.keys(data).length === 0) {
+		return "null";
+	}
+	// Serialize as JSON with 2-space indentation, replacing null with empty object
+	return JSON.stringify(data, null, 2);
+}
+
 function buildCollectionToRequestKeys(
 	entries: GeneratedRegistryEntry[],
 ): string {
@@ -49,12 +57,15 @@ function buildRegistryContent(
 		.map((entry) => {
 			const escapedName = escapeString(entry.name);
 			const hasEnhanced = splitRequests.includes(entry.key);
+			const payloadDataStr = serializePayloadData(entry.payloadData);
+
 			return `  "${entry.key}": {
     key: "${entry.key}",
     name: "${escapedName}",
     collection: "${entry.collection}",
     options: { method: "${entry.method}", url: "${entry.url}" },
-    payloadSchema: z.any(),
+    payloadSchema: ${entry.payloadSchema},
+    payloadData: ${payloadDataStr},
     _hasEnhancedSchema: ${hasEnhanced},
   },`;
 		})

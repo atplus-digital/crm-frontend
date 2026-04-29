@@ -52,61 +52,6 @@ function formatZodError(error: z.ZodError): string {
 		.join("; ");
 }
 
-interface CliArgs {
-	splitRequests: string[];
-}
-
-/**
- * Parseia argumentos CLI. Suporta:
- *   --split request1 --split request2
- * Retorna objeto com os argumentos parseados.
- */
-export function parseCliArgs(): CliArgs {
-	const args = process.argv.slice(2);
-	const splitRequests: string[] = [];
-
-	for (let i = 0; i < args.length; i++) {
-		const arg = args[i];
-
-		if (arg === "--split" || arg === "-s") {
-			const nextArg = args[i + 1];
-			if (nextArg && !nextArg.startsWith("-")) {
-				splitRequests.push(nextArg);
-				i++;
-			} else {
-				throw new Error(
-					"--split requer um valor (nome do request). Ex: --split criarContratoIxc",
-				);
-			}
-		} else if (arg.startsWith("--split=")) {
-			const value = arg.replace("--split=", "");
-			if (!value) {
-				throw new Error("--split= requer um valor. Ex: --split=request1");
-			}
-			splitRequests.push(value);
-		} else if (arg === "--help" || arg === "-h") {
-			console.log(`
-Usage: pnpm tsx scripts/generate-custom-requests/index.ts [options]
-
-Options:
-  --split <name>    Adiciona um request à lista de split (pode usar múltiplas vezes)
-  -s <name>        Forma curta de --split
-  --split=name      Forma alternativa com = (sem espaço)
-  --help, -h       Mostra esta ajuda
-
-Exemplos:
-  pnpm tsx scripts/generate-custom-requests/index.ts --split criarContratoIxc
-  pnpm tsx scripts/generate-custom-requests/index.ts -s request1 -s request2
-`);
-			process.exit(0);
-		} else if (arg.startsWith("-")) {
-			// Ignora flags desconhecidos (futuro: adicionar mais opções)
-		}
-	}
-
-	return { splitRequests };
-}
-
 export function parseConfig(
 	overrideConfig: Partial<ScriptConfig> = {},
 ): ScriptConfig {
@@ -124,8 +69,9 @@ export function parseConfig(
 		token: parsed.data.CRM_NOCOBASE_TOKEN,
 		timeoutMs: parsed.data.CRM_NOCOBASE_TIMEOUT_MS,
 		logLevel: "info",
-		outputDir: "src/features/custom-requests",
+		outputDir: "src/generated/custom-requests",
 		splitRequests: [],
+		lockWorkspaceFolder: true,
 		...overrideConfig,
 	};
 }
