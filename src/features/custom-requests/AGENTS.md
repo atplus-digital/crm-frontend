@@ -69,7 +69,7 @@ custom-requests/
 | `utils/schemas.ts`             | Legacy Zod schemas (deprecated — use split/ instead)                        |
 | `utils/service.ts`             | sendRequest, validatePayload, buildTemplateContext                          |
 | `errors.ts`                    | CustomRequestError, CustomRequestValidationError, CustomRequestNetworkError |
-| `hooks/use-custom-requests.ts` | useSendRequest, useRequests, useRequest                                     |
+| `hooks/use-custom-requests.ts` | useCustomRequest                                                            |
 
 ## Type Safety Levels
 
@@ -102,7 +102,7 @@ export const payloadSchema = z.object({
 ## Usage
 
 ```typescript
-import { sendRequest, useSendRequest } from "#/features/custom-requests";
+import { sendRequest, useCustomRequest } from "#/features/custom-requests";
 
 // Type-safe call (enhanced entries)
 const result = await sendRequest("criarContratoIxc", {
@@ -110,7 +110,7 @@ const result = await sendRequest("criarContratoIxc", {
 });
 
 // Hook (React Query)
-const mutation = useSendRequest();
+const mutation = useCustomRequest();
 mutation.mutate({ key: "criarContratoIxc", payload: { ... } });
 ```
 
@@ -134,4 +134,4 @@ This fetches all custom request configurations from NocoBase and generates `gene
 
 - **Auto-generated entries**: 50+ (from NocoBase)
 - **Manual entries**: 3 (with enhanced type safety)
-  | `hooks/use-custom-requests.ts` | useSendRequest, useRequests, useRequest |
+  | `hooks/use-custom-requests.ts` | useCustomRequest |
