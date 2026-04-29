@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 function normalizeMultiline(input: string): string {
 	return input
 		.split("\n")
-		.map((line) => line.trimEnd())
+		.map((line) => line.trim())
 		.join("\n")
 		.trim();
 }
@@ -98,6 +98,52 @@ describe("inferPayloadSchema", () => {
       }),
       id: z.unknown(),
     }),
+	  })`),
+		);
+	});
+
+	it("deve agrupar placeholders de currentUser em objeto sem literais", () => {
+		const result = inferPayloadSchema({
+			id_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
+			nome: "{{currentUser.profile.nome}}",
+		});
+
+		expect(normalizeMultiline(result)).toBe(
+			normalizeMultiline(`z.object({
+    currentUser: z.object({
+      f_id_vendedor_ixc: z.unknown(),
+      profile: z.object({
+        nome: z.unknown(),
+      }),
+    }),
+  })`),
+		);
+	});
+
+	it("deve agrupar placeholders de $nSelectedRecord em objeto sem literais", () => {
+		const result = inferPayloadSchema({
+			fk_funcionarios: "{{$nSelectedRecord.f_fk_funcionarios}}",
+			nome_patrimonio: "{{$nSelectedRecord.f_nome_patrimonio}}",
+		});
+
+		expect(normalizeMultiline(result)).toBe(
+			normalizeMultiline(`z.object({
+    $nSelectedRecord: z.object({
+      f_fk_funcionarios: z.unknown(),
+      f_nome_patrimonio: z.unknown(),
+    }),
+  })`),
+		);
+	});
+
+	it("deve inferir placeholder raiz de $nSelectedRecord como unknown", () => {
+		const result = inferPayloadSchema({
+			info_adicionais: "{{$nSelectedRecord}}",
+		});
+
+		expect(normalizeMultiline(result)).toBe(
+			normalizeMultiline(`z.object({
+    $nSelectedRecord: z.unknown(),
   })`),
 		);
 	});

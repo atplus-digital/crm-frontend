@@ -15,7 +15,11 @@ function toSafeObjectKey(key: string): string {
 	return /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(key) ? key : `"${key}"`;
 }
 
-type PlaceholderRoot = "$nForm" | "currentRecord";
+type PlaceholderRoot =
+	| "$nForm"
+	| "$nSelectedRecord"
+	| "currentRecord"
+	| "currentUser";
 
 function extractPlaceholderPathSegments(
 	value: unknown,
@@ -23,8 +27,11 @@ function extractPlaceholderPathSegments(
 ): string[] | null {
 	if (typeof value !== "string") return null;
 	const escapedRoot = root.replace("$", "\\$");
-	const match = value.match(new RegExp(`^\\{\\{${escapedRoot}\\.(.+)\\}\\}$`));
+	const match = value.match(
+		new RegExp(`^\\{\\{${escapedRoot}(?:\\.(.+))?\\}\\}$`),
+	);
 	if (!match) return null;
+	if (!match[1]) return [];
 	return match[1].split(".").filter(Boolean);
 }
 
@@ -99,12 +106,35 @@ function inferObjectZod(obj: Record<string, unknown>): string {
 
 	const lines: string[] = [];
 	const nFormTree: PlaceholderSchemaTree = {};
+	const nSelectedRecordTree: PlaceholderSchemaTree = {};
 	const currentRecordTree: PlaceholderSchemaTree = {};
+	const currentUserTree: PlaceholderSchemaTree = {};
+	let hasNFormRootReference = false;
+	let hasNSelectedRecordRootReference = false;
+	let hasCurrentRecordRootReference = false;
+	let hasCurrentUserRootReference = false;
 
 	for (const [key, value] of entries) {
 		const nFormPath = extractPlaceholderPathSegments(value, "$nForm");
 		if (nFormPath) {
-			addPathToTree(nFormTree, nFormPath);
+			if (nFormPath.length === 0) {
+				hasNFormRootReference = true;
+			} else {
+				addPathToTree(nFormTree, nFormPath);
+			}
+			continue;
+		}
+
+		const nSelectedRecordPath = extractPlaceholderPathSegments(
+			value,
+			"$nSelectedRecord",
+		);
+		if (nSelectedRecordPath) {
+			if (nSelectedRecordPath.length === 0) {
+				hasNSelectedRecordRootReference = true;
+			} else {
+				addPathToTree(nSelectedRecordTree, nSelectedRecordPath);
+			}
 			continue;
 		}
 
@@ -113,7 +143,24 @@ function inferObjectZod(obj: Record<string, unknown>): string {
 			"currentRecord",
 		);
 		if (currentRecordPath) {
-			addPathToTree(currentRecordTree, currentRecordPath);
+			if (currentRecordPath.length === 0) {
+				hasCurrentRecordRootReference = true;
+			} else {
+				addPathToTree(currentRecordTree, currentRecordPath);
+			}
+			continue;
+		}
+
+		const currentUserPath = extractPlaceholderPathSegments(
+			value,
+			"currentUser",
+		);
+		if (currentUserPath) {
+			if (currentUserPath.length === 0) {
+				hasCurrentUserRootReference = true;
+			} else {
+				addPathToTree(currentUserTree, currentUserPath);
+			}
 			continue;
 		}
 
@@ -123,6 +170,21 @@ function inferObjectZod(obj: Record<string, unknown>): string {
 	if (Object.keys(nFormTree).length > 0) {
 		const nFormShape = renderTree(nFormTree, "      ", "z.string()");
 		lines.push(`    $nForm: z.object({\n${nFormShape}\n    }),`);
+	} else if (hasNFormRootReference) {
+		lines.push("    $nForm: z.unknown(),");
+	}
+
+	if (Object.keys(nSelectedRecordTree).length > 0) {
+		const nSelectedRecordShape = renderTree(
+			nSelectedRecordTree,
+			"      ",
+			"z.unknown()",
+		);
+		lines.push(
+			`    $nSelectedRecord: z.object({\n${nSelectedRecordShape}\n    }),`,
+		);
+	} else if (hasNSelectedRecordRootReference) {
+		lines.push("    $nSelectedRecord: z.unknown(),");
 	}
 
 	if (Object.keys(currentRecordTree).length > 0) {
@@ -132,6 +194,19 @@ function inferObjectZod(obj: Record<string, unknown>): string {
 			"z.unknown()",
 		);
 		lines.push(`    currentRecord: z.object({\n${currentRecordShape}\n    }),`);
+	} else if (hasCurrentRecordRootReference) {
+		lines.push("    currentRecord: z.unknown(),");
+	}
+
+	if (Object.keys(currentUserTree).length > 0) {
+		const currentUserShape = renderTree(
+			currentUserTree,
+			"      ",
+			"z.unknown()",
+		);
+		lines.push(`    currentUser: z.object({\n${currentUserShape}\n    }),`);
+	} else if (hasCurrentUserRootReference) {
+		lines.push("    currentUser: z.unknown(),");
 	}
 
 	return `z.object({\n${lines.join("\n")}\n  })`;

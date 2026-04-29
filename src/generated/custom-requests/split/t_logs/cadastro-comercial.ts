@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /**
- * Custom request: qbk10nf76um
+ * Custom request: cadastro-comercial
  * Collection: t_logs
  * Method: GET
  * URL: https://jsonplaceholder.typicode.com/todos/1
@@ -21,11 +21,10 @@ export const payloadData = {
 
 export const requestEntry = {
 	key: "qbk10nf76um",
-	name: "qbk10nf76um",
+	name: "cadastro-comercial",
 	collection: "t_logs",
 	method: "GET",
 	url: "https://jsonplaceholder.typicode.com/todos/1",
 	payloadSchema,
 	payloadData,
-	_hasEnhancedSchema: true,
 } as const;

@@ -13,6 +13,10 @@ function toSafeIdentifier(value: string): string {
 	return value.replace(/[^a-zA-Z0-9_]/g, "_");
 }
 
+function toSafePathSegment(value: string): string {
+	return value.replace(/[^a-zA-Z0-9_-]/g, "-");
+}
+
 function buildCollectionToRequestKeys(
 	entries: GeneratedRegistryEntry[],
 ): string {
@@ -52,8 +56,10 @@ function buildRegistryContent(
 	const splitImports = sorted
 		.filter((entry) => splitRequestsSet.has(entry.key))
 		.map((entry) => {
-			const alias = `split_${toSafeIdentifier(entry.key)}`;
-			return `import { requestEntry as ${alias}RequestEntry } from "./split/${entry.key}";`;
+			const splitFileName = splitRequests[entry.key];
+			const collectionDir = toSafePathSegment(entry.collection);
+			const alias = `split_${toSafeIdentifier(splitFileName)}`;
+			return `import { requestEntry as ${alias}RequestEntry } from "./split/${collectionDir}/${splitFileName}";`;
 		})
 		.join("\n");
 
@@ -61,7 +67,8 @@ function buildRegistryContent(
 		.map((entry) => {
 			const hasEnhanced = splitRequestsSet.has(entry.key);
 			if (hasEnhanced) {
-				const alias = `split_${toSafeIdentifier(entry.key)}`;
+				const splitFileName = splitRequests[entry.key];
+				const alias = `split_${toSafeIdentifier(splitFileName)}`;
 				return `  "${entry.key}": ${alias}RequestEntry,`;
 			}
 			const escapedName = escapeString(entry.name);
@@ -75,7 +82,6 @@ function buildRegistryContent(
     url: "${entry.url}",
     payloadSchema: ${entry.payloadSchema},
     payloadData: ${payloadDataStr},
-    _hasEnhancedSchema: false,
   },`;
 		})
 		.join("\n\n");

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /**
- * Custom request: 23btjo9ohrr
+ * Custom request: negociacao-atualizada
  * Collection: cliente_contrato
  * Method: POST
  * URL: https://n8n.atplus.cloud/webhook/5d9eccc3-7091-47f9-bcae-75ea5292b7fd
@@ -25,11 +25,10 @@ export const payloadData = {
 
 export const requestEntry = {
 	key: "23btjo9ohrr",
-	name: "23btjo9ohrr",
+	name: "negociacao-atualizada",
 	collection: "cliente_contrato",
 	method: "POST",
 	url: "https://n8n.atplus.cloud/webhook/5d9eccc3-7091-47f9-bcae-75ea5292b7fd",
 	payloadSchema,
 	payloadData,
-	_hasEnhancedSchema: true,
 } as const;

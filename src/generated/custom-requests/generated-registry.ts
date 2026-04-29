@@ -3,8 +3,8 @@
  * Do not edit manually.
  */
 import { z } from "zod";
-import { requestEntry as split_23btjo9ohrrRequestEntry } from "./split/23btjo9ohrr";
-import { requestEntry as split_qbk10nf76umRequestEntry } from "./split/qbk10nf76um";
+import { requestEntry as split_negociacao_atualizadaRequestEntry } from "./split/cliente_contrato/negociacao-atualizada";
+import { requestEntry as split_cadastro_comercialRequestEntry } from "./split/t_logs/cadastro-comercial";
 
 export const generatedCustomRequestsRegistry = {
 	"0j7f9fuzuo7": {
@@ -15,16 +15,15 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://atplus-rh-n8n-rh.tvs9na.easypanel.host/webhook/9ceda127-997b-49df-8037-f50db4a55e42",
 		payloadSchema: z.object({
 			etapa: z.literal("aprova-informacoes"),
-			info_adicionais: z.literal("{{$nSelectedRecord}}"),
+			$nSelectedRecord: z.unknown(),
 		}),
 		payloadData: {
 			etapa: "aprova-informacoes",
 			info_adicionais: "{{$nSelectedRecord}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
-	"23btjo9ohrr": split_23btjo9ohrrRequestEntry,
+	"23btjo9ohrr": split_negociacao_atualizadaRequestEntry,
 
 	"32fmnujkpaq": {
 		key: "32fmnujkpaq",
@@ -44,7 +43,6 @@ export const generatedCustomRequestsRegistry = {
 			idcontrato: "{{currentRecord.id_contrato}}",
 			idlogin: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"37yaihkravc": {
@@ -54,16 +52,17 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/0860593c-859a-4427-9e7e-437b19bed46b",
 		payloadSchema: z.object({
-			id_vendedor: z.literal("{{currentUser.f_id_vendedor_ixc}}"),
 			currentRecord: z.object({
 				id: z.unknown(),
+			}),
+			currentUser: z.object({
+				f_id_vendedor_ixc: z.unknown(),
 			}),
 		}),
 		payloadData: {
 			id_contrato: "{{currentRecord.id}}",
 			id_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"3jd8i67j41e": {
@@ -74,7 +73,6 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://n8n.atplus.cloud/webhook/37cbdc46-4512-43e0-a89d-21e0d45de960",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	"4pqt2osnjwb": {
@@ -95,7 +93,6 @@ export const generatedCustomRequestsRegistry = {
 			idcontrato: "{{currentRecord.id_contrato}}",
 			idlogin: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"5kd0wmsvdo2": {
@@ -110,7 +107,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			f_status_tag: "4",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"5t5w4obvlfl": {
@@ -127,7 +123,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			id_contrato: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"6ke3hsmki23": {
@@ -137,7 +132,6 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:create",
 		payloadSchema: z.object({
-			f_fk_negociacao_vendedor: z.literal("{{currentUser.f_id_vendedor_ixc}}"),
 			f_titulo: z.literal(
 				"SEGUNDA CONTRATAÇÃO - {{currentRecord.f_nc_cliente.razao}}",
 			),
@@ -145,7 +139,6 @@ export const generatedCustomRequestsRegistry = {
 			f_endereco_estado: z.literal("SC"),
 			f_motivo: z.literal("S"),
 			f_status: z.literal("1"),
-			f_fk_pessoa_negociacao: z.literal("{{currentUser.f_id_vendedor_ixc}}"),
 			currentRecord: z.object({
 				bairro: z.unknown(),
 				cep: z.unknown(),
@@ -162,6 +155,9 @@ export const generatedCustomRequestsRegistry = {
 				}),
 				id: z.unknown(),
 				numero: z.unknown(),
+			}),
+			currentUser: z.object({
+				f_id_vendedor_ixc: z.unknown(),
 			}),
 		}),
 		payloadData: {
@@ -186,7 +182,6 @@ export const generatedCustomRequestsRegistry = {
 			f_nome_fantasia: "{{currentRecord.f_nc_cliente.razao}}",
 			f_fk_pessoa_negociacao: "{{currentUser.f_id_vendedor_ixc}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"73roqp9a2rc": {
@@ -207,7 +202,6 @@ export const generatedCustomRequestsRegistry = {
 			idcontrato: "{{currentRecord.id_contrato}}",
 			idlogin: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"78d5kny2gwn": {
@@ -224,7 +218,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			id_contrato: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"7bsfl4wnz5m": {
@@ -243,7 +236,6 @@ export const generatedCustomRequestsRegistry = {
 			id_contrato: "{{$nForm.id}}",
 			id_cliente: "{{$nForm.id_cliente}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"7fh1n04ztsu": {
@@ -254,7 +246,6 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://api.zapsign.com.br/api/v1/info-plan/",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	"7u4q8xjflzh": {
@@ -275,7 +266,6 @@ export const generatedCustomRequestsRegistry = {
 			idcontrato: "{{currentRecord.id_contrato}}",
 			idlogin: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"81p695ox20f": {
@@ -292,7 +282,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			id_funcionario: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"8e9nkpsadjm": {
@@ -319,7 +308,6 @@ export const generatedCustomRequestsRegistry = {
 			nome: "{{$nForm.f_responsavel_assinatura}}",
 			cpf: "{{$nForm.f_cpf_responsavel_assinatura}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	"93xtl7ut9gz": {
@@ -330,7 +318,6 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://n8n.atplus.cloud/webhook-test/acoesos",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	"9eedntq884w": {
@@ -347,7 +334,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			data: "{{$nForm.f_pacotes_adicionais}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	b186501hwq6: {
@@ -469,7 +455,6 @@ export const generatedCustomRequestsRegistry = {
 			"endereço e-mail": "{{$nForm.f_templates_atendimentos.f_e-mail}}",
 			"tarefa descrição": "{{$nForm.f_tarefas}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	b4xb4urp530: {
@@ -490,7 +475,6 @@ export const generatedCustomRequestsRegistry = {
 			idcontrato: "{{currentRecord.id_contrato}}",
 			idlogin: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	bq0cb339042: {
@@ -509,7 +493,6 @@ export const generatedCustomRequestsRegistry = {
 			id_negociacao: "{{$nForm.id}}",
 			id_contrato: "{{$nForm.f_contrato_ixc}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	cpjti4z0134: {
@@ -530,7 +513,6 @@ export const generatedCustomRequestsRegistry = {
 			idcontrato: "{{currentRecord.id_contrato}}",
 			idlogin: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	d349ih50xzh: {
@@ -540,12 +522,13 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_demandas:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			f_responsavel: z.literal("{{currentUser.id}}"),
+			currentUser: z.object({
+				id: z.unknown(),
+			}),
 		}),
 		payloadData: {
 			f_responsavel: "{{currentUser.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	d6ksnfld3et: {
@@ -556,7 +539,6 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://n8n.atplus.cloud/webhook-test/b43a1b28-e8e9-4aaf-86da-2289a4d5e233",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	dubcidu6jmc: {
@@ -583,7 +565,6 @@ export const generatedCustomRequestsRegistry = {
 			nome: "{{$nForm.f_responsavel_assinatura}}",
 			cpf: "{{$nForm.f_cpf_responsavel_assinatura}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	f8q6gymke8a: {
@@ -600,7 +581,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			id_negociacao: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	fiss44qjf20: {
@@ -610,16 +590,17 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			f_fk_negociacao_vendedor: z.literal("{{currentUser.f_id_vendedor_ixc}}"),
 			f_status: z.literal(2),
 			f_substatus: z.literal(1),
+			currentUser: z.object({
+				f_id_vendedor_ixc: z.unknown(),
+			}),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
 			f_status: 2,
 			f_substatus: 1,
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	gehbxharfjz: {
@@ -650,7 +631,6 @@ export const generatedCustomRequestsRegistry = {
 			departamento: "{{$nForm.f_departamento}}",
 			id_login: "{{$nForm.f_id_login}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	ghcsm5m6cb8: {
@@ -660,16 +640,17 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook-test/8dbc006d-f3b1-42a5-a715-7c7025655146",
 		payloadSchema: z.object({
-			fk_funcionarios: z.literal("{{$nSelectedRecord.f_fk_funcionarios}}"),
-			nome_patrimonio: z.literal("{{$nSelectedRecord.f_nome_patrimonio}}"),
-			f_numero_serie: z.literal("{{$nSelectedRecord.f_numero_serie}}"),
+			$nSelectedRecord: z.object({
+				f_fk_funcionarios: z.unknown(),
+				f_nome_patrimonio: z.unknown(),
+				f_numero_serie: z.unknown(),
+			}),
 		}),
 		payloadData: {
 			fk_funcionarios: "{{$nSelectedRecord.f_fk_funcionarios}}",
 			nome_patrimonio: "{{$nSelectedRecord.f_nome_patrimonio}}",
 			f_numero_serie: "{{$nSelectedRecord.f_numero_serie}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	gp4mrt26bbe: {
@@ -706,7 +687,6 @@ export const generatedCustomRequestsRegistry = {
 			id_contrato: "{{currentRecord.f_id_contrato}}",
 			id_demanda: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	h0h7rujhvvj: {
@@ -717,7 +697,6 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://n8n.atplus.cloud/webhook-test/cb200573-5c18-4a03-bb62-69cad03a2be4",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	h32vk2yid08: {
@@ -736,7 +715,6 @@ export const generatedCustomRequestsRegistry = {
 			procedimento: "17760523-1404-4ff9-b786-15a4b0d7a3e2",
 			id_negociacao: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	h901q2xewqo: {
@@ -746,10 +724,12 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/7578902b-c9b8-48df-a299-d21813709f13",
 		payloadSchema: z.object({
-			id_responsavel: z.literal("{{currentUser.f_id_tecnico_ixc}}"),
-			responsavel: z.literal("{{currentUser.nickname}}"),
 			currentRecord: z.object({
 				id: z.unknown(),
+			}),
+			currentUser: z.object({
+				f_id_tecnico_ixc: z.unknown(),
+				nickname: z.unknown(),
 			}),
 		}),
 		payloadData: {
@@ -757,7 +737,6 @@ export const generatedCustomRequestsRegistry = {
 			id_responsavel: "{{currentUser.f_id_tecnico_ixc}}",
 			responsavel: "{{currentUser.nickname}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	il2pcooj4pr: {
@@ -768,7 +747,6 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://n8n.atplus.cloud/webhook/envia-assinatura",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	im5okkvu9dz: {
@@ -891,7 +869,6 @@ export const generatedCustomRequestsRegistry = {
 			latitude_login: "",
 			longitude_login: "",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	iwdrxnxtmdq: {
@@ -920,7 +897,6 @@ export const generatedCustomRequestsRegistry = {
 			id_cliente: "{{$nForm.f_idcliente}}",
 			departamento: "{{$nForm.f_departamento}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	jhzlhxs8owo: {
@@ -949,7 +925,6 @@ export const generatedCustomRequestsRegistry = {
 			id_cliente: "{{$nForm.f_idcliente}}",
 			departamento: "{{$nForm.f_departamento}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	kgm9ahtf2yp: {
@@ -959,16 +934,17 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/0860593c-859a-4427-9e7e-437b19bed46b",
 		payloadSchema: z.object({
-			id_vendedor: z.literal("{{currentUser.f_id_vendedor_ixc}}"),
 			currentRecord: z.object({
 				id: z.unknown(),
+			}),
+			currentUser: z.object({
+				f_id_vendedor_ixc: z.unknown(),
 			}),
 		}),
 		payloadData: {
 			id_contrato: "{{currentRecord.id}}",
 			id_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	lt9r40c3a52: {
@@ -999,7 +975,6 @@ export const generatedCustomRequestsRegistry = {
 			idos: "{{$nForm.f_idos}}",
 			diagnostico: "{{$nForm.f_diagnosticos}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	m5pu59k8p9s: {
@@ -1009,12 +984,13 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/9571dab3-4e39-429e-a602-ae3619819b70",
 		payloadSchema: z.object({
-			apelido: z.literal("{{currentUser.nickname}}"),
+			currentUser: z.object({
+				nickname: z.unknown(),
+			}),
 		}),
 		payloadData: {
 			apelido: "{{currentUser.nickname}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	mp73jhvvcuj: {
@@ -1024,16 +1000,17 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			f_fk_negociacao_vendedor: z.literal("{{currentUser.f_id_vendedor_ixc}}"),
 			f_status: z.literal(2),
 			f_substatus: z.literal(1),
+			currentUser: z.object({
+				f_id_vendedor_ixc: z.unknown(),
+			}),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
 			f_status: 2,
 			f_substatus: 1,
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	mzpjc6seq2p: {
@@ -1064,7 +1041,6 @@ export const generatedCustomRequestsRegistry = {
 			departamento: "{{$nForm.f_departamento}}",
 			id_login: "{{$nForm.f_id_login}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	n8nCompras: {
@@ -1079,7 +1055,6 @@ export const generatedCustomRequestsRegistry = {
 			valor: z.number(),
 		}),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	oj5jwqjdjts: {
@@ -1100,7 +1075,6 @@ export const generatedCustomRequestsRegistry = {
 			idcontrato: "{{currentRecord.id_contrato}}",
 			idlogin: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	q5cd310hudg: {
@@ -1111,10 +1085,9 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://n8n.atplus.cloud/webhook-test/cb200573-5c18-4a03-bb62-69cad03a2be4",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
-	qbk10nf76um: split_qbk10nf76umRequestEntry,
+	qbk10nf76um: split_cadastro_comercialRequestEntry,
 
 	qtd2du574v1: {
 		key: "qtd2du574v1",
@@ -1130,7 +1103,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			id: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	rc6bqjtcfik: {
@@ -1161,7 +1133,6 @@ export const generatedCustomRequestsRegistry = {
 			idos: "{{$nForm.f_idos}}",
 			diagnostico: "{{$nForm.f_diagnosticos}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	rm9a8dyqfzr: {
@@ -1171,14 +1142,15 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_crm_troca_titularidade:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			f_fk_negociacao_vendedor: z.literal("{{currentUser.f_id_vendedor_ixc}}"),
 			f_status: z.literal(0),
+			currentUser: z.object({
+				f_id_vendedor_ixc: z.unknown(),
+			}),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
 			f_status: 0,
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	s0vwyf6kzdl: {
@@ -1188,16 +1160,17 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			f_fk_negociacao_vendedor: z.literal("{{currentUser.f_id_vendedor_ixc}}"),
 			f_status: z.literal(2),
 			f_substatus: z.literal(1),
+			currentUser: z.object({
+				f_id_vendedor_ixc: z.unknown(),
+			}),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
 			f_status: 2,
 			f_substatus: 1,
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	s1hoaij5zg3: {
@@ -1207,16 +1180,17 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			f_fk_negociacao_vendedor: z.literal("{{currentUser.f_id_vendedor_ixc}}"),
 			f_status: z.literal(2),
 			f_substatus: z.literal(1),
+			currentUser: z.object({
+				f_id_vendedor_ixc: z.unknown(),
+			}),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
 			f_status: 2,
 			f_substatus: 1,
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	sjohhcwirxz: {
@@ -1233,7 +1207,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			id_fn_areceber: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	sl7o14v2qhm: {
@@ -1250,7 +1223,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			boletos: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	smabb16kusp: {
@@ -1261,7 +1233,6 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://n8n.atplus.cloud/webhook/a24ba316-aed8-4bc2-a949-c6cb038a3fe7",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	spn119qrcv8: {
@@ -1272,7 +1243,6 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://placehold.co/600x400.png",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	t3x4cxkvz4l: {
@@ -1395,7 +1365,6 @@ export const generatedCustomRequestsRegistry = {
 			latitude_login: "",
 			longitude_login: "",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	t8csht5gpmi: {
@@ -1406,7 +1375,6 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://n8n.atplus.cloud/webhook-test/cb200573-5c18-4a03-bb62-69cad03a2be4",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	tjt1ajr1tkl: {
@@ -1416,16 +1384,17 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/segundacontratacao",
 		payloadSchema: z.object({
-			id_vendedor: z.literal("{{currentUser.f_id_vendedor_ixc}}"),
 			currentRecord: z.object({
 				id: z.unknown(),
+			}),
+			currentUser: z.object({
+				f_id_vendedor_ixc: z.unknown(),
 			}),
 		}),
 		payloadData: {
 			id_contrato: "{{currentRecord.id}}",
 			id_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	u1t103p3ra5: {
@@ -1454,7 +1423,6 @@ export const generatedCustomRequestsRegistry = {
 			prioridade: "{{$nForm.f_prioridade}}",
 			cliente: "Mateus Salomão de Barros Neto",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	uw77gy8qtte: {
@@ -1465,7 +1433,6 @@ export const generatedCustomRequestsRegistry = {
 		url: "/",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	vwl8w2fpjzg: {
@@ -1476,7 +1443,6 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://n8n.atplus.cloud/webhook-test/71977efe-295b-49d5-b36b-83040a36dd33",
 		payloadSchema: z.any(),
 		payloadData: null,
-		_hasEnhancedSchema: false,
 	},
 
 	wr4aj0srq5h: {
@@ -1491,7 +1457,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			f_substatus: "1",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	xk24zkcao2z: {
@@ -1510,7 +1475,22 @@ export const generatedCustomRequestsRegistry = {
 			procedimento: "17760523-1404-4ff9-b786-15a4b0d7a3e2",
 			id_negociacao: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
+	},
+
+	xk5u4vwbdap: {
+		key: "xk5u4vwbdap",
+		name: "xk5u4vwbdap",
+		collection: "t_logs",
+		method: "GET",
+		url: "https://jsonplaceholder.typicode.com/todos/1",
+		payloadSchema: z.object({
+			$nSelectedRecord: z.object({
+				id: z.unknown(),
+			}),
+		}),
+		payloadData: {
+			selected: "{{$nSelectedRecord.id}}",
+		},
 	},
 
 	xkmkcdnrksu: {
@@ -1541,7 +1521,6 @@ export const generatedCustomRequestsRegistry = {
 			departamento: "{{$nForm.f_departamento}}",
 			id_login: "{{$nForm.f_id_login}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	ychaqev81oe: {
@@ -1570,7 +1549,6 @@ export const generatedCustomRequestsRegistry = {
 			id_cliente: "{{$nForm.f_idcliente}}",
 			departamento: "{{$nForm.f_departamento}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	yep1cjhq0zp: {
@@ -1587,7 +1565,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			id_funcionario: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	ygimowrypfa: {
@@ -1597,12 +1574,11 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook-test/d86bf3fb-47da-4abc-916b-e08ebd07e231",
 		payloadSchema: z.object({
-			TESTE: z.literal("{{currentUser}}"),
+			currentUser: z.unknown(),
 		}),
 		payloadData: {
 			TESTE: "{{currentUser}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	ynsgglxpt3r: {
@@ -1623,7 +1599,6 @@ export const generatedCustomRequestsRegistry = {
 			idcontrato: "{{currentRecord.id_contrato}}",
 			idlogin: "{{currentRecord.id}}",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	ysw34sgdr52: {
@@ -1638,7 +1613,6 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: {
 			status: "CANCELLED",
 		},
-		_hasEnhancedSchema: false,
 	},
 
 	zjhlu1v5rxf: {
@@ -1648,12 +1622,19 @@ export const generatedCustomRequestsRegistry = {
 		method: "PUT",
 		url: "https://jsonplaceholder.typicode.com/todos/1",
 		payloadSchema: z.object({
-			form: z.literal("{{$nForm}}"),
+			record: z.literal(""),
+			xicara: z.literal("cafe"),
+			$nForm: z.unknown(),
+			currentUser: z.object({
+				id: z.unknown(),
+			}),
 		}),
 		payloadData: {
 			form: "{{$nForm}}",
+			record: "",
+			user: "{{currentUser.id}}",
+			xicara: "cafe",
 		},
-		_hasEnhancedSchema: false,
 	},
 } as const;
 
@@ -1704,7 +1685,7 @@ export const collectionToRequestKeys = {
 	t_crm_troca_titularidade: ["rm9a8dyqfzr"],
 	t_dados_adicionais_cliente_contrato: ["uw77gy8qtte"],
 	t_demandas: ["d349ih50xzh", "gp4mrt26bbe", "u1t103p3ra5", "vwl8w2fpjzg"],
-	t_logs: ["qbk10nf76um", "zjhlu1v5rxf"],
+	t_logs: ["qbk10nf76um", "xk5u4vwbdap", "zjhlu1v5rxf"],
 	t_negociacoes: [
 		"3jd8i67j41e",
 		"8e9nkpsadjm",
