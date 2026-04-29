@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
 			...authRoutes,
 			{
 				path: toRouterPath(routePaths.forbidden),
-				lazy: () => import("./forbidden/index"),
+				lazy: () => import("./error/forbidden/index"),
 			},
 			{
 				path: "*",
