@@ -14,6 +14,10 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://atplus-rh-n8n-rh.tvs9na.easypanel.host/webhook/9ceda127-997b-49df-8037-f50db4a55e42",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			etapa: "aprova-informacoes",
+			info_adicionais: "{{$nSelectedRecord}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -26,6 +30,10 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/5d9eccc3-7091-47f9-bcae-75ea5292b7fd",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_contrato: "{{currentRecord.id}}",
+			id_cliente: "{{currentRecord.f_nc_cliente.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -35,6 +43,11 @@ export const generatedCustomRequestsRegistry = {
 		collection: "radusuarios",
 		options: { method: "GET", url: "https://n8n.atplus.cloud/webhook/aegis" },
 		payloadSchema: z.any(),
+		payloadData: {
+			acao: "Limpar MAC",
+			idcontrato: "{{currentRecord.id_contrato}}",
+			idlogin: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -47,6 +60,10 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/0860593c-859a-4427-9e7e-437b19bed46b",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_contrato: "{{currentRecord.id}}",
+			id_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -59,6 +76,7 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/37cbdc46-4512-43e0-a89d-21e0d45de960",
 		},
 		payloadSchema: z.any(),
+		payloadData: null,
 		_hasEnhancedSchema: false,
 	},
 
@@ -68,6 +86,11 @@ export const generatedCustomRequestsRegistry = {
 		collection: "radusuarios",
 		options: { method: "GET", url: "https://n8n.atplus.cloud/webhook/aegis" },
 		payloadSchema: z.any(),
+		payloadData: {
+			acao: "Desconectar Login",
+			idcontrato: "{{currentRecord.id_contrato}}",
+			idlogin: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -80,6 +103,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://crm.atplus.cloud/api/t_demandas:update?filterByTk=73",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			f_status_tag: "4",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -92,6 +118,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/5f130ffe-2cf6-4f42-8f05-ef8aed602644",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_contrato: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -104,6 +133,28 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://crm.atplus.cloud/api/t_negociacoes:create",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
+			f_cep: "{{currentRecord.cep}}",
+			f_endereco: "{{currentRecord.endereco}}",
+			f_contrato_ixc: "{{currentRecord.id}}",
+			f_titulo: "SEGUNDA CONTRATAÇÃO - {{currentRecord.f_nc_cliente.razao}}",
+			f_endereco_cidade: "{{currentRecord.cidade}}",
+			f_telefone_2: "{{currentRecord.f_nc_cliente.telefone_celular}}",
+			f_valor_instalacao: "0",
+			f_endereco_estado: "SC",
+			f_motivo: "S",
+			f_telefone: "{{currentRecord.f_nc_cliente.telefone_celular}}",
+			f_endereco_numero: "{{currentRecord.numero}}",
+			f_tipo_pessoa: "{{currentRecord.f_klf0fxs3rds.tipo_pessoa}}",
+			f_status: "1",
+			f_email_cobranca: "{{currentRecord.f_nc_cliente.email}}",
+			f_cpf_cnpj: "{{currentRecord.f_nc_cliente.cnpj_cpf}}",
+			f_nome_razao: "{{currentRecord.f_nc_cliente.razao}}",
+			f_bairro: "{{currentRecord.bairro}}",
+			f_nome_fantasia: "{{currentRecord.f_nc_cliente.razao}}",
+			f_fk_pessoa_negociacao: "{{currentUser.f_id_vendedor_ixc}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -113,6 +164,11 @@ export const generatedCustomRequestsRegistry = {
 		collection: "radusuarios",
 		options: { method: "GET", url: "https://n8n.atplus.cloud/webhook/aegis" },
 		payloadSchema: z.any(),
+		payloadData: {
+			acao: "Desconectar Login",
+			idcontrato: "{{currentRecord.id_contrato}}",
+			idlogin: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -125,6 +181,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/5f130ffe-2cf6-4f42-8f05-ef8aed602644",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_contrato: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -137,6 +196,10 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/demandas",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_contrato: "{{$nForm.id}}",
+			id_cliente: "{{$nForm.id_cliente}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -149,6 +212,7 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://api.zapsign.com.br/api/v1/info-plan/",
 		},
 		payloadSchema: z.any(),
+		payloadData: null,
 		_hasEnhancedSchema: false,
 	},
 
@@ -158,6 +222,11 @@ export const generatedCustomRequestsRegistry = {
 		collection: "radusuarios",
 		options: { method: "GET", url: "https://n8n.atplus.cloud/webhook/aegis" },
 		payloadSchema: z.any(),
+		payloadData: {
+			acao: "Liberar Redução de Velocidade",
+			idcontrato: "{{currentRecord.id_contrato}}",
+			idlogin: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -170,6 +239,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/8dbc006d-f3b1-42a5-a715-7c7025655146",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_funcionario: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -182,6 +254,13 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/bec8f4d4-b0ad-4e3a-a42e-53e99674fe8d",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_negociacao: "{{currentRecord.id}}",
+			wpp_assinatura: "{{$nForm.f_telefone}}",
+			email_assinatura: "{{$nForm.f_email_cobranca}}",
+			nome: "{{$nForm.f_responsavel_assinatura}}",
+			cpf: "{{$nForm.f_cpf_responsavel_assinatura}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -194,6 +273,7 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/acoesos",
 		},
 		payloadSchema: z.any(),
+		payloadData: null,
 		_hasEnhancedSchema: false,
 	},
 
@@ -206,6 +286,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://crm.atplus.cloud/api/t_negociacoes_itens:create",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			data: "{{$nForm.f_pacotes_adicionais}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -218,6 +301,70 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/aegis-crm",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			"Tipo de atendimento":
+				"{{$nForm.f_templates_atendimentos.f_tipo_de_atendimento}}",
+			"Nome do solicitante":
+				"{{$nForm.f_templates_atendimentos.f_nome_do_solicitante}}",
+			"Protocolo do atendimento":
+				"{{$nForm.f_templates_atendimentos.f_protocolo_do_atendimento}}",
+			LOS: "{{$nForm.f_templates_atendimentos.f_los}}",
+			"Quantidade de dispositivos":
+				"{{$nForm.f_templates_atendimentos.f_quantidade_de_dispositivos}}",
+			"Tipo de conexão do dispositivo":
+				"{{$nForm.f_templates_atendimentos.f_tipo_de_conexao_do_dispositivo}}",
+			"Aplicativo específico":
+				"{{$nForm.f_templates_atendimentos.f_aplicativo_especifico}}",
+			Aplicativo: "{{$nForm.f_templates_atendimentos.f_qual_aplicativo}}",
+			"Login PPPoE": "{{$nForm.f_templates_atendimentos.f_login_pppoe}}",
+			"IP Fixo": "{{$nForm.f_templates_atendimentos.f_ip_fixo}}",
+			"Portas a serem liberadas":
+				"{{$nForm.f_templates_atendimentos.f_portas_a_serem_liberadas}}",
+			"IP interno para liberação":
+				"{{$nForm.f_templates_atendimentos.f_ip_interno_para_liberacao}}",
+			"Endereço do site":
+				"{{$nForm.f_templates_atendimentos.f_endereco_do_site}}",
+			"Acessa rela rede ATPlus":
+				"{{$nForm.f_templates_atendimentos.f_acessa_pela_rede_da_atplus}}",
+			"Alterações a serem realizadas":
+				"{{$nForm.f_templates_atendimentos.f_alteracoes}}",
+			"Nome da rede": "{{$nForm.f_templates_atendimentos.f_nome_rede_wifi}}",
+			"Senha da rede":
+				"{{$nForm.f_templates_atendimentos.f_senha_da_rede_wifi}}",
+			"Tipo de problema":
+				"{{$nForm.f_templates_atendimentos.f_telefonia_tipo_de_problema}}",
+			"Número de A": "{{$nForm.f_templates_atendimentos.f_numero_de_A}}",
+			"Número de B": "{{$nForm.f_templates_atendimentos.f_numero_de_B}}",
+			"Status do registro":
+				"{{$nForm.f_templates_atendimentos.f_status_do_circuito}}",
+			"Número para contato":
+				"{{$nForm.f_templates_atendimentos.f_numero_para_contato}}",
+			Observação: "{{$nForm.f_templates_atendimentos.f_descricao_do_cliente}}",
+			finaliza: "{{$nForm.f_finalizaatendimento}}",
+			tarefa: "{{$nForm.f_tarefas}}",
+			datainicio: "{{$nForm.f_datainicio}}",
+			datafim: "{{$nForm.f_datafim}}",
+			tecnico: "{{$nForm.f_responsavel}}",
+			idos: "{{$nForm.f_idos}}",
+			diagnostico: "{{$nForm.f_diagnosticos}}",
+			cliente: "{{$nForm.f_cliente}}",
+			idatendimento: "{{$nForm.f_idatendimento}}",
+			endereco: "{{$nForm.f_contrato}}",
+			usuário: "{{$nForm.f_usuario}}",
+			"melhor horário":
+				"{{$nForm.f_templates_atendimentos.f_melhor_horario_retorno}}",
+			"tipo de problema MVNO":
+				"{{$nForm.f_templates_atendimentos.f_tipo_de_problema_mvno}}",
+			fabricante: "{{$nForm.f_templates_atendimentos.f_fabricante}}",
+			"qual fabricante":
+				"{{$nForm.f_templates_atendimentos.f_qual_fabricante}}",
+			"APN preenchida": "{{$nForm.f_templates_atendimentos.f_apn_preenchida}}",
+			"qual APN": "{{$nForm.f_templates_atendimentos.f_qual_apn_configurada}}",
+			"torre de rede": "{{$nForm.f_templates_atendimentos.f_torre_rede}}",
+			"aplicativos sva": "{{$nForm.f_templates_atendimentos.f_aplicativo}}",
+			"endereço e-mail": "{{$nForm.f_templates_atendimentos.f_e-mail}}",
+			"tarefa descrição": "{{$nForm.f_tarefas}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -227,6 +374,11 @@ export const generatedCustomRequestsRegistry = {
 		collection: "radusuarios",
 		options: { method: "GET", url: "https://n8n.atplus.cloud/webhook/aegis" },
 		payloadSchema: z.any(),
+		payloadData: {
+			acao: "Liberar Redução de Velocidade",
+			idcontrato: "{{currentRecord.id_contrato}}",
+			idlogin: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -239,6 +391,10 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/7951a79e-7efc-49ac-bd63-9ec9d9f0b225",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_negociacao: "{{$nForm.id}}",
+			id_contrato: "{{$nForm.f_contrato_ixc}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -248,6 +404,11 @@ export const generatedCustomRequestsRegistry = {
 		collection: "radusuarios",
 		options: { method: "GET", url: "https://n8n.atplus.cloud/webhook/aegis" },
 		payloadSchema: z.any(),
+		payloadData: {
+			acao: "Limpar MAC",
+			idcontrato: "{{currentRecord.id_contrato}}",
+			idlogin: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -260,6 +421,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://crm.atplus.cloud/api/t_demandas:update?filterByTk={{currentRecord.id}}",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			f_responsavel: "{{currentUser.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -272,6 +436,7 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/b43a1b28-e8e9-4aaf-86da-2289a4d5e233",
 		},
 		payloadSchema: z.any(),
+		payloadData: null,
 		_hasEnhancedSchema: false,
 	},
 
@@ -284,6 +449,13 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/bec8f4d4-b0ad-4e3a-a42e-53e99674fe8d",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_negociacao: "{{currentRecord.id}}",
+			wpp_assinatura: "{{$nForm.f_telefone}}",
+			email_assinatura: "{{$nForm.f_email_cobranca}}",
+			nome: "{{$nForm.f_responsavel_assinatura}}",
+			cpf: "{{$nForm.f_cpf_responsavel_assinatura}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -296,6 +468,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/envia-para-assinatura",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_negociacao: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -308,6 +483,11 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
+			f_status: 2,
+			f_substatus: 1,
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -320,6 +500,16 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/aegisatendimento",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			assunto: "{{$nForm.f_assunto}}",
+			processo: "{{$nForm.f_processo}}",
+			descricao: "{{$nForm.f_descricao}}",
+			cliente: "{{$nForm.f_cliente}}",
+			contrato: "{{$nForm.f_contrato}}",
+			id_cliente: "{{$nForm.f_idcliente}}",
+			departamento: "{{$nForm.f_departamento}}",
+			id_login: "{{$nForm.f_id_login}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -332,6 +522,11 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/8dbc006d-f3b1-42a5-a715-7c7025655146",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			fk_funcionarios: "{{$nSelectedRecord.f_fk_funcionarios}}",
+			nome_patrimonio: "{{$nSelectedRecord.f_nome_patrimonio}}",
+			f_numero_serie: "{{$nSelectedRecord.f_numero_serie}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -344,6 +539,19 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/d86bf3fb-47da-4abc-916b-e08ebd07e231",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			f_cep: "{{currentRecord.f_cep}}",
+			f_endereco: "{{currentRecord.f_endereco}}",
+			f_endereco_numero: "{{currentRecord.f_endereco_numero}}",
+			f_endereco_complemento: "{{currentRecord.f_endereco_complemento}}",
+			f_endereco_cidade: "{{currentRecord.f_endereco_cidade}}",
+			f_endereco_referencia: "{{currentRecord.f_endereco_referencia}}",
+			f_bairro: "{{currentRecord.f_bairro}}",
+			f_taxa_instalacao: "{{currentRecord.f_taxa_instalacao}}",
+			cliente: "{{currentRecord.f_cliente}}",
+			id_contrato: "{{currentRecord.f_id_contrato}}",
+			id_demanda: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -356,6 +564,7 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/cb200573-5c18-4a03-bb62-69cad03a2be4",
 		},
 		payloadSchema: z.any(),
+		payloadData: null,
 		_hasEnhancedSchema: false,
 	},
 
@@ -368,6 +577,10 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/b2b40644-0463-4d36-8c1b-89db9ffb2880",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			procedimento: "17760523-1404-4ff9-b786-15a4b0d7a3e2",
+			id_negociacao: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -380,6 +593,11 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/7578902b-c9b8-48df-a299-d21813709f13",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_os: "{{currentRecord.id}}",
+			id_responsavel: "{{currentUser.f_id_tecnico_ixc}}",
+			responsavel: "{{currentUser.nickname}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -392,6 +610,7 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/envia-assinatura",
 		},
 		payloadSchema: z.any(),
+		payloadData: null,
 		_hasEnhancedSchema: false,
 	},
 
@@ -404,6 +623,63 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://45.229.104.23/webservice/v1/su_ticket",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			tipo: "C",
+			id_estrutura: "",
+			protocolo: "",
+			id_circuito: "",
+			id_cliente: "1992",
+			id_login: "",
+			id_contrato: "",
+			id_filial: "",
+			id_assunto: "1",
+			titulo: "Teste API",
+			origem_endereco: "",
+			origem_endereco_estrutura: "",
+			endereco: "",
+			latitude: "",
+			longitude: "",
+			id_wfl_processo: "",
+			id_ticket_setor: "2",
+			id_responsavel_tecnico: "",
+			data_criacao: "",
+			data_ultima_alteracao: "",
+			prioridade: "B",
+			data_reservada: "",
+			melhor_horario_reserva: "",
+			id_ticket_origem: "",
+			id_usuarios: "",
+			id_resposta: "",
+			menssagem: "Teste de API",
+			interacao_pendente: "",
+			su_status: "N",
+			id_evento_status_processo: "",
+			id_canal_atendimento: "",
+			status: "",
+			mensagens_nao_lida_cli: "",
+			mensagens_nao_lida_sup: "",
+			token: "",
+			finalizar_atendimento: "",
+			id_su_diagnostico: "",
+			status_sla: "",
+			origem_cadastro: "",
+			ultima_atualizacao: "",
+			cliente_fone: "",
+			cliente_telefone_comercial: "",
+			cliente_id_operadora_celular: "",
+			cliente_telefone_celular: "",
+			cliente_whatsapp: "",
+			cliente_ramal: "",
+			cliente_email: "",
+			cliente_contato: "",
+			cliente_website: "",
+			cliente_skype: "",
+			cliente_facebook: "",
+			latitude_cli: "",
+			longitude_cli: "",
+			latitude_login: "",
+			longitude_login: "",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -416,6 +692,15 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/aegisatendimento",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			assunto: "{{$nForm.f_assunto}}",
+			processo: "{{$nForm.f_processo}}",
+			descricao: "{{$nForm.f_descricao}}",
+			cliente: "{{$nForm.f_cliente}}",
+			contrato: "{{$nForm.f_contrato}}",
+			id_cliente: "{{$nForm.f_idcliente}}",
+			departamento: "{{$nForm.f_departamento}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -428,6 +713,15 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/demandas",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			assunto: "{{$nForm.f_assunto}}",
+			processo: "{{$nForm.f_processo}}",
+			descricao: "{{$nForm.f_descricao}}",
+			cliente: "{{$nForm.f_cliente}}",
+			contrato: "{{$nForm.f_contrato}}",
+			id_cliente: "{{$nForm.f_idcliente}}",
+			departamento: "{{$nForm.f_departamento}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -440,6 +734,10 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/0860593c-859a-4427-9e7e-437b19bed46b",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_contrato: "{{currentRecord.id}}",
+			id_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -452,6 +750,16 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/acoesos",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			descricao: "{{$nForm.f_descricao}}",
+			finaliza: "{{$nForm.f_finalizaatendimento}}",
+			tarefa: "{{$nForm.f_tarefas}}",
+			datainicio: "{{$nForm.f_datainicio}}",
+			datafim: "{{$nForm.f_datafim}}",
+			tecnico: "{{$nForm.f_responsavel}}",
+			idos: "{{$nForm.f_idos}}",
+			diagnostico: "{{$nForm.f_diagnosticos}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -464,6 +772,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/9571dab3-4e39-429e-a602-ae3619819b70",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			apelido: "{{currentUser.nickname}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -476,6 +787,11 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
+			f_status: 2,
+			f_substatus: 1,
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -488,6 +804,16 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/aegisatendimento",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			assunto: "{{$nForm.f_assunto}}",
+			processo: "{{$nForm.f_processo}}",
+			descricao: "{{$nForm.f_descricao}}",
+			cliente: "{{$nForm.f_cliente}}",
+			contrato: "{{$nForm.f_contrato}}",
+			id_cliente: "{{$nForm.f_idcliente}}",
+			departamento: "{{$nForm.f_departamento}}",
+			id_login: "{{$nForm.f_id_login}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -497,6 +823,11 @@ export const generatedCustomRequestsRegistry = {
 		collection: "radusuarios",
 		options: { method: "GET", url: "https://n8n.atplus.cloud/webhook/aegis" },
 		payloadSchema: z.any(),
+		payloadData: {
+			acao: "Desbloqueio de Confiança",
+			idcontrato: "{{currentRecord.id_contrato}}",
+			idlogin: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -509,6 +840,19 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/cb200573-5c18-4a03-bb62-69cad03a2be4",
 		},
 		payloadSchema: z.any(),
+		payloadData: null,
+		_hasEnhancedSchema: false,
+	},
+
+	qbk10nf76um: {
+		key: "qbk10nf76um",
+		name: "qbk10nf76um",
+		collection: "t_logs",
+		options: { method: "POST", url: "http://localhost:4000" },
+		payloadSchema: z.any(),
+		payloadData: {
+			model: "{{currentRecord}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -521,6 +865,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://{{$env.IXC_Domain}}/webservice/v1/desbloqueio_confianca",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -533,6 +880,16 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/acoesos",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			descricao: "{{$nForm.f_descricao}}",
+			finaliza: "{{$nForm.f_finalizaatendimento}}",
+			tarefa: "{{$nForm.f_tarefas}}",
+			datainicio: "{{$nForm.f_datainicio}}",
+			datafim: "{{$nForm.f_datafim}}",
+			tecnico: "{{$nForm.f_responsavel}}",
+			idos: "{{$nForm.f_idos}}",
+			diagnostico: "{{$nForm.f_diagnosticos}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -545,6 +902,10 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://crm.atplus.cloud/api/t_crm_troca_titularidade:update?filterByTk={{currentRecord.id}}",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
+			f_status: 0,
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -557,6 +918,11 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
+			f_status: 2,
+			f_substatus: 1,
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -569,6 +935,11 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
+			f_status: 2,
+			f_substatus: 1,
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -581,6 +952,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/c97170a1-15fe-44ca-a302-f9e7b2c54b63",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_fn_areceber: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -593,6 +967,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/68c0ddb3-6416-4093-88f3-ba7873581729.pdf",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			boletos: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -605,6 +982,7 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/a24ba316-aed8-4bc2-a949-c6cb038a3fe7",
 		},
 		payloadSchema: z.any(),
+		payloadData: null,
 		_hasEnhancedSchema: false,
 	},
 
@@ -614,6 +992,7 @@ export const generatedCustomRequestsRegistry = {
 		collection: "fn_areceber",
 		options: { method: "GET", url: "https://placehold.co/600x400.png" },
 		payloadSchema: z.any(),
+		payloadData: null,
 		_hasEnhancedSchema: false,
 	},
 
@@ -626,6 +1005,63 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://45.229.104.23/webservice/v1/su_ticket",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			tipo: "C",
+			id_estrutura: "",
+			protocolo: "",
+			id_circuito: "",
+			id_cliente: "1992",
+			id_login: "",
+			id_contrato: "",
+			id_filial: "",
+			id_assunto: "1",
+			titulo: "Teste API",
+			origem_endereco: "",
+			origem_endereco_estrutura: "",
+			endereco: "",
+			latitude: "",
+			longitude: "",
+			id_wfl_processo: "",
+			id_ticket_setor: "2",
+			id_responsavel_tecnico: "",
+			data_criacao: "",
+			data_ultima_alteracao: "",
+			prioridade: "B",
+			data_reservada: "",
+			melhor_horario_reserva: "",
+			id_ticket_origem: "",
+			id_usuarios: "",
+			id_resposta: "",
+			menssagem: "Teste de API",
+			interacao_pendente: "",
+			su_status: "N",
+			id_evento_status_processo: "",
+			id_canal_atendimento: "",
+			status: "",
+			mensagens_nao_lida_cli: "",
+			mensagens_nao_lida_sup: "",
+			token: "",
+			finalizar_atendimento: "",
+			id_su_diagnostico: "",
+			status_sla: "",
+			origem_cadastro: "",
+			ultima_atualizacao: "",
+			cliente_fone: "",
+			cliente_telefone_comercial: "",
+			cliente_id_operadora_celular: "",
+			cliente_telefone_celular: "",
+			cliente_whatsapp: "",
+			cliente_ramal: "",
+			cliente_email: "",
+			cliente_contato: "",
+			cliente_website: "",
+			cliente_skype: "",
+			cliente_facebook: "",
+			latitude_cli: "",
+			longitude_cli: "",
+			latitude_login: "",
+			longitude_login: "",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -638,6 +1074,7 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/cb200573-5c18-4a03-bb62-69cad03a2be4",
 		},
 		payloadSchema: z.any(),
+		payloadData: null,
 		_hasEnhancedSchema: false,
 	},
 
@@ -650,6 +1087,10 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/segundacontratacao",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_contrato: "{{currentRecord.id}}",
+			id_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -662,6 +1103,15 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/demandas",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id: "{{$nForm.id}}",
+			titulo: "{{$nForm.f_titulo}}",
+			descricao: "{{$nForm.f_descricao}}",
+			protocolo_interno: "{{$nForm.f_protocolo_interno}}",
+			status: "{{$nForm.f_status_tag}}",
+			prioridade: "{{$nForm.f_prioridade}}",
+			cliente: "Mateus Salomão de Barros Neto",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -671,6 +1121,7 @@ export const generatedCustomRequestsRegistry = {
 		collection: "t_dados_adicionais_cliente_contrato",
 		options: { method: "POST", url: "/" },
 		payloadSchema: z.any(),
+		payloadData: null,
 		_hasEnhancedSchema: false,
 	},
 
@@ -683,6 +1134,7 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/71977efe-295b-49d5-b36b-83040a36dd33",
 		},
 		payloadSchema: z.any(),
+		payloadData: null,
 		_hasEnhancedSchema: false,
 	},
 
@@ -695,6 +1147,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://crm.atplus.cloud/api/t_crm_troca_titularidade:update/13",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			f_substatus: "1",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -707,6 +1162,10 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/b2b40644-0463-4d36-8c1b-89db9ffb2880",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			procedimento: "17760523-1404-4ff9-b786-15a4b0d7a3e2",
+			id_negociacao: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -719,6 +1178,16 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/aegisatendimento",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			assunto: "{{$nForm.f_assunto}}",
+			processo: "{{$nForm.f_processo}}",
+			descricao: "{{$nForm.f_descricao}}",
+			cliente: "{{$nForm.f_cliente}}",
+			contrato: "{{$nForm.f_contrato}}",
+			id_cliente: "{{$nForm.f_idcliente}}",
+			departamento: "{{$nForm.f_departamento}}",
+			id_login: "{{$nForm.f_id_login}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -731,6 +1200,15 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook/demandas",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			assunto: "{{$nForm.f_assunto}}",
+			processo: "{{$nForm.f_processo}}",
+			descricao: "{{$nForm.f_descricao}}",
+			cliente: "{{$nForm.f_cliente}}",
+			contrato: "{{$nForm.f_contrato}}",
+			id_cliente: "{{$nForm.f_idcliente}}",
+			departamento: "{{$nForm.f_departamento}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -743,6 +1221,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://atplus-rh-n8n-rh.tvs9na.easypanel.host/webhook/4edc42ad-6d41-47f6-9a2f-4b536f4e92ae",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			id_funcionario: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -755,6 +1236,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://n8n.atplus.cloud/webhook-test/d86bf3fb-47da-4abc-916b-e08ebd07e231",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			TESTE: "{{currentUser}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -764,6 +1248,11 @@ export const generatedCustomRequestsRegistry = {
 		collection: "radusuarios",
 		options: { method: "GET", url: "https://n8n.atplus.cloud/webhook/aegis" },
 		payloadSchema: z.any(),
+		payloadData: {
+			acao: "Desbloqueio de Confiança",
+			idcontrato: "{{currentRecord.id_contrato}}",
+			idlogin: "{{currentRecord.id}}",
+		},
 		_hasEnhancedSchema: false,
 	},
 
@@ -776,6 +1265,9 @@ export const generatedCustomRequestsRegistry = {
 			url: "https://utxejnodralnuthfwzoo.supabase.co/functions/v1/public-api/execution-orders/{{$nSelectedRecord.f_id_externo}}",
 		},
 		payloadSchema: z.any(),
+		payloadData: {
+			status: "CANCELLED",
+		},
 		_hasEnhancedSchema: false,
 	},
 } as const;
@@ -822,6 +1314,7 @@ export const collectionToRequestKeys = {
 	t_crm_troca_titularidade: ["rm9a8dyqfzr"],
 	t_dados_adicionais_cliente_contrato: ["uw77gy8qtte"],
 	t_demandas: ["d349ih50xzh", "gp4mrt26bbe", "u1t103p3ra5", "vwl8w2fpjzg"],
+	t_logs: ["qbk10nf76um"],
 	t_negociacoes: [
 		"3jd8i67j41e",
 		"8e9nkpsadjm",
