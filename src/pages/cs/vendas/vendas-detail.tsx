@@ -2,7 +2,6 @@ import { Database, FilePlus, FolderOpen, Smartphone } from "lucide-react";
 import { Outlet, useParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/page-layout/page-layout";
-import { Skeleton } from "#/components/ui/skeleton";
 import { BackButton } from "#/features/cs/components/back-button";
 import { useNegociacao } from "#/features/cs/negociacoes/negociacoes-hooks";
 import { routePaths } from "#/routes/route-paths";
@@ -27,17 +26,7 @@ export function VendasDetailPage() {
 
 	return (
 		<PageLayout
-			prefixElement={<BackButton fallbackTo={routePaths.cs_vendas} />}
-			title={
-				isLoading ? (
-					<Skeleton className="h-7 w-48" />
-				) : (
-					`Venda #${negociacao?.id ?? id}`
-				)
-			}
-			subtitle={
-				!isLoading && negociacao?.f_titulo ? negociacao.f_titulo : undefined
-			}
+			tabsPrefixElement={<BackButton fallbackTo={routePaths.cs_vendas} />}
 			tabs={[
 				{
 					value: "detalhes",
@@ -62,7 +51,7 @@ export function VendasDetailPage() {
 			]}
 			defaultTab="detalhes"
 		>
-			<div className="mx-auto max-w-400">
+			<div className="w-full">
 				<Outlet
 					context={
 						{

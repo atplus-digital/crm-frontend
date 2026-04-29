@@ -1,8 +1,7 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { queryOptions, useMutation, useQuery } from "@tanstack/react-query";
 import type { CustomRequestRegistryKey } from "#/generated/custom-requests/merged-registry";
 import { customRequestsRegistry } from "#/generated/custom-requests/merged-registry";
 import { getRequestsByCollection, sendRequest } from "../utils/service";
-import type { CustomRequestEntry } from "../utils/types";
 
 export function useSendRequest() {
 	return useMutation({
@@ -36,14 +35,12 @@ export function useRequestsByCollection(collection: string) {
 }
 
 export function useRequest(key: CustomRequestRegistryKey) {
-	return useQuery({
-		queryKey: ["custom-requests", "single", key],
-		queryFn: () => {
-			const entry = customRequestsRegistry[key] as
-				| CustomRequestEntry
-				| undefined;
-			return entry ?? null;
-		},
+	return useQuery(requestQueryOptions(key));
+}
+
+export const requestQueryOptions = (key: CustomRequestRegistryKey) =>
+	queryOptions({
+		queryKey: ["custom-requests", "single", key] as const,
+		queryFn: () => customRequestsRegistry[key] ?? null,
 		staleTime: 5 * 60 * 1000,
 	});
-}
