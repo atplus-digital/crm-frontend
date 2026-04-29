@@ -1,7 +1,7 @@
+import { logger } from "@scripts/shared/utils/logger";
 import { dataSourceConfigs } from "./datasources.config";
 import type { ScriptConfig } from "./src/@types/script";
 import { parseConfig } from "./src/utils/config";
-import { logger } from "./src/utils/logger";
 
 const scriptConfig: Partial<ScriptConfig> = {
 	datasources: dataSourceConfigs,

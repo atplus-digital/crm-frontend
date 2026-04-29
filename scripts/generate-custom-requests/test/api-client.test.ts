@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 const mockFetch = vi.fn();
 vi.stubGlobal("fetch", mockFetch);
 
-vi.mock("@scripts/generate-types/src/utils/logger", () => ({
+vi.mock("@scripts/shared/utils/logger", () => ({
 	logger: {
 		info: vi.fn(),
 		warn: vi.fn(),

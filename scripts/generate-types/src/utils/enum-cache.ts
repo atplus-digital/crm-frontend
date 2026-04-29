@@ -1,8 +1,8 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
+import { logVerbose } from "@scripts/shared/utils/logger";
 import type { EnumAdapterFieldEnum } from "../@types/script";
-import { logVerbose } from "./logger";
 import { parseWikiText } from "./wiki-parser";
 
 interface CachedEntry {

@@ -1,6 +1,6 @@
+import { logVerbose } from "@scripts/shared/utils/logger";
 import type { EnumAdapter, EnumAdapterFieldEnum } from "../@types/script";
 import { fetchWithCache } from "../utils/enum-cache";
-import { logVerbose } from "../utils/logger";
 
 const WIKI_BASE_URL = "https://wikiapiprovedor.ixcsoft.com.br";
 

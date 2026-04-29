@@ -1,8 +1,8 @@
+import { logger } from "@scripts/shared/utils/logger";
 import type { DataSourceFilesResult } from "../../../@types/script";
 import { createInitialContext } from "../../../pipeline/core/context-builder";
 import { defaultPipeline } from "../../../pipeline/core/default-pipeline";
 import { createDataSourceClient } from "../../../utils/create-dataSource-client";
-import { logger } from "../../../utils/logger";
 import type {
 	DatasourceRunResult,
 	GenerationContext,

@@ -1,26 +1,18 @@
-import { existsSync, writeFileSync } from "node:fs";
+import { writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import type { GeneratedRegistryEntry } from "@scripts/generate-custom-requests/src/@types/generated-registry";
-import { logger } from "@scripts/generate-types/src/utils/logger";
-
-function escapeString(str: string): string {
-	return str
-		.replace(/\\/g, "\\\\")
-		.replace(/"/g, '\\"')
-		.replace(/\n/g, "\\n")
-		.replace(/\r/g, "\\r")
-		.replace(/\t/g, "\\t");
-}
-
-function serializePayloadData(data: Record<string, unknown> | null): string {
-	if (!data || Object.keys(data).length === 0) {
-		return "null";
-	}
-	return JSON.stringify(data, null, 2);
-}
+import { logger } from "@scripts/shared/utils/logger";
+import {
+	escapeString,
+	serializePayloadData,
+} from "@scripts/shared/utils/strings";
 
 function buildSplitFileContent(entry: GeneratedRegistryEntry): string {
+	const escapedKey = escapeString(entry.key);
 	const escapedName = escapeString(entry.name);
+	const escapedCollection = escapeString(entry.collection);
+	const escapedMethod = escapeString(entry.method);
+	const escapedUrl = escapeString(entry.url);
 	const payloadDataStr = serializePayloadData(entry.payloadData);
 
 	return `import { z } from "zod";
@@ -37,6 +29,16 @@ function buildSplitFileContent(entry: GeneratedRegistryEntry): string {
 export const payloadSchema = ${entry.payloadSchema};
 
 export const payloadData = ${payloadDataStr};
+
+export const requestEntry = {
+	key: "${escapedKey}",
+	name: "${escapedName}",
+	collection: "${escapedCollection}",
+	options: { method: "${escapedMethod}", url: "${escapedUrl}" },
+	payloadSchema,
+	payloadData,
+	_hasEnhancedSchema: true,
+} as const;
 `;
 }
 
@@ -47,14 +49,9 @@ export function writeSplitFile(
 	const splitDir = resolve(outputDir, "split");
 	const filePath = join(splitDir, `${entry.key}.ts`);
 
-	if (existsSync(filePath)) {
-		logger.debug(`Split file já existe, pulando: ${entry.key}`);
-		return;
-	}
-
 	const content = buildSplitFileContent(entry);
 	writeFileSync(filePath, content, "utf-8");
-	logger.debug(`Split file escrito: ${entry.key}`);
+	logger.debug(`Split file atualizado: ${entry.key}`);
 }
 
 export function writeAllSplitFiles(
@@ -68,7 +65,5 @@ export function writeAllSplitFiles(
 		writeSplitFile(entry, outputDir);
 	}
 
-	logger.info(
-		`${splitEntries.length} split files processados (${splitEntries.filter((e) => !existsSync(join(resolve(outputDir, "split"), `${e.key}.ts`))).length} escritos)`,
-	);
+	logger.info(`${splitEntries.length} split files atualizados`);
 }

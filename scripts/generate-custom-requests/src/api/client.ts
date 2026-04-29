@@ -3,7 +3,7 @@ import type {
 	CustomRequestsListResponse,
 } from "@scripts/generate-custom-requests/src/@types/custom-request-api";
 import type { ScriptConfig } from "@scripts/generate-custom-requests/src/@types/script-config";
-import { logger } from "@scripts/generate-types/src/utils/logger";
+import { logger } from "@scripts/shared/utils/logger";
 
 class HttpResponseError extends Error {
 	public constructor(

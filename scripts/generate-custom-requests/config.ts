@@ -1,13 +1,8 @@
-import { logger } from "@scripts/generate-types/src/utils/logger";
+import { logger } from "@scripts/shared/utils/logger";
 import type { ScriptConfig } from "./src/@types/script-config";
 import { parseConfig } from "./src/utils/config";
 
-const splitRequests = [
-	"23btjo9ohrr",
-	"criarContratoIxc",
-	"qualirunInfo",
-	"n8nCompras",
-];
+const splitRequests = ["23btjo9ohrr", "qbk10nf76um", "n8nCompras"];
 
 const scriptConfig: Partial<ScriptConfig> = {
 	logLevel: "debug",

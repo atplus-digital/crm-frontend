@@ -1,7 +1,7 @@
 import type { CustomRequestApiEntry } from "@scripts/generate-custom-requests/src/@types/custom-request-api";
 import type { GeneratedRegistryEntry } from "@scripts/generate-custom-requests/src/@types/generated-registry";
 import { inferPayloadSchema } from "@scripts/generate-custom-requests/src/utils/schema-inference";
-import { logger } from "@scripts/generate-types/src/utils/logger";
+import { logger } from "@scripts/shared/utils/logger";
 
 /**
  * Normaliza options.data que pode vir como string JSON ou objeto.

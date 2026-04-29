@@ -32,7 +32,7 @@ vi.mock("@scripts/generate-types/config", () => ({
 	},
 }));
 
-vi.mock("@scripts/generate-types/src/utils/logger", () => ({
+vi.mock("@scripts/shared/utils/logger", () => ({
 	logVerbose: vi.fn(),
 }));
 

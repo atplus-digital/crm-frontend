@@ -1,4 +1,4 @@
-import { logger } from "../../../utils/logger";
+import { logger } from "@scripts/shared/utils/logger";
 import type { BuildTypesContext, PipelineStage } from "../../core/types";
 import {
 	adapterEnumsToInferredEnums,

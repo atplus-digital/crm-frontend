@@ -1,6 +1,6 @@
 import type { RelationInfo } from "@scripts/generate-types/src/@types/generation";
 import type { DataSourceField } from "@scripts/generate-types/src/@types/script";
-import { logger } from "@scripts/generate-types/src/utils/logger";
+import { logger } from "@scripts/shared/utils/logger";
 import { resolveRelationByType, resolveRelationInterface } from "./relations";
 
 /**

@@ -3,7 +3,7 @@ import {
 	logger,
 	logInfo,
 	logVerbose,
-} from "@scripts/generate-types/src/utils/logger";
+} from "@scripts/shared/utils/logger";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("logger", () => {
