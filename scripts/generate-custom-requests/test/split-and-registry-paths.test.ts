@@ -59,7 +59,6 @@ describe("split and registry paths", () => {
 
 		const splitPath = join(
 			outputDir,
-			"split",
 			"nocobase",
 			"t_qualirun_info_adicionais",
 			"quali-run.ts",
@@ -71,13 +70,8 @@ describe("split and registry paths", () => {
 		const outputDir = createTempDir("legacy-cleanup");
 		const collection = "t_logs";
 		const splitFileName = "cadastro-comercial";
-		const legacyPath = join(
-			outputDir,
-			"split",
-			collection,
-			`${splitFileName}.ts`,
-		);
-		mkdirSync(join(outputDir, "split", collection), { recursive: true });
+		const legacyPath = join(outputDir, collection, `${splitFileName}.ts`);
+		mkdirSync(join(outputDir, collection), { recursive: true });
 		writeFileSync(legacyPath, "// legacy", "utf-8");
 
 		const entry = makeEntry("cadastro-comercial", {
@@ -109,8 +103,6 @@ describe("split and registry paths", () => {
 			join(outputDir, "generated-registry.ts"),
 			"utf-8",
 		);
-		expect(content).toContain(
-			'from "./split/nocobase/t_logs/cadastro-comercial";',
-		);
+		expect(content).toContain('from "./nocobase/t_logs/cadastro-comercial";');
 	});
 });

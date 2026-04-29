@@ -66,7 +66,7 @@ function buildRegistryContent(
 			const dataSourceDir = toDataSourceDir(entry.dataSourceKey);
 			const collectionDir = toSafePathSegment(entry.collection);
 			const alias = `split_${toSafeIdentifier(`${dataSourceDir}_${collectionDir}_${splitFileName}`)}`;
-			return `import { requestEntry as ${alias}RequestEntry } from "./split/${dataSourceDir}/${collectionDir}/${splitFileName}";`;
+			return `import { requestEntry as ${alias}RequestEntry } from "./${dataSourceDir}/${collectionDir}/${splitFileName}";`;
 		})
 		.join("\n");
 

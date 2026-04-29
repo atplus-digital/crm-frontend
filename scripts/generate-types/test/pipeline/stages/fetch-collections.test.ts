@@ -163,4 +163,30 @@ describe("fetchCollections", () => {
 			);
 		});
 	});
+
+	describe("NocoBase externo - usa collections explícitas", () => {
+		it("deve usar splitCollections configuradas sem chamar API", async () => {
+			const { fetchCollections } = await import(
+				"@scripts/generate-types/src/pipeline/stages/fetch-collections"
+			);
+
+			const ctx = createMockInitContext({
+				dataSource: {
+					name: "ixc",
+					type: "nocobase",
+					dataSource: "d_db_ixcsoft",
+					outputDir: "/tmp/test",
+					splitCollections: ["cliente", "cliente_contrato"],
+				} as InitContext["dataSource"],
+			});
+
+			const result = await fetchCollections(ctx);
+
+			expect(mockFetchCollections).not.toHaveBeenCalled();
+			expect(result.collections).toEqual([
+				{ name: "cliente" },
+				{ name: "cliente_contrato" },
+			]);
+		});
+	});
 });

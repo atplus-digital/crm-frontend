@@ -8,7 +8,7 @@ import {
 import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useContratoMovel } from "#/features/cs/contratos/contratos-hooks";
 import type { LinhaMovel } from "#/features/cs/contratos/contratos-types";
-import { LINHAMVNO_PORTABILIDADE_LABELS } from "#/generated/types/ixc/linha-mvno";
+import { LINHAMVNO_PORTABILIDADE_LABELS } from "#/generated/types/d_db_ixcsoft/linha-mvno";
 
 function formatPortabilidade(value: LinhaMovel["portabilidade"]): string {
 	return LINHAMVNO_PORTABILIDADE_LABELS[value] ?? String(value);

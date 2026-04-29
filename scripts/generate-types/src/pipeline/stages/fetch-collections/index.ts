@@ -12,8 +12,19 @@ export const fetchCollections: PipelineStage<InitContext> = async (ctx) => {
 		);
 	}
 
-	// NocoBase: SEMPRE buscar TODAS as collections da API
-	collections = await client.fetchCollections();
+	const explicitCollections = [
+		...(dataSource.collections ?? []),
+		...(dataSource.splitCollections ?? []),
+	];
+
+	// Datasources externos (ex.: IXC) podem não expor collections:list.
+	// Nesses casos, priorizamos a lista explícita do config.
+	if (dataSource.dataSource !== "main" && explicitCollections.length > 0) {
+		collections = explicitCollections.map((name) => ({ name }));
+	} else {
+		// Datasource principal: sempre buscar todas as collections da API.
+		collections = await client.fetchCollections();
+	}
 
 	return { ...ctx, collections };
 };

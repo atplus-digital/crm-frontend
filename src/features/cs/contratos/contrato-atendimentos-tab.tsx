@@ -13,7 +13,7 @@ import { Button } from "#/components/ui/button";
 import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useContratoAtendimentos } from "#/features/cs/contratos/contratos-hooks";
 import type { AtendimentoIXC } from "#/features/cs/contratos/contratos-types";
-import { SUTICKET_SUSTATUS_LABELS } from "#/generated/types/ixc/su-ticket";
+import { SUTICKET_SUSTATUS_LABELS } from "#/generated/types/d_db_ixcsoft/su-ticket";
 import { formatDatePtBR } from "#/lib/utils";
 
 const ATENDIMENTO_STATUS_VARIANTS: Record<string, BadgeVariant> = {

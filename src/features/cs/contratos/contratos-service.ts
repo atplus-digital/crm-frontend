@@ -1,8 +1,8 @@
-import type { ClienteContrato } from "#/generated/types/ixc/cliente-contrato";
-import type { FnAreceber } from "#/generated/types/ixc/fn-areceber";
-import type { LinhaMvno } from "#/generated/types/ixc/linha-mvno";
-import type { SuTicket } from "#/generated/types/ixc/su-ticket";
-import type { VdContratosProdutos } from "#/generated/types/ixc/vd-contratos-produtos";
+import type { ClienteContrato } from "#/generated/types/d_db_ixcsoft/cliente-contrato";
+import type { FnAreceber } from "#/generated/types/d_db_ixcsoft/fn-areceber";
+import type { LinhaMvno } from "#/generated/types/d_db_ixcsoft/linha-mvno";
+import type { SuTicket } from "#/generated/types/d_db_ixcsoft/su-ticket";
+import type { VdContratosProdutos } from "#/generated/types/d_db_ixcsoft/vd-contratos-produtos";
 import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-titularidade";
 import type { RegistrosDeContato } from "#/generated/types/nocobase/registros-de-contato";
 import { buildFilter, eq } from "#/lib/filter-builder";

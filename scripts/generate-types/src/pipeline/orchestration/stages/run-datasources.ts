@@ -43,6 +43,15 @@ export function runDatasourcesStage(): GenerationStage {
 					return { name, status: "fulfilled", result: settled.value };
 				}
 
+				const errorMessage =
+					settled.reason instanceof Error
+						? (settled.reason.stack ?? settled.reason.message)
+						: String(settled.reason);
+				logger.error(`❌ Datasource '${name}' falhou: ${errorMessage}`, {
+					datasource: name,
+					stage: "run-datasources",
+				});
+
 				return { name, status: "rejected", error: settled.reason };
 			},
 		);

@@ -1,4 +1,4 @@
-import { execFileSync } from "node:child_process";
+import { spawnSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
@@ -28,29 +28,26 @@ export function validateTypeScriptDirectory(dirPath: string): boolean {
 	}
 
 	try {
-		const tscPath = "./node_modules/.bin/tsc";
+		const tscPath = path.resolve(process.cwd(), "node_modules/.bin/tsc");
 		const args = [
 			"--noEmit",
 			"--pretty",
 			"false",
 			"--skipLibCheck",
-			"--target",
-			"ES2020",
-			"--module",
-			"NodeNext",
-			"--moduleResolution",
-			"NodeNext",
+			"--project",
+			path.resolve(process.cwd(), "tsconfig.json"),
 		];
 
-		const stdout = execFileSync(tscPath, args, {
-			stdio: "pipe",
+		const tsc = spawnSync(tscPath, args, {
+			stdio: ["ignore", "pipe", "pipe"],
 			timeout: 120000,
 			encoding: "utf-8",
-			cwd: resolvedDir,
+			cwd: process.cwd(),
 		});
+		const combinedOutput = `${tsc.stdout ?? ""}\n${tsc.stderr ?? ""}`.trim();
 
 		const generatedDirPrefix = resolvedDir.replace(/\\/g, "/");
-		const errorsInDir = stdout
+		const errorsInDir = combinedOutput
 			.split("\n")
 			.filter((line) => line.includes(generatedDirPrefix));
 
@@ -64,11 +61,18 @@ export function validateTypeScriptDirectory(dirPath: string): boolean {
 			return false;
 		}
 
+		if (tsc.status !== 0) {
+			logger.debug(
+				`Validação TypeScript detectou erros fora de ${path.relative(process.cwd(), resolvedDir)}/ (ignorado neste estágio)`,
+			);
+			return true;
+		}
+
 		logger.info(
 			`✓ TypeScript válido: ${path.relative(process.cwd(), resolvedDir)}/`,
 		);
 		return true;
-	} catch (_execError) {
+	} catch (_spawnError) {
 		logger.warn(
 			`⚠️  Falha ao executar validação TypeScript para: ${path.relative(process.cwd(), resolvedDir)}/`,
 		);

@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import type { GeneratedRegistryEntry } from "@scripts/generate-custom-requests/src/@types/generated-registry";
 import type { SplitRequestsMap } from "@scripts/generate-custom-requests/src/@types/script-config";
 import { logger } from "@scripts/shared/utils/logger";
@@ -63,10 +63,9 @@ export function writeSplitFile(
 	splitFileName: string,
 	outputDir: string,
 ): void {
-	const splitDir = resolve(outputDir, "split");
 	const dataSourceDir = toDataSourceDir(entry.dataSourceKey);
 	const collectionDir = toSafePathSegment(entry.collection);
-	const splitCollectionDir = join(splitDir, dataSourceDir, collectionDir);
+	const splitCollectionDir = join(outputDir, dataSourceDir, collectionDir);
 	const filePath = join(splitCollectionDir, `${splitFileName}.ts`);
 
 	mkdirSync(splitCollectionDir, { recursive: true });
@@ -75,7 +74,7 @@ export function writeSplitFile(
 	writeFileSync(filePath, content, "utf-8");
 	logger.debug(`Split file atualizado: ${splitFileName}`);
 
-	const legacyKeyFilePath = join(splitDir, `${entry.key}.ts`);
+	const legacyKeyFilePath = join(outputDir, `${entry.key}.ts`);
 	if (
 		splitFileName !== entry.key &&
 		existsSync(legacyKeyFilePath) &&
@@ -85,14 +84,14 @@ export function writeSplitFile(
 		logger.debug(`Split file legado removido: ${entry.key}.ts`);
 	}
 
-	const legacyNamedFilePath = join(splitDir, `${splitFileName}.ts`);
+	const legacyNamedFilePath = join(outputDir, `${splitFileName}.ts`);
 	if (existsSync(legacyNamedFilePath) && legacyNamedFilePath !== filePath) {
 		unlinkSync(legacyNamedFilePath);
 		logger.debug(`Split file legado removido: ${splitFileName}.ts`);
 	}
 
 	const legacyCollectionPath = join(
-		splitDir,
+		outputDir,
 		collectionDir,
 		`${splitFileName}.ts`,
 	);

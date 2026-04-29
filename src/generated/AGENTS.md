@@ -14,14 +14,14 @@ Auto-generated TypeScript types from NocoBase and IXC collection schemas plus cu
 
 ## Key Files
 
-| File                     | Purpose                                                                        |
-| ------------------------ | ------------------------------------------------------------------------------ |
-| `nocobase/`              | Generated types from NocoBase collections (`t_pessoas`, `t_empresas`, etc.)    |
-| `ixc/`                   | Generated types from IXC ERP collections (`cliente`, `cliente_contrato`, etc.) |
-| `nocobase/index.ts`      | Barrel export for all NocoBase collection types                                |
-| `ixc/index.ts`           | Barrel export for all IXC collection types                                     |
-| `custom-requests/`       | Generated custom request registry and split files                              |
-| `custom-requests/split/` | Auto-generated split files for enhanced custom request entries                 |
+| File                | Purpose                                                                        |
+| ------------------- | ------------------------------------------------------------------------------ |
+| `nocobase/`         | Generated types from NocoBase collections (`t_pessoas`, `t_empresas`, etc.)    |
+| `ixc/`              | Generated types from IXC ERP collections (`cliente`, `cliente_contrato`, etc.) |
+| `nocobase/index.ts` | Barrel export for all NocoBase collection types                                |
+| `ixc/index.ts`      | Barrel export for all IXC collection types                                     |
+| `custom-requests/`  | Generated custom request registry and split files                              |
+| `custom-requests/`  | Auto-generated split files for enhanced custom request entries                 |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
