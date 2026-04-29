@@ -6,8 +6,8 @@ import {
 	detailDateCell,
 	detailIdCell,
 	detailLongTextCell,
-	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
+import { Badge, type BadgeVariant } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useContratoAtendimentos } from "#/features/cs/contratos/contratos-hooks";
@@ -15,12 +15,13 @@ import type { AtendimentoIXC } from "#/features/cs/contratos/contratos-types";
 import { SUTICKET_SUSTATUS_LABELS } from "#/generated/ixc/su-ticket";
 import { formatDatePtBR } from "#/lib/utils";
 
-function formatAtendimentoStatus(status: string): string {
-	return (
-		SUTICKET_SUSTATUS_LABELS[status as keyof typeof SUTICKET_SUSTATUS_LABELS] ??
-		String(status)
-	);
-}
+const ATENDIMENTO_STATUS_VARIANTS: Record<string, BadgeVariant> = {
+	N: "secondary", // Novo
+	P: "outline", // Pendente
+	EP: "default", // Em progresso
+	S: "default", // Solucionado
+	C: "destructive", // Cancelado
+};
 
 const ATENDIMENTO_COLUMNS = [
 	"ID",
@@ -56,8 +57,17 @@ const atendimentosTableColumns: ColumnDef<AtendimentoIXC, unknown>[] = [
 	{
 		accessorKey: "status",
 		header: "Status",
-		cell: ({ row }) =>
-			detailShortTextCell(formatAtendimentoStatus(row.original.status)),
+		cell: ({ row }) => (
+			<Badge
+				variant={
+					ATENDIMENTO_STATUS_VARIANTS[row.original.status] ?? "secondary"
+				}
+			>
+				{SUTICKET_SUSTATUS_LABELS[
+					row.original.status as keyof typeof SUTICKET_SUSTATUS_LABELS
+				] ?? row.original.status}
+			</Badge>
+		),
 	},
 	{
 		accessorKey: "assunto",
@@ -87,27 +97,84 @@ interface ContratoAtendimentosTabProps {
 	contratoId: number;
 }
 
+function AtendimentoStatusCard({
+	label,
+	count,
+	variant,
+}: {
+	label: string;
+	count: number;
+	variant: BadgeVariant;
+}) {
+	return (
+		<div className="rounded-lg border bg-card p-3">
+			<p className="text-xs text-muted-foreground">{label}</p>
+			<div className="flex items-center gap-2">
+				<p className="text-lg font-semibold">{count}</p>
+				<Badge variant={variant} className="size-2 rounded-full p-0" />
+			</div>
+		</div>
+	);
+}
+
 export function ContratoAtendimentosTab({
 	contratoId,
 }: ContratoAtendimentosTabProps) {
 	const { data, isLoading, error } = useContratoAtendimentos(contratoId);
 	const atendimentos = data?.data ?? [];
+
+	const statusCounts = atendimentos.reduce<
+		Record<string, { count: number; variant: BadgeVariant }>
+	>(
+		(acc, a) => {
+			const status = a.status;
+			if (!acc[status]) {
+				acc[status] = {
+					count: 0,
+					variant: ATENDIMENTO_STATUS_VARIANTS[status] ?? "secondary",
+				};
+			}
+			acc[status].count++;
+			return acc;
+		},
+		{} as Record<string, { count: number; variant: BadgeVariant }>,
+	);
+
 	const table = useDataTable({
 		columns: atendimentosTableColumns,
 		data: atendimentos,
 	});
 
 	return (
-		<ContractTabWrapper
-			title="Atendimentos"
-			isLoading={isLoading}
-			error={error}
-			errorMessage="Erro ao carregar atendimentos"
-			isEmpty={atendimentos.length === 0}
-			emptyMessage="Nenhum atendimento encontrado"
-			emptyColumns={ATENDIMENTO_COLUMNS}
-		>
-			<DataTable table={table} />
-		</ContractTabWrapper>
+		<div className="flex flex-col gap-4">
+			{!isLoading && !error && atendimentos.length > 0 && (
+				<div className="flex flex-wrap gap-4">
+					{Object.entries(statusCounts).map(([status, info]) => (
+						<AtendimentoStatusCard
+							key={status}
+							label={
+								SUTICKET_SUSTATUS_LABELS[
+									status as keyof typeof SUTICKET_SUSTATUS_LABELS
+								] ?? status
+							}
+							count={info.count}
+							variant={info.variant}
+						/>
+					))}
+				</div>
+			)}
+			<ContractTabWrapper
+				title="Atendimentos"
+				count={atendimentos.length}
+				isLoading={isLoading}
+				error={error}
+				errorMessage="Erro ao carregar atendimentos"
+				isEmpty={atendimentos.length === 0}
+				emptyMessage="Nenhum atendimento encontrado"
+				emptyColumns={ATENDIMENTO_COLUMNS}
+			>
+				<DataTable table={table} />
+			</ContractTabWrapper>
+		</div>
 	);
 }

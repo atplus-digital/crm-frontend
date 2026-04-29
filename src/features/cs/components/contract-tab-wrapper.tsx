@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { EmptyTable } from "#/components/table/empty-table";
+import { Badge } from "#/components/ui/badge";
 import {
 	Card,
 	CardContent,
@@ -44,6 +45,10 @@ interface ContractTabWrapperProps {
 	 */
 	emptyMessage?: string;
 	/**
+	 * Contagem opcional — exibe um badge ao lado do título
+	 */
+	count?: number;
+	/**
 	 * Colunas exibidas na tabela vazia
 	 */
 	emptyColumns?: string[];
@@ -61,15 +66,27 @@ export function ContractTabWrapper({
 	error,
 	errorMessage,
 	isEmpty,
+	count,
 	emptyMessage,
 	emptyColumns,
 	className,
 }: ContractTabWrapperProps) {
+	const renderTitle = (titleNode: string) => (
+		<CardTitle className="flex items-center gap-2">
+			{titleNode}
+			{count !== undefined && (
+				<Badge variant="secondary" className="h-5 min-w-6 text-xs">
+					{count}
+				</Badge>
+			)}
+		</CardTitle>
+	);
+
 	if (isLoading) {
 		return (
 			<Card className={className}>
 				<CardHeader>
-					<CardTitle>{title}</CardTitle>
+					{renderTitle(title)}
 					{description && <CardDescription>{description}</CardDescription>}
 				</CardHeader>
 				<CardContent>
@@ -91,7 +108,7 @@ export function ContractTabWrapper({
 		return (
 			<Card className={className}>
 				<CardHeader>
-					<CardTitle>{title}</CardTitle>
+					{renderTitle(title)}
 					{description && <CardDescription>{description}</CardDescription>}
 				</CardHeader>
 				<CardContent>
@@ -113,7 +130,7 @@ export function ContractTabWrapper({
 	return (
 		<Card className={className}>
 			<CardHeader>
-				<CardTitle>{title}</CardTitle>
+				{renderTitle(title)}
 				{description && <CardDescription>{description}</CardDescription>}
 			</CardHeader>
 			<CardContent>{children}</CardContent>

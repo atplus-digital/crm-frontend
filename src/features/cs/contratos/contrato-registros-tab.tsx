@@ -38,12 +38,6 @@ const REGISTROS_COLUMNS = [
 	"Criado por",
 ];
 
-const BOOLEAN_LABELS: Record<string, string> = { true: "Sim", false: "Não" };
-const BOOLEAN_COLOR_CLASSES: Record<string, string> = {
-	true: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
-	false: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-};
-
 const registrosTableColumns: ColumnDef<RegistroContato, unknown>[] = [
 	{
 		accessorKey: "categoria",
@@ -73,10 +67,9 @@ const registrosTableColumns: ColumnDef<RegistroContato, unknown>[] = [
 		header: "Há Pendência?",
 		cell: ({ row }) => (
 			<StatusBadge
-				value={row.original.pendencia ? "true" : "false"}
-				labels={BOOLEAN_LABELS}
-				colorClasses={BOOLEAN_COLOR_CLASSES}
-				variant="inline"
+				value={String(row.original.pendencia)}
+				labels={{ true: "Sim", false: "Não" }}
+				variants={{ true: "outline", false: "default" }}
 			/>
 		),
 	},
@@ -102,22 +95,42 @@ export function ContratoRegistrosTab({
 }: ContratoRegistrosTabProps) {
 	const { data, isLoading, error } = useContratoRegistros(contratoId);
 	const registros = data?.data ?? [];
+
+	const categoryCounts = registros.reduce<Record<string, number>>((acc, r) => {
+		const cat = formatCategoria(r.categoria);
+		acc[cat] = (acc[cat] ?? 0) + 1;
+		return acc;
+	}, {});
+
 	const table = useDataTable({
 		columns: registrosTableColumns,
 		data: registros,
 	});
 
 	return (
-		<ContractTabWrapper
-			title="Registros de Contato"
-			isLoading={isLoading}
-			error={error}
-			errorMessage="Erro ao carregar registros de contato"
-			isEmpty={registros.length === 0}
-			emptyMessage="Nenhum registro encontrado"
-			emptyColumns={REGISTROS_COLUMNS}
-		>
-			<DataTable table={table} />
-		</ContractTabWrapper>
+		<div className="flex flex-col gap-4">
+			{!isLoading && !error && registros.length > 0 && (
+				<div className="flex flex-wrap gap-4">
+					{Object.entries(categoryCounts).map(([cat, count]) => (
+						<div key={cat} className="rounded-lg border bg-card p-3">
+							<p className="text-xs text-muted-foreground">{cat}</p>
+							<p className="text-lg font-semibold">{count}</p>
+						</div>
+					))}
+				</div>
+			)}
+			<ContractTabWrapper
+				title="Registros de Contato"
+				count={registros.length}
+				isLoading={isLoading}
+				error={error}
+				errorMessage="Erro ao carregar registros de contato"
+				isEmpty={registros.length === 0}
+				emptyMessage="Nenhum registro encontrado"
+				emptyColumns={REGISTROS_COLUMNS}
+			>
+				<DataTable table={table} />
+			</ContractTabWrapper>
+		</div>
 	);
 }

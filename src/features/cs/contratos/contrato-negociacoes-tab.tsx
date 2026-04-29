@@ -48,6 +48,23 @@ export function ContratoNegociacoesTab({
 
 	return (
 		<div className="flex flex-col gap-6">
+			{!isLoadingTrocas &&
+				!isLoadingNegociacoes &&
+				!errorTrocas &&
+				!errorNegociacoes && (
+					<div className="flex flex-wrap gap-4">
+						<div className="rounded-lg border bg-card p-3">
+							<p className="text-xs text-muted-foreground">
+								Trocas de Titularidade
+							</p>
+							<p className="text-lg font-semibold">{trocas.length}</p>
+						</div>
+						<div className="rounded-lg border bg-card p-3">
+							<p className="text-xs text-muted-foreground">Renovações</p>
+							<p className="text-lg font-semibold">{negociacoes.length}</p>
+						</div>
+					</div>
+				)}
 			<ContractTabWrapper
 				title="Troca de Titularidade"
 				description="Trocas de titularidade para este contrato"
@@ -57,6 +74,7 @@ export function ContratoNegociacoesTab({
 				isEmpty={trocas.length === 0}
 				emptyMessage="Nenhuma troca de titularidade encontrada"
 				emptyColumns={TROCAS_TITULARIDADE_COLUMNS}
+				count={trocas.length}
 			>
 				<DataTable table={trocasTable} />
 			</ContractTabWrapper>
@@ -70,6 +88,7 @@ export function ContratoNegociacoesTab({
 				isEmpty={negociacoes.length === 0}
 				emptyMessage="Nenhuma renovação encontrada"
 				emptyColumns={RENOVACOES_COLUMNS}
+				count={negociacoes.length}
 			>
 				<DataTable table={negociacoesTable} />
 			</ContractTabWrapper>

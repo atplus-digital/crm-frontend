@@ -63,7 +63,7 @@ export function ContratoDetailPage() {
 			]}
 			defaultTab="detalhes"
 		>
-			<div className="mx-auto max-w-400">
+			<div className="w-full">
 				<Outlet
 					context={
 						{

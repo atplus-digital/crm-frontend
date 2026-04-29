@@ -12,8 +12,8 @@ const FALLBACK_VALUE = "—";
 
 const DETAIL_TEXT_WIDTH_CLASS = {
 	id: "max-w-24",
-	short: "max-w-40",
-	long: "max-w-xs",
+	short: "",
+	long: "",
 } as const;
 
 function normalizeDetailValue(

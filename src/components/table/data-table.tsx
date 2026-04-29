@@ -41,7 +41,7 @@ export function DataTable<TData>({
 	const columnCount = table.getVisibleLeafColumns().length;
 
 	return (
-		<div className="relative overflow-x-auto rounded-lg border">
+		<div className="w-full relative overflow-x-auto rounded-lg border">
 			<TablePrimitive>
 				<TableHeader>
 					{table.getHeaderGroups().map((headerGroup) => (
