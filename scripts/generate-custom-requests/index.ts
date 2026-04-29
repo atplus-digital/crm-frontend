@@ -4,6 +4,7 @@ import { config } from "./config";
 import { CustomRequestsApiClient } from "./src/api/client";
 import { transformAllEntries } from "./src/transformer/entry-transformer";
 import { parseConfig } from "./src/utils/config";
+import { mergeRegistries } from "./src/utils/merge-registries";
 import { applyWorkspaceLockIfNeeded } from "./src/utils/workspace-locker";
 import { writeGeneratedRegistry } from "./src/writer/registry-writer";
 import { writeAllSplitFiles } from "./src/writer/split-writer";
@@ -30,19 +31,24 @@ async function main(): Promise<void> {
 	const transformed = transformAllEntries(entries);
 	logger.info(`${transformed.length} entradas válidas após transformação`);
 
-	if (transformed.length === 0) {
+	const mergedEntries = mergeRegistries(transformed, config.manualRequests);
+	logger.info(
+		`${mergedEntries.length} entradas após merge com ${config.manualRequests.length} manuais`,
+	);
+
+	if (mergedEntries.length === 0) {
 		logger.warn("Nenhuma entrada válida para escrever. Pulando escrita.");
 		return;
 	}
 
 	await writeGeneratedRegistry(
-		transformed,
+		mergedEntries,
 		config.outputDir,
 		config.splitRequests,
 	);
 	logger.info("Arquivo gerado com sucesso!");
 
-	writeAllSplitFiles(transformed, config.splitRequests, config.outputDir);
+	writeAllSplitFiles(mergedEntries, config.splitRequests, config.outputDir);
 	logger.info("Split files processados com sucesso!");
 }
 

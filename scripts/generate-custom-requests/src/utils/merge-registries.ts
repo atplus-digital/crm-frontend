@@ -1,4 +1,5 @@
 import type { GeneratedRegistryEntry } from "@scripts/generate-custom-requests/src/@types/generated-registry";
+import type { ManualRegistryEntry } from "@scripts/generate-custom-requests/src/@types/script-config";
 
 /**
  * Mescla entradas manuais e geradas. Entradas manuais com mesma key
@@ -10,15 +11,20 @@ import type { GeneratedRegistryEntry } from "@scripts/generate-custom-requests/s
  */
 export function mergeRegistries(
 	generated: GeneratedRegistryEntry[],
-	manual: GeneratedRegistryEntry[],
+	manual: Array<GeneratedRegistryEntry | ManualRegistryEntry>,
 ): GeneratedRegistryEntry[] {
-	const manualKeys = new Set(manual.map((e) => e.key));
+	const normalizedManual: GeneratedRegistryEntry[] = manual.map((entry) => ({
+		...entry,
+		payloadData: entry.payloadData ?? null,
+	}));
+
+	const manualKeys = new Set(normalizedManual.map((e) => e.key));
 
 	// Mantém geradas que não têm override manual
 	const filteredGenerated = generated.filter((e) => !manualKeys.has(e.key));
 
 	// Combina e ordena por key
-	const merged = [...filteredGenerated, ...manual];
+	const merged = [...filteredGenerated, ...normalizedManual];
 	merged.sort((a, b) => a.key.localeCompare(b.key));
 
 	return merged;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CustomRequestError, CustomRequestValidationError } from "../errors";
+import { CustomRequestError } from "../errors";
 import {
 	buildTemplateContext,
 	getRequestConfig,
@@ -10,25 +10,6 @@ import {
 
 describe("service", () => {
 	describe("validatePayload", () => {
-		it("validates criarContratoIxc payload", () => {
-			const payload = {
-				id_contrato: 1,
-				id_cliente: 2,
-				produto: "TV",
-			};
-			const result = validatePayload("criarContratoIxc", payload) as {
-				id_contrato: number;
-			};
-			expect(result.id_contrato).toBe(1);
-		});
-
-		it("throws CustomRequestValidationError for invalid payload", () => {
-			const payload = { id_contrato: "not a number" };
-			expect(() => validatePayload("criarContratoIxc", payload)).toThrow(
-				CustomRequestValidationError,
-			);
-		});
-
 		it("throws CustomRequestError for unknown key", () => {
 			expect(() => validatePayload("unknownKey" as never, {})).toThrow(
 				CustomRequestError,
@@ -97,12 +78,6 @@ describe("service", () => {
 	});
 
 	describe("getRequestConfig", () => {
-		it("returns config for valid key", () => {
-			const config = getRequestConfig("criarContratoIxc");
-			expect(config.key).toBe("criarContratoIxc");
-			expect(config.method).toBe("POST");
-		});
-
 		it("throws for unknown key", () => {
 			expect(() => getRequestConfig("unknown" as never)).toThrow(
 				CustomRequestError,

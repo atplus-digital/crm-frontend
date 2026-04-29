@@ -1,4 +1,4 @@
-import { z } from "zod";
+import type { z } from "zod";
 
 // ─── Error Codes ───────────────────────────────────────────────────────────────
 
@@ -98,9 +98,9 @@ export class CustomRequestNotFoundError extends CustomRequestError {
 
 // ─── Zod Error Mapping ─────────────────────────────────────────────────────────
 
-type TooSmallIssue = Extract<z.ZodIssue, { code: "too_small" }>;
-type TooBigIssue = Extract<z.ZodIssue, { code: "too_big" }>;
-type InvalidFormatIssue = Extract<z.ZodIssue, { code: "invalid_format" }>;
+type TooSmallIssue = Extract<z.core.$ZodIssue, { code: "too_small" }>;
+type TooBigIssue = Extract<z.core.$ZodIssue, { code: "too_big" }>;
+type InvalidFormatIssue = Extract<z.core.$ZodIssue, { code: "invalid_format" }>;
 
 /**
  * Map a Zod 4 error issue to a user-friendly Portuguese message.
@@ -111,59 +111,61 @@ type InvalidFormatIssue = Extract<z.ZodIssue, { code: "invalid_format" }>;
  * @returns Portuguese error message
  */
 export function mapZodErrorToPortuguese(
-	error: z.ZodIssue,
+	error: z.core.$ZodIssue,
 	fieldName?: string,
 ): string {
 	const field = fieldName ?? error.path.join(".") ?? "Este campo";
 
 	switch (error.code) {
-		case z.ZodIssueCode.invalid_type: {
-			const e = error as z.ZodIssue & { expected: string };
+		case "invalid_type": {
+			const e = error as z.core.$ZodIssue & { expected: string };
 			if (e.expected === "undefined") return `${field} é obrigatório`;
 			if (e.expected === "null") return `${field} não pode ser nulo`;
 			return `${field} deve ser do tipo ${e.expected}`;
 		}
 
-		case z.ZodIssueCode.too_small:
+		case "too_small":
 			return formatTooSmall(field, error as TooSmallIssue);
 
-		case z.ZodIssueCode.too_big:
+		case "too_big":
 			return formatTooBig(field, error as TooBigIssue);
 
-		case z.ZodIssueCode.invalid_format:
+		case "invalid_format":
 			return formatInvalidFormat(field, error as InvalidFormatIssue);
 
-		case z.ZodIssueCode.invalid_value: {
-			const e = error as Extract<z.ZodIssue, { code: "invalid_value" }>;
+		case "invalid_value": {
+			const e = error as Extract<z.core.$ZodIssue, { code: "invalid_value" }>;
 			return `${field} deve ser um dos seguintes valores: ${e.values.join(", ")}`;
 		}
 
-		case z.ZodIssueCode.unrecognized_keys: {
-			const e = error as Extract<z.ZodIssue, { code: "unrecognized_keys" }>;
+		case "unrecognized_keys": {
+			const e = error as Extract<
+				z.core.$ZodIssue,
+				{ code: "unrecognized_keys" }
+			>;
 			return `Chave(s) não reconhecida(s): ${e.keys.join(", ")}`;
 		}
 
-		case z.ZodIssueCode.not_multiple_of: {
-			const e = error as Extract<z.ZodIssue, { code: "not_multiple_of" }>;
+		case "not_multiple_of": {
+			const e = error as Extract<z.core.$ZodIssue, { code: "not_multiple_of" }>;
 			return `${field} deve ser múltiplo de ${e.divisor}`;
 		}
 
-		case z.ZodIssueCode.invalid_union:
+		case "invalid_union":
 			return `${field} não corresponde a nenhum formato válido`;
 
-		case z.ZodIssueCode.invalid_key: {
-			const e = error as Extract<z.ZodIssue, { code: "invalid_key" }>;
+		case "invalid_key": {
+			const e = error as Extract<z.core.$ZodIssue, { code: "invalid_key" }>;
 			return `Chave inválida em ${e.origin}`;
 		}
 
-		case z.ZodIssueCode.invalid_element: {
-			const e = error as Extract<z.ZodIssue, { code: "invalid_element" }>;
+		case "invalid_element": {
+			const e = error as Extract<z.core.$ZodIssue, { code: "invalid_element" }>;
 			return `Elemento inválido em ${e.origin}`;
 		}
 
-		case z.ZodIssueCode.custom:
+		case "custom":
 			return error.message;
-
 		default:
 			return "Erro desconhecido";
 	}

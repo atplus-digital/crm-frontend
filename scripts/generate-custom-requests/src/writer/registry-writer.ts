@@ -2,6 +2,7 @@ import { execFile } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { GeneratedRegistryEntry } from "@scripts/generate-custom-requests/src/@types/generated-registry";
+import type { SplitRequestsMap } from "@scripts/generate-custom-requests/src/@types/script-config";
 import { logInfo, logVerbose } from "@scripts/shared/utils/logger";
 import {
 	escapeString,
@@ -40,10 +41,10 @@ function buildCollectionToRequestKeys(
 
 function buildRegistryContent(
 	entries: GeneratedRegistryEntry[],
-	splitRequests: string[],
+	splitRequests: SplitRequestsMap,
 ): string {
 	const sorted = [...entries].sort((a, b) => a.key.localeCompare(b.key));
-	const splitRequestsSet = new Set(splitRequests);
+	const splitRequestsSet = new Set(Object.keys(splitRequests));
 	const inlineEntries = sorted.filter(
 		(entry) => !splitRequestsSet.has(entry.key),
 	);
@@ -70,7 +71,8 @@ function buildRegistryContent(
     key: "${entry.key}",
     name: "${escapedName}",
     collection: "${entry.collection}",
-    options: { method: "${entry.method}", url: "${entry.url}" },
+    method: "${entry.method}",
+    url: "${entry.url}",
     payloadSchema: ${entry.payloadSchema},
     payloadData: ${payloadDataStr},
     _hasEnhancedSchema: false,
@@ -89,6 +91,10 @@ ${inlineEntries.length > 0 ? 'import { z } from "zod";\n' : ""}${splitImports ? 
 export const generatedCustomRequestsRegistry = {
  ${entryLines}
 } as const;
+
+export const customRequestsRegistry = generatedCustomRequestsRegistry;
+
+export type CustomRequestRegistryKey = keyof typeof customRequestsRegistry;
 
 ${collectionMapping}
 `;
@@ -118,7 +124,7 @@ function runBiomeFix(filePath: string): Promise<void> {
 export async function writeGeneratedRegistry(
 	entries: GeneratedRegistryEntry[],
 	outputDir: string,
-	splitRequests: string[] = [],
+	splitRequests: SplitRequestsMap = {},
 ): Promise<void> {
 	const content = buildRegistryContent(entries, splitRequests);
 	const outputPath = resolve(outputDir, "generated-registry.ts");

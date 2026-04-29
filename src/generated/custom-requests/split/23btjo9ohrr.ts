@@ -18,3 +18,14 @@ export const payloadData = {
 	id_contrato: "{{currentRecord.id}}",
 	id_cliente: "{{currentRecord.f_nc_cliente.id}}",
 };
+
+export const requestEntry = {
+	key: "23btjo9ohrr",
+	name: "23btjo9ohrr",
+	collection: "cliente_contrato",
+	method: "POST",
+	url: "https://n8n.atplus.cloud/webhook/5d9eccc3-7091-47f9-bcae-75ea5292b7fd",
+	payloadSchema,
+	payloadData,
+	_hasEnhancedSchema: true,
+} as const;

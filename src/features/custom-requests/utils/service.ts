@@ -1,4 +1,4 @@
-import { customRequestsRegistry } from "#/generated/custom-requests/merged-registry";
+import { customRequestsRegistry } from "#/generated/custom-requests/generated-registry";
 import {
 	CustomRequestError,
 	CustomRequestErrorCode,
@@ -12,8 +12,13 @@ import type {
 	TemplateContext,
 } from "./types";
 
+const customRequestsRegistryByKey = customRequestsRegistry as Record<
+	string,
+	CustomRequestEntry
+>;
+
 export function validatePayload(key: string, payload: unknown) {
-	const entry = customRequestsRegistry[key] as CustomRequestEntry | undefined;
+	const entry = customRequestsRegistryByKey[key];
 	if (!entry) {
 		throw new CustomRequestError(
 			`Unknown request key: ${key}`,
@@ -59,7 +64,7 @@ export async function sendRequest(
 	key: string,
 	options: SendRequestOptions,
 ): Promise<SendRequestResult> {
-	const entry = customRequestsRegistry[key] as CustomRequestEntry | undefined;
+	const entry = customRequestsRegistryByKey[key];
 	if (!entry) {
 		throw new CustomRequestError(
 			`Unknown request key: ${key}`,
@@ -70,15 +75,13 @@ export async function sendRequest(
 	const validatedPayload = validatePayload(key, options.payload);
 
 	try {
-		const response = await fetch(`/api/${entry.options.url}`, {
-			method: entry.options.method,
+		const response = await fetch(`/api/${entry.url}`, {
+			method: entry.method,
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body:
-				entry.options.method === "POST"
-					? JSON.stringify(validatedPayload)
-					: undefined,
+				entry.method === "POST" ? JSON.stringify(validatedPayload) : undefined,
 			signal: options.signal,
 		});
 
@@ -112,7 +115,7 @@ export async function sendRequest(
 }
 
 export function getRequestConfig(key: string) {
-	const entry = customRequestsRegistry[key] as CustomRequestEntry | undefined;
+	const entry = customRequestsRegistryByKey[key];
 	if (!entry) {
 		throw new CustomRequestError(
 			`Unknown request key: ${key}`,
@@ -121,15 +124,15 @@ export function getRequestConfig(key: string) {
 	}
 	return {
 		key,
-		method: entry.options.method,
-		url: entry.options.url,
+		method: entry.method,
+		url: entry.url,
 	};
 }
 
 export function getRequestsByCollection(_collection: string) {
 	return Object.entries(customRequestsRegistry).map(([key, entry]) => ({
 		key,
-		method: entry.options.method,
-		url: entry.options.url,
+		method: entry.method,
+		url: entry.url,
 	}));
 }

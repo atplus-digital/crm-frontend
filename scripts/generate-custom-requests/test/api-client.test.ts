@@ -22,7 +22,8 @@ function createMockConfig(overrides: Partial<ScriptConfig> = {}): ScriptConfig {
 		timeoutMs: 5000,
 		logLevel: "info",
 		outputDir: "/tmp/test-output",
-		splitRequests: [],
+		splitRequests: {},
+		manualRequests: [],
 		...overrides,
 	};
 }

@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import type { CustomRequestRegistryKey } from "#/generated/custom-requests/merged-registry";
+import type { CustomRequestRegistryKey } from "#/generated/custom-requests/generated-registry";
 import { sendRequest } from "../utils/service";
 
 export function useCustomRequest() {

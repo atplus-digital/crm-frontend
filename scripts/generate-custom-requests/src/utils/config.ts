@@ -24,7 +24,8 @@ export function parseConfig(
 		timeoutMs: parsed.data.CRM_NOCOBASE_TIMEOUT_MS,
 		logLevel: "info",
 		outputDir: "src/generated/custom-requests",
-		splitRequests: [],
+		splitRequests: {},
+		manualRequests: [],
 		lockWorkspaceFolder: true,
 		...overrideConfig,
 	};

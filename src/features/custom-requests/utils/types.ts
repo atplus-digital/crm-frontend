@@ -13,7 +13,10 @@ export interface CustomRequestEntry {
 	key: string;
 	name: string;
 	collection: string;
-	options: CustomRequestOptions;
+	method: CustomRequestMethod;
+	url: string;
+	timeout?: number;
+	headers?: Record<string, string>;
 	payloadSchema: z.ZodType<unknown>;
 	responseSchema?: z.ZodType<unknown>;
 	_hasEnhancedSchema?: boolean;
