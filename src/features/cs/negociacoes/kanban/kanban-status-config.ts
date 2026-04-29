@@ -1,4 +1,4 @@
-import type { NegociacoesStatus } from "#/generated/nocobase/negociacoes";
+import type { NegociacoesStatus } from "#/generated/types/nocobase/negociacoes";
 
 export const STATUS_CONFIG = [
 	{

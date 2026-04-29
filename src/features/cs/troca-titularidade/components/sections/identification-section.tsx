@@ -6,7 +6,7 @@ import {
 	CRMTROCATITULARIDADE_STATUS_LABELS,
 	CRMTROCATITULARIDADE_SUBSTATUS_LABELS,
 	CRMTROCATITULARIDADE_TIPOPESSOA_LABELS,
-} from "#/generated/nocobase/crm-troca-titularidade";
+} from "#/generated/types/nocobase/crm-troca-titularidade";
 import { formatDatePtBR } from "#/lib/utils";
 
 interface IdentificationSectionProps {

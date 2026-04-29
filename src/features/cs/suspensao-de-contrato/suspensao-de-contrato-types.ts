@@ -1,7 +1,7 @@
 import type {
 	SuspensaoContrato,
 	SuspensaoContratoRelations,
-} from "#/generated/nocobase/suspensao-contrato";
+} from "#/generated/types/nocobase/suspensao-contrato";
 import type { ListParams } from "#/repositories/types";
 
 export const SUSPENSAO_CONTRATO_STATUS_LABELS = {

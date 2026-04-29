@@ -9,7 +9,7 @@ import {
 	type PessoaJuridicaTableFilters,
 	toPessoaJuridicaFilters,
 } from "#/features/cs/pessoas/pessoas-types";
-import type { Empresas } from "#/generated/nocobase/empresas";
+import type { Empresas } from "#/generated/types/nocobase/empresas";
 import { useListPage } from "#/hooks/use-list-page";
 
 export function PessoasJuridicasTabPage() {

@@ -4,7 +4,7 @@ import type {
 	NegociacoesComentariosRelations,
 	NegociacoesItens,
 	Pacotes,
-} from "#/generated/nocobase/index";
+} from "#/generated/types/nocobase/index";
 import {
 	buildFilter,
 	eq,
@@ -127,7 +127,7 @@ export async function fetchNegociacoes(
 			page,
 			pageSize,
 			appends: appends as Array<
-				keyof import("#/generated/nocobase/negociacoes").NegociacoesRelations
+				keyof import("#/generated/types/nocobase/negociacoes").NegociacoesRelations
 			>,
 			...(sort.length > 0 && { sort }),
 			...(filter && { filter }),

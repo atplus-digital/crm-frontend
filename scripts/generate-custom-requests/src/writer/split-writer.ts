@@ -52,13 +52,19 @@ function toSafePathSegment(value: string): string {
 	return value.replace(/[^a-zA-Z0-9_-]/g, "-");
 }
 
+function toDataSourceDir(dataSourceKey: string): string {
+	return dataSourceKey === "main"
+		? "nocobase"
+		: toSafePathSegment(dataSourceKey);
+}
+
 export function writeSplitFile(
 	entry: GeneratedRegistryEntry,
 	splitFileName: string,
 	outputDir: string,
 ): void {
 	const splitDir = resolve(outputDir, "split");
-	const dataSourceDir = toSafePathSegment(entry.dataSourceKey);
+	const dataSourceDir = toDataSourceDir(entry.dataSourceKey);
 	const collectionDir = toSafePathSegment(entry.collection);
 	const splitCollectionDir = join(splitDir, dataSourceDir, collectionDir);
 	const filePath = join(splitCollectionDir, `${splitFileName}.ts`);

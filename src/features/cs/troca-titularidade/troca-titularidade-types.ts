@@ -2,12 +2,12 @@ import type {
 	CrmTrocaTitularidadeEstado,
 	CrmTrocaTitularidadeStatus,
 	CrmTrocaTitularidadeSubstatus,
-} from "#/generated/nocobase/crm-troca-titularidade";
+} from "#/generated/types/nocobase/crm-troca-titularidade";
 import {
 	CRMTROCATITULARIDADE_ESTADO_LABELS,
 	CRMTROCATITULARIDADE_STATUS_LABELS,
 	CRMTROCATITULARIDADE_SUBSTATUS_LABELS,
-} from "#/generated/nocobase/crm-troca-titularidade";
+} from "#/generated/types/nocobase/crm-troca-titularidade";
 import type { ListParams } from "#/repositories/types";
 
 // ---------------------------------------------------------------------------

@@ -7,7 +7,7 @@ import {
 } from "#/components/table/detail-table-presets";
 import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useNegociacaoItens } from "#/features/cs/negociacoes/negociacoes-hooks";
-import type { NegociacoesItens } from "#/generated/nocobase/index";
+import type { NegociacoesItens } from "#/generated/types/nocobase/index";
 import { formatCurrency } from "#/lib/utils";
 import { RelacaoBadge, TipoProdutoBadge } from "./negociacao-badges";
 

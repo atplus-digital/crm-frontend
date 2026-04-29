@@ -1,6 +1,6 @@
 // ⚠️ Tipos gerados automaticamente são a fonte de verdade — NÃO redefinir manualmente
 
-import type { Empresas } from "#/generated/nocobase/empresas";
+import type { Empresas } from "#/generated/types/nocobase/empresas";
 import type {
 	Negociacoes,
 	NegociacoesFidelidade,
@@ -10,21 +10,21 @@ import type {
 	NegociacoesStatus,
 	NegociacoesSubstatus,
 	NegociacoesTipoPessoa,
-} from "#/generated/nocobase/negociacoes";
+} from "#/generated/types/nocobase/negociacoes";
 import {
 	NEGOCIACOES_MOTIVO_LABELS,
 	NEGOCIACOES_STATUS_LABELS,
 	NEGOCIACOES_SUBSTATUS_LABELS,
-} from "#/generated/nocobase/negociacoes";
-import type { Pessoas } from "#/generated/nocobase/pessoas";
-import type { Users } from "#/generated/nocobase/users";
+} from "#/generated/types/nocobase/negociacoes";
+import type { Pessoas } from "#/generated/types/nocobase/pessoas";
+import type { Users } from "#/generated/types/nocobase/users";
 import type { ListParams } from "#/repositories/types";
 
 export type {
 	NegociacoesMotivo as MotivoRenegociacao,
 	NegociacoesStatus as NegociacaoStatus,
 	NegociacoesSubstatus as NegociacaoSubstatus,
-} from "#/generated/nocobase/negociacoes";
+} from "#/generated/types/nocobase/negociacoes";
 
 export {
 	NEGOCIACOES_CONFISSAODIVIDA_LABELS as CONFISAO_DIVIDA_LABELS,
@@ -37,7 +37,7 @@ export {
 	NEGOCIACOES_STATUS_LABELS as NEGOCIACAO_STATUS_LABELS,
 	NEGOCIACOES_SUBSTATUS_LABELS as NEGOCIACAO_SUBSTATUS_LABELS,
 	NEGOCIACOES_TIPOPESSOA_LABELS as TIPO_PESSOA_LABELS,
-} from "#/generated/nocobase/negociacoes";
+} from "#/generated/types/nocobase/negociacoes";
 
 export const NEGOCIACAO_STATUS_FILTER_OPTIONS: {
 	value: NegociacoesStatus;

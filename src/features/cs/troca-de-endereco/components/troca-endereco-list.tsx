@@ -5,7 +5,7 @@ import { ViewActionButton } from "#/components/table/columns/view-action";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
 import { DataTableContainer } from "#/components/table/data-table-container";
 import type { TrocaEnderecoWithRelations } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
-import { TROCAENDERECO_STATUS_LABELS } from "#/generated/nocobase/troca-endereco";
+import { TROCAENDERECO_STATUS_LABELS } from "#/generated/types/nocobase/troca-endereco";
 import { formatDatePtBR } from "#/lib/utils";
 
 interface PaginationInfo {

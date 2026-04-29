@@ -75,7 +75,12 @@ export interface BaseDataSourceGenerationConfig {
 	name: string;
 	type: "nocobase" | "rest";
 	dataSource: string;
-	outputDir: string;
+	/**
+	 * Diretório de saída opcional por datasource.
+	 * Quando omitido, o script deriva automaticamente de ScriptConfig.outputDir
+	 * usando a chave dataSource (ex: "main" -> "nocobase").
+	 */
+	outputDir?: string;
 	splitCollections?: string[];
 	collections?: string[];
 	baseInterfaceNaming?: BaseInterfaceNamingConfig;

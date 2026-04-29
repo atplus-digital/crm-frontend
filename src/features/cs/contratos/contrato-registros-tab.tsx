@@ -14,7 +14,7 @@ import {
 	REGISTROSDECONTATO_CATEGORIA_LABELS,
 	REGISTROSDECONTATO_NOTATECNICO_LABELS,
 	REGISTROSDECONTATO_NOTAVENDAS_LABELS,
-} from "#/generated/nocobase/registros-de-contato";
+} from "#/generated/types/nocobase/registros-de-contato";
 import { formatDatePtBR } from "#/lib/utils";
 
 function formatCategoria(categoria: RegistroContato["categoria"]): string {

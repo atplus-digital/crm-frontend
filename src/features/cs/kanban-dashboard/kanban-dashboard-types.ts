@@ -3,21 +3,21 @@ import type { BadgeOption } from "#/components/filters";
 import type {
 	CrmTrocaTitularidade,
 	CrmTrocaTitularidadeRelations,
-} from "#/generated/nocobase/crm-troca-titularidade";
+} from "#/generated/types/nocobase/crm-troca-titularidade";
 import {
 	NEGOCIACOES_MOTIVO_LABELS,
 	type Negociacoes,
 	type NegociacoesRelations,
 	type NegociacoesStatus,
-} from "#/generated/nocobase/negociacoes";
+} from "#/generated/types/nocobase/negociacoes";
 import type {
 	SuspensaoContrato,
 	SuspensaoContratoRelations,
-} from "#/generated/nocobase/suspensao-contrato";
+} from "#/generated/types/nocobase/suspensao-contrato";
 import type {
 	TrocaEndereco,
 	TrocaEnderecoRelations,
-} from "#/generated/nocobase/troca-endereco";
+} from "#/generated/types/nocobase/troca-endereco";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Unified Kanban status columns (shared across all source collections)

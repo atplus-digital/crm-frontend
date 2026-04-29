@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { PermissionRole } from "#/features/auth/permissions";
 import { permissionRoleSchema } from "#/features/auth/permissions";
-import type { Users } from "#/generated/nocobase/users";
+import type { Users } from "#/generated/types/nocobase/users";
 
 export type AuthUser = Pick<Users, "id" | "email" | "username" | "nickname"> & {
 	phone: string;

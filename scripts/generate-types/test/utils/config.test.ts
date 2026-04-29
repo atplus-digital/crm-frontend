@@ -35,7 +35,7 @@ describe("parseConfig", () => {
 
 			const result = parseConfig(scriptConfig);
 
-			expect(result.outputDir).toBe("./generated");
+			expect(result.outputDir).toBe("src/generated/types");
 			expect(result.splitCollections).toEqual([]);
 			expect(result.logLevel).toBe("info");
 			expect(result.defaultEnvPath).toBe(".env.local");
@@ -50,6 +50,9 @@ describe("parseConfig", () => {
 			expect(result.baseUrl).toBe("https://example.com/api");
 			expect(result.token).toBe("test-token");
 			expect(result.timeoutMs).toBe(15_000);
+			expect(result.datasources?.[0].outputDir).toBe(
+				"src/generated/types/nocobase",
+			);
 		});
 	});
 
@@ -189,8 +192,9 @@ describe("parseConfig", () => {
 			expect(() => parseConfig(scriptConfig)).toThrow(/dataSource/);
 		});
 
-		it("throws error when datasource.outputDir is empty", () => {
+		it("deriva datasource.outputDir automaticamente a partir do outputDir raiz", () => {
 			const scriptConfig: Partial<ScriptConfig> = {
+				outputDir: "./generated",
 				datasources: [
 					{
 						name: "nocobase",
@@ -202,7 +206,8 @@ describe("parseConfig", () => {
 				],
 			};
 
-			expect(() => parseConfig(scriptConfig)).toThrow(/outputDir/);
+			const result = parseConfig(scriptConfig);
+			expect(result.datasources?.[0].outputDir).toBe("generated/nocobase");
 		});
 
 		it("throws error when non-main datasource has no collections", () => {
@@ -274,6 +279,7 @@ describe("parseConfig", () => {
 
 		it("handles external datasource with explicit collections", () => {
 			const scriptConfig: Partial<ScriptConfig> = {
+				outputDir: "./generated",
 				datasources: [
 					{
 						name: "nocobase",
@@ -299,6 +305,8 @@ describe("parseConfig", () => {
 			expect(result.datasources?.[1].name).toBe("ixc");
 			expect(result.datasources?.[1].dataSource).toBe("d_db_ixcsoft");
 			expect(result.datasources?.[1].collections).toEqual(["cliente_contrato"]);
+			expect(result.datasources?.[0].outputDir).toBe("generated/nocobase");
+			expect(result.datasources?.[1].outputDir).toBe("generated/d_db_ixcsoft");
 		});
 	});
 

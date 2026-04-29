@@ -24,6 +24,7 @@ function createMockConfig(overrides: Partial<ScriptConfig> = {}): ScriptConfig {
 		outputDir: "/tmp/test-output",
 		splitRequests: {},
 		manualRequests: [],
+		generateAnalysisReport: false,
 		...overrides,
 	};
 }

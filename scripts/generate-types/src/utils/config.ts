@@ -1,15 +1,15 @@
+import { join } from "node:path";
 import type { RuntimeConfig, ScriptConfig } from "../@types/script";
 import { resolveEnvConfig } from "./load-config";
 
 const defaultConfig: ScriptConfig = {
-	outputDir: "./generated",
+	outputDir: "src/generated/types",
 	splitCollections: [],
 	datasources: [
 		{
 			name: "nocobase",
 			type: "nocobase",
 			dataSource: "main",
-			outputDir: "./generated",
 			splitCollections: [],
 		},
 	],
@@ -24,6 +24,29 @@ const defaultConfig: ScriptConfig = {
 		suffix: "",
 	},
 } as const;
+
+function toSafePathSegment(value: string): string {
+	return value.replace(/[^a-zA-Z0-9_-]/g, "-");
+}
+
+function toDataSourceOutputFolder(dataSourceKey: string): string {
+	return dataSourceKey === "main"
+		? "nocobase"
+		: toSafePathSegment(dataSourceKey);
+}
+
+function normalizeDatasourceOutputDirs(
+	baseOutputDir: string,
+	datasources: ScriptConfig["datasources"],
+): ScriptConfig["datasources"] {
+	return (datasources ?? []).map((dataSource) => ({
+		...dataSource,
+		outputDir: join(
+			baseOutputDir,
+			toDataSourceOutputFolder(dataSource.dataSource),
+		),
+	}));
+}
 
 /**
  * Valida valores críticos da configuração após o merge.
@@ -85,12 +108,6 @@ function validateMergedConfig(mergedConfig: Partial<ScriptConfig>): void {
 			);
 		}
 
-		if (dataSource.outputDir.trim() === "") {
-			errors.push(
-				`dataSource '${dataSource.name}' deve definir outputDir não vazio`,
-			);
-		}
-
 		if (
 			dataSource.type !== "nocobase" &&
 			(!dataSource.collections || dataSource.collections.length === 0) &&
@@ -122,7 +139,10 @@ export function parseConfig(
 
 	const normalizedConfig = {
 		...mergedConfig,
-		datasources: mergedConfig.datasources,
+		datasources: normalizeDatasourceOutputDirs(
+			mergedConfig.outputDir,
+			mergedConfig.datasources,
+		),
 	};
 
 	validateMergedConfig(normalizedConfig);

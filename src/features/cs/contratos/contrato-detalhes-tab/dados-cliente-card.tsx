@@ -2,7 +2,7 @@ import { User } from "lucide-react";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
-import { CLIENTE_TIPOPESSOA_LABELS } from "#/generated/ixc/cliente";
+import { CLIENTE_TIPOPESSOA_LABELS } from "#/generated/types/ixc/cliente";
 
 function formatTipoPessoa(tipo: string | null | undefined): string {
 	if (!tipo) return "—";

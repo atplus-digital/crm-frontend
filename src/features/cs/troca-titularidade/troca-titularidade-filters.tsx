@@ -17,7 +17,7 @@ import type {
 	CrmTrocaTitularidadeEstado,
 	CrmTrocaTitularidadeStatus,
 	CrmTrocaTitularidadeSubstatus,
-} from "#/generated/nocobase/crm-troca-titularidade";
+} from "#/generated/types/nocobase/crm-troca-titularidade";
 
 export function TrocaTitularidadeFilterBar({
 	filters,

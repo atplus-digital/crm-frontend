@@ -11,7 +11,7 @@ import { useTrocaEnderecoById } from "#/features/cs/troca-de-endereco/troca-ende
 import {
 	TROCAENDERECO_STATUS_LABELS,
 	TROCAENDERECO_TAXAINSTALACAO_LABELS,
-} from "#/generated/nocobase/troca-endereco";
+} from "#/generated/types/nocobase/troca-endereco";
 import { formatDatePtBR, formatPhone } from "#/lib/utils";
 import { routePaths } from "#/routes/route-paths";
 

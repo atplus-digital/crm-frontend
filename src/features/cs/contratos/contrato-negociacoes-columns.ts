@@ -6,8 +6,8 @@ import {
 } from "#/components/table/detail-table-presets";
 import type { TrocaTitularidade } from "#/features/cs/contratos/contratos-types";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
-import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/nocobase/crm-troca-titularidade";
-import { NEGOCIACOES_STATUS_LABELS } from "#/generated/nocobase/negociacoes";
+import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/types/nocobase/crm-troca-titularidade";
+import { NEGOCIACOES_STATUS_LABELS } from "#/generated/types/nocobase/negociacoes";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 
 function formatTrocaStatus(status: TrocaTitularidade["status"]): string {

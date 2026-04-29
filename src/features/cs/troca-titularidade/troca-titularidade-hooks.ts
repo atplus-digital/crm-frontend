@@ -2,7 +2,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 import type {
 	CrmTrocaTitularidade,
 	CrmTrocaTitularidadeRelations,
-} from "#/generated/nocobase/crm-troca-titularidade";
+} from "#/generated/types/nocobase/crm-troca-titularidade";
 import { buildFilter, eq, gte, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
 import type {

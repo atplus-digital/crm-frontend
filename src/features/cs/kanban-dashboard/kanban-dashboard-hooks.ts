@@ -2,19 +2,19 @@ import { queryOptions, useQueries } from "@tanstack/react-query";
 import type {
 	CrmTrocaTitularidade,
 	CrmTrocaTitularidadeRelations,
-} from "#/generated/nocobase/crm-troca-titularidade";
+} from "#/generated/types/nocobase/crm-troca-titularidade";
 import type {
 	Negociacoes,
 	NegociacoesRelations,
-} from "#/generated/nocobase/negociacoes";
+} from "#/generated/types/nocobase/negociacoes";
 import type {
 	SuspensaoContrato,
 	SuspensaoContratoRelations,
-} from "#/generated/nocobase/suspensao-contrato";
+} from "#/generated/types/nocobase/suspensao-contrato";
 import type {
 	TrocaEndereco,
 	TrocaEnderecoRelations,
-} from "#/generated/nocobase/troca-endereco";
+} from "#/generated/types/nocobase/troca-endereco";
 import { buildFilter, includes, nestedField, or } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
 import type {

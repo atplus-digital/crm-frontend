@@ -5,7 +5,7 @@ import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-type
 import {
 	CLIENTECONTRATO_TIPO_LABELS,
 	CLIENTECONTRATO_TIPOCOBRANCA_LABELS,
-} from "#/generated/ixc/cliente-contrato";
+} from "#/generated/types/ixc/cliente-contrato";
 import { formatDatePtBR } from "#/lib/utils";
 
 function formatTipo(tipo: ContratoWithCliente["tipo"]): string {

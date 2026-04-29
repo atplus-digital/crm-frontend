@@ -6,7 +6,7 @@ import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
 import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { SUSPENSAO_CONTRATO_STATUS_LABELS } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
-import type { Contratos } from "#/generated/nocobase/index";
+import type { Contratos } from "#/generated/types/nocobase/index";
 import { formatPhone } from "#/lib/utils";
 import { SuspensaoContratoActions } from "./suspensao-contrato-actions";
 

@@ -1,6 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { StatusBadge } from "#/components/badges/status-badge";
-import type { Pessoas } from "#/generated/nocobase/pessoas";
+import type { Pessoas } from "#/generated/types/nocobase/pessoas";
 import { formatDatePtBR } from "#/lib/utils";
 
 const CREDITO_LABELS: Record<string, string> = {
@@ -110,7 +110,7 @@ export const pfColumns: ColumnDef<Pessoas, unknown>[] = [
 	},
 ];
 
-import type { Empresas } from "#/generated/nocobase/empresas";
+import type { Empresas } from "#/generated/types/nocobase/empresas";
 
 export const pjColumns: ColumnDef<Empresas, unknown>[] = [
 	{ accessorKey: "id", header: "ID" },

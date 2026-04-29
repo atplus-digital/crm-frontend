@@ -15,7 +15,7 @@ import {
 	NEGOCIACAO_STATUS_FILTER_OPTIONS,
 	NEGOCIACAO_SUBSTATUS_FILTER_OPTIONS,
 } from "#/features/cs/negociacoes/negociacoes-types";
-import type { Users } from "#/generated/nocobase/users";
+import type { Users } from "#/generated/types/nocobase/users";
 
 export interface VendasFiltersProps {
 	filters: NegociacaoFilters;

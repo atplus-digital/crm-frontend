@@ -4,7 +4,7 @@ import type {
 	CollectionMap,
 	CollectionName,
 	CollectionRelationsMap,
-} from "#/generated/nocobase/collections";
+} from "#/generated/types/nocobase/collections";
 import { createLogger } from "#/lib/logger";
 import type {
 	ApiRequestConfig,

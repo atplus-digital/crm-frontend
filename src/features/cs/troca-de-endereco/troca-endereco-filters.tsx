@@ -11,7 +11,7 @@ import {
 	TROCA_STATUS_FILTER_OPTIONS,
 	type TrocaEnderecoFilters,
 } from "#/features/cs/troca-de-endereco/troca-endereco-types";
-import type { TrocaEnderecoStatus } from "#/generated/nocobase/troca-endereco";
+import type { TrocaEnderecoStatus } from "#/generated/types/nocobase/troca-endereco";
 
 interface TrocaEnderecoFilterBarProps {
 	filters: TrocaEnderecoFilters;

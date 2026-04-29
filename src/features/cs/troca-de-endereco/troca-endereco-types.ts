@@ -1,5 +1,5 @@
-import type { TrocaEnderecoStatus } from "#/generated/nocobase/troca-endereco";
-import { TROCAENDERECO_STATUS_LABELS } from "#/generated/nocobase/troca-endereco";
+import type { TrocaEnderecoStatus } from "#/generated/types/nocobase/troca-endereco";
+import { TROCAENDERECO_STATUS_LABELS } from "#/generated/types/nocobase/troca-endereco";
 
 export const TROCA_STATUS_FILTER_OPTIONS: {
 	value: TrocaEnderecoStatus;

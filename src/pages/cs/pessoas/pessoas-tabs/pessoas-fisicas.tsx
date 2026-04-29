@@ -9,7 +9,7 @@ import {
 	type PessoaFisicaTableFilters,
 	toPessoaFisicaFilters,
 } from "#/features/cs/pessoas/pessoas-types";
-import type { Pessoas } from "#/generated/nocobase/pessoas";
+import type { Pessoas } from "#/generated/types/nocobase/pessoas";
 import { useListPage } from "#/hooks/use-list-page";
 
 export function PessoasFisicasTabPage() {

@@ -1,12 +1,12 @@
 import type {
 	Empresas,
 	EmpresasRelations,
-} from "#/generated/nocobase/empresas";
+} from "#/generated/types/nocobase/empresas";
 import type {
 	Pessoas,
 	PessoasAnaliseIxc,
 	PessoasRelations,
-} from "#/generated/nocobase/pessoas";
+} from "#/generated/types/nocobase/pessoas";
 import type { ListParams, PaginatedResponse } from "#/repositories/types";
 
 export type PessoaFisicaFilters = Pick<Pessoas, "f_nome" | "f_cpf"> & {

@@ -6,7 +6,7 @@ import { DataTableColumnHeader } from "#/components/table/data-table-column-head
 import { DataTableContainer } from "#/components/table/data-table-container";
 import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import { TROCA_STATUS_VARIANTS } from "#/features/cs/troca-titularidade/troca-titularidade-types";
-import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/nocobase/crm-troca-titularidade";
+import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/types/nocobase/crm-troca-titularidade";
 import { formatDatePtBR } from "#/lib/utils";
 
 interface PaginationInfo {

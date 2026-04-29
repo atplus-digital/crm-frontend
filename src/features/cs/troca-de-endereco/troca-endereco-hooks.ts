@@ -2,7 +2,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 import type {
 	TrocaEndereco,
 	TrocaEnderecoRelations,
-} from "#/generated/nocobase/troca-endereco";
+} from "#/generated/types/nocobase/troca-endereco";
 import { buildFilter, eq, gte, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
 import type { TrocaEnderecoFilters } from "./troca-endereco-types";
@@ -56,7 +56,7 @@ export const trocaEnderecoQueryOptions = (
 					page,
 					pageSize,
 					appends:
-						appends as (keyof import("#/generated/nocobase/troca-endereco").TrocaEnderecoRelations)[],
+						appends as (keyof import("#/generated/types/nocobase/troca-endereco").TrocaEnderecoRelations)[],
 					...(sort.length > 0 && { sort }),
 					...(filter && { filter }),
 				},
@@ -89,7 +89,7 @@ export function useTrocaEnderecoById(id: number) {
 				{
 					appends: [
 						"createdBy",
-					] as (keyof import("#/generated/nocobase/troca-endereco").TrocaEnderecoRelations)[],
+					] as (keyof import("#/generated/types/nocobase/troca-endereco").TrocaEnderecoRelations)[],
 				},
 			);
 			return response as unknown as TrocaEnderecoWithRelations;

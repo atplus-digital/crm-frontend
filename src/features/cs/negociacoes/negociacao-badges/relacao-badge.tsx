@@ -1,5 +1,5 @@
 import { StatusBadge } from "#/components/badges/status-badge";
-import type { NegociacoesItens } from "#/generated/nocobase";
+import type { NegociacoesItens } from "#/generated/types/nocobase";
 
 export const RELACAO_COLORS: Record<string, string> = {
 	COMBO: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",

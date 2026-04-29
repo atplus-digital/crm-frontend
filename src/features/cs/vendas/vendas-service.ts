@@ -1,4 +1,4 @@
-import type { Users } from "#/generated/nocobase/users";
+import type { Users } from "#/generated/types/nocobase/users";
 import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";
 

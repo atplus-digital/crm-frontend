@@ -1,6 +1,9 @@
-import type { CollectionRelationsMap } from "#/generated/nocobase/collections";
-import type { Empresas } from "#/generated/nocobase/empresas";
-import type { Pessoas, PessoasAnaliseIxc } from "#/generated/nocobase/pessoas";
+import type { CollectionRelationsMap } from "#/generated/types/nocobase/collections";
+import type { Empresas } from "#/generated/types/nocobase/empresas";
+import type {
+	Pessoas,
+	PessoasAnaliseIxc,
+} from "#/generated/types/nocobase/pessoas";
 import { buildFilter, eq, includes } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";

@@ -7,7 +7,6 @@ export const dataSourceConfigs = [
 		name: "nocobase",
 		type: "nocobase",
 		dataSource: "main",
-		outputDir: "src/generated/nocobase",
 		inferRelationsByName: false, // NocoBase já tem relações via API
 		splitCollections: [
 			"users",
@@ -26,7 +25,6 @@ export const dataSourceConfigs = [
 		name: "ixc",
 		type: "nocobase",
 		dataSource: "d_db_ixcsoft",
-		outputDir: "src/generated/ixc",
 		splitCollections: [
 			"cliente",
 			"cliente_contrato",

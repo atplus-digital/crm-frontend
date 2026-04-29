@@ -1,7 +1,7 @@
 import {
 	NEGOCIACOES_MOTIVO_LABELS,
 	NEGOCIACOES_STATUS_LABELS,
-} from "#/generated/nocobase/negociacoes";
+} from "#/generated/types/nocobase/negociacoes";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 import type { NegociacaoWithRelations } from "../negociacoes-types";
 

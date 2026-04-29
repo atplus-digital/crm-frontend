@@ -5,7 +5,12 @@ import { writeGeneratedFile } from "../../post-pipeline/writer";
 export async function writeFiles(
 	ctx: Readonly<PipelineContext & { fileContents: Map<string, string> }>,
 ): Promise<PipelineContext> {
-	const outputDir = ctx.dataSource.outputDir;
+	const outputDir = ctx.dataSource.outputDir ?? ctx.config.outputDir;
+	if (!outputDir?.trim()) {
+		throw new Error(
+			`outputDir inválido para datasource '${ctx.dataSource.name}'`,
+		);
+	}
 	const writeResults: GeneratedFileWrite[] = [];
 
 	for (const [relativePath, content] of ctx.fileContents.entries()) {

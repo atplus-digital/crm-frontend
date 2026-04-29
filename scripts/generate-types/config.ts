@@ -4,6 +4,7 @@ import type { ScriptConfig } from "./src/@types/script";
 import { parseConfig } from "./src/utils/config";
 
 const scriptConfig: Partial<ScriptConfig> = {
+	outputDir: "src/generated/types",
 	datasources: dataSourceConfigs,
 	lockWorkspaceFolder: true,
 	logLevel: "debug",

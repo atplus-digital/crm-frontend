@@ -60,7 +60,7 @@ describe("split and registry paths", () => {
 		const splitPath = join(
 			outputDir,
 			"split",
-			"main",
+			"nocobase",
 			"t_qualirun_info_adicionais",
 			"quali-run.ts",
 		);
@@ -91,7 +91,8 @@ describe("split and registry paths", () => {
 	});
 
 	it("gera import do split agrupado por dataSourceKey no registry", async () => {
-		const outputDir = createTempDir("registry-import");
+		const baseOutputDir = createTempDir("registry-import");
+		const outputDir = join(baseOutputDir, "nested", "generated", "out");
 		const splitRequests = {
 			"cadastro-comercial": "cadastro-comercial",
 		};
@@ -108,6 +109,8 @@ describe("split and registry paths", () => {
 			join(outputDir, "generated-registry.ts"),
 			"utf-8",
 		);
-		expect(content).toContain('from "./split/main/t_logs/cadastro-comercial";');
+		expect(content).toContain(
+			'from "./split/nocobase/t_logs/cadastro-comercial";',
+		);
 	});
 });

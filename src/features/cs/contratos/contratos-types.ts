@@ -1,15 +1,15 @@
 // Tipos para Contratos IXC
 // ⚠️ Usando tipos gerados automaticamente como fonte de verdade
 
-import type { Cliente } from "#/generated/ixc/cliente";
-import type { ClienteContrato } from "#/generated/ixc/cliente-contrato";
-import type { FnAreceber } from "#/generated/ixc/fn-areceber";
-import type { LinhaMvno } from "#/generated/ixc/linha-mvno";
-import type { SuTicket } from "#/generated/ixc/su-ticket";
-import type { VdContratosProdutos } from "#/generated/ixc/vd-contratos-produtos";
-import type { CrmTrocaTitularidade } from "#/generated/nocobase/crm-troca-titularidade";
-import type { DadosAdicionaisClienteContrato } from "#/generated/nocobase/other/dados-adicionais-cliente-contrato";
-import type { RegistrosDeContato } from "#/generated/nocobase/registros-de-contato";
+import type { Cliente } from "#/generated/types/ixc/cliente";
+import type { ClienteContrato } from "#/generated/types/ixc/cliente-contrato";
+import type { FnAreceber } from "#/generated/types/ixc/fn-areceber";
+import type { LinhaMvno } from "#/generated/types/ixc/linha-mvno";
+import type { SuTicket } from "#/generated/types/ixc/su-ticket";
+import type { VdContratosProdutos } from "#/generated/types/ixc/vd-contratos-produtos";
+import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-titularidade";
+import type { DadosAdicionaisClienteContrato } from "#/generated/types/nocobase/other/dados-adicionais-cliente-contrato";
+import type { RegistrosDeContato } from "#/generated/types/nocobase/registros-de-contato";
 import type { ListParams } from "#/repositories/types";
 
 // ---------------------------------------------------------------------------
@@ -126,7 +126,7 @@ export type DadosAdicionaisContrato = Pick<
 export {
 	DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS,
 	DADOSADICIONAISCLIENTECONTRATO_PERFILDEUSO_LABELS,
-} from "#/generated/nocobase/other/dados-adicionais-cliente-contrato";
+} from "#/generated/types/nocobase/other/dados-adicionais-cliente-contrato";
 
 // ---------------------------------------------------------------------------
 // Filters

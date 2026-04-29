@@ -7,7 +7,9 @@ import {
 function getOutputDirs(): string[] {
 	return [
 		config.outputDir,
-		...(config.datasources ?? []).map((d) => d.outputDir),
+		...(config.datasources ?? [])
+			.map((d) => d.outputDir)
+			.filter((outputDir): outputDir is string => Boolean(outputDir?.trim())),
 	];
 }
 

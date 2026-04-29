@@ -4,11 +4,12 @@
  */
 import { z } from "zod";
 import { requestEntry as split_d_db_ixcsoft_cliente_contrato_negociacao_atualizadaRequestEntry } from "./split/d_db_ixcsoft/cliente_contrato/negociacao-atualizada";
-import { requestEntry as split_main_t_logs_cadastro_comercialRequestEntry } from "./split/main/t_logs/cadastro-comercial";
-import { requestEntry as split_main_t_qualirun_info_adicionais_quali_runRequestEntry } from "./split/main/t_qualirun_info_adicionais/quali-run";
+import { requestEntry as split_nocobase_t_logs_cadastro_comercialRequestEntry } from "./split/nocobase/t_logs/cadastro-comercial";
+import { requestEntry as split_nocobase_t_qualirun_info_adicionais_quali_runRequestEntry } from "./split/nocobase/t_qualirun_info_adicionais/quali-run";
 
 export const generatedCustomRequestsRegistry = {
-	"0j7f9fuzuo7": split_main_t_qualirun_info_adicionais_quali_runRequestEntry,
+	"0j7f9fuzuo7":
+		split_nocobase_t_qualirun_info_adicionais_quali_runRequestEntry,
 
 	"23btjo9ohrr":
 		split_d_db_ixcsoft_cliente_contrato_negociacao_atualizadaRequestEntry,
@@ -1118,7 +1119,7 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: null,
 	},
 
-	qbk10nf76um: split_main_t_logs_cadastro_comercialRequestEntry,
+	qbk10nf76um: split_nocobase_t_logs_cadastro_comercialRequestEntry,
 
 	qtd2du574v1: {
 		key: "qtd2du574v1",
