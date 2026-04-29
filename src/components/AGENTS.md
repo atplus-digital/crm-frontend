@@ -37,6 +37,8 @@ features.
 
 - `ui/AGENTS.md` — shadcn/ui component reference and customization guide
 - `table/AGENTS.md` — Shared TanStack table controller/context and table composition patterns
+- `filters/AGENTS.md` — Shared filter primitives (field controls, layout, and actions)
+- `page-layout/AGENTS.md` — Reusable page layout with header/tab composition primitives
 - `../layout/AGENTS.md` — App shell composition and sidebar patterns
 
 <!-- AGENTS-GENERATED:END filemap -->
@@ -71,7 +73,3 @@ features.
 | Shared inline error feedback        | `src/components/feedback/inline-error-alert.tsx` |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-23 -->
-
-| `page-layout.tsx` | Standard page layout with header, tabs, and content |
-| Standard page layout with tabs | `src/components/page-layout.tsx` |

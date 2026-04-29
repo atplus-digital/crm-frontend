@@ -1,6 +1,6 @@
 <!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-23 -->
 
-# AGENTS.md — page-layot
+# AGENTS.md — page-layout
 
 <!-- AGENTS-GENERATED:START overview -->
 
@@ -28,7 +28,7 @@ Layout de página reutilizável com cabeçalho, tabs sincronizadas em URL e comp
 
 ## Patterns
 
-- Importações externas devem usar somente `#/components/page-layot/page-layout` para manter API estável.
+- Importações externas devem usar somente `#/components/page-layout/page-layout` para manter API estável.
 - `PageLayout` concentra o provider de contexto; `PageTabContent` apenas consome o contexto e decide o wrapper (`TabsContent` ou `div`).
 - Tipos do módulo devem ficar em `page-layout.types.ts` para evitar redefinições distribuídas.
 

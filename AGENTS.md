@@ -193,7 +193,8 @@ export interface PessoaFisica {
 
 <!-- AGENTS-GENERATED:START codebase-state -->
 
-- Contains deprecated code (grep for @deprecated)
+- `src/features/cs/negociacoes/negociacoes-service.ts` uses `as never` type escapes for 4 collections not yet in generated types (`t_negociacoes_itens`, `t_anexos_negociacoes`, `t_negociacoes_comentarios`, `t_pacotes`)
+- `src/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks.ts` casts collection as `"users"` to satisfy type system (not yet in `CollectionName`)
 <!-- AGENTS-GENERATED:END codebase-state -->
 
 ## Scoped AGENTS.md (MUST read when working in these directories)
@@ -203,22 +204,32 @@ export interface PessoaFisica {
 - `./src/AGENTS.md` — Frontend application (TypeScript/React)
 - `./src/components/AGENTS.md` — Shared UI building blocks and app-level reusable components
 - `./src/components/filters/AGENTS.md` — Shared filter primitives (field controls, layout, and actions)
+- `./src/components/page-layout/AGENTS.md` — Reusable page layout with header/tab composition primitives
+- `./src/components/table/AGENTS.md` — Shared TanStack-based table primitives and controller context
+- `./src/components/ui/AGENTS.md` — shadcn/ui component reference and customization guide
 - `./src/layout/AGENTS.md` — Authenticated app shell layout and navigation composition
 - `./src/features/AGENTS.md` — Cross-feature conventions and folder structure for domain modules
 - `./src/features/auth/AGENTS.md` — Authentication module
-- `./src/features/cs/AGENTS.md` — Customer Success domain (contratos, negociações, pessoas)
-- `./src/features/cs/contratos/AGENTS.md` — Contratos subdomain (IXC contracts list/detail and contract UI)
-- `./src/features/cs/negociacoes/AGENTS.md` — Negociações subdomain (kanban/list, filters, export and detail tabs)
-- `./src/features/cs/pessoas/AGENTS.md` — Pessoas subdomain (PF/PJ list, types, service, columns)
-- `./src/features/cs/troca-de-endereco/AGENTS.md` — Troca de Endereço subdomain (list/detail, hooks, and filters)
-- `./src/features/custom-requests/AGENTS.md` — Custom request registry/services/hooks
-- `./src/features/cs/vendas/AGENTS.md` — Vendas subdomain (sellers lookup, list columns, and filters)
 - `./src/features/auth/permissions/AGENTS.md` — Permissions, actions/snippets and navigation guards
+- `./src/features/cs/AGENTS.md` — Customer Success domain (contratos, negociações, pessoas)
+- `./src/features/cs/components/detail-skeleton/AGENTS.md` — Shared skeletons for CS detail sections and cards
+- `./src/features/cs/contratos/AGENTS.md` — Contratos subdomain (IXC contracts list/detail and contract UI)
+- `./src/features/cs/kanban-dashboard/AGENTS.md` — Kanban Dashboard subdomain (unified TT/TE/SC/NEG board)
+- `./src/features/cs/negociacoes/AGENTS.md` — Negociações subdomain (kanban/list, filters, export and detail tabs)
+- `./src/features/cs/negociacoes/negociacoes-filters/AGENTS.md` — Negociações filter components and filter bar
+- `./src/features/cs/pessoas/AGENTS.md` — Pessoas subdomain (PF/PJ list, types, service, columns)
+- `./src/features/cs/suspensao-de-contrato/AGENTS.md` — Suspensão de Contrato subdomain (list/detail, filters, status lifecycle)
+- `./src/features/cs/troca-de-endereco/AGENTS.md` — Troca de Endereço subdomain (list/detail, hooks, and filters)
+- `./src/features/cs/troca-titularidade/AGENTS.md` — Troca de Titularidade subdomain (ZapSign, status workflow, audit trail)
+- `./src/features/cs/vendas/AGENTS.md` — Vendas subdomain (sellers lookup, list columns, and filters)
+- `./src/features/custom-requests/AGENTS.md` — Custom request registry/services/hooks
 - `./src/generated/AGENTS.md` — Auto-generated TypeScript types from NocoBase/IXC schemas
 - `./src/hooks/AGENTS.md` — Shared cross-feature hooks
 - `./src/lib/AGENTS.md` — Pure utilities and formatting/filter/logging helpers
 - `./src/repositories/AGENTS.md` — NocoBase/IXC data access layer
 - `./src/routes/AGENTS.md` — React Router v7 route definitions and guard patterns
+- `./scripts/AGENTS.md` — Automation scripts for development workflow
+- `./scripts/generate-types/AGENTS.md` — Type generation pipeline (NocoBase + IXC schemas)
 - `./.github/workflows/AGENTS.md` — GitHub Actions workflows and CI/CD automation
 <!-- AGENTS-GENERATED:END scope-index -->
 
