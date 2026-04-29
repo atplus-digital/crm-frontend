@@ -1,9 +1,8 @@
-import { queryOptions, useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import type { CustomRequestRegistryKey } from "#/generated/custom-requests/merged-registry";
-import { customRequestsRegistry } from "#/generated/custom-requests/merged-registry";
-import { getRequestsByCollection, sendRequest } from "../utils/service";
+import { sendRequest } from "../utils/service";
 
-export function useSendRequest() {
+export function useCustomRequest() {
 	return useMutation({
 		mutationFn: ({
 			key,
@@ -16,31 +15,3 @@ export function useSendRequest() {
 		}) => sendRequest(key, { payload, signal }),
 	});
 }
-
-export function useRequests() {
-	return useQuery({
-		queryKey: ["custom-requests", "all"],
-		queryFn: () => getRequestsByCollection("all"),
-		staleTime: 5 * 60 * 1000,
-	});
-}
-
-export function useRequestsByCollection(collection: string) {
-	return useQuery({
-		queryKey: ["custom-requests", "collection", collection],
-		queryFn: () => getRequestsByCollection(collection),
-		staleTime: 5 * 60 * 1000,
-		enabled: collection !== "all",
-	});
-}
-
-export function useRequest(key: CustomRequestRegistryKey) {
-	return useQuery(requestQueryOptions(key));
-}
-
-export const requestQueryOptions = (key: CustomRequestRegistryKey) =>
-	queryOptions({
-		queryKey: ["custom-requests", "single", key] as const,
-		queryFn: () => customRequestsRegistry[key] ?? null,
-		staleTime: 5 * 60 * 1000,
-	});
