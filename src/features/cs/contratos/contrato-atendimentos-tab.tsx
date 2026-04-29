@@ -1,5 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
+import { BasicTableCard } from "#/components/basic-table-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
 	detailActionCell,
@@ -97,26 +98,6 @@ interface ContratoAtendimentosTabProps {
 	contratoId: number;
 }
 
-function AtendimentoStatusCard({
-	label,
-	count,
-	variant,
-}: {
-	label: string;
-	count: number;
-	variant: BadgeVariant;
-}) {
-	return (
-		<div className="rounded-lg border bg-card p-3">
-			<p className="text-xs text-muted-foreground">{label}</p>
-			<div className="flex items-center gap-2">
-				<p className="text-lg font-semibold">{count}</p>
-				<Badge variant={variant} className="size-2 rounded-full p-0" />
-			</div>
-		</div>
-	);
-}
-
 export function ContratoAtendimentosTab({
 	contratoId,
 }: ContratoAtendimentosTabProps) {
@@ -150,16 +131,23 @@ export function ContratoAtendimentosTab({
 			{!isLoading && !error && atendimentos.length > 0 && (
 				<div className="flex flex-wrap gap-4">
 					{Object.entries(statusCounts).map(([status, info]) => (
-						<AtendimentoStatusCard
+						<BasicTableCard
 							key={status}
 							label={
 								SUTICKET_SUSTATUS_LABELS[
 									status as keyof typeof SUTICKET_SUSTATUS_LABELS
 								] ?? status
 							}
-							count={info.count}
-							variant={info.variant}
-						/>
+							value={info.count}
+						>
+							<div className="flex items-center gap-2">
+								<p className="text-lg font-semibold">{info.count}</p>
+								<Badge
+									variant={info.variant}
+									className="size-2 rounded-full p-0"
+								/>
+							</div>
+						</BasicTableCard>
 					))}
 				</div>
 			)}

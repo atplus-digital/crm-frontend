@@ -1,5 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { StatusBadge } from "#/components/badges/status-badge";
+import { BasicTableCard } from "#/components/basic-table-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
 	detailDateCell,
@@ -112,10 +113,7 @@ export function ContratoRegistrosTab({
 			{!isLoading && !error && registros.length > 0 && (
 				<div className="flex flex-wrap gap-4">
 					{Object.entries(categoryCounts).map(([cat, count]) => (
-						<div key={cat} className="rounded-lg border bg-card p-3">
-							<p className="text-xs text-muted-foreground">{cat}</p>
-							<p className="text-lg font-semibold">{count}</p>
-						</div>
+						<BasicTableCard key={cat} label={cat} value={count} />
 					))}
 				</div>
 			)}

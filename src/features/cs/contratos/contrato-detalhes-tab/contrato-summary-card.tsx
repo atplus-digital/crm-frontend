@@ -1,12 +1,18 @@
-import { Calendar, DollarSign, Hash, MoreHorizontal, User } from "lucide-react";
-import { Button } from "#/components/ui/button";
-import { Card, CardContent, CardHeader } from "#/components/ui/card";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "#/components/ui/dropdown-menu";
+	ArrowRightLeft,
+	Calendar,
+	DollarSign,
+	FileWarning,
+	Hash,
+	MapPin,
+	Pause,
+	Plus,
+	RefreshCw,
+	User,
+} from "lucide-react";
+import type { ActionItem } from "#/components/actions-menu";
+import { ActionsMenu } from "#/components/actions-menu";
+import { Card, CardContent, CardHeader } from "#/components/ui/card";
 import {
 	ContratoStatusBadge,
 	InternetStatusBadge,
@@ -14,14 +20,14 @@ import {
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 
-const QUICK_ACTIONS = [
-	{ label: "Nova Contratação" },
-	{ label: "Transferir" },
-	{ label: "Renegociar" },
-	{ label: "Trocar Endereço" },
-	{ label: "Suspender" },
-	{ label: "Reter" },
-] as const;
+const CONTRATO_ACTIONS: readonly ActionItem[] = [
+	{ icon: Plus, label: "Nova Contratação" },
+	{ icon: ArrowRightLeft, label: "Transferir" },
+	{ icon: RefreshCw, label: "Renegociar" },
+	{ icon: MapPin, label: "Trocar Endereço" },
+	{ icon: Pause, label: "Suspender" },
+	{ icon: FileWarning, label: "Reter" },
+];
 
 interface ContratoSummaryCardProps {
 	contrato: ContratoWithCliente;
@@ -66,21 +72,7 @@ export function ContratoSummaryCard({ contrato }: ContratoSummaryCardProps) {
 							</span>
 							<InternetStatusBadge status={contrato.status_internet} />
 						</div>
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button variant="default" size="sm" className="gap-1.5">
-									<MoreHorizontal className="size-4" />
-									<span className="hidden sm:inline">Ações</span>
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent align="end" className="w-48">
-								{QUICK_ACTIONS.map((action) => (
-									<DropdownMenuItem key={action.label}>
-										{action.label}
-									</DropdownMenuItem>
-								))}
-							</DropdownMenuContent>
-						</DropdownMenu>
+						<ActionsMenu actions={CONTRATO_ACTIONS} />
 					</div>
 				</div>
 			</CardHeader>

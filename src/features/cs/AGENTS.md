@@ -14,28 +14,28 @@ Customer Success domain module — contracts, negotiations, and people flows (ty
 
 ## Key Files
 
-| File                                   | Purpose                                                                  |
-| -------------------------------------- | ------------------------------------------------------------------------ |
-| `contratos/`                           | Contract subdomain (types, service, hooks, table, filters)               |
-| `negociacoes/`                         | Negotiation subdomain (types, service, hooks, kanban, list)              |
-| `pessoas/`                             | Person subdomain (PF/PJ types, service, hooks, columns)                  |
-| `troca-titularidade/`                  | Ownership transfer subdomain (has own `AGENTS.md`)                       |
+| File                                   | Purpose                                                                      |
+| -------------------------------------- | ---------------------------------------------------------------------------- |
+| `contratos/`                           | Contract subdomain (types, service, hooks, table, filters)                   |
+| `negociacoes/`                         | Negotiation subdomain (types, service, hooks, kanban, list)                  |
+| `pessoas/`                             | Person subdomain (PF/PJ types, service, hooks, columns)                      |
+| `troca-titularidade/`                  | Ownership transfer subdomain (has own `AGENTS.md`)                           |
 | `kanban-dashboard/`                    | Kanban Dashboard subdomain (unified TT/TE/SC/NEG board, has own `AGENTS.md`) |
-| `contratos/contratos-types.ts`         | Contract statuses and list/filter params                                 |
-| `contratos/contratos-service.ts`       | Contract fetch/detail using `ixcRepository`                              |
-| `contratos/contratos-hooks.ts`         | React Query query options/hooks for contracts                            |
-| `negociacoes/negociacoes-types.ts`     | Negotiation entities, statuses/substatuses, and list params              |
-| `negociacoes/negociacoes-service.ts`   | CRUD + list/detail services for negotiations                             |
-| `negociacoes/negociacoes-hooks.ts`     | React Query hooks for negotiations                                       |
-| `pessoas/pessoas-types.ts`             | Person (PF/PJ) entities and filtering/pagination types                   |
-| `pessoas/pessoas-service.ts`           | CRUD/list services for PF/PJ using NocoBase repositories                 |
-| `pessoas/pessoas-hooks.ts`             | React Query hooks for PF/PJ lists and details                            |
-| `components/back-button.tsx`           | Cross-CS back navigation helper for detail pages                         |
-| `components/detail-field.tsx`          | Read-only label/value primitive for CS detail screens                    |
-| `components/detail-skeleton/`          | Shared skeletons for CS detail sections and cards (folder)               |
-| `components/contract-tab-wrapper.tsx`  | Shared card wrapper for contract/negotiation tab bodies                  |
-| `components/contract-tab-skeleton.tsx` | Skeleton body used by the shared contract tab wrapper                    |
-| `components/comments-list.tsx`         | Generic shared comments list for detail pages                            |
+| `contratos/contratos-types.ts`         | Contract statuses and list/filter params                                     |
+| `contratos/contratos-service.ts`       | Contract fetch/detail using `ixcRepository`                                  |
+| `contratos/contratos-hooks.ts`         | React Query query options/hooks for contracts                                |
+| `negociacoes/negociacoes-types.ts`     | Negotiation entities, statuses/substatuses, and list params                  |
+| `negociacoes/negociacoes-service.ts`   | CRUD + list/detail services for negotiations                                 |
+| `negociacoes/negociacoes-hooks.ts`     | React Query hooks for negotiations                                           |
+| `pessoas/pessoas-types.ts`             | Person (PF/PJ) entities and filtering/pagination types                       |
+| `pessoas/pessoas-service.ts`           | CRUD/list services for PF/PJ using NocoBase repositories                     |
+| `pessoas/pessoas-hooks.ts`             | React Query hooks for PF/PJ lists and details                                |
+| `components/back-button.tsx`           | Cross-CS back navigation helper for detail pages                             |
+| `components/detail-field.tsx`          | Read-only label/value primitive for CS detail screens                        |
+| `components/detail-skeleton/`          | Shared skeletons for CS detail sections and cards (folder)                   |
+| `components/contract-tab-wrapper.tsx`  | Shared card wrapper for contract/negotiation tab bodies                      |
+| `components/contract-tab-skeleton.tsx` | Skeleton body used by the shared contract tab wrapper                        |
+| `components/comments-list.tsx`         | Generic shared comments list for detail pages                                |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

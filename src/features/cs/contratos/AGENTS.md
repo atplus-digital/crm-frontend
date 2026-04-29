@@ -27,7 +27,7 @@ contract-specific table, tabs, filters, and status badges.
 | `contrato-negociacoes-tab.tsx`    | Contract negotiations tab section                           |
 | `contrato-registros-tab.tsx`      | Contract contact/history records tab section                |
 | `contrato-movel-tab.tsx`          | Mobile/line-related contract tab section                    |
-| `contrato-actions-card.tsx`       | Action buttons card (7 visual placeholders)                 |
+| `contrato-detalhes-tab/`          | Detail tab subfolder (summary, info, cliente, endereco)     |
 | `informacoes-adicionais-card.tsx` | Informações Adicionais section (4 fields from NocoBase)     |
 
 <!-- AGENTS-GENERATED:END filemap -->

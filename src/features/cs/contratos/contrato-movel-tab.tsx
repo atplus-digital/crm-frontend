@@ -1,4 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
+import { BasicTableCard } from "#/components/basic-table-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
 	detailIdCell,
@@ -8,7 +9,6 @@ import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrappe
 import { useContratoMovel } from "#/features/cs/contratos/contratos-hooks";
 import type { LinhaMovel } from "#/features/cs/contratos/contratos-types";
 import { LINHAMVNO_PORTABILIDADE_LABELS } from "#/generated/ixc/linha-mvno";
-import { cn } from "#/lib/utils";
 
 function formatPortabilidade(value: LinhaMovel["portabilidade"]): string {
 	return LINHAMVNO_PORTABILIDADE_LABELS[value] ?? String(value);
@@ -61,23 +61,6 @@ interface ContratoMovelTabProps {
 	contratoId: number;
 }
 
-function StatCard({
-	label,
-	value,
-	className,
-}: {
-	label: string;
-	value: string | number;
-	className?: string;
-}) {
-	return (
-		<div className={cn("rounded-lg border bg-card p-3", className)}>
-			<p className="text-xs text-muted-foreground">{label}</p>
-			<p className="text-lg font-semibold">{value}</p>
-		</div>
-	);
-}
-
 export function ContratoMovelTab({ contratoId }: ContratoMovelTabProps) {
 	const { data, isLoading, error } = useContratoMovel(contratoId);
 	const linhas = data?.data ?? [];
@@ -93,9 +76,12 @@ export function ContratoMovelTab({ contratoId }: ContratoMovelTabProps) {
 		<div className="flex flex-col gap-4">
 			{!isLoading && !error && linhas.length > 0 && (
 				<div className="flex flex-wrap gap-4">
-					<StatCard label="Total de Linhas" value={linhas.length} />
-					<StatCard label="Com Portabilidade" value={linhasComPortabilidade} />
-					<StatCard
+					<BasicTableCard label="Total de Linhas" value={linhas.length} />
+					<BasicTableCard
+						label="Com Portabilidade"
+						value={linhasComPortabilidade}
+					/>
+					<BasicTableCard
 						label="Sem Portabilidade"
 						value={linhas.length - linhasComPortabilidade}
 					/>
