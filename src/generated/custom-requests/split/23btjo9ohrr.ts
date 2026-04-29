@@ -10,8 +10,12 @@ import { z } from "zod";
  * Do not edit manually — this file is preserved on regeneration.
  */
 export const payloadSchema = z.object({
-	id_contrato: z.string(),
-	id_cliente: z.string(),
+	currentRecord: z.object({
+		f_nc_cliente: z.object({
+			id: z.unknown(),
+		}),
+		id: z.unknown(),
+	}),
 });
 
 export const payloadData = {

@@ -10,8 +10,8 @@ import { z } from "zod";
  * Do not edit manually — this file is preserved on regeneration.
  */
 export const payloadSchema = z.object({
-	a: z.number(),
-	b: z.string(),
+	a: z.literal(1),
+	b: z.literal("ASD"),
 });
 
 export const payloadData = {

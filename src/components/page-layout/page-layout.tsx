@@ -87,7 +87,7 @@ export function PageLayout({
 							>
 								<div className="flex items-center gap-4 overflow-x-auto pb-4">
 									{tabsPrefixElement && (
-										<div className="flex-shrink-0">{tabsPrefixElement}</div>
+										<div className="shrink-0">{tabsPrefixElement}</div>
 									)}
 									<TabsList variant="line" className="flex whitespace-nowrap">
 										{(tabs ?? []).map((tab) => (

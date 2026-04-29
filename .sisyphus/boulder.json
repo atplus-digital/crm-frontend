@@ -1,0 +1,115 @@
+{
+  "active_plan": "/home/gustavo_carbonera/Desktop/crm-atplus/.sisyphus/plans/extract-shared-script-utilities.md",
+  "started_at": "2026-04-29T17:59:40.549Z",
+  "session_ids": [
+    "ses_225adcaa0ffevn94AOASiblPlm",
+    "ses_22566415fffebn6B8f8w3kmrZ6",
+    "ses_22564ec5cffeFDJN5WIL2csdrN",
+    "ses_22563ea88ffetvtbKKV4SakDoM",
+    "ses_225626d86ffesFyb2XEQWSPqtw",
+    "ses_22557f55fffeOxBvy5jF7X1e4J",
+    "ses_2255709a2ffeKv2843oZGk2RKE"
+  ],
+  "session_origins": {
+    "ses_225adcaa0ffevn94AOASiblPlm": "direct",
+    "ses_22566415fffebn6B8f8w3kmrZ6": "appended",
+    "ses_22564ec5cffeFDJN5WIL2csdrN": "appended",
+    "ses_22563ea88ffetvtbKKV4SakDoM": "appended",
+    "ses_225626d86ffesFyb2XEQWSPqtw": "appended",
+    "ses_22557f55fffeOxBvy5jF7X1e4J": "appended",
+    "ses_2255709a2ffeKv2843oZGk2RKE": "appended"
+  },
+  "plan_name": "extract-shared-script-utilities",
+  "agent": "atlas",
+  "task_sessions": {
+    "todo:2": {
+      "task_key": "todo:2",
+      "task_label": "2",
+      "task_title": "Extract logger to shared",
+      "session_id": "ses_225937bc8ffeoG6HgukOu4Hda9",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-low",
+      "updated_at": "2026-04-29T18:08:23.624Z"
+    },
+    "todo:3": {
+      "task_key": "todo:3",
+      "task_label": "3",
+      "task_title": "Extract string utilities to shared",
+      "session_id": "ses_225916764ffezX6HJlXhHpbKb3",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-low",
+      "updated_at": "2026-04-29T18:12:39.066Z"
+    },
+    "todo:4": {
+      "task_key": "todo:4",
+      "task_label": "4",
+      "task_title": "Extract env config parser to shared",
+      "session_id": "ses_2258cdfc6ffeIIHI9wEukBwYlM",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-low",
+      "updated_at": "2026-04-29T18:16:38.800Z"
+    },
+    "todo:5": {
+      "task_key": "todo:5",
+      "task_label": "5",
+      "task_title": "Update generate-types to import logger from shared",
+      "session_id": "ses_2258812efffe2BgcVm7az97vkK",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-low",
+      "updated_at": "2026-04-29T18:22:48.606Z"
+    },
+    "todo:6": {
+      "task_key": "todo:6",
+      "task_label": "6",
+      "task_title": "Update generate-custom-requests to import from shared (logger + strings)",
+      "session_id": "ses_225827008ffeF0GoAxaVMMnC8w",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-low",
+      "updated_at": "2026-04-29T18:30:07.103Z"
+    },
+    "todo:7": {
+      "task_key": "todo:7",
+      "task_label": "7",
+      "task_title": "Extract unified workspace locker core to shared",
+      "session_id": "ses_2257a8da3ffe9p6vj6OAQ6Qh2Z",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-low",
+      "updated_at": "2026-04-29T18:37:47.696Z"
+    },
+    "todo:8": {
+      "task_key": "todo:8",
+      "task_label": "8",
+      "task_title": "Create generate-types workspace locker adapter",
+      "session_id": "ses_22575d9a2ffedyMr8H2kkPFK8Z",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-low",
+      "updated_at": "2026-04-29T18:43:38.869Z"
+    },
+    "todo:9": {
+      "task_key": "todo:9",
+      "task_label": "9",
+      "task_title": "Create generate-custom-requests workspace locker adapter",
+      "session_id": "ses_22571403fffeN0KNUqeUfb5D21",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-low",
+      "updated_at": "2026-04-29T18:46:12.111Z"
+    },
+    "todo:10": {
+      "task_key": "todo:10",
+      "task_label": "10",
+      "task_title": "Update generate-types config to use shared env loading",
+      "session_id": "ses_2256ac968ffelRdsqx4C7w8KTr",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-low",
+      "updated_at": "2026-04-29T18:52:42.637Z"
+    },
+    "final-wave:f1": {
+      "task_key": "final-wave:f1",
+      "task_label": "F1",
+      "task_title": "Plan Compliance Audit — oracle",
+      "session_id": "ses_2255709a2ffeKv2843oZGk2RKE",
+      "agent": "explore",
+      "updated_at": "2026-04-29T19:13:27.744Z"
+    }
+  }
+}
