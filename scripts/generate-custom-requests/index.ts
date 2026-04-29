@@ -2,10 +2,14 @@ import "./config";
 import { logger } from "@scripts/shared/utils/logger";
 import { config } from "./config";
 import { CustomRequestsApiClient } from "./src/api/client";
-import { transformAllEntries } from "./src/transformer/entry-transformer";
+import {
+	collectAnalysisReport,
+	transformAllEntries,
+} from "./src/transformer/entry-transformer";
 import { parseConfig } from "./src/utils/config";
 import { mergeRegistries } from "./src/utils/merge-registries";
 import { applyWorkspaceLockIfNeeded } from "./src/utils/workspace-locker";
+import { writeAnalysisReport } from "./src/writer/analysis-writer";
 import { writeGeneratedRegistry } from "./src/writer/registry-writer";
 import { writeAllSplitFiles } from "./src/writer/split-writer";
 
@@ -27,6 +31,10 @@ async function main(): Promise<void> {
 	const client = new CustomRequestsApiClient(config);
 	const entries = await client.fetchAllCustomRequests();
 	logger.info(`${entries.length} entradas encontradas na API`);
+	if (config.generateAnalysisReport) {
+		const analysisReport = collectAnalysisReport(entries);
+		writeAnalysisReport(analysisReport);
+	}
 
 	const transformed = transformAllEntries(entries);
 	logger.info(`${transformed.length} entradas válidas após transformação`);

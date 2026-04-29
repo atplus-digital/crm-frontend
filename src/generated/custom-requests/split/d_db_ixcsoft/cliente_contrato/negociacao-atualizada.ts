@@ -27,6 +27,7 @@ export const requestEntry = {
 	key: "23btjo9ohrr",
 	name: "negociacao-atualizada",
 	collection: "cliente_contrato",
+	dataSourceKey: "d_db_ixcsoft",
 	method: "POST",
 	url: "https://n8n.atplus.cloud/webhook/5d9eccc3-7091-47f9-bcae-75ea5292b7fd",
 	payloadSchema,

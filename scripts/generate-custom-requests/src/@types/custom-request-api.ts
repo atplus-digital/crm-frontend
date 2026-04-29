@@ -8,6 +8,7 @@ export interface CustomRequestApiEntry {
 		method?: string;
 		url?: string;
 		collectionName?: string;
+		dataSourceKey?: string;
 		data?: Record<string, unknown>;
 	};
 }

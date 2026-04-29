@@ -1,4 +1,5 @@
 import {
+	collectAnalysisReport,
 	transformAllEntries,
 	transformApiEntryToRegistry,
 } from "@scripts/generate-custom-requests/src/transformer/entry-transformer";
@@ -33,11 +34,29 @@ describe("transformApiEntryToRegistry", () => {
 			key: "test-entry",
 			name: "Test Entry",
 			collection: "t_test",
+			dataSourceKey: "main",
 			method: "POST",
 			url: "/api/test",
 			payloadSchema: "z.any()",
 			payloadData: null,
 		});
+	});
+
+	it("deve mapear dataSourceKey quando informado pela API", () => {
+		const entry = {
+			key: "test-ds",
+			name: "Test DS",
+			options: {
+				collectionName: "t_test",
+				dataSourceKey: "d_db_ixcsoft",
+				url: "/api/test",
+			},
+		};
+
+		const result = transformApiEntryToRegistry(entry);
+
+		expect(result).not.toBeNull();
+		expect(result?.dataSourceKey).toBe("d_db_ixcsoft");
 	});
 
 	it("deve retornar null e log warning quando sem options", () => {
@@ -129,5 +148,51 @@ describe("transformAllEntries", () => {
 
 		expect(result).toHaveLength(1);
 		expect(result[0].key).toBe("valid");
+	});
+});
+
+describe("collectAnalysisReport", () => {
+	it("deve separar entradas sem options e sem dataSourceKey", () => {
+		const entries = [
+			{ key: "no-options", name: "No Options" },
+			{
+				key: "no-datasource",
+				name: "No DS",
+				options: {
+					collectionName: "t_test",
+					method: "POST",
+					url: "https://example.com",
+				},
+			},
+			{
+				key: "with-datasource",
+				name: "With DS",
+				options: {
+					collectionName: "t_test",
+					method: "POST",
+					url: "https://example.com",
+					dataSourceKey: "main",
+				},
+			},
+		];
+
+		const result = collectAnalysisReport(entries);
+
+		expect(result.totalAnalyzed).toBe(3);
+		expect(result.withoutOptions).toEqual([
+			{
+				key: "no-options",
+				name: "No Options",
+			},
+		]);
+		expect(result.withoutDataSourceKey).toEqual([
+			{
+				key: "no-datasource",
+				name: "No DS",
+				collectionName: "t_test",
+				method: "POST",
+				url: "https://example.com",
+			},
+		]);
 	});
 });

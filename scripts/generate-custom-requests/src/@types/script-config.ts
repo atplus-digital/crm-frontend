@@ -62,6 +62,7 @@ export interface ManualRegistryEntry {
 	key: string;
 	name: string;
 	collection: string;
+	dataSourceKey?: string;
 	method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 	url: string;
 	payloadSchema: string;
@@ -82,5 +83,6 @@ export interface ScriptConfig {
 	outputDir: string;
 	splitRequests: SplitRequestsMap;
 	manualRequests: ManualRegistryEntry[];
+	generateAnalysisReport: boolean;
 	lockWorkspaceFolder?: boolean;
 }

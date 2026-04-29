@@ -17,6 +17,7 @@ function toSafeObjectKey(key: string): string {
 
 type PlaceholderRoot =
 	| "$nForm"
+	| "$nPopupRecord"
 	| "$nSelectedRecord"
 	| "currentRecord"
 	| "currentUser";
@@ -106,10 +107,12 @@ function inferObjectZod(obj: Record<string, unknown>): string {
 
 	const lines: string[] = [];
 	const nFormTree: PlaceholderSchemaTree = {};
+	const nPopupRecordTree: PlaceholderSchemaTree = {};
 	const nSelectedRecordTree: PlaceholderSchemaTree = {};
 	const currentRecordTree: PlaceholderSchemaTree = {};
 	const currentUserTree: PlaceholderSchemaTree = {};
 	let hasNFormRootReference = false;
+	let hasNPopupRecordRootReference = false;
 	let hasNSelectedRecordRootReference = false;
 	let hasCurrentRecordRootReference = false;
 	let hasCurrentUserRootReference = false;
@@ -121,6 +124,19 @@ function inferObjectZod(obj: Record<string, unknown>): string {
 				hasNFormRootReference = true;
 			} else {
 				addPathToTree(nFormTree, nFormPath);
+			}
+			continue;
+		}
+
+		const nPopupRecordPath = extractPlaceholderPathSegments(
+			value,
+			"$nPopupRecord",
+		);
+		if (nPopupRecordPath) {
+			if (nPopupRecordPath.length === 0) {
+				hasNPopupRecordRootReference = true;
+			} else {
+				addPathToTree(nPopupRecordTree, nPopupRecordPath);
 			}
 			continue;
 		}
@@ -174,17 +190,28 @@ function inferObjectZod(obj: Record<string, unknown>): string {
 		lines.push("    $nForm: z.unknown(),");
 	}
 
+	if (Object.keys(nPopupRecordTree).length > 0) {
+		const nPopupRecordShape = renderTree(
+			nPopupRecordTree,
+			"      ",
+			"z.unknown()",
+		);
+		lines.push(`    $nPopupRecord: z.object({\n${nPopupRecordShape}\n    }),`);
+	} else if (hasNPopupRecordRootReference) {
+		lines.push("    $nPopupRecord: z.unknown(),");
+	}
+
 	if (Object.keys(nSelectedRecordTree).length > 0) {
 		const nSelectedRecordShape = renderTree(
 			nSelectedRecordTree,
 			"      ",
-			"z.unknown()",
+			"z.array(z.unknown())",
 		);
 		lines.push(
 			`    $nSelectedRecord: z.object({\n${nSelectedRecordShape}\n    }),`,
 		);
 	} else if (hasNSelectedRecordRootReference) {
-		lines.push("    $nSelectedRecord: z.unknown(),");
+		lines.push("    $nSelectedRecord: z.array(z.unknown()),");
 	}
 
 	if (Object.keys(currentRecordTree).length > 0) {

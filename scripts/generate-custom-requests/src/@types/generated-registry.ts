@@ -6,6 +6,7 @@ export interface GeneratedRegistryEntry {
 	key: string;
 	name: string;
 	collection: string;
+	dataSourceKey: string;
 	method: string;
 	url: string;
 	/** Zod schema string inferred from payloadData shape */

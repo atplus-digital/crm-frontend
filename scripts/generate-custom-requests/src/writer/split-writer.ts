@@ -15,6 +15,7 @@ function buildSplitFileContent(
 	const escapedKey = escapeString(entry.key);
 	const escapedName = escapeString(displayName);
 	const escapedCollection = escapeString(entry.collection);
+	const escapedDataSourceKey = escapeString(entry.dataSourceKey);
 	const escapedMethod = escapeString(entry.method);
 	const escapedUrl = escapeString(entry.url);
 	const payloadDataStr = serializePayloadData(entry.payloadData);
@@ -38,6 +39,7 @@ export const requestEntry = {
 	key: "${escapedKey}",
 	name: "${escapedName}",
 	collection: "${escapedCollection}",
+	dataSourceKey: "${escapedDataSourceKey}",
 	method: "${escapedMethod}",
 	url: "${escapedUrl}",
 	payloadSchema,
@@ -56,8 +58,9 @@ export function writeSplitFile(
 	outputDir: string,
 ): void {
 	const splitDir = resolve(outputDir, "split");
+	const dataSourceDir = toSafePathSegment(entry.dataSourceKey);
 	const collectionDir = toSafePathSegment(entry.collection);
-	const splitCollectionDir = join(splitDir, collectionDir);
+	const splitCollectionDir = join(splitDir, dataSourceDir, collectionDir);
 	const filePath = join(splitCollectionDir, `${splitFileName}.ts`);
 
 	mkdirSync(splitCollectionDir, { recursive: true });
@@ -80,6 +83,18 @@ export function writeSplitFile(
 	if (existsSync(legacyNamedFilePath) && legacyNamedFilePath !== filePath) {
 		unlinkSync(legacyNamedFilePath);
 		logger.debug(`Split file legado removido: ${splitFileName}.ts`);
+	}
+
+	const legacyCollectionPath = join(
+		splitDir,
+		collectionDir,
+		`${splitFileName}.ts`,
+	);
+	if (existsSync(legacyCollectionPath) && legacyCollectionPath !== filePath) {
+		unlinkSync(legacyCollectionPath);
+		logger.debug(
+			`Split file legado removido (sem dataSourceKey): ${collectionDir}/${splitFileName}.ts`,
+		);
 	}
 }
 

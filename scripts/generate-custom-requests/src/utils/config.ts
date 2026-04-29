@@ -26,6 +26,7 @@ export function parseConfig(
 		outputDir: "src/generated/custom-requests",
 		splitRequests: {},
 		manualRequests: [],
+		generateAnalysisReport: true,
 		lockWorkspaceFolder: true,
 		...overrideConfig,
 	};

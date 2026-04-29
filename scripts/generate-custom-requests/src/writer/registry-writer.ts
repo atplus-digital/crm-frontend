@@ -57,9 +57,10 @@ function buildRegistryContent(
 		.filter((entry) => splitRequestsSet.has(entry.key))
 		.map((entry) => {
 			const splitFileName = splitRequests[entry.key];
+			const dataSourceDir = toSafePathSegment(entry.dataSourceKey);
 			const collectionDir = toSafePathSegment(entry.collection);
-			const alias = `split_${toSafeIdentifier(splitFileName)}`;
-			return `import { requestEntry as ${alias}RequestEntry } from "./split/${collectionDir}/${splitFileName}";`;
+			const alias = `split_${toSafeIdentifier(`${dataSourceDir}_${collectionDir}_${splitFileName}`)}`;
+			return `import { requestEntry as ${alias}RequestEntry } from "./split/${dataSourceDir}/${collectionDir}/${splitFileName}";`;
 		})
 		.join("\n");
 
@@ -68,7 +69,9 @@ function buildRegistryContent(
 			const hasEnhanced = splitRequestsSet.has(entry.key);
 			if (hasEnhanced) {
 				const splitFileName = splitRequests[entry.key];
-				const alias = `split_${toSafeIdentifier(splitFileName)}`;
+				const dataSourceDir = toSafePathSegment(entry.dataSourceKey);
+				const collectionDir = toSafePathSegment(entry.collection);
+				const alias = `split_${toSafeIdentifier(`${dataSourceDir}_${collectionDir}_${splitFileName}`)}`;
 				return `  "${entry.key}": ${alias}RequestEntry,`;
 			}
 			const escapedName = escapeString(entry.name);
@@ -78,6 +81,7 @@ function buildRegistryContent(
     key: "${entry.key}",
     name: "${escapedName}",
     collection: "${entry.collection}",
+    dataSourceKey: "${entry.dataSourceKey}",
     method: "${entry.method}",
     url: "${entry.url}",
     payloadSchema: ${entry.payloadSchema},

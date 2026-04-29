@@ -10,6 +10,7 @@ function makeEntry(
 		key,
 		name: `Entry ${key}`,
 		collection: "t_test",
+		dataSourceKey: "main",
 		method: "POST",
 		url: "/test",
 		payloadSchema: "z.any()",

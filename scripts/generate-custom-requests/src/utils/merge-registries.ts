@@ -15,6 +15,7 @@ export function mergeRegistries(
 ): GeneratedRegistryEntry[] {
 	const normalizedManual: GeneratedRegistryEntry[] = manual.map((entry) => ({
 		...entry,
+		dataSourceKey: entry.dataSourceKey ?? "main",
 		payloadData: entry.payloadData ?? null,
 	}));
 

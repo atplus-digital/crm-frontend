@@ -9,6 +9,7 @@ import { parseConfig } from "./src/utils/config";
 const splitRequests = defineSplitRequests({
 	"23btjo9ohrr": "negociacao-atualizada",
 	qbk10nf76um: "cadastro-comercial",
+	"0j7f9fuzuo7": "quali-run",
 });
 
 const manualRequests = defineManualRequests([
@@ -31,6 +32,7 @@ const scriptConfig: Partial<ScriptConfig> = {
 	outputDir: "src/generated/custom-requests",
 	splitRequests,
 	manualRequests,
+	generateAnalysisReport: true,
 	lockWorkspaceFolder: true,
 };
 

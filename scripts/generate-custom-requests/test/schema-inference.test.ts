@@ -129,8 +129,26 @@ describe("inferPayloadSchema", () => {
 		expect(normalizeMultiline(result)).toBe(
 			normalizeMultiline(`z.object({
     $nSelectedRecord: z.object({
-      f_fk_funcionarios: z.unknown(),
-      f_nome_patrimonio: z.unknown(),
+      f_fk_funcionarios: z.array(z.unknown()),
+      f_nome_patrimonio: z.array(z.unknown()),
+    }),
+  })`),
+		);
+	});
+
+	it("deve agrupar placeholders de $nPopupRecord em objeto sem literais", () => {
+		const result = inferPayloadSchema({
+			id_pessoa: "{{$nPopupRecord.f_pessoa.id}}",
+			nome: "{{$nPopupRecord.nome}}",
+		});
+
+		expect(normalizeMultiline(result)).toBe(
+			normalizeMultiline(`z.object({
+    $nPopupRecord: z.object({
+      f_pessoa: z.object({
+        id: z.unknown(),
+      }),
+      nome: z.unknown(),
     }),
   })`),
 		);
@@ -143,7 +161,19 @@ describe("inferPayloadSchema", () => {
 
 		expect(normalizeMultiline(result)).toBe(
 			normalizeMultiline(`z.object({
-    $nSelectedRecord: z.unknown(),
+    $nSelectedRecord: z.array(z.unknown()),
+  })`),
+		);
+	});
+
+	it("deve inferir placeholder raiz de $nPopupRecord como unknown", () => {
+		const result = inferPayloadSchema({
+			registro: "{{$nPopupRecord}}",
+		});
+
+		expect(normalizeMultiline(result)).toBe(
+			normalizeMultiline(`z.object({
+    $nPopupRecord: z.unknown(),
   })`),
 		);
 	});
