@@ -1,7 +1,10 @@
 import "./config";
 import {
-	createGenerator,
+	createOrchestrationTasks,
+	type GeneratorCliTask,
 	type GeneratorExecutionHooks,
+	type GeneratorOrchestrationStep,
+	type RunGeneratorCliOptions,
 	runGeneratorCli,
 } from "@scripts/generators/run-generator";
 import type { ScriptConfig } from "./@types/script-config";
@@ -25,73 +28,83 @@ interface GenerateCustomRequestsGeneratorContext {
 	>;
 }
 
+type GenerateCustomRequestsExecutionContext = ReturnType<
+	typeof createGenerateCustomRequestsExecutionContext
+>;
+
+const ORCHESTRATION_STEPS: GeneratorOrchestrationStep<GenerateCustomRequestsExecutionContext>[] =
+	[
+		{
+			name: "load-config",
+			run: runLoadConfigOrchestrationStage,
+		},
+		{
+			name: "fetch-entries",
+			run: runFetchEntriesOrchestrationStage,
+		},
+		{
+			name: "write-analysis-report",
+			run: runWriteAnalysisReportOrchestrationStage,
+		},
+		{
+			name: "transform-and-merge",
+			run: runTransformAndMergeOrchestrationStage,
+		},
+		{
+			name: "write-output",
+			run: runWriteOutputOrchestrationStage,
+		},
+	];
+
+function getExecutionContext(
+	context: GenerateCustomRequestsGeneratorContext,
+): GenerateCustomRequestsExecutionContext {
+	if (!context.executionContext) {
+		throw new Error("Contexto de execução não inicializado");
+	}
+
+	return context.executionContext;
+}
+
+function createGeneratorTasks(): GeneratorCliTask<GenerateCustomRequestsGeneratorContext>[] {
+	return [
+		{
+			name: "prepare-context",
+			run: (context) => {
+				context.executionContext = createGenerateCustomRequestsExecutionContext(
+					context.overrideConfig,
+					context.logger,
+				);
+			},
+		},
+		{
+			name: "lock-workspace",
+			run: () => {
+				lockGenerateCustomRequestsWorkspace();
+			},
+		},
+		...createOrchestrationTasks({
+			stages: ORCHESTRATION_STEPS,
+			getExecutionContext,
+		}),
+		{
+			name: "assert-result",
+			run: (context) => {
+				assertGenerateCustomRequestsResult(getExecutionContext(context));
+			},
+		},
+	];
+}
+
 export function createGenerateCustomRequestsGenerator(
 	hooks?: GeneratorExecutionHooks,
-) {
-	return createGenerator<GenerateCustomRequestsGeneratorContext>(
-		"generate-custom-requests",
-		{},
-		undefined,
+): RunGeneratorCliOptions<GenerateCustomRequestsGeneratorContext> {
+	return {
+		name: "generate-custom-requests",
+		context: {},
+		tasks: createGeneratorTasks(),
 		hooks,
-	)
-		.addStep("prepare-context", (context) => {
-			context.executionContext = createGenerateCustomRequestsExecutionContext(
-				context.overrideConfig,
-				context.logger,
-			);
-		})
-		.addStep("lock-workspace", () => {
-			lockGenerateCustomRequestsWorkspace();
-		})
-		.addPipeline("orchestration", (pipeline) => {
-			pipeline
-				.addStep("load-config", async (context) => {
-					if (!context.executionContext) {
-						throw new Error("Contexto de execução não inicializado");
-					}
-
-					await runLoadConfigOrchestrationStage(context.executionContext);
-				})
-				.addStep("fetch-entries", async (context) => {
-					if (!context.executionContext) {
-						throw new Error("Contexto de execução não inicializado");
-					}
-
-					await runFetchEntriesOrchestrationStage(context.executionContext);
-				})
-				.addStep("write-analysis-report", async (context) => {
-					if (!context.executionContext) {
-						throw new Error("Contexto de execução não inicializado");
-					}
-
-					await runWriteAnalysisReportOrchestrationStage(
-						context.executionContext,
-					);
-				})
-				.addStep("transform-and-merge", async (context) => {
-					if (!context.executionContext) {
-						throw new Error("Contexto de execução não inicializado");
-					}
-
-					await runTransformAndMergeOrchestrationStage(
-						context.executionContext,
-					);
-				})
-				.addStep("write-output", async (context) => {
-					if (!context.executionContext) {
-						throw new Error("Contexto de execução não inicializado");
-					}
-
-					await runWriteOutputOrchestrationStage(context.executionContext);
-				});
-		})
-		.addStep("assert-result", (context) => {
-			if (!context.executionContext) {
-				throw new Error("Contexto de execução não inicializado");
-			}
-
-			assertGenerateCustomRequestsResult(context.executionContext);
-		});
+	};
 }
 
 const generateCustomRequests = createGenerateCustomRequestsGenerator();

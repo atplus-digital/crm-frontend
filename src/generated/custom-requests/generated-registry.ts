@@ -13,7 +13,10 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://atplus-rh-n8n-rh.tvs9na.easypanel.host/webhook/9ceda127-997b-49df-8037-f50db4a55e42",
 		payloadSchema: z.object({
-			etapa: z.literal("aprova-informacoes"),
+			etapa: z
+				.literal("aprova-informacoes")
+				.default("aprova-informacoes")
+				.readonly(),
 			$nSelectedRecord: z.array(z.unknown()),
 		}),
 		payloadData: {
@@ -51,7 +54,7 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
 		payloadSchema: z.object({
-			acao: z.literal("Limpar MAC"),
+			acao: z.literal("Limpar MAC").default("Limpar MAC").readonly(),
 			currentRecord: z.object({
 				id: z.unknown(),
 				id_contrato: z.unknown(),
@@ -104,7 +107,10 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
 		payloadSchema: z.object({
-			acao: z.literal("Desconectar Login"),
+			acao: z
+				.literal("Desconectar Login")
+				.default("Desconectar Login")
+				.readonly(),
 			currentRecord: z.object({
 				id: z.unknown(),
 				id_contrato: z.unknown(),
@@ -125,7 +131,7 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_demandas:update?filterByTk=73",
 		payloadSchema: z.object({
-			f_status_tag: z.literal("4"),
+			f_status_tag: z.literal("4").default("4").readonly(),
 		}),
 		payloadData: {
 			f_status_tag: "4",
@@ -157,13 +163,14 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:create",
 		payloadSchema: z.object({
-			f_titulo: z.literal(
-				"SEGUNDA CONTRATAÇÃO - {{currentRecord.f_nc_cliente.razao}}",
-			),
-			f_valor_instalacao: z.literal("0"),
-			f_endereco_estado: z.literal("SC"),
-			f_motivo: z.literal("S"),
-			f_status: z.literal("1"),
+			f_titulo: z
+				.literal("SEGUNDA CONTRATAÇÃO - {{currentRecord.f_nc_cliente.razao}}")
+				.default("SEGUNDA CONTRATAÇÃO - {{currentRecord.f_nc_cliente.razao}}")
+				.readonly(),
+			f_valor_instalacao: z.literal("0").default("0").readonly(),
+			f_endereco_estado: z.literal("SC").default("SC").readonly(),
+			f_motivo: z.literal("S").default("S").readonly(),
+			f_status: z.literal("1").default("1").readonly(),
 			currentRecord: z.object({
 				bairro: z.unknown(),
 				cep: z.unknown(),
@@ -217,7 +224,10 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
 		payloadSchema: z.object({
-			acao: z.literal("Desconectar Login"),
+			acao: z
+				.literal("Desconectar Login")
+				.default("Desconectar Login")
+				.readonly(),
 			currentRecord: z.object({
 				id: z.unknown(),
 				id_contrato: z.unknown(),
@@ -285,7 +295,10 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
 		payloadSchema: z.object({
-			acao: z.literal("Liberar Redução de Velocidade"),
+			acao: z
+				.literal("Liberar Redução de Velocidade")
+				.default("Liberar Redução de Velocidade")
+				.readonly(),
 			currentRecord: z.object({
 				id: z.unknown(),
 				id_contrato: z.unknown(),
@@ -500,7 +513,10 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
 		payloadSchema: z.object({
-			acao: z.literal("Liberar Redução de Velocidade"),
+			acao: z
+				.literal("Liberar Redução de Velocidade")
+				.default("Liberar Redução de Velocidade")
+				.readonly(),
 			currentRecord: z.object({
 				id: z.unknown(),
 				id_contrato: z.unknown(),
@@ -540,7 +556,7 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
 		payloadSchema: z.object({
-			acao: z.literal("Limpar MAC"),
+			acao: z.literal("Limpar MAC").default("Limpar MAC").readonly(),
 			currentRecord: z.object({
 				id: z.unknown(),
 				id_contrato: z.unknown(),
@@ -633,8 +649,8 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			f_status: z.literal(2),
-			f_substatus: z.literal(1),
+			f_status: z.literal(2).default(2).readonly(),
+			f_substatus: z.literal(1).default(1).readonly(),
 			currentUser: z.object({
 				f_id_vendedor_ixc: z.unknown(),
 			}),
@@ -754,7 +770,10 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/b2b40644-0463-4d36-8c1b-89db9ffb2880",
 		payloadSchema: z.object({
-			procedimento: z.literal("17760523-1404-4ff9-b786-15a4b0d7a3e2"),
+			procedimento: z
+				.literal("17760523-1404-4ff9-b786-15a4b0d7a3e2")
+				.default("17760523-1404-4ff9-b786-15a4b0d7a3e2")
+				.readonly(),
 			currentRecord: z.object({
 				id: z.unknown(),
 			}),
@@ -807,61 +826,61 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://45.229.104.23/webservice/v1/su_ticket",
 		payloadSchema: z.object({
-			tipo: z.literal("C"),
-			id_estrutura: z.literal(""),
-			protocolo: z.literal(""),
-			id_circuito: z.literal(""),
-			id_cliente: z.literal("1992"),
-			id_login: z.literal(""),
-			id_contrato: z.literal(""),
-			id_filial: z.literal(""),
-			id_assunto: z.literal("1"),
-			titulo: z.literal("Teste API"),
-			origem_endereco: z.literal(""),
-			origem_endereco_estrutura: z.literal(""),
-			endereco: z.literal(""),
-			latitude: z.literal(""),
-			longitude: z.literal(""),
-			id_wfl_processo: z.literal(""),
-			id_ticket_setor: z.literal("2"),
-			id_responsavel_tecnico: z.literal(""),
-			data_criacao: z.literal(""),
-			data_ultima_alteracao: z.literal(""),
-			prioridade: z.literal("B"),
-			data_reservada: z.literal(""),
-			melhor_horario_reserva: z.literal(""),
-			id_ticket_origem: z.literal(""),
-			id_usuarios: z.literal(""),
-			id_resposta: z.literal(""),
-			menssagem: z.literal("Teste de API"),
-			interacao_pendente: z.literal(""),
-			su_status: z.literal("N"),
-			id_evento_status_processo: z.literal(""),
-			id_canal_atendimento: z.literal(""),
-			status: z.literal(""),
-			mensagens_nao_lida_cli: z.literal(""),
-			mensagens_nao_lida_sup: z.literal(""),
-			token: z.literal(""),
-			finalizar_atendimento: z.literal(""),
-			id_su_diagnostico: z.literal(""),
-			status_sla: z.literal(""),
-			origem_cadastro: z.literal(""),
-			ultima_atualizacao: z.literal(""),
-			cliente_fone: z.literal(""),
-			cliente_telefone_comercial: z.literal(""),
-			cliente_id_operadora_celular: z.literal(""),
-			cliente_telefone_celular: z.literal(""),
-			cliente_whatsapp: z.literal(""),
-			cliente_ramal: z.literal(""),
-			cliente_email: z.literal(""),
-			cliente_contato: z.literal(""),
-			cliente_website: z.literal(""),
-			cliente_skype: z.literal(""),
-			cliente_facebook: z.literal(""),
-			latitude_cli: z.literal(""),
-			longitude_cli: z.literal(""),
-			latitude_login: z.literal(""),
-			longitude_login: z.literal(""),
+			tipo: z.literal("C").default("C").readonly(),
+			id_estrutura: z.literal("").default("").readonly(),
+			protocolo: z.literal("").default("").readonly(),
+			id_circuito: z.literal("").default("").readonly(),
+			id_cliente: z.literal("1992").default("1992").readonly(),
+			id_login: z.literal("").default("").readonly(),
+			id_contrato: z.literal("").default("").readonly(),
+			id_filial: z.literal("").default("").readonly(),
+			id_assunto: z.literal("1").default("1").readonly(),
+			titulo: z.literal("Teste API").default("Teste API").readonly(),
+			origem_endereco: z.literal("").default("").readonly(),
+			origem_endereco_estrutura: z.literal("").default("").readonly(),
+			endereco: z.literal("").default("").readonly(),
+			latitude: z.literal("").default("").readonly(),
+			longitude: z.literal("").default("").readonly(),
+			id_wfl_processo: z.literal("").default("").readonly(),
+			id_ticket_setor: z.literal("2").default("2").readonly(),
+			id_responsavel_tecnico: z.literal("").default("").readonly(),
+			data_criacao: z.literal("").default("").readonly(),
+			data_ultima_alteracao: z.literal("").default("").readonly(),
+			prioridade: z.literal("B").default("B").readonly(),
+			data_reservada: z.literal("").default("").readonly(),
+			melhor_horario_reserva: z.literal("").default("").readonly(),
+			id_ticket_origem: z.literal("").default("").readonly(),
+			id_usuarios: z.literal("").default("").readonly(),
+			id_resposta: z.literal("").default("").readonly(),
+			menssagem: z.literal("Teste de API").default("Teste de API").readonly(),
+			interacao_pendente: z.literal("").default("").readonly(),
+			su_status: z.literal("N").default("N").readonly(),
+			id_evento_status_processo: z.literal("").default("").readonly(),
+			id_canal_atendimento: z.literal("").default("").readonly(),
+			status: z.literal("").default("").readonly(),
+			mensagens_nao_lida_cli: z.literal("").default("").readonly(),
+			mensagens_nao_lida_sup: z.literal("").default("").readonly(),
+			token: z.literal("").default("").readonly(),
+			finalizar_atendimento: z.literal("").default("").readonly(),
+			id_su_diagnostico: z.literal("").default("").readonly(),
+			status_sla: z.literal("").default("").readonly(),
+			origem_cadastro: z.literal("").default("").readonly(),
+			ultima_atualizacao: z.literal("").default("").readonly(),
+			cliente_fone: z.literal("").default("").readonly(),
+			cliente_telefone_comercial: z.literal("").default("").readonly(),
+			cliente_id_operadora_celular: z.literal("").default("").readonly(),
+			cliente_telefone_celular: z.literal("").default("").readonly(),
+			cliente_whatsapp: z.literal("").default("").readonly(),
+			cliente_ramal: z.literal("").default("").readonly(),
+			cliente_email: z.literal("").default("").readonly(),
+			cliente_contato: z.literal("").default("").readonly(),
+			cliente_website: z.literal("").default("").readonly(),
+			cliente_skype: z.literal("").default("").readonly(),
+			cliente_facebook: z.literal("").default("").readonly(),
+			latitude_cli: z.literal("").default("").readonly(),
+			longitude_cli: z.literal("").default("").readonly(),
+			latitude_login: z.literal("").default("").readonly(),
+			longitude_login: z.literal("").default("").readonly(),
 		}),
 		payloadData: {
 			tipo: "C",
@@ -1057,8 +1076,8 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			f_status: z.literal(2),
-			f_substatus: z.literal(1),
+			f_status: z.literal(2).default(2).readonly(),
+			f_substatus: z.literal(1).default(1).readonly(),
 			currentUser: z.object({
 				f_id_vendedor_ixc: z.unknown(),
 			}),
@@ -1109,7 +1128,10 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
 		payloadSchema: z.object({
-			acao: z.literal("Desbloqueio de Confiança"),
+			acao: z
+				.literal("Desbloqueio de Confiança")
+				.default("Desbloqueio de Confiança")
+				.readonly(),
 			currentRecord: z.object({
 				id: z.unknown(),
 				id_contrato: z.unknown(),
@@ -1141,7 +1163,7 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/836d3099-bd29-49d0-8010-a4b5033ecc43",
 		payloadSchema: z.object({
-			a: z.literal(1),
+			a: z.literal(1).default(1).readonly(),
 			currentRecord: z.object({
 				f_log_level: z.unknown(),
 			}),
@@ -1212,7 +1234,7 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_crm_troca_titularidade:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			f_status: z.literal(0),
+			f_status: z.literal(0).default(0).readonly(),
 			currentUser: z.object({
 				f_id_vendedor_ixc: z.unknown(),
 			}),
@@ -1231,8 +1253,8 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			f_status: z.literal(2),
-			f_substatus: z.literal(1),
+			f_status: z.literal(2).default(2).readonly(),
+			f_substatus: z.literal(1).default(1).readonly(),
 			currentUser: z.object({
 				f_id_vendedor_ixc: z.unknown(),
 			}),
@@ -1252,8 +1274,8 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			f_status: z.literal(2),
-			f_substatus: z.literal(1),
+			f_status: z.literal(2).default(2).readonly(),
+			f_substatus: z.literal(1).default(1).readonly(),
 			currentUser: z.object({
 				f_id_vendedor_ixc: z.unknown(),
 			}),
@@ -1329,61 +1351,61 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://45.229.104.23/webservice/v1/su_ticket",
 		payloadSchema: z.object({
-			tipo: z.literal("C"),
-			id_estrutura: z.literal(""),
-			protocolo: z.literal(""),
-			id_circuito: z.literal(""),
-			id_cliente: z.literal("1992"),
-			id_login: z.literal(""),
-			id_contrato: z.literal(""),
-			id_filial: z.literal(""),
-			id_assunto: z.literal("1"),
-			titulo: z.literal("Teste API"),
-			origem_endereco: z.literal(""),
-			origem_endereco_estrutura: z.literal(""),
-			endereco: z.literal(""),
-			latitude: z.literal(""),
-			longitude: z.literal(""),
-			id_wfl_processo: z.literal(""),
-			id_ticket_setor: z.literal("2"),
-			id_responsavel_tecnico: z.literal(""),
-			data_criacao: z.literal(""),
-			data_ultima_alteracao: z.literal(""),
-			prioridade: z.literal("B"),
-			data_reservada: z.literal(""),
-			melhor_horario_reserva: z.literal(""),
-			id_ticket_origem: z.literal(""),
-			id_usuarios: z.literal(""),
-			id_resposta: z.literal(""),
-			menssagem: z.literal("Teste de API"),
-			interacao_pendente: z.literal(""),
-			su_status: z.literal("N"),
-			id_evento_status_processo: z.literal(""),
-			id_canal_atendimento: z.literal(""),
-			status: z.literal(""),
-			mensagens_nao_lida_cli: z.literal(""),
-			mensagens_nao_lida_sup: z.literal(""),
-			token: z.literal(""),
-			finalizar_atendimento: z.literal(""),
-			id_su_diagnostico: z.literal(""),
-			status_sla: z.literal(""),
-			origem_cadastro: z.literal(""),
-			ultima_atualizacao: z.literal(""),
-			cliente_fone: z.literal(""),
-			cliente_telefone_comercial: z.literal(""),
-			cliente_id_operadora_celular: z.literal(""),
-			cliente_telefone_celular: z.literal(""),
-			cliente_whatsapp: z.literal(""),
-			cliente_ramal: z.literal(""),
-			cliente_email: z.literal(""),
-			cliente_contato: z.literal(""),
-			cliente_website: z.literal(""),
-			cliente_skype: z.literal(""),
-			cliente_facebook: z.literal(""),
-			latitude_cli: z.literal(""),
-			longitude_cli: z.literal(""),
-			latitude_login: z.literal(""),
-			longitude_login: z.literal(""),
+			tipo: z.literal("C").default("C").readonly(),
+			id_estrutura: z.literal("").default("").readonly(),
+			protocolo: z.literal("").default("").readonly(),
+			id_circuito: z.literal("").default("").readonly(),
+			id_cliente: z.literal("1992").default("1992").readonly(),
+			id_login: z.literal("").default("").readonly(),
+			id_contrato: z.literal("").default("").readonly(),
+			id_filial: z.literal("").default("").readonly(),
+			id_assunto: z.literal("1").default("1").readonly(),
+			titulo: z.literal("Teste API").default("Teste API").readonly(),
+			origem_endereco: z.literal("").default("").readonly(),
+			origem_endereco_estrutura: z.literal("").default("").readonly(),
+			endereco: z.literal("").default("").readonly(),
+			latitude: z.literal("").default("").readonly(),
+			longitude: z.literal("").default("").readonly(),
+			id_wfl_processo: z.literal("").default("").readonly(),
+			id_ticket_setor: z.literal("2").default("2").readonly(),
+			id_responsavel_tecnico: z.literal("").default("").readonly(),
+			data_criacao: z.literal("").default("").readonly(),
+			data_ultima_alteracao: z.literal("").default("").readonly(),
+			prioridade: z.literal("B").default("B").readonly(),
+			data_reservada: z.literal("").default("").readonly(),
+			melhor_horario_reserva: z.literal("").default("").readonly(),
+			id_ticket_origem: z.literal("").default("").readonly(),
+			id_usuarios: z.literal("").default("").readonly(),
+			id_resposta: z.literal("").default("").readonly(),
+			menssagem: z.literal("Teste de API").default("Teste de API").readonly(),
+			interacao_pendente: z.literal("").default("").readonly(),
+			su_status: z.literal("N").default("N").readonly(),
+			id_evento_status_processo: z.literal("").default("").readonly(),
+			id_canal_atendimento: z.literal("").default("").readonly(),
+			status: z.literal("").default("").readonly(),
+			mensagens_nao_lida_cli: z.literal("").default("").readonly(),
+			mensagens_nao_lida_sup: z.literal("").default("").readonly(),
+			token: z.literal("").default("").readonly(),
+			finalizar_atendimento: z.literal("").default("").readonly(),
+			id_su_diagnostico: z.literal("").default("").readonly(),
+			status_sla: z.literal("").default("").readonly(),
+			origem_cadastro: z.literal("").default("").readonly(),
+			ultima_atualizacao: z.literal("").default("").readonly(),
+			cliente_fone: z.literal("").default("").readonly(),
+			cliente_telefone_comercial: z.literal("").default("").readonly(),
+			cliente_id_operadora_celular: z.literal("").default("").readonly(),
+			cliente_telefone_celular: z.literal("").default("").readonly(),
+			cliente_whatsapp: z.literal("").default("").readonly(),
+			cliente_ramal: z.literal("").default("").readonly(),
+			cliente_email: z.literal("").default("").readonly(),
+			cliente_contato: z.literal("").default("").readonly(),
+			cliente_website: z.literal("").default("").readonly(),
+			cliente_skype: z.literal("").default("").readonly(),
+			cliente_facebook: z.literal("").default("").readonly(),
+			latitude_cli: z.literal("").default("").readonly(),
+			longitude_cli: z.literal("").default("").readonly(),
+			latitude_login: z.literal("").default("").readonly(),
+			longitude_login: z.literal("").default("").readonly(),
 		}),
 		payloadData: {
 			tipo: "C",
@@ -1484,7 +1506,10 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook-test/demandas",
 		payloadSchema: z.object({
-			cliente: z.literal("Mateus Salomão de Barros Neto"),
+			cliente: z
+				.literal("Mateus Salomão de Barros Neto")
+				.default("Mateus Salomão de Barros Neto")
+				.readonly(),
 			$nForm: z.object({
 				f_descricao: z.string(),
 				f_prioridade: z.string(),
@@ -1535,7 +1560,7 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_crm_troca_titularidade:update/13",
 		payloadSchema: z.object({
-			f_substatus: z.literal("1"),
+			f_substatus: z.literal("1").default("1").readonly(),
 		}),
 		payloadData: {
 			f_substatus: "1",
@@ -1550,7 +1575,10 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/b2b40644-0463-4d36-8c1b-89db9ffb2880",
 		payloadSchema: z.object({
-			procedimento: z.literal("17760523-1404-4ff9-b786-15a4b0d7a3e2"),
+			procedimento: z
+				.literal("17760523-1404-4ff9-b786-15a4b0d7a3e2")
+				.default("17760523-1404-4ff9-b786-15a4b0d7a3e2")
+				.readonly(),
 			currentRecord: z.object({
 				id: z.unknown(),
 			}),
@@ -1680,7 +1708,10 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
 		payloadSchema: z.object({
-			acao: z.literal("Desbloqueio de Confiança"),
+			acao: z
+				.literal("Desbloqueio de Confiança")
+				.default("Desbloqueio de Confiança")
+				.readonly(),
 			currentRecord: z.object({
 				id: z.unknown(),
 				id_contrato: z.unknown(),
@@ -1701,7 +1732,7 @@ export const generatedCustomRequestsRegistry = {
 		method: "PUT",
 		url: "https://utxejnodralnuthfwzoo.supabase.co/functions/v1/public-api/execution-orders/{{$nSelectedRecord.f_id_externo}}",
 		payloadSchema: z.object({
-			status: z.literal("CANCELLED"),
+			status: z.literal("CANCELLED").default("CANCELLED").readonly(),
 		}),
 		payloadData: {
 			status: "CANCELLED",
@@ -1716,8 +1747,8 @@ export const generatedCustomRequestsRegistry = {
 		method: "PUT",
 		url: "https://jsonplaceholder.typicode.com/todos/1",
 		payloadSchema: z.object({
-			record: z.literal(""),
-			xicara: z.literal("cafe"),
+			record: z.literal("").default("").readonly(),
+			xicara: z.literal("cafe").default("cafe").readonly(),
 			$nForm: z.unknown(),
 			currentUser: z.object({
 				id: z.unknown(),

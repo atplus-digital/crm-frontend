@@ -8,7 +8,8 @@
 function inferPrimitiveLiteralZod(
 	val: string | number | boolean | null,
 ): string {
-	return `z.literal(${JSON.stringify(val)})`;
+	const literal = JSON.stringify(val);
+	return `z.literal(${literal}).default(${literal}).readonly()`;
 }
 
 function toSafeObjectKey(key: string): string {

@@ -20,10 +20,10 @@ describe("inferPayloadSchema", () => {
 
 		expect(normalizeMultiline(result)).toBe(
 			normalizeMultiline(`z.object({
-    a: z.literal(1),
-    b: z.literal("ASD"),
-    c: z.literal(true),
-    d: z.literal(null),
+    a: z.literal(1).default(1).readonly(),
+    b: z.literal("ASD").default("ASD").readonly(),
+    c: z.literal(true).default(true).readonly(),
+    d: z.literal(null).default(null).readonly(),
   })`),
 		);
 	});
@@ -39,8 +39,8 @@ describe("inferPayloadSchema", () => {
 		expect(normalizeMultiline(result)).toBe(
 			normalizeMultiline(`z.object({
     nested: z.object({
-    status: z.literal("ok"),
-    code: z.literal(200),
+    status: z.literal("ok").default("ok").readonly(),
+    code: z.literal(200).default(200).readonly(),
   }),
   })`),
 		);
@@ -91,7 +91,7 @@ describe("inferPayloadSchema", () => {
 
 		expect(normalizeMultiline(result)).toBe(
 			normalizeMultiline(`z.object({
-    status: z.literal("fixo"),
+    status: z.literal("fixo").default("fixo").readonly(),
     currentRecord: z.object({
       cliente: z.object({
         nome: z.unknown(),

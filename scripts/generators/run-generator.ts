@@ -14,10 +14,6 @@ export type GeneratorStepContext<TContext extends object> = TContext & {
 	logger: Logger;
 };
 
-export type GeneratorStepTask<TContext extends object> = (
-	context: GeneratorStepContext<TContext>,
-) => Promise<void> | void;
-
 export type GeneratorStepStatus = "started" | "completed" | "failed";
 
 export interface GeneratorStepProgressEvent {
@@ -53,25 +49,44 @@ interface CreateGeneratorProgressTrackerOptions {
 	onUpdate?: (snapshot: GeneratorProgressSnapshot) => void;
 }
 
-interface GeneratorPipeline<TContext extends object> {
-	name: string;
-	steps: GeneratorStep<TContext>[];
-}
-
-interface GeneratorTaskStep<TContext extends object> {
-	name: string;
-	run: GeneratorStepTask<TContext>;
-}
-
-type GeneratorStep<TContext extends object> =
-	| GeneratorTaskStep<TContext>
-	| GeneratorPipeline<TContext>;
-
-type ListrTaskArgs = Parameters<NonNullable<ListrTask["task"]>>;
-
 interface BufferedStepLogs {
 	persistent: string[];
 	transient: string[];
+}
+
+export interface GeneratorCliTask<TContext extends object> {
+	name: string;
+	stepPath?: string[];
+	stepType?: "task" | "pipeline";
+	depth?: number;
+	run: (
+		context: GeneratorStepContext<TContext>,
+		task: Parameters<NonNullable<ListrTask["task"]>>[1],
+	) => ReturnType<NonNullable<ListrTask["task"]>>;
+}
+
+export interface RunGeneratorCliOptions<TContext extends object> {
+	name: string;
+	context: TContext;
+	tasks: GeneratorCliTask<TContext>[];
+	logger?: Logger;
+	hooks?: GeneratorExecutionHooks;
+}
+
+export interface GeneratorOrchestrationStep<TExecutionContext> {
+	name: string;
+	run: (context: TExecutionContext) => Promise<void> | void;
+}
+
+export interface CreateOrchestrationTasksOptions<
+	TContext extends object,
+	TExecutionContext,
+> {
+	stages: GeneratorOrchestrationStep<TExecutionContext>[];
+	getExecutionContext: (context: TContext) => TExecutionContext;
+	taskNamePrefix?: string;
+	stepPathPrefix?: string[];
+	depth?: number;
 }
 
 function renderStepOutput(buffer: BufferedStepLogs): string {
@@ -105,12 +120,6 @@ function appendStepLog(
 	}
 
 	return { shouldUpdateLiveOutput: false };
-}
-
-function isPipelineStep<TContext extends object>(
-	step: GeneratorStep<TContext>,
-): step is GeneratorPipeline<TContext> {
-	return "steps" in step;
 }
 
 function getDefaultProgressSnapshot(
@@ -198,157 +207,138 @@ export function createGeneratorProgressTracker(
 	};
 }
 
-export class GeneratorFactory<TContext extends object> {
-	private readonly steps: GeneratorStep<TContext>[] = [];
-	private readonly stepContext: GeneratorStepContext<TContext>;
+function createListrTask<TContext extends object>(
+	generatorName: string,
+	context: GeneratorStepContext<TContext>,
+	logger: Logger,
+	hooks: GeneratorExecutionHooks | undefined,
+	step: GeneratorCliTask<TContext>,
+	index: number,
+	total: number,
+): ListrTask {
+	const stepPath = step.stepPath ?? [step.name];
+	const stepType = step.stepType ?? "task";
+	const depth = step.depth ?? 0;
 
-	public constructor(
-		public readonly name: string,
-		private readonly context: TContext,
-		private readonly logger: Logger = defaultLogger,
-		private readonly hooks?: GeneratorExecutionHooks,
-	) {
-		this.stepContext = {
-			...this.context,
-			logger: this.logger,
-		};
-	}
-
-	public addStep(
-		name: string,
-		run: GeneratorStepTask<TContext>,
-	): GeneratorFactory<TContext> {
-		this.steps.push({ name, run });
-		return this;
-	}
-
-	public addPipeline(
-		name: string,
-		configure: (pipeline: GeneratorFactory<TContext>) => void,
-	): GeneratorFactory<TContext> {
-		const childPipeline = new GeneratorFactory<TContext>(
-			`${this.name}/${name}`,
-			this.context,
-			this.logger,
-			this.hooks,
-		);
-		configure(childPipeline);
-		this.steps.push({ name, steps: childPipeline.steps });
-		return this;
-	}
-
-	private createTaskFromStep(
-		step: GeneratorStep<TContext>,
-		index: number,
-		total: number,
-		parentPath: string[] = [],
-		depth = 0,
-	): ListrTask {
-		const stepPath = [...parentPath, step.name];
-		const emitProgress = (
-			status: GeneratorStepStatus,
-			errorMessage?: string,
-		): void => {
-			this.hooks?.onStepProgress?.({
-				generatorName: this.name,
-				stepName: step.name,
-				stepPath,
-				stepType: isPipelineStep(step) ? "pipeline" : "task",
-				status,
-				index,
-				total,
-				depth,
-				errorMessage,
-			});
-		};
-
-		return {
-			title: `[${index + 1}/${total}] ${step.name}`,
-			task: async (_ctx: ListrTaskArgs[0], task: ListrTaskArgs[1]) => {
-				emitProgress("started");
-
-				if (isPipelineStep(step)) {
-					const subTasks = this.createTasks(step.steps, stepPath, depth + 1);
-					return task.newListr(subTasks, {
-						concurrent: false,
-					});
-				}
-
-				const buffer: BufferedStepLogs = { persistent: [], transient: [] };
-
-				const unsubscribe = this.logger.subscribe((entry) => {
-					const { shouldUpdateLiveOutput } = appendStepLog(
-						entry,
-						this.logger.getLevel(),
-						buffer,
-					);
-					if (shouldUpdateLiveOutput) {
-						task.output = renderLiveOutput(buffer);
-					}
-				});
-
-				try {
-					await runWithLogger(this.logger, () => step.run(this.stepContext), {
-						chain: step.name,
-					});
-					emitProgress("completed");
-				} catch (error) {
-					const message =
-						error instanceof Error ? error.message : String(error);
-					emitProgress("failed", message);
-					throw new Error(
-						`[${this.name}] Falha na etapa "${step.name}": ${message}`,
-					);
-				} finally {
-					unsubscribe();
-					buffer.transient = [];
-					task.output = renderStepOutput(buffer);
-				}
-			},
-			rendererOptions: {
-				outputBar: true,
-				persistentOutput: true,
-			},
-		};
-	}
-
-	private createTasks(
-		steps: GeneratorStep<TContext>[],
-		parentPath: string[] = [],
-		depth = 0,
-	): ListrTask[] {
-		return steps.map((step, index) =>
-			this.createTaskFromStep(step, index, steps.length, parentPath, depth),
-		);
-	}
-
-	public async execute(): Promise<void> {
-		const tasks = new Listr(this.createTasks(this.steps), {
-			concurrent: false,
-			renderer: "default",
-			rendererOptions: {
-				collapseSubtasks: false,
-			},
+	const emitProgress = (
+		status: GeneratorStepStatus,
+		errorMessage?: string,
+	): void => {
+		hooks?.onStepProgress?.({
+			generatorName,
+			stepName: step.name,
+			stepPath,
+			stepType,
+			status,
+			index,
+			total,
+			depth,
+			errorMessage,
 		});
+	};
 
-		await tasks.run();
-	}
+	return {
+		title: `[${index + 1}/${total}] ${step.name}`,
+		task: async (_ctx, task) => {
+			emitProgress("started");
+
+			const buffer: BufferedStepLogs = { persistent: [], transient: [] };
+			const unsubscribe = logger.subscribe((entry) => {
+				const { shouldUpdateLiveOutput } = appendStepLog(
+					entry,
+					logger.getLevel(),
+					buffer,
+				);
+				if (shouldUpdateLiveOutput) {
+					task.output = renderLiveOutput(buffer);
+				}
+			});
+
+			try {
+				const result = await runWithLogger(
+					logger,
+					() => step.run(context, task),
+					{
+						chain: step.name,
+					},
+				);
+				emitProgress("completed");
+				return result;
+			} catch (error) {
+				const message = error instanceof Error ? error.message : String(error);
+				emitProgress("failed", message);
+				throw new Error(
+					`[${generatorName}] Falha na etapa "${step.name}": ${message}`,
+				);
+			} finally {
+				unsubscribe();
+				buffer.transient = [];
+				task.output = renderStepOutput(buffer);
+			}
+		},
+		rendererOptions: {
+			outputBar: true,
+			persistentOutput: true,
+		},
+	};
 }
 
-export function createGenerator<TContext extends object>(
-	name: string,
-	context: TContext,
-	logger?: Logger,
-	hooks?: GeneratorExecutionHooks,
-): GeneratorFactory<TContext> {
-	return new GeneratorFactory(name, context, logger, hooks);
+export function createGeneratorListr<TContext extends object>(
+	options: RunGeneratorCliOptions<TContext>,
+): Listr {
+	const logger = options.logger ?? defaultLogger;
+	const context: GeneratorStepContext<TContext> = {
+		...options.context,
+		logger,
+	};
+
+	const tasks = options.tasks.map((step, index) =>
+		createListrTask(
+			options.name,
+			context,
+			logger,
+			options.hooks,
+			step,
+			index,
+			options.tasks.length,
+		),
+	);
+
+	return new Listr(tasks, {
+		concurrent: false,
+		renderer: "default",
+		rendererOptions: {
+			collapseSubtasks: false,
+		},
+	});
+}
+
+export function createOrchestrationTasks<
+	TContext extends object,
+	TExecutionContext,
+>(
+	options: CreateOrchestrationTasksOptions<TContext, TExecutionContext>,
+): GeneratorCliTask<TContext>[] {
+	const taskNamePrefix = options.taskNamePrefix ?? "orchestration";
+	const stepPathPrefix = options.stepPathPrefix ?? ["orchestration"];
+	const depth = options.depth ?? 1;
+
+	return options.stages.map((stage) => ({
+		name: `${taskNamePrefix}/${stage.name}`,
+		stepPath: [...stepPathPrefix, stage.name],
+		stepType: "pipeline",
+		depth,
+		run: async (context) => {
+			await stage.run(options.getExecutionContext(context));
+		},
+	}));
 }
 
 export async function runGeneratorCli<TContext extends object>(
-	generator: GeneratorFactory<TContext>,
+	options: RunGeneratorCliOptions<TContext>,
 ): Promise<void> {
 	try {
-		await generator.execute();
+		await createGeneratorListr(options).run();
 	} catch (error) {
 		const message = error instanceof Error ? error.message : String(error);
 		defaultLogger.error(message);
