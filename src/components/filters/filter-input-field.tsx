@@ -6,6 +6,7 @@ import React, {
 	useState,
 } from "react";
 import { Input } from "#/components/ui/input";
+import { cn } from "#/lib/utils";
 
 const DEFAULT_DEBOUNCE_MS = 300;
 
@@ -17,6 +18,7 @@ export interface FilterInputFieldProps {
 	onChange: (value: string) => void;
 	/** Debounce delay in milliseconds. Set to 0 to disable. Defaults to 300ms. */
 	debounceMs?: number;
+	className?: string;
 }
 
 function FilterInputFieldComponent({
@@ -26,6 +28,7 @@ function FilterInputFieldComponent({
 	value,
 	onChange,
 	debounceMs = DEFAULT_DEBOUNCE_MS,
+	className,
 }: FilterInputFieldProps) {
 	const [localValue, setLocalValue] = useState(value);
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -95,7 +98,7 @@ function FilterInputFieldComponent({
 	}, [localValue]);
 
 	return (
-		<div className="space-y-2">
+		<div className={cn("space-y-2", className)}>
 			<label htmlFor={id} className="text-xs font-medium text-muted-foreground">
 				{label}
 			</label>

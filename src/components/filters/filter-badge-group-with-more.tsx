@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { cn } from "#/lib/utils";
-import type { BadgeOption } from "./filter-badge-group";
+
+export interface BadgeOption<T extends string> {
+	value: T;
+	label: string;
+	colorClass?: string;
+	bgClass?: string;
+}
 
 interface FilterBadgeGroupWithMoreProps<T extends string> {
 	label: string;
-	primaryOptions: readonly BadgeOption<T>[];
-	extraOptions: readonly BadgeOption<T>[];
+	options: readonly BadgeOption<T>[];
+	extraOptions?: readonly BadgeOption<T>[];
 	value: T[] | undefined;
 	onChange: (value: T[] | undefined) => void;
 	allLabel?: string;
@@ -13,11 +19,12 @@ interface FilterBadgeGroupWithMoreProps<T extends string> {
 	compact?: boolean;
 	disabled?: boolean;
 	showAllButton?: boolean;
+	className?: string;
 }
 
 export function FilterBadgeGroupWithMore<T extends string>({
 	label,
-	primaryOptions,
+	options,
 	extraOptions,
 	value,
 	onChange,
@@ -26,39 +33,40 @@ export function FilterBadgeGroupWithMore<T extends string>({
 	compact = false,
 	disabled = false,
 	showAllButton = true,
+	className,
 }: FilterBadgeGroupWithMoreProps<T>) {
 	const selectedValues = value ?? [];
 
 	// Extra options that are currently visible (not collapsed in "+" badge)
 	const [expandedExtraKeys, setExpandedExtraKeys] = useState<Set<T>>(new Set());
 
-	// Check which extra options are selected
-	const collapsedExtraOptions = extraOptions.filter(
-		(opt) => !selectedValues.includes(opt.value),
-	);
+	const hasExtras = extraOptions && extraOptions.length > 0;
+
+	// Extra options that are currently collapsed (not selected and not expanded)
+	const collapsedExtraOptions = hasExtras
+		? extraOptions.filter(
+				(opt) =>
+					!selectedValues.includes(opt.value) &&
+					!expandedExtraKeys.has(opt.value),
+			)
+		: [];
 
 	const handleToggle = (optionValue: T) => {
 		if (disabled) return;
 		if (selectedValues.includes(optionValue)) {
-			// Remove if already selected
 			const newValue = selectedValues.filter((v) => v !== optionValue);
-			// When showAllButton is false, we never use undefined - always return array
 			onChange(showAllButton && newValue.length === 0 ? undefined : newValue);
 		} else {
-			// Add to selection
 			onChange([...selectedValues, optionValue]);
 		}
 	};
 
 	// Handle clicking the "+" badge to expand/collapse extras
 	const handleToggleExtras = () => {
-		if (disabled) return;
+		if (disabled || !hasExtras) return;
 		if (expandedExtraKeys.size > 0) {
-			// Collapse all expanded extras
 			setExpandedExtraKeys(new Set());
 		} else {
-			// Expand all extras that have been explicitly shown before
-			// If no extras have been expanded, show all
 			setExpandedExtraKeys(new Set(extraOptions.map((opt) => opt.value)));
 		}
 	};
@@ -67,8 +75,6 @@ export function FilterBadgeGroupWithMore<T extends string>({
 	const handleExpandedOptionChange = (optionValue: T) => {
 		if (disabled) return;
 		handleToggle(optionValue);
-		// After toggling, check if this option is still selected
-		// If not, collapse it
 		const willBeSelected = !selectedValues.includes(optionValue);
 		if (!willBeSelected) {
 			setExpandedExtraKeys((prev) => {
@@ -79,8 +85,7 @@ export function FilterBadgeGroupWithMore<T extends string>({
 		}
 	};
 
-	// Check if "all" are selected
-	const allOptions = [...primaryOptions, ...extraOptions];
+	const allOptions = hasExtras ? [...options, ...extraOptions] : options;
 	const isAllSelected =
 		selectedValues.length === 0 || selectedValues.length === allOptions.length;
 
@@ -94,7 +99,7 @@ export function FilterBadgeGroupWithMore<T extends string>({
 		: "";
 
 	return (
-		<div className="space-y-1 w-full min-w-0">
+		<div className={cn("flex flex-col gap-1 w-full min-w-0", className)}>
 			<span className="text-sm font-medium text-muted-foreground">{label}</span>
 			<div className="flex flex-nowrap items-center gap-1.5 overflow-x-auto md:flex-wrap">
 				{showAllButton && (
@@ -118,7 +123,7 @@ export function FilterBadgeGroupWithMore<T extends string>({
 				)}
 
 				{/* Primary options */}
-				{primaryOptions.map((option) => {
+				{options.map((option) => {
 					const isSelected = selectedValues.includes(option.value);
 					return (
 						<button
@@ -141,29 +146,30 @@ export function FilterBadgeGroupWithMore<T extends string>({
 				})}
 
 				{/* Expanded extra options */}
-				{extraOptions
-					.filter((opt) => expandedExtraKeys.has(opt.value))
-					.map((option) => {
-						const isSelected = selectedValues.includes(option.value);
-						return (
-							<button
-								type="button"
-								key={option.value}
-								onClick={() => handleExpandedOptionChange(option.value)}
-								className={cn(
-									"inline-flex items-center rounded-full font-medium transition-colors border",
-									badgeClass,
-									disabledClass,
-									isSelected
-										? (option.bgClass ??
-												"bg-primary text-primary-foreground hover:bg-primary/90 border-primary")
-										: "bg-muted text-muted-foreground hover:bg-muted/80 border-border",
-								)}
-							>
-								{option.label}
-							</button>
-						);
-					})}
+				{hasExtras &&
+					extraOptions
+						.filter((opt) => expandedExtraKeys.has(opt.value))
+						.map((option) => {
+							const isSelected = selectedValues.includes(option.value);
+							return (
+								<button
+									type="button"
+									key={option.value}
+									onClick={() => handleExpandedOptionChange(option.value)}
+									className={cn(
+										"inline-flex items-center rounded-full font-medium transition-colors border",
+										badgeClass,
+										disabledClass,
+										isSelected
+											? (option.bgClass ??
+													"bg-primary text-primary-foreground hover:bg-primary/90 border-primary")
+											: "bg-muted text-muted-foreground hover:bg-muted/80 border-border",
+									)}
+								>
+									{option.label}
+								</button>
+							);
+						})}
 
 				{/* "+" badge for collapsed extras */}
 				{collapsedExtraOptions.length > 0 && (
