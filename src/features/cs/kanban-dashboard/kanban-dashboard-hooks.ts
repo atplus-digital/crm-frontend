@@ -1,4 +1,5 @@
 import { queryOptions, useQueries } from "@tanstack/react-query";
+import { authStore } from "#/features/auth";
 import type {
 	CrmTrocaTitularidade,
 	CrmTrocaTitularidadeRelations,
@@ -26,7 +27,6 @@ import { nocobaseRepository } from "#/repositories";
 import type {
 	KanbanDashboardCard,
 	KanbanDashboardFilters,
-	NegociacaoOverrideStatus,
 } from "./kanban-dashboard-types";
 import {
 	mapNegociacaoStatus,
@@ -64,8 +64,14 @@ function trocaTitularidadeQueryOptions(filters: KanbanDashboardFilters) {
 		);
 	}
 
-	if (filters.responsibleId != null) {
-		conditions.push(nestedField("f_vendedor", eq("id", filters.responsibleId)));
+	const effectiveResponsibleId = filters.currentUser
+		? authStore.state.user?.id
+		: filters.responsibleId;
+
+	if (effectiveResponsibleId != null) {
+		conditions.push(
+			nestedField("f_vendedor", eq("id", effectiveResponsibleId)),
+		);
 	}
 
 	return queryOptions({
@@ -102,8 +108,12 @@ function trocaEnderecoQueryOptions(filters: KanbanDashboardFilters) {
 		);
 	}
 
-	if (filters.responsibleId != null) {
-		conditions.push(nestedField("createdBy", eq("id", filters.responsibleId)));
+	const effectiveResponsibleId = filters.currentUser
+		? authStore.state.user?.id
+		: filters.responsibleId;
+
+	if (effectiveResponsibleId != null) {
+		conditions.push(nestedField("createdBy", eq("id", effectiveResponsibleId)));
 	}
 
 	return queryOptions({
@@ -146,11 +156,15 @@ function suspensaoContratoQueryOptions(filters: KanbanDashboardFilters) {
 		);
 	}
 
-	if (filters.responsibleId != null) {
+	const effectiveResponsibleId = filters.currentUser
+		? authStore.state.user?.id
+		: filters.responsibleId;
+
+	if (effectiveResponsibleId != null) {
 		conditions.push(
 			or(
-				nestedField("f_responsavel", eq("id", filters.responsibleId)),
-				nestedField("createdBy", eq("id", filters.responsibleId)),
+				nestedField("f_responsavel", eq("id", effectiveResponsibleId)),
+				nestedField("createdBy", eq("id", effectiveResponsibleId)),
 			),
 		);
 	}
@@ -189,8 +203,14 @@ function negociacoesQueryOptions(filters: KanbanDashboardFilters) {
 		);
 	}
 
-	if (filters.responsibleId != null) {
-		conditions.push(nestedField("f_vendedor", eq("id", filters.responsibleId)));
+	const effectiveResponsibleId = filters.currentUser
+		? authStore.state.user?.id
+		: filters.responsibleId;
+
+	if (effectiveResponsibleId != null) {
+		conditions.push(
+			nestedField("f_vendedor", eq("id", effectiveResponsibleId)),
+		);
 	}
 
 	// Apply tipo de negociação filter (f_motivo field) using OR for multiple values
@@ -260,8 +280,7 @@ function normalizeTrocaEndereco(
 function normalizeSuspensaoContrato(
 	record: SuspensaoContratoWithResponsibles,
 ): KanbanDashboardCard {
-	const status =
-		record.f_status as import("./kanban-dashboard-types").SuspensaoContratoOverrideStatus;
+	const status = record.f_status;
 	const unifiedStatus = mapSuspensaoContratoStatus(status);
 	const responsible = record.f_responsavel ?? record.createdBy ?? null;
 	return {
@@ -280,7 +299,7 @@ function normalizeSuspensaoContrato(
 function normalizeNegociacao(
 	record: NegociacoesWithVendedor,
 ): KanbanDashboardCard {
-	const status = record.f_status as NegociacaoOverrideStatus;
+	const status = record.f_status;
 	const unifiedStatus = mapNegociacaoStatus(status);
 	return {
 		sourceCollection: "neg",

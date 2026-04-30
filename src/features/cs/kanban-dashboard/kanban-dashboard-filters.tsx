@@ -2,14 +2,15 @@ import { useId, useRef } from "react";
 import {
 	FilterActions,
 	FilterBadgeGroup,
-	FilterBadgeGroupWithMore,
 	FilterInputField,
 	FilterLayout,
 	flushFilters,
 } from "#/components/filters";
+import { Label } from "#/components/ui/label";
+import { Switch } from "#/components/ui/switch";
 import type {
 	KanbanDashboardFilters,
-	NegociacaoMotivo,
+	NegociacoesMotivo,
 	SourceCollection,
 } from "./kanban-dashboard-types";
 import {
@@ -91,7 +92,7 @@ export function KanbanDashboardFilterBar({
 	};
 
 	const handleTipoNegociacaoChange = (
-		value: NegociacaoMotivo[] | undefined,
+		value: NegociacoesMotivo[] | undefined,
 	) => {
 		onFilter({ ...filters, tipoNegociacao: value });
 	};
@@ -130,7 +131,7 @@ export function KanbanDashboardFilterBar({
 					compact
 					showAllButton={false}
 				/>
-				<FilterBadgeGroupWithMore<NegociacaoMotivo>
+				<FilterBadgeGroup<NegociacoesMotivo>
 					label="Tipo de Negociação"
 					options={PRIMARY_NEGOCIACAO_OPTIONS}
 					extraOptions={EXTRA_NEGOCIACAO_OPTIONS}
@@ -140,6 +141,16 @@ export function KanbanDashboardFilterBar({
 					disabled={!showNegociacaoFilter}
 					showAllButton={false}
 				/>
+				<div className="flex items-center gap-2 pt-6">
+					<Switch
+						id="current-user-toggle"
+						checked={filters.currentUser === true}
+						onCheckedChange={(checked) =>
+							onFilter({ ...filters, currentUser: checked || undefined })
+						}
+					/>
+					<Label htmlFor="current-user-toggle">Apenas meus itens</Label>
+				</div>
 			</FilterLayout>
 		</div>
 	);

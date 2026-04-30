@@ -3,20 +3,24 @@ import type { BadgeOption } from "#/components/filters";
 import type {
 	CrmTrocaTitularidade,
 	CrmTrocaTitularidadeRelations,
+	CrmTrocaTitularidadeStatus,
 } from "#/generated/types/nocobase/crm-troca-titularidade";
 import {
 	NEGOCIACOES_MOTIVO_LABELS,
 	type Negociacoes,
+	type NegociacoesMotivo,
 	type NegociacoesRelations,
 	type NegociacoesStatus,
 } from "#/generated/types/nocobase/negociacoes";
 import type {
 	SuspensaoContrato,
 	SuspensaoContratoRelations,
+	SuspensaoContratoStatus,
 } from "#/generated/types/nocobase/suspensao-contrato";
 import type {
 	TrocaEndereco,
 	TrocaEnderecoRelations,
+	TrocaEnderecoStatus,
 } from "#/generated/types/nocobase/troca-endereco";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -66,12 +70,12 @@ export type UnifiedStatusKey = (typeof UNIFIED_STATUS_COLUMNS)[number]["key"];
 // "neg" (Negociação) is included here and controlled by this filter
 export type SourceCollection = "tt" | "te" | "sc" | "neg";
 
+export type { NegociacoesMotivo };
 // Tipo de negociação options derived from f_motivo field
 export { NEGOCIACOES_MOTIVO_LABELS };
-export type NegociacaoMotivo = keyof typeof NEGOCIACOES_MOTIVO_LABELS;
 
 // Primary tipo de negociação options (always visible in filter)
-export const PRIMARY_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacaoMotivo[] = [
+export const PRIMARY_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacoesMotivo[] = [
 	"N",
 	"I",
 	"S",
@@ -79,14 +83,8 @@ export const PRIMARY_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacaoMotivo[] = [
 ] as const;
 
 // Extra tipo de negociação options (hidden by default, shown in "+" badge)
-export const EXTRA_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacaoMotivo[] =
+export const EXTRA_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacoesMotivo[] =
 	[] as const;
-
-// SC actual API values: "0"|"1"|"2"|"3"|"4" (matches generated SuspensaoContratoStatus)
-export type SuspensaoContratoOverrideStatus = "0" | "1" | "2" | "3" | "4";
-
-// Negotiation status type (matches generated NegociacoesStatus)
-export type NegociacaoOverrideStatus = NegociacoesStatus;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Collection badge colors
@@ -122,7 +120,7 @@ export const SOURCE_COLLECTION_BADGE: Record<SourceCollection, BadgeStyle> = {
 };
 
 // Badge styles for negotiation types (motivo)
-export const NEGOCIACAO_MOTIVO_BADGE: Record<NegociacaoMotivo, BadgeStyle> = {
+export const NEGOCIACAO_MOTIVO_BADGE: Record<NegociacoesMotivo, BadgeStyle> = {
 	I: {
 		label: "Venda Nova",
 		colorClass:
@@ -183,36 +181,21 @@ export const NEGOCIACAO_MOTIVO_BADGE: Record<NegociacaoMotivo, BadgeStyle> = {
 	},
 };
 
-export const SOURCE_COLLECTION_OPTIONS: BadgeOption<SourceCollection>[] = [
-	{
-		value: "tt",
-		label: "Troca Titularidade",
-		colorClass: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-		bgClass: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-	},
-	{
-		value: "te",
-		label: "Troca Endereço",
-		colorClass:
-			"bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
-		bgClass:
-			"bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
-	},
-	{
-		value: "sc",
-		label: "Suspensão de Contrato",
-		colorClass:
-			"bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
-		bgClass:
-			"bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
-	},
-	{
-		value: "neg",
-		label: "Negociação",
-		colorClass: "bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200",
-		bgClass: "bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200",
-	},
-];
+const SOURCE_COLLECTION_OPTION_LABELS = {
+	tt: "Troca Titularidade",
+	te: "Troca Endereço",
+	sc: "Suspensão de Contrato",
+	neg: "Negociação",
+} as const satisfies Record<SourceCollection, string>;
+
+export const SOURCE_COLLECTION_OPTIONS: BadgeOption<SourceCollection>[] = (
+	Object.entries(SOURCE_COLLECTION_BADGE) as [SourceCollection, BadgeStyle][]
+).map(([value, style]) => ({
+	value,
+	label: SOURCE_COLLECTION_OPTION_LABELS[value],
+	colorClass: style.colorClass,
+	bgClass: style.bgClass,
+}));
 
 export type { BadgeOption };
 
@@ -226,7 +209,7 @@ export type KanbanDashboardCard =
 			id: number;
 			displayName: string;
 			createdAt: string;
-			status: CrmTrocaTitularidade["f_status"];
+			status: CrmTrocaTitularidadeStatus;
 			unifiedStatus: UnifiedStatusKey;
 			responsibleName: string | null;
 			responsibleId: number | null;
@@ -237,7 +220,7 @@ export type KanbanDashboardCard =
 			id: number;
 			displayName: string;
 			createdAt: string;
-			status: TrocaEndereco["f_status"];
+			status: TrocaEnderecoStatus;
 			unifiedStatus: UnifiedStatusKey;
 			responsibleName: string | null;
 			responsibleId: number | null;
@@ -248,7 +231,7 @@ export type KanbanDashboardCard =
 			id: number;
 			displayName: string;
 			createdAt: string;
-			status: SuspensaoContratoOverrideStatus;
+			status: SuspensaoContratoStatus;
 			unifiedStatus: UnifiedStatusKey;
 			responsibleName: string | null;
 			responsibleId: number | null;
@@ -259,7 +242,7 @@ export type KanbanDashboardCard =
 			id: number;
 			displayName: string;
 			createdAt: string;
-			status: NegociacaoOverrideStatus;
+			status: NegociacoesStatus;
 			unifiedStatus: UnifiedStatusKey;
 			responsibleName: string | null;
 			responsibleId: number | null;
@@ -271,9 +254,9 @@ export type KanbanDashboardCard =
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function mapTrocaTitularidadeStatus(
-	status: CrmTrocaTitularidade["f_status"],
+	status: CrmTrocaTitularidadeStatus,
 ): UnifiedStatusKey {
-	const mapping: Record<CrmTrocaTitularidade["f_status"], UnifiedStatusKey> = {
+	const mapping: Record<CrmTrocaTitularidadeStatus, UnifiedStatusKey> = {
 		"0": "Novo",
 		"1": "Assinatura",
 		"2": "Em Andamento",
@@ -284,9 +267,9 @@ export function mapTrocaTitularidadeStatus(
 }
 
 export function mapTrocaEnderecoStatus(
-	status: TrocaEndereco["f_status"],
+	status: TrocaEnderecoStatus,
 ): UnifiedStatusKey {
-	const mapping: Record<TrocaEndereco["f_status"], UnifiedStatusKey> = {
+	const mapping: Record<TrocaEnderecoStatus, UnifiedStatusKey> = {
 		"1": "Novo",
 		"3": "Em Andamento",
 		"4": "Em Andamento",
@@ -297,9 +280,9 @@ export function mapTrocaEnderecoStatus(
 }
 
 export function mapSuspensaoContratoStatus(
-	status: SuspensaoContratoOverrideStatus,
+	status: SuspensaoContratoStatus,
 ): UnifiedStatusKey {
-	const mapping: Record<SuspensaoContratoOverrideStatus, UnifiedStatusKey> = {
+	const mapping: Record<SuspensaoContratoStatus, UnifiedStatusKey> = {
 		"0": "Novo",
 		"1": "Assinatura",
 		"2": "Assinatura",
@@ -310,9 +293,9 @@ export function mapSuspensaoContratoStatus(
 }
 
 export function mapNegociacaoStatus(
-	status: NegociacaoOverrideStatus,
+	status: NegociacoesStatus,
 ): UnifiedStatusKey {
-	const mapping: Record<NegociacaoOverrideStatus, UnifiedStatusKey> = {
+	const mapping: Record<NegociacoesStatus, UnifiedStatusKey> = {
 		"1": "Novo",
 		"2": "Em Andamento",
 		"3": "Assinatura",
@@ -374,5 +357,10 @@ export interface KanbanDashboardFilters {
 	searchTerm?: string;
 	responsibleName?: string;
 	responsibleId?: number;
-	tipoNegociacao?: NegociacaoMotivo[];
+	tipoNegociacao?: NegociacoesMotivo[];
+	/**
+	 * When true, filters are scoped to the current authenticated user.
+	 * The hooks will override responsibleId with authStore.state.user?.id.
+	 */
+	currentUser?: boolean;
 }

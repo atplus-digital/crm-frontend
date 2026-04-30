@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/page-layout/page-layout";
-import { authStore } from "#/features/auth";
 import { KanbanBoard } from "#/features/cs/kanban-dashboard/kanban-board";
 import { KanbanDashboardFilterBar } from "#/features/cs/kanban-dashboard/kanban-dashboard-filters";
 import { useKanbanDashboardData } from "#/features/cs/kanban-dashboard/kanban-dashboard-hooks";
@@ -9,7 +8,7 @@ import type { KanbanDashboardFilters as FiltersType } from "#/features/cs/kanban
 
 export function KanbanDashboardPage() {
 	const [filters, setFilters] = useState<FiltersType>(() => ({
-		responsibleId: authStore.state.user?.id,
+		currentUser: true,
 	}));
 	const { cards, isLoading, error } = useKanbanDashboardData(filters);
 
