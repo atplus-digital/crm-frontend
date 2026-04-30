@@ -44,7 +44,7 @@ export class CustomRequestsApiClient extends NocoBaseApiClient {
 			},
 		});
 
-		this.logger.info(`Total: ${allEntries.length} custom requests`);
+		this.logger.debug(`Total: ${allEntries.length} custom requests`);
 		return allEntries;
 	}
 

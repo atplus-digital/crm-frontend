@@ -10,20 +10,12 @@ import type { ListrTask } from "listr2";
 import { DEFAULT_TASK_RENDERER_OPTIONS } from "./defaults";
 import type { GeneratorContext, GeneratorTask } from "./types";
 
-interface BufferedStepLogs {
-	persistent: string[];
-}
-
-function appendStepLog(
+function getPersistentLogLine(
 	entry: LogEntry,
 	minimumPersistentLevel: ReturnType<Logger["getLevel"]>,
-	buffer: BufferedStepLogs,
-): void {
-	const line = formatPersistentLog(entry);
-
-	if (shouldPersistLog(entry, minimumPersistentLevel)) {
-		buffer.persistent.push(line);
-	}
+): string | null {
+	if (!shouldPersistLog(entry, minimumPersistentLevel)) return null;
+	return formatPersistentLog(entry);
 }
 
 export function createListrTask<TContext extends object>(
@@ -35,13 +27,12 @@ export function createListrTask<TContext extends object>(
 	return {
 		title: `[${index + 1}/${total}] ${step.title}`,
 		task: async (context, task) => {
-			const buffer: BufferedStepLogs = { persistent: [] };
 			const logger = context.logger;
 			const minimumPersistentLevel = logger.getLevel();
 
 			const renderStepLogs = (entry: LogEntry): void => {
-				appendStepLog(entry, minimumPersistentLevel, buffer);
-				task.output = buffer.persistent.join("\n");
+				const line = getPersistentLogLine(entry, minimumPersistentLevel);
+				if (line) task.output = line;
 			};
 
 			try {
