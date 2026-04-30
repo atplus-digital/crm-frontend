@@ -52,7 +52,7 @@ export function generateIndexFileWithReexports(
  * Gera index.ts com re-exports de TODAS as collections disponíveis.
  * Cada collection é exportada do seu próprio arquivo.
  */
-export function generateIndexWithAllExports(
+function generateIndexWithAllExports(
 	allCollectionNames: readonly string[],
 	baseInterfaceNaming: BaseInterfaceNamingConfig,
 ): string {

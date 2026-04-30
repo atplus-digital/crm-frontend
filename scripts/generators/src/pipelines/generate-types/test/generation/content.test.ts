@@ -4,6 +4,7 @@ import type {
 } from "@scripts/generators/src/pipelines/generate-types/@types/generation";
 import {
 	generateCollectionBaseInterface,
+	generateCollectionInterfaces,
 	generateCollectionRelationKeyType,
 	generateCollectionRelationsInterface,
 	generateCollectionTypes,
@@ -149,6 +150,26 @@ describe("content", () => {
 			expect(result).toContain("export type");
 			expect(result).toContain("RelationKey =");
 			expect(result).toContain("keyof");
+		});
+	});
+
+	describe("generateCollectionInterfaces", () => {
+		it("orquestra base, relations e relation key em uma saída única", () => {
+			const types = createMockGeneratedTypes(
+				{ id: "number" },
+				{
+					departamento: { targetCollection: "departments", type: "belongsTo" },
+				},
+			);
+			const result = generateCollectionInterfaces("users", types);
+
+			expect(result.baseInterface).toContain("export interface UsersBase");
+			expect(result.relationsInterface).toContain(
+				"export interface UsersRelations",
+			);
+			expect(result.relationKeyType).toContain(
+				"export type UsersRelationKey = keyof UsersRelations;",
+			);
 		});
 	});
 

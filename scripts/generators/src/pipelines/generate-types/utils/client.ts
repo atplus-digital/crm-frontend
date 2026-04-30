@@ -1,7 +1,8 @@
+import { HttpResponseError } from "@scripts/generators/src/lib/http-client";
+import { NocoBaseApiClient } from "@scripts/generators/src/lib/nocobase-client";
 import type {
 	NocoBaseCollectionResponse,
 	NocoBaseCollectionsListResponse,
-	NocoBaseCredentials,
 	NocoBaseField,
 } from "@scripts/generators/src/pipelines/generate-types/@types/nocobase";
 import type {
@@ -21,33 +22,11 @@ interface AggregateResponse {
 	data?: Array<Record<string, unknown>>;
 }
 
-class HttpResponseError extends Error {
-	public constructor(
-		public readonly status: number,
-		public readonly statusText: string,
-		public readonly requestUrl: string,
-		bodySuffix: string,
-	) {
-		super(`HTTP ${status} ${statusText} em ${requestUrl}${bodySuffix}`);
-	}
-}
-
-interface NocoBaseClientOptions {
-	requestHeaders?: Record<string, string>;
-}
-
 /**
  * Ordena array de objetos por propriedade 'name' (ordem alfabética).
  */
 function sortByName<T extends { name: string }>(items: T[]): T[] {
 	return [...items].sort((a, b) => a.name.localeCompare(b.name));
-}
-
-/**
- * Retorna preview do body de erro HTTP (primeiros 200 caracteres, sem quebras de linha).
- */
-function getErrorBodyPreview(rawBody: string): string {
-	return rawBody.replaceAll(/\s+/g, " ").trim().slice(0, 200);
 }
 
 /**
@@ -65,19 +44,10 @@ function getErrorBodyPreview(rawBody: string): string {
  * const fields = await client.fetchCollectionFields("users");
  * ```
  */
-export class NocoBaseDataSourceClient implements DataSourceClient {
-	public readonly baseUrl: string;
-
-	private readonly requestHeaders?: Record<string, string>;
-
-	public constructor(
-		private readonly credentials: NocoBaseCredentials,
-		options?: NocoBaseClientOptions,
-	) {
-		this.baseUrl = credentials.baseUrl;
-		this.requestHeaders = options?.requestHeaders;
-	}
-
+export class NocoBaseDataSourceClient
+	extends NocoBaseApiClient
+	implements DataSourceClient
+{
 	public async fetchCollections(): Promise<DataSourceCollection[]> {
 		const response = await this.fetchJson<NocoBaseCollectionsListResponse>(
 			"collections:list?paginate=false",
@@ -244,51 +214,6 @@ export class NocoBaseDataSourceClient implements DataSourceClient {
 			return [...new Set(values)].sort((a, b) => a.localeCompare(b));
 		} catch {
 			return [];
-		}
-	}
-
-	private async fetchJson<T>(resourcePath: string): Promise<T> {
-		const url = `${this.credentials.baseUrl}/${resourcePath}`;
-		const controller = new AbortController();
-		const timeout = setTimeout(
-			() => controller.abort(),
-			this.credentials.timeoutMs,
-		);
-
-		try {
-			const response = await fetch(url, {
-				headers: {
-					Authorization: `Bearer ${this.credentials.token}`,
-					...(this.requestHeaders ?? {}),
-				},
-				signal: controller.signal,
-			});
-
-			if (!response.ok) {
-				const body = await response.text().catch(() => "");
-				const bodySuffix = body
-					? ` - resposta: ${getErrorBodyPreview(body)}`
-					: "";
-
-				throw new HttpResponseError(
-					response.status,
-					response.statusText,
-					url,
-					bodySuffix,
-				);
-			}
-
-			return (await response.json()) as T;
-		} catch (error) {
-			if (error instanceof DOMException && error.name === "AbortError") {
-				throw new Error(
-					`Timeout de ${this.credentials.timeoutMs}ms ao acessar ${url}`,
-				);
-			}
-
-			throw error;
-		} finally {
-			clearTimeout(timeout);
 		}
 	}
 }

@@ -1,16 +1,15 @@
-import {
-	applyWorkspaceLockIfNeeded as _applyWorkspaceLockIfNeeded,
-	isWorkspaceLocked as _isWorkspaceLocked,
-} from "@scripts/generators/src/lib/workspace-locker";
 import { config } from "@scripts/generators/src/pipelines/generate-custom-requests/config";
+import { createWorkspaceLockerAdapter } from "@scripts/generators/src/utils/workspace-locker-adapter";
 
-const outputDirs = [config.outputDir];
-const lockWorkspaceFolder = config.lockWorkspaceFolder ?? false;
+const workspaceLocker = createWorkspaceLockerAdapter({
+	getOutputDirs: () => [config.outputDir],
+	isLockEnabled: () => config.lockWorkspaceFolder ?? false,
+});
 
-export function isWorkspaceLocked(): boolean {
-	return _isWorkspaceLocked(outputDirs);
+function isWorkspaceLocked(): boolean {
+	return workspaceLocker.isWorkspaceLocked();
 }
 
 export function applyWorkspaceLockIfNeeded(): void {
-	_applyWorkspaceLockIfNeeded(outputDirs, lockWorkspaceFolder);
+	workspaceLocker.applyWorkspaceLockIfNeeded();
 }

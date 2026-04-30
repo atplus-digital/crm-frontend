@@ -25,6 +25,7 @@ export {
 // Interface functions
 export {
 	generateCollectionBaseInterface,
+	generateCollectionInterfaces,
 	generateCollectionRelationKeyType,
 	generateCollectionRelationsInterface,
 } from "./content-interfaces";

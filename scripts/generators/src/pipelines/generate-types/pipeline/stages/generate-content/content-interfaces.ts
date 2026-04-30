@@ -12,6 +12,12 @@ import { getScalarFieldType } from "./content-enums";
 import { _sortMapEntries, _sortScalarEntries } from "./content-sorting";
 import { getRelationCardinality, renderRelationValueType } from "./relations";
 
+export interface CollectionInterfacesOutput {
+	baseInterface: string;
+	relationsInterface: string;
+	relationKeyType: string;
+}
+
 function _renderRelationFieldType(
 	relation: RelationInfo,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
@@ -97,4 +103,28 @@ export function generateCollectionRelationKeyType(
 	lines.push(`export type ${typeName}RelationKey =`);
 	lines.push(`\tkeyof ${typeName}Relations;`);
 	return lines.join("\n");
+}
+
+/**
+ * Orquestra a geração completa dos contratos de interface de uma collection.
+ * Mantém a ordem de saída usada pelo pipeline de conteúdo.
+ */
+export function generateCollectionInterfaces(
+	collectionName: string,
+	types: GeneratedTypes,
+	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
+): CollectionInterfacesOutput {
+	return {
+		baseInterface: generateCollectionBaseInterface(
+			collectionName,
+			types,
+			baseInterfaceNaming,
+		),
+		relationsInterface: generateCollectionRelationsInterface(
+			collectionName,
+			types,
+			baseInterfaceNaming,
+		),
+		relationKeyType: generateCollectionRelationKeyType(collectionName),
+	};
 }

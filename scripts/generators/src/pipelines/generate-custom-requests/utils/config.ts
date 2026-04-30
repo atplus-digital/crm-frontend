@@ -1,8 +1,6 @@
 import {
-	createNocoBaseEnvSchema,
-	formatZodError,
-	loadEnvFiles,
 	resolveLogLevel,
+	resolveNocoBaseEnv,
 } from "@scripts/generators/src/utils/env-config";
 import type {
 	ManualRegistryEntry,
@@ -59,15 +57,10 @@ function validateManualRequests(
 export function parseConfig(
 	overrideConfig: Partial<ScriptConfig> = {},
 ): ScriptConfig {
-	const envPaths = loadEnvFiles(".env.local");
-	const envSchema = createNocoBaseEnvSchema(15_000);
-	const parsed = envSchema.safeParse(process.env);
-
-	if (!parsed.success) {
-		throw new Error(
-			`Variáveis de ambiente inválidas após carregar ${envPaths.join(" e ")}: ${formatZodError(parsed.error)}`,
-		);
-	}
+	const parsed = resolveNocoBaseEnv({
+		defaultEnvPath: ".env.local",
+		defaultTimeoutMs: 15_000,
+	});
 
 	const requests = validateRequests(overrideConfig.requests ?? {});
 	const manualRequests = validateManualRequests(
@@ -77,9 +70,9 @@ export function parseConfig(
 	const logLevel = resolveLogLevel(overrideConfig.logLevel);
 
 	return {
-		baseUrl: parsed.data.CRM_NOCOBASE_URL,
-		token: parsed.data.CRM_NOCOBASE_TOKEN,
-		timeoutMs: parsed.data.CRM_NOCOBASE_TIMEOUT_MS,
+		baseUrl: parsed.baseUrl,
+		token: parsed.token,
+		timeoutMs: parsed.timeoutMs,
 		logLevel: logLevel,
 		outputDir: "src/generated/custom-requests",
 		generateAnalysisReport: true,

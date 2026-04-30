@@ -3,112 +3,81 @@ import {
 	createGenerator,
 	runGeneratorCli,
 } from "@scripts/generators/run-generator";
-import { createAtomicWriteSession } from "@scripts/generators/src/lib/atomic-writer";
-import { logger } from "@scripts/generators/src/lib/logger";
-import type { CustomRequestApiEntry } from "./@types/custom-request-api";
-import type { GeneratedRegistryEntry } from "./@types/generated-registry";
-import { CustomRequestsApiClient } from "./api/client";
-import { config } from "./config";
+import type { ScriptConfig } from "./@types/script-config";
 import {
-	collectAnalysisReport,
-	transformAllEntries,
-} from "./transformer/entry-transformer";
-import { parseConfig } from "./utils/config";
-import { mergeRegistries } from "./utils/merge-registries";
-import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
-import { writeAnalysisReport } from "./writer/analysis-writer";
-import { writeGeneratedRegistry } from "./writer/registry-writer";
-import { writeAllSplitFiles } from "./writer/split-writer";
+	assertGenerateCustomRequestsResult,
+	createGenerateCustomRequestsExecutionContext,
+	lockGenerateCustomRequestsWorkspace,
+	runFetchEntriesOrchestrationStage,
+	runLoadConfigOrchestrationStage,
+	runTransformAndMergeOrchestrationStage,
+	runWriteAnalysisReportOrchestrationStage,
+	runWriteOutputOrchestrationStage,
+} from "./generate-custom-requests";
 
 export { config } from "./config";
 
-interface CustomRequestsGeneratorContext {
-	entries: CustomRequestApiEntry[];
-	transformedEntries: GeneratedRegistryEntry[];
-	mergedEntries: GeneratedRegistryEntry[];
+interface GenerateCustomRequestsGeneratorContext {
+	overrideConfig?: Partial<ScriptConfig>;
+	executionContext?: ReturnType<
+		typeof createGenerateCustomRequestsExecutionContext
+	>;
 }
 
-const initialContext: CustomRequestsGeneratorContext = {
-	entries: [],
-	transformedEntries: [],
-	mergedEntries: [],
-};
-
-const generateCustomRequests = createGenerator<CustomRequestsGeneratorContext>(
-	"generate-custom-requests",
-	initialContext,
-)
-	.addStep("validate-config", () => {
-		try {
-			parseConfig();
-		} catch (error) {
-			logger.error(
-				`Config inválida: ${error instanceof Error ? error.message : String(error)}`,
+const generateCustomRequests =
+	createGenerator<GenerateCustomRequestsGeneratorContext>(
+		"generate-custom-requests",
+		{},
+	)
+		.addStep("prepare-context", (context) => {
+			context.executionContext = createGenerateCustomRequestsExecutionContext(
+				context.overrideConfig,
 			);
-			process.exit(1);
-		}
-	})
-	.addStep("lock-workspace", () => {
-		applyWorkspaceLockIfNeeded();
-	})
-	.addStep("fetch-entries", async (context) => {
-		logger.info("Iniciando geração de custom requests...");
-		const client = new CustomRequestsApiClient(config);
-		context.entries = await client.fetchAllCustomRequests();
-		logger.info(`${context.entries.length} entradas encontradas na API`);
-	})
-	.addStep("write-analysis-report", (context) => {
-		if (!config.generateAnalysisReport) return;
-		const analysisReport = collectAnalysisReport(context.entries);
-		writeAnalysisReport(analysisReport);
-	})
-	.addStep("transform-and-merge", (context) => {
-		context.transformedEntries = transformAllEntries(context.entries);
-		logger.info(
-			`${context.transformedEntries.length} entradas válidas após transformação`,
-		);
+		})
+		.addStep("lock-workspace", () => {
+			lockGenerateCustomRequestsWorkspace();
+		})
+		.addStep("load-config", async (context) => {
+			if (!context.executionContext) {
+				throw new Error("Contexto de execução não inicializado");
+			}
 
-		context.mergedEntries = mergeRegistries(
-			context.transformedEntries,
-			config.manualRequests,
-		);
-		logger.info(
-			`${context.mergedEntries.length} entradas após merge com ${config.manualRequests.length} manuais`,
-		);
-	})
-	.addStep("write-output", async (context) => {
-		if (context.mergedEntries.length === 0) {
-			logger.warn("Nenhuma entrada válida para escrever. Pulando escrita.");
-			return;
-		}
+			await runLoadConfigOrchestrationStage(context.executionContext);
+		})
+		.addStep("fetch-entries", async (context) => {
+			if (!context.executionContext) {
+				throw new Error("Contexto de execução não inicializado");
+			}
 
-		const atomicSession = createAtomicWriteSession({
-			outputDir: config.outputDir,
-			label: "generate-custom-requests",
+			await runFetchEntriesOrchestrationStage(context.executionContext);
+		})
+		.addStep("write-analysis-report", async (context) => {
+			if (!context.executionContext) {
+				throw new Error("Contexto de execução não inicializado");
+			}
+
+			await runWriteAnalysisReportOrchestrationStage(context.executionContext);
+		})
+		.addStep("transform-and-merge", async (context) => {
+			if (!context.executionContext) {
+				throw new Error("Contexto de execução não inicializado");
+			}
+
+			await runTransformAndMergeOrchestrationStage(context.executionContext);
+		})
+		.addStep("write-output", async (context) => {
+			if (!context.executionContext) {
+				throw new Error("Contexto de execução não inicializado");
+			}
+
+			await runWriteOutputOrchestrationStage(context.executionContext);
+		})
+		.addStep("assert-result", (context) => {
+			if (!context.executionContext) {
+				throw new Error("Contexto de execução não inicializado");
+			}
+
+			assertGenerateCustomRequestsResult(context.executionContext);
 		});
-		atomicSession.backup();
-
-		await writeGeneratedRegistry(
-			context.mergedEntries,
-			config.outputDir,
-			config.requests,
-		);
-		logger.info("Arquivo gerado com sucesso!");
-
-		writeAllSplitFiles(
-			context.mergedEntries,
-			config.requests,
-			config.outputDir,
-		);
-		logger.info("Split files processados com sucesso!");
-
-		const validated = await atomicSession.validateAndFinalize();
-		if (!validated) {
-			logger.error(
-				"Validação falhou — arquivos originais restaurados. Corrija os erros e tente novamente.",
-			);
-			process.exit(1);
-		}
-	});
 
 void runGeneratorCli(generateCustomRequests);

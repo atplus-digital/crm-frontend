@@ -94,3 +94,40 @@ export function formatZodError(error: z.ZodError): string {
 		})
 		.join("; ");
 }
+
+export function buildEnvValidationErrorMessage(
+	envPaths: string[],
+	error: z.ZodError,
+): string {
+	return `Variáveis de ambiente inválidas após carregar ${envPaths.join(" e ")}: ${formatZodError(error)}`;
+}
+
+interface ResolvedNocoBaseEnv {
+	baseUrl: string;
+	token: string;
+	timeoutMs: number;
+	loadedEnvPaths: string[];
+}
+
+export function resolveNocoBaseEnv(options: {
+	defaultEnvPath: string;
+	defaultTimeoutMs: number;
+}): ResolvedNocoBaseEnv {
+	const loadedEnvPaths = loadEnvFiles(options.defaultEnvPath);
+	const parsed = createNocoBaseEnvSchema(options.defaultTimeoutMs).safeParse(
+		process.env,
+	);
+
+	if (!parsed.success) {
+		throw new Error(
+			buildEnvValidationErrorMessage(loadedEnvPaths, parsed.error),
+		);
+	}
+
+	return {
+		baseUrl: parsed.data.CRM_NOCOBASE_URL,
+		token: parsed.data.CRM_NOCOBASE_TOKEN,
+		timeoutMs: parsed.data.CRM_NOCOBASE_TIMEOUT_MS,
+		loadedEnvPaths,
+	};
+}

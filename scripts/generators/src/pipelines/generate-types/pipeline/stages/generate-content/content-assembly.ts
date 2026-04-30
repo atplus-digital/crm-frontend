@@ -8,11 +8,7 @@ import {
 	generateCollectionEnumMaps,
 	generateCollectionEnums,
 } from "./content-enums";
-import {
-	generateCollectionBaseInterface,
-	generateCollectionRelationKeyType,
-	generateCollectionRelationsInterface,
-} from "./content-interfaces";
+import { generateCollectionInterfaces } from "./content-interfaces";
 import { _sortMapEntries, _sortScalarEntries } from "./content-sorting";
 
 /**
@@ -69,23 +65,20 @@ export function generateCollectionTypes(
 	}
 
 	// 3. Interface Base
-	lines.push(
-		generateCollectionBaseInterface(collectionName, types, baseInterfaceNaming),
+	const interfaces = generateCollectionInterfaces(
+		collectionName,
+		types,
+		baseInterfaceNaming,
 	);
+	lines.push(interfaces.baseInterface);
 	lines.push("");
 
 	// 4. Relations
-	lines.push(
-		generateCollectionRelationsInterface(
-			collectionName,
-			types,
-			baseInterfaceNaming,
-		),
-	);
+	lines.push(interfaces.relationsInterface);
 	lines.push("");
 
 	// 5. RelationKey type
-	lines.push(generateCollectionRelationKeyType(collectionName));
+	lines.push(interfaces.relationKeyType);
 
 	return lines.join("\n");
 }
