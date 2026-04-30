@@ -3,277 +3,100 @@ import {
 	formatPersistentLog,
 	type LogEntry,
 	type Logger,
-	type LogLevel,
 	runWithLogger,
 	shouldPersistLog,
 	shouldRenderLiveInTui,
 } from "@scripts/generators/src/lib/logger";
 import { Listr, type ListrTask } from "listr2";
 
-export type GeneratorStepContext<TContext extends object> = TContext & {
+export type GeneratorContext<TContext extends object> = TContext & {
 	logger: Logger;
 };
 
-export type GeneratorStepStatus = "started" | "completed" | "failed";
+type ListrTaskRunner = Parameters<NonNullable<ListrTask["task"]>>[1];
+type ListrTaskReturn = ReturnType<NonNullable<ListrTask["task"]>>;
 
-export interface GeneratorStepProgressEvent {
-	generatorName: string;
-	stepName: string;
-	stepPath: string[];
-	stepType: "task" | "pipeline";
-	status: GeneratorStepStatus;
-	index: number;
-	total: number;
-	depth: number;
-	errorMessage?: string;
-}
-
-export interface GeneratorExecutionHooks {
-	onStepProgress?: (event: GeneratorStepProgressEvent) => void;
-}
-
-export interface GeneratorProgressSnapshot {
-	generatorName: string;
-	status: "idle" | "running" | "completed" | "failed";
-	progressPercent: number;
-	totalSteps: number;
-	completedSteps: number;
-	failedSteps: number;
-	activeStepPath?: string[];
-	lastEvent?: GeneratorStepProgressEvent;
-}
-
-interface CreateGeneratorProgressTrackerOptions {
-	generatorName: string;
-	includePipelinesInProgress?: boolean;
-	onUpdate?: (snapshot: GeneratorProgressSnapshot) => void;
-}
-
-interface BufferedStepLogs {
-	persistent: string[];
-	transient: string[];
-}
-
-export interface GeneratorCliTask<TContext extends object> {
-	name: string;
-	stepPath?: string[];
-	stepType?: "task" | "pipeline";
-	depth?: number;
+export interface GeneratorTask<TContext extends object> {
+	title: string;
 	run: (
-		context: GeneratorStepContext<TContext>,
-		task: Parameters<NonNullable<ListrTask["task"]>>[1],
-	) => ReturnType<NonNullable<ListrTask["task"]>>;
+		context: GeneratorContext<TContext>,
+		task: ListrTaskRunner,
+	) => ListrTaskReturn;
+}
+
+export interface GeneratorOrchestrationStage<TExecutionContext> {
+	title: string;
+	run: (context: TExecutionContext) => Promise<void> | void;
+}
+
+export interface CreateOrchestrationTaskOptions<
+	TContext extends object,
+	TExecutionContext,
+> {
+	title?: string;
+	stages: GeneratorOrchestrationStage<TExecutionContext>[];
+	getExecutionContext: (
+		context: GeneratorContext<TContext>,
+	) => TExecutionContext;
 }
 
 export interface RunGeneratorCliOptions<TContext extends object> {
 	name: string;
 	context: TContext;
-	tasks: GeneratorCliTask<TContext>[];
+	tasks: GeneratorTask<TContext>[];
 	logger?: Logger;
-	hooks?: GeneratorExecutionHooks;
 }
 
-export interface GeneratorOrchestrationStep<TExecutionContext> {
-	name: string;
-	run: (context: TExecutionContext) => Promise<void> | void;
-}
-
-export interface CreateOrchestrationTasksOptions<
-	TContext extends object,
-	TExecutionContext,
-> {
-	stages: GeneratorOrchestrationStep<TExecutionContext>[];
-	getExecutionContext: (context: TContext) => TExecutionContext;
-	taskNamePrefix?: string;
-	stepPathPrefix?: string[];
-	depth?: number;
-}
-
-function renderStepOutput(buffer: BufferedStepLogs): string {
-	return buffer.persistent.join("\n");
-}
-
-function renderLiveOutput(buffer: BufferedStepLogs): string {
-	if (buffer.transient.length === 0) {
-		return "";
-	}
-
-	return buffer.transient[buffer.transient.length - 1] ?? "";
+interface BufferedStepLogs {
+	persistent: string[];
 }
 
 function appendStepLog(
 	entry: LogEntry,
-	minimumPersistentLevel: LogLevel,
+	minimumPersistentLevel: ReturnType<Logger["getLevel"]>,
 	buffer: BufferedStepLogs,
-): { shouldUpdateLiveOutput: boolean } {
+): string | undefined {
 	const line = formatPersistentLog(entry);
-	const shouldPersist = shouldPersistLog(entry, minimumPersistentLevel);
-	const shouldRenderLive = shouldRenderLiveInTui(entry);
 
-	if (shouldPersist) {
+	if (shouldPersistLog(entry, minimumPersistentLevel)) {
 		buffer.persistent.push(line);
 	}
 
-	if (shouldRenderLive) {
-		buffer.transient = [line];
-		return { shouldUpdateLiveOutput: true };
-	}
-
-	return { shouldUpdateLiveOutput: false };
-}
-
-function getDefaultProgressSnapshot(
-	generatorName: string,
-): GeneratorProgressSnapshot {
-	return {
-		generatorName,
-		status: "idle",
-		progressPercent: 0,
-		totalSteps: 0,
-		completedSteps: 0,
-		failedSteps: 0,
-	};
-}
-
-export function createGeneratorProgressTracker(
-	options: CreateGeneratorProgressTrackerOptions,
-): {
-	hooks: GeneratorExecutionHooks;
-	getSnapshot: () => GeneratorProgressSnapshot;
-	reset: () => void;
-} {
-	let snapshot = getDefaultProgressSnapshot(options.generatorName);
-	const stepStatuses = new Map<string, GeneratorStepStatus>();
-
-	function shouldTrack(event: GeneratorStepProgressEvent): boolean {
-		if (options.includePipelinesInProgress) {
-			return true;
-		}
-		return event.stepType === "task";
-	}
-
-	function updateProgress(event: GeneratorStepProgressEvent): void {
-		const key = event.stepPath.join(">");
-		const existingStatus = stepStatuses.get(key);
-		const isTracked = shouldTrack(event);
-
-		if (isTracked && !existingStatus) {
-			snapshot.totalSteps += 1;
-		}
-
-		if (isTracked && existingStatus !== event.status) {
-			if (event.status === "completed") {
-				snapshot.completedSteps += 1;
-			}
-			if (event.status === "failed") {
-				snapshot.failedSteps += 1;
-			}
-		}
-
-		stepStatuses.set(key, event.status);
-		snapshot.activeStepPath = event.stepPath;
-		snapshot.lastEvent = event;
-
-		if (event.status === "started") {
-			snapshot.status = "running";
-		}
-		if (event.status === "failed") {
-			snapshot.status = "failed";
-		} else if (
-			snapshot.totalSteps > 0 &&
-			snapshot.completedSteps + snapshot.failedSteps >= snapshot.totalSteps
-		) {
-			snapshot.status = snapshot.failedSteps > 0 ? "failed" : "completed";
-		}
-
-		const resolvedSteps = snapshot.completedSteps + snapshot.failedSteps;
-		snapshot.progressPercent =
-			snapshot.totalSteps === 0
-				? 0
-				: Math.round((resolvedSteps / snapshot.totalSteps) * 100);
-
-		options.onUpdate?.({ ...snapshot });
-	}
-
-	return {
-		hooks: {
-			onStepProgress: updateProgress,
-		},
-		getSnapshot: () => ({ ...snapshot }),
-		reset: () => {
-			snapshot = getDefaultProgressSnapshot(options.generatorName);
-			stepStatuses.clear();
-		},
-	};
+	return shouldRenderLiveInTui(entry) ? line : undefined;
 }
 
 function createListrTask<TContext extends object>(
 	generatorName: string,
-	context: GeneratorStepContext<TContext>,
+	context: GeneratorContext<TContext>,
 	logger: Logger,
-	hooks: GeneratorExecutionHooks | undefined,
-	step: GeneratorCliTask<TContext>,
+	step: GeneratorTask<TContext>,
 	index: number,
 	total: number,
 ): ListrTask {
-	const stepPath = step.stepPath ?? [step.name];
-	const stepType = step.stepType ?? "task";
-	const depth = step.depth ?? 0;
-
-	const emitProgress = (
-		status: GeneratorStepStatus,
-		errorMessage?: string,
-	): void => {
-		hooks?.onStepProgress?.({
-			generatorName,
-			stepName: step.name,
-			stepPath,
-			stepType,
-			status,
-			index,
-			total,
-			depth,
-			errorMessage,
-		});
-	};
-
 	return {
-		title: `[${index + 1}/${total}] ${step.name}`,
+		title: `[${index + 1}/${total}] ${step.title}`,
 		task: async (_ctx, task) => {
-			emitProgress("started");
-
-			const buffer: BufferedStepLogs = { persistent: [], transient: [] };
+			const buffer: BufferedStepLogs = { persistent: [] };
+			const minimumPersistentLevel = logger.getLevel();
 			const unsubscribe = logger.subscribe((entry) => {
-				const { shouldUpdateLiveOutput } = appendStepLog(
-					entry,
-					logger.getLevel(),
-					buffer,
-				);
-				if (shouldUpdateLiveOutput) {
-					task.output = renderLiveOutput(buffer);
+				const liveOutput = appendStepLog(entry, minimumPersistentLevel, buffer);
+				if (liveOutput) {
+					task.output = liveOutput;
 				}
 			});
 
 			try {
-				const result = await runWithLogger(
-					logger,
-					() => step.run(context, task),
-					{
-						chain: step.name,
-					},
-				);
-				emitProgress("completed");
-				return result;
+				return await runWithLogger(logger, () => step.run(context, task), {
+					chain: step.title,
+				});
 			} catch (error) {
 				const message = error instanceof Error ? error.message : String(error);
-				emitProgress("failed", message);
 				throw new Error(
-					`[${generatorName}] Falha na etapa "${step.name}": ${message}`,
+					`[${generatorName}] Falha na etapa "${step.title}": ${message}`,
 				);
 			} finally {
 				unsubscribe();
-				buffer.transient = [];
-				task.output = renderStepOutput(buffer);
+				task.output = buffer.persistent.join("\n");
 			}
 		},
 		rendererOptions: {
@@ -283,11 +106,41 @@ function createListrTask<TContext extends object>(
 	};
 }
 
+export function createOrchestrationTask<
+	TContext extends object,
+	TExecutionContext,
+>(
+	options: CreateOrchestrationTaskOptions<TContext, TExecutionContext>,
+): GeneratorTask<TContext> {
+	return {
+		title: options.title ?? "orchestration",
+		run: (context, task) =>
+			task.newListr(
+				options.stages.map((stage) => ({
+					title: stage.title,
+					task: async () => {
+						await stage.run(options.getExecutionContext(context));
+					},
+					rendererOptions: {
+						outputBar: true,
+						persistentOutput: true,
+					},
+				})),
+				{
+					concurrent: false,
+					rendererOptions: {
+						collapseSubtasks: false,
+					},
+				},
+			),
+	};
+}
+
 export function createGeneratorListr<TContext extends object>(
 	options: RunGeneratorCliOptions<TContext>,
 ): Listr {
 	const logger = options.logger ?? defaultLogger;
-	const context: GeneratorStepContext<TContext> = {
+	const context: GeneratorContext<TContext> = {
 		...options.context,
 		logger,
 	};
@@ -297,7 +150,6 @@ export function createGeneratorListr<TContext extends object>(
 			options.name,
 			context,
 			logger,
-			options.hooks,
 			step,
 			index,
 			options.tasks.length,
@@ -313,35 +165,16 @@ export function createGeneratorListr<TContext extends object>(
 	});
 }
 
-export function createOrchestrationTasks<
-	TContext extends object,
-	TExecutionContext,
->(
-	options: CreateOrchestrationTasksOptions<TContext, TExecutionContext>,
-): GeneratorCliTask<TContext>[] {
-	const taskNamePrefix = options.taskNamePrefix ?? "orchestration";
-	const stepPathPrefix = options.stepPathPrefix ?? ["orchestration"];
-	const depth = options.depth ?? 1;
-
-	return options.stages.map((stage) => ({
-		name: `${taskNamePrefix}/${stage.name}`,
-		stepPath: [...stepPathPrefix, stage.name],
-		stepType: "pipeline",
-		depth,
-		run: async (context) => {
-			await stage.run(options.getExecutionContext(context));
-		},
-	}));
-}
-
 export async function runGeneratorCli<TContext extends object>(
 	options: RunGeneratorCliOptions<TContext>,
 ): Promise<void> {
+	const logger = options.logger ?? defaultLogger;
+
 	try {
 		await createGeneratorListr(options).run();
 	} catch (error) {
 		const message = error instanceof Error ? error.message : String(error);
-		defaultLogger.error(message);
+		logger.error(message);
 		process.exit(1);
 	}
 }

@@ -1,9 +1,8 @@
 import "./config";
 import {
-	createOrchestrationTasks,
-	type GeneratorCliTask,
-	type GeneratorExecutionHooks,
-	type GeneratorOrchestrationStep,
+	createOrchestrationTask,
+	type GeneratorOrchestrationStage,
+	type GeneratorTask,
 	type RunGeneratorCliOptions,
 	runGeneratorCli,
 } from "@scripts/generators/run-generator";
@@ -32,26 +31,26 @@ type GenerateTypesExecutionContext = ReturnType<
 	typeof createGenerateTypesExecutionContext
 >;
 
-const ORCHESTRATION_STEPS: GeneratorOrchestrationStep<GenerateTypesExecutionContext>[] =
+const ORCHESTRATION_STEPS: GeneratorOrchestrationStage<GenerateTypesExecutionContext>[] =
 	[
 		{
-			name: "load-config",
+			title: "load-config",
 			run: runLoadConfigOrchestrationStage,
 		},
 		{
-			name: "resolve-datasources",
+			title: "resolve-datasources",
 			run: runResolveDatasourcesOrchestrationStage,
 		},
 		{
-			name: "run-datasources",
+			title: "run-datasources",
 			run: runDatasourcesOrchestrationStage,
 		},
 		{
-			name: "run-post-pipeline",
+			title: "run-post-pipeline",
 			run: runPostPipelineOrchestrationStage,
 		},
 		{
-			name: "format-result",
+			title: "format-result",
 			run: runFormatResultOrchestrationStage,
 		},
 	];
@@ -66,10 +65,10 @@ function getExecutionContext(
 	return context.executionContext;
 }
 
-function createGeneratorTasks(): GeneratorCliTask<GenerateTypesGeneratorContext>[] {
+function createGeneratorTasks(): GeneratorTask<GenerateTypesGeneratorContext>[] {
 	return [
 		{
-			name: "prepare-context",
+			title: "prepare-context",
 			run: (context) => {
 				context.executionContext = createGenerateTypesExecutionContext(
 					context.overrideConfig,
@@ -78,29 +77,30 @@ function createGeneratorTasks(): GeneratorCliTask<GenerateTypesGeneratorContext>
 			},
 		},
 		{
-			name: "lock-workspace",
+			title: "lock-workspace",
 			run: () => {
 				lockGenerateTypesWorkspace();
 			},
 		},
 		{
-			name: "backup-outputs",
+			title: "backup-outputs",
 			run: (context) => {
 				backupGenerateTypesOutputs(getExecutionContext(context));
 			},
 		},
-		...createOrchestrationTasks({
+		createOrchestrationTask({
+			title: "orchestration",
 			stages: ORCHESTRATION_STEPS,
 			getExecutionContext,
 		}),
 		{
-			name: "assert-result",
+			title: "assert-result",
 			run: (context) => {
 				assertGenerateTypesResult(getExecutionContext(context));
 			},
 		},
 		{
-			name: "cleanup-backups",
+			title: "cleanup-backups",
 			run: (context) => {
 				cleanupGenerateTypesBackups(getExecutionContext(context));
 			},
@@ -108,14 +108,11 @@ function createGeneratorTasks(): GeneratorCliTask<GenerateTypesGeneratorContext>
 	];
 }
 
-export function createGenerateTypesGenerator(
-	hooks?: GeneratorExecutionHooks,
-): RunGeneratorCliOptions<GenerateTypesGeneratorContext> {
+export function createGenerateTypesGenerator(): RunGeneratorCliOptions<GenerateTypesGeneratorContext> {
 	return {
 		name: "generate-types",
 		context: {},
 		tasks: createGeneratorTasks(),
-		hooks,
 	};
 }
 

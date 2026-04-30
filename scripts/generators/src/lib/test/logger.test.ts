@@ -1,6 +1,7 @@
 import {
 	createLogger,
 	formatPersistentLog,
+	type LogEntry,
 	logger,
 	runWithLogger,
 	shouldPersistLog,
@@ -118,20 +119,20 @@ describe("logger", () => {
 
 	describe("persist and live rules", () => {
 		it("should persist log entries based on configured level", () => {
-			const infoEntry = {
+			const infoEntry: LogEntry = {
 				level: "info",
 				message: "info",
 				formattedMessage: "[INFO] info",
 				chainPath: ["step"],
 				chainDepth: 1,
-			} as const;
-			const warnEntry = {
+			};
+			const warnEntry: LogEntry = {
 				level: "warn",
 				message: "warn",
 				formattedMessage: "[WARN] warn",
 				chainPath: ["step"],
 				chainDepth: 1,
-			} as const;
+			};
 
 			expect(shouldPersistLog(infoEntry, "info")).toBe(true);
 			expect(shouldPersistLog(infoEntry, "warn")).toBe(false);
@@ -139,20 +140,20 @@ describe("logger", () => {
 		});
 
 		it("should render live in TUI for warn and error only", () => {
-			const infoEntry = {
+			const infoEntry: LogEntry = {
 				level: "info",
 				message: "info",
 				formattedMessage: "[INFO] info",
 				chainPath: [],
 				chainDepth: 0,
-			} as const;
-			const warnEntry = {
+			};
+			const warnEntry: LogEntry = {
 				level: "warn",
 				message: "warn",
 				formattedMessage: "[WARN] warn",
 				chainPath: [],
 				chainDepth: 0,
-			} as const;
+			};
 
 			expect(shouldRenderLiveInTui(infoEntry)).toBe(false);
 			expect(shouldRenderLiveInTui(warnEntry)).toBe(true);

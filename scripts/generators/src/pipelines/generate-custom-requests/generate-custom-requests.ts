@@ -90,16 +90,3 @@ export function assertGenerateCustomRequestsResult(
 
 	return context.pipelineContext;
 }
-
-async function runGenerateCustomRequests(
-	overrideConfig?: Partial<ScriptConfig>,
-): Promise<GenerationContext> {
-	const context = createGenerateCustomRequestsExecutionContext(overrideConfig);
-	lockGenerateCustomRequestsWorkspace();
-	await runLoadConfigOrchestrationStage(context);
-	await runFetchEntriesOrchestrationStage(context);
-	await runWriteAnalysisReportOrchestrationStage(context);
-	await runTransformAndMergeOrchestrationStage(context);
-	await runWriteOutputOrchestrationStage(context);
-	return assertGenerateCustomRequestsResult(context);
-}

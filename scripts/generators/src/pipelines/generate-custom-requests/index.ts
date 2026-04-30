@@ -1,9 +1,8 @@
 import "./config";
 import {
-	createOrchestrationTasks,
-	type GeneratorCliTask,
-	type GeneratorExecutionHooks,
-	type GeneratorOrchestrationStep,
+	createOrchestrationTask,
+	type GeneratorOrchestrationStage,
+	type GeneratorTask,
 	type RunGeneratorCliOptions,
 	runGeneratorCli,
 } from "@scripts/generators/run-generator";
@@ -32,26 +31,26 @@ type GenerateCustomRequestsExecutionContext = ReturnType<
 	typeof createGenerateCustomRequestsExecutionContext
 >;
 
-const ORCHESTRATION_STEPS: GeneratorOrchestrationStep<GenerateCustomRequestsExecutionContext>[] =
+const ORCHESTRATION_STEPS: GeneratorOrchestrationStage<GenerateCustomRequestsExecutionContext>[] =
 	[
 		{
-			name: "load-config",
+			title: "load-config",
 			run: runLoadConfigOrchestrationStage,
 		},
 		{
-			name: "fetch-entries",
+			title: "fetch-entries",
 			run: runFetchEntriesOrchestrationStage,
 		},
 		{
-			name: "write-analysis-report",
+			title: "write-analysis-report",
 			run: runWriteAnalysisReportOrchestrationStage,
 		},
 		{
-			name: "transform-and-merge",
+			title: "transform-and-merge",
 			run: runTransformAndMergeOrchestrationStage,
 		},
 		{
-			name: "write-output",
+			title: "write-output",
 			run: runWriteOutputOrchestrationStage,
 		},
 	];
@@ -66,10 +65,10 @@ function getExecutionContext(
 	return context.executionContext;
 }
 
-function createGeneratorTasks(): GeneratorCliTask<GenerateCustomRequestsGeneratorContext>[] {
+function createGeneratorTasks(): GeneratorTask<GenerateCustomRequestsGeneratorContext>[] {
 	return [
 		{
-			name: "prepare-context",
+			title: "prepare-context",
 			run: (context) => {
 				context.executionContext = createGenerateCustomRequestsExecutionContext(
 					context.overrideConfig,
@@ -78,17 +77,18 @@ function createGeneratorTasks(): GeneratorCliTask<GenerateCustomRequestsGenerato
 			},
 		},
 		{
-			name: "lock-workspace",
+			title: "lock-workspace",
 			run: () => {
 				lockGenerateCustomRequestsWorkspace();
 			},
 		},
-		...createOrchestrationTasks({
+		createOrchestrationTask({
+			title: "orchestration",
 			stages: ORCHESTRATION_STEPS,
 			getExecutionContext,
 		}),
 		{
-			name: "assert-result",
+			title: "assert-result",
 			run: (context) => {
 				assertGenerateCustomRequestsResult(getExecutionContext(context));
 			},
@@ -96,14 +96,11 @@ function createGeneratorTasks(): GeneratorCliTask<GenerateCustomRequestsGenerato
 	];
 }
 
-export function createGenerateCustomRequestsGenerator(
-	hooks?: GeneratorExecutionHooks,
-): RunGeneratorCliOptions<GenerateCustomRequestsGeneratorContext> {
+export function createGenerateCustomRequestsGenerator(): RunGeneratorCliOptions<GenerateCustomRequestsGeneratorContext> {
 	return {
 		name: "generate-custom-requests",
 		context: {},
 		tasks: createGeneratorTasks(),
-		hooks,
 	};
 }
 

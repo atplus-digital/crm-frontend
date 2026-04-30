@@ -1,3 +1,4 @@
+import { createLogger } from "@scripts/generators/src/lib/logger";
 import type { DataSourceClient } from "@scripts/generators/src/pipelines/generate-types/@types/script";
 import type { InitContext } from "@scripts/generators/src/pipelines/generate-types/pipeline/core/types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -13,6 +14,7 @@ const mockClient = {
 const createMockInitContext = (
 	overrides: Partial<InitContext> = {},
 ): InitContext => ({
+	logger: createLogger(),
 	config: {} as InitContext["config"],
 	dataSource: {
 		name: "test-ds",

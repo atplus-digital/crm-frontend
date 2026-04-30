@@ -43,7 +43,7 @@ vi.mock(
 
 const mockLinterRunBiome = vi.hoisted(() => vi.fn());
 
-vi.mock("@scripts/shared/utils/linter-runner", () => ({
+vi.mock("@scripts/generators/src/lib/linter-runner", () => ({
 	runLinterFix: mockLinterRunBiome,
 }));
 

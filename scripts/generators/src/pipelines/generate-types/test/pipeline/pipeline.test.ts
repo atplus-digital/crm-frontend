@@ -1,3 +1,4 @@
+import { createLogger } from "@scripts/generators/src/lib/logger";
 import { pipeAsync } from "@scripts/generators/src/pipelines/generate-types/pipeline/core/pipe";
 import type {
 	PipelineContext,
@@ -8,6 +9,7 @@ import { describe, expect, it } from "vitest";
 
 function makeContext(overrides?: Record<string, unknown>): PipelineContext {
 	return {
+		logger: createLogger(),
 		config: {} as never,
 		dataSource: {} as never,
 		client: {} as never,

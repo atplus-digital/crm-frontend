@@ -49,38 +49,6 @@ export function generateIndexFileWithReexports(
 }
 
 /**
- * Gera index.ts com re-exports de TODAS as collections disponíveis.
- * Cada collection é exportada do seu próprio arquivo.
- */
-function generateIndexWithAllExports(
-	allCollectionNames: readonly string[],
-	baseInterfaceNaming: BaseInterfaceNamingConfig,
-): string {
-	const header = generateFileHeader();
-
-	if (allCollectionNames.length === 0) {
-		return header;
-	}
-
-	const exports: string[] = [];
-
-	for (const collectionName of allCollectionNames) {
-		const baseTypeName = toCollectionBaseTypeName(
-			collectionName,
-			baseInterfaceNaming,
-		);
-		const typeName = deriveExportedTypeName(baseTypeName, baseInterfaceNaming);
-		const fileName = toFileName(collectionName);
-
-		exports.push(
-			`export type { ${typeName}, ${typeName}Relations, ${typeName}RelationKey } from "./${fileName}";`,
-		);
-	}
-
-	return `${[header, ...exports.sort()].join("\n")}\n`;
-}
-
-/**
  * Gera index.ts com re-exports de TODAS as collections usando paths customizados.
  * Útil quando collections estão em subpastas (ex: other/).
  *

@@ -237,7 +237,9 @@ describe("NocoBaseDataSourceClient", () => {
 				const client = new NocoBaseDataSourceClient(credentials);
 
 				const { fields } = await client.fetchCollectionFields("test");
-				const priceField = fields.find((f) => f.name === "price");
+				const priceField = fields.find(
+					(f: { name: string }) => f.name === "price",
+				);
 				expect(priceField).toEqual({
 					name: "price",
 					type: "double",
@@ -270,7 +272,9 @@ describe("NocoBaseDataSourceClient", () => {
 				const client = new NocoBaseDataSourceClient(credentials);
 
 				const { fields } = await client.fetchCollectionFields("test");
-				const isActiveField = fields.find((f) => f.name === "isActive");
+				const isActiveField = fields.find(
+					(f: { name: string }) => f.name === "isActive",
+				);
 				expect(isActiveField).toEqual({
 					name: "isActive",
 					type: "boolean",
@@ -303,7 +307,9 @@ describe("NocoBaseDataSourceClient", () => {
 				const client = new NocoBaseDataSourceClient(credentials);
 
 				const { fields } = await client.fetchCollectionFields("test");
-				const tagsField = fields.find((f) => f.name === "tags");
+				const tagsField = fields.find(
+					(f: { name: string }) => f.name === "tags",
+				);
 				expect(tagsField).toEqual({
 					name: "tags",
 					type: "array",
@@ -336,7 +342,9 @@ describe("NocoBaseDataSourceClient", () => {
 				const client = new NocoBaseDataSourceClient(credentials);
 
 				const { fields } = await client.fetchCollectionFields("test");
-				const nullField = fields.find((f) => f.name === "nullField");
+				const nullField = fields.find(
+					(f: { name: string }) => f.name === "nullField",
+				);
 				expect(nullField).toEqual({
 					name: "nullField",
 					type: "string",
@@ -369,7 +377,9 @@ describe("NocoBaseDataSourceClient", () => {
 				const client = new NocoBaseDataSourceClient(credentials);
 
 				const { fields } = await client.fetchCollectionFields("test");
-				const metadataField = fields.find((f) => f.name === "metadata");
+				const metadataField = fields.find(
+					(f: { name: string }) => f.name === "metadata",
+				);
 				expect(metadataField).toEqual({
 					name: "metadata",
 					type: "json",
@@ -402,7 +412,9 @@ describe("NocoBaseDataSourceClient", () => {
 				const client = new NocoBaseDataSourceClient(credentials);
 
 				const { fields } = await client.fetchCollectionFields("test");
-				const createdAtField = fields.find((f) => f.name === "createdAt");
+				const createdAtField = fields.find(
+					(f: { name: string }) => f.name === "createdAt",
+				);
 				expect(createdAtField).toEqual({
 					name: "createdAt",
 					type: "date",
@@ -435,7 +447,9 @@ describe("NocoBaseDataSourceClient", () => {
 				const client = new NocoBaseDataSourceClient(credentials);
 
 				const { fields } = await client.fetchCollectionFields("test");
-				const titleField = fields.find((f) => f.name === "title");
+				const titleField = fields.find(
+					(f: { name: string }) => f.name === "title",
+				);
 				expect(titleField).toEqual({
 					name: "title",
 					type: "string",
@@ -544,7 +558,9 @@ describe("NocoBaseDataSourceClient", () => {
 			const client = new NocoBaseDataSourceClient(credentials);
 
 			const { fields } = await client.fetchCollectionFields("test");
-			const optionalField = fields.find((f) => f.name === "optionalField");
+			const optionalField = fields.find(
+				(f: { name: string }) => f.name === "optionalField",
+			);
 			expect(optionalField).toEqual({
 				name: "optionalField",
 				type: "string",
@@ -577,7 +593,9 @@ describe("NocoBaseDataSourceClient", () => {
 			const client = new NocoBaseDataSourceClient(credentials);
 
 			const { fields } = await client.fetchCollectionFields("test");
-			const bigintField = fields.find((f) => f.name === "bigintField");
+			const bigintField = fields.find(
+				(f: { name: string }) => f.name === "bigintField",
+			);
 			expect(bigintField).toEqual({
 				name: "bigintField",
 				type: "string",
@@ -610,7 +628,9 @@ describe("NocoBaseDataSourceClient", () => {
 			const client = new NocoBaseDataSourceClient(credentials);
 
 			const { fields } = await client.fetchCollectionFields("test");
-			const dateField = fields.find((f) => f.name === "dateField");
+			const dateField = fields.find(
+				(f: { name: string }) => f.name === "dateField",
+			);
 			expect(dateField).toEqual({
 				name: "dateField",
 				type: "date",
