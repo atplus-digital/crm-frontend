@@ -1,3 +1,4 @@
+import { createLogger } from "@scripts/generators/src/lib/logger";
 import type { RuntimeConfig } from "@scripts/generators/src/pipelines/generate-types/@types/script";
 import { describe, expect, it, vi } from "vitest";
 
@@ -108,9 +109,9 @@ describe("runGenerateTypes", () => {
 			timeoutMs: 30_000,
 		} as RuntimeConfig);
 
-		await expect(generateTypesModule.runGenerateTypes()).rejects.toThrow(
-			"Nenhum datasource configurado para geração de tipos",
-		);
+		await expect(
+			generateTypesModule.runGenerateTypes(undefined, createLogger()),
+		).rejects.toThrow("Nenhum datasource configurado para geração de tipos");
 	});
 });
 

@@ -29,7 +29,7 @@ export function createOrchestrationTask<
 ): GeneratorTask<TContext> {
 	return {
 		title: options.title ?? "orchestration",
-		run: (context, task) => {
+		run: async (context, task) => {
 			const executionContext = options.getExecutionContext(context);
 			const stageTasks: ListrTask[] = options.stages.map((stage) => ({
 				title: stage.title,

@@ -1,3 +1,4 @@
+import { createLogger } from "@scripts/generators/src/lib/logger";
 import type { RuntimeConfig } from "@scripts/generators/src/pipelines/generate-types/@types/script";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -115,7 +116,7 @@ describe("Pipeline End-to-End", () => {
 			"@scripts/generators/src/pipelines/generate-types/generate-types"
 		);
 
-		const result = await runGenerateTypes();
+		const result = await runGenerateTypes(undefined, createLogger());
 
 		expect(mockDefaultPipeline).toHaveBeenCalledOnce();
 		expect(result).toMatchObject({
@@ -154,7 +155,7 @@ describe("Pipeline End-to-End", () => {
 			"@scripts/generators/src/pipelines/generate-types/generate-types"
 		);
 
-		await runGenerateTypes();
+		await runGenerateTypes(undefined, createLogger());
 
 		expect(mockDefaultPipeline).toHaveBeenCalledOnce();
 		expect(mockDefaultPipeline.mock.calls[0][0].dataSource.collections).toEqual(
@@ -169,7 +170,7 @@ describe("Pipeline End-to-End", () => {
 			"@scripts/generators/src/pipelines/generate-types/generate-types"
 		);
 
-		await expect(runGenerateTypes()).rejects.toThrow(
+		await expect(runGenerateTypes(undefined, createLogger())).rejects.toThrow(
 			"Todos os datasources falharam: test",
 		);
 	});

@@ -1,4 +1,4 @@
-import type { EnumInferenceConfig } from "./@types/script-config";
+import type { EnumInferenceConfig } from "../@types/script-config";
 
 /**
  * Configuração global de inferência de enums.

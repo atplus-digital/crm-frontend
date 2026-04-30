@@ -16,7 +16,6 @@ Code generation framework — Listr2-based CLI runner, shared library layer, and
 
 ```
 generators/
-├── run-generator.ts            # Barrel re-export of generator-cli (runner, types, orchestration-task)
 ├── tsconfig.generated.json     # Validates generated output only (src/generated/**/*.ts)
 └── src/
     ├── lib/                    # Shared library (no pipeline-specific logic)
@@ -98,7 +97,7 @@ import { resolveNocoBaseEnv } from "@scripts/generators/src/lib/env-config";
 import {
   runGeneratorCli,
   createOrchestrationTask,
-} from "@scripts/generators/run-generator";
+} from "@scripts/generators/src/lib/generator-cli";
 ```
 
 <!-- AGENTS-GENERATED:END import-pattern -->

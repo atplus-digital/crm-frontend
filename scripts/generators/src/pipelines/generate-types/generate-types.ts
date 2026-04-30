@@ -2,7 +2,7 @@ import type { AtomicWriteSession } from "@scripts/generators/src/lib/atomic-writ
 import { createAtomicWriteSession } from "@scripts/generators/src/lib/atomic-writer";
 import type { OrchestrationTaskRunner } from "@scripts/generators/src/lib/generator-cli";
 import { runLinterFix } from "@scripts/generators/src/lib/linter-runner";
-import { type Logger, logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logger";
 import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/tsc-validator";
 import { config } from "@scripts/generators/src/pipelines/generate-types/config";
 import type { ListrTask } from "listr2";
@@ -46,8 +46,8 @@ export interface GenerateTypesExecutionContext {
 }
 
 export function createGenerateTypesExecutionContext(
-	overrideConfig?: Partial<RuntimeConfig>,
-	injectedLogger: Logger = logger,
+	overrideConfig: Partial<RuntimeConfig> | undefined,
+	injectedLogger: Logger,
 ): GenerateTypesExecutionContext {
 	const runtimeConfig: RuntimeConfig = overrideConfig
 		? { ...config, ...overrideConfig }
@@ -198,8 +198,8 @@ async function runPostPipelineTask(
 ): Promise<void> {
 	logger.info("Iniciando pós-processamento...", {
 		stage: "run-post-pipeline",
-		outputDirs: outputDirs.length,
-		writeFiles: writeFilesCount,
+		outputDirs: String(outputDirs.length),
+		writeFiles: String(writeFilesCount),
 	});
 
 	await task
@@ -330,9 +330,13 @@ export function cleanupGenerateTypesBackups(
 }
 
 export async function runGenerateTypes(
-	overrideConfig?: Partial<RuntimeConfig>,
+	overrideConfig: Partial<RuntimeConfig> | undefined,
+	injectedLogger: Logger,
 ): Promise<GenerateTypesResult> {
-	const context = createGenerateTypesExecutionContext(overrideConfig);
+	const context = createGenerateTypesExecutionContext(
+		overrideConfig,
+		injectedLogger,
+	);
 	lockGenerateTypesWorkspace();
 	backupGenerateTypesOutputs(context);
 	await runLoadConfigOrchestrationStage(context);
