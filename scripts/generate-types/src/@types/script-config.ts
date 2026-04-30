@@ -124,7 +124,7 @@ export interface ScriptConfig {
 	outputDir: string;
 	splitCollections: string[];
 	datasources?: DataSourceGenerationConfig[];
-	logLevel: "debug" | "info" | "error";
+	logLevel?: "debug" | "info" | "error";
 	defaultEnvPath: string;
 	requestTimeoutMs: number;
 	requestConcurrency: number;

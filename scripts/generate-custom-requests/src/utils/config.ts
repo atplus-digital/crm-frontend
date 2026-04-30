@@ -1,8 +1,8 @@
-import { logger } from "@scripts/shared/lib/logger";
 import {
 	createNocoBaseEnvSchema,
 	formatZodError,
 	loadEnvFiles,
+	resolveLogLevel,
 } from "@scripts/shared/utils/env-config";
 import type {
 	ManualRegistryEntry,
@@ -74,8 +74,7 @@ export function parseConfig(
 		overrideConfig.manualRequests ?? [],
 	);
 
-	const logLevel = overrideConfig.logLevel ?? "info";
-	logger.setLevel(logLevel);
+	const logLevel = resolveLogLevel(overrideConfig.logLevel);
 
 	return {
 		baseUrl: parsed.data.CRM_NOCOBASE_URL,

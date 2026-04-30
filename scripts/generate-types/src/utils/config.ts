@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import { resolveLogLevel } from "@scripts/shared/utils/env-config";
 import type { RuntimeConfig, ScriptConfig } from "../@types/script";
 import { resolveEnvConfig } from "./load-config";
 
@@ -13,7 +14,6 @@ const defaultConfig: ScriptConfig = {
 			splitCollections: [],
 		},
 	],
-	logLevel: "info",
 	defaultEnvPath: ".env.local",
 	requestTimeoutMs: 15_000,
 	requestConcurrency: 5,
@@ -23,7 +23,7 @@ const defaultConfig: ScriptConfig = {
 		prefix: "",
 		suffix: "",
 	},
-} as const;
+} as const satisfies ScriptConfig;
 
 function toSafePathSegment(value: string): string {
 	return value.replace(/[^a-zA-Z0-9_-]/g, "-");
@@ -131,10 +131,14 @@ export function parseConfig(
 	options: { cliDryRun?: boolean } = {},
 ): RuntimeConfig {
 	const cliDryRun = options.cliDryRun ?? process.argv.includes("--dry-run");
+	const logLevel = resolveLogLevel(
+		overrideConfig.logLevel,
+	) as ScriptConfig["logLevel"];
 
 	const mergedConfig = {
 		...defaultConfig,
 		...overrideConfig,
+		logLevel,
 	};
 
 	const normalizedConfig = {

@@ -3,7 +3,6 @@ import type { ScriptConfig } from "./src/@types/script-config";
 import { parseConfig } from "./src/utils/config";
 
 const scriptConfig: Partial<ScriptConfig> = {
-	logLevel: "debug",
 	lockWorkspaceFolder: true,
 	generateAnalysisReport: true,
 	outputDir: "src/generated/custom-requests",

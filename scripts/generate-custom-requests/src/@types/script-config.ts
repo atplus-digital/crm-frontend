@@ -15,7 +15,7 @@ export interface ScriptConfig {
 	baseUrl: string;
 	token: string;
 	timeoutMs: number;
-	logLevel: "debug" | "info" | "warn" | "error";
+	logLevel?: "debug" | "info" | "warn" | "error";
 	outputDir: string;
 	requests: RequestsMap;
 	manualRequests: ManualRegistryEntry[];
