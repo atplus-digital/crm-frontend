@@ -23,7 +23,7 @@ export function runPostPipelineStage(): GenerationStage {
 		);
 
 		if (writeFiles.length > 0) {
-			await runPostPipeline(outputDirs, writeFiles);
+			await runPostPipeline(outputDirs, writeFiles, ctx.logger);
 		}
 
 		return { ...ctx, postPipelineCompleted: true };

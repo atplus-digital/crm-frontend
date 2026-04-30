@@ -1,4 +1,3 @@
-import { logger } from "@scripts/generators/src/lib/logger";
 import type { DataSourceFilesResult } from "../../../@types/script";
 import { createDataSourceClient } from "../../../utils/create-dataSource-client";
 import { createInitialContext } from "../../core/context-builder";
@@ -10,6 +9,7 @@ import type {
 } from "../types";
 
 async function runSingleDatasource(
+	logger: GenerationContext["logger"],
 	config: GenerationContext["config"],
 	dataSource: GenerationContext["dataSourceConfigs"][number],
 ): Promise<DataSourceFilesResult> {
@@ -19,7 +19,7 @@ async function runSingleDatasource(
 	});
 
 	const client = createDataSourceClient(dataSource);
-	const ctx = createInitialContext(config, dataSource, client);
+	const ctx = createInitialContext(config, dataSource, client, logger);
 	const result = await defaultPipeline(ctx);
 
 	logger.info(`✅ Datasource '${dataSource.name}' processado com sucesso`, {
@@ -32,7 +32,9 @@ async function runSingleDatasource(
 export function runDatasourcesStage(): GenerationStage {
 	return async (ctx: GenerationContext): Promise<GenerationContext> => {
 		const settledResults = await Promise.allSettled(
-			ctx.dataSourceConfigs.map((ds) => runSingleDatasource(ctx.config, ds)),
+			ctx.dataSourceConfigs.map((ds) =>
+				runSingleDatasource(ctx.logger, ctx.config, ds),
+			),
 		);
 
 		const datasourceResults: DatasourceRunResult[] = settledResults.map(
@@ -47,7 +49,7 @@ export function runDatasourcesStage(): GenerationStage {
 					settled.reason instanceof Error
 						? (settled.reason.stack ?? settled.reason.message)
 						: String(settled.reason);
-				logger.error(`❌ Datasource '${name}' falhou: ${errorMessage}`, {
+				ctx.logger.error(`❌ Datasource '${name}' falhou: ${errorMessage}`, {
 					datasource: name,
 					stage: "run-datasources",
 				});

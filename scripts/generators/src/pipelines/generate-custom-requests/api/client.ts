@@ -1,4 +1,5 @@
-import { logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logger";
+import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logger";
 import { NocoBaseApiClient } from "@scripts/generators/src/lib/nocobase-client";
 import type {
 	CustomRequestApiEntry,
@@ -16,7 +17,10 @@ import type { ScriptConfig } from "@scripts/generators/src/pipelines/generate-cu
  * ```
  */
 export class CustomRequestsApiClient extends NocoBaseApiClient {
-	public constructor(private readonly config: ScriptConfig) {
+	public constructor(
+		private readonly config: ScriptConfig,
+		private readonly logger: Logger = defaultRuntimeLogger,
+	) {
 		super(config);
 	}
 
@@ -32,7 +36,7 @@ export class CustomRequestsApiClient extends NocoBaseApiClient {
 					`customRequests:list?pageSize=${currentPageSize}&page=${page}`,
 				);
 				const entries = response.data ?? [];
-				logger.info(`Página ${page}: ${entries.length} custom requests`);
+				this.logger.debug(`Página ${page}: ${entries.length} custom requests`);
 				return {
 					entries,
 					hasNextPage: entries.length >= currentPageSize,
@@ -40,7 +44,7 @@ export class CustomRequestsApiClient extends NocoBaseApiClient {
 			},
 		});
 
-		logger.info(`Total: ${allEntries.length} custom requests`);
+		this.logger.info(`Total: ${allEntries.length} custom requests`);
 		return allEntries;
 	}
 

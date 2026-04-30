@@ -1,4 +1,11 @@
-import { createLogger, logger } from "@scripts/generators/src/lib/logger";
+import {
+	createLogger,
+	formatPersistentLog,
+	logger,
+	runWithLogger,
+	shouldPersistLog,
+	shouldRenderLiveInTui,
+} from "@scripts/generators/src/lib/logger";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("logger", () => {
@@ -69,6 +76,86 @@ describe("logger", () => {
 
 			isolatedLogger.setLevel("error");
 			expect(isolatedLogger.getLevel()).toBe("error");
+		});
+
+		it("should capture nested chain depth for pipeline logs", () => {
+			const isolatedLogger = createLogger();
+			const entries: Parameters<
+				Parameters<typeof isolatedLogger.subscribe>[0]
+			>[0][] = [];
+			const unsubscribe = isolatedLogger.subscribe((entry) => {
+				entries.push(entry);
+			});
+
+			runWithLogger(
+				isolatedLogger,
+				() => {
+					isolatedLogger.info("top");
+					runWithLogger(
+						isolatedLogger,
+						() => {
+							isolatedLogger.info("nested");
+						},
+						{ chain: "nested-stage" },
+					);
+				},
+				{ chain: "root-stage" },
+			);
+
+			unsubscribe();
+
+			expect(entries).toHaveLength(2);
+			expect(entries[0]?.chainDepth).toBe(1);
+			expect(entries[1]?.chainDepth).toBe(2);
+			const nestedEntry = entries[1];
+			expect(nestedEntry).toBeDefined();
+			if (!nestedEntry) {
+				throw new Error("nested entry missing");
+			}
+			expect(formatPersistentLog(nestedEntry)).toMatch(/^ {4}/);
+		});
+	});
+
+	describe("persist and live rules", () => {
+		it("should persist log entries based on configured level", () => {
+			const infoEntry = {
+				level: "info",
+				message: "info",
+				formattedMessage: "[INFO] info",
+				chainPath: ["step"],
+				chainDepth: 1,
+			} as const;
+			const warnEntry = {
+				level: "warn",
+				message: "warn",
+				formattedMessage: "[WARN] warn",
+				chainPath: ["step"],
+				chainDepth: 1,
+			} as const;
+
+			expect(shouldPersistLog(infoEntry, "info")).toBe(true);
+			expect(shouldPersistLog(infoEntry, "warn")).toBe(false);
+			expect(shouldPersistLog(warnEntry, "warn")).toBe(true);
+		});
+
+		it("should render live in TUI for warn and error only", () => {
+			const infoEntry = {
+				level: "info",
+				message: "info",
+				formattedMessage: "[INFO] info",
+				chainPath: [],
+				chainDepth: 0,
+			} as const;
+			const warnEntry = {
+				level: "warn",
+				message: "warn",
+				formattedMessage: "[WARN] warn",
+				chainPath: [],
+				chainDepth: 0,
+			} as const;
+
+			expect(shouldRenderLiveInTui(infoEntry)).toBe(false);
+			expect(shouldRenderLiveInTui(warnEntry)).toBe(true);
 		});
 	});
 });

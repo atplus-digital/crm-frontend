@@ -1,4 +1,5 @@
-import { logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logger";
+import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logger";
 import type { CustomRequestApiEntry } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/custom-request-api";
 import type { GeneratedRegistryEntry } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/generated-registry";
 import { inferPayloadSchema } from "@scripts/generators/src/pipelines/generate-custom-requests/utils/schema-inference";
@@ -21,7 +22,10 @@ export interface CustomRequestsAnalysisReport {
 /**
  * Normaliza options.data que pode vir como string JSON ou objeto.
  */
-function normalizePayloadData(raw: unknown): Record<string, unknown> | null {
+function normalizePayloadData(
+	raw: unknown,
+	logger: Logger,
+): Record<string, unknown> | null {
 	if (raw == null) return null;
 	if (typeof raw === "object") return raw as Record<string, unknown>;
 	if (typeof raw === "string") {
@@ -43,25 +47,27 @@ function normalizePayloadData(raw: unknown): Record<string, unknown> | null {
  */
 export function transformApiEntryToRegistry(
 	entry: CustomRequestApiEntry,
+	logger?: Logger,
 ): GeneratedRegistryEntry | null {
+	const activeLogger = logger ?? defaultRuntimeLogger;
 	if (!entry.options) {
-		logger.warn(`Entrada "${entry.key}": sem options, pulando`);
+		activeLogger.debug(`Entrada "${entry.key}": sem options, pulando`);
 		return null;
 	}
 
 	if (!entry.options.collectionName) {
-		logger.warn(`Entrada "${entry.key}": sem collectionName, pulando`);
+		activeLogger.debug(`Entrada "${entry.key}": sem collectionName, pulando`);
 		return null;
 	}
 
 	if (!entry.options.url) {
-		logger.warn(`Entrada "${entry.key}": sem url, usando string vazia`);
+		activeLogger.warn(`Entrada "${entry.key}": sem url, usando string vazia`);
 	}
 
 	// API não retorna campo "name" — usa key como fallback
 	const name = entry.name ?? entry.key;
 
-	const payloadData = normalizePayloadData(entry.options.data);
+	const payloadData = normalizePayloadData(entry.options.data, activeLogger);
 
 	return {
 		key: entry.key,
@@ -81,12 +87,14 @@ export function transformApiEntryToRegistry(
  */
 export function transformAllEntries(
 	entries: CustomRequestApiEntry[],
+	logger?: Logger,
 ): GeneratedRegistryEntry[] {
+	const activeLogger = logger ?? defaultRuntimeLogger;
 	const transformed: GeneratedRegistryEntry[] = [];
 	let skipped = 0;
 
 	for (const entry of entries) {
-		const result = transformApiEntryToRegistry(entry);
+		const result = transformApiEntryToRegistry(entry, activeLogger);
 		if (result) {
 			transformed.push(result);
 		} else {
@@ -96,7 +104,7 @@ export function transformAllEntries(
 
 	transformed.sort((a, b) => a.key.localeCompare(b.key));
 
-	logger.info(
+	activeLogger.info(
 		`Transformação: ${transformed.length} entradas, ${skipped} puladas`,
 	);
 

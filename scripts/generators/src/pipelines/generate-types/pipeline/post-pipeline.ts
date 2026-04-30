@@ -1,13 +1,20 @@
 import { runLinterFix } from "@scripts/generators/src/lib/linter-runner";
-import { logger } from "@scripts/generators/src/lib/logger";
+import {
+	logger as defaultRuntimeLogger,
+	type Logger,
+} from "@scripts/generators/src/lib/logger";
 import type { GeneratedFileWrite } from "./core/types";
 import { validateTypeScriptDirectory } from "./post-pipeline/writer";
 
 export async function runPostPipeline(
 	outputDirs: string[],
 	_writeResults: GeneratedFileWrite[],
+	logger?: Logger,
 ): Promise<void> {
-	logger.info("Iniciando pós-processamento...", { stage: "post-pipeline" });
+	const activeLogger = logger ?? defaultRuntimeLogger;
+	activeLogger.info("Iniciando pós-processamento...", {
+		stage: "post-pipeline",
+	});
 
 	const validationPromise = Promise.all(
 		outputDirs.map((outputDir) => {

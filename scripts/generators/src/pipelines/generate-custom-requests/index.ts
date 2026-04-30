@@ -32,6 +32,7 @@ const generateCustomRequests =
 		.addStep("prepare-context", (context) => {
 			context.executionContext = createGenerateCustomRequestsExecutionContext(
 				context.overrideConfig,
+				context.logger,
 			);
 		})
 		.addStep("lock-workspace", () => {

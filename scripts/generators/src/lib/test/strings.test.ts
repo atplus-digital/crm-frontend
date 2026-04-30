@@ -1,7 +1,7 @@
 import {
 	escapeString,
 	serializePayloadData,
-} from "@scripts/generators/src/utils/strings";
+} from "@scripts/generators/src/lib/strings";
 import { describe, expect, it } from "vitest";
 
 describe("escapeString", () => {

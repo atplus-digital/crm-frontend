@@ -56,9 +56,8 @@ export function isWorkspaceLocked(outputDirs: string[]): boolean {
 			.map((outputDir) => toReadonlyPattern(outputDir))
 			.some((pattern) => pattern in readonlyInclude);
 	} catch (error) {
-		console.warn(
-			"⚠️ Não foi possível verificar as configurações do workspace:",
-			error,
+		logger.warn(
+			`⚠️ Não foi possível verificar as configurações do workspace: ${String(error)}`,
 		);
 		return false;
 	}

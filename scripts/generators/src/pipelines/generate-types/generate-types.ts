@@ -1,6 +1,6 @@
 import type { AtomicWriteSession } from "@scripts/generators/src/lib/atomic-writer";
 import { createAtomicWriteSession } from "@scripts/generators/src/lib/atomic-writer";
-import { logger } from "@scripts/generators/src/lib/logger";
+import { type Logger, logger } from "@scripts/generators/src/lib/logger";
 import { config } from "@scripts/generators/src/pipelines/generate-types/config";
 import type { GenerateTypesResult, RuntimeConfig } from "./@types/script";
 import {
@@ -25,6 +25,7 @@ function getOutputDirs(runtimeConfig: RuntimeConfig): string[] {
 }
 
 export interface GenerateTypesExecutionContext {
+	logger: Logger;
 	overrideConfig?: Partial<RuntimeConfig>;
 	runtimeConfig: RuntimeConfig;
 	outputDirs: string[];
@@ -35,11 +36,13 @@ export interface GenerateTypesExecutionContext {
 
 export function createGenerateTypesExecutionContext(
 	overrideConfig?: Partial<RuntimeConfig>,
+	injectedLogger: Logger = logger,
 ): GenerateTypesExecutionContext {
 	const runtimeConfig: RuntimeConfig = overrideConfig
 		? { ...config, ...overrideConfig }
 		: config;
 	return {
+		logger: injectedLogger,
 		overrideConfig,
 		runtimeConfig,
 		outputDirs: getOutputDirs(runtimeConfig),
@@ -71,7 +74,7 @@ function restoreAllSessions(context: GenerateTypesExecutionContext): void {
 		try {
 			session.restore();
 		} catch (restoreError) {
-			logger.warn(
+			context.logger.warn(
 				`Failed to restore backup for ${session.outputDir}: ${restoreError}`,
 			);
 		}
@@ -83,7 +86,9 @@ async function runOrchestrationStage(
 	stage: (ctx: Readonly<GenerationContext>) => Promise<GenerationContext>,
 ): Promise<void> {
 	try {
-		const current = (context.pipelineContext ?? {}) as GenerationContext;
+		const current = (context.pipelineContext ?? {
+			logger: context.logger,
+		}) as GenerationContext;
 		context.pipelineContext = await stage(current);
 	} catch (error) {
 		restoreAllSessions(context);

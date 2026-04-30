@@ -1,13 +1,14 @@
 import { execFile } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { logger } from "@scripts/generators/src/lib/logger";
-import type { GeneratedRegistryEntry } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/generated-registry";
-import type { RequestsMap } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/script-config";
+import type { Logger } from "@scripts/generators/src/lib/logger";
+import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logger";
 import {
 	escapeString,
 	serializePayloadData,
-} from "@scripts/generators/src/utils/strings";
+} from "@scripts/generators/src/lib/strings";
+import type { GeneratedRegistryEntry } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/generated-registry";
+import type { RequestsMap } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/script-config";
 
 function toSafeIdentifier(value: string): string {
 	return value.replace(/[^a-zA-Z0-9_]/g, "_");
@@ -114,7 +115,7 @@ ${collectionMapping}
 `;
 }
 
-function runBiomeFix(filePath: string): Promise<void> {
+function runBiomeFix(filePath: string, logger: Logger): Promise<void> {
 	return new Promise((resolve) => {
 		execFile(
 			"biome",
@@ -126,8 +127,6 @@ function runBiomeFix(filePath: string): Promise<void> {
 					logger.info(
 						`⚠️  Biome retornou erro (pode ser apenas warnings): ${error.message}`,
 					);
-				} else {
-					logger.info("✅ Biome aplicado com sucesso no registry gerado");
 				}
 				resolve();
 			},
@@ -139,16 +138,17 @@ export async function writeGeneratedRegistry(
 	entries: GeneratedRegistryEntry[],
 	outputDir: string,
 	requests: RequestsMap = {},
+	logger?: Logger,
 ): Promise<void> {
+	const activeLogger = logger ?? defaultRuntimeLogger;
 	const content = buildRegistryContent(entries, requests);
 	const outputPath = resolve(outputDir, "generated-registry.ts");
 
-	logger.info(`📝 Gerando registry em: ${outputPath}`);
+	activeLogger.debug("📝 Gerando registry");
+	activeLogger.debug(`registry path: ${outputPath}`);
 	mkdirSync(resolve(outputDir), { recursive: true });
 
 	writeFileSync(outputPath, content, "utf-8");
 
-	logger.info("✅ Arquivo escrito com sucesso");
-
-	await runBiomeFix(outputPath);
+	await runBiomeFix(outputPath, activeLogger);
 }

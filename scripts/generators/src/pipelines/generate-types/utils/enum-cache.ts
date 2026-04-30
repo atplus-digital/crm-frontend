@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import * as path from "node:path";
-import { logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logger";
 import { config } from "@scripts/generators/src/pipelines/generate-types/config";
 import type { EnumAdapterFieldEnum } from "../@types/script";
 import { parseWikiText } from "./wiki-parser";
@@ -56,6 +56,7 @@ function saveMetadata(metadata: Record<string, number>): void {
 export async function fetchWithCache(
 	collectionName: string,
 	url: string,
+	logger: Logger,
 ): Promise<Record<string, EnumAdapterFieldEnum>> {
 	if (!config.cacheEnums) {
 		logger.debug(`[Cache] Disabled — fetching from ${url}`);

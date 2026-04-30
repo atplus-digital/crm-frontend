@@ -66,7 +66,7 @@ describe("transformApiEntryToRegistry", () => {
 		const result = transformApiEntryToRegistry(entry);
 
 		expect(result).toBeNull();
-		expect(logger.warn).toHaveBeenCalledWith(
+		expect(logger.debug).toHaveBeenCalledWith(
 			expect.stringContaining("sem options"),
 		);
 	});
@@ -81,7 +81,7 @@ describe("transformApiEntryToRegistry", () => {
 		const result = transformApiEntryToRegistry(entry);
 
 		expect(result).toBeNull();
-		expect(logger.warn).toHaveBeenCalledWith(
+		expect(logger.debug).toHaveBeenCalledWith(
 			expect.stringContaining("sem collectionName"),
 		);
 	});

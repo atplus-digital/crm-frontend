@@ -42,7 +42,7 @@ export const fetchSchemas: PipelineStage<FetchCollectionsContext> = async (
 					});
 					continue;
 				}
-				generated.scalars.set(field.name, mapFieldType(field));
+				generated.scalars.set(field.name, mapFieldType(field, ctx.logger));
 				if (field.uiSchema?.enum && field.uiSchema.enum.length > 0) {
 					generated.enums.set(field.name, field.uiSchema.enum);
 				}

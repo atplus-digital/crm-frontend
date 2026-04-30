@@ -1,11 +1,11 @@
+import {
+	normalizeBaseUrl,
+	resolveNocoBaseEnv,
+} from "@scripts/generators/src/lib/env-config";
 import type {
 	EnvConfig,
 	ScriptConfig,
 } from "@scripts/generators/src/pipelines/generate-types/@types/script";
-import {
-	normalizeBaseUrl,
-	resolveNocoBaseEnv,
-} from "@scripts/generators/src/utils/env-config";
 
 export function resolveEnvConfig(scriptConfig: ScriptConfig): EnvConfig {
 	const parsed = resolveNocoBaseEnv({

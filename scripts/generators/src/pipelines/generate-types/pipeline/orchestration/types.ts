@@ -1,3 +1,4 @@
+import type { Logger } from "@scripts/generators/src/lib/logger";
 import type {
 	DataSourceFilesResult,
 	DataSourceGenerationConfig,
@@ -14,6 +15,8 @@ import type {
  * Each stage receives a readonly context and returns a new context with additional data.
  */
 export interface GenerationContext {
+	logger: Logger;
+
 	// ── Stage: loadConfig ──
 	config: RuntimeConfig;
 

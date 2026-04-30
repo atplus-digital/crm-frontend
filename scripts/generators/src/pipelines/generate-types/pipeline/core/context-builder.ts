@@ -1,3 +1,4 @@
+import type { Logger } from "@scripts/generators/src/lib/logger";
 import type {
 	DataSourceClient,
 	DataSourceGenerationConfig,
@@ -9,6 +10,7 @@ export function createInitialContext(
 	config: RuntimeConfig,
 	dataSource: DataSourceGenerationConfig,
 	client: DataSourceClient,
+	logger: Logger,
 ): InitContext {
-	return { config, dataSource, client };
+	return { config, dataSource, client, logger };
 }

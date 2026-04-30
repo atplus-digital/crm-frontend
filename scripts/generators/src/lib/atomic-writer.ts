@@ -208,9 +208,8 @@ export class AtomicWriteSession {
 		this.backedUp = true;
 
 		this.backupOutputDir();
-		logger.info(
-			`[AtomicWriter:${this.label}] Backup created at: ${this.backupDir}`,
-		);
+		logger.debug(`[AtomicWriter:${this.label}] Backup created`);
+		logger.debug(`[AtomicWriter:${this.label}] backup path: ${this.backupDir}`);
 	}
 
 	/**

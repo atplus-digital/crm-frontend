@@ -1,10 +1,10 @@
-import { logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logger";
 import type { EnumAdapter, EnumAdapterFieldEnum } from "../@types/script";
 import { fetchWithCache } from "../utils/enum-cache";
 
 const WIKI_BASE_URL = "https://wikiapiprovedor.ixcsoft.com.br";
 
-export function createIXCWikiAdapter(): EnumAdapter {
+export function createIXCWikiAdapter(logger: Logger): EnumAdapter {
 	return {
 		name: "IXC Wiki Schema",
 		async fetchEnums(
@@ -16,7 +16,7 @@ export function createIXCWikiAdapter(): EnumAdapter {
 
 			let enums: Record<string, EnumAdapterFieldEnum>;
 			try {
-				enums = await fetchWithCache(collectionName, url);
+				enums = await fetchWithCache(collectionName, url, logger);
 			} catch (err) {
 				logger.debug(
 					`[IXC Wiki] Falha ao buscar ${url}: ${err instanceof Error ? err.message : String(err)}`,

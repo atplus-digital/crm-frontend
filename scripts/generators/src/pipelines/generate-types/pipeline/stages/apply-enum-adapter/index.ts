@@ -1,4 +1,3 @@
-import { logger } from "@scripts/generators/src/lib/logger";
 import type { BuildTypesContext, PipelineStage } from "../../core/types";
 import {
 	adapterEnumsToInferredEnums,
@@ -33,7 +32,7 @@ export const applyEnumAdapter: PipelineStage<BuildTypesContext> = async (
 					await dataSource.preEnumAdapter.fetchEnums(collectionName);
 				usedAdapter = true;
 			} catch {
-				logger.debug(
+				ctx.logger.debug(
 					`[${collectionName}] Adapter '${dataSource.preEnumAdapter.name}' falhou — usando sample-based`,
 				);
 			}

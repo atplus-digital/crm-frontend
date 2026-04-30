@@ -1,4 +1,3 @@
-import { logger } from "@scripts/generators/src/lib/logger";
 import type { BuildTypesContext, PipelineStage } from "../../core/types";
 import { type InferredEnumsMap, mergeEnums } from "./enum-inference";
 
@@ -44,7 +43,9 @@ export const inferEnums: PipelineStage<BuildTypesContext> = async (ctx) => {
 				);
 				types.enums = mergedEnums;
 			} catch {
-				logger.debug(`[${collectionName}] Enum inference failed — skipping`);
+				ctx.logger.debug(
+					`[${collectionName}] Enum inference failed — skipping`,
+				);
 			}
 		}
 	}

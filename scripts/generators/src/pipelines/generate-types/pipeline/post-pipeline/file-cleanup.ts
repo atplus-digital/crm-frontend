@@ -1,6 +1,9 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { logger } from "@scripts/generators/src/lib/logger";
+import {
+	logger as defaultRuntimeLogger,
+	type Logger,
+} from "@scripts/generators/src/lib/logger";
 import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/tsc-validator";
 import type { MultiFileResult } from "@scripts/generators/src/pipelines/generate-types/@types/script";
 import { config } from "@scripts/generators/src/pipelines/generate-types/config";
@@ -21,7 +24,9 @@ export function writeMultipleFiles(
 	filesMap: Map<string, string>,
 	outputDir: string = config.outputDir,
 	_options: { skipValidation?: boolean } = {},
+	logger?: Logger,
 ): MultiFileResult {
+	const activeLogger = logger ?? defaultRuntimeLogger;
 	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
 	const files: Array<{
 		outputPath: string;
@@ -40,7 +45,7 @@ export function writeMultipleFiles(
 		const outputPath = path.join(resolvedOutputDir, fileName);
 
 		if (isFileBeingEdited(outputPath)) {
-			logger.warn(
+			activeLogger.warn(
 				`⏭️  Pulando arquivo em edição: ${path.relative(process.cwd(), outputPath)}`,
 			);
 			files.push({ outputPath, changed: false, skipped: true });
@@ -56,7 +61,9 @@ export function writeMultipleFiles(
 			fs.writeFileSync(outputPath, content, "utf-8");
 			changed = true;
 			totalChanged++;
-			logger.debug(`✓ Gravado: ${path.relative(process.cwd(), outputPath)}`);
+			activeLogger.debug(
+				`✓ Gravado: ${path.relative(process.cwd(), outputPath)}`,
+			);
 		}
 
 		files.push({ outputPath, changed });
@@ -91,12 +98,16 @@ export function getUnusedFiles(
 		.map((file) => path.join(resolvedOutputDir, file));
 }
 
-export function cleanOutputDirectory(unusedFiles: string[]): string[] {
+export function cleanOutputDirectory(
+	unusedFiles: string[],
+	logger?: Logger,
+): string[] {
+	const activeLogger = logger ?? defaultRuntimeLogger;
 	const removed: string[] = [];
 
 	for (const filePath of unusedFiles) {
 		if (isFileBeingEdited(filePath)) {
-			logger.warn(
+			activeLogger.warn(
 				`⏭️  Pulando exclusão de arquivo em edição: ${path.relative(process.cwd(), filePath)}`,
 			);
 			continue;
@@ -105,7 +116,9 @@ export function cleanOutputDirectory(unusedFiles: string[]): string[] {
 		if (fs.existsSync(filePath)) {
 			fs.unlinkSync(filePath);
 			removed.push(filePath);
-			logger.debug(`🗑️  Removido: ${path.relative(process.cwd(), filePath)}`);
+			activeLogger.debug(
+				`🗑️  Removido: ${path.relative(process.cwd(), filePath)}`,
+			);
 		}
 	}
 

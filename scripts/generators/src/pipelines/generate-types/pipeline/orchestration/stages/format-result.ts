@@ -18,29 +18,31 @@ export function formatResultStage(): GenerationStage {
 			.map((r) => r.name);
 
 		if (failedNames.length > 0) {
-			console.warn(
+			ctx.logger.warn(
 				`⚠️  ${failedNames.length} datasource(s) falharam: ${failedNames.join(", ")}`,
 			);
 		}
 
 		if (totalChanged > 0) {
-			console.info(`📝 Arquivos alterados (${totalChanged}):`);
+			ctx.logger.info(`📝 Arquivos alterados (${totalChanged}):`);
 			for (const file of changedFiles.slice(0, 20)) {
-				console.info(`   • ${path.relative(process.cwd(), file.outputPath)}`);
+				ctx.logger.debug(
+					`   • ${path.relative(process.cwd(), file.outputPath)}`,
+				);
 			}
 			if (totalChanged > 20) {
-				console.info(`   ... e mais ${totalChanged - 20} arquivo(s)`);
+				ctx.logger.debug(`   ... e mais ${totalChanged - 20} arquivo(s)`);
 			}
 		}
 
 		if (totalSkipped > 0) {
-			console.info(
+			ctx.logger.info(
 				`\n⏭️  Arquivos pulados (${totalSkipped}) — em edição ou inalterados`,
 			);
 		}
 
 		if (totalChanged === 0 && failedNames.length === 0) {
-			console.info(`✅ Nenhum arquivo alterado — tudo já está atualizado.`);
+			ctx.logger.info(`✅ Nenhum arquivo alterado — tudo já está atualizado.`);
 		}
 
 		const finalResult: GenerateTypesResult =

@@ -1,6 +1,9 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { logger } from "@scripts/generators/src/lib/logger";
+import {
+	logger as defaultRuntimeLogger,
+	type Logger,
+} from "@scripts/generators/src/lib/logger";
 import type { SingleFileResult } from "@scripts/generators/src/pipelines/generate-types/@types/script";
 import { config } from "@scripts/generators/src/pipelines/generate-types/config";
 import { toFileName } from "@scripts/generators/src/pipelines/generate-types/utils/naming";
@@ -12,11 +15,13 @@ export function writeGeneratedFile(
 	content: string,
 	outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE),
 	_options: { skipValidation?: boolean } = {},
+	logger?: Logger,
 ): SingleFileResult {
+	const activeLogger = logger ?? defaultRuntimeLogger;
 	const resolvedOutputPath = resolveOutputPath(outputPath);
 
 	if (config.dryRun) {
-		logger.info(
+		activeLogger.info(
 			`🔍 [DRY-RUN] Escreveria em: ${path.relative(process.cwd(), resolvedOutputPath)}`,
 		);
 		return {
@@ -27,7 +32,7 @@ export function writeGeneratedFile(
 	}
 
 	if (isFileBeingEdited(resolvedOutputPath)) {
-		logger.warn(
+		activeLogger.warn(
 			`⏭️  Pulando arquivo em edição: ${path.relative(process.cwd(), resolvedOutputPath)}`,
 		);
 		return {
@@ -50,7 +55,7 @@ export function writeGeneratedFile(
 
 	ensureDirectoryExists(resolvedOutputPath);
 	fs.writeFileSync(resolvedOutputPath, content, "utf-8");
-	logger.debug(
+	activeLogger.debug(
 		`✓ Gravado: ${path.relative(process.cwd(), resolvedOutputPath)}`,
 	);
 

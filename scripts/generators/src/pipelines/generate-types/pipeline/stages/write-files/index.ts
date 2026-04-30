@@ -15,7 +15,7 @@ export async function writeFiles(
 
 	for (const [relativePath, content] of ctx.fileContents.entries()) {
 		const fullPath = path.join(outputDir, relativePath);
-		const result = writeGeneratedFile(content, fullPath);
+		const result = writeGeneratedFile(content, fullPath, {}, ctx.logger);
 
 		writeResults.push({
 			outputPath: result.outputPath,

@@ -1,3 +1,4 @@
+import { logger } from "@scripts/generators/src/lib/logger";
 import type { DataSourceGenerationConfig } from "./@types/script";
 import { createIXCRelationsAdapter } from "./adapters/ixc-relations-adapter";
 import { createIXCWikiAdapter } from "./adapters/ixc-wiki-scraper";
@@ -33,7 +34,7 @@ export const dataSourceConfigs = [
 			"fn_areceber",
 			"su_ticket",
 		],
-		preEnumAdapter: createIXCWikiAdapter(),
+		preEnumAdapter: createIXCWikiAdapter(logger),
 		relationsAdapter: createIXCRelationsAdapter(),
 		enumCorrection: [],
 		generateEnumReport: true,

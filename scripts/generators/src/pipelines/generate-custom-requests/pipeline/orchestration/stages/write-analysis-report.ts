@@ -6,7 +6,7 @@ export function writeAnalysisReportStage(): GenerationStage {
 	return async (context) => {
 		if (context.config.generateAnalysisReport) {
 			const analysisReport = collectAnalysisReport(context.entries);
-			writeAnalysisReport(analysisReport);
+			writeAnalysisReport(analysisReport, context.logger);
 		}
 
 		return context;

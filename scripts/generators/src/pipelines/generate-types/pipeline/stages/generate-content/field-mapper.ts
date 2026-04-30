@@ -1,4 +1,5 @@
-import { logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logger";
+import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logger";
 import type { RelationInfo } from "@scripts/generators/src/pipelines/generate-types/@types/generation";
 import type { DataSourceField } from "@scripts/generators/src/pipelines/generate-types/@types/script";
 import { resolveRelationByType, resolveRelationInterface } from "./relations";
@@ -246,7 +247,8 @@ function buildEnumType(
  * @param field Campo do NocoBase
  * @returns Tipo TypeScript correspondente
  */
-export function mapFieldType(field: DataSourceField): string {
+export function mapFieldType(field: DataSourceField, logger?: Logger): string {
+	const activeLogger = logger ?? defaultRuntimeLogger;
 	// 1. Campos de sistema têm mapeamento fixo
 	if (field.name in SYSTEM_SCALAR_FIELDS) {
 		return SYSTEM_SCALAR_FIELDS[field.name]();
@@ -270,7 +272,7 @@ export function mapFieldType(field: DataSourceField): string {
 	// 4. Mapeia pelo field type ou retorna unknown se não reconhecido
 	const tsType = FIELD_TYPE_MAP[field.type];
 	if (!tsType) {
-		logger.warn(
+		activeLogger.warn(
 			`Tipo de campo desconhecido: '${field.type}' no campo '${field.name}' — mapeando para 'unknown'`,
 		);
 		return "unknown";

@@ -1,7 +1,7 @@
 import {
 	resolveLogLevel,
 	resolveNocoBaseEnv,
-} from "@scripts/generators/src/utils/env-config";
+} from "@scripts/generators/src/lib/env-config";
 import type {
 	ManualRegistryEntry,
 	RequestsMap,

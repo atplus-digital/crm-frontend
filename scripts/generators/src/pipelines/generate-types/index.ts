@@ -31,6 +31,7 @@ const generateTypes = createGenerator<GenerateTypesGeneratorContext>(
 	.addStep("prepare-context", (context) => {
 		context.executionContext = createGenerateTypesExecutionContext(
 			context.overrideConfig,
+			context.logger,
 		);
 	})
 	.addStep("lock-workspace", () => {

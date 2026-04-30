@@ -5,7 +5,7 @@ import {
 	loadEnvFiles,
 	normalizeBaseUrl,
 	resolveEnvPath,
-} from "@scripts/generators/src/utils/env-config";
+} from "@scripts/generators/src/lib/env-config";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("dotenv", () => ({

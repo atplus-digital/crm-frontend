@@ -1,3 +1,4 @@
+import { type Logger, logger } from "@scripts/generators/src/lib/logger";
 import type { ScriptConfig } from "./@types/script-config";
 import {
 	fetchEntriesStage,
@@ -13,14 +14,16 @@ import type {
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 
 export interface GenerateCustomRequestsExecutionContext {
+	logger: Logger;
 	overrideConfig?: Partial<ScriptConfig>;
 	pipelineContext?: GenerationContext;
 }
 
 export function createGenerateCustomRequestsExecutionContext(
 	overrideConfig?: Partial<ScriptConfig>,
+	injectedLogger: Logger = logger,
 ): GenerateCustomRequestsExecutionContext {
-	return { overrideConfig };
+	return { logger: injectedLogger, overrideConfig };
 }
 
 export function lockGenerateCustomRequestsWorkspace(): void {
@@ -31,8 +34,10 @@ async function runOrchestrationStage(
 	context: GenerateCustomRequestsExecutionContext,
 	stage: GenerationStage,
 ): Promise<void> {
-	const current = (context.pipelineContext ?? {}) as GenerationContext;
-	context.pipelineContext = await stage(current);
+	const baseContext = (context.pipelineContext ?? {
+		logger: context.logger,
+	}) as GenerationContext;
+	context.pipelineContext = await stage(baseContext);
 }
 
 export async function runLoadConfigOrchestrationStage(

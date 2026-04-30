@@ -1,3 +1,4 @@
+import type { Logger } from "@scripts/generators/src/lib/logger";
 import type { CollectionTypesMap } from "../../@types/generation";
 import type {
 	DataSourceClient,
@@ -38,6 +39,7 @@ export interface EnumOriginEntry {
  * Use `Readonly<C>` in stage signatures to enforce immutability at the type level.
  */
 export interface PipelineContext {
+	logger: Logger;
 	// ── Immutable configuration (set once, never modified) ──
 	config: Readonly<RuntimeConfig>;
 	dataSource: Readonly<DataSourceGenerationConfig>;

@@ -10,11 +10,11 @@ export interface LoadConfigOptions {
 export function loadConfigStage(
 	options: LoadConfigOptions = {},
 ): GenerationStage {
-	return async (): Promise<GenerationContext> => {
+	return async (ctx): Promise<GenerationContext> => {
 		if (options.overrideConfig) {
 			const runtimeConfig = parseConfig(options.overrideConfig);
-			return { config: runtimeConfig } as GenerationContext;
+			return { ...ctx, config: runtimeConfig } as GenerationContext;
 		}
-		return { config: defaultScriptConfig } as GenerationContext;
+		return { ...ctx, config: defaultScriptConfig } as GenerationContext;
 	};
 }

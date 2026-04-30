@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { resolveLogLevel } from "@scripts/generators/src/utils/env-config";
+import { resolveLogLevel } from "@scripts/generators/src/lib/env-config";
 import type { RuntimeConfig, ScriptConfig } from "../@types/script";
 import { resolveEnvConfig } from "./load-config";
 
