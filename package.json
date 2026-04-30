@@ -19,8 +19,8 @@
 		"lint-staged": "lint-staged",
 		"typecheck": "tsc --noEmit",
 		"analyze-bundle": "pnpx vite-bundle-analyzer",
-		"generate-types": "tsx scripts/generate-types/index.ts",
-		"generate-custom-requests": "tsx scripts/generate-custom-requests/index.ts"
+		"generate-types": "tsx scripts/generators/generate-types/index.ts",
+		"generate-custom-requests": "tsx scripts/generators/generate-custom-requests/index.ts"
 	},
 	"dependencies": {
 		"@fontsource-variable/geist": "^5.2.8",

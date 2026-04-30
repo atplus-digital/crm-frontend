@@ -11,7 +11,7 @@ export default defineConfig({
 		globalSetup: ["./src/_tests/global-setup.ts"],
 		setupFiles: [
 			"./src/_tests/mock-env.ts",
-			"./scripts/generate-types/test/setup.ts",
+			"./scripts/generators/generate-types/test/setup.ts",
 		],
 		coverage: {
 			provider: "v8",
@@ -19,8 +19,8 @@ export default defineConfig({
 			include: ["src/**/*.ts", "scripts/**/*.ts"],
 			exclude: [
 				"src/generated/**",
-				"scripts/generate-types/config.ts",
-				"scripts/generate-types/src/@types/**",
+				"scripts/generators/generate-types/config.ts",
+				"scripts/generators/generate-types/src/@types/**",
 				"src/_tests/global-setup.ts",
 				"src/_tests/mock-env.ts",
 			],
