@@ -47,7 +47,7 @@ function getExtraHeadersFromEnv() {
 async function launchBrowser(browserType = "chromium", options = {}) {
 	const defaultOptions = {
 		headless: process.env.HEADLESS !== "false",
-		slowMo: process.env.SLOW_MO ? parseInt(process.env.SLOW_MO) : 0,
+		slowMo: process.env.SLOW_MO ? parseInt(process.env.SLOW_MO, 10) : 0,
 		args: ["--no-sandbox", "--disable-setuid-sandbox"],
 	};
 
@@ -387,7 +387,7 @@ async function createContext(browser, options = {}) {
  * @returns {Promise<Array>} Array of detected server URLs
  */
 async function detectDevServers(customPorts = []) {
-	const http = require("http");
+	const http = require("node:http");
 
 	// Common dev server ports
 	const commonPorts = [

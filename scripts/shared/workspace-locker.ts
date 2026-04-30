@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { logVerbose } from "@scripts/shared/utils/logger";
+import { logVerbose } from "@scripts/shared/logger";
 
 interface VSCodeSettings {
 	[setting: string]: unknown;

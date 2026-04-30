@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { GeneratedRegistryEntry } from "@scripts/generate-custom-requests/src/@types/generated-registry";
 import type { SplitRequestsMap } from "@scripts/generate-custom-requests/src/@types/script-config";
-import { logger } from "@scripts/shared/utils/logger";
+import { logger } from "@scripts/shared/logger";
 import {
 	escapeString,
 	serializePayloadData,

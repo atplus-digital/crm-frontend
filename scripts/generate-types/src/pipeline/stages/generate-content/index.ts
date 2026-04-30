@@ -99,7 +99,7 @@ export async function generateContentStage(
 
 	// Gera paths para todas as collections
 	const collectionPaths = new Map<string, string>();
-	for (const name of Object.keys(ctx.splitCollections ?? {})) {
+	for (const name of ctx.splitCollections?.keys() ?? []) {
 		collectionPaths.set(name, getImportPath(name, true));
 	}
 	for (const name of Object.keys(ctx.mainCollections ?? {})) {

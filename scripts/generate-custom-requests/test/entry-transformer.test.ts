@@ -3,16 +3,17 @@ import {
 	transformAllEntries,
 	transformApiEntryToRegistry,
 } from "@scripts/generate-custom-requests/src/transformer/entry-transformer";
-import { logger } from "@scripts/shared/utils/logger";
+import { logger } from "@scripts/shared/logger";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@scripts/shared/utils/logger", () => ({
+vi.mock("@scripts/shared/logger", () => ({
 	logger: {
 		info: vi.fn(),
 		warn: vi.fn(),
 		error: vi.fn(),
 		debug: vi.fn(),
 		setLevel: vi.fn(),
+		getLevel: vi.fn(() => "info"),
 	},
 }));
 

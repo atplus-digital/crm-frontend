@@ -1,5 +1,5 @@
 import { config } from "@scripts/generate-types/config";
-import { logger } from "@scripts/shared/utils/logger";
+import { logger } from "@scripts/shared/logger";
 import type { GeneratedFileWrite } from "./core/types";
 import { runLinterFix } from "./post-pipeline/linter-runner";
 import { validateTypeScriptDirectory } from "./post-pipeline/writer";

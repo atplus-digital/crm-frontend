@@ -33,7 +33,7 @@ describe("workspace-locker", () => {
 	describe("isWorkspaceLocked", () => {
 		it("retorna falso quando o arquivo de configurações não existe", async () => {
 			const { isWorkspaceLocked } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 			vi.mocked(fs.existsSync).mockReturnValue(false);
 
@@ -43,7 +43,7 @@ describe("workspace-locker", () => {
 
 		it("retorna falso quando readonlyInclude está ausente", async () => {
 			const { isWorkspaceLocked } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 			vi.mocked(fs.existsSync).mockReturnValue(true);
 			vi.mocked(fs.readFileSync).mockReturnValue(
@@ -56,7 +56,7 @@ describe("workspace-locker", () => {
 
 		it("retorna falso quando readonlyInclude não tem padrões correspondentes", async () => {
 			const { isWorkspaceLocked } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 			vi.mocked(fs.existsSync).mockReturnValue(true);
 			vi.mocked(fs.readFileSync).mockReturnValue(
@@ -71,7 +71,7 @@ describe("workspace-locker", () => {
 
 		it("retorna verdadeiro quando GENERATED_PATTERN está presente", async () => {
 			const { isWorkspaceLocked } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 			vi.mocked(fs.existsSync).mockReturnValue(true);
 			vi.mocked(fs.readFileSync).mockReturnValue(
@@ -86,7 +86,7 @@ describe("workspace-locker", () => {
 
 		it("retorna verdadeiro quando um dos outputDirs corresponde a um padrão", async () => {
 			const { isWorkspaceLocked } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 			vi.mocked(fs.existsSync).mockReturnValue(true);
 			vi.mocked(fs.readFileSync).mockReturnValue(
@@ -101,7 +101,7 @@ describe("workspace-locker", () => {
 
 		it("retorna falso quando readonlyInclude não é um objeto", async () => {
 			const { isWorkspaceLocked } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 			vi.mocked(fs.existsSync).mockReturnValue(true);
 			vi.mocked(fs.readFileSync).mockReturnValue(
@@ -116,7 +116,7 @@ describe("workspace-locker", () => {
 
 		it("retorna falso em caso de erro ao analisar JSON", async () => {
 			const { isWorkspaceLocked } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 			vi.mocked(fs.existsSync).mockReturnValue(true);
 			vi.mocked(fs.readFileSync).mockReturnValue("not json content");
@@ -128,7 +128,7 @@ describe("workspace-locker", () => {
 
 		it("trata outputDirs vazio corretamente", async () => {
 			const { isWorkspaceLocked } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 			vi.mocked(fs.existsSync).mockReturnValue(true);
 			vi.mocked(fs.readFileSync).mockReturnValue(
@@ -143,7 +143,7 @@ describe("workspace-locker", () => {
 
 		it("verifica múltiplos diretórios de saída", async () => {
 			const { isWorkspaceLocked } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 			vi.mocked(fs.existsSync).mockReturnValue(true);
 			vi.mocked(fs.readFileSync).mockReturnValue(
@@ -165,7 +165,7 @@ describe("workspace-locker", () => {
 	describe("lockWorkspace", () => {
 		it("cria o diretório .vscode se não existir", async () => {
 			const { applyWorkspaceLockIfNeeded } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 
 			applyWorkspaceLockIfNeeded(["src/generated"], true);
@@ -178,7 +178,7 @@ describe("workspace-locker", () => {
 
 		it("escreve no arquivo .vscode/settings.json quando não está bloqueado", async () => {
 			const { applyWorkspaceLockIfNeeded } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 
 			applyWorkspaceLockIfNeeded(["src/generated"], true);
@@ -189,7 +189,7 @@ describe("workspace-locker", () => {
 
 		it("escreve padrões readonlyInclude corretos", async () => {
 			const { applyWorkspaceLockIfNeeded } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 
 			applyWorkspaceLockIfNeeded(["src/generated/nocobase"], true);
@@ -207,7 +207,7 @@ describe("workspace-locker", () => {
 
 		it("preserva outras configurações ao mesclar", async () => {
 			const { applyWorkspaceLockIfNeeded } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 
 			vi.mocked(fs.existsSync).mockReturnValue(true);
@@ -231,7 +231,7 @@ describe("workspace-locker", () => {
 
 		it("trata padrões duplicados sem erros", async () => {
 			const { applyWorkspaceLockIfNeeded } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 
 			vi.mocked(fs.existsSync).mockReturnValue(true);
@@ -251,7 +251,7 @@ describe("workspace-locker", () => {
 
 		it("trata múltiplos diretórios de saída corretamente", async () => {
 			const { applyWorkspaceLockIfNeeded } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 
 			applyWorkspaceLockIfNeeded(
@@ -273,7 +273,7 @@ describe("workspace-locker", () => {
 
 		it("remove duplicatas ao bloquear múltiplos diretórios", async () => {
 			const { applyWorkspaceLockIfNeeded } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 
 			applyWorkspaceLockIfNeeded(
@@ -294,7 +294,7 @@ describe("workspace-locker", () => {
 
 		it("gera erro quando writeFileSync falha", async () => {
 			const { applyWorkspaceLockIfNeeded } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 
 			vi.mocked(fs.writeFileSync).mockImplementation(() => {
@@ -310,7 +310,7 @@ describe("workspace-locker", () => {
 	describe("applyWorkspaceLockIfNeeded", () => {
 		it("não bloqueia quando lockWorkspaceFolder é falso", async () => {
 			const { applyWorkspaceLockIfNeeded } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 
 			applyWorkspaceLockIfNeeded(["src/generated"], false);
@@ -321,7 +321,7 @@ describe("workspace-locker", () => {
 
 		it("não bloqueia quando o workspace já está bloqueado", async () => {
 			const { applyWorkspaceLockIfNeeded } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 
 			vi.mocked(fs.existsSync).mockReturnValue(true);
@@ -339,7 +339,7 @@ describe("workspace-locker", () => {
 
 		it("trata outputDirs vazio sem erro", async () => {
 			const { applyWorkspaceLockIfNeeded } = await import(
-				"@scripts/shared/utils/workspace-locker"
+				"@scripts/shared/workspace-locker"
 			);
 
 			expect(() => applyWorkspaceLockIfNeeded([], true)).not.toThrow();

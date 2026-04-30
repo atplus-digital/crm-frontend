@@ -2,7 +2,7 @@ import {
 	createNocoBaseEnvSchema,
 	formatZodError,
 	loadEnvFiles,
-} from "@scripts/shared/utils/env-config";
+} from "@scripts/shared/env-config";
 import type { ScriptConfig } from "../@types/script-config";
 
 export function parseConfig(

@@ -1,7 +1,7 @@
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { CustomRequestsAnalysisReport } from "@scripts/generate-custom-requests/src/transformer/entry-transformer";
-import { logInfo } from "@scripts/shared/utils/logger";
+import { logInfo } from "@scripts/shared/logger";
 
 const ANALYSIS_OUTPUT_FILE = "analysis-report.json";
 

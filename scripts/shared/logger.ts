@@ -25,12 +25,21 @@ interface Logger {
 
 let currentLevel: LogLevel = "info";
 
+export const LEVEL_COLORS: Record<LogLevel, string> = {
+	debug: "\x1b[90m",
+	info: "\x1b[34m",
+	warn: "\x1b[1m\x1b[33m",
+	error: "\x1b[1m\x1b[31m",
+};
+export const RESET = "\x1b[0m";
+
 function formatMessage(
 	level: LogLevel,
 	message: string,
 	meta?: LogMeta,
 ): string {
-	const prefix = `[${level.toUpperCase()}]`;
+	const color = LEVEL_COLORS[level];
+	const prefix = `${color}[${level.toUpperCase()}]${RESET}`;
 	if (!meta || Object.keys(meta).length === 0) {
 		return `${prefix} ${message}`;
 	}
@@ -45,7 +54,13 @@ export function createLogger(): Logger {
 	return {
 		debug: (message: string, meta?: LogMeta) => {
 			if (LOG_LEVEL_PRIORITY.debug >= LOG_LEVEL_PRIORITY[currentLevel]) {
-				console.debug(formatMessage("debug", message, meta));
+				console.debug(
+					formatMessage(
+						"debug",
+						`${LEVEL_COLORS.debug}${message}${RESET}`,
+						meta,
+					),
+				);
 			}
 		},
 		info: (message: string, meta?: LogMeta) => {
@@ -60,7 +75,13 @@ export function createLogger(): Logger {
 		},
 		error: (message: string, meta?: LogMeta) => {
 			if (LOG_LEVEL_PRIORITY.error >= LOG_LEVEL_PRIORITY[currentLevel]) {
-				console.error(formatMessage("error", message, meta));
+				console.error(
+					formatMessage(
+						"error",
+						`${LEVEL_COLORS.error}${message}${RESET}`,
+						meta,
+					),
+				);
 			}
 		},
 		setLevel: (level: LogLevel) => {

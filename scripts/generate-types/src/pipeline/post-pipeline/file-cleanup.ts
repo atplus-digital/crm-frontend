@@ -4,7 +4,7 @@ import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type { MultiFileResult } from "@scripts/generate-types/src/@types/script";
 import { toFileName } from "@scripts/generate-types/src/utils/naming";
-import { logger } from "@scripts/shared/utils/logger";
+import { logger } from "@scripts/shared/logger";
 import { isFileBeingEdited } from "./file-editor-check";
 
 function readExistingContent(filePath: string): string {

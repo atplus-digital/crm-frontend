@@ -7,7 +7,7 @@ import {
 	formatZodError,
 	loadEnvFiles,
 	normalizeBaseUrl,
-} from "@scripts/shared/utils/env-config";
+} from "@scripts/shared/env-config";
 
 export function resolveEnvConfig(scriptConfig: ScriptConfig): EnvConfig {
 	const loadedEnvPaths = loadEnvFiles(scriptConfig.defaultEnvPath);

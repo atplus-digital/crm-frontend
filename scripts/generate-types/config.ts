@@ -1,4 +1,4 @@
-import { logger } from "@scripts/shared/utils/logger";
+import { logger } from "@scripts/shared/logger";
 import { dataSourceConfigs } from "./datasources.config";
 import type { ScriptConfig } from "./src/@types/script";
 import { parseConfig } from "./src/utils/config";

@@ -1,4 +1,4 @@
-import { logger } from "@scripts/shared/utils/logger";
+import { logger } from "@scripts/shared/logger";
 import type { DataSourceFilesResult } from "../../../@types/script";
 import { createInitialContext } from "../../../pipeline/core/context-builder";
 import { defaultPipeline } from "../../../pipeline/core/default-pipeline";

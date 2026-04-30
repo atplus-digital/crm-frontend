@@ -1,4 +1,4 @@
-import { logVerbose } from "@scripts/shared/utils/logger";
+import { logVerbose } from "@scripts/shared/logger";
 import type { EnumAdapter, EnumAdapterFieldEnum } from "../@types/script";
 import { fetchWithCache } from "../utils/enum-cache";
 

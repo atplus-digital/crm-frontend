@@ -3,7 +3,7 @@ import {
 	logger,
 	logInfo,
 	logVerbose,
-} from "@scripts/shared/utils/logger";
+} from "@scripts/shared/logger";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("logger", () => {
@@ -30,7 +30,10 @@ describe("logger", () => {
 
 			logInfo(message);
 
-			expect(consoleInfoSpy).toHaveBeenCalledWith("[INFO] Test info message");
+			// Verify the call was made with a string containing the expected parts
+			const callArgs = consoleInfoSpy.mock.calls[0][0];
+			expect(callArgs).toContain("[INFO]");
+			expect(callArgs).toContain(message);
 			expect(consoleInfoSpy).toHaveBeenCalledTimes(1);
 		});
 
@@ -57,9 +60,10 @@ describe("logger", () => {
 
 			logVerbose(message);
 
-			expect(consoleDebugSpy).toHaveBeenCalledWith(
-				"[DEBUG] Verbose message when on",
-			);
+			// Verify the call was made with a string containing the expected parts
+			const callArgs = consoleDebugSpy.mock.calls[0][0];
+			expect(callArgs).toContain("[DEBUG]");
+			expect(callArgs).toContain("Verbose message when on");
 			expect(consoleDebugSpy).toHaveBeenCalledTimes(1);
 		});
 	});

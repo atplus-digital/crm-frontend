@@ -1,5 +1,5 @@
 import "./config";
-import { logger } from "@scripts/shared/utils/logger";
+import { logger } from "@scripts/shared/logger";
 import { config } from "./config";
 import { CustomRequestsApiClient } from "./src/api/client";
 import {
