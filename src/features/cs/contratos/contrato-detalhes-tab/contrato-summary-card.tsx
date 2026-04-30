@@ -5,10 +5,10 @@ import {
 	FileWarning,
 	Hash,
 	MapPin,
+	Package,
 	Pause,
 	Plus,
 	RefreshCw,
-	User,
 } from "lucide-react";
 import type { ActionItem } from "#/components/actions-menu";
 import { ActionsMenu } from "#/components/actions-menu";
@@ -52,10 +52,10 @@ export function ContratoSummaryCard({ contrato }: ContratoSummaryCardProps) {
 						</div>
 						<div>
 							<h1 className="text-xl font-bold tracking-tight">
-								{contrato.contrato}
+								{contrato.f_nc_cliente?.razao ?? "—"}
 							</h1>
-							<p className="text-sm text-muted-foreground">
-								Contrato IXC #{contrato.id}
+							<p className="text-sm font-bold text-muted-foreground">
+								#{contrato.id}
 							</p>
 						</div>
 					</div>
@@ -80,14 +80,14 @@ export function ContratoSummaryCard({ contrato }: ContratoSummaryCardProps) {
 				<div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-5">
 					<div className="flex items-center gap-2.5">
 						<div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-							<User className="size-4 text-primary" />
+							<Package className="size-4 text-primary" />
 						</div>
 						<div className="min-w-0 flex-1">
 							<p className="text-xs font-medium text-muted-foreground">
-								Cliente
+								Pacote
 							</p>
 							<p className="truncate text-sm font-semibold">
-								{contrato.f_nc_cliente?.razao ?? "—"}
+								{contrato.contrato}
 							</p>
 						</div>
 					</div>

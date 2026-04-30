@@ -8,7 +8,7 @@ import type {
 	GenerationStage,
 } from "../types";
 
-async function runSingleDatasource(
+export async function runSingleDatasource(
 	logger: GenerationContext["logger"],
 	config: GenerationContext["config"],
 	dataSource: GenerationContext["dataSourceConfigs"][number],
@@ -29,6 +29,33 @@ async function runSingleDatasource(
 	return { writeFiles: result.writeResults ?? [] };
 }
 
+function formatDatasourceError(error: unknown): string {
+	return error instanceof Error
+		? (error.stack ?? error.message)
+		: String(error);
+}
+
+export function createFulfilledDatasourceResult(
+	name: string,
+	result: DataSourceFilesResult,
+): DatasourceRunResult {
+	return { name, status: "fulfilled", result };
+}
+
+export function createRejectedDatasourceResult(
+	logger: GenerationContext["logger"],
+	name: string,
+	error: unknown,
+): DatasourceRunResult {
+	const errorMessage = formatDatasourceError(error);
+	logger.error(`❌ Datasource '${name}' falhou: ${errorMessage}`, {
+		datasource: name,
+		stage: "run-datasources",
+	});
+
+	return { name, status: "rejected", error };
+}
+
 export function runDatasourcesStage(): GenerationStage {
 	return async (ctx: GenerationContext): Promise<GenerationContext> => {
 		const settledResults = await Promise.allSettled(
@@ -42,19 +69,9 @@ export function runDatasourcesStage(): GenerationStage {
 				const name = ctx.dataSourceConfigs[i]?.name ?? `datasource-${i}`;
 
 				if (settled.status === "fulfilled") {
-					return { name, status: "fulfilled", result: settled.value };
+					return createFulfilledDatasourceResult(name, settled.value);
 				}
-
-				const errorMessage =
-					settled.reason instanceof Error
-						? (settled.reason.stack ?? settled.reason.message)
-						: String(settled.reason);
-				ctx.logger.error(`❌ Datasource '${name}' falhou: ${errorMessage}`, {
-					datasource: name,
-					stage: "run-datasources",
-				});
-
-				return { name, status: "rejected", error: settled.reason };
+				return createRejectedDatasourceResult(ctx.logger, name, settled.reason);
 			},
 		);
 

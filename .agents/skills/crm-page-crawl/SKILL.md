@@ -82,12 +82,88 @@ If any mandatory input is missing, ask a concise clarification question first.
 - Confirm whether popups, custom actions, and status transitions are in scope.
 - Confirm target role/profile if UI is permission-sensitive.
 
-### 2. Authenticate safely
+### 2. Authenticate (required for every crawl)
 
-- Look for token/base URL in `.env.local` and project env files.
-- Attempt authenticated access with existing token/session.
-- If access fails, ask user for credentials/session guidance.
-- Mask secrets in logs and in final report.
+Authentication is **mandatory** before any browser navigation to CRM pages. NocoBase requires a valid Bearer token both for API calls and for the frontend SPA session. Follow these steps in order:
+
+#### Step 2.1 — Read credentials from environment
+
+Read the token and base URL from `.env.local` (these variables are always present in the project):
+
+| Variable                      | Purpose                         | Example                        |
+| ----------------------------- | ------------------------------- | ------------------------------ |
+| `CRM_NOCOBASE_TOKEN`          | NocoBase API Bearer token (JWT) | `eyJhbGciOiJIUzI1NiI...`       |
+| `CRM_NOCOBASE_URL`            | NocoBase API base URL           | `https://crm.atplus.cloud/api` |
+| `VITE_NOCOBASE_URL`           | Same as above (read-only alias) | `https://crm.atplus.cloud/api` |
+| `VITE_LOCAL_STORAGE_BASE_KEY` | localStorage key prefix         | `atplus-crm`                   |
+
+Extract with a terminal command:
+
+```bash
+source .env.local 2>/dev/null
+echo "TOKEN=${CRM_NOCOBASE_TOKEN}"
+echo "BASE_URL=${CRM_NOCOBASE_URL}"
+```
+
+#### Step 2.2 — Validate token via API
+
+Before opening any browser page, verify the token is still valid:
+
+```bash
+curl -s -o /dev/null -w "%{http_code}" \
+  -X GET "${CRM_NOCOBASE_URL}/auth:check" \
+  -H "Authorization: Bearer ${CRM_NOCOBASE_TOKEN}" \
+  -H "Content-Type: application/json"
+```
+
+- **200** → token is valid, proceed to Step 2.3.
+- **401** → token expired. Try to get a new one via signin endpoint:
+  ```bash
+  curl -X POST "${CRM_NOCOBASE_URL}/auth:signin" \
+    -H "Content-Type: application/json" \
+    -d '{"email":"EMAIL","password":"PASSWORD"}'
+  ```
+  If signin is not available, **ask the user for a fresh token or credentials** before continuing.
+
+#### Step 2.3 — Inject token into browser localStorage
+
+**CRITICAL:** The NocoBase frontend reads the auth token from `localStorage`, NOT from cookies or headers. You MUST inject it before navigating to any CRM page, otherwise all API calls from the SPA will return 401.
+
+**The correct sequence is:**
+
+1. **Open browser** to the CRM base domain (e.g., `https://crm.atplus.cloud`) using `open_browser_page` or `run_playwright_code`.
+2. **Inject the token** using `run_playwright_code` — navigate to the base URL first (so localStorage domain matches), then set the keys:
+
+```javascript
+// Navigate to base domain first — localStorage is domain-scoped
+await page.goto("https://crm.atplus.cloud/admin");
+await page.waitForTimeout(2000);
+
+// Inject token into all keys the NocoBase frontend expects
+const token = "PASTE_CRM_NOCOBASE_TOKEN_HERE";
+await page.evaluate((t) => {
+  localStorage.setItem("atplus-crm:token", t); // from VITE_LOCAL_STORAGE_BASE_KEY
+  localStorage.setItem("NOCOBASE_TOKEN", t); // NocoBase SDK default key
+}, token);
+```
+
+3. **Now navigate** to the target crawl URL — the SPA will read the token from localStorage and authenticate all requests:
+
+```javascript
+await page.goto("TARGET_URL_HERE", {
+  waitUntil: "networkidle",
+  timeout: 30000,
+});
+await page.waitForTimeout(5000);
+```
+
+#### Key pitfalls to avoid
+
+- **DO NOT** navigate directly to the target URL without first injecting the token — you will get a page full of 401 errors.
+- **DO NOT** use `mcp_microsoft_pla_browser_navigate` to navigate to the target URL before token injection — use `run_playwright_code` which gives full control over the sequence.
+- **DO NOT** forget to navigate to the base domain first — `localStorage.setItem` only works for the current origin.
+- **Always** inject both keys (`atplus-crm:token` AND `NOCOBASE_TOKEN`) — the NocoBase SDK and the custom app both read from different keys.
+- **Mask secrets** in all logs and final report outputs. Never print the raw token.
 
 ### 3. Crawl list page
 

@@ -6,7 +6,7 @@ import {
 	type GeneratorTask,
 	type RunGeneratorCliOptions,
 	runGeneratorCli,
-} from "@scripts/generators/run-generator";
+} from "@scripts/generators/src/lib/generator-cli";
 import type { RuntimeConfig } from "./@types/script";
 import {
 	assertGenerateTypesResult,

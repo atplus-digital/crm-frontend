@@ -82,6 +82,7 @@ export type Contrato = Pick<
 	| "numero"
 	| "complemento"
 	| "num_parcelas_atraso"
+	| "descricao_aux_plano_venda"
 >;
 
 /**

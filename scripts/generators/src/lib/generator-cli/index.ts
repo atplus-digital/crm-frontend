@@ -11,5 +11,6 @@ export type {
 	GeneratorTask,
 	GeneratorTaskResult,
 	ListrTaskRunner,
+	OrchestrationTaskRunner,
 	RunGeneratorCliOptions,
 } from "@scripts/generators/src/lib/generator-cli/types";
