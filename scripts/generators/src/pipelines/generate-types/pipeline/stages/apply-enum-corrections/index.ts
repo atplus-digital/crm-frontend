@@ -1,7 +1,7 @@
 import type {
 	ApplyEnumCorrectionsContext,
 	PipelineStage,
-} from "../../core/types";
+} from "../../datasource-pipeline/types";
 import { applyEnumCorrections as applyCorrections } from "../infer-enums/enum-inference";
 
 export const applyEnumCorrections: PipelineStage<

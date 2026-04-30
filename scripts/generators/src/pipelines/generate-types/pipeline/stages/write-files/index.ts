@@ -1,5 +1,8 @@
 import * as path from "node:path";
-import type { GeneratedFileWrite, PipelineContext } from "../../core/types";
+import type {
+	GeneratedFileWrite,
+	PipelineContext,
+} from "../../datasource-pipeline/types";
 import { writeGeneratedFile } from "../../post-pipeline/writer";
 
 export async function writeFiles(

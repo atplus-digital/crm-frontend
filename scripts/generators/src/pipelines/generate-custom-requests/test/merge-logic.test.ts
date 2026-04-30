@@ -1,5 +1,5 @@
 import type { GeneratedRegistryEntry } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/generated-registry";
-import { mergeRegistries } from "@scripts/generators/src/pipelines/generate-custom-requests/utils/merge-registries";
+import { mergeRegistries } from "@scripts/generators/src/pipelines/generate-custom-requests/pipeline/stages/transform-and-merge/merge-registries";
 import { describe, expect, it } from "vitest";
 
 function makeEntry(

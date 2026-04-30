@@ -7,12 +7,15 @@ import {
 	type RunGeneratorCliOptions,
 	runGeneratorCli,
 } from "@scripts/generators/src/lib/generator-cli";
+import { defaultLogger } from "@scripts/generators/src/lib/logger";
 import type { RuntimeConfig } from "./@types/script";
+import { assertGenerateTypesResult } from "./assert";
 import {
-	assertGenerateTypesResult,
 	backupGenerateTypesOutputs,
 	cleanupGenerateTypesBackups,
-	createGenerateTypesExecutionContext,
+} from "./backup";
+import { createGenerateTypesExecutionContext } from "./context";
+import {
 	lockGenerateTypesWorkspace,
 	runDatasourcesOrchestrationStage,
 	runFormatResultOrchestrationStage,
@@ -118,4 +121,12 @@ export function createGenerateTypesGenerator(): RunGeneratorCliOptions<GenerateT
 
 const generateTypes = createGenerateTypesGenerator();
 
-void runGeneratorCli(generateTypes);
+async function main(): Promise<void> {
+	await runGeneratorCli(generateTypes);
+}
+
+void main().catch((error) => {
+	const message = error instanceof Error ? error.message : String(error);
+	defaultLogger.error(message);
+	process.exitCode = 1;
+});

@@ -2,7 +2,7 @@ import type {
 	BuildTypesContext,
 	PipelineStage,
 	SplitCollectionsContext,
-} from "../../core/types";
+} from "../../datasource-pipeline/types";
 import { splitCollectionsByConfig } from "./collection-splitter";
 
 export const splitCollections: PipelineStage<BuildTypesContext> = async (

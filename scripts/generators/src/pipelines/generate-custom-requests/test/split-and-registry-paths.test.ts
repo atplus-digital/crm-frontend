@@ -8,8 +8,8 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { GeneratedRegistryEntry } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/generated-registry";
-import { writeGeneratedRegistry } from "@scripts/generators/src/pipelines/generate-custom-requests/writer/registry-writer";
-import { writeSplitFile } from "@scripts/generators/src/pipelines/generate-custom-requests/writer/split-writer";
+import { writeGeneratedRegistry } from "@scripts/generators/src/pipelines/generate-custom-requests/pipeline/stages/write-output/registry-writer";
+import { writeSplitFile } from "@scripts/generators/src/pipelines/generate-custom-requests/pipeline/stages/write-output/split-writer";
 import { afterEach, describe, expect, it } from "vitest";
 
 function makeEntry(

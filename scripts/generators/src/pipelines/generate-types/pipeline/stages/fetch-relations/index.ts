@@ -1,5 +1,8 @@
 import type { ManualRelationMapping } from "../../../@types/script";
-import type { FetchCollectionsContext, PipelineStage } from "../../core/types";
+import type {
+	FetchCollectionsContext,
+	PipelineStage,
+} from "../../datasource-pipeline/types";
 
 export const fetchRelations: PipelineStage<
 	FetchCollectionsContext & {

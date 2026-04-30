@@ -4,7 +4,10 @@ import type {
 } from "../../../@types/generation";
 import type { ManualRelationMapping } from "../../../@types/script";
 import { mapWithConcurrency } from "../../../utils/concurrency";
-import type { FetchCollectionsContext, PipelineStage } from "../../core/types";
+import type {
+	FetchCollectionsContext,
+	PipelineStage,
+} from "../../datasource-pipeline/types";
 import {
 	extractRelationInfo,
 	mapFieldType,

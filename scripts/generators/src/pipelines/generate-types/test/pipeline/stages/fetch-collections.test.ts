@@ -1,6 +1,6 @@
 import { createLogger } from "@scripts/generators/src/lib/logger";
 import type { DataSourceClient } from "@scripts/generators/src/pipelines/generate-types/@types/script";
-import type { InitContext } from "@scripts/generators/src/pipelines/generate-types/pipeline/core/types";
+import type { InitContext } from "@scripts/generators/src/pipelines/generate-types/pipeline/datasource-pipeline/types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockFetchCollections = vi.fn();

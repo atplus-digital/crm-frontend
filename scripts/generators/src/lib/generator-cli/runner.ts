@@ -1,7 +1,7 @@
 import { defaultLogger } from "@scripts/generators/src/lib/logger";
 import { Listr } from "listr2";
 
-import { DEFAULT_SUBTASK_OPTIONS } from "./defaults";
+import { getSubtaskOptions } from "./defaults";
 import { createListrTask } from "./listr-task";
 import type {
 	CreateGeneratorOptions,
@@ -11,7 +11,7 @@ import type {
 
 function buildGeneratorListr<TContext extends object>(
 	options: RunGeneratorCliOptions<TContext>,
-): Listr {
+) {
 	const logger = options.logger ?? defaultLogger;
 	const context = {
 		...options.context,
@@ -23,7 +23,7 @@ function buildGeneratorListr<TContext extends object>(
 	);
 
 	return new Listr(tasks, {
-		...DEFAULT_SUBTASK_OPTIONS,
+		...getSubtaskOptions("main"),
 		ctx: context,
 		renderer: "default",
 	});
@@ -42,13 +42,5 @@ export function createGeneratorOptions<TContext extends object>(
 export async function runGeneratorCli<TContext extends object>(
 	options: RunGeneratorCliOptions<TContext>,
 ): Promise<void> {
-	const logger = options.logger ?? defaultLogger;
-
-	try {
-		await buildGeneratorListr(options).run();
-	} catch (error) {
-		const message = error instanceof Error ? error.message : String(error);
-		logger.error(message);
-		process.exit(1);
-	}
+	await buildGeneratorListr(options).run();
 }

@@ -1,9 +1,9 @@
 import { logger } from "@scripts/generators/src/lib/logger";
 import {
-	collectAnalysisReport,
 	transformAllEntries,
 	transformApiEntryToRegistry,
-} from "@scripts/generators/src/pipelines/generate-custom-requests/transformer/entry-transformer";
+} from "@scripts/generators/src/pipelines/generate-custom-requests/pipeline/stages/transform-and-merge/entry-transformer";
+import { collectAnalysisReport } from "@scripts/generators/src/pipelines/generate-custom-requests/pipeline/stages/write-analysis-report/analysis-collector";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@scripts/generators/src/lib/logger", () => ({

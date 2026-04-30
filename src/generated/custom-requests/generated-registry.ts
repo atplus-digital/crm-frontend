@@ -1749,7 +1749,7 @@ export const generatedCustomRequestsRegistry = {
 		payloadSchema: z.object({
 			record: z.literal("").default("").readonly(),
 			xicara: z.literal("cafe").default("cafe").readonly(),
-			$nForm: z.unknown(),
+			$nForm: z.string(),
 			currentUser: z.object({
 				id: z.unknown(),
 			}),

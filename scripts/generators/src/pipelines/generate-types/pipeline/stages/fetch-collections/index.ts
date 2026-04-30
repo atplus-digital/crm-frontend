@@ -1,5 +1,8 @@
 import type { DataSourceCollection } from "../../../@types/script";
-import type { InitContext, PipelineStage } from "../../core/types";
+import type {
+	InitContext,
+	PipelineStage,
+} from "../../datasource-pipeline/types";
 
 export const fetchCollections: PipelineStage<InitContext> = async (ctx) => {
 	const { client, dataSource } = ctx;

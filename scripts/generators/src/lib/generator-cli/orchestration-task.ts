@@ -1,25 +1,10 @@
-import {
-	formatPersistentLog,
-	type LogEntry,
-	type Logger,
-	runWithLogger,
-	shouldPersistLog,
-} from "@scripts/generators/src/lib/logger";
-import type { ListrTask } from "listr2";
-
-import {
-	DEFAULT_SUBTASK_OPTIONS,
-	DEFAULT_TASK_RENDERER_OPTIONS,
-} from "./defaults";
-import type { CreateOrchestrationTaskOptions, GeneratorTask } from "./types";
-
-function getPersistentStageLogLine(
-	entry: LogEntry,
-	minimumPersistentLevel: ReturnType<Logger["getLevel"]>,
-): string | null {
-	if (!shouldPersistLog(entry, minimumPersistentLevel)) return null;
-	return formatPersistentLog(entry);
-}
+import { DEFAULT_TASK_RENDERER_OPTIONS, getSubtaskOptions } from "./defaults";
+import { createLoggedSubtask } from "./logged-subtask";
+import type {
+	CreateOrchestrationTaskOptions,
+	GeneratorTask,
+	OrchestrationListrTask,
+} from "./types";
 
 export function createOrchestrationTask<
 	TContext extends object,
@@ -31,41 +16,17 @@ export function createOrchestrationTask<
 		title: options.title ?? "orchestration",
 		run: async (context, task) => {
 			const executionContext = options.getExecutionContext(context);
-			const stageTasks: ListrTask[] = options.stages.map((stage) => ({
-				title: stage.title,
-				task: async (_stageCtx, stageTask) => {
-					const logger = context.logger;
-					const minimumPersistentLevel = logger.getLevel();
+			const stageTasks: OrchestrationListrTask[] = options.stages.map((stage) =>
+				createLoggedSubtask({
+					title: stage.title,
+					logger: context.logger,
+					run: (stageTask) => stage.run(executionContext, stageTask),
+					formatError: (message) =>
+						`Falha na subetapa "${stage.title}": ${message}`,
+				}),
+			);
 
-					const renderStageLogs = (entry: LogEntry): void => {
-						const line = getPersistentStageLogLine(
-							entry,
-							minimumPersistentLevel,
-						);
-						if (line) stageTask.output = line;
-					};
-
-					try {
-						await runWithLogger(
-							logger,
-							() => stage.run(executionContext, stageTask),
-							{
-								chain: stage.title,
-								onEntry: renderStageLogs,
-							},
-						);
-					} catch (error) {
-						const message =
-							error instanceof Error ? error.message : String(error);
-						throw new Error(`Falha na subetapa "${stage.title}": ${message}`, {
-							cause: error,
-						});
-					}
-				},
-				rendererOptions: DEFAULT_TASK_RENDERER_OPTIONS,
-			}));
-
-			return task.newListr(stageTasks, DEFAULT_SUBTASK_OPTIONS);
+			return task.newListr(stageTasks, getSubtaskOptions("nested"));
 		},
 		rendererOptions: DEFAULT_TASK_RENDERER_OPTIONS,
 	};

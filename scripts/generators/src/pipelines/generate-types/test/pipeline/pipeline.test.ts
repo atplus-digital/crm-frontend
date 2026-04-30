@@ -1,10 +1,8 @@
 import { createLogger } from "@scripts/generators/src/lib/logger";
-import { pipeAsync } from "@scripts/generators/src/pipelines/generate-types/pipeline/core/pipe";
 import type {
 	PipelineContext,
 	PipelineStage,
-} from "@scripts/generators/src/pipelines/generate-types/pipeline/core/types";
-import { createPipeline } from "@scripts/generators/src/pipelines/generate-types/pipeline/core/types";
+} from "@scripts/generators/src/pipelines/generate-types/pipeline/datasource-pipeline/types";
 import { describe, expect, it } from "vitest";
 
 function makeContext(overrides?: Record<string, unknown>): PipelineContext {
@@ -17,7 +15,18 @@ function makeContext(overrides?: Record<string, unknown>): PipelineContext {
 	} as PipelineContext;
 }
 
-describe("pipeAsync", () => {
+async function runPipeline(
+	stages: PipelineStage[],
+	initial: PipelineContext,
+): Promise<PipelineContext> {
+	let context: PipelineContext = initial;
+	for (const stage of stages) {
+		context = await stage(context);
+	}
+	return context;
+}
+
+describe("defaultPipeline", () => {
 	it("deve executar estágios em ordem sequencial", async () => {
 		const executionOrder: string[] = [];
 
@@ -36,9 +45,8 @@ describe("pipeAsync", () => {
 			return { ...ctx, value3: "third" };
 		};
 
-		const pipeline = pipeAsync(stage1, stage2, stage3);
 		const initialContext = makeContext();
-		await pipeline(initialContext);
+		await runPipeline([stage1, stage2, stage3], initialContext);
 
 		expect(executionOrder).toEqual(["stage1", "stage2", "stage3"]);
 	});
@@ -56,9 +64,8 @@ describe("pipeAsync", () => {
 			return { ...ctx, field3: "value3" };
 		};
 
-		const pipeline = pipeAsync(stage1, stage2, stage3);
 		const initialContext = makeContext();
-		const result = await pipeline(initialContext);
+		const result = await runPipeline([stage1, stage2, stage3], initialContext);
 
 		expect(result).toMatchObject({
 			field1: "value1",
@@ -80,17 +87,17 @@ describe("pipeAsync", () => {
 			return ctx;
 		};
 
-		const pipeline = pipeAsync(stage1, stage2, stage3);
 		const initialContext = makeContext();
 
-		await expect(pipeline(initialContext)).rejects.toThrow("Erro no estágio 2");
+		await expect(
+			runPipeline([stage1, stage2, stage3], initialContext),
+		).rejects.toThrow("Erro no estágio 2");
 	});
 
 	it("deve retornar contexto inalterado com pipeline vazio", async () => {
-		const pipeline = pipeAsync();
 		const initialContext = makeContext();
 
-		const result = await pipeline(initialContext);
+		const result = await runPipeline([], initialContext);
 
 		expect(result).toEqual(initialContext);
 	});
@@ -100,119 +107,10 @@ describe("pipeAsync", () => {
 			return { ...ctx, modified: true };
 		};
 
-		const pipeline = pipeAsync(stage1);
 		const initialContext = makeContext();
-		const result = await pipeline(initialContext);
+		const result = await runPipeline([stage1], initialContext);
 
 		expect(result).toMatchObject({ modified: true });
-	});
-});
-
-describe("createPipeline (defaultPipeline)", () => {
-	it("deve ser callable e retornar uma função", () => {
-		const stage: PipelineStage = async (ctx) => ctx;
-		const pipeline = createPipeline([stage]);
-
-		expect(typeof pipeline).toBe("function");
-	});
-
-	it("deve executar pipeline com múltiplos estágios", async () => {
-		const executionOrder: string[] = [];
-
-		const stages: PipelineStage[] = [
-			async (ctx) => {
-				executionOrder.push("stage1");
-				return { ...ctx, step: 1 };
-			},
-			async (ctx) => {
-				executionOrder.push("stage2");
-				return { ...ctx, step: 2 };
-			},
-			async (ctx) => {
-				executionOrder.push("stage3");
-				return { ...ctx, step: 3 };
-			},
-		];
-
-		const pipeline = createPipeline(stages);
-		const initialContext = makeContext();
-		const result = await pipeline(initialContext);
-
-		expect(executionOrder).toEqual(["stage1", "stage2", "stage3"]);
-		expect(result).toMatchObject({ step: 3 });
-	});
-
-	it("deve propagar todo o contexto através dos estágios", async () => {
-		const stages: PipelineStage[] = [
-			async (ctx) => ({ ...ctx, field1: "value1" }),
-			async (ctx) => ({ ...ctx, field2: "value2" }),
-			async (ctx) => ({ ...ctx, field3: "value3" }),
-		];
-
-		const pipeline = createPipeline(stages);
-		const initialContext = makeContext({ initial: "data" });
-
-		const result = await pipeline(initialContext);
-
-		expect(result).toMatchObject({
-			initial: "data",
-			field1: "value1",
-			field2: "value2",
-			field3: "value3",
-		});
-	});
-
-	it("deve parar execução quando um estágio lança erro", async () => {
-		const executionOrder: string[] = [];
-
-		const stages: PipelineStage[] = [
-			async (ctx) => {
-				executionOrder.push("stage1");
-				return ctx;
-			},
-			async () => {
-				executionOrder.push("stage2");
-				throw new Error("Falha intencional");
-			},
-			async (ctx) => {
-				executionOrder.push("stage3");
-				return ctx;
-			},
-		];
-
-		const pipeline = createPipeline(stages);
-		const initialContext = makeContext();
-
-		await expect(pipeline(initialContext)).rejects.toThrow("Falha intencional");
-		expect(executionOrder).toEqual(["stage1", "stage2"]);
-	});
-
-	it("deve retornar contexto inicial quando pipeline está vazio", async () => {
-		const pipeline = createPipeline([]);
-		const initialContext = makeContext({ custom: "value" });
-
-		const result = await pipeline(initialContext);
-
-		expect(result).toEqual(initialContext);
-	});
-
-	it("deve suportar estágios assíncronos", async () => {
-		const stages: PipelineStage[] = [
-			async (ctx) => {
-				await new Promise((resolve) => setTimeout(resolve, 10));
-				return { ...ctx, async1: true };
-			},
-			async (ctx) => {
-				await new Promise((resolve) => setTimeout(resolve, 10));
-				return { ...ctx, async2: true };
-			},
-		];
-
-		const pipeline = createPipeline(stages);
-		const initialContext = makeContext();
-		const result = await pipeline(initialContext);
-
-		expect(result).toMatchObject({ async1: true, async2: true });
 	});
 
 	it("deve passar contexto readonly para cada estágio", async () => {
@@ -229,14 +127,31 @@ describe("createPipeline (defaultPipeline)", () => {
 			},
 		];
 
-		const pipeline = createPipeline(stages);
 		const initialContext = makeContext({ start: true });
 
-		await pipeline(initialContext);
+		await runPipeline(stages, initialContext);
 
 		expect(receivedContexts[0]).toMatchObject({ start: true });
 		expect(receivedContexts[0]).not.toHaveProperty("step");
 
 		expect(receivedContexts[1]).toMatchObject({ start: true, step: 1 });
+	});
+
+	it("deve suportar estágios assíncronos", async () => {
+		const stages: PipelineStage[] = [
+			async (ctx) => {
+				await new Promise((resolve) => setTimeout(resolve, 10));
+				return { ...ctx, async1: true };
+			},
+			async (ctx) => {
+				await new Promise((resolve) => setTimeout(resolve, 10));
+				return { ...ctx, async2: true };
+			},
+		];
+
+		const initialContext = makeContext();
+		const result = await runPipeline(stages, initialContext);
+
+		expect(result).toMatchObject({ async1: true, async2: true });
 	});
 });

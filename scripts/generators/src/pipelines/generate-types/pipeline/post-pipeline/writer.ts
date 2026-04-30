@@ -6,7 +6,6 @@ import {
 } from "@scripts/generators/src/lib/logger";
 import type { SingleFileResult } from "@scripts/generators/src/pipelines/generate-types/@types/script";
 import { config } from "@scripts/generators/src/pipelines/generate-types/config";
-import { toFileName } from "@scripts/generators/src/pipelines/generate-types/utils/naming";
 import { isFileBeingEdited } from "./file-editor-check";
 
 const MAIN_OUTPUT_FILE = "index.ts";
@@ -86,11 +85,3 @@ export function readExistingContent(filePath: string): string {
 
 	return fs.readFileSync(filePath, "utf-8");
 }
-
-export {
-	cleanOutputDirectory,
-	getUnusedFiles,
-	validateTypeScriptDirectory,
-	writeMultipleFiles,
-} from "./file-cleanup";
-export { toFileName };

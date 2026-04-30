@@ -3,8 +3,8 @@ import {
 	logger as defaultRuntimeLogger,
 	type Logger,
 } from "@scripts/generators/src/lib/logger";
-import type { GeneratedFileWrite } from "./core/types";
-import { validateTypeScriptDirectory } from "./post-pipeline/writer";
+import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/tsc-validator";
+import type { GeneratedFileWrite } from "./datasource-pipeline/types";
 
 export async function runPostPipeline(
 	outputDirs: string[],
@@ -22,7 +22,7 @@ export async function runPostPipeline(
 		}),
 	);
 
-	const linterPromise = runLinterFix(outputDirs);
+	const linterPromise = runLinterFix(outputDirs, activeLogger);
 
 	await Promise.all([validationPromise, linterPromise]);
 }

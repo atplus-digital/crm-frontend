@@ -1,7 +1,7 @@
 import type { DataSourceFilesResult } from "../../../@types/script";
 import { createDataSourceClient } from "../../../utils/create-dataSource-client";
-import { createInitialContext } from "../../core/context-builder";
-import { defaultPipeline } from "../../core/default-pipeline";
+import { createInitialContext } from "../../datasource-pipeline/context-builder";
+import { defaultPipeline } from "../../datasource-pipeline/default-pipeline";
 import type {
 	DatasourceRunResult,
 	GenerationContext,

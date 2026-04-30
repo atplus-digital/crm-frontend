@@ -1,4 +1,7 @@
-import type { BuildTypesContext, PipelineStage } from "../../core/types";
+import type {
+	BuildTypesContext,
+	PipelineStage,
+} from "../../datasource-pipeline/types";
 import { type InferredEnumsMap, mergeEnums } from "./enum-inference";
 
 export const inferEnums: PipelineStage<BuildTypesContext> = async (ctx) => {

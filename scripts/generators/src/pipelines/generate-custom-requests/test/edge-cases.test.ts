@@ -1,4 +1,4 @@
-import { transformApiEntryToRegistry } from "@scripts/generators/src/pipelines/generate-custom-requests/transformer/entry-transformer";
+import { transformApiEntryToRegistry } from "@scripts/generators/src/pipelines/generate-custom-requests/pipeline/stages/transform-and-merge/entry-transformer";
 import { describe, expect, it } from "vitest";
 
 describe("Edge cases", () => {

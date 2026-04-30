@@ -20,8 +20,20 @@ export type GeneratorTaskResult<TContext extends object> =
 	| undefined
 	| ListrTaskResult<GeneratorContext<TContext>>;
 
+export type GeneratorListrTask<TContext extends object> = ListrTask<
+	GeneratorContext<TContext>,
+	ListrRendererFactory,
+	ListrRendererFactory
+>;
+
+export type OrchestrationListrTask = ListrTask<
+	unknown,
+	ListrRendererFactory,
+	ListrRendererFactory
+>;
+
 type NativeGeneratorTaskOptions<TContext extends object> = Pick<
-	ListrTask<GeneratorContext<TContext>>,
+	GeneratorListrTask<TContext>,
 	| "enabled"
 	| "skip"
 	| "retry"
@@ -46,12 +58,14 @@ export type OrchestrationTaskRunner = ListrTaskWrapper<
 	ListrRendererFactory
 >;
 
+export type OrchestrationTaskResult = undefined | ListrTaskResult<unknown>;
+
 export interface GeneratorOrchestrationStage<TExecutionContext> {
 	title: string;
 	run: (
 		context: TExecutionContext,
 		task: OrchestrationTaskRunner,
-	) => Promise<void> | void;
+	) => OrchestrationTaskResult;
 }
 
 export interface CreateOrchestrationTaskOptions<

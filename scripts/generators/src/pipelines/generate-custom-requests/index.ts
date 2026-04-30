@@ -4,9 +4,9 @@ import {
 	createOrchestrationTask,
 	type GeneratorOrchestrationStage,
 	type GeneratorTask,
-	type RunGeneratorCliOptions,
 	runGeneratorCli,
 } from "@scripts/generators/src/lib/generator-cli";
+import { defaultLogger } from "@scripts/generators/src/lib/logger";
 import type { ScriptConfig } from "./@types/script-config";
 import {
 	assertGenerateCustomRequestsResult,
@@ -18,8 +18,6 @@ import {
 	runWriteAnalysisReportOrchestrationStage,
 	runWriteOutputOrchestrationStage,
 } from "./generate-custom-requests";
-
-export { config } from "./config";
 
 interface GenerateCustomRequestsGeneratorContext {
 	overrideConfig?: Partial<ScriptConfig>;
@@ -97,13 +95,17 @@ function createGeneratorTasks(): GeneratorTask<GenerateCustomRequestsGeneratorCo
 	];
 }
 
-export function createGenerateCustomRequestsGenerator(): RunGeneratorCliOptions<GenerateCustomRequestsGeneratorContext> {
-	return createGeneratorOptions({
-		name: "generate-custom-requests",
-		tasks: createGeneratorTasks(),
-	});
+const generateCustomRequests = createGeneratorOptions({
+	name: "generate-custom-requests",
+	tasks: createGeneratorTasks(),
+});
+
+async function main(): Promise<void> {
+	await runGeneratorCli(generateCustomRequests);
 }
 
-const generateCustomRequests = createGenerateCustomRequestsGenerator();
-
-void runGeneratorCli(generateCustomRequests);
+void main().catch((error) => {
+	const message = error instanceof Error ? error.message : String(error);
+	defaultLogger.error(message);
+	process.exitCode = 1;
+});

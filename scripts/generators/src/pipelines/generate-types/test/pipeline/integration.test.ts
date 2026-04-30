@@ -36,7 +36,7 @@ vi.mock("@scripts/generators/src/pipelines/generate-types/config", () => ({
 const mockDefaultPipeline = vi.hoisted(() => vi.fn());
 
 vi.mock(
-	"@scripts/generators/src/pipelines/generate-types/pipeline/core/default-pipeline",
+	"@scripts/generators/src/pipelines/generate-types/pipeline/datasource-pipeline/default-pipeline",
 	() => ({
 		defaultPipeline: mockDefaultPipeline,
 	}),

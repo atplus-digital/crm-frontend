@@ -3,7 +3,7 @@ import {
 	resolveBaseInterfaceNamingConfig,
 	toFileName,
 } from "../../../utils/naming";
-import type { PipelineContext } from "../../core/types";
+import type { PipelineContext } from "../../datasource-pipeline/types";
 import { generateCollectionsFile } from "./collections-index";
 import { generateContent, generateSplitFiles } from "./content";
 import {

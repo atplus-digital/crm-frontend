@@ -340,7 +340,7 @@ export class AtomicWriteSession {
 		}
 
 		if (this.lint) {
-			await runLinterFix([this.outputDir]);
+			await runLinterFix([this.outputDir], logger);
 		}
 
 		return true;

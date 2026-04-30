@@ -51,20 +51,3 @@ export interface DatasourceRunResult {
 export type GenerationStage<C extends GenerationContext = GenerationContext> = (
 	context: Readonly<C>,
 ) => Promise<GenerationContext>;
-
-// ──────────────────────────────────────────────
-// Pipeline runner
-// ──────────────────────────────────────────────
-
-export async function runGenerationPipeline(
-	stages: GenerationStage[],
-	initialContext: GenerationContext,
-): Promise<GenerationContext> {
-	let current = initialContext;
-
-	for (const stage of stages) {
-		current = await stage(current);
-	}
-
-	return current;
-}

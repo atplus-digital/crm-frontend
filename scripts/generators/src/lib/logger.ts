@@ -27,10 +27,13 @@ export interface LogEntry {
 
 export type LogListener = (entry: LogEntry) => void;
 
-interface LoggerExecutionContext {
-	logger: Logger;
+interface LoggerExecutionSnapshot {
 	chainPath: string[];
 	onEntry?: LogListener;
+}
+
+interface LoggerExecutionContext extends LoggerExecutionSnapshot {
+	logger: Logger;
 }
 
 export interface Logger {
@@ -45,6 +48,12 @@ export interface Logger {
 export interface RunWithLoggerOptions {
 	chain?: string;
 	onEntry?: LogListener;
+}
+
+interface CreateLoggerCoreOptions {
+	resolveExecutionContext?: (
+		owner: Logger,
+	) => LoggerExecutionSnapshot | undefined;
 }
 
 const activeLoggerStore = new AsyncLocalStorage<LoggerExecutionContext>();
@@ -72,26 +81,6 @@ export function shouldPersistLog(
 	return isLogLevelEnabled(entry.level, minimumLevel);
 }
 
-function getActiveChainPath(owner: Logger): string[] {
-	const activeContext = activeLoggerStore.getStore();
-
-	if (!activeContext || activeContext.logger !== owner) {
-		return [];
-	}
-
-	return activeContext.chainPath;
-}
-
-function getActiveEntryListener(owner: Logger): LogListener | undefined {
-	const activeContext = activeLoggerStore.getStore();
-
-	if (!activeContext || activeContext.logger !== owner) {
-		return undefined;
-	}
-
-	return activeContext.onEntry;
-}
-
 function formatMessage(
 	level: LogLevel,
 	message: string,
@@ -108,75 +97,161 @@ function formatMessage(
 	return `${prefix} [${metaStr}] ${message}`;
 }
 
-export function createLogger(): Logger {
+function resolveDefaultExecutionContext(
+	owner: Logger,
+): LoggerExecutionSnapshot | undefined {
+	const activeContext = activeLoggerStore.getStore();
+
+	if (!activeContext || activeContext.logger !== owner) {
+		return undefined;
+	}
+
+	return {
+		chainPath: activeContext.chainPath,
+		onEntry: activeContext.onEntry,
+	};
+}
+
+function emitLog(
+	owner: Logger,
+	level: LogLevel,
+	message: string,
+	meta: LogMeta | undefined,
+	logFn: (formatted: string) => void,
+	resolveExecutionContext?: (
+		owner: Logger,
+	) => LoggerExecutionSnapshot | undefined,
+): void {
+	const executionContext = resolveExecutionContext?.(owner) ?? {
+		chainPath: [],
+	};
+
+	const formattedMessage = formatMessage(level, message, meta);
+	const entry: LogEntry = {
+		level,
+		message,
+		meta,
+		formattedMessage,
+		chainPath: executionContext.chainPath,
+		chainDepth: executionContext.chainPath.length,
+	};
+
+	if (executionContext.onEntry) {
+		executionContext.onEntry(entry);
+		return;
+	}
+
+	logFn(formattedMessage);
+}
+
+export function createLoggerCore(
+	options: CreateLoggerCoreOptions = {},
+): Logger {
 	let currentLevel: LogLevel = "info";
 
 	const instance = {} as Logger;
 
-	const emit = (
-		owner: Logger,
-		level: LogLevel,
-		message: string,
-		meta: LogMeta | undefined,
-		logFn: (formatted: string) => void,
-	): void => {
-		const chainPath = getActiveChainPath(owner);
-		const formattedMessage = formatMessage(level, message, meta);
-		const entry: LogEntry = {
-			level,
-			message,
-			meta,
-			formattedMessage,
-			chainPath,
-			chainDepth: chainPath.length,
-		};
-
-		const onEntry = getActiveEntryListener(owner);
-		if (onEntry) {
-			onEntry(entry);
-			return;
-		}
-
-		logFn(formattedMessage);
-	};
-
 	instance.debug = (message: string, meta?: LogMeta) => {
 		if (isLogLevelEnabled("debug", currentLevel)) {
-			emit(instance, "debug", message, meta, console.debug);
+			emitLog(
+				instance,
+				"debug",
+				message,
+				meta,
+				console.debug,
+				options.resolveExecutionContext,
+			);
 		}
 	};
+
 	instance.info = (message: string, meta?: LogMeta) => {
 		if (isLogLevelEnabled("info", currentLevel)) {
-			emit(instance, "info", message, meta, console.info);
+			emitLog(
+				instance,
+				"info",
+				message,
+				meta,
+				console.info,
+				options.resolveExecutionContext,
+			);
 		}
 	};
+
 	instance.warn = (message: string, meta?: LogMeta) => {
 		if (isLogLevelEnabled("warn", currentLevel)) {
-			emit(instance, "warn", message, meta, console.warn);
+			emitLog(
+				instance,
+				"warn",
+				message,
+				meta,
+				console.warn,
+				options.resolveExecutionContext,
+			);
 		}
 	};
+
 	instance.error = (message: string, meta?: LogMeta) => {
 		if (isLogLevelEnabled("error", currentLevel)) {
-			emit(instance, "error", message, meta, console.error);
+			emitLog(
+				instance,
+				"error",
+				message,
+				meta,
+				console.error,
+				options.resolveExecutionContext,
+			);
 		}
 	};
+
 	instance.setLevel = (level: LogLevel) => {
 		currentLevel = level;
 	};
+
 	instance.getLevel = () => currentLevel;
 
 	return instance;
 }
 
-const rootLogger = createLogger();
-export const defaultLogger = rootLogger;
+export function createLogger(): Logger {
+	return createLoggerCore({
+		resolveExecutionContext: resolveDefaultExecutionContext,
+	});
+}
+
+export const defaultLogger = createLogger();
 
 function getActiveLoggerContext(): LoggerExecutionContext {
-	return activeLoggerStore.getStore() ?? { logger: rootLogger, chainPath: [] };
+	return (
+		activeLoggerStore.getStore() ?? {
+			logger: defaultLogger,
+			chainPath: [],
+		}
+	);
 }
 
 function getActiveLogger(): Logger {
 	return getActiveLoggerContext().logger;
+}
+
+function createExecutionScopedLogger(getLogger: () => Logger): Logger {
+	return {
+		debug: (message, meta) => {
+			getLogger().debug(message, meta);
+		},
+		info: (message, meta) => {
+			getLogger().info(message, meta);
+		},
+		warn: (message, meta) => {
+			getLogger().warn(message, meta);
+		},
+		error: (message, meta) => {
+			getLogger().error(message, meta);
+		},
+		setLevel: (level) => {
+			getLogger().setLevel(level);
+		},
+		getLevel: () => getLogger().getLevel(),
+	};
 }
 
 export function runWithLogger<T>(
@@ -204,21 +279,4 @@ export function runWithLogger<T>(
 	);
 }
 
-export const logger: Logger = {
-	debug: (message, meta) => {
-		getActiveLogger().debug(message, meta);
-	},
-	info: (message, meta) => {
-		getActiveLogger().info(message, meta);
-	},
-	warn: (message, meta) => {
-		getActiveLogger().warn(message, meta);
-	},
-	error: (message, meta) => {
-		getActiveLogger().error(message, meta);
-	},
-	setLevel: (level) => {
-		getActiveLogger().setLevel(level);
-	},
-	getLevel: () => getActiveLogger().getLevel(),
-};
+export const logger = createExecutionScopedLogger(getActiveLogger);
