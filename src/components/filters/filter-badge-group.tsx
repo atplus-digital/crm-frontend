@@ -8,7 +8,7 @@ export interface BadgeOption<T extends string> {
 	bgClass?: string;
 }
 
-interface FilterBadgeGroupWithMoreProps<T extends string> {
+interface FilterBadgeGroupProps<T extends string> {
 	label: string;
 	options: readonly BadgeOption<T>[];
 	extraOptions?: readonly BadgeOption<T>[];
@@ -22,7 +22,7 @@ interface FilterBadgeGroupWithMoreProps<T extends string> {
 	className?: string;
 }
 
-export function FilterBadgeGroupWithMore<T extends string>({
+export function FilterBadgeGroup<T extends string>({
 	label,
 	options,
 	extraOptions,
@@ -34,7 +34,7 @@ export function FilterBadgeGroupWithMore<T extends string>({
 	disabled = false,
 	showAllButton = true,
 	className,
-}: FilterBadgeGroupWithMoreProps<T>) {
+}: FilterBadgeGroupProps<T>) {
 	const selectedValues = value ?? [];
 
 	// Extra options that are currently visible (not collapsed in "+" badge)
