@@ -2,7 +2,7 @@ import { config } from "@scripts/generate-types/config";
 import {
 	applyWorkspaceLockIfNeeded as _applyWorkspaceLockIfNeeded,
 	isWorkspaceLocked as _isWorkspaceLocked,
-} from "@scripts/shared/workspace-locker";
+} from "@scripts/shared/lib/workspace-locker";
 
 function getOutputDirs(): string[] {
 	return [

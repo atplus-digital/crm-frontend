@@ -2,8 +2,8 @@ import { execFile } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { GeneratedRegistryEntry } from "@scripts/generate-custom-requests/src/@types/generated-registry";
-import type { SplitRequestsMap } from "@scripts/generate-custom-requests/src/@types/script-config";
-import { logInfo, logVerbose } from "@scripts/shared/logger";
+import type { RequestsMap } from "@scripts/generate-custom-requests/src/@types/script-config";
+import { logger } from "@scripts/shared/lib/logger";
 import {
 	escapeString,
 	serializePayloadData,
@@ -51,18 +51,16 @@ function buildCollectionToRequestKeys(
 
 function buildRegistryContent(
 	entries: GeneratedRegistryEntry[],
-	splitRequests: SplitRequestsMap,
+	requests: RequestsMap,
 ): string {
 	const sorted = [...entries].sort((a, b) => a.key.localeCompare(b.key));
-	const splitRequestsSet = new Set(Object.keys(splitRequests));
-	const inlineEntries = sorted.filter(
-		(entry) => !splitRequestsSet.has(entry.key),
-	);
+	const requestsSet = new Set(Object.keys(requests));
+	const inlineEntries = sorted.filter((entry) => !requestsSet.has(entry.key));
 
 	const splitImports = sorted
-		.filter((entry) => splitRequestsSet.has(entry.key))
+		.filter((entry) => requestsSet.has(entry.key))
 		.map((entry) => {
-			const splitFileName = splitRequests[entry.key];
+			const splitFileName = requests[entry.key];
 			const dataSourceDir = toDataSourceDir(entry.dataSourceKey);
 			const collectionDir = toSafePathSegment(entry.collection);
 			const alias = `split_${toSafeIdentifier(`${dataSourceDir}_${collectionDir}_${splitFileName}`)}`;
@@ -72,9 +70,9 @@ function buildRegistryContent(
 
 	const entryLines = sorted
 		.map((entry) => {
-			const hasEnhanced = splitRequestsSet.has(entry.key);
+			const hasEnhanced = requestsSet.has(entry.key);
 			if (hasEnhanced) {
-				const splitFileName = splitRequests[entry.key];
+				const splitFileName = requests[entry.key];
 				const dataSourceDir = toDataSourceDir(entry.dataSourceKey);
 				const collectionDir = toSafePathSegment(entry.collection);
 				const alias = `split_${toSafeIdentifier(`${dataSourceDir}_${collectionDir}_${splitFileName}`)}`;
@@ -122,14 +120,14 @@ function runBiomeFix(filePath: string): Promise<void> {
 			"biome",
 			["check", "--write", filePath],
 			(error, stdout, stderr) => {
-				if (stdout) logVerbose(stdout);
-				if (stderr) logVerbose(stderr);
+				if (stdout) logger.debug(stdout);
+				if (stderr) logger.debug(stderr);
 				if (error) {
-					logInfo(
+					logger.info(
 						`⚠️  Biome retornou erro (pode ser apenas warnings): ${error.message}`,
 					);
 				} else {
-					logInfo("✅ Biome aplicado com sucesso no registry gerado");
+					logger.info("✅ Biome aplicado com sucesso no registry gerado");
 				}
 				resolve();
 			},
@@ -140,17 +138,17 @@ function runBiomeFix(filePath: string): Promise<void> {
 export async function writeGeneratedRegistry(
 	entries: GeneratedRegistryEntry[],
 	outputDir: string,
-	splitRequests: SplitRequestsMap = {},
+	requests: RequestsMap = {},
 ): Promise<void> {
-	const content = buildRegistryContent(entries, splitRequests);
+	const content = buildRegistryContent(entries, requests);
 	const outputPath = resolve(outputDir, "generated-registry.ts");
 
-	logInfo(`📝 Gerando registry em: ${outputPath}`);
+	logger.info(`📝 Gerando registry em: ${outputPath}`);
 	mkdirSync(resolve(outputDir), { recursive: true });
 
 	writeFileSync(outputPath, content, "utf-8");
 
-	logInfo("✅ Arquivo escrito com sucesso");
+	logger.info("✅ Arquivo escrito com sucesso");
 
 	await runBiomeFix(outputPath);
 }

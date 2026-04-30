@@ -183,21 +183,12 @@ describe("writer", () => {
 	});
 
 	describe("validateTypeScriptDirectory", () => {
-		it("deve retornar true quando validateTypes é false", () => {
-			setMockConfig({ outputDir: "/tmp/test-output", validateTypes: false });
-
-			const result = validateTypeScriptDirectory("/tmp/output");
-
-			expect(result).toBe(true);
-		});
-
 		it("deve retornar true quando diretório não existe", () => {
-			setMockConfig({ outputDir: "/tmp/test-output", validateTypes: true });
 			vi.mocked(fs.existsSync).mockReturnValue(false);
 
 			const result = validateTypeScriptDirectory("/tmp/nonexistent");
 
-			expect(result).toBe(true);
+			expect(result).resolves.toBe(true);
 		});
 	});
 

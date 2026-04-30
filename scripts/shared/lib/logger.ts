@@ -92,8 +92,3 @@ export function createLogger(): Logger {
 }
 
 export const logger = createLogger();
-
-export const logInfo = (message: string, meta?: LogMeta) =>
-	logger.info(message, meta);
-export const logVerbose = (message: string, meta?: LogMeta) =>
-	logger.debug(message, meta);

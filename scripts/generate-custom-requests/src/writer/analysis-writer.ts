@@ -1,7 +1,7 @@
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { CustomRequestsAnalysisReport } from "@scripts/generate-custom-requests/src/transformer/entry-transformer";
-import { logInfo } from "@scripts/shared/logger";
+import { logger } from "@scripts/shared/lib/logger";
 
 const ANALYSIS_OUTPUT_FILE = "analysis-report.json";
 
@@ -20,7 +20,7 @@ export function writeAnalysisReport(
 
 	writeFileSync(outputPath, JSON.stringify(payload, null, 2), "utf-8");
 
-	logInfo(
+	logger.info(
 		`📊 Relatório salvo em: ${outputPath} (sem options: ${report.withoutOptions.length}, sem dataSourceKey: ${report.withoutDataSourceKey.length})`,
 	);
 }

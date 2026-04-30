@@ -87,7 +87,7 @@ describe("split and registry paths", () => {
 	it("gera import do split agrupado por dataSourceKey no registry", async () => {
 		const baseOutputDir = createTempDir("registry-import");
 		const outputDir = join(baseOutputDir, "nested", "generated", "out");
-		const splitRequests = {
+		const requests = {
 			"cadastro-comercial": "cadastro-comercial",
 		};
 		const entries = [
@@ -97,7 +97,7 @@ describe("split and registry paths", () => {
 			}),
 		];
 
-		await writeGeneratedRegistry(entries, outputDir, splitRequests);
+		await writeGeneratedRegistry(entries, outputDir, requests);
 
 		const content = readFileSync(
 			join(outputDir, "generated-registry.ts"),

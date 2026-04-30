@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
-import { logVerbose } from "@scripts/shared/logger";
+import { logger } from "@scripts/shared/lib/logger";
 import type { EnumAdapterFieldEnum } from "../@types/script";
 import { parseWikiText } from "./wiki-parser";
 
@@ -58,7 +58,7 @@ export async function fetchWithCache(
 	url: string,
 ): Promise<Record<string, EnumAdapterFieldEnum>> {
 	if (!config.cacheEnums) {
-		logVerbose(`[Cache] Disabled — fetching from ${url}`);
+		logger.debug(`[Cache] Disabled — fetching from ${url}`);
 		const html = await fetchFromWiki(url);
 		return parseWikiText(html);
 	}
@@ -70,14 +70,14 @@ export async function fetchWithCache(
 			const cached = JSON.parse(
 				readFileSync(cacheFile, "utf-8"),
 			) as CachedEntry;
-			logVerbose(`[Cache] HIT: ${collectionName}`);
+			logger.debug(`[Cache] HIT: ${collectionName}`);
 			return cached.enums;
 		} catch {
 			// corrupted cache — fall through to fetch
 		}
 	}
 
-	logVerbose(`[Cache] MISS — fetching from ${url}`);
+	logger.debug(`[Cache] MISS — fetching from ${url}`);
 	const html = await fetchFromWiki(url);
 	const enums = parseWikiText(html);
 
@@ -89,11 +89,11 @@ export async function fetchWithCache(
 		metadata[collectionName] = Date.now();
 		saveMetadata(metadata);
 
-		logVerbose(
+		logger.debug(
 			`[Cache] WRITE: ${collectionName} (${Object.keys(enums).length} fields)`,
 		);
 	} catch (error) {
-		logVerbose(
+		logger.debug(
 			`[Cache] WRITE FAILED: ${error instanceof Error ? error.message : String(error)}`,
 		);
 	}

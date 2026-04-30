@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { logVerbose } from "@scripts/shared/logger";
+import { logger } from "./logger";
 
 interface VSCodeSettings {
 	[setting: string]: unknown;
@@ -106,7 +106,7 @@ function lockWorkspace(outputDirs: string[]): void {
 			"utf-8",
 		);
 
-		logVerbose(
+		logger.debug(
 			"🔒 Workspace bloqueado: os arquivos gerados agora são somente leitura",
 		);
 	} catch (error) {

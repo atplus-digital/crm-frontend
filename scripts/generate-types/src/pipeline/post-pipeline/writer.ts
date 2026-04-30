@@ -3,7 +3,7 @@ import * as path from "node:path";
 import { config } from "@scripts/generate-types/config";
 import type { SingleFileResult } from "@scripts/generate-types/src/@types/script";
 import { toFileName } from "@scripts/generate-types/src/utils/naming";
-import { logger } from "@scripts/shared/logger";
+import { logger } from "@scripts/shared/lib/logger";
 import { isFileBeingEdited } from "./file-editor-check";
 
 const MAIN_OUTPUT_FILE = "index.ts";

@@ -2,7 +2,7 @@ import { config } from "@scripts/generate-custom-requests/config";
 import {
 	applyWorkspaceLockIfNeeded as _applyWorkspaceLockIfNeeded,
 	isWorkspaceLocked as _isWorkspaceLocked,
-} from "@scripts/shared/workspace-locker";
+} from "@scripts/shared/lib/workspace-locker";
 
 const outputDirs = [config.outputDir];
 const lockWorkspaceFolder = config.lockWorkspaceFolder ?? false;

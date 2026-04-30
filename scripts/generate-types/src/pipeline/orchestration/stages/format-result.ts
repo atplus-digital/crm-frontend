@@ -24,7 +24,7 @@ export function formatResultStage(): GenerationStage {
 		}
 
 		if (totalChanged > 0) {
-			console.info(`\n📝 Arquivos alterados (${totalChanged}):`);
+			console.info(`📝 Arquivos alterados (${totalChanged}):`);
 			for (const file of changedFiles.slice(0, 20)) {
 				console.info(`   • ${path.relative(process.cwd(), file.outputPath)}`);
 			}
@@ -40,7 +40,7 @@ export function formatResultStage(): GenerationStage {
 		}
 
 		if (totalChanged === 0 && failedNames.length === 0) {
-			console.info(`\n✅ Nenhum arquivo alterado — tudo já está atualizado.`);
+			console.info(`✅ Nenhum arquivo alterado — tudo já está atualizado.`);
 		}
 
 		const finalResult: GenerateTypesResult =

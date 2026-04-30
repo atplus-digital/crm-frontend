@@ -1,5 +1,6 @@
 import "./config";
-import { logger } from "@scripts/shared/logger";
+import { createAtomicWriteSession } from "@scripts/shared/lib/atomic-writer";
+import { logger } from "@scripts/shared/lib/logger";
 import { config } from "./config";
 import { CustomRequestsApiClient } from "./src/api/client";
 import {
@@ -49,15 +50,30 @@ async function main(): Promise<void> {
 		return;
 	}
 
+	const atomicSession = createAtomicWriteSession({
+		outputDir: config.outputDir,
+		label: "generate-custom-requests",
+	});
+
+	atomicSession.backup();
+
 	await writeGeneratedRegistry(
 		mergedEntries,
 		config.outputDir,
-		config.splitRequests,
+		config.requests,
 	);
 	logger.info("Arquivo gerado com sucesso!");
 
-	writeAllSplitFiles(mergedEntries, config.splitRequests, config.outputDir);
+	writeAllSplitFiles(mergedEntries, config.requests, config.outputDir);
 	logger.info("Split files processados com sucesso!");
+
+	const validated = await atomicSession.validateAndFinalize();
+	if (!validated) {
+		logger.error(
+			"Validação falhou — arquivos originais restaurados. Corrija os erros e tente novamente.",
+		);
+		process.exit(1);
+	}
 }
 
 main().catch((error) => {

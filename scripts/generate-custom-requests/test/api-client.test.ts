@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 const mockFetch = vi.fn();
 vi.stubGlobal("fetch", mockFetch);
 
-vi.mock("@scripts/shared/utils/logger", () => ({
+vi.mock("@scripts/shared/lib/logger", () => ({
 	logger: {
 		info: vi.fn(),
 		warn: vi.fn(),
@@ -22,7 +22,7 @@ function createMockConfig(overrides: Partial<ScriptConfig> = {}): ScriptConfig {
 		timeoutMs: 5000,
 		logLevel: "info",
 		outputDir: "/tmp/test-output",
-		splitRequests: {},
+		requests: {},
 		manualRequests: [],
 		generateAnalysisReport: false,
 		...overrides,

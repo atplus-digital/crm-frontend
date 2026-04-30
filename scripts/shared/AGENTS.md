@@ -6,7 +6,7 @@
 
 ## Overview
 
-Shared utilities used across generation scripts — logger, string helpers, env config parser, and workspace locker.
+Shared utilities used across generation scripts — logger, string helpers, env config parser, atomic writer, and workspace locker.
 
 <!-- AGENTS-GENERATED:END overview -->
 
@@ -14,13 +14,17 @@ Shared utilities used across generation scripts — logger, string helpers, env 
 
 ## Key Files
 
-| File                        | Purpose                                                               |
-| --------------------------- | --------------------------------------------------------------------- |
-| `utils/logger.ts`           | Structured logger with levels (debug, info, warn, error) and metadata |
-| `utils/strings.ts`          | String utilities — `escapeString`, `serializePayloadData`             |
-| `utils/env-config.ts`       | Shared env loading (dotenv + Zod) for NocoBase credentials            |
-| `utils/workspace-locker.ts` | Parameterized workspace locker — locks generated files as read-only   |
-| `test/`                     | Test files for shared utilities                                       |
+| File                      | Purpose                                                               |
+| ------------------------- | --------------------------------------------------------------------- |
+| `lib/atomic-writer.ts`    | Atomic write session — writes to temp dir, validates, then swaps      |
+| `lib/logger.ts`           | Structured logger with levels (debug, info, warn, error) and metadata |
+| `lib/workspace-locker.ts` | Parameterized workspace locker — locks generated files as read-only   |
+| `lib/tsc-validator.ts`    | TypeScript validation via `tsc --noEmit` with process-level cache     |
+| `lib/linter-runner.ts`    | Biome + Prettier linter runner for generated directories              |
+| `utils/logger.ts`         | Re-export of `lib/logger.ts` (backward compat)                        |
+| `utils/strings.ts`        | String utilities — `escapeString`, `serializePayloadData`             |
+| `utils/env-config.ts`     | Shared env loading (dotenv + Zod) for NocoBase credentials            |
+| `test/`                   | Test files for shared utilities                                       |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

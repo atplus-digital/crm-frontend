@@ -40,12 +40,9 @@ vi.mock("@scripts/generate-types/src/pipeline/core/default-pipeline", () => ({
 
 const mockLinterRunBiome = vi.hoisted(() => vi.fn());
 
-vi.mock(
-	"@scripts/generate-types/src/pipeline/post-pipeline/linter-runner",
-	() => ({
-		runLinterFix: mockLinterRunBiome,
-	}),
-);
+vi.mock("@scripts/shared/utils/linter-runner", () => ({
+	runLinterFix: mockLinterRunBiome,
+}));
 
 describe("Pipeline End-to-End", () => {
 	beforeEach(() => {

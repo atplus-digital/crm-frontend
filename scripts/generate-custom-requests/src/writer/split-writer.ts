@@ -1,8 +1,8 @@
 import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { GeneratedRegistryEntry } from "@scripts/generate-custom-requests/src/@types/generated-registry";
-import type { SplitRequestsMap } from "@scripts/generate-custom-requests/src/@types/script-config";
-import { logger } from "@scripts/shared/logger";
+import type { RequestsMap } from "@scripts/generate-custom-requests/src/@types/script-config";
+import { logger } from "@scripts/shared/lib/logger";
 import {
 	escapeString,
 	serializePayloadData,
@@ -105,16 +105,16 @@ export function writeSplitFile(
 
 export function writeAllSplitFiles(
 	entries: GeneratedRegistryEntry[],
-	splitRequests: SplitRequestsMap,
+	requests: RequestsMap,
 	outputDir: string,
 ): void {
-	const splitRequestKeys = new Set(Object.keys(splitRequests));
+	const splitRequestKeys = new Set(Object.keys(requests));
 	const splitEntries = entries.filter((entry) =>
 		splitRequestKeys.has(entry.key),
 	);
 
 	for (const entry of splitEntries) {
-		const splitFileName = splitRequests[entry.key];
+		const splitFileName = requests[entry.key];
 		writeSplitFile(entry, splitFileName, outputDir);
 	}
 

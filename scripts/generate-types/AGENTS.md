@@ -17,7 +17,7 @@ Type generation pipeline — fetches NocoBase + IXC schemas via API, generates T
 | File                                                   | Purpose                                                                                                      |
 | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
 | `datasources.config.ts`                                | **CRITICAL**: Datasource definitions (NocoBase + IXC), collection lists, split config                        |
-| `src/generate-types.ts`                                | Main entry point — orchestrates fetch, generate, write, cleanup                                              |
+| `src/generate-types.ts`                                | Main entry point — orchestrates fetch, generate, write, cleanup; wraps pipeline in AtomicWriteSession        |
 | `src/utils/client.ts`                                  | NocoBase API client with retry logic                                                                         |
 | `src/pipeline/stages/generate-content/`                | Content generation (barrel, assembly, enums, interfaces, sorting, import injection, split/collections index) |
 | `src/pipeline/stages/generate-content/field-mapper.ts` | NocoBase field → TypeScript type mapping                                                                     |

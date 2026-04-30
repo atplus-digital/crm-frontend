@@ -1,9 +1,4 @@
-import {
-	createLogger,
-	logger,
-	logInfo,
-	logVerbose,
-} from "@scripts/shared/logger";
+import { createLogger, logger } from "@scripts/shared/lib/logger";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("logger", () => {
@@ -24,11 +19,11 @@ describe("logger", () => {
 		consoleErrorSpy.mockRestore();
 	});
 
-	describe("logInfo", () => {
+	describe("logger.info", () => {
 		it("should call console.info with level prefix", () => {
 			const message = "Test info message";
 
-			logInfo(message);
+			logger.info(message);
 
 			// Verify the call was made with a string containing the expected parts
 			const callArgs = consoleInfoSpy.mock.calls[0][0];
@@ -40,16 +35,16 @@ describe("logger", () => {
 		it("should not log info when level is error", () => {
 			logger.setLevel("error");
 
-			logInfo("Info hidden by error level");
+			logger.info("Info hidden by error level");
 			expect(consoleInfoSpy).not.toHaveBeenCalled();
 		});
 	});
 
-	describe("logVerbose", () => {
+	describe("logger.debug", () => {
 		it("should NOT call console.debug when level is info", () => {
 			const message = "Verbose message when off";
 
-			logVerbose(message);
+			logger.debug(message);
 
 			expect(consoleDebugSpy).not.toHaveBeenCalled();
 		});
@@ -58,7 +53,7 @@ describe("logger", () => {
 			logger.setLevel("debug");
 			const message = "Verbose message when on";
 
-			logVerbose(message);
+			logger.debug(message);
 
 			// Verify the call was made with a string containing the expected parts
 			const callArgs = consoleDebugSpy.mock.calls[0][0];

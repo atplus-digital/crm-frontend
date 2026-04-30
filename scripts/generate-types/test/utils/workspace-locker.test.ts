@@ -32,8 +32,15 @@ vi.mock("@scripts/generate-types/config", () => ({
 	},
 }));
 
-vi.mock("@scripts/shared/utils/logger", () => ({
-	logVerbose: vi.fn(),
+vi.mock("@scripts/shared/lib/logger", () => ({
+	logger: {
+		info: vi.fn(),
+		warn: vi.fn(),
+		error: vi.fn(),
+		debug: vi.fn(),
+		setLevel: vi.fn(),
+		getLevel: vi.fn(() => "info"),
+	},
 }));
 
 describe("workspace-locker", () => {
