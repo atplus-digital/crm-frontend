@@ -5,6 +5,7 @@
  */
 import type { Empresas } from "./empresas";
 import type { AnexosNegociacoes } from "./other/anexos-negociacoes";
+import type { AprovacaoCpf } from "./other/aprovacao-cpf";
 import type { Contratos } from "./other/contratos";
 import type { CuponsDesconto } from "./other/cupons-desconto";
 import type { NegociacoesComentarios } from "./other/negociacoes-comentarios";
@@ -222,6 +223,7 @@ export interface Negociacoes {
 export interface NegociacoesRelations {
 	createdBy?: Users | null;
 	f_anexos?: AnexosNegociacoes[];
+	f_aprovacao_cpf?: AprovacaoCpf | null;
 	f_comentarios?: NegociacoesComentarios[];
 	f_cupom_desconto?: CuponsDesconto | null;
 	f_fk_oe_qualirun?: OeQualirun[];

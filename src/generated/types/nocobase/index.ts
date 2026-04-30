@@ -56,6 +56,11 @@ export type {
 	AniversariosRelations,
 } from "./other/aniversarios";
 export type {
+	AprovacaoCpf,
+	AprovacaoCpfRelationKey,
+	AprovacaoCpfRelations,
+} from "./other/aprovacao-cpf";
+export type {
 	ArquivosFuncionarios,
 	ArquivosFuncionariosRelationKey,
 	ArquivosFuncionariosRelations,

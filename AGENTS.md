@@ -229,7 +229,10 @@ export interface PessoaFisica {
 - `./src/repositories/AGENTS.md` — NocoBase/IXC data access layer
 - `./src/routes/AGENTS.md` — React Router v7 route definitions and guard patterns
 - `./scripts/AGENTS.md` — Automation scripts for development workflow
-- `./scripts/generate-types/AGENTS.md` — Type generation pipeline (NocoBase + IXC schemas)
+- `./scripts/generators/AGENTS.md` — Code generation framework (Listr2 CLI, shared lib, pipelines)
+- `./scripts/generators/src/AGENTS.md` — Shared library layer (logger, atomic-writer, workspace-locker)
+- `./scripts/generators/src/pipelines/generate-types/AGENTS.md` — Type generation pipeline (NocoBase + IXC schemas)
+- `./scripts/generators/src/pipelines/generate-custom-requests/AGENTS.md` — Custom request registry pipeline
 - `./.github/workflows/AGENTS.md` — GitHub Actions workflows and CI/CD automation
 <!-- AGENTS-GENERATED:END scope-index -->
 

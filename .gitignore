@@ -11,4 +11,3 @@ coverage
 .playwright-mcp
 .cache
 crawl
-analysis-report.json
