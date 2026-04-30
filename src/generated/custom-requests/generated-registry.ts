@@ -3,16 +3,45 @@
  * Do not edit manually.
  */
 import { z } from "zod";
-import { requestEntry as split_d_db_ixcsoft_cliente_contrato_negociacao_atualizadaRequestEntry } from "./d_db_ixcsoft/cliente_contrato/negociacao-atualizada";
-import { requestEntry as split_nocobase_t_logs_cadastro_comercialRequestEntry } from "./nocobase/t_logs/cadastro-comercial";
-import { requestEntry as split_nocobase_t_qualirun_info_adicionais_quali_runRequestEntry } from "./nocobase/t_qualirun_info_adicionais/quali-run";
 
 export const generatedCustomRequestsRegistry = {
-	"0j7f9fuzuo7":
-		split_nocobase_t_qualirun_info_adicionais_quali_runRequestEntry,
+	"0j7f9fuzuo7": {
+		key: "0j7f9fuzuo7",
+		name: "0j7f9fuzuo7",
+		collection: "t_qualirun_info_adicionais",
+		dataSourceKey: "main",
+		method: "POST",
+		url: "https://atplus-rh-n8n-rh.tvs9na.easypanel.host/webhook/9ceda127-997b-49df-8037-f50db4a55e42",
+		payloadSchema: z.object({
+			etapa: z.literal("aprova-informacoes"),
+			$nSelectedRecord: z.array(z.unknown()),
+		}),
+		payloadData: {
+			etapa: "aprova-informacoes",
+			info_adicionais: "{{$nSelectedRecord}}",
+		},
+	},
 
-	"23btjo9ohrr":
-		split_d_db_ixcsoft_cliente_contrato_negociacao_atualizadaRequestEntry,
+	"23btjo9ohrr": {
+		key: "23btjo9ohrr",
+		name: "23btjo9ohrr",
+		collection: "cliente_contrato",
+		dataSourceKey: "d_db_ixcsoft",
+		method: "POST",
+		url: "https://n8n.atplus.cloud/webhook/5d9eccc3-7091-47f9-bcae-75ea5292b7fd",
+		payloadSchema: z.object({
+			currentRecord: z.object({
+				f_nc_cliente: z.object({
+					id: z.unknown(),
+				}),
+				id: z.unknown(),
+			}),
+		}),
+		payloadData: {
+			id_contrato: "{{currentRecord.id}}",
+			id_cliente: "{{currentRecord.f_nc_cliente.id}}",
+		},
+	},
 
 	"32fmnujkpaq": {
 		key: "32fmnujkpaq",
@@ -1072,21 +1101,6 @@ export const generatedCustomRequestsRegistry = {
 		},
 	},
 
-	n8nCompras: {
-		key: "n8nCompras",
-		name: "N8N Compras",
-		collection: "compras",
-		dataSourceKey: "main",
-		method: "POST",
-		url: "customRequests:send/n8nCompras",
-		payloadSchema: z.object({
-			id_pedido: z.number(),
-			id_fornecedor: z.number(),
-			valor: z.number(),
-		}),
-		payloadData: null,
-	},
-
 	oj5jwqjdjts: {
 		key: "oj5jwqjdjts",
 		name: "oj5jwqjdjts",
@@ -1119,7 +1133,28 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: null,
 	},
 
-	qbk10nf76um: split_nocobase_t_logs_cadastro_comercialRequestEntry,
+	qbk10nf76um: {
+		key: "qbk10nf76um",
+		name: "qbk10nf76um",
+		collection: "t_logs",
+		dataSourceKey: "main",
+		method: "GET",
+		url: "https://n8n.atplus.cloud/webhook/836d3099-bd29-49d0-8010-a4b5033ecc43",
+		payloadSchema: z.object({
+			a: z.literal(1),
+			currentRecord: z.object({
+				f_log_level: z.unknown(),
+			}),
+			currentUser: z.object({
+				nickname: z.unknown(),
+			}),
+		}),
+		payloadData: {
+			a: 1,
+			b: "{{currentUser.nickname}}",
+			rec: "{{currentRecord.f_log_level}}",
+		},
+	},
 
 	qtd2du574v1: {
 		key: "qtd2du574v1",
@@ -1713,7 +1748,6 @@ export const collectionToRequestKeys = {
 		"qtd2du574v1",
 		"tjt1ajr1tkl",
 	],
-	compras: ["n8nCompras"],
 	f_funcionarios: ["81p695ox20f", "yep1cjhq0zp"],
 	fn_areceber: ["m5pu59k8p9s", "sjohhcwirxz", "sl7o14v2qhm", "spn119qrcv8"],
 	radusuarios: [
