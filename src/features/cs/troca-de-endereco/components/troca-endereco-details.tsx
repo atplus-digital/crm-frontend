@@ -1,9 +1,9 @@
 import { FileText, MapPin, MessageSquare, Phone } from "lucide-react";
 import { useParams } from "react-router";
+import { BackButton } from "#/components/back-button";
 import { StatusBadge as SharedStatusBadge } from "#/components/badges/status-badge";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Skeleton } from "#/components/ui/skeleton";
-import { BackButton } from "#/features/cs/components/back-button";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
 import { CardSectionSkeleton } from "#/features/cs/components/detail-skeleton";
