@@ -18,7 +18,7 @@ import type { ScriptConfig } from "@scripts/generators/src/pipelines/generate-cu
  */
 export class CustomRequestsApiClient extends NocoBaseApiClient {
 	public constructor(
-		private readonly config: ScriptConfig,
+		config: ScriptConfig,
 		private readonly logger: Logger = defaultRuntimeLogger,
 	) {
 		super(config);

@@ -1,6 +1,7 @@
 import "./config";
 import {
 	createGenerator,
+	type GeneratorExecutionHooks,
 	runGeneratorCli,
 } from "@scripts/generators/run-generator";
 import type { ScriptConfig } from "./@types/script-config";
@@ -24,10 +25,14 @@ interface GenerateCustomRequestsGeneratorContext {
 	>;
 }
 
-const generateCustomRequests =
-	createGenerator<GenerateCustomRequestsGeneratorContext>(
+export function createGenerateCustomRequestsGenerator(
+	hooks?: GeneratorExecutionHooks,
+) {
+	return createGenerator<GenerateCustomRequestsGeneratorContext>(
 		"generate-custom-requests",
 		{},
+		undefined,
+		hooks,
 	)
 		.addStep("prepare-context", (context) => {
 			context.executionContext = createGenerateCustomRequestsExecutionContext(
@@ -38,40 +43,47 @@ const generateCustomRequests =
 		.addStep("lock-workspace", () => {
 			lockGenerateCustomRequestsWorkspace();
 		})
-		.addStep("load-config", async (context) => {
-			if (!context.executionContext) {
-				throw new Error("Contexto de execução não inicializado");
-			}
+		.addPipeline("orchestration", (pipeline) => {
+			pipeline
+				.addStep("load-config", async (context) => {
+					if (!context.executionContext) {
+						throw new Error("Contexto de execução não inicializado");
+					}
 
-			await runLoadConfigOrchestrationStage(context.executionContext);
-		})
-		.addStep("fetch-entries", async (context) => {
-			if (!context.executionContext) {
-				throw new Error("Contexto de execução não inicializado");
-			}
+					await runLoadConfigOrchestrationStage(context.executionContext);
+				})
+				.addStep("fetch-entries", async (context) => {
+					if (!context.executionContext) {
+						throw new Error("Contexto de execução não inicializado");
+					}
 
-			await runFetchEntriesOrchestrationStage(context.executionContext);
-		})
-		.addStep("write-analysis-report", async (context) => {
-			if (!context.executionContext) {
-				throw new Error("Contexto de execução não inicializado");
-			}
+					await runFetchEntriesOrchestrationStage(context.executionContext);
+				})
+				.addStep("write-analysis-report", async (context) => {
+					if (!context.executionContext) {
+						throw new Error("Contexto de execução não inicializado");
+					}
 
-			await runWriteAnalysisReportOrchestrationStage(context.executionContext);
-		})
-		.addStep("transform-and-merge", async (context) => {
-			if (!context.executionContext) {
-				throw new Error("Contexto de execução não inicializado");
-			}
+					await runWriteAnalysisReportOrchestrationStage(
+						context.executionContext,
+					);
+				})
+				.addStep("transform-and-merge", async (context) => {
+					if (!context.executionContext) {
+						throw new Error("Contexto de execução não inicializado");
+					}
 
-			await runTransformAndMergeOrchestrationStage(context.executionContext);
-		})
-		.addStep("write-output", async (context) => {
-			if (!context.executionContext) {
-				throw new Error("Contexto de execução não inicializado");
-			}
+					await runTransformAndMergeOrchestrationStage(
+						context.executionContext,
+					);
+				})
+				.addStep("write-output", async (context) => {
+					if (!context.executionContext) {
+						throw new Error("Contexto de execução não inicializado");
+					}
 
-			await runWriteOutputOrchestrationStage(context.executionContext);
+					await runWriteOutputOrchestrationStage(context.executionContext);
+				});
 		})
 		.addStep("assert-result", (context) => {
 			if (!context.executionContext) {
@@ -80,5 +92,8 @@ const generateCustomRequests =
 
 			assertGenerateCustomRequestsResult(context.executionContext);
 		});
+}
+
+const generateCustomRequests = createGenerateCustomRequestsGenerator();
 
 void runGeneratorCli(generateCustomRequests);
