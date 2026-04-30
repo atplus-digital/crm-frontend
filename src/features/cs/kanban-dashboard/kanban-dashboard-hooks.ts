@@ -15,7 +15,13 @@ import type {
 	TrocaEndereco,
 	TrocaEnderecoRelations,
 } from "#/generated/types/nocobase/troca-endereco";
-import { buildFilter, includes, nestedField, or } from "#/lib/filter-builder";
+import {
+	buildFilter,
+	eq,
+	includes,
+	nestedField,
+	or,
+} from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
 import type {
 	KanbanDashboardCard,
@@ -58,6 +64,10 @@ function trocaTitularidadeQueryOptions(filters: KanbanDashboardFilters) {
 		);
 	}
 
+	if (filters.responsibleId != null) {
+		conditions.push(nestedField("f_vendedor", eq("id", filters.responsibleId)));
+	}
+
 	return queryOptions({
 		queryKey: ["kanban-dashboard", "tt", filters] as const,
 		queryFn: async () => {
@@ -90,6 +100,10 @@ function trocaEnderecoQueryOptions(filters: KanbanDashboardFilters) {
 		conditions.push(
 			nestedField("createdBy", includes("nickname", filters.responsibleName)),
 		);
+	}
+
+	if (filters.responsibleId != null) {
+		conditions.push(nestedField("createdBy", eq("id", filters.responsibleId)));
 	}
 
 	return queryOptions({
@@ -132,6 +146,15 @@ function suspensaoContratoQueryOptions(filters: KanbanDashboardFilters) {
 		);
 	}
 
+	if (filters.responsibleId != null) {
+		conditions.push(
+			or(
+				nestedField("f_responsavel", eq("id", filters.responsibleId)),
+				nestedField("createdBy", eq("id", filters.responsibleId)),
+			),
+		);
+	}
+
 	return queryOptions({
 		queryKey: ["kanban-dashboard", "sc", filters] as const,
 		queryFn: async () => {
@@ -164,6 +187,10 @@ function negociacoesQueryOptions(filters: KanbanDashboardFilters) {
 		conditions.push(
 			nestedField("f_vendedor", includes("nickname", filters.responsibleName)),
 		);
+	}
+
+	if (filters.responsibleId != null) {
+		conditions.push(nestedField("f_vendedor", eq("id", filters.responsibleId)));
 	}
 
 	// Apply tipo de negociação filter (f_motivo field) using OR for multiple values

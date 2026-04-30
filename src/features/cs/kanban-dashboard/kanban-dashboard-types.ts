@@ -373,5 +373,6 @@ export interface KanbanDashboardFilters {
 	sourceCollections?: SourceCollection[];
 	searchTerm?: string;
 	responsibleName?: string;
+	responsibleId?: number;
 	tipoNegociacao?: NegociacaoMotivo[];
 }

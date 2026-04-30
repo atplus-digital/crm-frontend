@@ -57,7 +57,6 @@ export function KanbanDashboardFilterBar({
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const searchId = useId();
-	const responsibleId = useId();
 
 	// Check if "Negociação" is selected in source collections filter
 	const showNegociacaoFilter =
@@ -67,7 +66,6 @@ export function KanbanDashboardFilterBar({
 
 	const hasFilters = Boolean(
 		filters.searchTerm ||
-			filters.responsibleName ||
 			(filters.tipoNegociacao && filters.tipoNegociacao.length > 0) ||
 			(filters.sourceCollections && filters.sourceCollections.length > 0),
 	);
@@ -102,7 +100,7 @@ export function KanbanDashboardFilterBar({
 		<div ref={containerRef}>
 			<FilterLayout
 				className="space-y-4"
-				fieldsClassName="gap-y-2 gap-x-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+				fieldsClassName="gap-y-2 gap-x-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
 				actions={
 					<FilterActions
 						onApply={() => {
@@ -115,16 +113,6 @@ export function KanbanDashboardFilterBar({
 					/>
 				}
 			>
-				<div className="w-full">
-					<FilterBadgeGroup<SourceCollection>
-						label="Tipo de Solicitação"
-						options={SOURCE_COLLECTION_OPTIONS}
-						value={filters.sourceCollections}
-						onChange={handleSourceChange}
-						compact
-						showAllButton={false}
-					/>
-				</div>
 				<FilterInputField
 					id={searchId}
 					label="Nome do Cliente"
@@ -134,27 +122,24 @@ export function KanbanDashboardFilterBar({
 						onFilter({ ...filters, searchTerm: value || undefined })
 					}
 				/>
-				<FilterInputField
-					id={responsibleId}
-					label="Responsável"
-					placeholder="Buscar por responsável..."
-					value={filters.responsibleName ?? ""}
-					onChange={(value) =>
-						onFilter({ ...filters, responsibleName: value || undefined })
-					}
+				<FilterBadgeGroup<SourceCollection>
+					label="Tipo de Solicitação"
+					options={SOURCE_COLLECTION_OPTIONS}
+					value={filters.sourceCollections}
+					onChange={handleSourceChange}
+					compact
+					showAllButton={false}
 				/>
-				<div className="w-full">
-					<FilterBadgeGroupWithMore<NegociacaoMotivo>
-						label="Tipo de Negociação"
-						primaryOptions={PRIMARY_NEGOCIACAO_OPTIONS}
-						extraOptions={EXTRA_NEGOCIACAO_OPTIONS}
-						value={filters.tipoNegociacao}
-						onChange={handleTipoNegociacaoChange}
-						compact
-						disabled={!showNegociacaoFilter}
-						showAllButton={false}
-					/>
-				</div>
+				<FilterBadgeGroupWithMore<NegociacaoMotivo>
+					label="Tipo de Negociação"
+					options={PRIMARY_NEGOCIACAO_OPTIONS}
+					extraOptions={EXTRA_NEGOCIACAO_OPTIONS}
+					value={filters.tipoNegociacao}
+					onChange={handleTipoNegociacaoChange}
+					compact
+					disabled={!showNegociacaoFilter}
+					showAllButton={false}
+				/>
 			</FilterLayout>
 		</div>
 	);
