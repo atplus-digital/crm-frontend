@@ -1,5 +1,6 @@
 import "./config";
 import {
+	createGeneratorOptions,
 	createOrchestrationTask,
 	type GeneratorOrchestrationStage,
 	type GeneratorTask,
@@ -97,11 +98,10 @@ function createGeneratorTasks(): GeneratorTask<GenerateCustomRequestsGeneratorCo
 }
 
 export function createGenerateCustomRequestsGenerator(): RunGeneratorCliOptions<GenerateCustomRequestsGeneratorContext> {
-	return {
+	return createGeneratorOptions({
 		name: "generate-custom-requests",
-		context: {},
 		tasks: createGeneratorTasks(),
-	};
+	});
 }
 
 const generateCustomRequests = createGenerateCustomRequestsGenerator();

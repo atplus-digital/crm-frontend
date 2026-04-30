@@ -5,7 +5,6 @@ import {
 	logger,
 	runWithLogger,
 	shouldPersistLog,
-	shouldRenderLiveInTui,
 } from "@scripts/generators/src/lib/logger";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -33,7 +32,6 @@ describe("logger", () => {
 
 			logger.info(message);
 
-			// Verify the call was made with a string containing the expected parts
 			const callArgs = consoleInfoSpy.mock.calls[0][0];
 			expect(callArgs).toContain("[INFO]");
 			expect(callArgs).toContain(message);
@@ -63,7 +61,6 @@ describe("logger", () => {
 
 			logger.debug(message);
 
-			// Verify the call was made with a string containing the expected parts
 			const callArgs = consoleDebugSpy.mock.calls[0][0];
 			expect(callArgs).toContain("[DEBUG]");
 			expect(callArgs).toContain("Verbose message when on");
@@ -81,12 +78,7 @@ describe("logger", () => {
 
 		it("should capture nested chain depth for pipeline logs", () => {
 			const isolatedLogger = createLogger();
-			const entries: Parameters<
-				Parameters<typeof isolatedLogger.subscribe>[0]
-			>[0][] = [];
-			const unsubscribe = isolatedLogger.subscribe((entry) => {
-				entries.push(entry);
-			});
+			const entries: LogEntry[] = [];
 
 			runWithLogger(
 				isolatedLogger,
@@ -100,10 +92,13 @@ describe("logger", () => {
 						{ chain: "nested-stage" },
 					);
 				},
-				{ chain: "root-stage" },
+				{
+					chain: "root-stage",
+					onEntry: (entry) => {
+						entries.push(entry);
+					},
+				},
 			);
-
-			unsubscribe();
 
 			expect(entries).toHaveLength(2);
 			expect(entries[0]?.chainDepth).toBe(1);
@@ -117,7 +112,7 @@ describe("logger", () => {
 		});
 	});
 
-	describe("persist and live rules", () => {
+	describe("persist rules", () => {
 		it("should persist log entries based on configured level", () => {
 			const infoEntry: LogEntry = {
 				level: "info",
@@ -137,26 +132,6 @@ describe("logger", () => {
 			expect(shouldPersistLog(infoEntry, "info")).toBe(true);
 			expect(shouldPersistLog(infoEntry, "warn")).toBe(false);
 			expect(shouldPersistLog(warnEntry, "warn")).toBe(true);
-		});
-
-		it("should render live in TUI for warn and error only", () => {
-			const infoEntry: LogEntry = {
-				level: "info",
-				message: "info",
-				formattedMessage: "[INFO] info",
-				chainPath: [],
-				chainDepth: 0,
-			};
-			const warnEntry: LogEntry = {
-				level: "warn",
-				message: "warn",
-				formattedMessage: "[WARN] warn",
-				chainPath: [],
-				chainDepth: 0,
-			};
-
-			expect(shouldRenderLiveInTui(infoEntry)).toBe(false);
-			expect(shouldRenderLiveInTui(warnEntry)).toBe(true);
 		});
 	});
 });

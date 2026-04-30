@@ -15,7 +15,12 @@ export function writeAnalysisReport(
 	logger?: Logger,
 ): void {
 	const activeLogger = logger ?? defaultRuntimeLogger;
-	const outputPath = resolve(process.cwd(), ANALYSIS_OUTPUT_FILE);
+	const outputPath = resolve(
+		process.cwd(),
+		"scripts",
+		"generators",
+		ANALYSIS_OUTPUT_FILE,
+	);
 	const payload: AnalysisOutput = {
 		generatedAt: new Date().toISOString(),
 		...report,

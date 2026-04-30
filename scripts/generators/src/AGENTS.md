@@ -1,6 +1,6 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-29 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-30 -->
 
-# AGENTS.md — scripts/shared
+# AGENTS.md — generators/src (shared library)
 
 <!-- AGENTS-GENERATED:START overview -->
 

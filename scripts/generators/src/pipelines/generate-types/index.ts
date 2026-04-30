@@ -1,5 +1,6 @@
 import "./config";
 import {
+	createGeneratorOptions,
 	createOrchestrationTask,
 	type GeneratorOrchestrationStage,
 	type GeneratorTask,
@@ -109,11 +110,10 @@ function createGeneratorTasks(): GeneratorTask<GenerateTypesGeneratorContext>[] 
 }
 
 export function createGenerateTypesGenerator(): RunGeneratorCliOptions<GenerateTypesGeneratorContext> {
-	return {
+	return createGeneratorOptions({
 		name: "generate-types",
-		context: {},
 		tasks: createGeneratorTasks(),
-	};
+	});
 }
 
 const generateTypes = createGenerateTypesGenerator();
