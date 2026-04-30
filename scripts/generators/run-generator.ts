@@ -1,4 +1,4 @@
-import { logger } from "@scripts/generators/shared/lib/logger";
+import { logger } from "@scripts/generators/src/lib/logger";
 
 export type GeneratorStepTask<TContext extends object> = (
 	context: TContext,
