@@ -28,10 +28,6 @@ import type {
 } from "./other/anexos-troca-titularidade";
 import type { Aniversarios, AniversariosRelations } from "./other/aniversarios";
 import type {
-	AprovacaoCpf,
-	AprovacaoCpfRelations,
-} from "./other/aprovacao-cpf";
-import type {
 	ArquivosFuncionarios,
 	ArquivosFuncionariosRelations,
 } from "./other/arquivos-funcionarios";
@@ -355,7 +351,6 @@ export type CollectionName =
 	| "t_anexos_negociacoes"
 	| "t_anexos_troca_titularidade"
 	| "t_aniversarios"
-	| "t_aprovacao_cpf"
 	| "t_arquivos_funcionarios"
 	| "t_asos"
 	| "t_atendimentos_ixc"
@@ -476,7 +471,6 @@ export interface CollectionMap {
 	t_anexos_negociacoes: AnexosNegociacoes;
 	t_anexos_troca_titularidade: AnexosTrocaTitularidade;
 	t_aniversarios: Aniversarios;
-	t_aprovacao_cpf: AprovacaoCpf;
 	t_arquivos_funcionarios: ArquivosFuncionarios;
 	t_asos: Asos;
 	t_atendimentos_ixc: AtendimentosIxc;
@@ -598,7 +592,6 @@ export interface CollectionRelationsMap {
 	t_anexos_negociacoes: AnexosNegociacoesRelations;
 	t_anexos_troca_titularidade: AnexosTrocaTitularidadeRelations;
 	t_aniversarios: AniversariosRelations;
-	t_aprovacao_cpf: AprovacaoCpfRelations;
 	t_arquivos_funcionarios: ArquivosFuncionariosRelations;
 	t_asos: AsosRelations;
 	t_atendimentos_ixc: AtendimentosIxcRelations;
@@ -721,7 +714,6 @@ export const COLLECTIONS = [
 	"t_anexos_negociacoes",
 	"t_anexos_troca_titularidade",
 	"t_aniversarios",
-	"t_aprovacao_cpf",
 	"t_arquivos_funcionarios",
 	"t_asos",
 	"t_atendimentos_ixc",
