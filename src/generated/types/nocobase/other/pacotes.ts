@@ -13,6 +13,11 @@ export const PACOTES_ABREATENDIMENTO_LABELS = {
 	"1": "SIM",
 } as const;
 
+export const PACOTES_CLAUSULABONUSVELOCIDADE_LABELS = {
+	Nao: "Nao",
+	Sim: "Sim",
+} as const;
+
 export const PACOTES_PACOTEADICIONAL_LABELS = {
 	"0": "NAO",
 	"1": "SIM",
@@ -36,6 +41,9 @@ export const PACOTES_VENDERPARA_LABELS = {
 export type PacotesAbreAtendimento =
 	keyof typeof PACOTES_ABREATENDIMENTO_LABELS;
 
+export type PacotesClausulaBonusVelocidade =
+	keyof typeof PACOTES_CLAUSULABONUSVELOCIDADE_LABELS;
+
 export type PacotesPacoteAdicional =
 	keyof typeof PACOTES_PACOTEADICIONAL_LABELS;
 
@@ -51,6 +59,10 @@ export interface Pacotes {
 	f_fk_desconto_pacotes: number;
 	f_fk_id_pacote: number;
 	f_abre_atendimento: PacotesAbreAtendimento;
+	f_clausula_bonus_velocidade: PacotesClausulaBonusVelocidade;
+	f_mbps_bonus: string;
+	f_mbps_padrao: string;
+	f_mbps_total: string;
 	f_mensalidade_com_desconto: number;
 	f_mensalidade_sem_desconto: number;
 	f_nome_pacote: string;
