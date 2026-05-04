@@ -8,7 +8,7 @@ import {
 	toCollectionBaseTypeName,
 	toCollectionTypeName,
 } from "@scripts/generators/src/pipelines/generate-types/utils/naming";
-import { getScalarFieldType } from "./content-enums";
+import { getScalarFieldType, getScalarFieldZodType } from "./content-enums";
 import { _sortMapEntries, _sortScalarEntries } from "./content-sorting";
 import { getRelationCardinality, renderRelationValueType } from "./relations";
 
@@ -16,6 +16,10 @@ export interface CollectionInterfacesOutput {
 	baseInterface: string;
 	relationsInterface: string;
 	relationKeyType: string;
+	/** Nome do schema Zod (ex: pessoasSchema) */
+	schemaName: string;
+	/** Nome do type principal (ex: Pessoas) */
+	typeName: string;
 }
 
 function _renderRelationFieldType(
@@ -60,6 +64,44 @@ export function generateCollectionBaseInterface(
 }
 
 /**
+ * Gera o schema Zod principal da collection.
+ * Ex: export const pessoasSchema = z.object({ id: z.number(), ... });
+ */
+export function generateMainSchema(
+	collectionName: string,
+	types: GeneratedTypes,
+): string | null {
+	const scalarEntries = _sortScalarEntries(types.scalars);
+	// Remove t_ prefix and ensure valid identifier
+	const cleanCollectionName = collectionName.replace(/^t_/, "");
+	const schemaName = ensureValidIdentifier(
+		`${cleanCollectionName.toLowerCase()}Schema`,
+	);
+
+	// Se não tem campos escalares, não gera schema
+	if (scalarEntries.length === 0) {
+		return null;
+	}
+
+	const lines: string[] = [];
+	lines.push(`export const ${schemaName} = z.object({`);
+
+	for (const [fieldName, fieldType] of scalarEntries) {
+		const resolvedType = getScalarFieldZodType(
+			fieldName,
+			fieldType,
+			types,
+			collectionName,
+		);
+		lines.push(`\t${formatKey(fieldName)}: ${resolvedType},`);
+	}
+
+	lines.push("});");
+
+	return lines.join("\n");
+}
+
+/**
  * Gera a interface Relations de uma collection.
  */
 export function generateCollectionRelationsInterface(
@@ -74,13 +116,13 @@ export function generateCollectionRelationsInterface(
 	if (relationEntries.length === 0) {
 		lines.push(`export type ${typeName}Relations = Record<string, never>;`);
 	} else {
-		lines.push(`export interface ${typeName}Relations {`);
+		lines.push(`export type ${typeName}Relations = {`);
 		for (const [fieldName, relation] of relationEntries) {
 			lines.push(
 				`\t${formatKey(fieldName)}?: ${_renderRelationFieldType(relation, baseInterfaceNaming)};`,
 			);
 		}
-		lines.push("}");
+		lines.push("};");
 	}
 
 	return lines.join("\n");
@@ -113,18 +155,47 @@ export function generateCollectionInterfaces(
 	collectionName: string,
 	types: GeneratedTypes,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
+	isSplitCollection = false,
 ): CollectionInterfacesOutput {
-	return {
-		baseInterface: generateCollectionBaseInterface(
+	// Remove t_ prefix and ensure valid identifier for schema name
+	const cleanCollectionName = collectionName.replace(/^t_/, "");
+	const schemaName = ensureValidIdentifier(
+		`${cleanCollectionName.toLowerCase()}Schema`,
+	);
+	const typeName = toCollectionBaseTypeName(
+		collectionName,
+		baseInterfaceNaming,
+	);
+
+	// Para split collections, não gera interface (usa type inferido do schema)
+	let baseInterface = "";
+	if (!isSplitCollection) {
+		baseInterface = generateCollectionBaseInterface(
 			collectionName,
 			types,
 			baseInterfaceNaming,
-		),
+		);
+	}
+
+	return {
+		baseInterface,
 		relationsInterface: generateCollectionRelationsInterface(
 			collectionName,
 			types,
 			baseInterfaceNaming,
 		),
 		relationKeyType: generateCollectionRelationKeyType(collectionName),
+		schemaName,
+		typeName,
 	};
+}
+
+/**
+ * Prefixa um nome se começar com número para garantir identificador válido.
+ */
+function ensureValidIdentifier(name: string): string {
+	if (/^[0-9]/.test(name)) {
+		return `_${name}`;
+	}
+	return name;
 }

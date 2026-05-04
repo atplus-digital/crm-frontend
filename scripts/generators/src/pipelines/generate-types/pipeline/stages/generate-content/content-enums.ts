@@ -7,11 +7,22 @@ import {
 	toCollectionTypeName,
 } from "@scripts/generators/src/pipelines/generate-types/utils/naming";
 
+export interface EnumFieldInfo {
+	/** Nome do campo no formato PascalCase */
+	fieldName: string;
+	/** Nome do schema Zod em camelCase */
+	schemaName: string;
+	/** Nome do type inferido do schema */
+	typeName: string;
+	/** Nome da constante de labels em SCREAMING_SNAKE_CASE */
+	labelsName: string;
+}
+
 /**
  * Converte valor de enum em nome válido para TypeScript enum member.
  * Regras: deve começar com letra/underline, conter apenas letras, números e underline.
  */
-function toEnumMemberName(value: string | number): string {
+export function toEnumMemberName(value: string | number): string {
 	const raw = value.toString();
 	const withoutAccents = removeAccents(raw);
 	const sanitized = withoutAccents
@@ -22,7 +33,7 @@ function toEnumMemberName(value: string | number): string {
 	const parts = sanitized.split("_").filter((part) => part.length > 0);
 
 	if (parts.length === 0) {
-		return "Unknown";
+		return "UNKNOWN";
 	}
 
 	const pascal = parts
@@ -41,7 +52,7 @@ function toEnumMemberName(value: string | number): string {
  * Para keys de objeto TypeScript, strings numéricas puras são válidas.
  * Regras: letras/números/underscore, OU apenas números (sem leading zeros).
  */
-function isValidObjectKey(str: string): boolean {
+export function isValidObjectKey(str: string): boolean {
 	// Strings numéricas puras SEM leading zeros são válidas
 	if (/^[1-9]\d*$|^0$/.test(str)) {
 		return true;
@@ -51,33 +62,76 @@ function isValidObjectKey(str: string): boolean {
 }
 
 /**
- * Gera type alias para um campo enum usando keyof typeof.
- * Padrão moderno: type inferido do objeto constante de labels.
- * Ex: export type PessoasStatus = keyof typeof STATUS_LABELS;
+ * Prefixa um nome se começar com número.
  */
-export function generateEnumDefinition(
+function ensureValidIdentifier(name: string): string {
+	// Se começar com número, adiciona underscore
+	if (/^[0-9]/.test(name)) {
+		return `_${name}`;
+	}
+	return name;
+}
+
+/**
+ * Deriva o nome da variável em camelCase a partir do nome do campo.
+ * Ex: t_pessoas + f_status → pessoasStatusSchema
+ * Ex: t_902ctke5dhq + f_status → _902ctke5dhqStatusSchema
+ */
+function toEnumSchemaName(collectionName: string, fieldName: string): string {
+	// Remove t_ or f_ prefix from collection name
+	const cleanCollectionName = collectionName.replace(/^t_/, "");
+	// Remove t_ or f_ prefix from field name
+	const fieldNameWithoutPrefix = fieldName.replace(/^[tf]_/, "");
+	// Converte f_status → status → _902ctke5dhqStatusSchema
+	const pascalField = toEnumMemberName(fieldNameWithoutPrefix);
+	return ensureValidIdentifier(
+		`${cleanCollectionName.toLowerCase()}${pascalField}Schema`,
+	);
+}
+
+/**
+ * Deriva o nome do type em PascalCase.
+ * Ex: f_status → PessoasStatus
+ */
+function toEnumTypeName(collectionName: string, fieldName: string): string {
+	const fieldNameWithoutPrefix = fieldName.replace(/^[tf]_/, "");
+	return `${toCollectionTypeName(collectionName)}${toEnumMemberName(fieldNameWithoutPrefix)}`;
+}
+
+/**
+ * Extrai as informações de um campo enum.
+ */
+export function getEnumFieldInfo(
 	collectionName: string,
 	fieldName: string,
 	_enumOptions: EnumOption[],
-): string {
+): EnumFieldInfo {
 	const fieldNameWithoutPrefix = fieldName.replace(/^[tf]_/, "");
-	const enumName = `${toCollectionTypeName(collectionName)}${toEnumMemberName(fieldNameWithoutPrefix)}`;
-	const mapName = `${toCollectionTypeName(collectionName).toUpperCase()}_${toEnumMemberName(fieldNameWithoutPrefix).toUpperCase()}_LABELS`;
+	const labelsName = `${toCollectionTypeName(collectionName).toUpperCase()}_${toEnumMemberName(fieldNameWithoutPrefix).toUpperCase()}_LABELS`;
 
-	return `export type ${enumName} = keyof typeof ${mapName};`;
+	return {
+		fieldName: fieldNameWithoutPrefix,
+		schemaName: toEnumSchemaName(collectionName, fieldName),
+		typeName: toEnumTypeName(collectionName, fieldName),
+		labelsName,
+	};
 }
 
 /**
  * Gera o objeto constante de labels com as const.
- * Padrão moderno: objeto constante como single source of truth.
- * Preserva valores originais da API como keys quando são identifiers válidos.
- * Ex: export const STATUS_LABELS = { ativo: "Ativo", inativo: "Inativo" } as const;
+ * Single source of truth para os valores de enum.
+ * Ex: export const PESSOAS_SEXO_LABELS = { M: "MASCULINO", F: "FEMININO" } as const;
  */
 export function generateEnumLabelMap(
 	collectionName: string,
 	fieldName: string,
 	enumOptions: EnumOption[],
 ): string {
+	const { labelsName } = getEnumFieldInfo(
+		collectionName,
+		fieldName,
+		enumOptions,
+	);
 	const seenValues = new Set<string | number>();
 	const seenMemberNames = new Set<string>();
 	const dedupedOptions = enumOptions
@@ -89,7 +143,6 @@ export function generateEnumLabelMap(
 			return true;
 		})
 		.filter((opt) => {
-			// Check if value can be used as-is or needs transformation
 			const valueStr = String(opt.value);
 			const needsTransformation = !isValidObjectKey(valueStr);
 			const memberName = needsTransformation
@@ -103,8 +156,6 @@ export function generateEnumLabelMap(
 			return true;
 		});
 
-	const fieldNameWithoutPrefix = fieldName.replace(/^[tf]_/, "");
-
 	const entries = dedupedOptions
 		.map((opt) => {
 			const valueStr = String(opt.value);
@@ -113,45 +164,71 @@ export function generateEnumLabelMap(
 				? toEnumMemberName(opt.value)
 				: valueStr;
 			const label = JSON.stringify(opt.label);
-
-			// Always quote keys to ensure they are treated as string literals, not numbers
-			// This prevents TypeScript from inferring 'number' type for numeric keys
 			const keyName = `"${memberName}"`;
 
 			return `\t${keyName}: ${label}`;
 		})
 		.join(",\n");
 
-	const mapName = `${toCollectionTypeName(collectionName).toUpperCase()}_${toEnumMemberName(fieldNameWithoutPrefix).toUpperCase()}_LABELS`;
-
-	return `export const ${mapName} = {\n${entries}\n} as const;`;
+	return `export const ${labelsName} = {\n${entries}\n} as const;`;
 }
 
 /**
- * Gera todos os enums de uma collection.
+ * Gera o schema Zod para um campo enum.
+ * Extrai valores das labels e adiciona mensagem de erro customizada.
+ * Usa labels no message de erro para melhor UX.
+ * Ex: export const pessoasSexoSchema = z.enum(["M", "F"], { error: ... });
  */
-export function generateCollectionEnums(
+export function generateEnumSchema(
 	collectionName: string,
-	types: GeneratedTypes,
+	fieldName: string,
+	enumOptions: EnumOption[],
 ): string {
-	if (types.enums.size === 0) {
-		return "";
-	}
-
-	const lines: string[] = [];
-	const sortedEnums = Array.from(types.enums.entries()).sort(([a], [b]) =>
-		a.localeCompare(b),
+	const { schemaName, fieldName: fieldNameWithoutPrefix } = getEnumFieldInfo(
+		collectionName,
+		fieldName,
+		enumOptions,
 	);
+	const seenValues = new Set<string | number>();
+	const seenLabels = new Set<string>();
 
-	for (const [fieldName, enumOptions] of sortedEnums) {
-		lines.push(generateEnumDefinition(collectionName, fieldName, enumOptions));
+	// Extrair valores e labels únicos preservando ordem
+	const uniqueEntries: { value: string; label: string }[] = [];
+	for (const opt of enumOptions) {
+		if (seenValues.has(opt.value)) continue;
+
+		seenValues.add(opt.value);
+		uniqueEntries.push({ value: String(opt.value), label: opt.label });
 	}
 
-	return lines.join("\n\n");
+	const valuesList = uniqueEntries.map((e) => `"${e.value}"`).join(", ");
+	const validLabels = uniqueEntries.map((e) => e.label).join(", ");
+
+	return `export const ${schemaName} = z.enum([${valuesList}], {
+  error: () => ({ message: "${fieldNameWithoutPrefix}: valores válidos são [${validLabels}]" }),
+});`;
+}
+
+/**
+ * Gera o type alias para um campo enum, inferido do schema Zod.
+ * Ex: export type PessoasSexo = z.infer<typeof pessoasSexoSchema>;
+ */
+export function generateEnumType(
+	collectionName: string,
+	fieldName: string,
+	_enumOptions: EnumOption[],
+): string {
+	const { schemaName, typeName } = getEnumFieldInfo(
+		collectionName,
+		fieldName,
+		_enumOptions,
+	);
+	return `export type ${typeName} = z.infer<typeof ${schemaName}>;`;
 }
 
 /**
  * Gera todos os mapas de labels de enums de uma collection.
+ * Seguindo a ordem: Labels primeiro (single source of truth).
  */
 export function generateCollectionEnumMaps(
 	collectionName: string,
@@ -174,7 +251,54 @@ export function generateCollectionEnumMaps(
 }
 
 /**
+ * Gera todos os schemas Zod de enums de uma collection.
+ */
+export function generateCollectionEnumSchemas(
+	collectionName: string,
+	types: GeneratedTypes,
+): string {
+	if (types.enums.size === 0) {
+		return "";
+	}
+
+	const lines: string[] = [];
+	const sortedEnums = Array.from(types.enums.entries()).sort(([a], [b]) =>
+		a.localeCompare(b),
+	);
+
+	for (const [fieldName, enumOptions] of sortedEnums) {
+		lines.push(generateEnumSchema(collectionName, fieldName, enumOptions));
+	}
+
+	return lines.join("\n\n");
+}
+
+/**
+ * Gera todos os types de enums de uma collection.
+ */
+export function generateCollectionEnumTypes(
+	collectionName: string,
+	types: GeneratedTypes,
+): string {
+	if (types.enums.size === 0) {
+		return "";
+	}
+
+	const lines: string[] = [];
+	const sortedEnums = Array.from(types.enums.entries()).sort(([a], [b]) =>
+		a.localeCompare(b),
+	);
+
+	for (const [fieldName, enumOptions] of sortedEnums) {
+		lines.push(generateEnumType(collectionName, fieldName, enumOptions));
+	}
+
+	return lines.join("\n\n");
+}
+
+/**
  * Gera o tipo para um campo escalar, usando enum se disponível.
+ * Retorna o nome do schema Zod se existir, ou o tipo escalar.
  */
 export function getScalarFieldType(
 	fieldName: string,
@@ -183,10 +307,55 @@ export function getScalarFieldType(
 	collectionName: string,
 ): string {
 	if (types.enums.has(fieldName)) {
-		const fieldNameWithoutPrefix = fieldName.replace(/^[tf]_/, "");
-		const enumName = `${toCollectionTypeName(collectionName)}${toEnumMemberName(fieldNameWithoutPrefix)}`;
-		return enumName;
+		const { schemaName } = getEnumFieldInfo(
+			collectionName,
+			fieldName,
+			types.enums.get(fieldName)!,
+		);
+		return schemaName;
 	}
 
 	return fieldType;
+}
+
+/**
+ * Gera o tipo Zod para um campo escalar (para uso no schema principal).
+ */
+export function getScalarFieldZodType(
+	fieldName: string,
+	fieldType: string,
+	types: GeneratedTypes,
+	collectionName: string,
+): string {
+	if (types.enums.has(fieldName)) {
+		const { schemaName } = getEnumFieldInfo(
+			collectionName,
+			fieldName,
+			types.enums.get(fieldName)!,
+		);
+		return schemaName;
+	}
+
+	// Mapear tipos escalares para schemas Zod
+	const scalarToZod: Record<string, string> = {
+		string: "z.string()",
+		number: "z.number()",
+		boolean: "z.boolean()",
+		Date: "z.string()", // NocoBase usa string para datas
+	};
+
+	return scalarToZod[fieldType] ?? "z.string()";
+}
+
+// Legacy alias for backwards compatibility
+export const generateCollectionEnums = generateCollectionEnumTypes;
+
+// Legacy function - generates keyof typeof format for backwards compatibility
+export function generateEnumDefinition(
+	collectionName: string,
+	fieldName: string,
+	_enumOptions: EnumOption[],
+): string {
+	// Usa generateEnumType que produz z.infer<typeof schemaName>
+	return generateEnumType(collectionName, fieldName, _enumOptions);
 }

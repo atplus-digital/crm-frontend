@@ -84,7 +84,7 @@ describe("content", () => {
 				schemaAvailable: true,
 			};
 			const result = generateCollectionBaseInterface("empresas", types);
-			expect(result).toContain("f_analise_ixc: EmpresasAnaliseIxc;");
+			expect(result).toContain("f_analise_ixc: empresasAnaliseIxcSchema;");
 			expect(result).not.toContain('f_analise_ixc: "0" | "1"');
 		});
 	});
@@ -96,7 +96,7 @@ describe("content", () => {
 				{ department: { targetCollection: "departments", type: "belongsTo" } },
 			);
 			const result = generateCollectionRelationsInterface("users", types);
-			expect(result).toContain("export interface UsersRelations {");
+			expect(result).toContain("export type UsersRelations = {");
 			expect(result).toContain("department?:");
 		});
 
@@ -165,7 +165,7 @@ describe("content", () => {
 
 			expect(result.baseInterface).toContain("export interface UsersBase");
 			expect(result.relationsInterface).toContain(
-				"export interface UsersRelations",
+				"export type UsersRelations = {",
 			);
 			expect(result.relationKeyType).toContain(
 				"export type UsersRelationKey = keyof UsersRelations;",
@@ -358,7 +358,7 @@ describe("content", () => {
 	});
 
 	describe("generateEnumDefinition", () => {
-		it("generates type alias with keyof typeof", async () => {
+		it("generates type alias using z.infer", async () => {
 			const { generateEnumDefinition } = await import(
 				"@scripts/generators/src/pipelines/generate-types/pipeline/stages/generate-content/content"
 			);
@@ -367,7 +367,7 @@ describe("content", () => {
 				{ value: "inactive", label: "Inactive" },
 			]);
 			expect(result).toBe(
-				"export type UsersStatus = keyof typeof USERS_STATUS_LABELS;",
+				"export type UsersStatus = z.infer<typeof usersStatusSchema>;",
 			);
 		});
 
@@ -380,7 +380,7 @@ describe("content", () => {
 				{ value: 2, label: "High" },
 			]);
 			expect(result).toBe(
-				"export type UsersPriority = keyof typeof USERS_PRIORITY_LABELS;",
+				"export type UsersPriority = z.infer<typeof usersPrioritySchema>;",
 			);
 		});
 
@@ -392,7 +392,7 @@ describe("content", () => {
 				{ value: "active", label: "Active" },
 			]);
 			expect(result).toBe(
-				"export type PessoasStatus = keyof typeof PESSOAS_STATUS_LABELS;",
+				"export type PessoasStatus = z.infer<typeof pessoasStatusSchema>;",
 			);
 		});
 
@@ -404,7 +404,7 @@ describe("content", () => {
 				{ value: "active", label: "Active" },
 			]);
 			expect(result).toBe(
-				"export type EmpresasStatus = keyof typeof EMPRESAS_STATUS_LABELS;",
+				"export type EmpresasStatus = z.infer<typeof empresasStatusSchema>;",
 			);
 		});
 	});
@@ -470,7 +470,7 @@ describe("content", () => {
 			const result = generateCollectionTypes("users", userTypes);
 			expect(result).toContain("export const USERS_STATUS_LABELS = {");
 			expect(result).toContain(
-				"export type UsersStatus = keyof typeof USERS_STATUS_LABELS;",
+				"export type UsersStatus = z.infer<typeof usersStatusSchema>;",
 			);
 			// Constants must come before types
 			const labelsIndex = result.indexOf("USERS_STATUS_LABELS");

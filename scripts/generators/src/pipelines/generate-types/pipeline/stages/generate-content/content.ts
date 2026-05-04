@@ -1,7 +1,7 @@
 // Barrel re-export file for content generation modules
 // @see content-sorting.ts - field sorting/categorization
-// @see content-enums.ts - enum generation (definition + label maps)
-// @see content-interfaces.ts - interface/relation generation
+// @see content-enums.ts - enum generation (labels, schemas, types)
+// @see content-interfaces.ts - interface/relation/schema generation
 // @see content-assembly.ts - collection assembly + file content generation
 
 // Assembly functions
@@ -12,25 +12,32 @@ export {
 	generateFileHeader,
 	generateSplitFiles,
 } from "./content-assembly";
-
+export type { EnumFieldInfo } from "./content-enums";
 // Enum functions
 export {
 	generateCollectionEnumMaps,
+	generateCollectionEnumSchemas,
 	generateCollectionEnums,
+	generateCollectionEnumTypes,
 	generateEnumDefinition,
 	generateEnumLabelMap,
+	generateEnumSchema,
+	generateEnumType,
 	getScalarFieldType,
+	getScalarFieldZodType,
+	isValidObjectKey,
+	toEnumMemberName,
 } from "./content-enums";
-
+// Types
+export type { CollectionInterfacesOutput } from "./content-interfaces";
 // Interface functions
 export {
 	generateCollectionBaseInterface,
 	generateCollectionInterfaces,
 	generateCollectionRelationKeyType,
 	generateCollectionRelationsInterface,
+	generateMainSchema,
 } from "./content-interfaces";
-// Types
-export type { FieldCategory } from "./content-sorting";
 // Sorting utilities
 export {
 	_categorizeField,

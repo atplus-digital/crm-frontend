@@ -21,7 +21,7 @@ describe("generateEnumDefinition integration", () => {
 		const result = generateEnumDefinition("t_teste", "status", enumOptions);
 
 		expect(result).toBe(
-			"export type TesteStatus = keyof typeof TESTE_STATUS_LABELS;",
+			"export type TesteStatus = z.infer<typeof testeStatusSchema>;",
 		);
 	});
 
@@ -41,7 +41,7 @@ describe("generateEnumDefinition integration", () => {
 		);
 
 		expect(result).toBe(
-			"export type TesteGrauSatisfacao = keyof typeof TESTE_GRAUSATISFACAO_LABELS;",
+			"export type TesteGrauSatisfacao = z.infer<typeof testeGrauSatisfacaoSchema>;",
 		);
 	});
 
@@ -57,7 +57,7 @@ describe("generateEnumDefinition integration", () => {
 		const result = generateEnumDefinition("t_teste", "tipo", enumOptions);
 
 		expect(result).toBe(
-			"export type TesteTipo = keyof typeof TESTE_TIPO_LABELS;",
+			"export type TesteTipo = z.infer<typeof testeTipoSchema>;",
 		);
 	});
 });

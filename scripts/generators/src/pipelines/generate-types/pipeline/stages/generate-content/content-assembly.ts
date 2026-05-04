@@ -6,9 +6,13 @@ import type { BaseInterfaceNamingConfig } from "@scripts/generators/src/pipeline
 import { toValidIdentifier } from "@scripts/generators/src/pipelines/generate-types/utils/naming";
 import {
 	generateCollectionEnumMaps,
-	generateCollectionEnums,
+	generateCollectionEnumSchemas,
+	generateCollectionEnumTypes,
 } from "./content-enums";
-import { generateCollectionInterfaces } from "./content-interfaces";
+import {
+	generateCollectionInterfaces,
+	generateMainSchema,
+} from "./content-interfaces";
 import { _sortMapEntries, _sortScalarEntries } from "./content-sorting";
 
 /**
@@ -23,6 +27,13 @@ export function generateFileHeader(): string {
 `;
 }
 
+/**
+ * Gera o import do zod.
+ */
+function generateZodImport(): string {
+	return `import { z } from "zod";`;
+}
+
 function _toCollectionSourceConstName(collectionName: string): string {
 	const normalized = collectionName
 		.trim()
@@ -35,16 +46,33 @@ function _toCollectionSourceConstName(collectionName: string): string {
 
 /**
  * Gera a definição completa de tipos para uma collection.
- * Ordem: Constantes de labels → Type aliases → Interfaces → Types auxiliares
+ * Nova ordem para split collections com Zod:
+ * 1. Import do zod
+ * 2. TABLE_NAME const
+ * 3. Labels (single source of truth)
+ * 4. Enum Schemas (extraídos das labels)
+ * 5. Enum Types (inferidos dos schemas)
+ * 6. Schema Principal (z.object)
+ * 7. Type Principal (inferido do schema)
+ * 8. Relations Types
+ * 9. RelationKey Type
  */
 export function generateCollectionTypes(
 	collectionName: string,
 	types: GeneratedTypes,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 	includeSourceTableConst = false,
+	isSplitCollection = false,
 ): string {
 	const lines: string[] = [];
 
+	// 1. Import do zod (apenas para collections split)
+	if (isSplitCollection) {
+		lines.push(generateZodImport());
+		lines.push("");
+	}
+
+	// 2. TABLE_NAME const
 	if (includeSourceTableConst) {
 		lines.push(
 			`export const ${_toCollectionSourceConstName(collectionName)} = "${collectionName}";`,
@@ -52,32 +80,91 @@ export function generateCollectionTypes(
 		lines.push("");
 	}
 
-	// 1. Enum maps (labels) PRIMEIRO - constantes que servem como base para os types
+	// 3. Labels (single source of truth)
 	if (types.enums.size > 0) {
+		lines.push(
+			"// ============================================================",
+		);
+		lines.push("// LABELS (single source of truth)");
+		lines.push(
+			"// ============================================================",
+		);
 		lines.push(generateCollectionEnumMaps(collectionName, types));
 		lines.push("");
 	}
 
-	// 2. Type aliases (inferidos de keyof typeof LABELS)
+	// 4. Enum Schemas (extraídos das labels)
 	if (types.enums.size > 0) {
-		lines.push(generateCollectionEnums(collectionName, types));
+		lines.push(
+			"// ============================================================",
+		);
+		lines.push("// ENUM SCHEMAS (validação em runtime)");
+		lines.push(
+			"// ============================================================",
+		);
+		lines.push(generateCollectionEnumSchemas(collectionName, types));
 		lines.push("");
 	}
 
-	// 3. Interface Base
+	// 5. Enum Types (inferidos dos schemas)
+	if (types.enums.size > 0) {
+		lines.push(
+			"// ============================================================",
+		);
+		lines.push("// ENUM TYPES (inferidos dos schemas)");
+		lines.push(
+			"// ============================================================",
+		);
+		lines.push(generateCollectionEnumTypes(collectionName, types));
+		lines.push("");
+	}
+
+	// 6. Schema Principal (z.object) - apenas para collections split
+	if (isSplitCollection) {
+		lines.push(
+			"// ============================================================",
+		);
+		lines.push("// SCHEMA PRINCIPAL (validação completa)");
+		lines.push(
+			"// ============================================================",
+		);
+		const schema = generateMainSchema(collectionName, types);
+		if (schema) {
+			lines.push(schema);
+			lines.push("");
+		}
+	}
+
+	// 7. Interface Base (para não-split, ou se preferir manter interface)
 	const interfaces = generateCollectionInterfaces(
 		collectionName,
 		types,
 		baseInterfaceNaming,
+		isSplitCollection,
 	);
-	lines.push(interfaces.baseInterface);
-	lines.push("");
 
-	// 4. Relations
+	if (isSplitCollection) {
+		lines.push(
+			"// ============================================================",
+		);
+		lines.push("// TYPE PRINCIPAL (inferido do schema)");
+		lines.push(
+			"// ============================================================",
+		);
+		const typeName = interfaces.typeName;
+		const schemaName = interfaces.schemaName;
+		lines.push(`export type ${typeName} = z.infer<typeof ${schemaName}>;`);
+		lines.push("");
+	} else {
+		lines.push(interfaces.baseInterface);
+		lines.push("");
+	}
+
+	// 8. Relations
 	lines.push(interfaces.relationsInterface);
 	lines.push("");
 
-	// 5. RelationKey type
+	// 9. RelationKey Type
 	lines.push(interfaces.relationKeyType);
 
 	return lines.join("\n");
@@ -92,6 +179,7 @@ export function generateContentForCollections(
 	includeHeader = true,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 	includeSourceTableConst = false,
+	isSplitCollection = false,
 ): string {
 	const lines: string[] = [];
 
@@ -110,6 +198,7 @@ export function generateContentForCollections(
 				types,
 				baseInterfaceNaming,
 				includeSourceTableConst,
+				isSplitCollection,
 			),
 		);
 		lines.push("");
@@ -128,14 +217,15 @@ export function generateSplitFiles(
 ): Map<string, string> {
 	const result = new Map<string, string>();
 
-	for (const [fileName, collections] of splitCollections) {
+	for (const [collectionName, collections] of splitCollections) {
 		const content = generateContentForCollections(
 			collections,
 			true,
 			baseInterfaceNaming,
-			true,
+			true, // includeSourceTableConst
+			true, // isSplitCollection
 		);
-		result.set(fileName, content);
+		result.set(collectionName, content);
 	}
 
 	return result;

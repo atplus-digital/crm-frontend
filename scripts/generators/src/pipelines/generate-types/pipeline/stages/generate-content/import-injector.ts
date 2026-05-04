@@ -71,6 +71,21 @@ function addImport(
 	importsBySource.set(source, new Set([typeName]));
 }
 
+/**
+ * Procura pela linha que contém "import { z } from" e retorna a posição após ela.
+ * Retorna -1 se não encontrar.
+ */
+function findZodImportEnd(content: string): number {
+	const match = content.match(
+		/^import\s*\{[^}]*\b[zZ]\b[^}]*\}\s*from\s*["']z["']/m,
+	);
+	if (!match) {
+		return -1;
+	}
+	const matchIndex = content.indexOf(match[0]);
+	return matchIndex + match[0].length;
+}
+
 function injectImports(
 	content: string,
 	importsBySource: Map<string, Set<string>>,
@@ -96,6 +111,18 @@ function injectImports(
 		});
 
 	const importBlock = importLines.join("\n");
+
+	// Para split files com Zod, insere após o import do zod
+	const zodImportEnd = findZodImportEnd(content);
+	if (zodImportEnd !== -1) {
+		const afterZod = content.indexOf("\n", zodImportEnd);
+		const insertPos = afterZod === -1 ? content.length : afterZod;
+		const before = content.slice(0, insertPos);
+		const after = content.slice(insertPos).replace(/^\n+/, "\n");
+		return `${before}\n${importBlock}\n${after}`;
+	}
+
+	// Fallback: insere após header ou antes do conteúdo
 	const headerEndIndex = content.indexOf("*/");
 
 	if (headerEndIndex === -1) {
