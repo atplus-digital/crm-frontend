@@ -1,6 +1,6 @@
 import type { OrchestrationTaskRunner } from "@scripts/generators/src/lib/generator-cli";
 import type { Logger } from "@scripts/generators/src/lib/logger";
-import { runExecutionStage } from "@scripts/generators/src/lib/pipeline-runner";
+import { createOrchestrationRunner } from "@scripts/generators/src/lib/pipeline-runner";
 import type { ScriptConfig } from "./@types/script-config";
 import { assertGenerateCustomRequestsResult } from "./assert";
 import {
@@ -8,10 +8,7 @@ import {
 	type GenerateCustomRequestsExecutionContext,
 	getPipelineContext,
 } from "./context";
-import type {
-	GenerationContext,
-	GenerationStage,
-} from "./pipeline/orchestration/types";
+import type { GenerationContext } from "./pipeline/orchestration/types";
 import {
 	fetchEntriesStage,
 	loadConfigStage,
@@ -30,24 +27,21 @@ export function lockGenerateCustomRequestsWorkspace(): void {
 	applyWorkspaceLockIfNeeded();
 }
 
-async function runOrchestrationStage(
+const { runOrchestrationStage } = createOrchestrationRunner<GenerationContext>({
+	createInitialContext: (logger) => ({ logger }) as GenerationContext,
+});
+
+async function runStage(
 	context: GenerateCustomRequestsExecutionContext,
-	stage: GenerationStage,
+	stage: Parameters<typeof runOrchestrationStage>[1],
 ): Promise<void> {
-	await runExecutionStage({
-		runtimeContext: context,
-		stage,
-		createInitialContext: (injectedLogger) =>
-			({
-				logger: injectedLogger,
-			}) as GenerationContext,
-	});
+	await runOrchestrationStage(context, stage);
 }
 
 export async function runLoadConfigOrchestrationStage(
 	context: GenerateCustomRequestsExecutionContext,
 ): Promise<void> {
-	await runOrchestrationStage(
+	await runStage(
 		context,
 		loadConfigStage({ overrideConfig: context.overrideConfig }),
 	);
@@ -56,19 +50,19 @@ export async function runLoadConfigOrchestrationStage(
 export async function runFetchEntriesOrchestrationStage(
 	context: GenerateCustomRequestsExecutionContext,
 ): Promise<void> {
-	await runOrchestrationStage(context, fetchEntriesStage());
+	await runStage(context, fetchEntriesStage());
 }
 
 export async function runWriteAnalysisReportOrchestrationStage(
 	context: GenerateCustomRequestsExecutionContext,
 ): Promise<void> {
-	await runOrchestrationStage(context, writeAnalysisReportStage());
+	await runStage(context, writeAnalysisReportStage());
 }
 
 export async function runTransformAndMergeOrchestrationStage(
 	context: GenerateCustomRequestsExecutionContext,
 ): Promise<void> {
-	await runOrchestrationStage(context, transformAndMergeStage());
+	await runStage(context, transformAndMergeStage());
 }
 
 export function runWriteOutputOrchestrationStage(
@@ -76,7 +70,7 @@ export function runWriteOutputOrchestrationStage(
 	task?: OrchestrationTaskRunner,
 ) {
 	if (!task) {
-		return runOrchestrationStage(context, writeOutputStage());
+		return runStage(context, writeOutputStage());
 	}
 
 	return runWriteOutputOrchestration(getPipelineContext(context), task);

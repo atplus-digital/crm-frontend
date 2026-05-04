@@ -1,21 +1,13 @@
-import { runExecutionStage } from "@scripts/generators/src/lib/pipeline-runner";
-import type {
-	GenerationContext,
-	GenerationStage,
-} from "../pipeline/orchestration/types";
+import { createOrchestrationRunner } from "@scripts/generators/src/lib/pipeline-runner";
+import type { GenerationContext } from "../pipeline/orchestration/types";
 import { restoreAllSessions } from "../runtime/backup";
 import type { GenerateTypesExecutionContext } from "../runtime/context";
 
-export async function runOrchestrationStage(
-	context: GenerateTypesExecutionContext,
-	stage: GenerationStage,
-): Promise<void> {
-	await runExecutionStage({
-		runtimeContext: context,
-		stage,
-		createInitialContext: (logger) => ({ logger }) as GenerationContext,
-		onError: () => {
-			restoreAllSessions(context);
-		},
-	});
-}
+const { runOrchestrationStage } = createOrchestrationRunner<GenerationContext>({
+	createInitialContext: (logger) => ({ logger }) as GenerationContext,
+	onError: (_error, context) => {
+		restoreAllSessions(context as GenerateTypesExecutionContext);
+	},
+});
+
+export { runOrchestrationStage };
