@@ -1,5 +1,5 @@
 import "./config";
-import { runGeneratorCli } from "@scripts/generators/src/lib/generator-cli";
+import { runGeneratorCli } from "@scripts/generators/src/lib/cli";
 import { defaultLogger } from "@scripts/generators/src/lib/logger";
 import { createGenerateTypesGenerator } from "./generator/create-generator";
 

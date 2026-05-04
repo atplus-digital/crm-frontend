@@ -3,11 +3,11 @@ import * as path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock tsc-validator and linter-runner before importing atomic-writer
-vi.mock("@scripts/generators/src/lib/tsc-validator", () => ({
+vi.mock("@scripts/generators/src/lib/validation/tsc-validator", () => ({
 	validateTypeScriptDirectory: vi.fn().mockResolvedValue(true),
 }));
 
-vi.mock("@scripts/generators/src/lib/linter-runner", () => ({
+vi.mock("@scripts/generators/src/lib/validation/linter-runner", () => ({
 	runLinterFix: vi.fn().mockResolvedValue(undefined),
 }));
 
@@ -41,7 +41,7 @@ describe("AtomicWriter", () => {
 	describe("createAtomicWriteSession", () => {
 		it("creates a session with correct paths", async () => {
 			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/atomic-writer"
+				"@scripts/generators/src/lib/io/atomic-writer"
 			);
 
 			const session = createAtomicWriteSession({
@@ -59,7 +59,7 @@ describe("AtomicWriter", () => {
 	describe("ensureTempDir", () => {
 		it("creates the temp directory", async () => {
 			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/atomic-writer"
+				"@scripts/generators/src/lib/io/atomic-writer"
 			);
 
 			const session = createAtomicWriteSession({
@@ -73,7 +73,7 @@ describe("AtomicWriter", () => {
 
 		it("is idempotent — calling twice does not throw", async () => {
 			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/atomic-writer"
+				"@scripts/generators/src/lib/io/atomic-writer"
 			);
 
 			const session = createAtomicWriteSession({
@@ -90,7 +90,7 @@ describe("AtomicWriter", () => {
 	describe("commit", () => {
 		it("moves files from temp dir to output dir", async () => {
 			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/atomic-writer"
+				"@scripts/generators/src/lib/io/atomic-writer"
 			);
 
 			const session = createAtomicWriteSession({
@@ -120,7 +120,7 @@ describe("AtomicWriter", () => {
 
 		it("preserves subdirectory structure", async () => {
 			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/atomic-writer"
+				"@scripts/generators/src/lib/io/atomic-writer"
 			);
 
 			const session = createAtomicWriteSession({
@@ -150,7 +150,7 @@ describe("AtomicWriter", () => {
 
 		it("reports unchanged files when content matches", async () => {
 			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/atomic-writer"
+				"@scripts/generators/src/lib/io/atomic-writer"
 			);
 
 			// Pre-create the output file with same content
@@ -180,12 +180,12 @@ describe("AtomicWriter", () => {
 
 		it("restores backup when tsc validation fails", async () => {
 			const { validateTypeScriptDirectory } = await import(
-				"@scripts/generators/src/lib/tsc-validator"
+				"@scripts/generators/src/lib/validation/tsc-validator"
 			);
 			vi.mocked(validateTypeScriptDirectory).mockResolvedValueOnce(false);
 
 			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/atomic-writer"
+				"@scripts/generators/src/lib/io/atomic-writer"
 			);
 
 			// Pre-create an existing file in output dir
@@ -221,11 +221,11 @@ describe("AtomicWriter", () => {
 
 		it("skips validation when validate=false", async () => {
 			const { validateTypeScriptDirectory } = await import(
-				"@scripts/generators/src/lib/tsc-validator"
+				"@scripts/generators/src/lib/validation/tsc-validator"
 			);
 
 			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/atomic-writer"
+				"@scripts/generators/src/lib/io/atomic-writer"
 			);
 
 			const session = createAtomicWriteSession({
@@ -249,7 +249,7 @@ describe("AtomicWriter", () => {
 
 		it("throws if commit is called twice", async () => {
 			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/atomic-writer"
+				"@scripts/generators/src/lib/io/atomic-writer"
 			);
 
 			const session = createAtomicWriteSession({
@@ -270,7 +270,7 @@ describe("AtomicWriter", () => {
 
 		it("returns committed=false when temp dir does not exist", async () => {
 			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/atomic-writer"
+				"@scripts/generators/src/lib/io/atomic-writer"
 			);
 
 			const session = createAtomicWriteSession({
@@ -287,7 +287,7 @@ describe("AtomicWriter", () => {
 	describe("cleanup", () => {
 		it("removes the temp and backup directories", async () => {
 			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/atomic-writer"
+				"@scripts/generators/src/lib/io/atomic-writer"
 			);
 
 			const session = createAtomicWriteSession({

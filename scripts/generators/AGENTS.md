@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-30 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-04 -->
 
 # AGENTS.md — scripts/generators
 
@@ -19,16 +19,22 @@ generators/
 ├── tsconfig.generated.json     # Validates generated output only (src/generated/**/*.ts)
 └── src/
     ├── lib/                    # Shared library (no pipeline-specific logic)
-    │   ├── generator-cli/      # Listr2-based CLI framework
-    │   ├── logger.ts           # Structured logger with AsyncLocalStorage chains
-    │   ├── atomic-writer.ts    # Backup → swap → validate → keep/restore
-    │   ├── workspace-locker.ts # Parameterized VSCode readonly locker
+    │   ├── cli/                # Listr2-based CLI framework
+    │   ├── http/               # HTTP utilities
+    │   │   ├── http-client.ts
+    │   │   └── nocobase-client.ts
+    │   ├── io/                 # File I/O operations
+    │   │   ├── atomic-writer.ts
+    │   │   ├── workspace-locker.ts
+    │   │   └── workspace-locker-adapter.ts
+    │   ├── validation/         # Code validation
+    │   │   ├── linter-runner.ts
+    │   │   └── tsc-validator.ts
     │   ├── env-config.ts       # dotenv + Zod env validation
-    │   ├── http-client.ts      # fetch with retry, timeout, auth
-    │   ├── nocobase-client.ts  # Abstract NocoBase API client (fetchPaginated)
+    │   ├── logger.ts           # Structured logger with AsyncLocalStorage chains
+    │   ├── pipeline-runner.ts  # Pipeline orchestration
     │   ├── strings.ts          # escapeString, serializePayloadData
-    │   ├── tsc-validator.ts    # tsc --noEmit with process-level cache
-    │   └── linter-runner.ts    # Biome + Prettier runner
+    │   └── test/               # Test files
     └── pipelines/
         ├── generate-types/            # 10-stage type generation pipeline
         └── generate-custom-requests/  # 5-stage custom request registry pipeline
@@ -40,13 +46,14 @@ generators/
 
 ## Where to Look
 
-| Task                                     | Location                                               | Notes                                             |
-| ---------------------------------------- | ------------------------------------------------------ | ------------------------------------------------- |
-| Understand generator CLI framework       | `src/lib/generator-cli/`                               | runner.ts → orchestration-task.ts → listr-task.ts |
-| Add shared utility                       | `src/lib/`                                             | No barrel index.ts, direct imports only           |
-| Modify pipeline orchestration            | `src/pipelines/<name>/pipeline/orchestration/`         | Each pipeline defines its own stages              |
-| Change how generated files are validated | `src/lib/tsc-validator.ts`, `src/lib/linter-runner.ts` | Post-pipeline validation                          |
-| Understand atomic write pattern          | `src/lib/atomic-writer.ts`                             | Used by both pipelines for safe file writes       |
+| Task                                     | Location                                       | Notes                                             |
+| ---------------------------------------- | ---------------------------------------------- | ------------------------------------------------- |
+| Understand generator CLI framework       | `src/lib/cli/`                                 | runner.ts → orchestration-task.ts → listr-task.ts |
+| Add shared utility                       | `src/lib/`                                     | No barrel index.ts, direct imports only           |
+| Modify pipeline orchestration            | `src/pipelines/<name>/pipeline/orchestration/` | Each pipeline defines its own stages              |
+| Change how generated files are validated | `src/lib/validation/`                          | Post-pipeline validation                          |
+| Understand atomic write pattern          | `src/lib/io/atomic-writer.ts`                  | Used by both pipelines for safe file writes       |
+| HTTP/API operations                      | `src/lib/http/`                                | NocoBase client and HTTP utilities                |
 
 <!-- AGENTS-GENERATED:END where-to-look -->
 
@@ -54,13 +61,13 @@ generators/
 
 ## Key Files
 
-| File                                          | Purpose                                                                        |
-| --------------------------------------------- | ------------------------------------------------------------------------------ |
-| `run-generator.ts`                            | Barrel re-export — bridges `@scripts/generators/run-generator` alias           |
-| `tsconfig.generated.json`                     | Extends root tsconfig, includes only `src/generated/**`                        |
-| `src/lib/generator-cli/runner.ts`             | `runGeneratorCli()` — builds Listr task list, injects logger, exits on failure |
-| `src/lib/generator-cli/orchestration-task.ts` | `createOrchestrationTask()` — wraps sub-stages with `runWithLogger()` chains   |
-| `src/lib/generator-cli/types.ts`              | `GeneratorTask`, `GeneratorContext`, `GeneratorOrchestrationStage` types       |
+| File                                | Purpose                                                                        |
+| ----------------------------------- | ------------------------------------------------------------------------------ |
+| `run-generator.ts`                  | Barrel re-export — bridges `@scripts/generators/run-generator` alias           |
+| `tsconfig.generated.json`           | Extends root tsconfig, includes only `src/generated/**`                        |
+| `src/lib/cli/runner.ts`             | `runGeneratorCli()` — builds Listr task list, injects logger, exits on failure |
+| `src/lib/cli/orchestration-task.ts` | `createOrchestrationTask()` — wraps sub-stages with `runWithLogger()` chains   |
+| `src/lib/cli/types.ts`              | `GeneratorTask`, `GeneratorContext`, `GeneratorOrchestrationStage` types       |
 
 <!-- AGENTS-GENERATED:END key-files -->
 
@@ -79,7 +86,7 @@ Both pipelines follow the same pattern:
 
 ```
 lib/ (shared) ← consumed by pipelines (one-way only)
-generator-cli/ ← consumed by both pipeline entry points
+cli/ ← consumed by both pipeline entry points
 pipelines/ ← independent of each other
 ```
 
@@ -92,12 +99,12 @@ pipelines/ ← independent of each other
 ```typescript
 // From pipelines, import shared lib directly:
 import { logger } from "@scripts/generators/src/lib/logger";
-import { createAtomicWriteSession } from "@scripts/generators/src/lib/atomic-writer";
+import { createAtomicWriteSession } from "@scripts/generators/src/lib/io/atomic-writer";
 import { resolveNocoBaseEnv } from "@scripts/generators/src/lib/env-config";
 import {
   runGeneratorCli,
   createOrchestrationTask,
-} from "@scripts/generators/src/lib/generator-cli";
+} from "@scripts/generators/src/lib/cli";
 ```
 
 <!-- AGENTS-GENERATED:END import-pattern -->

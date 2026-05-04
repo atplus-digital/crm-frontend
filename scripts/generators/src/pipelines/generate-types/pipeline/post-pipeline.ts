@@ -1,9 +1,9 @@
-import { runLinterFix } from "@scripts/generators/src/lib/linter-runner";
 import {
 	logger as defaultRuntimeLogger,
 	type Logger,
 } from "@scripts/generators/src/lib/logger";
-import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/tsc-validator";
+import { runLinterFix } from "@scripts/generators/src/lib/validation/linter-runner";
+import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/validation/tsc-validator";
 import type { GeneratedFileWrite } from "./datasource-pipeline/types";
 
 export async function runPostPipeline(

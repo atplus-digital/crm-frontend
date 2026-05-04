@@ -6,7 +6,7 @@ import {
 	type GeneratorTask,
 	type RunGeneratorCliOptions,
 	runGeneratorCli,
-} from "@scripts/generators/src/lib/generator-cli";
+} from "@scripts/generators/src/lib/cli";
 import { defaultLogger } from "@scripts/generators/src/lib/logger";
 import type { ScriptConfig } from "./@types/script-config";
 import { assertGenerateCustomRequestsResult } from "./assert";

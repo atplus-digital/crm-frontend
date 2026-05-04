@@ -3,7 +3,7 @@ import {
 	getSubtaskOptions,
 	type OrchestrationListrTask,
 	type OrchestrationTaskRunner,
-} from "@scripts/generators/src/lib/generator-cli";
+} from "@scripts/generators/src/lib/cli";
 import {
 	createFulfilledDatasourceResult,
 	createRejectedDatasourceResult,

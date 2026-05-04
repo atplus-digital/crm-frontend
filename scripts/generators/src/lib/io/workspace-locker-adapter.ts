@@ -1,7 +1,7 @@
 import {
 	applyWorkspaceLockIfNeeded as _applyWorkspaceLockIfNeeded,
 	isWorkspaceLocked as _isWorkspaceLocked,
-} from "@scripts/generators/src/lib/workspace-locker";
+} from "@scripts/generators/src/lib/io/workspace-locker";
 
 export function createWorkspaceLockerAdapter(options: {
 	getOutputDirs: () => string[];

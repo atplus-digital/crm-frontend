@@ -1,8 +1,8 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { runLinterFix } from "@scripts/generators/src/lib/linter-runner";
 import { logger } from "@scripts/generators/src/lib/logger";
-import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/tsc-validator";
+import { runLinterFix } from "@scripts/generators/src/lib/validation/linter-runner";
+import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/validation/tsc-validator";
 
 export interface AtomicWriterOptions {
 	/**

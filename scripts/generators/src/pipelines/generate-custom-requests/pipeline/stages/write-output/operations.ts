@@ -1,7 +1,7 @@
 import {
 	type AtomicWriteSession,
 	createAtomicWriteSession,
-} from "@scripts/generators/src/lib/atomic-writer";
+} from "@scripts/generators/src/lib/io/atomic-writer";
 import { writeGeneratedRegistry } from "./registry-writer";
 import { writeAllSplitFiles } from "./split-writer";
 import type { WriteOutputContext } from "./types";

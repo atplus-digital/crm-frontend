@@ -1,4 +1,4 @@
-import { createWorkspaceLockerAdapter } from "@scripts/generators/src/lib/workspace-locker-adapter";
+import { createWorkspaceLockerAdapter } from "@scripts/generators/src/lib/io/workspace-locker-adapter";
 import { config } from "@scripts/generators/src/pipelines/generate-types/config";
 
 function getOutputDirs(): string[] {

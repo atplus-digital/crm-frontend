@@ -2,7 +2,7 @@ import {
 	createGeneratorOptions,
 	createOrchestrationTask,
 	type RunGeneratorCliOptions,
-} from "@scripts/generators/src/lib/generator-cli";
+} from "@scripts/generators/src/lib/cli";
 import type { GenerateTypesExecutionContext } from "../runtime/context";
 import {
 	createGeneratorTasks,

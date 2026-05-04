@@ -1,4 +1,4 @@
-import { createAtomicWriteSession } from "@scripts/generators/src/lib/atomic-writer";
+import { createAtomicWriteSession } from "@scripts/generators/src/lib/io/atomic-writer";
 import type { GenerateTypesExecutionContext } from "./context";
 
 export function backupGenerateTypesOutputs(

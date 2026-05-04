@@ -1,7 +1,7 @@
 import type {
 	GeneratorOrchestrationStage,
 	GeneratorTask,
-} from "@scripts/generators/src/lib/generator-cli";
+} from "@scripts/generators/src/lib/cli";
 import type { RuntimeConfig } from "../@types/script";
 import { runDatasourcesOrchestrationStage } from "../orchestration/datasource-stage";
 import { runPostPipelineOrchestrationStage } from "../orchestration/post-pipeline-stage";

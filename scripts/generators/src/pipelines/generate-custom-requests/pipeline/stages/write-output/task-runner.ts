@@ -1,9 +1,9 @@
-import type { AtomicWriteSession } from "@scripts/generators/src/lib/atomic-writer";
 import {
 	createLoggedSubtask,
 	getSubtaskOptions,
 	type OrchestrationTaskRunner,
-} from "@scripts/generators/src/lib/generator-cli";
+} from "@scripts/generators/src/lib/cli";
+import type { AtomicWriteSession } from "@scripts/generators/src/lib/io/atomic-writer";
 import {
 	createWriteOutputSession,
 	finalizeWriteOutput,

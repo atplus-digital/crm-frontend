@@ -2,10 +2,10 @@ import {
 	createLoggedSubtask,
 	getSubtaskOptions,
 	type OrchestrationTaskRunner,
-} from "@scripts/generators/src/lib/generator-cli";
-import { runLinterFix } from "@scripts/generators/src/lib/linter-runner";
+} from "@scripts/generators/src/lib/cli";
 import type { Logger } from "@scripts/generators/src/lib/logger";
-import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/tsc-validator";
+import { runLinterFix } from "@scripts/generators/src/lib/validation/linter-runner";
+import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/validation/tsc-validator";
 import {
 	resolvePostPipelineInputs,
 	runPostPipelineStage,

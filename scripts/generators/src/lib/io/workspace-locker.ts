@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { logger } from "./logger";
+import { logger } from "@scripts/generators/src/lib/logger";
 
 interface VSCodeSettings {
 	[setting: string]: unknown;

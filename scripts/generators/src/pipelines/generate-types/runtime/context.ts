@@ -1,4 +1,4 @@
-import type { AtomicWriteSession } from "@scripts/generators/src/lib/atomic-writer";
+import type { AtomicWriteSession } from "@scripts/generators/src/lib/io/atomic-writer";
 import type { Logger } from "@scripts/generators/src/lib/logger";
 import type { GenerateTypesResult, RuntimeConfig } from "../@types/script";
 import { config } from "../config";

@@ -1,4 +1,4 @@
-import type { OrchestrationTaskRunner } from "@scripts/generators/src/lib/generator-cli";
+import type { OrchestrationTaskRunner } from "@scripts/generators/src/lib/cli";
 import type { Logger } from "@scripts/generators/src/lib/logger";
 import { createOrchestrationRunner } from "@scripts/generators/src/lib/pipeline-runner";
 import type { ScriptConfig } from "./@types/script-config";

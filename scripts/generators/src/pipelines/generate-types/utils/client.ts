@@ -1,5 +1,5 @@
-import { HttpResponseError } from "@scripts/generators/src/lib/http-client";
-import { NocoBaseApiClient } from "@scripts/generators/src/lib/nocobase-client";
+import { HttpResponseError } from "@scripts/generators/src/lib/http/http-client";
+import { NocoBaseApiClient } from "@scripts/generators/src/lib/http/nocobase-client";
 import type {
 	NocoBaseCollectionResponse,
 	NocoBaseCollectionsListResponse,
