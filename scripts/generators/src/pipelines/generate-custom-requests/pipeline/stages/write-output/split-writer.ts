@@ -1,26 +1,26 @@
-import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
 import type { Logger } from "@scripts/generators/src/lib/logger";
 import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logger";
-import {
-	escapeString,
-	serializePayloadData,
-} from "@scripts/generators/src/lib/strings";
 import type { GeneratedRegistryEntry } from "../../../@types/generated-registry";
 import type { RequestsMap } from "../../../@types/script-config";
-import { toDataSourceDir, toSafePathSegment } from "./path-utils";
+import { serializeEntryFields } from "./entry-serialization";
+import { cleanupLegacySplitFiles } from "./legacy-split-cleanup";
+import { resolveSplitPathInfo } from "./split-paths";
 
 function buildSplitFileContent(
 	entry: GeneratedRegistryEntry,
 	displayName: string,
 ): string {
-	const escapedKey = escapeString(entry.key);
-	const escapedName = escapeString(displayName);
-	const escapedCollection = escapeString(entry.collection);
-	const escapedDataSourceKey = escapeString(entry.dataSourceKey);
-	const escapedMethod = escapeString(entry.method);
-	const escapedUrl = escapeString(entry.url);
-	const payloadDataStr = serializePayloadData(entry.payloadData);
+	const {
+		escapedCollection,
+		escapedDataSourceKey,
+		escapedKey,
+		escapedMethod,
+		escapedName,
+		escapedUrl,
+		payloadDataStr,
+	} = serializeEntryFields(entry, displayName);
 
 	return `import { z } from "zod";
 
@@ -57,44 +57,23 @@ export function writeSplitFile(
 	logger?: Logger,
 ): void {
 	const activeLogger = logger ?? defaultRuntimeLogger;
-	const dataSourceDir = toDataSourceDir(entry.dataSourceKey);
-	const collectionDir = toSafePathSegment(entry.collection);
-	const splitCollectionDir = join(outputDir, dataSourceDir, collectionDir);
-	const filePath = join(splitCollectionDir, `${splitFileName}.ts`);
+	const splitPathInfo = resolveSplitPathInfo(entry, splitFileName, outputDir);
+	const filePath = splitPathInfo.resolvedFilePath;
 
-	mkdirSync(splitCollectionDir, { recursive: true });
+	mkdirSync(dirname(filePath), { recursive: true });
 
 	const content = buildSplitFileContent(entry, splitFileName);
 	writeFileSync(filePath, content, "utf-8");
 	activeLogger.debug(`Split file atualizado: ${splitFileName}`);
 
-	const legacyKeyFilePath = join(outputDir, `${entry.key}.ts`);
-	if (
-		splitFileName !== entry.key &&
-		existsSync(legacyKeyFilePath) &&
-		legacyKeyFilePath !== filePath
-	) {
-		unlinkSync(legacyKeyFilePath);
-		activeLogger.debug(`Split file legado removido: ${entry.key}.ts`);
-	}
-
-	const legacyNamedFilePath = join(outputDir, `${splitFileName}.ts`);
-	if (existsSync(legacyNamedFilePath) && legacyNamedFilePath !== filePath) {
-		unlinkSync(legacyNamedFilePath);
-		activeLogger.debug(`Split file legado removido: ${splitFileName}.ts`);
-	}
-
-	const legacyCollectionPath = join(
+	cleanupLegacySplitFiles({
+		collectionDir: splitPathInfo.collectionDir,
+		entry,
+		filePath,
 		outputDir,
-		collectionDir,
-		`${splitFileName}.ts`,
-	);
-	if (existsSync(legacyCollectionPath) && legacyCollectionPath !== filePath) {
-		unlinkSync(legacyCollectionPath);
-		activeLogger.debug(
-			`Split file legado removido (sem dataSourceKey): ${collectionDir}/${splitFileName}.ts`,
-		);
-	}
+		splitFileName,
+		logger: activeLogger,
+	});
 }
 
 export function writeAllSplitFiles(

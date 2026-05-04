@@ -4,13 +4,14 @@ import {
 	createOrchestrationTask,
 	type GeneratorOrchestrationStage,
 	type GeneratorTask,
+	type RunGeneratorCliOptions,
 	runGeneratorCli,
 } from "@scripts/generators/src/lib/generator-cli";
 import { defaultLogger } from "@scripts/generators/src/lib/logger";
 import type { ScriptConfig } from "./@types/script-config";
+import { assertGenerateCustomRequestsResult } from "./assert";
+import { createGenerateCustomRequestsExecutionContext } from "./context";
 import {
-	assertGenerateCustomRequestsResult,
-	createGenerateCustomRequestsExecutionContext,
 	lockGenerateCustomRequestsWorkspace,
 	runFetchEntriesOrchestrationStage,
 	runLoadConfigOrchestrationStage,
@@ -95,10 +96,14 @@ function createGeneratorTasks(): GeneratorTask<GenerateCustomRequestsGeneratorCo
 	];
 }
 
-const generateCustomRequests = createGeneratorOptions({
-	name: "generate-custom-requests",
-	tasks: createGeneratorTasks(),
-});
+export function createGenerateCustomRequestsGenerator(): RunGeneratorCliOptions<GenerateCustomRequestsGeneratorContext> {
+	return createGeneratorOptions({
+		name: "generate-custom-requests",
+		tasks: createGeneratorTasks(),
+	});
+}
+
+const generateCustomRequests = createGenerateCustomRequestsGenerator();
 
 async function main(): Promise<void> {
 	await runGeneratorCli(generateCustomRequests);

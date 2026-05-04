@@ -3,16 +3,46 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Logger } from "@scripts/generators/src/lib/logger";
 import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logger";
-import {
-	escapeString,
-	serializePayloadData,
-} from "@scripts/generators/src/lib/strings";
 import type { GeneratedRegistryEntry } from "../../../@types/generated-registry";
 import type { RequestsMap } from "../../../@types/script-config";
-import { toDataSourceDir, toSafePathSegment } from "./path-utils";
+import { serializeEntryFields } from "./entry-serialization";
+import { resolveSplitPathInfo } from "./split-paths";
 
 function toSafeIdentifier(value: string): string {
 	return value.replace(/[^a-zA-Z0-9_]/g, "_");
+}
+
+function createSplitAlias(relativeSplitName: string): string {
+	return `split_${toSafeIdentifier(relativeSplitName)}`;
+}
+
+interface SplitImportDescriptor {
+	alias: string;
+	entryKey: string;
+	importPath: string;
+}
+
+function buildSplitImportDescriptors(
+	entries: GeneratedRegistryEntry[],
+	requests: RequestsMap,
+): SplitImportDescriptor[] {
+	const splitDescriptors: SplitImportDescriptor[] = [];
+
+	for (const entry of entries) {
+		const splitFileName = requests[entry.key];
+		if (!splitFileName) {
+			continue;
+		}
+
+		const splitPathInfo = resolveSplitPathInfo(entry, splitFileName);
+		splitDescriptors.push({
+			alias: createSplitAlias(splitPathInfo.relativeSplitName),
+			entryKey: entry.key,
+			importPath: splitPathInfo.relativeImportPath,
+		});
+	}
+
+	return splitDescriptors;
 }
 
 function buildCollectionToRequestKeys(
@@ -33,7 +63,7 @@ function buildCollectionToRequestKeys(
 			([collection, keys]) =>
 				`  "${collection}": [${keys
 					.sort()
-					.map((k) => `"${k}"`)
+					.map((key) => `"${key}"`)
 					.join(", ")}],`,
 		)
 		.join("\n");
@@ -41,47 +71,57 @@ function buildCollectionToRequestKeys(
 	return `export const collectionToRequestKeys = {\n${lines}\n} as const;`;
 }
 
+function buildInlineEntryContent(entry: GeneratedRegistryEntry): string {
+	const {
+		escapedCollection,
+		escapedDataSourceKey,
+		escapedKey,
+		escapedMethod,
+		escapedName,
+		escapedUrl,
+		payloadDataStr,
+	} = serializeEntryFields(entry);
+
+	return `  "${entry.key}": {
+    key: "${escapedKey}",
+    name: "${escapedName}",
+    collection: "${escapedCollection}",
+    dataSourceKey: "${escapedDataSourceKey}",
+    method: "${escapedMethod}",
+    url: "${escapedUrl}",
+    payloadSchema: ${entry.payloadSchema},
+    payloadData: ${payloadDataStr},
+  },`;
+}
+
 function buildRegistryContent(
 	entries: GeneratedRegistryEntry[],
 	requests: RequestsMap,
 ): string {
-	const sorted = [...entries].sort((a, b) => a.key.localeCompare(b.key));
-	const requestsSet = new Set(Object.keys(requests));
+	const sortedEntries = [...entries].sort((a, b) => a.key.localeCompare(b.key));
+	const splitDescriptors = buildSplitImportDescriptors(sortedEntries, requests);
+	const splitAliasByKey = new Map(
+		splitDescriptors.map((descriptor) => [
+			descriptor.entryKey,
+			descriptor.alias,
+		]),
+	);
 
-	const splitImports = sorted
-		.filter((entry) => requestsSet.has(entry.key))
-		.map((entry) => {
-			const splitFileName = requests[entry.key];
-			const dataSourceDir = toDataSourceDir(entry.dataSourceKey);
-			const collectionDir = toSafePathSegment(entry.collection);
-			const alias = `split_${toSafeIdentifier(`${dataSourceDir}_${collectionDir}_${splitFileName}`)}`;
-			return `import { requestEntry as ${alias}RequestEntry } from "./${dataSourceDir}/${collectionDir}/${splitFileName}";`;
-		})
+	const splitImports = splitDescriptors
+		.map(
+			(descriptor) =>
+				`import { requestEntry as ${descriptor.alias}RequestEntry } from "${descriptor.importPath}";`,
+		)
 		.join("\n");
 
-	const entryLines = sorted
+	const entryLines = sortedEntries
 		.map((entry) => {
-			const hasEnhanced = requestsSet.has(entry.key);
-			if (hasEnhanced) {
-				const splitFileName = requests[entry.key];
-				const dataSourceDir = toDataSourceDir(entry.dataSourceKey);
-				const collectionDir = toSafePathSegment(entry.collection);
-				const alias = `split_${toSafeIdentifier(`${dataSourceDir}_${collectionDir}_${splitFileName}`)}`;
-				return `  "${entry.key}": ${alias}RequestEntry,`;
+			const splitAlias = splitAliasByKey.get(entry.key);
+			if (splitAlias) {
+				return `  "${entry.key}": ${splitAlias}RequestEntry,`;
 			}
-			const escapedName = escapeString(entry.name);
-			const payloadDataStr = serializePayloadData(entry.payloadData);
 
-			return `  "${entry.key}": {
-    key: "${entry.key}",
-    name: "${escapedName}",
-    collection: "${entry.collection}",
-    dataSourceKey: "${entry.dataSourceKey}",
-    method: "${entry.method}",
-    url: "${entry.url}",
-    payloadSchema: ${entry.payloadSchema},
-    payloadData: ${payloadDataStr},
-  },`;
+			return buildInlineEntryContent(entry);
 		})
 		.join("\n\n");
 
@@ -106,7 +146,7 @@ ${collectionMapping}
 }
 
 function runBiomeFix(filePath: string, logger: Logger): Promise<void> {
-	return new Promise((resolve) => {
+	return new Promise((resolvePromise) => {
 		execFile(
 			"biome",
 			["check", "--write", filePath],
@@ -115,10 +155,10 @@ function runBiomeFix(filePath: string, logger: Logger): Promise<void> {
 				if (stderr) logger.debug(stderr);
 				if (error) {
 					logger.info(
-						`⚠️  Biome retornou erro (pode ser apenas warnings): ${error.message}`,
+						`Biome retornou erro (pode ser apenas warnings): ${error.message}`,
 					);
 				}
-				resolve();
+				resolvePromise();
 			},
 		);
 	});
@@ -134,7 +174,7 @@ export async function writeGeneratedRegistry(
 	const content = buildRegistryContent(entries, requests);
 	const outputPath = resolve(outputDir, "generated-registry.ts");
 
-	activeLogger.debug("📝 Gerando registry");
+	activeLogger.debug("Gerando registry");
 	activeLogger.debug(`registry path: ${outputPath}`);
 	mkdirSync(resolve(outputDir), { recursive: true });
 
