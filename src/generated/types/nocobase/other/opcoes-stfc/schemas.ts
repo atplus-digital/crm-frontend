@@ -1,0 +1,56 @@
+/**
+ * Arquivo gerado automaticamente
+ * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
+ * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
+ */
+
+import { z } from "zod";
+import { opcoes_stfcPortabilidadeSchema } from "./labels";
+
+export const T_OPCOES_STFC_TABLE_NAME = "t_opcoes_stfc";
+
+// ============================================================
+// BASE SCHEMA (campos escalares)
+// ============================================================
+export const opcoes_stfcBaseSchema = z.object({
+	id: z.number(),
+	f_fk_opcoes_stfc: z.number(),
+	f_canais: z.string(),
+	f_franquia: z.string(),
+	f_nome_do_plano: z.string(),
+	f_portabilidade: opcoes_stfcPortabilidadeSchema,
+	f_terminais: z.string(),
+	updatedAt: z.string(),
+	createdAt: z.string(),
+});
+
+// ============================================================
+// RELATION SCHEMA (campos de relação)
+// ============================================================
+export const opcoes_stfcRelationSchema = z.object({
+	createdBy: z.number().nullable(),
+	updatedBy: z.number().nullable(),
+});
+
+// ============================================================
+// SCHEMA PRINCIPAL (validação completa)
+// ============================================================
+export const opcoes_stfcSchema = opcoes_stfcBaseSchema.merge(
+	opcoes_stfcRelationSchema,
+);
+
+// ============================================================
+// CREATE SCHEMA
+// ============================================================
+export const opcoes_stfcCreateSchema = opcoes_stfcSchema.omit({
+	createdAt: true,
+	createdBy: true,
+	id: true,
+	updatedAt: true,
+	updatedBy: true,
+});
+
+// ============================================================
+// UPDATE SCHEMA
+// ============================================================
+export const opcoes_stfcUpdateSchema = opcoes_stfcCreateSchema.partial();

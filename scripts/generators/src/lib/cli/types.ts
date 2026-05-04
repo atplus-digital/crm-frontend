@@ -6,8 +6,12 @@ import type {
 	ListrTaskWrapper,
 } from "listr2";
 
+export type TaskOutputWriter = (line: string) => void;
+
 export type GeneratorContext<TContext extends object> = TContext & {
 	logger: Logger;
+	writeOutput?: TaskOutputWriter;
+	disableOutput?: boolean;
 };
 
 export type ListrTaskRunner<TContext extends object> = ListrTaskWrapper<
@@ -84,10 +88,15 @@ export interface RunGeneratorCliOptions<TContext extends object> {
 	context: TContext;
 	tasks: GeneratorTask<TContext>[];
 	logger?: Logger;
+	disableOutput?: boolean;
+	writeOutput?: TaskOutputWriter;
 }
 
 export interface CreateGeneratorOptions<TContext extends object> {
 	name: string;
 	tasks: GeneratorTask<TContext>[];
 	context?: TContext;
+	logger?: Logger;
+	disableOutput?: boolean;
+	writeOutput?: TaskOutputWriter;
 }

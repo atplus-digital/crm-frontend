@@ -20,6 +20,7 @@ export const buildTypes: PipelineStage<
 > = async (ctx) => {
 	const { client, collections, config, relations, dataSource } = ctx;
 	const knownCollections = new Set(collections.map((c) => c.name));
+	const excludedFields = new Set(dataSource.excludeFields ?? []);
 	const concurrency = config.requestConcurrency ?? 5;
 	const inferRelationsByName = dataSource.inferRelationsByName ?? false;
 
@@ -40,19 +41,22 @@ export const buildTypes: PipelineStage<
 			};
 
 			for (const field of fields) {
+				if (excludedFields.has(field.name)) {
+					continue;
+				}
+
 				const relationInfo = extractRelationInfo(
 					field,
 					manualRelations,
 					inferRelationsByName && !manualRelations,
 				);
 				if (relationInfo) {
+					const originalTarget = relationInfo.targetCollection;
+					const isAvailable = knownCollections.has(originalTarget);
 					generated.relations.set(field.name, {
-						...relationInfo,
-						targetCollection: knownCollections.has(
-							relationInfo.targetCollection,
-						)
-							? relationInfo.targetCollection
-							: "",
+						type: relationInfo.type,
+						targetCollection: isAvailable ? originalTarget : "",
+						originalTarget: originalTarget || undefined,
 					});
 					continue;
 				}
@@ -65,11 +69,12 @@ export const buildTypes: PipelineStage<
 			if (manualRelations) {
 				for (const [fieldName, relation] of Object.entries(manualRelations)) {
 					if (!generated.relations.has(fieldName)) {
+						const originalTarget = relation.target;
+						const isAvailable = knownCollections.has(originalTarget);
 						generated.relations.set(fieldName, {
 							type: relation.type,
-							targetCollection: knownCollections.has(relation.target)
-								? relation.target
-								: "",
+							targetCollection: isAvailable ? originalTarget : "",
+							originalTarget: originalTarget || undefined,
 						});
 					}
 				}

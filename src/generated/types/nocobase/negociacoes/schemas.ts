@@ -1,0 +1,157 @@
+/**
+ * Arquivo gerado automaticamente
+ * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
+ * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
+ */
+
+import { z } from "zod";
+import {
+	negociacoesConfissaoDividaSchema,
+	negociacoesDataVencimentoSchema,
+	negociacoesEnderecoCobrancaSchema,
+	negociacoesEnderecoComplementoSchema,
+	negociacoesFidelidadeSchema,
+	negociacoesMotivoPontosSchema,
+	negociacoesMotivoSchema,
+	negociacoesPontosAtencaoSchema,
+	negociacoesStatusSchema,
+	negociacoesSubstatusSchema,
+	negociacoesTipoPessoaSchema,
+} from "./labels";
+
+export const T_NEGOCIACOES_TABLE_NAME = "t_negociacoes";
+
+// ============================================================
+// BASE SCHEMA (campos escalares)
+// ============================================================
+export const negociacoesBaseSchema = z.object({
+	id: z.number(),
+	f_fk_auditoria_automatica: z.number(),
+	f_fk_contrato_ixc: z.number(),
+	f_fk_cupom_desconto: z.number(),
+	f_fk_negociacao_indicador: z.number(),
+	f_fk_negociacao_vendedor: z.number(),
+	f_fk_pacote: z.number(),
+	f_fk_pessoa_negociacao: z.number(),
+	f_fk_pessoa_pj_negociacao: z.number(),
+	f_apartamento: z.string(),
+	f_assinatura_gov: z.boolean(),
+	f_bairro: z.string(),
+	f_bairro_cobranca: z.string(),
+	f_bloco_quadra: z.string(),
+	f_cep: z.string(),
+	f_cep_cobranca: z.string(),
+	f_cidade_cobranca: z.string(),
+	f_complemento_cobranca: z.string(),
+	f_confissao_divida: negociacoesConfissaoDividaSchema,
+	f_contrato_ixc: z.string(),
+	f_cpf_cnpj: z.string(),
+	f_cpf_responsavel_assinatura: z.string(),
+	f_data_vencimento: negociacoesDataVencimentoSchema,
+	f_email_cobranca: z.string(),
+	f_endereco: z.string(),
+	f_endereco_cidade: z.string(),
+	f_endereco_cobranca: negociacoesEnderecoCobrancaSchema,
+	f_endereco_complemento: negociacoesEnderecoComplementoSchema,
+	f_endereco_de_cobranca: z.string(),
+	f_endereco_estado: z.string(),
+	f_endereco_numero: z.string(),
+	f_endereco_referencia: z.string(),
+	f_entrada_saldo_devedor: z.number(),
+	f_estado_cobranca: z.string(),
+	f_fidelidade: negociacoesFidelidadeSchema,
+	f_Incremento: z.string(),
+	f_ixc_tipo_cobranca: z.string(),
+	f_link_assinatura: z.string(),
+	f_motivo: negociacoesMotivoSchema,
+	f_motivo_pontos: negociacoesMotivoPontosSchema,
+	f_multa_juros: z.number(),
+	f_nome_edificio: z.string(),
+	f_nome_fantasia: z.string(),
+	f_nome_razao: z.string(),
+	f_numero_cobranca: z.string(),
+	f_ordenacao: z.number(),
+	f_parcelas_mensais: z.number(),
+	f_periodo_final: z.string(),
+	f_permuta: z.boolean(),
+	f_pontos_atencao: negociacoesPontosAtencaoSchema,
+	f_responsavel_assinatura: z.string(),
+	f_rg_ie: z.string(),
+	f_scm: z.number(),
+	f_smp: z.number(),
+	f_status: negociacoesStatusSchema,
+	f_stfc: z.number(),
+	f_substatus: negociacoesSubstatusSchema,
+	f_sva: z.number(),
+	f_telefone: z.string(),
+	f_telefone_2: z.string(),
+	f_tipo_pessoa: negociacoesTipoPessoaSchema,
+	f_titulo: z.string(),
+	f_valor_beneficios: z.number(),
+	f_valor_da_parcela: z.string(),
+	f_valor_devedor: z.number(),
+	f_valor_devedor_total: z.string(),
+	f_valor_instalacao: z.number(),
+	f_valor_mensal: z.number(),
+	f_valor_mensal_antigo: z.number(),
+	f_valor_mensal_sem_desconto: z.number(),
+	f_valor_multa_mes_faltante: z.number(),
+	f_zapsign: z.boolean(),
+	updatedAt: z.string(),
+	createdAt: z.string(),
+});
+
+// ============================================================
+// RELATION SCHEMA (campos de relação)
+// ============================================================
+export const negociacoesRelationSchema = z.object({
+	createdBy: z.number().nullable(),
+	f_anexos: z.number().array(),
+	f_comentarios: z.number().array(),
+	f_cupom_desconto: z.number().nullable(),
+	f_fk_oe_qualirun: z.number().array(),
+	f_itens_negociacao: z.number().array(),
+	f_negociacao_contrato: z.number().array(),
+	f_negociacao_pessoa_juridica: z.number().nullable(),
+	f_pacote: z.number().nullable(),
+	f_pacotes_adicionais: z.number().array(),
+	f_pessoa: z.number().nullable(),
+	f_qualirun_assinatura_gov: z.number().array(),
+	f_vendedor: z.number().nullable(),
+	updatedBy: z.number().nullable(),
+});
+
+// ============================================================
+// SCHEMA PRINCIPAL (validação completa)
+// ============================================================
+export const negociacoesSchema = negociacoesBaseSchema.merge(
+	negociacoesRelationSchema,
+);
+
+// ============================================================
+// CREATE SCHEMA
+// ============================================================
+export const negociacoesCreateSchema = negociacoesSchema.omit({
+	createdAt: true,
+	createdBy: true,
+	f_anexos: true,
+	f_comentarios: true,
+	f_cupom_desconto: true,
+	f_fk_oe_qualirun: true,
+	f_itens_negociacao: true,
+	f_negociacao_contrato: true,
+	f_negociacao_pessoa_juridica: true,
+	f_pacote: true,
+	f_pacotes_adicionais: true,
+	f_pessoa: true,
+	f_qualirun_assinatura_gov: true,
+	f_vendedor: true,
+	id: true,
+	updatedAt: true,
+	updatedBy: true,
+});
+
+// ============================================================
+// UPDATE SCHEMA
+// ============================================================
+export const negociacoesUpdateSchema = negociacoesCreateSchema.partial();

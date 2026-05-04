@@ -15,6 +15,7 @@ import {
 	lockGenerateCustomRequestsWorkspace,
 	runFetchEntriesOrchestrationStage,
 	runLoadConfigOrchestrationStage,
+	runLoadSchemasOrchestrationStage,
 	runTransformAndMergeOrchestrationStage,
 	runWriteAnalysisReportOrchestrationStage,
 	runWriteOutputOrchestrationStage,
@@ -40,6 +41,10 @@ const ORCHESTRATION_STEPS: GeneratorOrchestrationStage<GenerateCustomRequestsExe
 		{
 			title: "fetch-entries",
 			run: runFetchEntriesOrchestrationStage,
+		},
+		{
+			title: "load-schemas",
+			run: runLoadSchemasOrchestrationStage,
 		},
 		{
 			title: "write-analysis-report",

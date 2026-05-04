@@ -12,6 +12,7 @@ interface CreateLoggedSubtaskOptions {
 	logger: Logger;
 	run: (task: OrchestrationTaskRunner) => Promise<unknown> | unknown;
 	formatError?: (message: string) => string;
+	disableOutput?: boolean;
 	enabled?: OrchestrationListrTask["enabled"];
 	skip?: OrchestrationListrTask["skip"];
 	retry?: OrchestrationListrTask["retry"];
@@ -27,12 +28,11 @@ export function createLoggedSubtask(
 	return {
 		title: options.title,
 		task: (_context, task) => {
-			const renderLogs = createPersistentOutputWriter(
-				options.logger,
-				(line) => {
-					task.output = line;
-				},
-			);
+			const renderLogs = options.disableOutput
+				? undefined
+				: createPersistentOutputWriter(options.logger, (line) => {
+						task.output = line;
+					});
 
 			return runTaskWithLogger({
 				logger: options.logger,

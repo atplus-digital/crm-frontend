@@ -286,10 +286,11 @@ describe("content", () => {
 			]);
 			const result = generateSplitFiles(splitCollections);
 			expect(result).toBeInstanceOf(Map);
-			expect(result.has("users")).toBe(true);
-			expect(result.has("departments")).toBe(true);
-			expect(result.get("users")).toContain("UsersBase");
-			expect(result.get("departments")).toContain("DepartmentsBase");
+			expect(result.has("users/labels.ts")).toBe(true);
+			expect(result.has("users/schemas.ts")).toBe(true);
+			expect(result.has("users/index.ts")).toBe(true);
+			expect(result.has("departments/labels.ts")).toBe(true);
+			expect(result.get("users/index.ts")).toContain("UsersBase");
 		});
 
 		it("each file has header and includeSourceTableConst=true", () => {
@@ -302,7 +303,7 @@ describe("content", () => {
 				],
 			]);
 			const result = generateSplitFiles(splitCollections);
-			const content = result.get("users") ?? "";
+			const content = result.get("users/schemas.ts") ?? "";
 			expect(content).toContain("Arquivo gerado automaticamente");
 			expect(content).toContain("USERS_TABLE_NAME");
 		});

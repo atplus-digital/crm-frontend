@@ -1,5 +1,9 @@
 /**
- * Padrões para categorização de campos na ordenação customizada.
+ * Padrões para categorização de campos na ordenação customizada do output.
+ *
+ * NOTA: Estes padrões são usados APENAS para ordenação dos campos no output.
+ * A inclusão/exclusão de campos é determinada pela API do NocoBase, não por estes padrões.
+ * Campos de sistema (createdById, updatedById, etc.) só aparecem se a API os retornar.
  */
 export const SORT_PATTERNS = {
 	/** Chaves primárias e de identificação (id, sort, uid, etc.) */
@@ -9,9 +13,9 @@ export const SORT_PATTERNS = {
 	/** Identificadores técnicos (f_id_*_ixc) */
 	TECH_ID: /^f_id_.*_ixc$/i,
 	/** Campos de auditoria - atualização (updatedBy, updatedAt) */
-	AUDIT_UPDATE: /^updated(byid|at)$/i,
+	AUDIT_UPDATE: /^updated(byid|at)$/i, // Nota: createdBy/updatedBy são relações, não escalares
 	/** Campos de auditoria - criação (createdBy, createdAt) */
-	AUDIT_CREATE: /^created(byid|at)$/i,
+	AUDIT_CREATE: /^created(byid|at)$/i, // Nota: createdBy/updatedBy são relações, não escalares
 } as const;
 
 export type FieldCategory =

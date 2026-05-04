@@ -82,6 +82,12 @@ export interface BaseDataSourceGenerationConfig {
 	 */
 	outputDir?: string;
 	splitCollections?: string[];
+	/**
+	 * Lista opcional de campos a excluir da geração para esta datasource.
+	 * Útil para remover campos sistêmicos herdados da API que não fazem parte
+	 * do contrato esperado da aplicação.
+	 */
+	excludeFields?: string[];
 	collections?: string[];
 	baseInterfaceNaming?: BaseInterfaceNamingConfig;
 	/**

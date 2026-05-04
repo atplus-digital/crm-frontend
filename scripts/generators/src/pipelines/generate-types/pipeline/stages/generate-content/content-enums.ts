@@ -6,6 +6,7 @@ import {
 	removeAccents,
 	toCollectionTypeName,
 } from "@scripts/generators/src/pipelines/generate-types/utils/naming";
+import { jsonToSingleQuotedString } from "@scripts/generators/src/lib/strings";
 
 export interface EnumFieldInfo {
 	/** Nome do campo no formato PascalCase */
@@ -163,7 +164,8 @@ export function generateEnumLabelMap(
 			const memberName = needsTransformation
 				? toEnumMemberName(opt.value)
 				: valueStr;
-			const label = JSON.stringify(opt.label);
+			// Use jsonToSingleQuotedString to properly escape for single-quoted TS strings
+			const label = `'${jsonToSingleQuotedString(JSON.stringify(opt.label))}'`;
 			const keyName = `"${memberName}"`;
 
 			return `\t${keyName}: ${label}`;
@@ -171,6 +173,33 @@ export function generateEnumLabelMap(
 		.join(",\n");
 
 	return `export const ${labelsName} = {\n${entries}\n} as const;`;
+}
+
+/**
+ * Escapa um valor de enum para uso seguro em string TypeScript double-quoted.
+ * Lida com aspas, backslashes e outros caracteres especiais.
+ */
+function escapeEnumValue(value: string): string {
+	return value
+		.replace(/\\/g, "\\\\")
+		.replace(/"/g, '\\"')
+		.replace(/\n/g, "\\n")
+		.replace(/\r/g, "\\r")
+		.replace(/\t/g, "\\t");
+}
+
+/**
+ * Escapa uma label para uso em mensagem de erro (double-quoted string).
+ * - Escapa backslashes, aspas duplas, newlines, tabs
+ * - Escapa vírgulas com backslash para não quebrar a lista entre colchetes
+ */
+function escapeLabelForMessage(label: string): string {
+	// Primeiro JSON.stringify para escapar caracteres especiais
+	const jsonEscaped = JSON.stringify(label);
+	// Remove aspas externas do JSON e substitui vírgulas
+	const inner = jsonEscaped.slice(1, -1);
+	// Escapa vírgulas para não quebrar a lista
+	return inner.replace(/,/g, "\\,");
 }
 
 /**
@@ -190,7 +219,6 @@ export function generateEnumSchema(
 		enumOptions,
 	);
 	const seenValues = new Set<string | number>();
-	const seenLabels = new Set<string>();
 
 	// Extrair valores e labels únicos preservando ordem
 	const uniqueEntries: { value: string; label: string }[] = [];
@@ -201,8 +229,14 @@ export function generateEnumSchema(
 		uniqueEntries.push({ value: String(opt.value), label: opt.label });
 	}
 
-	const valuesList = uniqueEntries.map((e) => `"${e.value}"`).join(", ");
-	const validLabels = uniqueEntries.map((e) => e.label).join(", ");
+	const valuesList = uniqueEntries
+		.map((e) => `"${escapeEnumValue(e.value)}"`)
+		.join(", ");
+	// Para a mensagem de erro, escapamos vírgulas dentro das labels
+	// para não quebrar a lista entre colchetes
+	const validLabels = uniqueEntries
+		.map((e) => escapeLabelForMessage(e.label))
+		.join(", ");
 
 	return `export const ${schemaName} = z.enum([${valuesList}], {
   error: () => ({ message: "${fieldNameWithoutPrefix}: valores válidos são [${validLabels}]" }),

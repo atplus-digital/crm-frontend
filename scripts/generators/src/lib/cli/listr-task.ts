@@ -3,7 +3,11 @@ import {
 	createPersistentOutputWriter,
 	runTaskWithLogger,
 } from "./task-runtime";
-import type { GeneratorListrTask, GeneratorTask } from "./types";
+import type {
+	GeneratorContext,
+	GeneratorListrTask,
+	GeneratorTask,
+} from "./types";
 
 export function createListrTask<TContext extends object>(
 	generatorName: string,
@@ -15,9 +19,20 @@ export function createListrTask<TContext extends object>(
 		title: `[${index + 1}/${total}] ${step.title}`,
 		task: async (context, task) => {
 			const logger = context.logger;
-			const renderStepLogs = createPersistentOutputWriter(logger, (line) => {
-				task.output = line;
-			});
+			const ctx = context as GeneratorContext<TContext>;
+			const writeOutput = ctx.writeOutput;
+			const disableOutput = ctx.disableOutput;
+
+			// When disableOutput is true, use the provided writeOutput
+			// Otherwise, use task.output (default Listr behavior)
+			const outputWriter =
+				disableOutput && writeOutput
+					? writeOutput
+					: (line: string) => {
+							task.output = line;
+						};
+
+			const renderStepLogs = createPersistentOutputWriter(logger, outputWriter);
 
 			return runTaskWithLogger({
 				logger,

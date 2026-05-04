@@ -1,21 +1,24 @@
 export type RelationInterface =
-	| "m2o"
 	| "belongsTo"
-	| "o2m"
 	| "hasMany"
 	| "m2m"
-	| "manyToMany"
-	| "oho"
-	| "obo"
 	| "mbm"
 	| "belongsToArray"
-	| "hasOne";
+	| "hasOne"
+	| "m2o"
+	| "o2m"
+	| "manyToMany"
+	| "oho"
+	| "obo";
 
 export type RelationCardinality = "one" | "many";
 
 export interface RelationInfo {
 	type: RelationInterface;
+	/** Collection de destino (pode estar vazia se não disponível no datasource) */
 	targetCollection: string;
+	/** Target original antes da limpeza (sempre presente se definido) */
+	originalTarget?: string;
 }
 
 export interface EnumOption {

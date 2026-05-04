@@ -1,0 +1,55 @@
+/**
+ * Arquivo gerado automaticamente
+ * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
+ * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
+ */
+
+import { z } from "zod";
+export const ROLES_TABLE_NAME = "roles";
+
+// ============================================================
+// BASE SCHEMA (campos escalares)
+// ============================================================
+export const rolesBaseSchema = z.object({
+	sort: z.number(),
+	allowConfigure: z.boolean(),
+	allowNewMenu: z.boolean(),
+	allowNewMobileMenu: z.boolean(),
+	default: z.boolean(),
+	description: z.string(),
+	hidden: z.boolean(),
+	name: z.string(),
+	snippets: z.string(),
+	strategy: z.string(),
+	title: z.string(),
+});
+
+// ============================================================
+// RELATION SCHEMA (campos de relação)
+// ============================================================
+export const rolesRelationSchema = z.object({
+	menuUiSchemas: z.number().array(),
+	mobileRoutes: z.number().array(),
+	resources: z.number().array(),
+	users: z.number().array(),
+});
+
+// ============================================================
+// SCHEMA PRINCIPAL (validação completa)
+// ============================================================
+export const rolesSchema = rolesBaseSchema.merge(rolesRelationSchema);
+
+// ============================================================
+// CREATE SCHEMA
+// ============================================================
+export const rolesCreateSchema = rolesSchema.omit({
+	menuUiSchemas: true,
+	mobileRoutes: true,
+	resources: true,
+	users: true,
+});
+
+// ============================================================
+// UPDATE SCHEMA
+// ============================================================
+export const rolesUpdateSchema = rolesCreateSchema.partial();

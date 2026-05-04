@@ -1,0 +1,56 @@
+/**
+ * Arquivo gerado automaticamente
+ * NÃO EDITAR MANUALMENTE - usar: pnpm generate-types
+ * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
+ */
+
+import { z } from "zod";
+import { consultas_pfStatusConsultaSchema } from "./labels";
+
+export const T_CONSULTAS_PF_TABLE_NAME = "t_consultas_pf";
+
+// ============================================================
+// BASE SCHEMA (campos escalares)
+// ============================================================
+export const consultas_pfBaseSchema = z.object({
+	id: z.number(),
+	f_id_pessoa_fk: z.number(),
+	f_justificativa: z.string(),
+	f_retorno_spc: z.string(),
+	f_status_consulta: consultas_pfStatusConsultaSchema,
+	updatedAt: z.string(),
+	createdAt: z.string(),
+});
+
+// ============================================================
+// RELATION SCHEMA (campos de relação)
+// ============================================================
+export const consultas_pfRelationSchema = z.object({
+	createdBy: z.number().nullable(),
+	f_id_pessoa: z.number().nullable(),
+	updatedBy: z.number().nullable(),
+});
+
+// ============================================================
+// SCHEMA PRINCIPAL (validação completa)
+// ============================================================
+export const consultas_pfSchema = consultas_pfBaseSchema.merge(
+	consultas_pfRelationSchema,
+);
+
+// ============================================================
+// CREATE SCHEMA
+// ============================================================
+export const consultas_pfCreateSchema = consultas_pfSchema.omit({
+	createdAt: true,
+	createdBy: true,
+	f_id_pessoa: true,
+	id: true,
+	updatedAt: true,
+	updatedBy: true,
+});
+
+// ============================================================
+// UPDATE SCHEMA
+// ============================================================
+export const consultas_pfUpdateSchema = consultas_pfCreateSchema.partial();

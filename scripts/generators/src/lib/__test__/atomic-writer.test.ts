@@ -54,6 +54,22 @@ describe("AtomicWriter", () => {
 			expect(session.tempDir).toMatch(/^\S+\.tmp-\d+-\w+$/);
 			expect(session.backupDir).toContain(".backup-");
 		});
+
+		it("uses backupBaseDir when provided", async () => {
+			const { createAtomicWriteSession } = await import(
+				"@scripts/generators/src/lib/io/atomic-writer"
+			);
+
+			const session = createAtomicWriteSession({
+				outputDir,
+				label: "test",
+				backupBaseDir: testDir,
+			});
+
+			// Backup dir should be inside the specified base dir
+			expect(session.backupDir).toContain(testDir);
+			expect(session.backupDir).toContain(".backup-");
+		});
 	});
 
 	describe("ensureTempDir", () => {

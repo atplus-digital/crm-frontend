@@ -1,5 +1,5 @@
 import { NotFoundPage } from "#/pages/not-found/not-found";
 
-export function Component() {
+export default function Component() {
 	return <NotFoundPage />;
 }

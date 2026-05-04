@@ -6,27 +6,26 @@ import { createMockField } from "@scripts/generators/src/pipelines/generate-type
 import { describe, expect, it } from "vitest";
 
 describe("mapFieldType", () => {
-	describe("SYSTEM_SCALAR_FIELDS handling", () => {
-		it("should return 'number | null' for createdById field", () => {
+	describe("context fields", () => {
+		it("should return 'unknown' for createdById when field type/interface is context", () => {
 			const field = createMockField({
 				name: "createdById",
 				type: "context",
 				interface: "context",
 			});
-			expect(mapFieldType(field)).toBe("number | null");
+			expect(mapFieldType(field)).toBe("unknown");
 		});
 
-		it("should return 'number | null' for updatedById field", () => {
+		it("should return 'unknown' for updatedById when field type/interface is context", () => {
 			const field = createMockField({
 				name: "updatedById",
 				type: "context",
 				interface: "context",
 			});
-			expect(mapFieldType(field)).toBe("number | null");
+			expect(mapFieldType(field)).toBe("unknown");
 		});
 
-		it("should ignore other fields with 'context' type/interface", () => {
-			// otherField is NOT in SYSTEM_SCALAR_FIELDS
+		it("should treat other context fields the same way", () => {
 			const field = createMockField({
 				name: "otherField",
 				type: "context",
@@ -270,7 +269,7 @@ describe("mapFieldType", () => {
 });
 
 describe("extractRelationInfo", () => {
-	describe("SYSTEM_SCALAR_FIELDS filtering", () => {
+	describe("context scalar fields are not relations", () => {
 		it("should return null for createdById field", () => {
 			const field = createMockField({
 				name: "createdById",
@@ -373,6 +372,19 @@ describe("extractRelationInfo", () => {
 			const result = extractRelationInfo(field);
 			expect(result).toEqual({
 				type: "m2o",
+				targetCollection: "",
+			});
+		});
+
+		it("should not inject default target for createdBy when target is missing", () => {
+			const field = createMockField({
+				name: "createdBy",
+				type: "belongsTo",
+				interface: "createdBy",
+			});
+			const result = extractRelationInfo(field);
+			expect(result).toEqual({
+				type: "belongsTo",
 				targetCollection: "",
 			});
 		});

@@ -12,6 +12,7 @@ import {
 import {
 	fetchEntriesStage,
 	loadConfigStage,
+	loadSchemasStage,
 	transformAndMergeStage,
 	writeAnalysisReportStage,
 } from "./pipeline/stages";
@@ -59,6 +60,12 @@ export async function runWriteAnalysisReportOrchestrationStage(
 	await runStage(context, writeAnalysisReportStage());
 }
 
+export async function runLoadSchemasOrchestrationStage(
+	context: GenerateCustomRequestsExecutionContext,
+): Promise<void> {
+	await runStage(context, loadSchemasStage());
+}
+
 export async function runTransformAndMergeOrchestrationStage(
 	context: GenerateCustomRequestsExecutionContext,
 ): Promise<void> {
@@ -88,9 +95,35 @@ export async function runGenerateCustomRequests(
 	lockGenerateCustomRequestsWorkspace();
 	await runLoadConfigOrchestrationStage(context);
 	await runFetchEntriesOrchestrationStage(context);
+	await runLoadSchemasOrchestrationStage(context);
 	await runWriteAnalysisReportOrchestrationStage(context);
 	await runTransformAndMergeOrchestrationStage(context);
 	await runWriteOutputOrchestrationStage(context);
+
+	// Reporta schemas não encontrados ao fim da geração
+	const pipelineContext = getPipelineContext(context);
+	if (
+		pipelineContext.schemasNotFound &&
+		pipelineContext.schemasNotFound.length > 0
+	) {
+		injectedLogger.warn("");
+		injectedLogger.warn("=".repeat(60));
+		injectedLogger.warn("SCHEMAS DE COLLECTIONS NÃO ENCONTRADOS:");
+		injectedLogger.warn("=".repeat(60));
+		for (const notFound of pipelineContext.schemasNotFound) {
+			injectedLogger.warn(
+				`  - Collection: "${notFound.collectionName}" (datasource: ${notFound.dataSourceKey})`,
+			);
+			injectedLogger.warn(
+				"    Essas collections não têm schema gerado em src/generated/types/.",
+			);
+			injectedLogger.warn(
+				"    Considere adicionar ao datasources.config.ts do generate-types.",
+			);
+		}
+		injectedLogger.warn("=".repeat(60));
+		injectedLogger.warn("");
+	}
 
 	return assertGenerateCustomRequestsResult(context);
 }

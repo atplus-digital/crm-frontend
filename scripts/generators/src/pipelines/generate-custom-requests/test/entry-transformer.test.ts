@@ -1,4 +1,5 @@
 import { logger } from "@scripts/generators/src/lib/logger";
+import type { SchemaRegistry } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/collection-schema";
 import {
 	transformAllEntries,
 	transformApiEntryToRegistry,
@@ -31,7 +32,7 @@ describe("transformApiEntryToRegistry", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).toEqual({
+		expect(result.entry).toEqual({
 			key: "test-entry",
 			name: "Test Entry",
 			collection: "t_test",
@@ -56,8 +57,8 @@ describe("transformApiEntryToRegistry", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).not.toBeNull();
-		expect(result?.dataSourceKey).toBe("d_db_ixcsoft");
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.dataSourceKey).toBe("d_db_ixcsoft");
 	});
 
 	it("deve retornar null e log warning quando sem options", () => {
@@ -65,7 +66,7 @@ describe("transformApiEntryToRegistry", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).toBeNull();
+		expect(result.entry).toBeNull();
 		expect(logger.debug).toHaveBeenCalledWith(
 			expect.stringContaining("sem options"),
 		);
@@ -80,7 +81,7 @@ describe("transformApiEntryToRegistry", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).toBeNull();
+		expect(result.entry).toBeNull();
 		expect(logger.debug).toHaveBeenCalledWith(
 			expect.stringContaining("sem collectionName"),
 		);
@@ -95,8 +96,8 @@ describe("transformApiEntryToRegistry", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).not.toBeNull();
-		expect(result?.url).toBe("");
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.url).toBe("");
 	});
 
 	it("deve usar POST como method default", () => {
@@ -108,8 +109,60 @@ describe("transformApiEntryToRegistry", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).not.toBeNull();
-		expect(result?.method).toBe("POST");
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.method).toBe("POST");
+	});
+
+	it("deve comentar campos inexistentes ao gerar pick de schema", () => {
+		const schemaRegistry: SchemaRegistry = new Map([
+			[
+				"d_db_ixcsoft:cliente_contrato",
+				{
+					collectionName: "cliente_contrato",
+					dataSourceKey: "d_db_ixcsoft",
+					schemaImportPath: "#/generated/types/d_db_ixcsoft/cliente-contrato",
+					schemaName: "cliente_contratoSchema",
+					baseSchemaName: "cliente_contratoBaseSchema",
+					availableFields: new Set(["bairro", "f_nc_cliente", "id", "numero"]),
+				},
+			],
+		]);
+
+		const entry = {
+			key: "schema-pick-missing-field",
+			name: "Schema Pick Missing Field",
+			options: {
+				collectionName: "cliente_contrato",
+				dataSourceKey: "d_db_ixcsoft",
+				method: "POST",
+				url: "/api/t_negociacoes:create",
+				data: {
+					f_bairro: "{{currentRecord.bairro}}",
+					f_contrato_ixc: "{{currentRecord.id}}",
+					f_endereco_numero: "{{currentRecord.numero}}",
+					f_nome_razao: "{{currentRecord.f_nc_cliente.razao}}",
+					f_tipo_pessoa: "{{currentRecord.f_klf0fxs3rds.tipo_pessoa}}",
+				},
+			},
+		};
+
+		const result = transformApiEntryToRegistry(
+			entry,
+			undefined,
+			schemaRegistry,
+		);
+
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.payloadSchema).toContain(
+			"currentRecord: cliente_contratoSchema.pick({",
+		);
+		expect(result.entry?.payloadSchema).toContain("bairro: true,");
+		expect(result.entry?.payloadSchema).toContain("id: true,");
+		expect(result.entry?.payloadSchema).toContain("f_nc_cliente: true,");
+		expect(result.entry?.payloadSchema).toContain("numero: true,");
+		expect(result.entry?.payloadSchema).toContain(
+			"//    f_klf0fxs3rds: true, ! Não Existe na collection",
+		);
 	});
 });
 
@@ -130,9 +183,9 @@ describe("transformAllEntries", () => {
 
 		const result = transformAllEntries(entries);
 
-		expect(result).toHaveLength(2);
-		expect(result[0].key).toBe("a-entry");
-		expect(result[1].key).toBe("b-entry");
+		expect(result.transformed).toHaveLength(2);
+		expect(result.transformed[0].key).toBe("a-entry");
+		expect(result.transformed[1].key).toBe("b-entry");
 	});
 
 	it("deve filtrar entradas inválidas", () => {
@@ -147,8 +200,8 @@ describe("transformAllEntries", () => {
 
 		const result = transformAllEntries(entries);
 
-		expect(result).toHaveLength(1);
-		expect(result[0].key).toBe("valid");
+		expect(result.transformed).toHaveLength(1);
+		expect(result.transformed[0].key).toBe("valid");
 	});
 });
 

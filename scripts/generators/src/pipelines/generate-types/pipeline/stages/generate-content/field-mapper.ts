@@ -5,11 +5,12 @@ import type { DataSourceField } from "../../../@types/script";
 import { inferRelationFromFieldName } from "./relation-inference";
 import { resolveRelationByType, resolveRelationInterface } from "./relations";
 
-const SYSTEM_SCALAR_FIELDS: Record<string, () => string> = {
-	createdById: () => "number | null",
-	updatedById: () => "number | null",
-};
-
+/**
+ * Mapeamento de tipos escalares para TypeScript.
+ *
+ * IMPORTANTE: não há injeção global de campos. O gerador tipa apenas
+ * os campos retornados pela fonte de dados.
+ */
 const FIELD_TYPE_MAP: Record<string, string> = {
 	array: "string[]",
 	boolean: "boolean",
@@ -57,10 +58,6 @@ export function extractRelationInfo(
 	>,
 	inferRelationsByName = false,
 ): RelationInfo | null {
-	if (field.name in SYSTEM_SCALAR_FIELDS) {
-		return null;
-	}
-
 	if (manualRelations?.[field.name]) {
 		const manual = manualRelations[field.name];
 		return { type: manual.type, targetCollection: manual.target };
@@ -101,10 +98,6 @@ function buildEnumType(
 
 export function mapFieldType(field: DataSourceField, logger?: Logger): string {
 	const activeLogger = logger ?? defaultRuntimeLogger;
-
-	if (field.name in SYSTEM_SCALAR_FIELDS) {
-		return SYSTEM_SCALAR_FIELDS[field.name]();
-	}
 
 	if (field.uiSchema?.enum && field.uiSchema.enum.length > 0) {
 		return buildEnumType(field.uiSchema.enum);

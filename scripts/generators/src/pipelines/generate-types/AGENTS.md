@@ -145,3 +145,68 @@ TypeScript type generation pipeline — fetches NocoBase/IXC collection schemas,
 
 The nearest `AGENTS.md` wins. For shared library conventions, see `generators/src/AGENTS.md`.
 For the generator framework, see `generators/AGENTS.md`.
+
+<!-- AGENTS-GENERATED:START generation-report -->
+
+## Generation Report
+
+After each run, a `generation-report.md` file is generated in each datasource output directory.
+
+**What it tracks:**
+
+1. **Relações Não Resolvidas**: Relations where the target collection is not available in the datasource
+   - Fields using `z.number().nullable()` as placeholder
+   - Grouped by source collection for easy resolution
+
+2. **Collections Split**: Collections that are NOT in split mode (no Zod schemas)
+   - Listed in a table for easy addition to `splitCollections` config
+
+**When to use:**
+
+- After adding new relations to a datasource
+- When split collections reference non-split collections
+- During IXC integration when adding new tables
+- Planning which collections to add to splitCollections
+
+**Example output:**
+
+```markdown
+# Relatório de Geração de Tipos
+
+**Datasource:** ixc
+
+## 📍 Status: Relações
+
+### ✅ Status: Sem Problemas
+
+## 📦 Status: Collections Split
+
+### ⚠️ 3 collection(ões) não-splitada(s)
+
+| Collection |
+| ---------- |
+| `users`    |
+| `settings` |
+```
+
+<!-- AGENTS-GENERATED:END generation-report -->
+
+---
+
+## Quick Add: Collections to Split
+
+O relatório `generation-report.md` inclui um **array pronto para colar** na configuração do gerador.
+
+**Exemplo de output:**
+
+```typescript
+// Cole este array no splitCollections:
+["users", "settings", "products"];
+```
+
+**Como usar:**
+
+1. Rode `pnpm generate-types`
+2. Abra `src/generated/types/<datasource>/generation-report.md`
+3. Copie o array em `## 📦 Status: Collections Split`
+4. Cole no `splitCollections` em `datasources.config.ts`

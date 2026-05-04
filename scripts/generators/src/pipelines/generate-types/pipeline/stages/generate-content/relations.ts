@@ -89,3 +89,57 @@ export function renderRelationValueType(
 
 	return cardinality === "many" ? `${targetType}[]` : `${targetType} | null`;
 }
+
+/**
+ * Gera o nome do schema base para uma collection (ex: usersBaseSchema).
+ * Mantido localmente para evitar dependência circular.
+ */
+function _toBaseSchemaName(collectionName: string): string {
+	const cleanCollectionName = collectionName.replace(/^t_/, "").toLowerCase();
+	if (!cleanCollectionName || cleanCollectionName === "t") {
+		return _ensureValidIdentifier(`${collectionName.toLowerCase()}BaseSchema`);
+	}
+	return _ensureValidIdentifier(`${cleanCollectionName}BaseSchema`);
+}
+
+function _ensureValidIdentifier(name: string): string {
+	if (/^[0-9]/.test(name)) {
+		return `_${name}`;
+	}
+	return name;
+}
+
+/**
+ * Gera o tipo Zod para um campo de relação.
+ * Usa referências a schemas base quando a collection destino está disponível,
+ * ou fallbacks para tipos primitivos quando não está.
+ *
+ * @param targetCollection - Nome da collection de destino
+ * @param cardinality - Cardinalidade da relação ("one" ou "many")
+ * @param availableCollections - Set com nomes das collections disponíveis no datasource
+ * @returns String com o tipo Zod (ex: "usersBaseSchema.nullable()", "z.number().array()")
+ */
+export function renderRelationZodType(
+	targetCollection: string,
+	cardinality: RelationCardinality,
+	availableCollections: ReadonlySet<string>,
+): string {
+	const targetCollectionTrimmed = targetCollection.trim();
+	const isAvailable =
+		targetCollectionTrimmed !== "" &&
+		availableCollections.has(targetCollectionTrimmed);
+
+	if (isAvailable) {
+		const targetSchemaName = _toBaseSchemaName(targetCollectionTrimmed);
+		if (cardinality === "one") {
+			return `${targetSchemaName}.nullable()`;
+		}
+		return `${targetSchemaName}.array()`;
+	}
+
+	// Fallback para collections não disponíveis no datasource
+	if (cardinality === "one") {
+		return "z.number().nullable()";
+	}
+	return "z.number().array()";
+}

@@ -15,8 +15,8 @@ describe("Edge cases", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).not.toBeNull();
-		expect(result?.name).toBe('Request com "aspas" e \\backslash\\');
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.name).toBe('Request com "aspas" e \\backslash\\');
 	});
 
 	it("deve lidar com key vazia", () => {
@@ -32,8 +32,8 @@ describe("Edge cases", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).not.toBeNull();
-		expect(result?.key).toBe("");
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.key).toBe("");
 	});
 
 	it("deve lidar com name vazio", () => {
@@ -49,8 +49,8 @@ describe("Edge cases", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).not.toBeNull();
-		expect(result?.name).toBe("");
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.name).toBe("");
 	});
 
 	it("deve lidar com URL contendo query params e fragment", () => {
@@ -66,8 +66,8 @@ describe("Edge cases", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).not.toBeNull();
-		expect(result?.url).toBe("/custom/test?a=1&b=2#fragment");
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.url).toBe("/custom/test?a=1&b=2#fragment");
 	});
 
 	it("deve lidar com collection name contendo acentos", () => {
@@ -83,8 +83,8 @@ describe("Edge cases", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).not.toBeNull();
-		expect(result?.collection).toBe("t_pessoas_físicas-v2");
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.collection).toBe("t_pessoas_físicas-v2");
 	});
 
 	it("deve retornar null quando options é undefined", () => {
@@ -95,7 +95,7 @@ describe("Edge cases", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).toBeNull();
+		expect(result.entry).toBeNull();
 	});
 
 	it("deve retornar null quando collectionName é undefined", () => {
@@ -110,7 +110,7 @@ describe("Edge cases", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).toBeNull();
+		expect(result.entry).toBeNull();
 	});
 
 	it("deve usar valores default quando method e url são undefined", () => {
@@ -124,8 +124,8 @@ describe("Edge cases", () => {
 
 		const result = transformApiEntryToRegistry(entry);
 
-		expect(result).not.toBeNull();
-		expect(result?.method).toBe("POST");
-		expect(result?.url).toBe("");
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.method).toBe("POST");
+		expect(result.entry?.url).toBe("");
 	});
 });

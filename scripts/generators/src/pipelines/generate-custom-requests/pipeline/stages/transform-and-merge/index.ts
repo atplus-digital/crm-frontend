@@ -4,26 +4,34 @@ import { mergeRegistries } from "./merge-registries";
 
 export function transformAndMergeStage(): GenerationStage {
 	return async (context) => {
-		const transformedEntries = transformAllEntries(
+		const { transformed, schemasNotFound } = transformAllEntries(
 			context.entries,
 			context.logger,
+			context.schemaRegistry,
 		);
 		context.logger.info(
-			`${transformedEntries.length} entradas válidas após transformação`,
+			`${transformed.length} entradas válidas após transformação`,
 		);
 
 		const mergedEntries = mergeRegistries(
-			transformedEntries,
+			transformed,
 			context.config.manualRequests,
 		);
 		context.logger.info(
 			`${mergedEntries.length} entradas após merge com ${context.config.manualRequests.length} manuais`,
 		);
 
+		// Atualiza lista de schemas não encontrados
+		const allSchemasNotFound = [
+			...(context.schemasNotFound ?? []),
+			...schemasNotFound,
+		];
+
 		return {
 			...context,
-			transformedEntries,
+			transformedEntries: transformed,
 			mergedEntries,
+			schemasNotFound: allSchemasNotFound,
 		};
 	};
 }

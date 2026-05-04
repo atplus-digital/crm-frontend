@@ -26,6 +26,12 @@ export interface AtomicWriterOptions {
 	 * @default true
 	 */
 	lint?: boolean;
+	/**
+	 * Base directory for backup files. When provided, backups are stored here instead of
+	 * being siblings of the output dir.
+	 * @default undefined (backup is created as sibling of outputDir)
+	 */
+	backupBaseDir?: string;
 }
 
 export interface AtomicWriteResult {
@@ -67,17 +73,22 @@ export interface AtomicWriteResult {
 export function createAtomicWriteSession(
 	options: AtomicWriterOptions,
 ): AtomicWriteSession {
-	const { outputDir, label } = options;
+	const { outputDir, label, backupBaseDir } = options;
 	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
 
 	// Temp dirs are siblings of the output dir (same parent)
 	const parentDir = path.dirname(resolvedOutputDir);
 	const tempId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
+	// Backup location: use provided baseDir or parent of outputDir
+	const resolvedBackupDir = backupBaseDir
+		? path.resolve(process.cwd(), backupBaseDir)
+		: parentDir;
+
 	return new AtomicWriteSession(
 		resolvedOutputDir,
 		path.join(parentDir, `.tmp-${tempId}`),
-		path.join(parentDir, `.backup-${tempId}`),
+		path.join(resolvedBackupDir, `.backup-${tempId}`),
 		label,
 		options.validate ?? true,
 		options.lint ?? true,

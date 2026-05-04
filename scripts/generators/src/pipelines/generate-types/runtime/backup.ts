@@ -10,6 +10,7 @@ export function backupGenerateTypesOutputs(
 			label: `generate-types (${outputDir})`,
 			validate: false,
 			lint: false,
+			backupBaseDir: "scripts/.cache",
 		});
 		session.backup();
 		return session;

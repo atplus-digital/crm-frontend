@@ -10,6 +10,9 @@ export {
 	generateContent,
 	generateContentForCollections,
 	generateFileHeader,
+	generateIndexContent,
+	generateLabelsContent,
+	generateSchemasContent,
 	generateSplitFiles,
 } from "./content-assembly";
 export type { EnumFieldInfo } from "./content-enums";

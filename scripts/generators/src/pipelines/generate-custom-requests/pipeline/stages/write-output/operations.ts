@@ -16,6 +16,7 @@ export function createWriteOutputSession(
 	const session = createAtomicWriteSession({
 		outputDir: context.config.outputDir,
 		label: "generate-custom-requests",
+		backupBaseDir: "scripts/.cache",
 	});
 	session.backup();
 	return session;
@@ -29,6 +30,7 @@ export async function writeGeneratedRegistryOutput(
 		context.config.outputDir,
 		context.config.requests,
 		context.logger,
+		context.schemaMappings,
 	);
 	context.logger.info("Arquivo gerado com sucesso!");
 }
