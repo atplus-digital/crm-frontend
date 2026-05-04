@@ -9,8 +9,6 @@ import {
 	linha_mvnoApiSchema,
 	linha_mvnoEsimSchema,
 	linha_mvnoPortabilidadeSchema,
-	linha_mvnoStatusLinhaSchema,
-	linha_mvnoStatusPortabilidadeSchema,
 	linha_mvnoTipoNumeroSchema,
 } from "./labels";
 

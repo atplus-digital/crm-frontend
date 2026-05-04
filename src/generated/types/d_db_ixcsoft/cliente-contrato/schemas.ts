@@ -13,7 +13,6 @@ import {
 	cliente_contratoBaseGeracaoTipoDocSchema,
 	cliente_contratoBloqueioAutomaticoSchema,
 	cliente_contratoCcPrevisaoSchema,
-	cliente_contratoContratoRecorrenciaSchema,
 	cliente_contratoContratoSuspensoSchema,
 	cliente_contratoDesbloqueioConfiancaAtivoSchema,
 	cliente_contratoDesbloqueioConfiancaSchema,

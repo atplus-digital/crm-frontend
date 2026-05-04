@@ -105,20 +105,20 @@ export const negociacoesBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const negociacoesRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_anexos: z.number().array(),
-	f_comentarios: z.number().array(),
-	f_cupom_desconto: z.number().nullable(),
-	f_fk_oe_qualirun: z.number().array(),
-	f_itens_negociacao: z.number().array(),
-	f_negociacao_contrato: z.number().array(),
-	f_negociacao_pessoa_juridica: z.number().nullable(),
-	f_pacote: z.number().nullable(),
-	f_pacotes_adicionais: z.number().array(),
-	f_pessoa: z.number().nullable(),
-	f_qualirun_assinatura_gov: z.number().array(),
-	f_vendedor: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.any().nullable(),
+	f_anexos: z.any().array(),
+	f_comentarios: z.any().array(),
+	f_cupom_desconto: z.any().nullable(),
+	f_fk_oe_qualirun: z.any().array(),
+	f_itens_negociacao: z.any().array(),
+	f_negociacao_contrato: z.any().array(),
+	f_negociacao_pessoa_juridica: z.any().nullable(),
+	f_pacote: z.any().nullable(),
+	f_pacotes_adicionais: z.any().array(),
+	f_pessoa: z.any().nullable(),
+	f_qualirun_assinatura_gov: z.any().array(),
+	f_vendedor: z.any().nullable(),
+	updatedBy: z.any().nullable(),
 });
 
 // ============================================================

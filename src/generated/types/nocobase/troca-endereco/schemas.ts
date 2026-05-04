@@ -40,8 +40,8 @@ export const troca_enderecoBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const troca_enderecoRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.any().nullable(),
+	updatedBy: z.any().nullable(),
 });
 
 // ============================================================

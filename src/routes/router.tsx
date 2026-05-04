@@ -5,7 +5,7 @@ import { DashboardLayout } from "#/layout/dashboard-layout";
 import { routePaths, toRouterPath } from "#/routes/route-paths";
 import { authRoutes } from "./auth/routes";
 import { csRoutes } from "./cs/routes";
-import NotFoundPage from "./error/not-found";
+import { Component as NotFoundPage } from "./error/not-found";
 
 export const router = createBrowserRouter([
 	{

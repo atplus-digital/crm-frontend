@@ -36,13 +36,13 @@ export const suspensao_contratoBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const suspensao_contratoRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_comentarios: z.number().array(),
-	f_contratos: z.number().array(),
-	f_pessoas: z.number().nullable(),
-	f_pessoas_pj: z.number().nullable(),
-	f_responsavel: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.any().nullable(),
+	f_comentarios: z.any().array(),
+	f_contratos: z.any().array(),
+	f_pessoas: z.any().nullable(),
+	f_pessoas_pj: z.any().nullable(),
+	f_responsavel: z.any().nullable(),
+	updatedBy: z.any().nullable(),
 });
 
 // ============================================================

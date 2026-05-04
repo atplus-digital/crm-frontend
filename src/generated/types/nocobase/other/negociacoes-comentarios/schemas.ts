@@ -29,8 +29,8 @@ export const negociacoes_comentariosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const negociacoes_comentariosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.any().nullable(),
+	updatedBy: z.any().nullable(),
 });
 
 // ============================================================

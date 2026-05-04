@@ -10,8 +10,8 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const REGISTROSDECONTATO_CATEGORIA_LABELS = {
-	PosVenda: "Pós Venda",
-	PreVenda: "Pré Venda",
+	"pos-venda": "Pós Venda",
+	"pre-venda": "Pré Venda",
 	cancelamento: "Cancelamento",
 } as const;
 

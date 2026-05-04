@@ -56,14 +56,14 @@ export const crm_troca_titularidadeBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const crm_troca_titularidadeRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_anexos: z.number().array(),
-	f_comentarios: z.number().array(),
-	f_pessoa_pf: z.number().nullable(),
-	f_pessoa_pj: z.number().nullable(),
-	f_trocadetitularidade_contrato: z.number().array(),
-	f_vendedor: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.any().nullable(),
+	f_anexos: z.any().array(),
+	f_comentarios: z.any().array(),
+	f_pessoa_pf: z.any().nullable(),
+	f_pessoa_pj: z.any().nullable(),
+	f_trocadetitularidade_contrato: z.any().array(),
+	f_vendedor: z.any().nullable(),
+	updatedBy: z.any().nullable(),
 });
 
 // ============================================================

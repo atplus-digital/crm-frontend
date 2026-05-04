@@ -8,7 +8,7 @@ import type { LinhaMvno } from "#/generated/types/d_db_ixcsoft/linha-mvno";
 import type { SuTicket } from "#/generated/types/d_db_ixcsoft/su-ticket";
 import type { VdContratosProdutos } from "#/generated/types/d_db_ixcsoft/vd-contratos-produtos";
 import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-titularidade";
-import type { DadosAdicionaisClienteContrato } from "#/generated/types/nocobase/dados-adicionais-cliente-contrato";
+import type { DadosAdicionaisClienteContrato } from "#/generated/types/nocobase/other/dados-adicionais-cliente-contrato";
 import type { RegistrosDeContato } from "#/generated/types/nocobase/registros-de-contato";
 import type { ListParams } from "#/repositories/types";
 
@@ -127,7 +127,7 @@ export type DadosAdicionaisContrato = Pick<
 export {
 	DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS,
 	DADOSADICIONAISCLIENTECONTRATO_PERFILDEUSO_LABELS,
-} from "#/generated/types/nocobase/dados-adicionais-cliente-contrato";
+} from "#/generated/types/nocobase/other/dados-adicionais-cliente-contrato";
 
 // ---------------------------------------------------------------------------
 // Filters
