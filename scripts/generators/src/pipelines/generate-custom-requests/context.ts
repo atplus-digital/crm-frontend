@@ -1,7 +1,7 @@
 import type { Logger } from "@scripts/generators/src/lib/logger";
 import { logger } from "@scripts/generators/src/lib/logger";
+import type { GenerationContext } from "./@types/orchestration";
 import type { ScriptConfig } from "./@types/script-config";
-import type { GenerationContext } from "./pipeline/orchestration/types";
 
 export interface GenerateCustomRequestsExecutionContext {
 	logger: Logger;

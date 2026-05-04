@@ -1,8 +1,8 @@
+import type { GenerationContext } from "./@types/orchestration";
 import {
 	type GenerateCustomRequestsExecutionContext,
 	getPipelineContext,
 } from "./context";
-import type { GenerationContext } from "./pipeline/orchestration/types";
 
 export function assertGenerateCustomRequestsResult(
 	context: GenerateCustomRequestsExecutionContext,

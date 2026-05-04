@@ -1,4 +1,4 @@
-import type { GenerationStage } from "../../orchestration/types";
+import type { GenerationStage } from "../../../@types/orchestration";
 import { writeAnalysisReport } from "../write-output/analysis-writer";
 import { collectAnalysisReport } from "./analysis-collector";
 

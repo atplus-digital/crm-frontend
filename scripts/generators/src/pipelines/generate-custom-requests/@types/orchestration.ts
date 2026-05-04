@@ -1,7 +1,7 @@
 import type { Logger } from "@scripts/generators/src/lib/logger";
-import type { CustomRequestApiEntry } from "../../@types/custom-request-api";
-import type { GeneratedRegistryEntry } from "../../@types/generated-registry";
-import type { ScriptConfig } from "../../@types/script-config";
+import type { CustomRequestApiEntry } from "./custom-request-api";
+import type { GeneratedRegistryEntry } from "./generated-registry";
+import type { ScriptConfig } from "./script-config";
 
 export interface PipelineContext {
 	logger: Logger;

@@ -1,5 +1,5 @@
+import type { GenerationStage } from "../../../@types/orchestration";
 import { CustomRequestsApiClient } from "../../../api/client";
-import type { GenerationStage } from "../../orchestration/types";
 
 export function fetchEntriesStage(): GenerationStage {
 	return async (context) => {

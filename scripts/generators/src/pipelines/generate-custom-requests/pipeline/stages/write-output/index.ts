@@ -1,4 +1,4 @@
-import type { GenerationStage } from "../../orchestration/types";
+import type { GenerationStage } from "../../../@types/orchestration";
 import { executeWriteOutput } from "./operations";
 
 export {

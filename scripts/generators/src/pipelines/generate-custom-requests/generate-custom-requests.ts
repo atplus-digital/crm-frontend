@@ -1,6 +1,7 @@
 import type { OrchestrationTaskRunner } from "@scripts/generators/src/lib/cli";
 import type { Logger } from "@scripts/generators/src/lib/logger";
 import { createOrchestrationRunner } from "@scripts/generators/src/lib/pipeline-runner";
+import type { GenerationContext } from "./@types/orchestration";
 import type { ScriptConfig } from "./@types/script-config";
 import { assertGenerateCustomRequestsResult } from "./assert";
 import {
@@ -8,7 +9,6 @@ import {
 	type GenerateCustomRequestsExecutionContext,
 	getPipelineContext,
 } from "./context";
-import type { GenerationContext } from "./pipeline/orchestration/types";
 import {
 	fetchEntriesStage,
 	loadConfigStage,
