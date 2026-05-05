@@ -1,3 +1,5 @@
+import type { NocoBaseFieldInterface } from "./nocobase-field-interfaces";
+
 export type { NocoBaseFieldInterface } from "./nocobase-field-interfaces";
 
 export interface NocoBaseCollection {
@@ -8,9 +10,7 @@ export interface NocoBaseCollection {
 export interface NocoBaseField {
 	name: string;
 	type: string;
-	interface:
-		| import("./nocobase-field-interfaces").NocoBaseFieldInterface
-		| null;
+	interface: NocoBaseFieldInterface | null;
 	target?: string | null;
 	uiSchema?: {
 		enum?: Array<{
