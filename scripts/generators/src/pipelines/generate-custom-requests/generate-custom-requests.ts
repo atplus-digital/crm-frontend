@@ -1,6 +1,7 @@
 import type { OrchestrationTaskRunner } from "@scripts/generators/src/lib/cli";
 import type { Logger } from "@scripts/generators/src/lib/logging";
 import { createOrchestrationRunner } from "@scripts/generators/src/lib/pipeline-runner";
+import { createReportsContext } from "@scripts/generators/src/lib/reports";
 import { resetTypeScriptValidationCache } from "@scripts/generators/src/lib/validation/tsc-validator";
 import type { GenerationContext } from "./@types/orchestration";
 import type { ScriptConfig } from "./@types/script-config";
@@ -14,6 +15,7 @@ import {
 	fetchEntriesStage,
 	loadConfigStage,
 	loadSchemasStage,
+	renderConsolidatedReportsStage,
 	transformAndMergeStage,
 	writeAnalysisReportStage,
 } from "./pipeline/stages";
@@ -30,7 +32,11 @@ export function lockGenerateCustomRequestsWorkspace(): void {
 }
 
 const { runOrchestrationStage } = createOrchestrationRunner<GenerationContext>({
-	createInitialContext: (logger) => ({ logger }) as GenerationContext,
+	createInitialContext: (logger) =>
+		({
+			logger,
+			reports: createReportsContext(),
+		}) as GenerationContext,
 });
 
 async function runStage(
@@ -73,6 +79,12 @@ export async function runTransformAndMergeOrchestrationStage(
 	await runStage(context, transformAndMergeStage());
 }
 
+export async function runRenderConsolidatedReportsOrchestrationStage(
+	context: GenerateCustomRequestsExecutionContext,
+): Promise<void> {
+	await runStage(context, renderConsolidatedReportsStage());
+}
+
 export function runWriteOutputOrchestrationStage(
 	context: GenerateCustomRequestsExecutionContext,
 	task?: OrchestrationTaskRunner,
@@ -101,6 +113,7 @@ export async function runGenerateCustomRequests(
 	await runWriteAnalysisReportOrchestrationStage(context);
 	await runTransformAndMergeOrchestrationStage(context);
 	await runWriteOutputOrchestrationStage(context);
+	await runRenderConsolidatedReportsOrchestrationStage(context);
 
 	return assertGenerateCustomRequestsResult(context);
 }

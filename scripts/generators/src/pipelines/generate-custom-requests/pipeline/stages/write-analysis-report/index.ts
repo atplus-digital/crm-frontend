@@ -1,14 +1,28 @@
+import { addJsonReport } from "@scripts/generators/src/lib/reports";
 import type { GenerationStage } from "../../../@types/orchestration";
-import { writeAnalysisReport } from "../write-output/analysis-writer";
 import { collectAnalysisReport } from "./analysis-collector";
 
 export function writeAnalysisReportStage(): GenerationStage {
 	return async (context) => {
-		if (context.config.generateAnalysisReport) {
-			const analysisReport = collectAnalysisReport(context.entries);
-			writeAnalysisReport(analysisReport, context.logger);
-		}
+		const analysisReport = collectAnalysisReport(context.entries);
+		const reports = addJsonReport(context.reports, {
+			namespace: "custom-requests",
+			key: "analysis-report",
+			title: "Entradas sem options/dataSourceKey",
+			scope: {
+				pipeline: "generate-custom-requests",
+				stage: "write-analysis-report",
+			},
+			payload: {
+				totalAnalyzed: analysisReport.totalAnalyzed,
+				withoutOptions: analysisReport.withoutOptions,
+				withoutDataSourceKey: analysisReport.withoutDataSourceKey,
+			},
+		});
 
-		return context;
+		return {
+			...context,
+			reports,
+		};
 	};
 }

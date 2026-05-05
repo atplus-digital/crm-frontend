@@ -19,30 +19,45 @@ const COLLECTION_PLACEHOLDERS = [
 ] as const;
 
 const USER_PLACEHOLDERS = ["currentUser"] as const;
+const MAIN_DATASOURCE_KEY = "main";
+const MAIN_USER_COLLECTION = "users";
+
+function getSchemaForPlaceholder(
+	placeholder:
+		| (typeof COLLECTION_PLACEHOLDERS)[number]
+		| (typeof USER_PLACEHOLDERS)[number],
+	collectionName: string,
+	dataSourceKey: string,
+	registry: SchemaRegistry,
+): CollectionSchemaMapping | null {
+	if (placeholder === "currentUser") {
+		return findSchema(registry, MAIN_USER_COLLECTION, MAIN_DATASOURCE_KEY);
+	}
+
+	return findSchema(registry, collectionName, dataSourceKey);
+}
 
 function generatePlaceholderSchema(
 	placeholder:
 		| (typeof COLLECTION_PLACEHOLDERS)[number]
 		| (typeof USER_PLACEHOLDERS)[number],
 	fields: Set<string>,
-	collectionSchema: CollectionSchemaMapping | null,
+	placeholderSchema: CollectionSchemaMapping | null,
 ): string | null {
-	if (placeholder === "currentUser") {
+	if (!placeholderSchema) {
 		return null;
 	}
 
-	if (!collectionSchema) {
-		return null;
-	}
+	const concreteFields = new Set([...fields].filter((field) => field !== "*"));
 
-	if (fields.has("*")) {
+	if (fields.has("*") && concreteFields.size === 0) {
 		if (placeholder === "$nSelectedRecord") {
-			return `z.array(${collectionSchema.schemaName})`;
+			return `z.array(${placeholderSchema.schemaName})`;
 		}
-		return collectionSchema.schemaName;
+		return placeholderSchema.schemaName;
 	}
 
-	const pickCode = generateSchemaPickCode(collectionSchema, fields);
+	const pickCode = generateSchemaPickCode(placeholderSchema, concreteFields);
 	if (placeholder === "$nSelectedRecord") {
 		return `z.array(${pickCode})`;
 	}
@@ -63,13 +78,13 @@ function inferFieldSchema(value: unknown): string {
 function getPlaceholderFallback(placeholder: string): string {
 	switch (placeholder) {
 		case "$nForm":
-			return "z.record(z.string())";
+			return "z.object({}).catchall(z.string())";
 		case "$nPopupRecord":
-			return "z.record(z.unknown())";
+			return "z.object({}).catchall(z.unknown())";
 		case "$nSelectedRecord":
-			return "z.array(z.record(z.unknown()))";
+			return "z.array(z.object({}).catchall(z.unknown()))";
 		case "currentRecord":
-			return "z.record(z.unknown())";
+			return "z.object({}).catchall(z.unknown())";
 		case "currentUser":
 			return "z.object({ id: z.unknown() })";
 		default:
@@ -99,8 +114,6 @@ function buildEnhancedSchemaString(
 		}
 	}
 
-	const schemaInfo = findSchema(registry, collectionName, dataSourceKey);
-
 	for (const placeholder of [
 		...COLLECTION_PLACEHOLDERS,
 		...USER_PLACEHOLDERS,
@@ -108,22 +121,20 @@ function buildEnhancedSchemaString(
 		const fields = placeholderFields[placeholder];
 		if (!fields || fields.size === 0) continue;
 
-		if (
-			COLLECTION_PLACEHOLDERS.includes(
-				placeholder as (typeof COLLECTION_PLACEHOLDERS)[number],
-			)
-		) {
-			const schemaStr = generatePlaceholderSchema(
-				placeholder as (typeof COLLECTION_PLACEHOLDERS)[number],
-				fields,
-				schemaInfo,
-			);
+		const placeholderSchema = getSchemaForPlaceholder(
+			placeholder,
+			collectionName,
+			dataSourceKey,
+			registry,
+		);
+		const schemaStr = generatePlaceholderSchema(
+			placeholder,
+			fields,
+			placeholderSchema,
+		);
 
-			if (schemaStr) {
-				lines.push(`  ${placeholder}: ${schemaStr},`);
-			} else {
-				lines.push(`  ${placeholder}: ${getPlaceholderFallback(placeholder)},`);
-			}
+		if (schemaStr) {
+			lines.push(`  ${placeholder}: ${schemaStr},`);
 		} else {
 			lines.push(`  ${placeholder}: ${getPlaceholderFallback(placeholder)},`);
 		}
@@ -158,30 +169,43 @@ export function inferPayloadSchemaWithCollections(
 	const notFoundCollections: CollectionSchemaMapping[] = [];
 	let atLeastOneSchemaFound = false;
 
-	for (const placeholder of COLLECTION_PLACEHOLDERS) {
+	for (const placeholder of [
+		...COLLECTION_PLACEHOLDERS,
+		...USER_PLACEHOLDERS,
+	]) {
 		const fields = placeholderFields[placeholder];
 		if (!fields || fields.size === 0) continue;
 
-		const foundSchema = findSchema(registry, collectionName, dataSourceKey);
+		const foundSchema = getSchemaForPlaceholder(
+			placeholder,
+			collectionName,
+			dataSourceKey,
+			registry,
+		);
 		if (foundSchema) {
 			atLeastOneSchemaFound = true;
 			break;
 		}
 
+		const missingCollectionName =
+			placeholder === "currentUser" ? MAIN_USER_COLLECTION : collectionName;
+		const missingDataSourceKey =
+			placeholder === "currentUser" ? MAIN_DATASOURCE_KEY : dataSourceKey;
+
 		logger.debug(
-			`Schema não encontrado para collection "${collectionName}" (${dataSourceKey}) para placeholder "${placeholder}"`,
+			`Schema não encontrado para collection "${missingCollectionName}" (${missingDataSourceKey}) para placeholder "${placeholder}"`,
 		);
 
 		const alreadyAdded = notFoundCollections.some(
 			(nf) =>
-				nf.collectionName === collectionName &&
-				nf.dataSourceKey === dataSourceKey,
+				nf.collectionName === missingCollectionName &&
+				nf.dataSourceKey === missingDataSourceKey,
 		);
 
 		if (!alreadyAdded) {
 			notFoundCollections.push({
-				collectionName,
-				dataSourceKey,
+				collectionName: missingCollectionName,
+				dataSourceKey: missingDataSourceKey,
 				schemaImportPath: "",
 				schemaName: "",
 				baseSchemaName: "",

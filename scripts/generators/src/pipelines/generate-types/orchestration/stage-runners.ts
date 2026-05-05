@@ -1,6 +1,7 @@
 import {
 	formatResultStage,
 	loadConfigStage,
+	renderConsolidatedReportsStage,
 	resolveDatasourcesStage,
 } from "../pipeline/orchestration/stages";
 import type { GenerateTypesExecutionContext } from "../runtime/context";
@@ -25,4 +26,10 @@ export async function runFormatResultOrchestrationStage(
 	context: GenerateTypesExecutionContext,
 ): Promise<void> {
 	await runStage(context, formatResultStage());
+}
+
+export async function runRenderConsolidatedReportsOrchestrationStage(
+	context: GenerateTypesExecutionContext,
+): Promise<void> {
+	await runStage(context, renderConsolidatedReportsStage());
 }

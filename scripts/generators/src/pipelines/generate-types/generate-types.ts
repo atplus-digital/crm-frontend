@@ -3,6 +3,7 @@ export { runPostPipelineOrchestrationStage } from "./orchestration/post-pipeline
 export {
 	runFormatResultOrchestrationStage,
 	runLoadConfigOrchestrationStage,
+	runRenderConsolidatedReportsOrchestrationStage,
 	runResolveDatasourcesOrchestrationStage,
 } from "./orchestration/stage-runners";
 export { runGenerateTypes } from "./orchestration/standalone-runner";

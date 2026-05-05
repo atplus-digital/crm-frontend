@@ -17,6 +17,7 @@ import {
 	runFetchEntriesOrchestrationStage,
 	runLoadConfigOrchestrationStage,
 	runLoadSchemasOrchestrationStage,
+	runRenderConsolidatedReportsOrchestrationStage,
 	runTransformAndMergeOrchestrationStage,
 	runWriteAnalysisReportOrchestrationStage,
 	runWriteOutputOrchestrationStage,
@@ -56,6 +57,10 @@ const ORCHESTRATION_STEPS: GeneratorOrchestrationStage<GenerateCustomRequestsExe
 		{
 			title: "write-output",
 			run: runWriteOutputOrchestrationStage,
+		},
+		{
+			title: "render-consolidated-reports",
+			run: runRenderConsolidatedReportsOrchestrationStage,
 		},
 	];
 

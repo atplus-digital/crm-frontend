@@ -1,5 +1,6 @@
 export { formatResultStage } from "./format-result";
 export { loadConfigStage } from "./load-config";
+export { renderConsolidatedReportsStage } from "./render-consolidated-reports";
 export { resolveDatasourcesStage } from "./resolve-datasources";
 export {
 	createFulfilledDatasourceResult,

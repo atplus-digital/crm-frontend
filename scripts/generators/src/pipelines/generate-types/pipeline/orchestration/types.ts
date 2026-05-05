@@ -1,4 +1,5 @@
 import type { Logger } from "@scripts/generators/src/lib/logging";
+import type { PipelineReportsContext } from "@scripts/generators/src/lib/reports";
 import type {
 	DataSourceFilesResult,
 	DataSourceGenerationConfig,
@@ -16,6 +17,7 @@ import type {
  */
 export interface GenerationContext {
 	logger: Logger;
+	reports: PipelineReportsContext;
 
 	// ── Stage: loadConfig ──
 	config: RuntimeConfig;

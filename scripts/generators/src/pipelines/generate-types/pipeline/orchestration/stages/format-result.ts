@@ -1,4 +1,5 @@
 import * as path from "node:path";
+import { addJsonReport } from "@scripts/generators/src/lib/reports";
 import type { GenerateTypesResult } from "../../../@types/script";
 import type { GenerationContext, GenerationStage } from "../types";
 
@@ -61,6 +62,25 @@ export function formatResultStage(): GenerationStage {
 						totalSkipped,
 					};
 
-		return { ...ctx, finalResult };
+		const reports = addJsonReport(ctx.reports, {
+			namespace: "generate-types",
+			key: "generation-summary",
+			title: "Resumo final de geração",
+			scope: {
+				pipeline: "generate-types",
+				stage: "format-result",
+			},
+			payload: {
+				totalChanged,
+				totalSkipped,
+				failedDatasources: failedNames,
+				datasourceStatuses: ctx.datasourceResults.map((result) => ({
+					name: result.name,
+					status: result.status,
+				})),
+			},
+		});
+
+		return { ...ctx, finalResult, reports };
 	};
 }

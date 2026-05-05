@@ -5,6 +5,7 @@ export const requestsConfig: Partial<ScriptConfig> = {
 		"23btjo9ohrr": "negociacao-atualizada",
 		qbk10nf76um: "cadastro-comercial",
 		"0j7f9fuzuo7": "quali-run",
+		tjt1ajr1tkl: "segunda-contratacao",
 	},
 	manualRequests: [
 		{

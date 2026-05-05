@@ -68,6 +68,12 @@ export function parseConfig(
 	);
 
 	const logLevel = resolveLogLevel(overrideConfig.logLevel);
+	const reports = {
+		generateConsolidatedMarkdown: true,
+		consolidatedMarkdownOutputFile:
+			"scripts/generators/custom-requests-reports.md",
+		...overrideConfig.reports,
+	};
 
 	return {
 		baseUrl: parsed.baseUrl,
@@ -78,6 +84,7 @@ export function parseConfig(
 		generateAnalysisReport: true,
 		lockWorkspaceFolder: true,
 		...overrideConfig,
+		reports,
 		requests,
 		manualRequests,
 	};

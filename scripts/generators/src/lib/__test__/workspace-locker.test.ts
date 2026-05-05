@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import { logger } from "@scripts/generators/src/lib/logging";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("node:fs", () => ({
 	existsSync: vi.fn(),

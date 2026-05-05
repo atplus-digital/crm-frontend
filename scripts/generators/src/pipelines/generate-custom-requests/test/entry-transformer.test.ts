@@ -207,6 +207,96 @@ describe("transformApiEntryToRegistry", () => {
 			"$nSelectedRecord: z.array(qualirun_info_adicionaisSchema)",
 		);
 	});
+
+	it("deve priorizar pick quando mistura placeholder raiz e campos específicos", () => {
+		const schemaRegistry: SchemaRegistry = new Map([
+			[
+				"d_db_ixcsoft:cliente_contrato",
+				{
+					collectionName: "cliente_contrato",
+					dataSourceKey: "d_db_ixcsoft",
+					schemaImportPath: "#/generated/types/d_db_ixcsoft/cliente-contrato",
+					schemaName: "cliente_contratoSchema",
+					baseSchemaName: "cliente_contratoBaseSchema",
+					availableFields: new Set(["id", "id_contrato"]),
+				},
+			],
+		]);
+
+		const entry = {
+			key: "schema-current-record-mixed-root-and-field",
+			name: "Schema Current Record Mixed Root And Field",
+			options: {
+				collectionName: "cliente_contrato",
+				dataSourceKey: "d_db_ixcsoft",
+				method: "POST",
+				url: "/webhook/test",
+				data: {
+					record: "{{currentRecord}}",
+					id_login: "{{currentRecord.id}}",
+				},
+			},
+		};
+
+		const result = transformApiEntryToRegistry(
+			entry,
+			undefined,
+			schemaRegistry,
+		);
+
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.payloadSchema).toContain(
+			"currentRecord: cliente_contratoSchema.pick({",
+		);
+		expect(result.entry?.payloadSchema).toContain("id: true,");
+		expect(result.entry?.payloadSchema).not.toContain(
+			"currentRecord: cliente_contratoSchema,",
+		);
+	});
+
+	it("deve usar schema users do datasource main para currentUser", () => {
+		const schemaRegistry: SchemaRegistry = new Map([
+			[
+				"main:users",
+				{
+					collectionName: "users",
+					dataSourceKey: "main",
+					schemaImportPath: "#/generated/types/nocobase/users/schemas",
+					schemaName: "usersSchema",
+					baseSchemaName: "usersBaseSchema",
+					availableFields: new Set(["f_id_vendedor_ixc", "profile"]),
+				},
+			],
+		]);
+
+		const entry = {
+			key: "schema-current-user-main",
+			name: "Schema Current User Main",
+			options: {
+				collectionName: "cliente_contrato",
+				dataSourceKey: "d_db_ixcsoft",
+				method: "POST",
+				url: "/webhook/test",
+				data: {
+					id_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
+					nome: "{{currentUser.profile.nome}}",
+				},
+			},
+		};
+
+		const result = transformApiEntryToRegistry(
+			entry,
+			undefined,
+			schemaRegistry,
+		);
+
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.payloadSchema).toContain(
+			"currentUser: usersSchema.pick({",
+		);
+		expect(result.entry?.payloadSchema).toContain("f_id_vendedor_ixc: true,");
+		expect(result.entry?.payloadSchema).toContain("profile: true,");
+	});
 });
 
 describe("transformAllEntries", () => {

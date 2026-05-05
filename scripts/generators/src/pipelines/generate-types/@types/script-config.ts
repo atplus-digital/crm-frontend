@@ -163,6 +163,10 @@ export interface ScriptConfig {
 	 * @default true
 	 */
 	validateTypes?: boolean;
+	reports?: {
+		generateConsolidatedMarkdown?: boolean;
+		consolidatedMarkdownOutputFile?: string;
+	};
 }
 
 export type EnvConfig = NocoBaseCredentials;

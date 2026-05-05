@@ -25,6 +25,8 @@ function buildGeneratorListr<TContext extends object>(
 
 	return new Listr(tasks, {
 		...getSubtaskOptions("main"),
+		renderer: "default",
+		fallbackRenderer: "verbose",
 		ctx: context,
 		silentRendererCondition: options.disableOutput ? () => true : undefined,
 		rendererOptions: {

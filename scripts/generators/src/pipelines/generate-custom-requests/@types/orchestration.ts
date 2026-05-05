@@ -1,4 +1,5 @@
 import type { Logger } from "@scripts/generators/src/lib/logging";
+import type { PipelineReportsContext } from "@scripts/generators/src/lib/reports";
 import type {
 	CollectionSchemaMapping,
 	SchemaRegistry,
@@ -9,6 +10,7 @@ import type { ScriptConfig } from "./script-config";
 
 export interface PipelineContext {
 	logger: Logger;
+	reports?: PipelineReportsContext;
 	config?: ScriptConfig;
 	entries?: CustomRequestApiEntry[];
 	transformedEntries?: GeneratedRegistryEntry[];
@@ -19,6 +21,7 @@ export interface PipelineContext {
 }
 
 export interface GenerationContext extends PipelineContext {
+	reports: PipelineReportsContext;
 	config: ScriptConfig;
 	entries: CustomRequestApiEntry[];
 	transformedEntries: GeneratedRegistryEntry[];

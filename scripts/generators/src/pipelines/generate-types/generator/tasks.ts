@@ -11,6 +11,7 @@ import { runPostPipelineOrchestrationStage } from "../orchestration/post-pipelin
 import {
 	runFormatResultOrchestrationStage,
 	runLoadConfigOrchestrationStage,
+	runRenderConsolidatedReportsOrchestrationStage,
 	runResolveDatasourcesOrchestrationStage,
 } from "../orchestration/stage-runners";
 import { assertGenerateTypesResult } from "../runtime/assert";
@@ -50,6 +51,10 @@ export const ORCHESTRATION_STEPS: GeneratorOrchestrationStage<GenerateTypesExecu
 		{
 			title: "format-result",
 			run: runFormatResultOrchestrationStage,
+		},
+		{
+			title: "render-consolidated-reports",
+			run: runRenderConsolidatedReportsOrchestrationStage,
 		},
 	];
 

@@ -1,3 +1,4 @@
+import { addJsonReport } from "@scripts/generators/src/lib/reports";
 import type { GenerationStage } from "../../../@types/orchestration";
 import { transformAllEntries } from "./entry-transformer";
 import { mergeRegistries } from "./merge-registries";
@@ -27,10 +28,28 @@ export function transformAndMergeStage(): GenerationStage {
 			...schemasNotFound,
 		];
 
+		const reports = addJsonReport(context.reports, {
+			namespace: "custom-requests",
+			key: "schemas-not-found",
+			title: "Schemas de collection não encontrados",
+			scope: {
+				pipeline: "generate-custom-requests",
+				stage: "transform-and-merge",
+			},
+			payload: {
+				totalMissing: allSchemasNotFound.length,
+				missingSchemas: allSchemasNotFound.map((item) => ({
+					collectionName: item.collectionName,
+					dataSourceKey: item.dataSourceKey,
+				})),
+			},
+		});
+
 		return {
 			...context,
 			transformedEntries: transformed,
 			mergedEntries,
+			reports,
 			schemasNotFound: allSchemasNotFound,
 		};
 	};

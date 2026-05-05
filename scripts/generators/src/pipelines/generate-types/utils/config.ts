@@ -24,6 +24,11 @@ const defaultConfig: ScriptConfig = {
 		prefix: "",
 		suffix: "",
 	},
+	reports: {
+		generateConsolidatedMarkdown: true,
+		consolidatedMarkdownOutputFile:
+			"scripts/generators/generate-types-reports.md",
+	},
 } as const satisfies ScriptConfig;
 
 function normalizeDatasourceOutputDirs(
@@ -130,6 +135,10 @@ export function parseConfig(
 		...defaultConfig,
 		...overrideConfig,
 		logLevel,
+		reports: {
+			...defaultConfig.reports,
+			...overrideConfig.reports,
+		},
 	};
 
 	const normalizedConfig = {

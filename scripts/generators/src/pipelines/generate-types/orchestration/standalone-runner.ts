@@ -13,6 +13,7 @@ import { runPostPipelineOrchestrationStage } from "./post-pipeline-stage";
 import {
 	runFormatResultOrchestrationStage,
 	runLoadConfigOrchestrationStage,
+	runRenderConsolidatedReportsOrchestrationStage,
 	runResolveDatasourcesOrchestrationStage,
 } from "./stage-runners";
 
@@ -32,6 +33,7 @@ export async function runGenerateTypes(
 	await runDatasourcesOrchestrationStage(context);
 	await runPostPipelineOrchestrationStage(context);
 	await runFormatResultOrchestrationStage(context);
+	await runRenderConsolidatedReportsOrchestrationStage(context);
 	const result = assertGenerateTypesResult(context);
 	cleanupGenerateTypesBackups(context);
 	return result;

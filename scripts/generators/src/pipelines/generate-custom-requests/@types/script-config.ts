@@ -20,5 +20,9 @@ export interface ScriptConfig {
 	requests: RequestsMap;
 	manualRequests: ManualRegistryEntry[];
 	generateAnalysisReport: boolean;
+	reports: {
+		generateConsolidatedMarkdown: boolean;
+		consolidatedMarkdownOutputFile: string;
+	};
 	lockWorkspaceFolder?: boolean;
 }

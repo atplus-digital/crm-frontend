@@ -14,36 +14,35 @@ Custom request registry generation pipeline — fetches NocoBase custom request 
 
 ## Key Files
 
-| File                                                          | Purpose                                                                                                 |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `index.ts`                                                    | Entry point — self-executing `void runGeneratorCli(...)` via Listr2                                     |
-| `generate-custom-requests.ts`                                 | Orchestrator — context creation, workspace lock, stage runners, assertion                               |
-| `config.ts`                                                   | Merges `requests.config.ts` into `ScriptConfig`                                                         |
-| `requests.config.ts`                                          | **CRITICAL**: Maps NocoBase request IDs → friendly names + manual request definitions                   |
-| `api/client.ts`                                               | `CustomRequestsApiClient` — extends `NocoBaseApiClient`, paginates `customRequests:list`                |
-| `pipeline/orchestration/types.ts`                             | `GenerationContext` (extends `PipelineContext`), `GenerationStage`                                      |
-| `pipeline/stages/load-config/index.ts`                        | `loadConfigStage()` — resolves env, validates config                                                    |
-| `pipeline/stages/fetch-entries/index.ts`                      | `fetchEntriesStage()` — paginates NocoBase API                                                          |
-| `pipeline/stages/load-schemas/index.ts`                       | `loadSchemasStage()` — loads generated collection schemas                                               |
-| `pipeline/stages/write-analysis-report/index.ts`              | `writeAnalysisReportStage()` — generates `analysis-report.json`                                         |
-| `pipeline/stages/write-analysis-report/analysis-collector.ts` | `collectAnalysisReport()` — identifies entries without options/dataSourceKey                            |
-| `pipeline/stages/transform-and-merge/index.ts`                | `transformAndMergeStage()` — transforms API entries + merges manual overrides                           |
-| `pipeline/stages/transform-and-merge/entry-transformer.ts`    | `transformApiEntryToRegistry()`, `transformAllEntries()` — entry normalization + schema enrichment         |
-| `pipeline/stages/transform-and-merge/merge-registries.ts`     | `mergeRegistries()` — manual override merge logic                                                       |
-| `pipeline/stages/write-output/index.ts`                       | `writeOutputStage()` — atomic write of registry + split files                                           |
-| `pipeline/stages/write-output/registry-writer.ts`             | Generated `generated-registry.ts` content builder                                                       |
-| `pipeline/stages/write-output/split-writer.ts`                | Split file writer + legacy path cleanup                                                                 |
-| `pipeline/stages/write-output/analysis-writer.ts`             | `analysis-report.json` writer                                                                           |
-| `pipeline/stages/write-output/path-utils.ts`                  | Shared `toSafePathSegment()` / `toDataSourceDir()`                                                      |
-| `utils/config.ts`                                             | `parseConfig()` — validates requests (kebab-case), manual entries (required fields, valid HTTP methods) |
+| File                                                          | Purpose                                                                                                      |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `index.ts`                                                    | Entry point — self-executing `void runGeneratorCli(...)` via Listr2                                          |
+| `generate-custom-requests.ts`                                 | Orchestrator — context creation, workspace lock, stage runners, assertion                                    |
+| `config.ts`                                                   | Merges `requests.config.ts` into `ScriptConfig`                                                              |
+| `requests.config.ts`                                          | **CRITICAL**: Maps NocoBase request IDs → friendly names + manual request definitions                        |
+| `api/client.ts`                                               | `CustomRequestsApiClient` — extends `NocoBaseApiClient`, paginates `customRequests:list`                     |
+| `pipeline/orchestration/types.ts`                             | `GenerationContext` (extends `PipelineContext`), `GenerationStage`                                           |
+| `pipeline/stages/load-config/index.ts`                        | `loadConfigStage()` — resolves env, validates config                                                         |
+| `pipeline/stages/fetch-entries/index.ts`                      | `fetchEntriesStage()` — paginates NocoBase API                                                               |
+| `pipeline/stages/load-schemas/index.ts`                       | `loadSchemasStage()` — loads generated collection schemas                                                    |
+| `pipeline/stages/write-analysis-report/index.ts`              | `writeAnalysisReportStage()` — collects report entries into pipeline report context                          |
+| `pipeline/stages/write-analysis-report/analysis-collector.ts` | `collectAnalysisReport()` — identifies entries without options/dataSourceKey                                 |
+| `pipeline/stages/transform-and-merge/index.ts`                | `transformAndMergeStage()` — transforms API entries + merges manual overrides                                |
+| `pipeline/stages/transform-and-merge/entry-transformer.ts`    | `transformApiEntryToRegistry()`, `transformAllEntries()` — entry normalization + schema enrichment           |
+| `pipeline/stages/transform-and-merge/merge-registries.ts`     | `mergeRegistries()` — manual override merge logic                                                            |
+| `pipeline/stages/write-output/index.ts`                       | `writeOutputStage()` — atomic write of registry + split files                                                |
+| `pipeline/stages/write-output/registry-writer.ts`             | Generated `generated-registry.ts` content builder                                                            |
+| `pipeline/stages/write-output/split-writer.ts`                | Split file writer + legacy path cleanup                                                                      |
+| `pipeline/stages/write-output/path-utils.ts`                  | Shared `toSafePathSegment()` / `toDataSourceDir()`                                                           |
+| `utils/config.ts`                                             | `parseConfig()` — validates requests (kebab-case), manual entries (required fields, valid HTTP methods)      |
 | `utils/collection-schema-loader.ts`                           | `loadCollectionSchemas()`, `findSchema()`, `extractPlaceholderFields()` — schema loader from generated types |
-| `utils/schema-inference/index.ts`                             | `inferPayloadSchema()` — main export                                                                    |
-| `utils/schema-inference/value-inferrer.ts`                    | `inferValueZod()`, `inferObjectZod()` — Zod schema generation from payload data                         |
-| `utils/schema-inference/placeholder-resolver.ts`              | `extractPlaceholderPathSegments()` — NocoBase placeholder handling                                      |
-| `utils/schema-inference/tree-renderer.ts`                     | `renderTree()`, `toSafeObjectKey()` — tree-to-Zod rendering utilities                                   |
-| `utils/workspace-locker.ts`                                   | Adapter wrapping shared locker for this pipeline                                                        |
-| `@types/script-config.ts`                                     | `ScriptConfig`, `RequestsMap`, `ManualRegistryEntry`                                                    |
-| `@types/collection-schema.ts`                                | `CollectionSchemaMapping`, `SchemaLoadResult`, `SchemaRegistry`                                       |
+| `utils/schema-inference/index.ts`                             | `inferPayloadSchema()` — main export                                                                         |
+| `utils/schema-inference/value-inferrer.ts`                    | `inferValueZod()`, `inferObjectZod()` — Zod schema generation from payload data                              |
+| `utils/schema-inference/placeholder-resolver.ts`              | `extractPlaceholderPathSegments()` — NocoBase placeholder handling                                           |
+| `utils/schema-inference/tree-renderer.ts`                     | `renderTree()`, `toSafeObjectKey()` — tree-to-Zod rendering utilities                                        |
+| `utils/workspace-locker.ts`                                   | Adapter wrapping shared locker for this pipeline                                                             |
+| `@types/script-config.ts`                                     | `ScriptConfig`, `RequestsMap`, `ManualRegistryEntry`                                                         |
+| `@types/collection-schema.ts`                                 | `CollectionSchemaMapping`, `SchemaLoadResult`, `SchemaRegistry`                                              |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -51,7 +50,7 @@ Custom request registry generation pipeline — fetches NocoBase custom request 
 
 ## Patterns
 
-- **6-stage pipeline** (one directory per stage under `pipeline/stages/`): load-config → fetch-entries → load-schemas → write-analysis-report → transform-and-merge → write-output
+- **7-stage pipeline** (one directory per stage under `pipeline/stages/`): load-config → fetch-entries → load-schemas → write-analysis-report → transform-and-merge → write-output → render-consolidated-reports
 - **Listr2 orchestration**: Stages composed via `createOrchestrationTask()` from shared `generator-cli`; no manual pipeline loops
 - **`PipelineContext` + `GenerationContext`**: Context types live in `pipeline/orchestration/types.ts` (base opcional + contexto obrigatório por etapa)
 - **Manual overrides**: `requests.config.ts` defines `manualRequests[]` with `key`, `name`, `collection`, `method`, `url`, `payloadSchema`; these override API entries on key collision
@@ -77,6 +76,7 @@ The pipeline can use schemas generated by `generate-types` to create better type
 ### Output Example
 
 **Before (without schema enrichment):**
+
 ```typescript
 payloadSchema: z.object({
   currentRecord: z.object({
@@ -87,6 +87,7 @@ payloadSchema: z.object({
 ```
 
 **After (with schema enrichment):**
+
 ```typescript
 payloadSchema: z.object({
   currentRecord: NegociacoesSchema.pick({
@@ -99,9 +100,10 @@ payloadSchema: z.object({
 ### Missing Schemas Report
 
 If a custom request references a collection without a generated schema, the pipeline will:
+
 1. Use fallback schema inference (`z.unknown()`)
 2. Log a warning during transformation
-3. Report all missing schemas at the end of generation
+3. Include missing schema details in the consolidated pipeline report markdown
 
 ```bash
 ================================================================
@@ -120,14 +122,14 @@ SCHEMAS DE COLLECTIONS NÃO ENCONTRADOS:
 ## Golden Samples
 
 | Pattern                                         | Reference file                                             |
-| ----------------------------------------------- | ----------------------------------------------------------|
+| ----------------------------------------------- | ---------------------------------------------------------- |
 | Entry point wiring (Listr2)                     | `index.ts`                                                 |
 | Orchestration (prepare/lock/orchestrate/assert) | `generate-custom-requests.ts`                              |
-| API client with pagination                       | `api/client.ts`                                           |
-| Entry transformation                             | `pipeline/stages/transform-and-merge/entry-transformer.ts` |
+| API client with pagination                      | `api/client.ts`                                            |
+| Entry transformation                            | `pipeline/stages/transform-and-merge/entry-transformer.ts` |
 | Schema loader                                   | `utils/collection-schema-loader.ts`                        |
-| Registry merge (manual overrides)                 | `pipeline/stages/transform-and-merge/merge-registries.ts`  |
-| Zod schema inference                            | `utils/schema-inference/value-inferrer.ts`                |
+| Registry merge (manual overrides)               | `pipeline/stages/transform-and-merge/merge-registries.ts`  |
+| Zod schema inference                            | `utils/schema-inference/value-inferrer.ts`                 |
 | Placeholder resolution                          | `utils/schema-inference/placeholder-resolver.ts`           |
 | Config validation                               | `utils/config.ts`                                          |
 | Split file writer                               | `pipeline/stages/write-output/split-writer.ts`             |
@@ -187,10 +189,10 @@ pnpm test scripts/generators/src/pipelines/generate-custom-requests # Run tests
 
 | ❌ Avoid                                 | ✅ Use                                                |
 | ---------------------------------------- | ----------------------------------------------------- |
-| Editing generated registry files          | Update `requests.config.ts` + regenerate              |
+| Editing generated registry files         | Update `requests.config.ts` + regenerate              |
 | Hardcoding NocoBase request IDs in code  | Map in `requests.config.ts`, import generated types   |
 | Skipping generation after config changes | **ALWAYS** run `pnpm generate-custom-requests`        |
-| Adding pipeline-specific logic to `lib/`  | Keep in pipeline's own `pipeline/stages/` or `utils/` |
+| Adding pipeline-specific logic to `lib/` | Keep in pipeline's own `pipeline/stages/` or `utils/` |
 
 <!-- AGENTS-GENERATED:END anti-patterns -->
 

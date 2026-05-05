@@ -51,6 +51,10 @@ describe("parseConfig", () => {
 		expect(result.baseUrl).toBe("https://example.com/api");
 		expect(result.timeoutMs).toBe(15_000);
 		expect(result.generateAnalysisReport).toBe(true);
+		expect(result.reports.generateConsolidatedMarkdown).toBe(true);
+		expect(result.reports.consolidatedMarkdownOutputFile).toBe(
+			"scripts/generators/custom-requests-reports.md",
+		);
 		expect(mockedLoadDotEnv).toHaveBeenNthCalledWith(1, {
 			path: path.resolve(process.cwd(), ".env.local"),
 			quiet: true,
@@ -77,5 +81,23 @@ describe("parseConfig", () => {
 		const result = parseConfig({ generateAnalysisReport: false });
 
 		expect(result.generateAnalysisReport).toBe(false);
+	});
+
+	it("permite customizar geração de markdown consolidado de reports", () => {
+		process.env.CRM_NOCOBASE_URL = "https://example.com/api/";
+		process.env.CRM_NOCOBASE_TOKEN = "token";
+		delete process.env.CRM_NOCOBASE_TIMEOUT_MS;
+
+		const result = parseConfig({
+			reports: {
+				generateConsolidatedMarkdown: true,
+				consolidatedMarkdownOutputFile: "tmp/reports.md",
+			},
+		});
+
+		expect(result.reports).toEqual({
+			generateConsolidatedMarkdown: true,
+			consolidatedMarkdownOutputFile: "tmp/reports.md",
+		});
 	});
 });
