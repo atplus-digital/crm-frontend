@@ -5,9 +5,9 @@
  */
 
 import { z } from "zod";
+import { f_funcionariosBaseSchema } from "../../funcionarios/schemas";
 import { usersBaseSchema } from "../../users/schemas";
 import { asosBaseSchema } from "../asos/schemas";
-import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
 import { info_asoInformadoSchema, info_asoTipoExameSchema } from "./labels";
 
 export const T_INFO_ASO_TABLE_NAME = "t_info_aso";

@@ -13,6 +13,7 @@ import type {
 	CrmTrocaTitularidadeRelations,
 } from "./crm-troca-titularidade";
 import type { Empresas, EmpresasRelations } from "./empresas";
+import type { FFuncionarios, FFuncionariosRelations } from "./funcionarios";
 import type { Negociacoes, NegociacoesRelations } from "./negociacoes";
 import type { _3advfk0gv0z, _3advfk0gv0zRelations } from "./other/3advfk0gv0z";
 import type { _902ctke5dhq, _902ctke5dhqRelations } from "./other/902ctke5dhq";
@@ -137,10 +138,6 @@ import type {
 	FotoFuncionarios,
 	FotoFuncionariosRelations,
 } from "./other/foto-funcionarios";
-import type {
-	FFuncionarios,
-	FFuncionariosRelations,
-} from "./other/funcionarios";
 import type { Historico, HistoricoRelations } from "./other/historico";
 import type { Ij93gv1hx9m, Ij93gv1hx9mRelations } from "./other/ij93gv1hx9m";
 import type {

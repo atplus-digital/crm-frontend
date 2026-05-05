@@ -5,9 +5,9 @@
  */
 
 import { z } from "zod";
+import { f_funcionariosBaseSchema } from "../../funcionarios/schemas";
 import { usersBaseSchema } from "../../users/schemas";
 import { arquivos_funcionariosBaseSchema } from "../arquivos-funcionarios/schemas";
-import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
 import { info_arquivosArquivoExternoSchema } from "./labels";
 
 export const T_INFO_ARQUIVOS_TABLE_NAME = "t_info_arquivos";

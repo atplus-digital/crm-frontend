@@ -5,8 +5,8 @@
  */
 
 import { z } from "zod";
+import { f_funcionariosBaseSchema } from "../../funcionarios/schemas";
 import { usersBaseSchema } from "../../users/schemas";
-import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
 
 export const T_LOGS_CARGOS_TABLE_NAME = "t_logs_cargos";
 

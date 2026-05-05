@@ -21,6 +21,11 @@ export type {
 	LinhaMvnoRelations,
 } from "./linha-mvno";
 export type {
+	Radusuarios,
+	RadusuariosRelationKey,
+	RadusuariosRelations,
+} from "./radusuarios";
+export type {
 	SuTicket,
 	SuTicketRelationKey,
 	SuTicketRelations,

@@ -5,8 +5,8 @@
  */
 
 import { z } from "zod";
+import { f_funcionariosBaseSchema } from "../../funcionarios/schemas";
 import { usersBaseSchema } from "../../users/schemas";
-import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
 import { lancamentos_feriasBaseSchema } from "../lancamentos-ferias/schemas";
 import { periodos_feriasStatusPeriodoSchema } from "./labels";
 

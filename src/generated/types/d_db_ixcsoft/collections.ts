@@ -11,6 +11,7 @@ import type {
 } from "./cliente-contrato";
 import type { FnAreceber, FnAreceberRelations } from "./fn-areceber";
 import type { LinhaMvno, LinhaMvnoRelations } from "./linha-mvno";
+import type { Radusuarios, RadusuariosRelations } from "./radusuarios";
 import type { SuTicket, SuTicketRelations } from "./su-ticket";
 import type {
 	VdContratosProdutos,
@@ -23,6 +24,7 @@ export type CollectionName =
 	| "cliente_contrato"
 	| "fn_areceber"
 	| "linha_mvno"
+	| "radusuarios"
 	| "su_ticket"
 	| "vd_contratos_produtos";
 
@@ -31,6 +33,7 @@ export interface CollectionMap {
 	cliente_contrato: ClienteContrato;
 	fn_areceber: FnAreceber;
 	linha_mvno: LinhaMvno;
+	radusuarios: Radusuarios;
 	su_ticket: SuTicket;
 	vd_contratos_produtos: VdContratosProdutos;
 }
@@ -40,6 +43,7 @@ export interface CollectionRelationsMap {
 	cliente_contrato: ClienteContratoRelations;
 	fn_areceber: FnAreceberRelations;
 	linha_mvno: LinhaMvnoRelations;
+	radusuarios: RadusuariosRelations;
 	su_ticket: SuTicketRelations;
 	vd_contratos_produtos: VdContratosProdutosRelations;
 }
@@ -50,6 +54,7 @@ export const COLLECTIONS = [
 	"cliente_contrato",
 	"fn_areceber",
 	"linha_mvno",
+	"radusuarios",
 	"su_ticket",
 	"vd_contratos_produtos",
 ] as const;

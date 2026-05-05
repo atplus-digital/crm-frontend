@@ -5,6 +5,7 @@
 import { z } from "zod";
 import { cliente_contratoSchema } from "#/generated/types/d_db_ixcsoft/cliente-contrato/schemas";
 import { fn_areceberSchema } from "#/generated/types/d_db_ixcsoft/fn-areceber/schemas";
+import { radusuariosSchema } from "#/generated/types/d_db_ixcsoft/radusuarios/schemas";
 import { su_ticketSchema } from "#/generated/types/d_db_ixcsoft/su-ticket/schemas";
 import { vd_contratos_produtosSchema } from "#/generated/types/d_db_ixcsoft/vd-contratos-produtos/schemas";
 import { crm_troca_titularidadeSchema } from "#/generated/types/nocobase/crm-troca-titularidade/schemas";
@@ -37,14 +38,15 @@ export const generatedCustomRequestsRegistry = {
 		key: "32fmnujkpaq",
 		name: "32fmnujkpaq",
 		collection: "radusuarios",
+		collectionSchema: radusuariosSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
 		payloadSchema: z.object({
 			acao: z.literal("Limpar MAC").default("Limpar MAC").readonly(),
-			currentRecord: z.object({
-				id: z.unknown(),
-				id_contrato: z.unknown(),
+			currentRecord: radusuariosSchema.pick({
+				id: true,
+				id_contrato: true,
 			}),
 		}),
 		payloadData: {
@@ -94,6 +96,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "4pqt2osnjwb",
 		name: "4pqt2osnjwb",
 		collection: "radusuarios",
+		collectionSchema: radusuariosSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
@@ -102,9 +105,9 @@ export const generatedCustomRequestsRegistry = {
 				.literal("Desconectar Login")
 				.default("Desconectar Login")
 				.readonly(),
-			currentRecord: z.object({
-				id: z.unknown(),
-				id_contrato: z.unknown(),
+			currentRecord: radusuariosSchema.pick({
+				id: true,
+				id_contrato: true,
 			}),
 		}),
 		payloadData: {
@@ -204,6 +207,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "73roqp9a2rc",
 		name: "73roqp9a2rc",
 		collection: "radusuarios",
+		collectionSchema: radusuariosSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
@@ -212,9 +216,9 @@ export const generatedCustomRequestsRegistry = {
 				.literal("Desconectar Login")
 				.default("Desconectar Login")
 				.readonly(),
-			currentRecord: z.object({
-				id: z.unknown(),
-				id_contrato: z.unknown(),
+			currentRecord: radusuariosSchema.pick({
+				id: true,
+				id_contrato: true,
 			}),
 		}),
 		payloadData: {
@@ -278,6 +282,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "7u4q8xjflzh",
 		name: "7u4q8xjflzh",
 		collection: "radusuarios",
+		collectionSchema: radusuariosSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
@@ -286,9 +291,9 @@ export const generatedCustomRequestsRegistry = {
 				.literal("Liberar Redução de Velocidade")
 				.default("Liberar Redução de Velocidade")
 				.readonly(),
-			currentRecord: z.object({
-				id: z.unknown(),
-				id_contrato: z.unknown(),
+			currentRecord: radusuariosSchema.pick({
+				id: true,
+				id_contrato: true,
 			}),
 		}),
 		payloadData: {
@@ -466,6 +471,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "b4xb4urp530",
 		name: "b4xb4urp530",
 		collection: "radusuarios",
+		collectionSchema: radusuariosSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
@@ -474,9 +480,9 @@ export const generatedCustomRequestsRegistry = {
 				.literal("Liberar Redução de Velocidade")
 				.default("Liberar Redução de Velocidade")
 				.readonly(),
-			currentRecord: z.object({
-				id: z.unknown(),
-				id_contrato: z.unknown(),
+			currentRecord: radusuariosSchema.pick({
+				id: true,
+				id_contrato: true,
 			}),
 		}),
 		payloadData: {
@@ -510,14 +516,15 @@ export const generatedCustomRequestsRegistry = {
 		key: "cpjti4z0134",
 		name: "cpjti4z0134",
 		collection: "radusuarios",
+		collectionSchema: radusuariosSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
 		payloadSchema: z.object({
 			acao: z.literal("Limpar MAC").default("Limpar MAC").readonly(),
-			currentRecord: z.object({
-				id: z.unknown(),
-				id_contrato: z.unknown(),
+			currentRecord: radusuariosSchema.pick({
+				id: true,
+				id_contrato: true,
 			}),
 		}),
 		payloadData: {
@@ -1127,6 +1134,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "oj5jwqjdjts",
 		name: "oj5jwqjdjts",
 		collection: "radusuarios",
+		collectionSchema: radusuariosSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
@@ -1135,9 +1143,9 @@ export const generatedCustomRequestsRegistry = {
 				.literal("Desbloqueio de Confiança")
 				.default("Desbloqueio de Confiança")
 				.readonly(),
-			currentRecord: z.object({
-				id: z.unknown(),
-				id_contrato: z.unknown(),
+			currentRecord: radusuariosSchema.pick({
+				id: true,
+				id_contrato: true,
 			}),
 		}),
 		payloadData: {
@@ -1675,6 +1683,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "ynsgglxpt3r",
 		name: "ynsgglxpt3r",
 		collection: "radusuarios",
+		collectionSchema: radusuariosSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegis",
@@ -1683,9 +1692,9 @@ export const generatedCustomRequestsRegistry = {
 				.literal("Desbloqueio de Confiança")
 				.default("Desbloqueio de Confiança")
 				.readonly(),
-			currentRecord: z.object({
-				id: z.unknown(),
-				id_contrato: z.unknown(),
+			currentRecord: radusuariosSchema.pick({
+				id: true,
+				id_contrato: true,
 			}),
 		}),
 		payloadData: {

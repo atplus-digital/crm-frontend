@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const env = createEnv({
 	clientPrefix: "VITE_",
+	skipValidation: import.meta.env.MODE === "test",
 	client: {
 		VITE_APP_URL: z.string().optional().default("localhost:5173"),
 		VITE_DISABLE_FORGOT_PASSWORD: z.boolean().optional().default(true),

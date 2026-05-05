@@ -19,6 +19,8 @@ export const dataSourceConfigs = [
 			"t_troca_endereco",
 			"t_suspensao_contrato",
 			"t_comentarios_suspensao_de_contrato",
+			"f_funcionarios",
+			"t_demandas",
 			// "colaboradores_do_setor",
 			// "colaboradores_x_setor",
 			// "departments",.
@@ -142,6 +144,7 @@ export const dataSourceConfigs = [
 			"vd_contratos_produtos",
 			"fn_areceber",
 			"su_ticket",
+			"radusuarios",
 			// "cidade",
 			// "cliente_condominio",
 			// "cliente_contrato_indexadores",

@@ -5,8 +5,8 @@
  */
 
 import { z } from "zod";
+import { f_funcionariosBaseSchema } from "../../funcionarios/schemas";
 import { usersBaseSchema } from "../../users/schemas";
-import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
 import { sistemas_acessosBaseSchema } from "../sistemas-acessos/schemas";
 
 export const T_SETOR_TABLE_NAME = "t_setor";

@@ -20,6 +20,11 @@ export type {
 	EmpresasRelations,
 } from "./empresas";
 export type {
+	FFuncionarios,
+	FFuncionariosRelationKey,
+	FFuncionariosRelations,
+} from "./funcionarios";
+export type {
 	Negociacoes,
 	NegociacoesRelationKey,
 	NegociacoesRelations,
@@ -226,11 +231,6 @@ export type {
 	FotoFuncionariosRelationKey,
 	FotoFuncionariosRelations,
 } from "./other/foto-funcionarios";
-export type {
-	FFuncionarios,
-	FFuncionariosRelationKey,
-	FFuncionariosRelations,
-} from "./other/funcionarios";
 export type {
 	Historico,
 	HistoricoRelationKey,

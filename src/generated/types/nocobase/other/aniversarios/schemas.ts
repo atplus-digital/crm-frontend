@@ -5,9 +5,9 @@
  */
 
 import { z } from "zod";
+import { f_funcionariosBaseSchema } from "../../funcionarios/schemas";
 import { usersBaseSchema } from "../../users/schemas";
 import { foto_aniversarioBaseSchema } from "../foto-aniversario/schemas";
-import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
 import { aniversariosStatusSchema } from "./labels";
 
 export const T_ANIVERSARIOS_TABLE_NAME = "t_aniversarios";
