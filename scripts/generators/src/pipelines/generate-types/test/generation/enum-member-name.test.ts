@@ -1,16 +1,16 @@
 import type { EnumOption } from "@scripts/generators/src/pipelines/generate-types/@types/generation";
 import { describe, expect, it } from "vitest";
 
-async function getGenerateEnumDefinition() {
+async function getGenerateEnumType() {
 	const module = await import(
 		"@scripts/generators/src/pipelines/generate-types/pipeline/stages/generate-content/content"
 	);
 	return module;
 }
 
-describe("generateEnumDefinition integration", () => {
+describe("generateEnumType integration", () => {
 	it("deve gerar type alias com nome correto para valores com acentos", async () => {
-		const { generateEnumDefinition } = await getGenerateEnumDefinition();
+		const { generateEnumType } = await getGenerateEnumType();
 
 		const enumOptions: EnumOption[] = [
 			{ value: "União Estável", label: "União Estável" },
@@ -18,7 +18,7 @@ describe("generateEnumDefinition integration", () => {
 			{ value: "Solteiro", label: "Solteiro" },
 		];
 
-		const result = generateEnumDefinition("t_teste", "status", enumOptions);
+		const result = generateEnumType("t_teste", "status", enumOptions);
 
 		expect(result).toBe(
 			"export type TesteStatus = z.infer<typeof testeStatusSchema>;",
@@ -26,7 +26,7 @@ describe("generateEnumDefinition integration", () => {
 	});
 
 	it("deve gerar type alias com nome correto para valores numéricos", async () => {
-		const { generateEnumDefinition } = await getGenerateEnumDefinition();
+		const { generateEnumType } = await getGenerateEnumType();
 
 		const enumOptions: EnumOption[] = [
 			{ value: "3", label: "Ruim" },
@@ -34,11 +34,7 @@ describe("generateEnumDefinition integration", () => {
 			{ value: "5", label: "Bom" },
 		];
 
-		const result = generateEnumDefinition(
-			"t_teste",
-			"grau_satisfacao",
-			enumOptions,
-		);
+		const result = generateEnumType("t_teste", "grau_satisfacao", enumOptions);
 
 		expect(result).toBe(
 			"export type TesteGrauSatisfacao = z.infer<typeof testeGrauSatisfacaoSchema>;",
@@ -46,7 +42,7 @@ describe("generateEnumDefinition integration", () => {
 	});
 
 	it("deve gerar type alias com nome correto para valores com espaços", async () => {
-		const { generateEnumDefinition } = await getGenerateEnumDefinition();
+		const { generateEnumType } = await getGenerateEnumType();
 
 		const enumOptions: EnumOption[] = [
 			{ value: "Pessoa Física", label: "Pessoa Física" },
@@ -54,7 +50,7 @@ describe("generateEnumDefinition integration", () => {
 			{ value: "Outros", label: "Outros" },
 		];
 
-		const result = generateEnumDefinition("t_teste", "tipo", enumOptions);
+		const result = generateEnumType("t_teste", "tipo", enumOptions);
 
 		expect(result).toBe(
 			"export type TesteTipo = z.infer<typeof testeTipoSchema>;",

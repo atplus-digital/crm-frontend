@@ -1,7 +1,7 @@
 import { spawn } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { logger } from "@scripts/generators/src/lib/logging";
+import { defaultLogger as logger } from "@scripts/generators/src/lib/logging";
 
 const TSCONFIG_CANDIDATES = [
 	path.resolve(process.cwd(), "scripts/generators/tsconfig.generated.json"),

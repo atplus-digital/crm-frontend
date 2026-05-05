@@ -115,5 +115,3 @@ export function createLogger(options: CreateLoggerOptions = {}): Logger {
 }
 
 export const defaultLogger = createLogger();
-
-export const logger = defaultLogger;

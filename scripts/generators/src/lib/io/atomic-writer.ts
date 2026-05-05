@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { logger } from "@scripts/generators/src/lib/logging";
+import { defaultLogger as logger } from "@scripts/generators/src/lib/logging";
 import { runLinterFix } from "@scripts/generators/src/lib/validation/linter-runner";
 import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/validation/tsc-validator";
 

@@ -1,4 +1,4 @@
-import { logger } from "@scripts/generators/src/lib/logging";
+import { defaultLogger as logger } from "@scripts/generators/src/lib/logging";
 import type { DataSourceGenerationConfig } from "./@types/script";
 import { createIXCRelationsAdapter } from "./adapters/ixc-relations-adapter";
 import { createIXCWikiAdapter } from "./adapters/ixc-wiki-scraper";

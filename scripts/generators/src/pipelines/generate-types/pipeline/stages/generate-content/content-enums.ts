@@ -379,16 +379,3 @@ export function getScalarFieldZodType(
 
 	return scalarToZod[fieldType] ?? "z.string()";
 }
-
-// Legacy alias for backwards compatibility
-export const generateCollectionEnums = generateCollectionEnumTypes;
-
-// Legacy function - generates keyof typeof format for backwards compatibility
-export function generateEnumDefinition(
-	collectionName: string,
-	fieldName: string,
-	_enumOptions: EnumOption[],
-): string {
-	// Usa generateEnumType que produz z.infer<typeof schemaName>
-	return generateEnumType(collectionName, fieldName, _enumOptions);
-}

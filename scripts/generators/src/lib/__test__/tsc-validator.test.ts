@@ -42,7 +42,7 @@ vi.mock("node:child_process", () => ({
 }));
 
 vi.mock("@scripts/generators/src/lib/logging", () => ({
-	logger: {
+	defaultLogger: {
 		debug: vi.fn(),
 		info: vi.fn(),
 		warn: vi.fn(),

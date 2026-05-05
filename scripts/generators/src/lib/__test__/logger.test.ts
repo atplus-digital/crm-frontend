@@ -2,7 +2,7 @@ import {
 	createLogger,
 	isLogLevelEnabled,
 	type LogLevel,
-	logger,
+	defaultLogger as logger,
 } from "@scripts/generators/src/lib/logging";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

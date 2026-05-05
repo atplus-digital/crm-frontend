@@ -1,4 +1,4 @@
-import { logger } from "@scripts/generators/src/lib/logging";
+import { defaultLogger as logger } from "@scripts/generators/src/lib/logging";
 import type { SchemaRegistry } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/collection-schema";
 import {
 	transformAllEntries,
@@ -8,7 +8,7 @@ import { collectAnalysisReport } from "@scripts/generators/src/pipelines/generat
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@scripts/generators/src/lib/logging", () => ({
-	logger: {
+	defaultLogger: {
 		info: vi.fn(),
 		warn: vi.fn(),
 		error: vi.fn(),

@@ -20,9 +20,7 @@ export type { EnumFieldInfo } from "./content-enums";
 export {
 	generateCollectionEnumMaps,
 	generateCollectionEnumSchemas,
-	generateCollectionEnums,
 	generateCollectionEnumTypes,
-	generateEnumDefinition,
 	generateEnumLabelMap,
 	generateEnumSchema,
 	generateEnumType,

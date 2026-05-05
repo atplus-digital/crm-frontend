@@ -458,12 +458,12 @@ describe("content", () => {
 		});
 	});
 
-	describe("generateEnumDefinition", () => {
+	describe("generateEnumType", () => {
 		it("generates type alias using z.infer", async () => {
-			const { generateEnumDefinition } = await import(
+			const { generateEnumType } = await import(
 				"@scripts/generators/src/pipelines/generate-types/pipeline/stages/generate-content/content"
 			);
-			const result = generateEnumDefinition("users", "f_status", [
+			const result = generateEnumType("users", "f_status", [
 				{ value: "active", label: "Active" },
 				{ value: "inactive", label: "Inactive" },
 			]);
@@ -473,10 +473,10 @@ describe("content", () => {
 		});
 
 		it("generates type alias for number values", async () => {
-			const { generateEnumDefinition } = await import(
+			const { generateEnumType } = await import(
 				"@scripts/generators/src/pipelines/generate-types/pipeline/stages/generate-content/content"
 			);
-			const result = generateEnumDefinition("users", "f_priority", [
+			const result = generateEnumType("users", "f_priority", [
 				{ value: 1, label: "Low" },
 				{ value: 2, label: "High" },
 			]);
@@ -486,10 +486,10 @@ describe("content", () => {
 		});
 
 		it("removes f_ prefix from type name", async () => {
-			const { generateEnumDefinition } = await import(
+			const { generateEnumType } = await import(
 				"@scripts/generators/src/pipelines/generate-types/pipeline/stages/generate-content/content"
 			);
-			const result = generateEnumDefinition("t_pessoas", "f_status", [
+			const result = generateEnumType("t_pessoas", "f_status", [
 				{ value: "active", label: "Active" },
 			]);
 			expect(result).toBe(
@@ -498,10 +498,10 @@ describe("content", () => {
 		});
 
 		it("removes t_ prefix from collection name", async () => {
-			const { generateEnumDefinition } = await import(
+			const { generateEnumType } = await import(
 				"@scripts/generators/src/pipelines/generate-types/pipeline/stages/generate-content/content"
 			);
-			const result = generateEnumDefinition("t_empresas", "status", [
+			const result = generateEnumType("t_empresas", "status", [
 				{ value: "active", label: "Active" },
 			]);
 			expect(result).toBe(

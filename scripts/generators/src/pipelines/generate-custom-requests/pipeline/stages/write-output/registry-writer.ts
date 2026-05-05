@@ -2,7 +2,7 @@ import { execFile } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Logger } from "@scripts/generators/src/lib/logging";
-import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logging";
+import { defaultLogger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logging";
 import type { CollectionSchemaMapping } from "../../../@types/collection-schema";
 import type { GeneratedRegistryEntry } from "../../../@types/generated-registry";
 import type { RequestsMap } from "../../../@types/script-config";

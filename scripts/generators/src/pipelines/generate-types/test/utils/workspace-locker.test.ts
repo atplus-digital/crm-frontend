@@ -1,5 +1,5 @@
 import * as fs from "node:fs";
-import { logger } from "@scripts/generators/src/lib/logging";
+import { defaultLogger as logger } from "@scripts/generators/src/lib/logging";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("node:fs", () => ({
@@ -34,7 +34,7 @@ vi.mock("@scripts/generators/src/pipelines/generate-types/config", () => ({
 }));
 
 vi.mock("@scripts/generators/src/lib/logging", () => ({
-	logger: {
+	defaultLogger: {
 		info: vi.fn(),
 		warn: vi.fn(),
 		error: vi.fn(),

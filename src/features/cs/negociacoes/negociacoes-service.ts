@@ -185,14 +185,11 @@ export async function fetchNegociacaoItens(
 	negociacaoId: number,
 ): Promise<PaginatedResponse<NegociacoesItens>> {
 	try {
-		const response = await nocobaseRepository.list(
-			"t_negociacoes_itens" as never,
-			{
-				page: 1,
-				pageSize: 100,
-				filter: eq("f_fk_id_negociacao", negociacaoId),
-			},
-		);
+		const response = await nocobaseRepository.list("t_negociacoes_itens", {
+			page: 1,
+			pageSize: 100,
+			filter: eq("f_fk_id_negociacao", negociacaoId),
+		});
 
 		return {
 			data: response.data as unknown as NegociacoesItens[],
@@ -213,14 +210,11 @@ export async function fetchNegociacaoAnexos(
 	negociacaoId: number,
 ): Promise<PaginatedResponse<AnexosNegociacoes>> {
 	try {
-		const response = await nocobaseRepository.list(
-			"t_anexos_negociacoes" as never,
-			{
-				page: 1,
-				pageSize: 100,
-				filter: eq("f_anexos_fk", negociacaoId),
-			},
-		);
+		const response = await nocobaseRepository.list("t_anexos_negociacoes", {
+			page: 1,
+			pageSize: 100,
+			filter: eq("f_anexos_fk", negociacaoId),
+		});
 
 		return {
 			data: response.data as unknown as AnexosNegociacoes[],
@@ -245,7 +239,7 @@ export async function fetchNegociacaoComentarios(
 ): Promise<PaginatedResponse<NegociacaoComentarioWithRelations>> {
 	try {
 		const response = await nocobaseRepository.list(
-			"t_negociacoes_comentarios" as never,
+			"t_negociacoes_comentarios",
 			{
 				page: 1,
 				pageSize: 100,
@@ -273,7 +267,7 @@ export async function fetchNegociacaoPacotes(
 	negociacaoId: number,
 ): Promise<PaginatedResponse<Pacotes>> {
 	try {
-		const response = await nocobaseRepository.list("t_pacotes" as never, {
+		const response = await nocobaseRepository.list("t_pacotes", {
 			page: 1,
 			pageSize: 100,
 			filter: { f_negociacao: negociacaoId },

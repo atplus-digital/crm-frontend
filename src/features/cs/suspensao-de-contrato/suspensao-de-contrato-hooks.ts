@@ -37,16 +37,13 @@ export const suspensaoContratoQueryOptions = (
 	return queryOptions({
 		queryKey: ["suspensao-contrato", params] as const,
 		queryFn: async () => {
-			const response = await nocobaseRepository.list(
-				"t_suspensao_contrato" as "users",
-				{
-					page,
-					pageSize,
-					appends: appends as ("createdBy" | "updatedBy")[],
-					...(sort.length > 0 && { sort }),
-					...(filter && { filter }),
-				},
-			);
+			const response = await nocobaseRepository.list("t_suspensao_contrato", {
+				page,
+				pageSize,
+				appends: appends as ("createdBy" | "updatedBy")[],
+				...(sort.length > 0 && { sort }),
+				...(filter && { filter }),
+			});
 			return response as unknown as {
 				data: SuspensaoContratoWithRelations[];
 				meta: {
@@ -70,7 +67,7 @@ export function useSuspensaoContratoById(id: number) {
 		queryKey: ["suspensao-contrato", id],
 		queryFn: async () => {
 			const response = await nocobaseRepository.get(
-				"t_suspensao_contrato" as "users",
+				"t_suspensao_contrato",
 				id,
 				{
 					appends: [

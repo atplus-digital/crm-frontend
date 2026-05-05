@@ -15,8 +15,25 @@
 	"ignore": [
 		"src/generated/**",
 		"src/components/ui/**",
-		"src/features/custom-requests/**"
+		"src/features/custom-requests/**",
+		"src/components/table/data-table-context.tsx",
+		"src/features/auth/permissions/hooks.ts",
+		"src/features/auth/permissions/matchers.ts",
+		"src/features/cs/contratos/contratos-hooks.ts",
+		"src/features/cs/kanban-dashboard/kanban-dashboard-filters-url.ts",
+		"src/features/cs/negociacoes/negociacoes-filters/kanban-filters.tsx",
+		"src/features/cs/negociacoes/negociacoes-types.ts",
+		"scripts/generators/src/pipelines/generate-custom-requests/generate-custom-requests.ts",
+		"scripts/generators/src/pipelines/generate-types/pipeline/stages/generate-content/content-interfaces.ts",
+		"scripts/generators/src/pipelines/generate-types/test/mock-config.ts"
 	],
-	"ignoreDependencies": [],
+	"ignoreDependencies": [
+		"@fontsource-variable/geist",
+		"@radix-ui/react-slot",
+		"@radix-ui/react-tooltip",
+		"shadcn",
+		"tailwindcss",
+		"tw-animate-css"
+	],
 	"ignoreExportsUsedInFile": true
 }

@@ -1,5 +1,5 @@
 import type { Logger } from "@scripts/generators/src/lib/logging";
-import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logging";
+import { defaultLogger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logging";
 import type {
 	CollectionSchemaMapping,
 	SchemaRegistry,

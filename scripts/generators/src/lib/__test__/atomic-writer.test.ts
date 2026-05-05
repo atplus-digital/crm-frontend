@@ -12,7 +12,7 @@ vi.mock("@scripts/generators/src/lib/validation/linter-runner", () => ({
 }));
 
 vi.mock("@scripts/generators/src/lib/logging", () => ({
-	logger: {
+	defaultLogger: {
 		info: vi.fn(),
 		warn: vi.fn(),
 		error: vi.fn(),

@@ -1,5 +1,5 @@
 import type { Logger } from "@scripts/generators/src/lib/logging";
-import { logger } from "@scripts/generators/src/lib/logging";
+import { defaultLogger as logger } from "@scripts/generators/src/lib/logging";
 import type { GenerationContext } from "./@types/orchestration";
 import type { ScriptConfig } from "./@types/script-config";
 

@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import {
-	logger as defaultRuntimeLogger,
+	defaultLogger as defaultRuntimeLogger,
 	type Logger,
 } from "@scripts/generators/src/lib/logging";
 import type { SingleFileResult } from "@scripts/generators/src/pipelines/generate-types/@types/script";

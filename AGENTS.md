@@ -193,8 +193,6 @@ export interface PessoaFisica {
 
 <!-- AGENTS-GENERATED:START codebase-state -->
 
-- `src/features/cs/negociacoes/negociacoes-service.ts` uses `as never` type escapes for 4 collections not yet in generated types (`t_negociacoes_itens`, `t_anexos_negociacoes`, `t_negociacoes_comentarios`, `t_pacotes`)
-- `src/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks.ts` casts collection as `"users"` to satisfy type system (not yet in `CollectionName`)
 <!-- AGENTS-GENERATED:END codebase-state -->
 
 ## Scoped AGENTS.md (MUST read when working in these directories)

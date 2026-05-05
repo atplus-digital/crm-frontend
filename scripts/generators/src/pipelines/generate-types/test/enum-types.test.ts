@@ -4,7 +4,6 @@ import {
 	generateCollectionEnumMaps,
 	generateCollectionEnumSchemas,
 	generateCollectionEnumTypes,
-	generateEnumDefinition,
 	generateEnumLabelMap,
 	generateEnumSchema,
 	generateEnumType,
@@ -304,9 +303,9 @@ describe("generateCollectionEnumTypes", () => {
 	});
 });
 
-describe("generateEnumDefinition (legacy)", () => {
-	it("should generate type alias using z.infer (legacy compatibility)", () => {
-		const result = generateEnumDefinition("t_pessoas", "f_status", [
+describe("generateEnumType", () => {
+	it("should generate type alias using z.infer", () => {
+		const result = generateEnumType("t_pessoas", "f_status", [
 			{ value: "ativo", label: "Ativo" },
 			{ value: "inativo", label: "Inativo" },
 		]);
@@ -317,7 +316,7 @@ describe("generateEnumDefinition (legacy)", () => {
 	});
 
 	it("should handle mixed string and number values", () => {
-		const result = generateEnumDefinition("t_teste", "status", [
+		const result = generateEnumType("t_teste", "status", [
 			{ value: "aberto", label: "Aberto" },
 			{ value: 0, label: "Zero" },
 			{ value: "fechado", label: "Fechado" },
