@@ -1,4 +1,5 @@
 import { customRequestsRegistry } from "#/generated/custom-requests/generated-registry";
+import { nocobaseRepository } from "#/repositories";
 import {
 	CustomRequestError,
 	CustomRequestErrorCode,
@@ -73,32 +74,37 @@ export async function sendRequest(
 	}
 
 	const validatedPayload = validatePayload(key, options.payload);
-
+	const endpoint = `customRequests:send/${entry.key}`;
 	try {
-		const response = await fetch(`/api/${entry.url}`, {
-			method: entry.method,
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body:
-				entry.method === "POST" ? JSON.stringify(validatedPayload) : undefined,
+		const data = await nocobaseRepository.request<unknown>({
+			url: endpoint,
+			method: "POST",
+			data: validatedPayload,
 			signal: options.signal,
 		});
 
-		if (!response.ok) {
-			throw new CustomRequestNetworkError(
-				`HTTP ${response.status}: ${response.statusText}`,
-				response.status,
-			);
-		}
-
-		const data = await response.json();
 		return { success: true, data };
 	} catch (error) {
 		if (error instanceof DOMException && error.name === "AbortError") {
 			throw new CustomRequestError(
 				"Request cancelled",
 				CustomRequestErrorCode.UNKNOWN,
+			);
+		}
+		const status =
+			typeof error === "object" &&
+			error !== null &&
+			"response" in error &&
+			typeof error.response === "object" &&
+			error.response !== null &&
+			"status" in error.response &&
+			typeof error.response.status === "number"
+				? error.response.status
+				: undefined;
+		if (typeof status === "number") {
+			throw new CustomRequestNetworkError(
+				error instanceof Error ? error.message : `HTTP ${status}`,
+				status,
 			);
 		}
 		if (error instanceof CustomRequestValidationError) {
@@ -124,8 +130,8 @@ export function getRequestConfig(key: string) {
 	}
 	return {
 		key,
-		method: entry.method,
-		url: entry.url,
+		method: "POST",
+		url: `/api/customRequests:send/${entry.key}`,
 	};
 }
 

@@ -6,6 +6,7 @@ export interface ApiRequestConfig {
 	params?: Record<string, unknown>;
 	data?: unknown;
 	headers?: Record<string, string>;
+	signal?: AbortSignal;
 }
 
 export interface PaginatedResponse<T> {

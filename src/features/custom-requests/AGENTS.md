@@ -80,9 +80,14 @@ const result = await sendRequest("criarContratoIxc", {
   payload: { id_contrato: 1, id_cliente: 2, produto: "TV" },
 });
 
-const mutation = useCustomRequest();
-mutation.mutate({ key: "criarContratoIxc", payload: { id_contrato: 1 } });
+const mutation = useCustomRequest("criarContratoIxc");
+mutation.mutate({ payload: { id_contrato: 1 } });
 ```
+
+When payload templates reference `currentUser` (for example `{{currentUser.id}}`),
+`useCustomRequest()` auto-injects the authenticated user data. You can omit
+`currentUser` in `mutation.mutate({ payload })` and keep passing only the
+request-specific business fields.
 
 ## Regeneration
 

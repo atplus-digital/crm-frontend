@@ -7,6 +7,7 @@ import { authRoutes } from "./auth/routes";
 import { configRoutes } from "./config/routes";
 import { csRoutes } from "./cs/routes";
 import { errorRoutes } from "./error/routes";
+import { testesRoutes } from "./testes/routes";
 
 export const router = createBrowserRouter([
 	{
@@ -26,6 +27,7 @@ export const router = createBrowserRouter([
 						loader: () => redirect(routePaths.cs_dashboard),
 					},
 					...csRoutes,
+					...testesRoutes,
 					...configRoutes,
 				],
 			},

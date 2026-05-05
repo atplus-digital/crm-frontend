@@ -23,6 +23,7 @@ import { usersSchema } from "#/generated/types/nocobase/users/schemas";
 import { requestEntry as split_d_db_ixcsoft_cliente_contrato_negociacao_atualizadaRequestEntry } from "./d_db_ixcsoft/cliente_contrato/negociacao-atualizada";
 import { requestEntry as split_d_db_ixcsoft_cliente_contrato_segunda_contratacaoRequestEntry } from "./d_db_ixcsoft/cliente_contrato/segunda-contratacao";
 import { requestEntry as split_nocobase_t_logs_cadastro_comercialRequestEntry } from "./nocobase/t_logs/cadastro-comercial";
+import { requestEntry as split_nocobase_t_logs_log_testRequestEntry } from "./nocobase/t_logs/log-test";
 import { requestEntry as split_nocobase_t_qualirun_info_adicionais_quali_runRequestEntry } from "./nocobase/t_qualirun_info_adicionais/quali-run";
 
 export const generatedCustomRequestsRegistry = {
@@ -1545,25 +1546,7 @@ export const generatedCustomRequestsRegistry = {
 		},
 	},
 
-	xk5u4vwbdap: {
-		key: "xk5u4vwbdap",
-		name: "xk5u4vwbdap",
-		collection: "t_logs",
-		collectionSchema: logsSchema,
-		dataSourceKey: "main",
-		method: "GET",
-		url: "https://n8n.atplus.cloud/webhook/836d3099-bd29-49d0-8010-a4b5033ecc43",
-		payloadSchema: z.object({
-			$nSelectedRecord: z.array(logsSchema),
-			currentUser: usersSchema.pick({
-				id: true,
-			}),
-		}),
-		payloadData: {
-			selected: "{{$nSelectedRecord}}",
-			user: "{{currentUser.id}}",
-		},
-	},
+	xk5u4vwbdap: split_nocobase_t_logs_log_testRequestEntry,
 
 	xkmkcdnrksu: {
 		key: "xkmkcdnrksu",

@@ -1,4 +1,10 @@
-import { FileText, Handshake, LayoutDashboard, Users } from "lucide-react";
+import {
+	FileText,
+	FlaskConical,
+	Handshake,
+	LayoutDashboard,
+	Users,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import type { AppRoutePath } from "#/routes/route-paths";
 import { routePaths } from "#/routes/route-paths";
@@ -109,6 +115,19 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 						to: routePaths.cs_suspensao_de_contrato,
 					},
 				],
+			},
+		],
+	},
+	{
+		label: "Testes",
+		icon: <FlaskConical className="size-4" />,
+		to: routePaths.testes,
+		matches: ["/testes"],
+		items: [
+			{
+				label: "Testes",
+				icon: <FlaskConical />,
+				to: routePaths.testes,
 			},
 		],
 	},

@@ -1,17 +1,143 @@
 import { useMutation } from "@tanstack/react-query";
-import type { CustomRequestRegistryKey } from "#/generated/custom-requests/generated-registry";
+import type { z } from "zod";
+import { authStore } from "#/features/auth";
+import {
+	type CustomRequestRegistryKey,
+	customRequestsRegistry,
+} from "#/generated/custom-requests/generated-registry";
+import { nocobaseRepository } from "#/repositories";
 import { sendRequest } from "../utils/service";
 
-export function useCustomRequest() {
+type RequestIdentifierForKey<K extends CustomRequestRegistryKey> =
+	| K
+	| (typeof customRequestsRegistry)[K]["name"]
+	| `${(typeof customRequestsRegistry)[K]["collection"]}.${(typeof customRequestsRegistry)[K]["name"]}`
+	| `${(typeof customRequestsRegistry)[K]["dataSourceKey"]}.${(typeof customRequestsRegistry)[K]["collection"]}.${(typeof customRequestsRegistry)[K]["name"]}`;
+type CustomRequestIdentifier = {
+	[K in CustomRequestRegistryKey]: RequestIdentifierForKey<K>;
+}[CustomRequestRegistryKey];
+type RequestKeyFromIdentifier<I extends CustomRequestIdentifier> = {
+	[K in CustomRequestRegistryKey]: I extends RequestIdentifierForKey<K>
+		? K
+		: never;
+}[CustomRequestRegistryKey];
+type PayloadByRequestKey<K extends CustomRequestRegistryKey> = z.input<
+	(typeof customRequestsRegistry)[K]["payloadSchema"]
+>;
+type PayloadWithOptionalCurrentUser<T> = T extends {
+	currentUser: infer TCurrentUser;
+}
+	? Omit<T, "currentUser"> & { currentUser?: TCurrentUser }
+	: T;
+type UseCustomRequestMutationInput<I extends CustomRequestIdentifier> = {
+	payload: PayloadWithOptionalCurrentUser<
+		PayloadByRequestKey<RequestKeyFromIdentifier<I>>
+	>;
+	signal?: AbortSignal;
+};
+
+function resolveRequestKey(identifier: CustomRequestIdentifier) {
+	if (identifier in customRequestsRegistry) {
+		return identifier as CustomRequestRegistryKey;
+	}
+
+	for (const [key, entry] of Object.entries(customRequestsRegistry)) {
+		if (entry.name === identifier) {
+			return key as CustomRequestRegistryKey;
+		}
+
+		const collectionNameIdentifier = `${entry.collection}.${entry.name}`;
+		if (collectionNameIdentifier === identifier) {
+			return key as CustomRequestRegistryKey;
+		}
+
+		const fullyQualifiedIdentifier = `${entry.dataSourceKey}.${entry.collection}.${entry.name}`;
+		if (fullyQualifiedIdentifier === identifier) {
+			return key as CustomRequestRegistryKey;
+		}
+	}
+
+	return identifier as CustomRequestRegistryKey;
+}
+
+function hasCurrentUserTemplate(value: unknown): boolean {
+	if (typeof value === "string") {
+		return value.includes("{{currentUser.");
+	}
+
+	if (Array.isArray(value)) {
+		return value.some(hasCurrentUserTemplate);
+	}
+
+	if (value && typeof value === "object") {
+		return Object.values(value).some(hasCurrentUserTemplate);
+	}
+
+	return false;
+}
+
+export function useCustomRequest<I extends CustomRequestIdentifier>(
+	identifier: I,
+) {
+	const key = resolveRequestKey(identifier);
+	const entry = customRequestsRegistry[key];
+	let cachedCurrentUserId: number | null = null;
+	let cachedCurrentUserData: unknown = null;
+
+	const resolveCurrentUserData = async () => {
+		const authUser = authStore.state.user;
+		if (!authUser?.id) {
+			throw new Error(
+				"Nenhum usuário autenticado disponível para preencher currentUser.",
+			);
+		}
+
+		if (cachedCurrentUserId === authUser.id && cachedCurrentUserData !== null) {
+			return cachedCurrentUserData;
+		}
+
+		try {
+			const fullCurrentUser = await nocobaseRepository.get(
+				"users",
+				authUser.id,
+			);
+			cachedCurrentUserId = authUser.id;
+			cachedCurrentUserData = fullCurrentUser;
+			return fullCurrentUser;
+		} catch {
+			cachedCurrentUserId = authUser.id;
+			cachedCurrentUserData = authUser;
+			return authUser;
+		}
+	};
+
 	return useMutation({
-		mutationFn: ({
-			key,
+		mutationFn: async ({
 			payload,
 			signal,
-		}: {
-			key: CustomRequestRegistryKey;
-			payload: unknown;
-			signal?: AbortSignal;
-		}) => sendRequest(key, { payload, signal }),
+		}: UseCustomRequestMutationInput<I>) => {
+			const requestUsesCurrentUser = hasCurrentUserTemplate(entry.payloadData);
+			const canInjectFromPayload =
+				payload && typeof payload === "object" && !Array.isArray(payload);
+			const payloadAsObject = canInjectFromPayload
+				? (payload as Record<string, unknown>)
+				: null;
+			const hasManualCurrentUser =
+				payloadAsObject !== null &&
+				"currentUser" in payloadAsObject &&
+				payloadAsObject.currentUser != null;
+
+			let finalPayload: unknown = payload;
+
+			if (requestUsesCurrentUser && !hasManualCurrentUser) {
+				const currentUser = await resolveCurrentUserData();
+				finalPayload =
+					payloadAsObject !== null
+						? { ...payloadAsObject, currentUser }
+						: { currentUser };
+			}
+
+			return sendRequest(key, { payload: finalPayload, signal });
+		},
 	});
 }
