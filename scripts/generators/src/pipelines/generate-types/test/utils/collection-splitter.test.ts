@@ -1,5 +1,5 @@
 import { splitCollectionsByConfig } from "@scripts/generators/src/pipelines/generate-types/pipeline/stages/split-collections/collection-splitter";
-import { createMockCollectionTypesMap } from "@scripts/generators/src/pipelines/generate-types/test/setup";
+import { createMockCollectionTypesMap } from "@scripts/generators/src/pipelines/generate-types/test/factories";
 import { describe, expect, it } from "vitest";
 
 describe("splitCollectionsByConfig", () => {

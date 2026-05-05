@@ -2,7 +2,7 @@ import {
 	extractRelationInfo,
 	mapFieldType,
 } from "@scripts/generators/src/pipelines/generate-types/pipeline/stages/generate-content/field-mapper";
-import { createMockField } from "@scripts/generators/src/pipelines/generate-types/test/setup";
+import { createMockField } from "@scripts/generators/src/pipelines/generate-types/test/factories";
 import { describe, expect, it } from "vitest";
 
 describe("mapFieldType", () => {

@@ -18,7 +18,7 @@ import { describe, expect, it } from "vitest";
 import {
 	createMockCollectionTypesMap,
 	createMockGeneratedTypes,
-} from "../setup";
+} from "../factories";
 
 describe("content", () => {
 	describe("generateFileHeader", () => {

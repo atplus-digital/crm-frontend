@@ -11,8 +11,11 @@ export default defineConfig({
 		globalSetup: ["./src/_tests/global-setup.ts"],
 		setupFiles: [
 			"./src/_tests/mock-env.ts",
-			"./scripts/generators/src/pipelines/generate-types/test/setup.ts",
+			"./scripts/generators/__tests__/setup.ts",
 		],
+		onConsoleLog() {
+			return false;
+		},
 		coverage: {
 			provider: "v8",
 			reporter: ["text", "json-summary", "html-spa"],
