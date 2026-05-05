@@ -1,6 +1,7 @@
 # Extract Shared Script Utilities
 
 ## TL;DR
+
 > **Summary**: Extracts duplicated utilities (logger, workspace locker, env config parser, string helpers) from `scripts/generate-types/` and `scripts/generate-custom-requests/` into a new `scripts/shared/` module, eliminating 4 code duplications and formalizing shared dependencies.
 > **Deliverables**: `scripts/shared/utils/` (logger, workspace-locker, env-config, strings), `scripts/shared/test/` (test files), updated imports across both scripts, thin adapter wrappers per script.
 > **Effort**: Short
@@ -8,10 +9,13 @@
 > **Critical Path**: Wave 1 (foundation) → Wave 2 (import updates + workspace locker) → Wave 6 (verification)
 
 ## Context
+
 ### Original Request
+
 > "Eu tenho dois scripts @scripts/generate-types/ e @scripts/generate-custom-requests/. E eles compartilham algumas funcionalidades similares, quero um plano para extrair essas funcionalidades para serem reutilizáveis."
 
 ### Interview Summary
+
 - **Target**: `scripts/shared/` with `utils/` subdirectory
 - **Scope**: Logger, Workspace Locker (adapter pattern), Config Parser Base (env loading + Zod validation), String Utilities
 - **Test Strategy**: Move tests to `scripts/shared/test/`, update imports
@@ -19,6 +23,7 @@
 - **Alias**: `@scripts/*` → `./scripts/*` already exists in `tsconfig.json` and `vitest.config.ts`
 
 ### Metis Review (gaps addressed)
+
 - **Guardrail**: `npx knip` after extraction to catch unused exports
 - **Guardrail**: Run both `pnpm generate-types` and `pnpm generate-custom-requests` to verify end-to-end
 - **Edge case**: Workspace locker needs to handle empty `outputDirs` array (no-op)
@@ -27,10 +32,13 @@
 - **Assumption validated**: `@scripts/shared/*` resolves correctly via existing alias
 
 ## Work Objectives
+
 ### Core Objective
+
 Create `scripts/shared/` with reusable utilities, update both scripts to consume them, eliminate all code duplication.
 
 ### Deliverables
+
 1. `scripts/shared/utils/logger.ts` — structured logger with levels
 2. `scripts/shared/utils/strings.ts` — `escapeString`, `serializePayloadData`
 3. `scripts/shared/utils/env-config.ts` — shared env loading + Zod validation
@@ -40,6 +48,7 @@ Create `scripts/shared/` with reusable utilities, update both scripts to consume
 7. Tests moved to `scripts/shared/test/`
 
 ### Definition of Done
+
 ```bash
 # All tests pass
 pnpm test scripts/shared scripts/generate-types scripts/generate-custom-requests
@@ -60,6 +69,7 @@ grep -r "function escapeString" scripts/ | grep -v shared/
 ```
 
 ### Must Have
+
 - Logger in shared, all imports updated
 - Workspace locker unified, both scripts functional
 - String utilities in shared, writer files deduplicated
@@ -67,6 +77,7 @@ grep -r "function escapeString" scripts/ | grep -v shared/
 - All existing tests pass after migration
 
 ### Must NOT Have
+
 - Shared imports from generate-types or generate-custom-requests (one-way only: scripts → shared)
 - Breaking changes to public API of either script
 - New dependencies
@@ -74,13 +85,17 @@ grep -r "function escapeString" scripts/ | grep -v shared/
 - Manual edits to generated files in `src/generated/`
 
 ## Verification Strategy
+
 > ZERO HUMAN INTERVENTION — all verification is agent-executed.
+
 - Test decision: **tests-after** — migrate existing tests, add tests for new shared utilities
 - QA policy: Every task has agent-executed scenarios
 - Evidence: `.sisyphus/evidence/task-{N}-{slug}.{ext}`
 
 ## Execution Strategy
+
 ### Parallel Execution Waves
+
 > Target: 5-8 tasks per wave.
 
 Wave 1: Foundation — create directory structure, extract pure utilities (4 tasks, all parallel)
@@ -92,34 +107,36 @@ Wave 6: Final verification
 
 ### Dependency Matrix
 
-| Task | Blocks | Blocked By |
-|------|--------|------------|
-| T1 | — | — |
-| T2 | T5, T7 | T1 |
-| T3 | T6, T10 | T1 |
-| T4 | T8 | T1 |
-| T5 | — | T2 |
-| T6 | — | T3 |
-| T7 | T9, T10 | T2 |
-| T8 | T9, T10 | T4 |
-| T9 | — | T7, T8 |
-| T10 | T11 | T6, T9 |
-| T11 | — | T10 |
-| T12 | — | T11 |
-| T13 | — | T12 |
-| F1-F4 | — | T13 |
+| Task  | Blocks  | Blocked By |
+| ----- | ------- | ---------- |
+| T1    | —       | —          |
+| T2    | T5, T7  | T1         |
+| T3    | T6, T10 | T1         |
+| T4    | T8      | T1         |
+| T5    | —       | T2         |
+| T6    | —       | T3         |
+| T7    | T9, T10 | T2         |
+| T8    | T9, T10 | T4         |
+| T9    | —       | T7, T8     |
+| T10   | T11     | T6, T9     |
+| T11   | —       | T10        |
+| T12   | —       | T11        |
+| T13   | —       | T12        |
+| F1-F4 | —       | T13        |
 
 ### Agent Dispatch Summary
-| Wave | Tasks | Categories |
-|------|-------|------------|
-| 1 | T1-T4 | visual-engineering (logger), unspecified-low (strings, env-config, directory) |
-| 2 | T5-T6 | unspecified-low |
-| 3 | T7-T9 | unspecified-low |
-| 4 | T10-T12 | unspecified-low |
-| 5 | T13-T14 | unspecified-low |
-| 6 | F1-F4 | oracle, unspecified-high ×2, deep |
+
+| Wave | Tasks   | Categories                                                                    |
+| ---- | ------- | ----------------------------------------------------------------------------- |
+| 1    | T1-T4   | visual-engineering (logger), unspecified-low (strings, env-config, directory) |
+| 2    | T5-T6   | unspecified-low                                                               |
+| 3    | T7-T9   | unspecified-low                                                               |
+| 4    | T10-T12 | unspecified-low                                                               |
+| 5    | T13-T14 | unspecified-low                                                               |
+| 6    | F1-F4   | oracle, unspecified-high ×2, deep                                             |
 
 ## TODOs
+
 > Implementation + Test = ONE task. Never separate.
 > EVERY task MUST have: Agent Profile + Parallelization + QA Scenarios.
 
@@ -147,6 +164,7 @@ Wave 6: Final verification
   - [ ] `scripts/shared/AGENTS.md` exists with overview, filemap, and import examples
 
   **QA Scenarios**:
+
   ```
   Scenario: Directory structure verified
     Tool: Bash
@@ -180,6 +198,7 @@ Wave 6: Final verification
   - [ ] `pnpm test scripts/shared/test/logger.test.ts` passes
 
   **QA Scenarios**:
+
   ```
   Scenario: Logger tests pass from shared location
     Tool: Bash
@@ -221,6 +240,7 @@ Wave 6: Final verification
   - [ ] `pnpm test scripts/shared/test/strings.test.ts` passes
 
   **QA Scenarios**:
+
   ```
   Scenario: escapeString handles all special chars
     Tool: Bash
@@ -261,6 +281,7 @@ Wave 6: Final verification
   - [ ] `pnpm test scripts/shared/test/env-config.test.ts` passes
 
   **QA Scenarios**:
+
   ```
   Scenario: normalizeBaseUrl strips trailing slashes
     Tool: Bash
@@ -305,6 +326,7 @@ Wave 6: Final verification
   - [ ] `pnpm generate-types` runs without errors
 
   **QA Scenarios**:
+
   ```
   Scenario: Type generation still works after logger migration
     Tool: Bash
@@ -348,6 +370,7 @@ Wave 6: Final verification
   - [ ] `pnpm generate-custom-requests` runs without errors
 
   **QA Scenarios**:
+
   ```
   Scenario: Custom requests generation still works after migration
     Tool: Bash
@@ -393,6 +416,7 @@ Wave 6: Final verification
   - [ ] `pnpm test scripts/shared/test/workspace-locker.test.ts` passes
 
   **QA Scenarios**:
+
   ```
   Scenario: lockWorkspace writes correct readonlyInclude patterns
     Tool: Bash
@@ -441,6 +465,7 @@ Wave 6: Final verification
   - [ ] `pnpm generate-types` locking behavior unchanged
 
   **QA Scenarios**:
+
   ```
   Scenario: generate-types workspace locking still works
     Tool: Bash
@@ -482,6 +507,7 @@ Wave 6: Final verification
   - [ ] `pnpm test scripts/generate-custom-requests` passes
 
   **QA Scenarios**:
+
   ```
   Scenario: generate-custom-requests workspace locking is functional
     Tool: Bash
@@ -525,6 +551,7 @@ Wave 6: Final verification
   - [ ] `pnpm generate-types` runs without errors
 
   **QA Scenarios**:
+
   ```
   Scenario: Env config behavior unchanged after migration
     Tool: Bash
@@ -567,6 +594,7 @@ Wave 6: Final verification
   - [ ] `pnpm generate-custom-requests` runs without errors
 
   **QA Scenarios**:
+
   ```
   Scenario: Custom requests config parsing unchanged
     Tool: Bash
@@ -606,6 +634,7 @@ Wave 6: Final verification
   - [ ] `pnpm typecheck` passes
 
   **QA Scenarios**:
+
   ```
   Scenario: Full test suite runs cleanly
     Tool: Bash
@@ -647,6 +676,7 @@ Wave 6: Final verification
   - [ ] `pnpm knip` reports no unused exports in scripts/shared/
 
   **QA Scenarios**:
+
   ```
   Scenario: Both scripts execute successfully
     Tool: Bash
@@ -670,14 +700,18 @@ Wave 6: Final verification
   **Commit**: NO | Message: — | Files: —
 
 ## Final Verification Wave (MANDATORY — after ALL implementation tasks)
+
 > 4 review agents run in PARALLEL. ALL must APPROVE. Present consolidated results to user and get explicit "okay" before completing.
 > **Do NOT auto-proceed after verification. Wait for user's explicit approval before marking work complete.**
 > **Never mark F1-F4 as checked before getting user's okay.** Rejection or user feedback → fix → re-run → present again → wait for okay.
+
 - [x] F1. Plan Compliance Audit — oracle
 - [x] F2. Code Quality Review — unspecified-high
 - [x] F3. Real Manual QA — unspecified-high (+ playwright if UI)
 - [x] F4. Scope Fidelity Check — deep
+
 ## Commit Strategy
+
 Atomic commits per task, conventional commit format. Final verification (T13) does NOT create a commit — it's pure verification. Commits T1-T12 only.
 
 ```
@@ -696,6 +730,7 @@ chore(vitest): clean up stale logger references
 ```
 
 ## Success Criteria
+
 ```bash
 # 1. All tests pass across all three test suites
 pnpm test scripts/shared scripts/generate-types scripts/generate-custom-requests

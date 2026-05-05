@@ -15,21 +15,21 @@ and detail-tab composition for negotiation lifecycle data.
 
 ## Key Files
 
-| File                             | Purpose                                                     |
-| -------------------------------- | ----------------------------------------------------------- |
-| `negociacoes-types.ts`           | Domain types, status/substatus labels, and filter contracts |
-| `negociacoes-service.ts`         | CRUD/list operations and CSV export helper wiring           |
-| `negociacoes-hooks.ts`           | React Query hooks and query keys                            |
-| `negociacoes-list.tsx`           | Tabular list for all negotiations                           |
-| `negociacoes-kanban.tsx`         | Kanban board grouped by workflow status                     |
-| `negociacoes-filters/`           | Kanban/list filter UIs (kanban-filters, lista-filters)      |
-| `negociacao-badges/`             | Shared badges for status/substatus/metadata (folder)        |
-| `negociacao-detalhes-tab/`       | Detail tab decomposed into card components                  |
-| `negociacao-anexos-tab.tsx`      | Detail tab for attachments                                  |
-| `negociacao-comentarios-tab.tsx` | Detail tab for comments                                     |
-| `negociacao-itens-tab.tsx`       | Detail tab for negotiated items                             |
-| `utils/export-csv.ts`            | CSV formatting utility used by negotiation export flow      |
-| `utils/negociacao-anexos-utils.tsx`| File type badge helpers and icons for attachments           |
+| File                                | Purpose                                                     |
+| ----------------------------------- | ----------------------------------------------------------- |
+| `negociacoes-types.ts`              | Domain types, status/substatus labels, and filter contracts |
+| `negociacoes-service.ts`            | CRUD/list operations and CSV export helper wiring           |
+| `negociacoes-hooks.ts`              | React Query hooks and query keys                            |
+| `negociacoes-list.tsx`              | Tabular list for all negotiations                           |
+| `negociacoes-kanban.tsx`            | Kanban board grouped by workflow status                     |
+| `negociacoes-filters/`              | Kanban/list filter UIs (kanban-filters, lista-filters)      |
+| `negociacao-badges/`                | Shared badges for status/substatus/metadata (folder)        |
+| `negociacao-detalhes-tab/`          | Detail tab decomposed into card components                  |
+| `negociacao-anexos-tab.tsx`         | Detail tab for attachments                                  |
+| `negociacao-comentarios-tab.tsx`    | Detail tab for comments                                     |
+| `negociacao-itens-tab.tsx`          | Detail tab for negotiated items                             |
+| `utils/export-csv.ts`               | CSV formatting utility used by negotiation export flow      |
+| `utils/negociacao-anexos-utils.tsx` | File type badge helpers and icons for attachments           |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

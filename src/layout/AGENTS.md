@@ -14,19 +14,19 @@ Application shell layout — shared header, sidebar, and dashboard frame used by
 
 ## Key Files
 
-| File                                 | Purpose                                                                      |
-| ------------------------------------ | ---------------------------------------------------------------------------- |
-| `dashboard-layout.tsx`               | Wraps authenticated content with sidebar provider, app header, and main area |
-| `app-header.tsx`                     | Header shell with sidebar trigger and top-level section navigation           |
-| `app-sidebar/app-sidebar.tsx`        | Sidebar composition with branding, navigation, and user footer menu          |
-| `app-sidebar/sidebar-navigation.tsx` | Renders sidebar items for the active top-level section                       |
-| `app-sidebar/nav-menu-item.tsx`      | Nav menu item wrapper that delegates to with/without submenu variants        |
-| `app-sidebar/nav-menu-item-without-submenu.tsx` | Single nav item without children                                     |
-| `app-sidebar/nav-menu-item-with-submenu.tsx` | Collapsible nav item with children submenu                                  |
-| `app-sidebar/sidebar-header.tsx`     | Sidebar brand/header link back into the app                                  |
-| `app-sidebar/sidebar-user-menu.tsx`  | User avatar dropdown and sign-out entry                                      |
-| `app-sidebar/use-user-initials.ts`   | Derives initials and display fallback for the sidebar user menu              |
-| `app-sidebar/index.ts`               | Local re-exports for layout sidebar building blocks                          |
+| File                                            | Purpose                                                                      |
+| ----------------------------------------------- | ---------------------------------------------------------------------------- |
+| `dashboard-layout.tsx`                          | Wraps authenticated content with sidebar provider, app header, and main area |
+| `app-header.tsx`                                | Header shell with sidebar trigger and top-level section navigation           |
+| `app-sidebar/app-sidebar.tsx`                   | Sidebar composition with branding, navigation, and user footer menu          |
+| `app-sidebar/sidebar-navigation.tsx`            | Renders sidebar items for the active top-level section                       |
+| `app-sidebar/nav-menu-item.tsx`                 | Nav menu item wrapper that delegates to with/without submenu variants        |
+| `app-sidebar/nav-menu-item-without-submenu.tsx` | Single nav item without children                                             |
+| `app-sidebar/nav-menu-item-with-submenu.tsx`    | Collapsible nav item with children submenu                                   |
+| `app-sidebar/sidebar-header.tsx`                | Sidebar brand/header link back into the app                                  |
+| `app-sidebar/sidebar-user-menu.tsx`             | User avatar dropdown and sign-out entry                                      |
+| `app-sidebar/use-user-initials.ts`              | Derives initials and display fallback for the sidebar user menu              |
+| `app-sidebar/index.ts`                          | Local re-exports for layout sidebar building blocks                          |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

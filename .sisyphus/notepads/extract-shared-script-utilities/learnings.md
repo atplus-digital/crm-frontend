@@ -1,7 +1,7 @@
-
 ## T10: Update generate-types to use shared env-config (2026-04-29)
 
 ### What was done
+
 - Updated `scripts/generate-types/src/utils/load-config.ts` to import from shared
 - Removed local definitions: `normalizeBaseUrl`, `resolveEnvPath`, `getEnvPaths`, `formatZodError`, `createEnvSchema`
 - Imported from `@scripts/shared/utils/env-config`: `loadEnvFiles`, `normalizeBaseUrl`, `createNocoBaseEnvSchema`, `formatZodError`
@@ -9,11 +9,13 @@
 - Used `createNocoBaseEnvSchema()` factory instead of inline `createEnvSchema()`
 
 ### Key insight
+
 - `loadEnvFiles()` in shared already handles the dotenv loading loop internally
 - This reduces code duplication and centralizes the env loading logic
 - The `resolveEnvConfig` public API remains identical — same signature and behavior
 
 ### Verification
+
 - `pnpm test scripts/generate-types`: 414 tests passed (21 files)
 - `pnpm typecheck`: Clean (0 errors)
 
@@ -22,6 +24,7 @@
 ### Verdict: REJECT (minor issues found)
 
 ### Files reviewed
+
 - `scripts/shared/utils/logger.ts` — PASS
 - `scripts/shared/utils/strings.ts` — PASS
 - `scripts/shared/utils/env-config.ts` — PASS
@@ -48,8 +51,8 @@
 
 ### Checks that passed (all clean)
 
-| Check                                                  | Result                     |
-| ------------------------------------------------------ | -------------------------- |
+| Check                                                  | Result                      |
+| ------------------------------------------------------ | --------------------------- |
 | No `as any` type assertions                            | ✅ Clean                    |
 | No `@ts-ignore`                                        | ✅ Clean                    |
 | No `console.log` (only `console.warn` for errors)      | ✅ Clean                    |
@@ -70,21 +73,22 @@ All 13 implementation tasks verified. Summary:
 
 | Task | Status | Detail                                                                                                                          |
 | ---- | ------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| T1   | ✅      | scripts/shared/utils/, test/, AGENTS.md created                                                                                 |
-| T2   | ✅      | Logger extracted: LogLevel, createLogger, logger, logInfo, logVerbose exported. Logger/LogMeta non-exported (same as original). |
-| T3   | ✅      | escapeString, serializePayloadData exported from strings.ts                                                                     |
-| T4   | ✅      | All 6 env-config functions exported                                                                                             |
-| T5   | ✅      | 12 files in generate-types import from shared; old logger.ts deleted                                                            |
-| T6   | ✅      | generate-custom-requests imports from shared; old string.ts deleted; zero inline duplicates                                     |
-| T7   | ✅      | workspace-locker accepts outputDirs: string[] parameter                                                                         |
-| T8   | ✅      | generate-types adapter = 27 lines (within 15-27 range)                                                                          |
-| T9   | ✅      | generate-custom-requests adapter = 16 lines (within 15-16 range)                                                                |
-| T10  | ✅      | load-config.ts imports from shared env-config; no duplicate functions                                                           |
-| T11  | ✅      | config.ts imports from shared env-config; no duplicate functions                                                                |
-| T12  | ✅      | vitest.config.ts has no stale references; setup.ts clean                                                                        |
-| T13  | ✅      | 516/516 tests pass; typecheck passes; knip clean for scripts/shared/                                                            |
+| T1   | ✅     | scripts/shared/utils/, test/, AGENTS.md created                                                                                 |
+| T2   | ✅     | Logger extracted: LogLevel, createLogger, logger, logInfo, logVerbose exported. Logger/LogMeta non-exported (same as original). |
+| T3   | ✅     | escapeString, serializePayloadData exported from strings.ts                                                                     |
+| T4   | ✅     | All 6 env-config functions exported                                                                                             |
+| T5   | ✅     | 12 files in generate-types import from shared; old logger.ts deleted                                                            |
+| T6   | ✅     | generate-custom-requests imports from shared; old string.ts deleted; zero inline duplicates                                     |
+| T7   | ✅     | workspace-locker accepts outputDirs: string[] parameter                                                                         |
+| T8   | ✅     | generate-types adapter = 27 lines (within 15-27 range)                                                                          |
+| T9   | ✅     | generate-custom-requests adapter = 16 lines (within 15-16 range)                                                                |
+| T10  | ✅     | load-config.ts imports from shared env-config; no duplicate functions                                                           |
+| T11  | ✅     | config.ts imports from shared env-config; no duplicate functions                                                                |
+| T12  | ✅     | vitest.config.ts has no stale references; setup.ts clean                                                                        |
+| T13  | ✅     | 516/516 tests pass; typecheck passes; knip clean for scripts/shared/                                                            |
 
 **Verification commands:**
+
 - `pnpm test scripts/shared scripts/generate-types scripts/generate-custom-requests` → 31 files, 516 tests, all passed
 - `pnpm typecheck` → exit 0, no errors
 - `pnpm knip` → no unused exports from scripts/shared/
