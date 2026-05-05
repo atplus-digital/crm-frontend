@@ -16,11 +16,10 @@ interface CreateTaskLoggerOptions<TContext extends object> {
 function createTaskOutputWriter<TContext extends object>(
 	task: ListrTaskRunner<TContext>,
 ): TaskOutputWriter {
-	const lines: string[] = [];
+	const stream = task.stdout();
 
 	return (line: string) => {
-		lines.push(line);
-		task.output = lines.join("\n");
+		stream.write(`${line}\n`);
 	};
 }
 
