@@ -7,18 +7,18 @@ export const requestsConfig: Partial<ScriptConfig> = {
 		"0j7f9fuzuo7": "quali-run",
 		tjt1ajr1tkl: "segunda-contratacao",
 	},
-	manualRequests: [
-		{
-			key: "n8nCompras",
-			name: "N8N Compras",
-			collection: "compras",
-			method: "POST",
-			url: "customRequests:send/n8nCompras",
-			payloadSchema: `z.object({
-				id_pedido: z.number(),
-				id_fornecedor: z.number(),
-				valor: z.number(),
-			})`,
-		},
-	],
+	// manualRequests: [
+	// 	{
+	// 		key: "n8nCompras",
+	// 		name: "N8N Compras",
+	// 		collection: "compras",
+	// 		method: "POST",
+	// 		url: "customRequests:send/n8nCompras",
+	// 		payloadSchema: `z.object({
+	// 			id_pedido: z.number(),
+	// 			id_fornecedor: z.number(),
+	// 			valor: z.number(),
+	// 		})`,
+	// 	},
+	// ],
 };

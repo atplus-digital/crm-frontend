@@ -1103,21 +1103,6 @@ export const generatedCustomRequestsRegistry = {
 		},
 	},
 
-	n8nCompras: {
-		key: "n8nCompras",
-		name: "N8N Compras",
-		collection: "compras",
-		dataSourceKey: "main",
-		method: "POST",
-		url: "customRequests:send/n8nCompras",
-		payloadSchema: z.object({
-			id_pedido: z.number(),
-			id_fornecedor: z.number(),
-			valor: z.number(),
-		}),
-		payloadData: null,
-	},
-
 	oj5jwqjdjts: {
 		key: "oj5jwqjdjts",
 		name: "oj5jwqjdjts",
@@ -1756,7 +1741,6 @@ export const collectionToRequestKeys = {
 		"qtd2du574v1",
 		"tjt1ajr1tkl",
 	],
-	compras: ["n8nCompras"],
 	f_funcionarios: ["81p695ox20f", "yep1cjhq0zp"],
 	fn_areceber: ["m5pu59k8p9s", "sjohhcwirxz", "sl7o14v2qhm", "spn119qrcv8"],
 	radusuarios: [
