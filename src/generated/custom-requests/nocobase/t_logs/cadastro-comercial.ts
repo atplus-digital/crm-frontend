@@ -12,13 +12,15 @@ import { usersSchema } from "#/generated/types/nocobase/users/schemas";
  * Do not edit manually — this file is preserved on regeneration.
  */
 export const payloadSchema = z.object({
-	a: z.number(),
+	a: z.literal(1).default(1).readonly(),
 	currentRecord: logsSchema.pick({
 		f_log_level: true,
 	}),
-	currentUser: usersSchema.pick({
-		nickname: true,
-	}),
+	currentUser: usersSchema
+		.pick({
+			nickname: true,
+		})
+		.optional(),
 });
 
 export const payloadData = {

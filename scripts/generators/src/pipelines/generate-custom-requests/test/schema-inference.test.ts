@@ -115,7 +115,7 @@ describe("inferPayloadSchema", () => {
       profile: z.object({
         nome: z.unknown(),
       }),
-    }),
+    }).optional(),
   })`),
 		);
 	});

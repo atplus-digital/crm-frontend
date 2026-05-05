@@ -20,6 +20,14 @@ const PLACEHOLDER_RENDER_ORDER: readonly PlaceholderRoot[] = [
 	"currentRecord",
 	"currentUser",
 ];
+const OPTIONAL_PLACEHOLDER_ROOTS = new Set<PlaceholderRoot>(["currentUser"]);
+
+function maybeOptionalPlaceholderSchema(
+	root: PlaceholderRoot,
+	schema: string,
+): string {
+	return OPTIONAL_PLACEHOLDER_ROOTS.has(root) ? `${schema}.optional()` : schema;
+}
 
 function inferPrimitiveLiteralZod(
 	val: string | number | boolean | null,
@@ -82,9 +90,13 @@ function inferObjectZod(obj: Record<string, unknown>): string {
 
 		if (tree && Object.keys(tree).length > 0) {
 			const shape = renderTree(tree, "      ", leafSchema);
-			placeholderLines.push(`    ${root}: z.object({\n${shape}\n    }),`);
+			placeholderLines.push(
+				`    ${root}: ${maybeOptionalPlaceholderSchema(root, `z.object({\n${shape}\n    })`)},`,
+			);
 		} else if (rootRefs.has(root)) {
-			placeholderLines.push(`    ${root}: ${leafSchema},`);
+			placeholderLines.push(
+				`    ${root}: ${maybeOptionalPlaceholderSchema(root, leafSchema)},`,
+			);
 		}
 	}
 

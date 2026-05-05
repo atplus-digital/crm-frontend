@@ -66,9 +66,11 @@ export const generatedCustomRequestsRegistry = {
 			currentRecord: cliente_contratoSchema.pick({
 				id: true,
 			}),
-			currentUser: usersSchema.pick({
-				f_id_vendedor_ixc: true,
-			}),
+			currentUser: usersSchema
+				.pick({
+					f_id_vendedor_ixc: true,
+				})
+				.optional(),
 		}),
 		payloadData: {
 			id_contrato: "{{currentRecord.id}}",
@@ -164,13 +166,15 @@ export const generatedCustomRequestsRegistry = {
 				id: true,
 				numero: true,
 			}),
-			currentUser: usersSchema.pick({
-				f_id_vendedor_ixc: true,
-			}),
-			f_endereco_estado: z.string(),
-			f_motivo: z.string(),
-			f_status: z.string(),
-			f_valor_instalacao: z.string(),
+			currentUser: usersSchema
+				.pick({
+					f_id_vendedor_ixc: true,
+				})
+				.optional(),
+			f_endereco_estado: z.literal("SC").default("SC").readonly(),
+			f_motivo: z.literal("S").default("S").readonly(),
+			f_status: z.literal("1").default("1").readonly(),
+			f_valor_instalacao: z.literal("0").default("0").readonly(),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
@@ -531,9 +535,11 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_demandas:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			currentUser: usersSchema.pick({
-				id: true,
-			}),
+			currentUser: usersSchema
+				.pick({
+					id: true,
+				})
+				.optional(),
 		}),
 		payloadData: {
 			f_responsavel: "{{currentUser.id}}",
@@ -623,11 +629,13 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			currentUser: usersSchema.pick({
-				f_id_vendedor_ixc: true,
-			}),
-			f_status: z.number(),
-			f_substatus: z.number(),
+			currentUser: usersSchema
+				.pick({
+					f_id_vendedor_ixc: true,
+				})
+				.optional(),
+			f_status: z.literal(2).default(2).readonly(),
+			f_substatus: z.literal(1).default(1).readonly(),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
@@ -753,7 +761,10 @@ export const generatedCustomRequestsRegistry = {
 			currentRecord: negociacoesSchema.pick({
 				id: true,
 			}),
-			procedimento: z.string(),
+			procedimento: z
+				.literal("17760523-1404-4ff9-b786-15a4b0d7a3e2")
+				.default("17760523-1404-4ff9-b786-15a4b0d7a3e2")
+				.readonly(),
 		}),
 		payloadData: {
 			procedimento: "17760523-1404-4ff9-b786-15a4b0d7a3e2",
@@ -770,10 +781,12 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://n8n.atplus.cloud/webhook/7578902b-c9b8-48df-a299-d21813709f13",
 		payloadSchema: z.object({
 			currentRecord: z.object({}).catchall(z.unknown()),
-			currentUser: usersSchema.pick({
-				f_id_tecnico_ixc: true,
-				nickname: true,
-			}),
+			currentUser: usersSchema
+				.pick({
+					f_id_tecnico_ixc: true,
+					nickname: true,
+				})
+				.optional(),
 		}),
 		payloadData: {
 			id_os: "{{currentRecord.id}}",
@@ -990,9 +1003,11 @@ export const generatedCustomRequestsRegistry = {
 			currentRecord: cliente_contratoSchema.pick({
 				id: true,
 			}),
-			currentUser: usersSchema.pick({
-				f_id_vendedor_ixc: true,
-			}),
+			currentUser: usersSchema
+				.pick({
+					f_id_vendedor_ixc: true,
+				})
+				.optional(),
 		}),
 		payloadData: {
 			id_contrato: "{{currentRecord.id}}",
@@ -1041,9 +1056,11 @@ export const generatedCustomRequestsRegistry = {
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/9571dab3-4e39-429e-a602-ae3619819b70",
 		payloadSchema: z.object({
-			currentUser: usersSchema.pick({
-				nickname: true,
-			}),
+			currentUser: usersSchema
+				.pick({
+					nickname: true,
+				})
+				.optional(),
 		}),
 		payloadData: {
 			apelido: "{{currentUser.nickname}}",
@@ -1059,11 +1076,13 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			currentUser: usersSchema.pick({
-				f_id_vendedor_ixc: true,
-			}),
-			f_status: z.number(),
-			f_substatus: z.number(),
+			currentUser: usersSchema
+				.pick({
+					f_id_vendedor_ixc: true,
+				})
+				.optional(),
+			f_status: z.literal(2).default(2).readonly(),
+			f_substatus: z.literal(1).default(1).readonly(),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
@@ -1201,10 +1220,12 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_crm_troca_titularidade:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			currentUser: usersSchema.pick({
-				f_id_vendedor_ixc: true,
-			}),
-			f_status: z.number(),
+			currentUser: usersSchema
+				.pick({
+					f_id_vendedor_ixc: true,
+				})
+				.optional(),
+			f_status: z.literal(0).default(0).readonly(),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
@@ -1221,11 +1242,13 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			currentUser: usersSchema.pick({
-				f_id_vendedor_ixc: true,
-			}),
-			f_status: z.number(),
-			f_substatus: z.number(),
+			currentUser: usersSchema
+				.pick({
+					f_id_vendedor_ixc: true,
+				})
+				.optional(),
+			f_status: z.literal(2).default(2).readonly(),
+			f_substatus: z.literal(1).default(1).readonly(),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
@@ -1243,11 +1266,13 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
 		payloadSchema: z.object({
-			currentUser: usersSchema.pick({
-				f_id_vendedor_ixc: true,
-			}),
-			f_status: z.number(),
-			f_substatus: z.number(),
+			currentUser: usersSchema
+				.pick({
+					f_id_vendedor_ixc: true,
+				})
+				.optional(),
+			f_status: z.literal(2).default(2).readonly(),
+			f_substatus: z.literal(1).default(1).readonly(),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
@@ -1538,7 +1563,10 @@ export const generatedCustomRequestsRegistry = {
 			currentRecord: negociacoesSchema.pick({
 				id: true,
 			}),
-			procedimento: z.string(),
+			procedimento: z
+				.literal("17760523-1404-4ff9-b786-15a4b0d7a3e2")
+				.default("17760523-1404-4ff9-b786-15a4b0d7a3e2")
+				.readonly(),
 		}),
 		payloadData: {
 			procedimento: "17760523-1404-4ff9-b786-15a4b0d7a3e2",
@@ -1636,7 +1664,7 @@ export const generatedCustomRequestsRegistry = {
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook-test/d86bf3fb-47da-4abc-916b-e08ebd07e231",
 		payloadSchema: z.object({
-			currentUser: usersSchema,
+			currentUser: usersSchema.optional(),
 		}),
 		payloadData: {
 			TESTE: "{{currentUser}}",
@@ -1693,11 +1721,13 @@ export const generatedCustomRequestsRegistry = {
 		url: "https://jsonplaceholder.typicode.com/todos/1",
 		payloadSchema: z.object({
 			$nForm: logsSchema,
-			currentUser: usersSchema.pick({
-				id: true,
-			}),
-			record: z.string(),
-			xicara: z.string(),
+			currentUser: usersSchema
+				.pick({
+					id: true,
+				})
+				.optional(),
+			record: z.literal("").default("").readonly(),
+			xicara: z.literal("cafe").default("cafe").readonly(),
 		}),
 		payloadData: {
 			form: "{{$nForm}}",

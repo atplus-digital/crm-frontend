@@ -13,7 +13,7 @@ type RequestIdentifierForKey<K extends CustomRequestRegistryKey> =
 	| (typeof customRequestsRegistry)[K]["name"]
 	| `${(typeof customRequestsRegistry)[K]["collection"]}.${(typeof customRequestsRegistry)[K]["name"]}`
 	| `${(typeof customRequestsRegistry)[K]["dataSourceKey"]}.${(typeof customRequestsRegistry)[K]["collection"]}.${(typeof customRequestsRegistry)[K]["name"]}`;
-type CustomRequestIdentifier = {
+export type CustomRequestIdentifier = {
 	[K in CustomRequestRegistryKey]: RequestIdentifierForKey<K>;
 }[CustomRequestRegistryKey];
 type RequestKeyFromIdentifier<I extends CustomRequestIdentifier> = {
@@ -29,10 +29,12 @@ type PayloadWithOptionalCurrentUser<T> = T extends {
 }
 	? Omit<T, "currentUser"> & { currentUser?: TCurrentUser }
 	: T;
-type UseCustomRequestMutationInput<I extends CustomRequestIdentifier> = {
-	payload: PayloadWithOptionalCurrentUser<
+export type CustomRequestPayload<I extends CustomRequestIdentifier> =
+	PayloadWithOptionalCurrentUser<
 		PayloadByRequestKey<RequestKeyFromIdentifier<I>>
 	>;
+type UseCustomRequestMutationInput<I extends CustomRequestIdentifier> = {
+	payload: CustomRequestPayload<I>;
 	signal?: AbortSignal;
 };
 

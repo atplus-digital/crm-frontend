@@ -12,7 +12,10 @@ import { qualirun_info_adicionaisSchema } from "#/generated/types/nocobase/other
  */
 export const payloadSchema = z.object({
 	$nSelectedRecord: z.array(qualirun_info_adicionaisSchema),
-	etapa: z.string(),
+	etapa: z
+		.literal("aprova-informacoes")
+		.default("aprova-informacoes")
+		.readonly(),
 });
 
 export const payloadData = {

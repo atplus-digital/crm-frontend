@@ -13,37 +13,15 @@ The feature consumes a single generated registry source:
 
 Both are merged during generation and emitted into `src/generated/custom-requests/generated-registry.ts`.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    NocoBase API                             │
-└─────────────────────────┬───────────────────────────────────┘
-                          │
-                          │ pnpm generate-custom-requests
-                          ▼
-┌──────────────────────────────────────────────────────────────┐
-│ scripts/generate-custom-requests/config.ts                  │
-│  - splitRequests                                             │
-│  - manualRequests                                            │
-└─────────────────────────┬────────────────────────────────────┘
-                          │ merge during generation
-                          ▼
-┌──────────────────────────────────────────────────────────────┐
-│ src/generated/custom-requests/generated-registry.ts          │
-│  - customRequestsRegistry                                    │
-│  - CustomRequestRegistryKey                                  │
-└─────────────────────────┬────────────────────────────────────┘
-                          │
-              ┌───────────┼───────────┐
-              ▼           ▼           ▼
-         service.ts     hooks/      index.ts
-```
-
 ## Structure
 
 ```
 custom-requests/
 ├── index.ts                        # Feature public exports
 ├── errors.ts                       # Error classes
+├── components/
+│   ├── index.ts                    # Component exports
+│   └── popup-request.tsx           # Dialog + button component for custom requests
 ├── hooks/
 │   └── use-custom-requests.ts      # React Query hook
 ├── utils/
@@ -60,6 +38,7 @@ custom-requests/
 | ----------------------------------------------------- | ------------------------------------------------------ |
 | `src/generated/custom-requests/generated-registry.ts` | Final generated registry (API + manual config entries) |
 | `scripts/generate-custom-requests/config.ts`          | Declares `splitRequests` and `manualRequests`          |
+| `components/popup-request.tsx`                        | Dialog button component with confirmation flow         |
 | `utils/service.ts`                                    | Core execution and payload validation                  |
 | `hooks/use-custom-requests.ts`                        | React Query mutation wrapper                           |
 | `errors.ts`                                           | CustomRequestError hierarchy                           |
@@ -73,6 +52,8 @@ custom-requests/
 
 ## Usage
 
+### Hook (imperative)
+
 ```typescript
 import { sendRequest, useCustomRequest } from "#/features/custom-requests";
 
@@ -82,6 +63,37 @@ const result = await sendRequest("criarContratoIxc", {
 
 const mutation = useCustomRequest("criarContratoIxc");
 mutation.mutate({ payload: { id_contrato: 1 } });
+```
+
+### PopupRequest Component
+
+Button component with integrated dialog for executing custom requests:
+
+```tsx
+import { PopupRequest } from "#/features/custom-requests";
+
+// Basic usage with confirmation (default)
+<PopupRequest identifier="negociacao_atualizada" payload={{ id: 1 }}>
+  Atualizar Negociação
+</PopupRequest>
+
+// Skip confirmation (direct execution)
+<PopupRequest identifier="log_test" confirm={false}>
+  Executar Log
+</PopupRequest>
+
+// With custom confirmation message
+<PopupRequest identifier="qualirun" confirmMessage="Executar QUALI RUN?">
+  Executar
+</PopupRequest>
+
+// With success callback
+<PopupRequest
+  identifier="qualirun"
+  onSuccess={(data) => console.log("Sucesso:", data)}
+>
+  Executar
+</PopupRequest>
 ```
 
 When payload templates reference `currentUser` (for example `{{currentUser.id}}`),

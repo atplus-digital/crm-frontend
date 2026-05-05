@@ -9,7 +9,10 @@ import {
 	findSchema,
 	generateSchemaPickCode,
 } from "../../../../utils/collection-schema-loader";
-import { inferPayloadSchema } from "../../../../utils/schema-inference";
+import {
+	inferPayloadSchema,
+	inferPrimitiveLiteralZod,
+} from "../../../../utils/schema-inference";
 
 const COLLECTION_PLACEHOLDERS = [
 	"$nForm",
@@ -54,6 +57,9 @@ function generatePlaceholderSchema(
 		if (placeholder === "$nSelectedRecord") {
 			return `z.array(${placeholderSchema.schemaName})`;
 		}
+		if (placeholder === "currentUser") {
+			return `${placeholderSchema.schemaName}.optional()`;
+		}
 		return placeholderSchema.schemaName;
 	}
 
@@ -61,15 +67,22 @@ function generatePlaceholderSchema(
 	if (placeholder === "$nSelectedRecord") {
 		return `z.array(${pickCode})`;
 	}
+	if (placeholder === "currentUser") {
+		return `${pickCode}.optional()`;
+	}
 
 	return pickCode;
 }
 
 function inferFieldSchema(value: unknown): string {
-	if (value === null) return "z.string()";
-	if (typeof value === "string") return "z.string()";
-	if (typeof value === "number") return "z.number()";
-	if (typeof value === "boolean") return "z.boolean()";
+	if (value === null) return inferPrimitiveLiteralZod(null);
+	if (typeof value === "string") return inferPrimitiveLiteralZod(value);
+	if (typeof value === "number") {
+		return Number.isFinite(value)
+			? inferPrimitiveLiteralZod(value)
+			: "z.number()";
+	}
+	if (typeof value === "boolean") return inferPrimitiveLiteralZod(value);
 	if (Array.isArray(value)) return "z.array(z.unknown())";
 	if (typeof value === "object") return "z.record(z.unknown())";
 	return "z.unknown()";
@@ -86,7 +99,7 @@ function getPlaceholderFallback(placeholder: string): string {
 		case "currentRecord":
 			return "z.object({}).catchall(z.unknown())";
 		case "currentUser":
-			return "z.object({ id: z.unknown() })";
+			return "z.object({ id: z.unknown() }).optional()";
 		default:
 			return "z.unknown()";
 	}

@@ -296,6 +296,53 @@ describe("transformApiEntryToRegistry", () => {
 		);
 		expect(result.entry?.payloadSchema).toContain("f_id_vendedor_ixc: true,");
 		expect(result.entry?.payloadSchema).toContain("profile: true,");
+		expect(result.entry?.payloadSchema).toContain("}).optional(),");
+	});
+
+	it("deve manter literais default para números constantes no schema enriquecido", () => {
+		const schemaRegistry: SchemaRegistry = new Map([
+			[
+				"main:users",
+				{
+					collectionName: "users",
+					dataSourceKey: "main",
+					schemaImportPath: "#/generated/types/nocobase/users/schemas",
+					schemaName: "usersSchema",
+					baseSchemaName: "usersBaseSchema",
+					availableFields: new Set(["nickname"]),
+				},
+			],
+		]);
+
+		const entry = {
+			key: "schema-constants-as-literals",
+			name: "Schema Constants As Literals",
+			options: {
+				collectionName: "t_logs",
+				dataSourceKey: "main",
+				method: "POST",
+				url: "/webhook/test",
+				data: {
+					a: 1,
+					status: "ok",
+					rec: "{{currentUser.nickname}}",
+				},
+			},
+		};
+
+		const result = transformApiEntryToRegistry(
+			entry,
+			undefined,
+			schemaRegistry,
+		);
+
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.payloadSchema).toContain(
+			"a: z.literal(1).default(1).readonly(),",
+		);
+		expect(result.entry?.payloadSchema).toContain(
+			'status: z.literal("ok").default("ok").readonly(),',
+		);
 	});
 });
 

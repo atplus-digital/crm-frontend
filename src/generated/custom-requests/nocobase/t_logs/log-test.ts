@@ -13,9 +13,11 @@ import { usersSchema } from "#/generated/types/nocobase/users/schemas";
  */
 export const payloadSchema = z.object({
 	$nSelectedRecord: z.array(logsSchema),
-	currentUser: usersSchema.pick({
-		id: true,
-	}),
+	currentUser: usersSchema
+		.pick({
+			id: true,
+		})
+		.optional(),
 });
 
 export const payloadData = {

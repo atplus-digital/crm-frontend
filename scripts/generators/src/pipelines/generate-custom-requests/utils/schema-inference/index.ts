@@ -1,4 +1,4 @@
-import { inferObjectZod } from "./value-inferrer";
+import { inferObjectZod, inferPrimitiveLiteralZod } from "./value-inferrer";
 
 export function inferPayloadSchema(
 	data: Record<string, unknown> | null,
@@ -9,3 +9,5 @@ export function inferPayloadSchema(
 
 	return inferObjectZod(data);
 }
+
+export { inferPrimitiveLiteralZod };

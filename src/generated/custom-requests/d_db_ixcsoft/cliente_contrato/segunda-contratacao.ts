@@ -15,9 +15,11 @@ export const payloadSchema = z.object({
 	currentRecord: cliente_contratoSchema.pick({
 		id: true,
 	}),
-	currentUser: usersSchema.pick({
-		f_id_vendedor_ixc: true,
-	}),
+	currentUser: usersSchema
+		.pick({
+			f_id_vendedor_ixc: true,
+		})
+		.optional(),
 });
 
 export const payloadData = {
