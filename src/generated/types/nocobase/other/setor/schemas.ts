@@ -5,6 +5,10 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
+import { sistemas_acessosBaseSchema } from "../sistemas-acessos/schemas";
+
 export const T_SETOR_TABLE_NAME = "t_setor";
 
 // ============================================================
@@ -23,17 +27,17 @@ export const setorBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const setorRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().array(),
-	f_funcionarios_1: z.number().array(),
-	f_sistemas_acessos: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.array()),
+	f_funcionarios_1: z.lazy(() => f_funcionariosBaseSchema.array()),
+	f_sistemas_acessos: z.lazy(() => sistemas_acessosBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const setorSchema = setorBaseSchema.merge(setorRelationSchema);
+export const setorSchema = setorBaseSchema.extend(setorRelationSchema.shape);
 
 // ============================================================
 // CREATE SCHEMA

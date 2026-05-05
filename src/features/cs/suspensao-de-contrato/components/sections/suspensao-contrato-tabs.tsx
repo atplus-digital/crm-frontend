@@ -6,7 +6,6 @@ import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
 import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { SUSPENSAO_CONTRATO_STATUS_LABELS } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
-import type { Contratos } from "#/generated/types/nocobase/index";
 import { formatPhone } from "#/lib/utils";
 import { SuspensaoContratoActions } from "./suspensao-contrato-actions";
 
@@ -131,7 +130,7 @@ export function SuspensaoContratoTabs({
 							{suspensaoContrato.f_contratos &&
 							suspensaoContrato.f_contratos.length > 0 ? (
 								<div className="space-y-2">
-									{suspensaoContrato.f_contratos.map((contrato: Contratos) => (
+									{suspensaoContrato.f_contratos.map((contrato) => (
 										<div key={contrato.id}>
 											<a
 												href={contrato.url || "#"}

@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_ZAPSIGN_TABLE_NAME = "t_zapsign";
 
 // ============================================================
@@ -25,14 +27,16 @@ export const zapsignBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const zapsignRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const zapsignSchema = zapsignBaseSchema.merge(zapsignRelationSchema);
+export const zapsignSchema = zapsignBaseSchema.extend(
+	zapsignRelationSchema.shape,
+);
 
 // ============================================================
 // CREATE SCHEMA

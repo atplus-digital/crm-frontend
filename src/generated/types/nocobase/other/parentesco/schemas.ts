@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
+
 export const T_PARENTESCO_TABLE_NAME = "t_parentesco";
 
 // ============================================================
@@ -24,16 +27,16 @@ export const parentescoBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const parentescoRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const parentescoSchema = parentescoBaseSchema.merge(
-	parentescoRelationSchema,
+export const parentescoSchema = parentescoBaseSchema.extend(
+	parentescoRelationSchema.shape,
 );
 
 // ============================================================

@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
 import {
 	patrimonioEstadoUsoSchema,
 	patrimonioTipoPatrimonioSchema,
@@ -38,16 +40,16 @@ export const patrimonioBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const patrimonioRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const patrimonioSchema = patrimonioBaseSchema.merge(
-	patrimonioRelationSchema,
+export const patrimonioSchema = patrimonioBaseSchema.extend(
+	patrimonioRelationSchema.shape,
 );
 
 // ============================================================

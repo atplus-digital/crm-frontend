@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { produtosBaseSchema } from "../produtos/schemas";
 import {
 	pacotesAbreAtendimentoSchema,
 	pacotesClausulaBonusVelocidadeSchema,
@@ -43,15 +45,17 @@ export const pacotesBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const pacotesRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_itens_do_pacote: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_itens_do_pacote: z.lazy(() => produtosBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const pacotesSchema = pacotesBaseSchema.merge(pacotesRelationSchema);
+export const pacotesSchema = pacotesBaseSchema.extend(
+	pacotesRelationSchema.shape,
+);
 
 // ============================================================
 // CREATE SCHEMA

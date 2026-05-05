@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import { discosCapacidadeSchema, discosTipoSchema } from "./labels";
 
 export const T_DISCOS_TABLE_NAME = "t_discos";
@@ -31,14 +32,14 @@ export const discosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const discosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const discosSchema = discosBaseSchema.merge(discosRelationSchema);
+export const discosSchema = discosBaseSchema.extend(discosRelationSchema.shape);
 
 // ============================================================
 // CREATE SCHEMA

@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { datacenter_memoriasBaseSchema } from "../datacenter-memorias/schemas";
+import { discosBaseSchema } from "../discos/schemas";
 import {
 	dc_servidoresFabricanteSchema,
 	dc_servidoresStatusSchema,
@@ -33,17 +36,17 @@ export const dc_servidoresBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const dc_servidoresRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_discos: z.number().array(),
-	f_memorias: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_discos: z.lazy(() => discosBaseSchema.array()),
+	f_memorias: z.lazy(() => datacenter_memoriasBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const dc_servidoresSchema = dc_servidoresBaseSchema.merge(
-	dc_servidoresRelationSchema,
+export const dc_servidoresSchema = dc_servidoresBaseSchema.extend(
+	dc_servidoresRelationSchema.shape,
 );
 
 // ============================================================

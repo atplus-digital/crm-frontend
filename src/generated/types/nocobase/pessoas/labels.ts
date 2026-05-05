@@ -10,14 +10,14 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const PESSOAS_ANALISEIXC_LABELS = {
-	"0": "Com Pendências",
-	"1": "Sem Pendências",
+	0: "Com Pendências",
+	1: "Sem Pendências",
 } as const;
 
 export const PESSOAS_CREDITO_LABELS = {
-	"1": "Aprovado",
-	"2": "Aprovado com Atenção",
-	"9": "Negado",
+	1: "Aprovado",
+	2: "Aprovado com Atenção",
+	9: "Negado",
 } as const;
 
 export const PESSOAS_SEXO_LABELS = {

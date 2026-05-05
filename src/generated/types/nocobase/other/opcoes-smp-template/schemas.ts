@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_OPCOES_SMP_TEMPLATE_TABLE_NAME = "t_opcoes_smp_template";
 
 // ============================================================
@@ -29,15 +31,15 @@ export const opcoes_smp_templateBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const opcoes_smp_templateRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const opcoes_smp_templateSchema = opcoes_smp_templateBaseSchema.merge(
-	opcoes_smp_templateRelationSchema,
+export const opcoes_smp_templateSchema = opcoes_smp_templateBaseSchema.extend(
+	opcoes_smp_templateRelationSchema.shape,
 );
 
 // ============================================================

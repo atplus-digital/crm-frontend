@@ -10,19 +10,19 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const DEMANDASVIABILIDADES_FORMAATENDIMENTO_LABELS = {
-	"1": "Rede Própria",
-	"2": "Ultima Milha de Terceiros",
+	1: "Rede Própria",
+	2: "Ultima Milha de Terceiros",
 } as const;
 
 export const DEMANDASVIABILIDADES_SERVICOPRETENDIDO_LABELS = {
-	"1": "Link Dedicado",
-	"2": "E-Line",
+	1: "Link Dedicado",
+	2: "E-Line",
 } as const;
 
 export const DEMANDASVIABILIDADES_STATUS_LABELS = {
-	"1": "Aguardando",
-	"2": "Viável",
-	"3": "Não Viável",
+	1: "Aguardando",
+	2: "Viável",
+	3: "Não Viável",
 } as const;
 
 // ============================================================

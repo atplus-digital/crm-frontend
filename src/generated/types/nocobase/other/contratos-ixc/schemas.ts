@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { contrato_ixc_itensBaseSchema } from "../contrato-ixc-itens/schemas";
+
 export const T_CONTRATOS_IXC_TABLE_NAME = "t_contratos_ixc";
 
 // ============================================================
@@ -23,16 +26,16 @@ export const contratos_ixcBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const contratos_ixcRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_itens_contrato: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_itens_contrato: z.lazy(() => contrato_ixc_itensBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const contratos_ixcSchema = contratos_ixcBaseSchema.merge(
-	contratos_ixcRelationSchema,
+export const contratos_ixcSchema = contratos_ixcBaseSchema.extend(
+	contratos_ixcRelationSchema.shape,
 );
 
 // ============================================================

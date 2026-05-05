@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import {
 	viagem_solicitacaoDestinoViagemSchema,
 	viagem_solicitacaoDiariaSchema,
@@ -44,16 +45,16 @@ export const viagem_solicitacaoBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const viagem_solicitacaoRelationSchema = z.object({
-	createdBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
 	f_anexos: z.number().array(),
-	updatedBy: z.number().nullable(),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const viagem_solicitacaoSchema = viagem_solicitacaoBaseSchema.merge(
-	viagem_solicitacaoRelationSchema,
+export const viagem_solicitacaoSchema = viagem_solicitacaoBaseSchema.extend(
+	viagem_solicitacaoRelationSchema.shape,
 );
 
 // ============================================================

@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../users/schemas";
 import { empresasAnaliseIxcSchema, empresasCreditoSchema } from "./labels";
 
 export const T_EMPRESAS_TABLE_NAME = "t_empresas";
@@ -32,14 +33,16 @@ export const empresasBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const empresasRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const empresasSchema = empresasBaseSchema.merge(empresasRelationSchema);
+export const empresasSchema = empresasBaseSchema.extend(
+	empresasRelationSchema.shape,
+);
 
 // ============================================================
 // CREATE SCHEMA

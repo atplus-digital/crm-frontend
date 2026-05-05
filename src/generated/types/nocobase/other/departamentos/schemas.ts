@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_DEPARTAMENTOS_TABLE_NAME = "t_departamentos";
 
 // ============================================================
@@ -22,16 +24,16 @@ export const departamentosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const departamentosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_responsavel: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_responsavel: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const departamentosSchema = departamentosBaseSchema.merge(
-	departamentosRelationSchema,
+export const departamentosSchema = departamentosBaseSchema.extend(
+	departamentosRelationSchema.shape,
 );
 
 // ============================================================

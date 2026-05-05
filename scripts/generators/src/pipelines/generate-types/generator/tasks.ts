@@ -2,6 +2,7 @@ import type {
 	GeneratorOrchestrationStage,
 	GeneratorTask,
 } from "@scripts/generators/src/lib/cli";
+import { resetTypeScriptValidationCache } from "@scripts/generators/src/lib/validation/tsc-validator";
 import type { RuntimeConfig } from "../@types/script";
 import { runDatasourcesOrchestrationStage } from "../orchestration/datasource-stage";
 import { runPostPipelineOrchestrationStage } from "../orchestration/post-pipeline-stage";
@@ -65,6 +66,7 @@ export function createPreparationTasks(): GeneratorTask<GenerateTypesGeneratorCo
 		{
 			title: "prepare-context",
 			run: (context) => {
+				resetTypeScriptValidationCache();
 				context.executionContext = createGenerateTypesExecutionContext(
 					context.overrideConfig,
 					context.logger,

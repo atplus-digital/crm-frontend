@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { opcoes_smp_templateBaseSchema } from "../opcoes-smp-template/schemas";
+import { opcoes_stfc_templateBaseSchema } from "../opcoes-stfc-template/schemas";
 import { produtosTipoIxcSchema, produtosTipoProdutoSchema } from "./labels";
 
 export const T_PRODUTOS_TABLE_NAME = "t_produtos";
@@ -29,16 +32,18 @@ export const produtosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const produtosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_opcoes_smp_template: z.number().nullable(),
-	f_opcoes_STFC: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_opcoes_smp_template: z.lazy(() => opcoes_smp_templateBaseSchema.nullable()),
+	f_opcoes_STFC: z.lazy(() => opcoes_stfc_templateBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const produtosSchema = produtosBaseSchema.merge(produtosRelationSchema);
+export const produtosSchema = produtosBaseSchema.extend(
+	produtosRelationSchema.shape,
+);
 
 // ============================================================
 // CREATE SCHEMA

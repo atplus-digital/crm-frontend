@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { templates_atendimento_n1BaseSchema } from "../templates-atendimento-n1/schemas";
 import {
 	atendimentos_ixcAssuntoSchema,
 	atendimentos_ixcDiagnosticosSchema,
@@ -46,16 +48,18 @@ export const atendimentos_ixcBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const atendimentos_ixcRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_templates_atendimentos: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_templates_atendimentos: z.lazy(() =>
+		templates_atendimento_n1BaseSchema.array(),
+	),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const atendimentos_ixcSchema = atendimentos_ixcBaseSchema.merge(
-	atendimentos_ixcRelationSchema,
+export const atendimentos_ixcSchema = atendimentos_ixcBaseSchema.extend(
+	atendimentos_ixcRelationSchema.shape,
 );
 
 // ============================================================

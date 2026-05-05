@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { negociacoesBaseSchema } from "../../negociacoes/schemas";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_AUDITORIA_AUTOMATICA_TABLE_NAME = "t_auditoria_automatica";
 
 // ============================================================
@@ -24,16 +27,16 @@ export const auditoria_automaticaBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const auditoria_automaticaRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_negociacoes: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_negociacoes: z.lazy(() => negociacoesBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const auditoria_automaticaSchema = auditoria_automaticaBaseSchema.merge(
-	auditoria_automaticaRelationSchema,
+export const auditoria_automaticaSchema = auditoria_automaticaBaseSchema.extend(
+	auditoria_automaticaRelationSchema.shape,
 );
 
 // ============================================================

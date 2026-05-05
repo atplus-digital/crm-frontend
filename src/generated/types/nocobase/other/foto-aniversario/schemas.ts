@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { aniversariosBaseSchema } from "../aniversarios/schemas";
+
 export const T_FOTO_ANIVERSARIO_TABLE_NAME = "t_foto_aniversario";
 
 // ============================================================
@@ -30,17 +33,17 @@ export const foto_aniversarioBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const foto_aniversarioRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_aniversarios: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_aniversarios: z.lazy(() => aniversariosBaseSchema.nullable()),
 	storage: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const foto_aniversarioSchema = foto_aniversarioBaseSchema.merge(
-	foto_aniversarioRelationSchema,
+export const foto_aniversarioSchema = foto_aniversarioBaseSchema.extend(
+	foto_aniversarioRelationSchema.shape,
 );
 
 // ============================================================

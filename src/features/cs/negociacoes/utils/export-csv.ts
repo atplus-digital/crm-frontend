@@ -26,9 +26,8 @@ const CSV_COLUMNS: CsvColumn[] = [
 		key: "f_status",
 		header: "Status",
 		format: (v: unknown) =>
-			NEGOCIACOES_STATUS_LABELS[
-				v as string as keyof typeof NEGOCIACOES_STATUS_LABELS
-			] ?? String(v ?? ""),
+			NEGOCIACOES_STATUS_LABELS[v as keyof typeof NEGOCIACOES_STATUS_LABELS] ??
+			String(v ?? ""),
 	},
 	{ key: "f_substatus", header: "Substatus" },
 	{ key: "f_nome_razao", header: "Nome/Razão Social" },

@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_ANEXOS_NEGOCIACOES_TABLE_NAME = "t_anexos_negociacoes";
 
 // ============================================================
@@ -31,16 +33,16 @@ export const anexos_negociacoesBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const anexos_negociacoesRelationSchema = z.object({
-	createdBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
 	storage: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const anexos_negociacoesSchema = anexos_negociacoesBaseSchema.merge(
-	anexos_negociacoesRelationSchema,
+export const anexos_negociacoesSchema = anexos_negociacoesBaseSchema.extend(
+	anexos_negociacoesRelationSchema.shape,
 );
 
 // ============================================================

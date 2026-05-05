@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
+
 export const T_LOGS_CARGOS_TABLE_NAME = "t_logs_cargos";
 
 // ============================================================
@@ -27,16 +30,16 @@ export const logs_cargosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const logs_cargosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const logs_cargosSchema = logs_cargosBaseSchema.merge(
-	logs_cargosRelationSchema,
+export const logs_cargosSchema = logs_cargosBaseSchema.extend(
+	logs_cargosRelationSchema.shape,
 );
 
 // ============================================================

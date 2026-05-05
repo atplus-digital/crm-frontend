@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../users/schemas";
 import {
 	pessoasAnaliseIxcSchema,
 	pessoasCreditoSchema,
@@ -33,14 +34,16 @@ export const pessoasBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const pessoasRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const pessoasSchema = pessoasBaseSchema.merge(pessoasRelationSchema);
+export const pessoasSchema = pessoasBaseSchema.extend(
+	pessoasRelationSchema.shape,
+);
 
 // ============================================================
 // CREATE SCHEMA

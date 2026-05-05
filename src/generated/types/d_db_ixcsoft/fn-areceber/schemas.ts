@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { clienteBaseSchema } from "../cliente/schemas";
 import {
 	fn_areceberAguardandoConfirmacaoPagamentoSchema,
 	fn_areceberArquivoRemessaBaixadoSchema,
@@ -146,7 +147,7 @@ export const fn_areceberBaseSchema = z.object({
 // ============================================================
 export const fn_areceberRelationSchema = z.object({
 	f_carteira_cobranca: z.number().nullable(),
-	f_cliente: z.number().nullable(),
+	f_cliente: z.lazy(() => clienteBaseSchema.nullable()),
 	f_conta: z.number().nullable(),
 	f_conta_class_finan_a: z.number().nullable(),
 	f_filial: z.number().nullable(),
@@ -160,8 +161,8 @@ export const fn_areceberRelationSchema = z.object({
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const fn_areceberSchema = fn_areceberBaseSchema.merge(
-	fn_areceberRelationSchema,
+export const fn_areceberSchema = fn_areceberBaseSchema.extend(
+	fn_areceberRelationSchema.shape,
 );
 
 // ============================================================

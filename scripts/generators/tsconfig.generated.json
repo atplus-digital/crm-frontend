@@ -1,4 +1,4 @@
 {
-	"include": ["../src/generated/**/*.ts", "../src/generated/**/*.d.ts"],
-	"extends": "../tsconfig.json"
+	"extends": "../../tsconfig.json",
+	"include": ["../../src/generated/**/*.ts", "../../src/generated/**/*.d.ts"]
 }

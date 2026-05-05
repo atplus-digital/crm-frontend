@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
 import { linha_corporativaTipoSchema } from "./labels";
 
 export const T_LINHA_CORPORATIVA_TABLE_NAME = "t_linha_corporativa";
@@ -26,16 +28,16 @@ export const linha_corporativaBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const linha_corporativaRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const linha_corporativaSchema = linha_corporativaBaseSchema.merge(
-	linha_corporativaRelationSchema,
+export const linha_corporativaSchema = linha_corporativaBaseSchema.extend(
+	linha_corporativaRelationSchema.shape,
 );
 
 // ============================================================

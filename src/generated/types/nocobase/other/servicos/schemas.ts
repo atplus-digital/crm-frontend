@@ -5,6 +5,10 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { acessosBaseSchema } from "../acessos/schemas";
+import { telecom_anexosBaseSchema } from "../telecom-anexos/schemas";
+import { telecom_contratosBaseSchema } from "../telecom-contratos/schemas";
 import { servicosStatusSchema, servicosTipoSchema } from "./labels";
 
 export const T_SERVICOS_TABLE_NAME = "t_servicos";
@@ -33,19 +37,21 @@ export const servicosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const servicosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_acessos: z.number().array(),
-	f_arquivos: z.number().array(),
-	f_kyyzn4kut6e: z.number().nullable(),
-	f_rj1pckkkeqi: servicosBaseSchema.array(),
-	f_servicos_relacionados: servicosBaseSchema.array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_acessos: z.lazy(() => acessosBaseSchema.array()),
+	f_arquivos: z.lazy(() => telecom_anexosBaseSchema.array()),
+	f_kyyzn4kut6e: z.lazy(() => telecom_contratosBaseSchema.nullable()),
+	f_rj1pckkkeqi: z.lazy(() => servicosBaseSchema.array()),
+	f_servicos_relacionados: z.lazy(() => servicosBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const servicosSchema = servicosBaseSchema.merge(servicosRelationSchema);
+export const servicosSchema = servicosBaseSchema.extend(
+	servicosRelationSchema.shape,
+);
 
 // ============================================================
 // CREATE SCHEMA

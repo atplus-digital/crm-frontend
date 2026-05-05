@@ -19,28 +19,9 @@ export const FNARECEBER_ARQUIVOREMESSABAIXADO_LABELS = {
 	N: "Não",
 } as const;
 
-export const FNARECEBER_EMCOBRANCA_LABELS = {
-	S: "SIm",
-	N: "Não",
-} as const;
-
 export const FNARECEBER_ESTORNADO_LABELS = {
 	S: "Sim",
 	N: "Não",
-} as const;
-
-export const FNARECEBER_ETAPAENVIOREGUA_LABELS = {
-	LP: "Lembrete de pagamento",
-	CV: "No vencimento",
-	AC: "Aviso de cobrança",
-	IP: "Informativo de pendência",
-	AP: "Agendar pagamento",
-	CAP: "Cobrança automática e presencial",
-	NC: "Negativar clientes",
-	RCA: "Recebimento de contas a receber",
-	CCA: "Cancelamento de contas a receber",
-	RCB: "Renegociação de contas a receber",
-	RN: "Remover negativações",
 } as const;
 
 export const FNARECEBER_FORMARECEBIMENTO_LABELS = {
@@ -59,41 +40,41 @@ export const FNARECEBER_LIBERAPERIODO_LABELS = {
 } as const;
 
 export const FNARECEBER_MOTIVOALTERACAO_LABELS = {
-	Value08: "Cancelamento de Desconto",
-	"15": "Dispensar Cobrança de Multa",
-	"16": "Alteração do Valor de Desconto",
-	"17": "Não conceder Desconto",
-	Value03: "Protesto para Fins Falimentares",
-	Value04: "Concessão de Abatimento",
-	Value05: "Cancelamento de Abatimento",
-	Value06: "Alteração de Vencimento",
-	Value07: "Concessão de Desconto",
-	Value09: "Protestar",
-	"10": "Sustar Protesto e Baixar Título",
-	"11": "Sustar Protesto e Manter em Carteira",
-	"12": "Alteração de Juros de Mora",
-	"13": "Dispensar Cobrança de Juros de Mora",
-	"14": "Alteração de Valor/Percentual de Multa",
-	"18": "Alteração do Valor de Abatimento",
-	"19": "Prazo Limite de Recebimento ? Alterar",
-	"20": "Prazo Limite de Recebimento ? Dispensar",
-	"21": "Alterar número do título dado pelo beneficiario",
-	"22": "Alterar número do título dado pelo beneficiario",
-	"23": "Alterar dados do Pagador",
-	"24": "Alterar dados do Sacador/Avalista",
-	"30": "Recusa da Alegação do Pagador",
-	"31": "Alteração de Outros Dados",
-	"33": "Alteração dos Dados do Rateio de Crédito",
-	"34": "Pedido de Cancelamento dos Dados do Rateio de Crédito",
-	"35": "Pedido de Desagendamento do Débito Automático",
-	"40": "Alteração de Carteira",
-	"41": "Cancelar protesto",
-	"42": "Alteração de Espécie de Título",
-	"43": "Transferência de carteira/modalidade de cobrança",
-	"44": "Alteração de contrato de cobrança",
-	"45": "Negativação Sem Protesto",
-	"46": "Solicitação de Baixa de Título Negativado Sem Protesto",
-	"49": "Alteração de dados extras multa",
+	"08": "Cancelamento de Desconto",
+	15: "Dispensar Cobrança de Multa",
+	16: "Alteração do Valor de Desconto",
+	17: "Não conceder Desconto",
+	"03": "Protesto para Fins Falimentares",
+	"04": "Concessão de Abatimento",
+	"05": "Cancelamento de Abatimento",
+	"06": "Alteração de Vencimento",
+	"07": "Concessão de Desconto",
+	"09": "Protestar",
+	10: "Sustar Protesto e Baixar Título",
+	11: "Sustar Protesto e Manter em Carteira",
+	12: "Alteração de Juros de Mora",
+	13: "Dispensar Cobrança de Juros de Mora",
+	14: "Alteração de Valor/Percentual de Multa",
+	18: "Alteração do Valor de Abatimento",
+	19: "Prazo Limite de Recebimento ? Alterar",
+	20: "Prazo Limite de Recebimento ? Dispensar",
+	21: "Alterar número do título dado pelo beneficiario",
+	22: "Alterar número do título dado pelo beneficiario",
+	23: "Alterar dados do Pagador",
+	24: "Alterar dados do Sacador/Avalista",
+	30: "Recusa da Alegação do Pagador",
+	31: "Alteração de Outros Dados",
+	33: "Alteração dos Dados do Rateio de Crédito",
+	34: "Pedido de Cancelamento dos Dados do Rateio de Crédito",
+	35: "Pedido de Desagendamento do Débito Automático",
+	40: "Alteração de Carteira",
+	41: "Cancelar protesto",
+	42: "Alteração de Espécie de Título",
+	43: "Transferência de carteira/modalidade de cobrança",
+	44: "Alteração de contrato de cobrança",
+	45: "Negativação Sem Protesto",
+	46: "Solicitação de Baixa de Título Negativado Sem Protesto",
+	49: "Alteração de dados extras multa",
 } as const;
 
 export const FNARECEBER_PARCELADOCARTAO_LABELS = {
@@ -116,11 +97,6 @@ export const FNARECEBER_PREVISAO_LABELS = {
 	M: "Manual",
 } as const;
 
-export const FNARECEBER_RECEBIDOPORRECORRENCIA_LABELS = {
-	S: "Sim",
-	N: "Não",
-} as const;
-
 export const FNARECEBER_RECEBIDOVIAPIX_LABELS = {
 	S: "Sim",
 	N: "Não",
@@ -133,30 +109,20 @@ export const FNARECEBER_STATUS_LABELS = {
 	C: "Cancelado",
 } as const;
 
-export const FNARECEBER_STATUSCOBRANCAREGUA_LABELS = {
-	A: "Aberta",
-	F: "Finalizada",
-} as const;
-
 export const FNARECEBER_TIPOCOBRANCA_LABELS = {
 	P: "Padrão",
 	I: "Impresso",
 	E: "E-mail",
 } as const;
 
-export const FNARECEBER_TIPOCOBRANCAPIX_LABELS = {
-	COM_VENCIMENTO: "Com vencimento",
-	IMEDIATA: "Imediata",
-} as const;
-
 export const FNARECEBER_TIPORECEBIMENTO_LABELS = {
 	Boleto: "Boleto",
 	Cheque: "Cheque",
-	CartaO: "Cartão de crédito",
+	"CartÃ£o": "Cartão de crédito",
 	Dinheiro: "Dinheiro",
-	DepaSito: "Depósito",
+	"DepÃ³sito": "Depósito",
 	Gateway: "Gateway",
-	DaBito: "Débito em conta",
+	"DÃ©bito": "Débito em conta",
 	Fatura: "Fatura",
 	ArrecadacaoRecebimento: "Arrecadação/Recebimento",
 	Transferencia: "Transferência",
@@ -197,23 +163,9 @@ export const fn_areceberArquivoRemessaBaixadoSchema = z.enum(["S", "N"], {
 	}),
 });
 
-export const fn_areceberEmCobrancaSchema = z.enum(["S", "N"], {
-	error: () => ({ message: "em_cobranca: valores válidos são [SIm, Não]" }),
-});
-
 export const fn_areceberEstornadoSchema = z.enum(["S", "N"], {
 	error: () => ({ message: "estornado: valores válidos são [Sim, Não]" }),
 });
-
-export const fn_areceberEtapaEnvioReguaSchema = z.enum(
-	["LP", "CV", "AC", "IP", "AP", "CAP", "NC", "RCA", "CCA", "RCB", "RN"],
-	{
-		error: () => ({
-			message:
-				"etapa_envio_regua: valores válidos são [Lembrete de pagamento, No vencimento, Aviso de cobrança, Informativo de pendência, Agendar pagamento, Cobrança automática e presencial, Negativar clientes, Recebimento de contas a receber, Cancelamento de contas a receber, Renegociação de contas a receber, Remover negativações]",
-		}),
-	},
-);
 
 export const fn_areceberFormaRecebimentoSchema = z.enum(["M", "R"], {
 	error: () => ({
@@ -299,12 +251,6 @@ export const fn_areceberPrevisaoSchema = z.enum(["N", "S", "M"], {
 	}),
 });
 
-export const fn_areceberRecebidoPorRecorrenciaSchema = z.enum(["S", "N"], {
-	error: () => ({
-		message: "recebido_por_recorrencia: valores válidos são [Sim, Não]",
-	}),
-});
-
 export const fn_areceberRecebidoViaPixSchema = z.enum(["S", "N"], {
 	error: () => ({
 		message: "recebido_via_pix: valores válidos são [Sim, Não]",
@@ -318,27 +264,11 @@ export const fn_areceberStatusSchema = z.enum(["A", "R", "P", "C"], {
 	}),
 });
 
-export const fn_areceberStatusCobrancaReguaSchema = z.enum(["A", "F"], {
-	error: () => ({
-		message: "status_cobranca_regua: valores válidos são [Aberta, Finalizada]",
-	}),
-});
-
 export const fn_areceberTipoCobrancaSchema = z.enum(["P", "I", "E"], {
 	error: () => ({
 		message: "tipo_cobranca: valores válidos são [Padrão, Impresso, E-mail]",
 	}),
 });
-
-export const fn_areceberTipoCobrancaPixSchema = z.enum(
-	["COM_VENCIMENTO", "IMEDIATA"],
-	{
-		error: () => ({
-			message:
-				"tipo_cobranca_pix: valores válidos são [Com vencimento, Imediata]",
-		}),
-	},
-);
 
 export const fn_areceberTipoRecebimentoSchema = z.enum(
 	[
@@ -391,13 +321,7 @@ export type FnAreceberArquivoRemessaBaixado = z.infer<
 	typeof fn_areceberArquivoRemessaBaixadoSchema
 >;
 
-export type FnAreceberEmCobranca = z.infer<typeof fn_areceberEmCobrancaSchema>;
-
 export type FnAreceberEstornado = z.infer<typeof fn_areceberEstornadoSchema>;
-
-export type FnAreceberEtapaEnvioRegua = z.infer<
-	typeof fn_areceberEtapaEnvioReguaSchema
->;
 
 export type FnAreceberFormaRecebimento = z.infer<
 	typeof fn_areceberFormaRecebimentoSchema
@@ -423,26 +347,14 @@ export type FnAreceberPixStatusRecorrente = z.infer<
 
 export type FnAreceberPrevisao = z.infer<typeof fn_areceberPrevisaoSchema>;
 
-export type FnAreceberRecebidoPorRecorrencia = z.infer<
-	typeof fn_areceberRecebidoPorRecorrenciaSchema
->;
-
 export type FnAreceberRecebidoViaPix = z.infer<
 	typeof fn_areceberRecebidoViaPixSchema
 >;
 
 export type FnAreceberStatus = z.infer<typeof fn_areceberStatusSchema>;
 
-export type FnAreceberStatusCobrancaRegua = z.infer<
-	typeof fn_areceberStatusCobrancaReguaSchema
->;
-
 export type FnAreceberTipoCobranca = z.infer<
 	typeof fn_areceberTipoCobrancaSchema
->;
-
-export type FnAreceberTipoCobrancaPix = z.infer<
-	typeof fn_areceberTipoCobrancaPixSchema
 >;
 
 export type FnAreceberTipoRecebimento = z.infer<

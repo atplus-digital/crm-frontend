@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { negociacoesBaseSchema } from "../../negociacoes/schemas";
+import { usersBaseSchema } from "../../users/schemas";
 import {
 	oe_qualirunProcedimentoSchema,
 	oe_qualirunStatusSchema,
@@ -30,16 +32,16 @@ export const oe_qualirunBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const oe_qualirunRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_negociacoes: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_negociacoes: z.lazy(() => negociacoesBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const oe_qualirunSchema = oe_qualirunBaseSchema.merge(
-	oe_qualirunRelationSchema,
+export const oe_qualirunSchema = oe_qualirunBaseSchema.extend(
+	oe_qualirunRelationSchema.shape,
 );
 
 // ============================================================

@@ -16,9 +16,9 @@ export const SITES_STATUS_LABELS = {
 } as const;
 
 export const SITES_TIPO_LABELS = {
-	"1": "ATPLUS",
-	"2": "FORNECEDOR",
-	"3": "CLIENTE",
+	1: "ATPLUS",
+	2: "FORNECEDOR",
+	3: "CLIENTE",
 } as const;
 
 // ============================================================

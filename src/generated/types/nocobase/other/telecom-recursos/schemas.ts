@@ -5,6 +5,16 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { equipamentosBaseSchema } from "../equipamentos/schemas";
+import { fornecedores_telecomBaseSchema } from "../fornecedores-telecom/schemas";
+import { sitesBaseSchema } from "../sites/schemas";
+import { telecom_anexosBaseSchema } from "../telecom-anexos/schemas";
+import { telecom_colocation_opcoesBaseSchema } from "../telecom-colocation-opcoes/schemas";
+import { telecom_interfacesBaseSchema } from "../telecom-interfaces/schemas";
+import { telecom_opcoes_l2lBaseSchema } from "../telecom-opcoes-l2l/schemas";
+import { telecom_racksBaseSchema } from "../telecom-racks/schemas";
+import { telecom_transito_opcoesBaseSchema } from "../telecom-transito-opcoes/schemas";
 import {
 	telecom_recursosFinalidadeSchema,
 	telecom_recursosStatusSchema,
@@ -44,30 +54,32 @@ export const telecom_recursosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const telecom_recursosRelationSchema = z.object({
-	children: telecom_recursosBaseSchema.array(),
-	createdBy: z.number().nullable(),
-	f_anexos: z.number().array(),
-	f_cliente: z.number().nullable(),
-	f_equipamento_a: z.number().nullable(),
-	f_fornecedor: z.number().nullable(),
-	f_interface_ponta_a: z.number().array(),
-	f_interface_ponta_b: z.number().array(),
-	f_opcoes_colocation: z.number().nullable(),
-	f_opcoes_l2l: z.number().nullable(),
-	f_opcoes_link_ip: z.number().nullable(),
-	f_rack_a: z.number().nullable(),
-	f_rack_b: z.number().nullable(),
-	f_site_a: z.number().nullable(),
-	f_site_b: z.number().nullable(),
-	parent: telecom_recursosBaseSchema.nullable(),
-	updatedBy: z.number().nullable(),
+	children: z.lazy(() => telecom_recursosBaseSchema.array()),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_anexos: z.lazy(() => telecom_anexosBaseSchema.array()),
+	f_cliente: z.lazy(() => fornecedores_telecomBaseSchema.nullable()),
+	f_equipamento_a: z.lazy(() => equipamentosBaseSchema.nullable()),
+	f_fornecedor: z.lazy(() => fornecedores_telecomBaseSchema.nullable()),
+	f_interface_ponta_a: z.lazy(() => telecom_interfacesBaseSchema.array()),
+	f_interface_ponta_b: z.lazy(() => telecom_interfacesBaseSchema.array()),
+	f_opcoes_colocation: z.lazy(() =>
+		telecom_colocation_opcoesBaseSchema.nullable(),
+	),
+	f_opcoes_l2l: z.lazy(() => telecom_opcoes_l2lBaseSchema.nullable()),
+	f_opcoes_link_ip: z.lazy(() => telecom_transito_opcoesBaseSchema.nullable()),
+	f_rack_a: z.lazy(() => telecom_racksBaseSchema.nullable()),
+	f_rack_b: z.lazy(() => telecom_racksBaseSchema.nullable()),
+	f_site_a: z.lazy(() => sitesBaseSchema.nullable()),
+	f_site_b: z.lazy(() => sitesBaseSchema.nullable()),
+	parent: z.lazy(() => telecom_recursosBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const telecom_recursosSchema = telecom_recursosBaseSchema.merge(
-	telecom_recursosRelationSchema,
+export const telecom_recursosSchema = telecom_recursosBaseSchema.extend(
+	telecom_recursosRelationSchema.shape,
 );
 
 // ============================================================

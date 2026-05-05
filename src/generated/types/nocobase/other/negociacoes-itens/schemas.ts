@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { opcoes_smpBaseSchema } from "../opcoes-smp/schemas";
+import { opcoes_stfcBaseSchema } from "../opcoes-stfc/schemas";
 import {
 	negociacoes_itensRelacaoSchema,
 	negociacoes_itensTipoProdutoSchema,
@@ -35,17 +38,17 @@ export const negociacoes_itensBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const negociacoes_itensRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_opcoes_smp: z.number().nullable(),
-	f_opcoes_stfc: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_opcoes_smp: z.lazy(() => opcoes_smpBaseSchema.nullable()),
+	f_opcoes_stfc: z.lazy(() => opcoes_stfcBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const negociacoes_itensSchema = negociacoes_itensBaseSchema.merge(
-	negociacoes_itensRelationSchema,
+export const negociacoes_itensSchema = negociacoes_itensBaseSchema.extend(
+	negociacoes_itensRelationSchema.shape,
 );
 
 // ============================================================

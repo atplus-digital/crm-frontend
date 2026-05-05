@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { solicitacao_comprasBaseSchema } from "../solicitacao-compras/schemas";
+
 export const T_COMPRAS_PRODUTOS_TABLE_NAME = "t_compras_produtos";
 
 // ============================================================
@@ -26,16 +29,18 @@ export const compras_produtosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const compras_produtosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_fk_produtos_solicitacao_compra: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_fk_produtos_solicitacao_compra: z.lazy(() =>
+		solicitacao_comprasBaseSchema.nullable(),
+	),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const compras_produtosSchema = compras_produtosBaseSchema.merge(
-	compras_produtosRelationSchema,
+export const compras_produtosSchema = compras_produtosBaseSchema.extend(
+	compras_produtosRelationSchema.shape,
 );
 
 // ============================================================

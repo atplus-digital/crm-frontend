@@ -12,7 +12,6 @@ const scriptConfig: Partial<ScriptConfig> = {
 	enumInference: enumInferenceConfig,
 	cacheEnums: true,
 	cacheDir: ".cache/ixc-wiki",
-	cacheTtlMs: 86400000, // 24 horas
 	validateTypes: true,
 } as const;
 

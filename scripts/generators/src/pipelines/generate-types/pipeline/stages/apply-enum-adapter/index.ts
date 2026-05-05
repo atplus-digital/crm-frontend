@@ -41,10 +41,17 @@ export const applyEnumAdapter: PipelineStage<BuildTypesContext> = async (
 			}
 		}
 
-		const hasAdapterEnum = usedAdapter && Object.keys(adapterEnums).length > 0;
+		const scalarFieldNames = new Set(types.scalars.keys());
+		const filteredAdapterEnums = Object.fromEntries(
+			Object.entries(adapterEnums).filter(([fieldName]) =>
+				scalarFieldNames.has(fieldName),
+			),
+		);
+		const hasAdapterEnum =
+			usedAdapter && Object.keys(filteredAdapterEnums).length > 0;
 
 		if (hasAdapterEnum) {
-			const adapterInferred = adapterEnumsToInferredEnums(adapterEnums);
+			const adapterInferred = adapterEnumsToInferredEnums(filteredAdapterEnums);
 
 			for (const fieldName of Object.keys(adapterInferred)) {
 				originsForCollection.set(fieldName, { origin: "adapter" });

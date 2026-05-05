@@ -11,7 +11,7 @@ import { z } from "zod";
 // ============================================================
 export const INFOARQUIVOS_ARQUIVOEXTERNO_LABELS = {
 	sim: "Sim",
-	Nao: "Não",
+	não: "Não",
 } as const;
 
 // ============================================================

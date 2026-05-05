@@ -1,9 +1,10 @@
-export function toSafePathSegment(value: string): string {
-	return value.replace(/[^a-zA-Z0-9_-]/g, "-");
-}
+import {
+	toDataSourceOutputFolder,
+	toSafePathSegment,
+} from "@scripts/generators/src/lib/path-utils";
+
+export { toSafePathSegment };
 
 export function toDataSourceDir(dataSourceKey: string): string {
-	return dataSourceKey === "main"
-		? "nocobase"
-		: toSafePathSegment(dataSourceKey);
+	return toDataSourceOutputFolder(dataSourceKey);
 }

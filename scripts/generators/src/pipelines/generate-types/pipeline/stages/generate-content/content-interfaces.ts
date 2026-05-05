@@ -309,7 +309,7 @@ export function generateMergedMainSchema(
 
 	if (hasRelations) {
 		const relationSchemaName = _toRelationSchemaName(collectionName);
-		return `export const ${mainSchemaName} = ${baseSchema}.merge(\n\t${relationSchemaName},\n);`;
+		return `export const ${mainSchemaName} = ${baseSchema}.extend(\n\t${relationSchemaName}.shape,\n);`;
 	}
 
 	// Sem relações: o schema principal é apenas o base

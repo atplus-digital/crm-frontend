@@ -10,16 +10,22 @@ import { isFileBeingEdited } from "./file-editor-check";
 
 const MAIN_OUTPUT_FILE = "index.ts";
 
+interface WriteGeneratedFileOptions {
+	skipValidation?: boolean;
+	dryRun?: boolean;
+}
+
 export function writeGeneratedFile(
 	content: string,
 	outputPath: string = path.join(config.outputDir, MAIN_OUTPUT_FILE),
-	_options: { skipValidation?: boolean } = {},
+	options: WriteGeneratedFileOptions = {},
 	logger?: Logger,
 ): SingleFileResult {
 	const activeLogger = logger ?? defaultRuntimeLogger;
 	const resolvedOutputPath = resolveOutputPath(outputPath);
+	const dryRun = options.dryRun ?? config.dryRun;
 
-	if (config.dryRun) {
+	if (dryRun) {
 		activeLogger.info(
 			`🔍 [DRY-RUN] Escreveria em: ${path.relative(process.cwd(), resolvedOutputPath)}`,
 		);

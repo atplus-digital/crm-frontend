@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
+import { lancamentos_feriasBaseSchema } from "../lancamentos-ferias/schemas";
 import { periodos_feriasStatusPeriodoSchema } from "./labels";
 
 export const T_PERIODOS_FERIAS_TABLE_NAME = "t_periodos_ferias";
@@ -29,17 +32,17 @@ export const periodos_feriasBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const periodos_feriasRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().nullable(),
-	f_lancamentos_ferias: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.nullable()),
+	f_lancamentos_ferias: z.lazy(() => lancamentos_feriasBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const periodos_feriasSchema = periodos_feriasBaseSchema.merge(
-	periodos_feriasRelationSchema,
+export const periodos_feriasSchema = periodos_feriasBaseSchema.extend(
+	periodos_feriasRelationSchema.shape,
 );
 
 // ============================================================

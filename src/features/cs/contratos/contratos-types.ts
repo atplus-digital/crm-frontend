@@ -1,7 +1,6 @@
 // Tipos para Contratos IXC
 // ⚠️ Usando tipos gerados automaticamente como fonte de verdade
 
-import type { Cliente } from "#/generated/types/d_db_ixcsoft/cliente";
 import type { ClienteContrato } from "#/generated/types/d_db_ixcsoft/cliente-contrato";
 import type { FnAreceber } from "#/generated/types/d_db_ixcsoft/fn-areceber";
 import type { LinhaMvno } from "#/generated/types/d_db_ixcsoft/linha-mvno";
@@ -49,80 +48,26 @@ export const INTERNET_STATUS_LABELS: Record<InternetStatus, string> = {
 };
 
 // ---------------------------------------------------------------------------
-// Tipos derivados dos gerados
+// Tipos gerados (usados diretamente na UI e camada de serviço)
 // ---------------------------------------------------------------------------
 
-/**
- * Contrato - baseado no tipo gerado ClienteContrato do IXC
- * Pick dos campos mais utilizados na UI
- */
-export type Contrato = Pick<
-	ClienteContrato,
-	| "id"
-	| "id_cliente"
-	| "id_vd_contrato"
-	| "contrato"
-	| "status"
-	| "status_internet"
-	| "ultima_atualizacao"
-	| "data"
-	| "data_ativacao"
-	| "data_cancelamento"
-	| "data_validade"
-	| "pago_ate_data"
-	| "email_cobranca"
-	| "valor_unitario"
-	| "fidelidade"
-	| "tipo_cobranca"
-	| "tipo"
-	| "cidade"
-	| "bairro"
-	| "cep"
-	| "endereco"
-	| "numero"
-	| "complemento"
-	| "num_parcelas_atraso"
-	| "descricao_aux_plano_venda"
->;
+/** Contrato - tipo gerado completo do IXC (cliente_contrato) */
+export type Contrato = ClienteContrato;
 
-/**
- * Cliente do contrato - derivado do tipo gerado de IXC (`cliente`)
- */
-export type ContratoCliente = Pick<
-	Cliente,
-	| "id"
-	| "razao"
-	| "cnpj_cpf"
-	| "fantasia"
-	| "email"
-	| "telefone_celular"
-	| "tipo_pessoa"
-	| "endereco"
-	| "numero"
-	| "bairro"
-	| "cidade"
-	| "cep"
-	| "complemento"
->;
+/** Cliente do contrato - tipo gerado completo do IXC (cliente) */
+export type Cliente = import("#/generated/types/d_db_ixcsoft/cliente").Cliente;
 
-/**
- * Contrato com dados do cliente
- */
+/** Contrato com dados do cliente (appends) */
 export type ContratoWithCliente = Contrato & {
-	f_nc_cliente?: ContratoCliente | null;
+	f_nc_cliente?: Cliente | null;
 };
 
 // ---------------------------------------------------------------------------
 // Dados Adicionais (NocoBase)
 // ---------------------------------------------------------------------------
 
-export type DadosAdicionaisContrato = Pick<
-	DadosAdicionaisClienteContrato,
-	| "f_origem_cliente"
-	| "f_perfil_de_uso"
-	| "f_forma_de_pagamento"
-	| "f_pessoas_na_residencia"
->;
+/** Dados adicionais do contrato - tipo gerado completo */
+export type DadosAdicionaisContrato = DadosAdicionaisClienteContrato;
 
 export {
 	DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS,
@@ -145,60 +90,23 @@ export type ContratoListParams = Omit<ListParams, "filter"> & {
 	appends?: string[];
 };
 
-export type LinhaMovel = Pick<
-	LinhaMvno,
-	| "id"
-	| "id_contrato"
-	| "ddd_telefone"
-	| "numero_telefone"
-	| "dia_recorrencia"
-	| "portabilidade"
-	| "simcard"
->;
+/** Linha móvel - tipo gerado completo do IXC (linha_mvno) */
+export type LinhaMovel = LinhaMvno;
 
-export type TrocaTitularidade = {
-	id: CrmTrocaTitularidade["id"];
-	id_contrato: CrmTrocaTitularidade["f_id_contrato"];
-	cedente: CrmTrocaTitularidade["f_cedente"];
-	documento_cedente: CrmTrocaTitularidade["f_cedente_documento"];
-	cessionario: CrmTrocaTitularidade["f_cessionario"];
-	documento_cessionario: CrmTrocaTitularidade["f_cessionario_documento"];
-	status: CrmTrocaTitularidade["f_status"];
-};
+/** Troca de titularidade - tipo gerado completo do NocoBase */
+export type TrocaTitularidade = CrmTrocaTitularidade;
 
-export type AtendimentoIXC = {
-	id: SuTicket["id"];
-	id_contrato: SuTicket["id_contrato"];
-	status: SuTicket["status"];
-	assunto: SuTicket["titulo"];
-	descricao: SuTicket["menssagem"];
-	data_criacao: SuTicket["data_criacao"];
-	data_ultima_alteracao: SuTicket["data_ultima_alteracao"];
-};
+/** Atendimento IXC - tipo gerado completo (su_ticket) */
+export type AtendimentoIXC = SuTicket;
 
-export type RegistroContato = {
-	id: RegistrosDeContato["id"];
-	id_contrato: RegistrosDeContato["f_fk_id_contrato"];
-	categoria: RegistrosDeContato["f_categoria"];
-	motivo_contato: RegistrosDeContato["f_resumo_contato"];
-	nota_vendas: RegistrosDeContato["f_nota_vendas"];
-	nota_tecnico: RegistrosDeContato["f_nota_tecnico"];
-	pendencia: RegistrosDeContato["f_ha_pendencia"];
-	data_criacao: RegistrosDeContato["createdAt"];
-	criado_por: string;
-};
+/** Registro de contato - tipo gerado completo do NocoBase */
+export type RegistroContato = RegistrosDeContato;
 
-export type ProdutoContrato = Pick<
-	VdContratosProdutos,
-	"id" | "id_contrato" | "descricao" | "valor_unit" | "qtde"
->;
+/** Produto do contrato - tipo gerado completo do IXC (vd_contratos_produtos) */
+export type ProdutoContrato = VdContratosProdutos;
 
-export type Fatura = Pick<
-	FnAreceber,
-	"id" | "id_contrato" | "status" | "valor" | "data_vencimento"
-> & {
-	data_pagamento: FnAreceber["pagamento_data"] | null;
-};
+/** Fatura - tipo gerado completo do IXC (fn_areceber) */
+export type Fatura = FnAreceber;
 
 // ---------------------------------------------------------------------------
 // Table Filters (UI-facing types)

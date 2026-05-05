@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import {
 	negociacoes_comentariosInsereAtendimentoIxcSchema,
 	negociacoes_comentariosSetorParaObsSchema,
@@ -29,16 +30,16 @@ export const negociacoes_comentariosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const negociacoes_comentariosRelationSchema = z.object({
-	createdBy: z.any().nullable(),
-	updatedBy: z.any().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const negociacoes_comentariosSchema =
-	negociacoes_comentariosBaseSchema.merge(
-		negociacoes_comentariosRelationSchema,
+	negociacoes_comentariosBaseSchema.extend(
+		negociacoes_comentariosRelationSchema.shape,
 	);
 
 // ============================================================

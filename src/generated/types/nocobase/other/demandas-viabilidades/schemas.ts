@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import {
 	demandas_viabilidadesFormaAtendimentoSchema,
 	demandas_viabilidadesServicoPretendidoSchema,
@@ -35,15 +36,17 @@ export const demandas_viabilidadesBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const demandas_viabilidadesRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const demandas_viabilidadesSchema =
-	demandas_viabilidadesBaseSchema.merge(demandas_viabilidadesRelationSchema);
+	demandas_viabilidadesBaseSchema.extend(
+		demandas_viabilidadesRelationSchema.shape,
+	);
 
 // ============================================================
 // CREATE SCHEMA

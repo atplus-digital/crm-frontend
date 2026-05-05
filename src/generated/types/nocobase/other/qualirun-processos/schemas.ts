@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
 import {
 	qualirun_processosDetalhesProcedimentoSchema,
 	qualirun_processosIdProcedimentoQualirunSchema,
@@ -34,16 +36,16 @@ export const qualirun_processosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const qualirun_processosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const qualirun_processosSchema = qualirun_processosBaseSchema.merge(
-	qualirun_processosRelationSchema,
+export const qualirun_processosSchema = qualirun_processosBaseSchema.extend(
+	qualirun_processosRelationSchema.shape,
 );
 
 // ============================================================

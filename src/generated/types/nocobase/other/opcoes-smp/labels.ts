@@ -10,8 +10,8 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const OPCOESSMP_PORTABILIDADE_LABELS = {
-	"0": "NÃO",
-	"1": "SIM",
+	0: "NÃO",
+	1: "SIM",
 } as const;
 
 // ============================================================

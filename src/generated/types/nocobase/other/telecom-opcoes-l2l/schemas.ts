@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_TELECOM_OPCOES_L2L_TABLE_NAME = "t_telecom_opcoes_l2l";
 
 // ============================================================
@@ -22,15 +24,15 @@ export const telecom_opcoes_l2lBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const telecom_opcoes_l2lRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const telecom_opcoes_l2lSchema = telecom_opcoes_l2lBaseSchema.merge(
-	telecom_opcoes_l2lRelationSchema,
+export const telecom_opcoes_l2lSchema = telecom_opcoes_l2lBaseSchema.extend(
+	telecom_opcoes_l2lRelationSchema.shape,
 );
 
 // ============================================================

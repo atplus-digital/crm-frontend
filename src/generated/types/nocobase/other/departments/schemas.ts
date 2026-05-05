@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { rolesBaseSchema } from "../roles/schemas";
+
 export const DEPARTMENTS_TABLE_NAME = "departments";
 
 // ============================================================
@@ -23,20 +26,20 @@ export const departmentsBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const departmentsRelationSchema = z.object({
-	children: departmentsBaseSchema.array(),
-	createdBy: z.number().nullable(),
-	members: z.number().array(),
-	owners: z.number().array(),
-	parent: departmentsBaseSchema.nullable(),
-	roles: z.number().array(),
-	updatedBy: z.number().nullable(),
+	children: z.lazy(() => departmentsBaseSchema.array()),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	members: z.lazy(() => usersBaseSchema.array()),
+	owners: z.lazy(() => usersBaseSchema.array()),
+	parent: z.lazy(() => departmentsBaseSchema.nullable()),
+	roles: z.lazy(() => rolesBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const departmentsSchema = departmentsBaseSchema.merge(
-	departmentsRelationSchema,
+export const departmentsSchema = departmentsBaseSchema.extend(
+	departmentsRelationSchema.shape,
 );
 
 // ============================================================

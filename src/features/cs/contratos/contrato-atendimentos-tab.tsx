@@ -71,14 +71,14 @@ const atendimentosTableColumns: ColumnDef<AtendimentoIXC, unknown>[] = [
 		),
 	},
 	{
-		accessorKey: "assunto",
+		accessorKey: "titulo",
 		header: "Assunto",
-		cell: ({ row }) => detailLongTextCell(row.original.assunto),
+		cell: ({ row }) => detailLongTextCell(row.original.titulo),
 	},
 	{
-		accessorKey: "descricao",
+		accessorKey: "menssagem",
 		header: "Descrição",
-		cell: ({ row }) => detailLongTextCell(row.original.descricao),
+		cell: ({ row }) => detailLongTextCell(row.original.menssagem),
 	},
 	{
 		accessorKey: "data_criacao",

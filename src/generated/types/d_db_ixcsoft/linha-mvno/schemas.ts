@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { clienteBaseSchema } from "../cliente/schemas";
 import {
 	linha_mvnoApiSchema,
 	linha_mvnoEsimSchema,
@@ -61,15 +62,15 @@ export const linha_mvnoBaseSchema = z.object({
 // ============================================================
 export const linha_mvnoRelationSchema = z.object({
 	f_chip: z.number().nullable(),
-	f_cliente: z.number().nullable(),
+	f_cliente: z.lazy(() => clienteBaseSchema.nullable()),
 	f_plano: z.number().nullable(),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const linha_mvnoSchema = linha_mvnoBaseSchema.merge(
-	linha_mvnoRelationSchema,
+export const linha_mvnoSchema = linha_mvnoBaseSchema.extend(
+	linha_mvnoRelationSchema.shape,
 );
 
 // ============================================================

@@ -11,21 +11,21 @@ import { z } from "zod";
 // ============================================================
 export const FFUNCIONARIOS_ATIVO_LABELS = {
 	Sim: "Sim",
-	Nao: "Não",
+	Não: "Não",
 } as const;
 
 export const FFUNCIONARIOS_CHECKLISTADMISSIONAL_LABELS = {
-	AsoAdmissional: "ASO Admissional",
+	"aso-admissional": "ASO Admissional",
 	rg: "RG",
-	ECnh: "e-CNH",
-	ComprovanteResidencia: "Comprovante de Residência",
-	CertidaoCasamentoUniaoEstavel: "Certidão de Casamento / União Estável",
-	ETituloEleitoral: "e-Título Eleitoral",
-	CertificadoDeReservista: "Certificado de Reservista",
-	RgCertidaoNascimentoFilhos:
+	"e-cnh": "e-CNH",
+	"comprovante-residencia": "Comprovante de Residência",
+	"certidao-casamento-uniao-estavel": "Certidão de Casamento / União Estável",
+	"e-titulo-eleitoral": "e-Título Eleitoral",
+	"certificado-de-reservista": "Certificado de Reservista",
+	"rg-certidao-nascimento-filhos":
 		"RG ou Certidão de Nascimento dos filhos menores de 21 anos",
-	Nr10Nr35: "Certificado NR 10 e NR 35 (Opcional)",
-	TermosResponsabilidade: "Termos de Responsabilidade",
+	"nr10-nr35": "Certificado NR 10 e NR 35 (Opcional)",
+	"termos-responsabilidade": "Termos de Responsabilidade",
 } as const;
 
 export const FFUNCIONARIOS_EMPRESA_LABELS = {
@@ -34,22 +34,22 @@ export const FFUNCIONARIOS_EMPRESA_LABELS = {
 } as const;
 
 export const FFUNCIONARIOS_EPICALCADO_LABELS = {
-	"35": "35",
-	"36": "36",
-	"37": "37",
-	"38": "38",
-	"39": "39",
-	"40": "40",
-	"41": "41",
-	"42": "42",
-	"43": "43",
-	"44": "44",
+	35: "35",
+	36: "36",
+	37: "37",
+	38: "38",
+	39: "39",
+	40: "40",
+	41: "41",
+	42: "42",
+	43: "43",
+	44: "44",
 } as const;
 
 export const FFUNCIONARIOS_ESCOLARIDADE_LABELS = {
-	EnsinoMedio: "Ensino Médio",
+	"Ensino Médio": "Ensino Médio",
 	Superior: "Superior",
-	PosMba: "Pós, MBA",
+	"Pós, MBA": "Pós, MBA",
 	Mestrado: "Mestrado",
 	Doutorado: "Doutorado",
 } as const;
@@ -57,8 +57,8 @@ export const FFUNCIONARIOS_ESCOLARIDADE_LABELS = {
 export const FFUNCIONARIOS_ESTADOCIVIL_LABELS = {
 	Solteiro: "Solteiro",
 	Casado: "Casado",
-	UniaoEstavel: "União Estável",
-	Viuvo: "Viúvo",
+	"União Estável": "União Estável",
+	Viúvo: "Viúvo",
 	Divorciado: "Divorciado",
 	Separado: "Separado",
 } as const;
@@ -69,23 +69,23 @@ export const FFUNCIONARIOS_GENERO_LABELS = {
 } as const;
 
 export const FFUNCIONARIOS_MOBILIDADE_LABELS = {
-	ValeTransporteTransul: "Vale Transporte (Transul)",
-	MobilidadeCartaoBeneficios: "Mobilidade (Cartão Benefícios)",
+	"Vale Transporte (Transul)": "Vale Transporte (Transul)",
+	"Mobilidade (Cartão Benefícios)": "Mobilidade (Cartão Benefícios)",
 } as const;
 
 export const FFUNCIONARIOS_PCD_LABELS = {
 	Sim: "Sim",
-	Nao: "Não",
+	Não: "Não",
 } as const;
 
 export const FFUNCIONARIOS_PRAZOEXPERIENCIA_LABELS = {
-	Value4050: "40 / 50",
-	Value4545: "45 / 45",
+	"40-50": "40 / 50",
+	"45-45": "45 / 45",
 } as const;
 
 export const FFUNCIONARIOS_RESERVISTA_LABELS = {
 	Sim: "Sim",
-	Nao: "Não",
+	Não: "Não",
 } as const;
 
 export const FFUNCIONARIOS_SITUACAOESCOLARIDADE_LABELS = {
@@ -96,23 +96,23 @@ export const FFUNCIONARIOS_SITUACAOESCOLARIDADE_LABELS = {
 
 export const FFUNCIONARIOS_TERCEIRO_LABELS = {
 	Sim: "Sim",
-	Nao: "Não",
+	Não: "Não",
 } as const;
 
 export const FFUNCIONARIOS_TIPOCONTRATO_LABELS = {
 	CLT: "CLT",
-	PrestadorDeServicos: "Prestador de Serviços",
-	Estagiario: "Estagiário",
-	JovemAprendiz: "Jovem Aprendiz",
-	Socio: "Sócio",
-	Temporario: "Temporário",
-	CltComissao: "CLT + Comissão",
+	"Prestador de Serviços": "Prestador de Serviços",
+	Estagiário: "Estagiário",
+	"Jovem Aprendiz": "Jovem Aprendiz",
+	Sócio: "Sócio",
+	Temporário: "Temporário",
+	"CLT + Comissão": "CLT + Comissão",
 } as const;
 
 export const FFUNCIONARIOS_UNIDADE_LABELS = {
 	Matriz: "Matriz",
-	LojaCentroLages: "Loja Centro Lages",
-	LojaCuritibanos: "Loja Curitibanos",
+	"Loja Centro Lages": "Loja Centro Lages",
+	"Loja Curitibanos": "Loja Curitibanos",
 	Platon: "Platon",
 } as const;
 
@@ -126,8 +126,8 @@ export const FFUNCIONARIOS_UNIVERSIDADE_LABELS = {
 
 export const FFUNCIONARIOS_VINCULOCOMCOLABORADOR_LABELS = {
 	Pais: "Pais",
-	FilhoAOuEnteadoA: "Filho(a) ou Enteado(a)",
-	Avos: "Avós",
+	"Filho(a) ou Enteado(a)": "Filho(a) ou Enteado(a)",
+	Avós: "Avós",
 	Conjuge: "Conjuge",
 } as const;
 

@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
+
 export const T_SISTEMAS_ACESSOS_TABLE_NAME = "t_sistemas_acessos";
 
 // ============================================================
@@ -23,16 +26,16 @@ export const sistemas_acessosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const sistemas_acessosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const sistemas_acessosSchema = sistemas_acessosBaseSchema.merge(
-	sistemas_acessosRelationSchema,
+export const sistemas_acessosSchema = sistemas_acessosBaseSchema.extend(
+	sistemas_acessosRelationSchema.shape,
 );
 
 // ============================================================

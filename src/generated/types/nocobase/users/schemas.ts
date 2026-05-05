@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { departmentsBaseSchema } from "../other/departments/schemas";
+import { rolesBaseSchema } from "../other/roles/schemas";
+
 export const USERS_TABLE_NAME = "users";
 
 // ============================================================
@@ -37,17 +40,17 @@ export const usersBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const usersRelationSchema = z.object({
-	createdBy: usersBaseSchema.nullable(),
-	departments: z.number().array(),
-	mainDepartment: z.number().nullable(),
-	roles: z.number().array(),
-	updatedBy: usersBaseSchema.nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	departments: z.lazy(() => departmentsBaseSchema.array()),
+	mainDepartment: z.lazy(() => departmentsBaseSchema.nullable()),
+	roles: z.lazy(() => rolesBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const usersSchema = usersBaseSchema.merge(usersRelationSchema);
+export const usersSchema = usersBaseSchema.extend(usersRelationSchema.shape);
 
 // ============================================================
 // CREATE SCHEMA

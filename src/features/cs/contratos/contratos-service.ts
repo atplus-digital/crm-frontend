@@ -1,10 +1,3 @@
-import type { ClienteContrato } from "#/generated/types/d_db_ixcsoft/cliente-contrato";
-import type { FnAreceber } from "#/generated/types/d_db_ixcsoft/fn-areceber";
-import type { LinhaMvno } from "#/generated/types/d_db_ixcsoft/linha-mvno";
-import type { SuTicket } from "#/generated/types/d_db_ixcsoft/su-ticket";
-import type { VdContratosProdutos } from "#/generated/types/d_db_ixcsoft/vd-contratos-produtos";
-import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-titularidade";
-import type { RegistrosDeContato } from "#/generated/types/nocobase/registros-de-contato";
 import { buildFilter, eq } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { ixcRepository, nocobaseRepository } from "#/repositories";
@@ -61,21 +54,13 @@ export async function fetchContratos(
 		const { page = 1, pageSize = 15, sort, filters } = params;
 		const filter = buildContratoFilter(filters);
 
-		const response = await ixcRepository.list<ClienteContrato>(
-			"cliente_contrato",
-			{
-				page,
-				pageSize,
-				appends: ["f_nc_cliente"],
-				...(sort && sort.length > 0 && { sort }),
-				...(filter && { filter }),
-			},
-		);
-
-		return {
-			...response,
-			data: response.data as unknown as Array<ContratoWithCliente>,
-		};
+		return ixcRepository.list<ContratoWithCliente>("cliente_contrato", {
+			page,
+			pageSize,
+			appends: ["f_nc_cliente"],
+			...(sort && sort.length > 0 && { sort }),
+			...(filter && { filter }),
+		});
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : "Erro desconhecido";
@@ -88,7 +73,7 @@ export async function fetchContratoById(
 	id: number,
 ): Promise<ContratoWithCliente> {
 	try {
-		const response = await ixcRepository.list<ClienteContrato>(
+		const response = await ixcRepository.list<ContratoWithCliente>(
 			"cliente_contrato",
 			{
 				page: 1,
@@ -104,7 +89,7 @@ export async function fetchContratoById(
 			throw new Error(`Contrato ${id} não encontrado`);
 		}
 
-		return contrato as ContratoWithCliente;
+		return contrato;
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : "Erro desconhecido";
@@ -117,11 +102,11 @@ export async function fetchContratoMovel(
 	idContrato: number,
 ): Promise<PaginatedResponse<LinhaMovel>> {
 	try {
-		return ixcRepository.list<LinhaMvno>("linha_mvno", {
+		return ixcRepository.list<LinhaMovel>("linha_mvno", {
 			page: 1,
 			pageSize: 100,
 			filter: eq("id_contrato", idContrato),
-		}) as Promise<PaginatedResponse<LinhaMovel>>;
+		});
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : "Erro desconhecido";
@@ -134,11 +119,11 @@ export async function fetchContratoProdutos(
 	idContrato: number,
 ): Promise<PaginatedResponse<ProdutoContrato>> {
 	try {
-		return ixcRepository.list<VdContratosProdutos>("vd_contratos_produtos", {
+		return ixcRepository.list<ProdutoContrato>("vd_contratos_produtos", {
 			page: 1,
 			pageSize: 100,
 			filter: eq("id_contrato", idContrato),
-		}) as Promise<PaginatedResponse<ProdutoContrato>>;
+		});
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : "Erro desconhecido";
@@ -154,23 +139,11 @@ export async function fetchContratoFaturas(
 	idContrato: number,
 ): Promise<PaginatedResponse<Fatura>> {
 	try {
-		const response = await ixcRepository.list<FnAreceber>("fn_areceber", {
+		return ixcRepository.list<Fatura>("fn_areceber", {
 			page: 1,
 			pageSize: 10,
 			filter: eq("id_contrato", idContrato),
 		});
-
-		return {
-			...response,
-			data: response.data.map((item) => ({
-				id: item.id,
-				id_contrato: item.id_contrato,
-				status: item.status,
-				valor: item.valor,
-				data_vencimento: item.data_vencimento,
-				data_pagamento: item.pagamento_data || null,
-			})),
-		};
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : "Erro desconhecido";
@@ -186,24 +159,14 @@ export async function fetchContratoTrocasTitularidade(
 	idContrato: number,
 ): Promise<PaginatedResponse<TrocaTitularidade>> {
 	try {
-		const response = await nocobaseRepository.list("t_crm_troca_titularidade", {
-			page: 1,
-			pageSize: 50,
-			filter: eq("f_id_contrato", String(idContrato)),
-		});
-
-		return {
-			...response,
-			data: response.data.map((item: CrmTrocaTitularidade) => ({
-				id: item.id,
-				id_contrato: item.f_id_contrato,
-				cedente: item.f_cedente,
-				documento_cedente: item.f_cedente_documento,
-				cessionario: item.f_cessionario,
-				documento_cessionario: item.f_cessionario_documento,
-				status: item.f_status,
-			})),
-		};
+		return nocobaseRepository.list<"t_crm_troca_titularidade">(
+			"t_crm_troca_titularidade",
+			{
+				page: 1,
+				pageSize: 50,
+				filter: eq("f_id_contrato", String(idContrato)),
+			},
+		);
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : "Erro desconhecido";
@@ -219,24 +182,11 @@ export async function fetchContratoAtendimentos(
 	idContrato: number,
 ): Promise<PaginatedResponse<AtendimentoIXC>> {
 	try {
-		const response = await ixcRepository.list<SuTicket>("su_ticket", {
+		return ixcRepository.list<AtendimentoIXC>("su_ticket", {
 			page: 1,
 			pageSize: 50,
 			filter: eq("id_contrato", idContrato),
 		});
-
-		return {
-			...response,
-			data: response.data.map((item) => ({
-				id: item.id,
-				id_contrato: item.id_contrato,
-				status: item.status,
-				assunto: item.titulo,
-				descricao: item.menssagem,
-				data_criacao: item.data_criacao,
-				data_ultima_alteracao: item.data_ultima_alteracao,
-			})),
-		};
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : "Erro desconhecido";
@@ -249,33 +199,15 @@ export async function fetchContratoRegistros(
 	idContrato: number,
 ): Promise<PaginatedResponse<RegistroContato>> {
 	try {
-		const response = await nocobaseRepository.list("t_registros_de_contato", {
-			page: 1,
-			pageSize: 50,
-			filter: eq("f_fk_id_contrato", idContrato),
-			appends: ["createdBy"],
-		});
-
-		return {
-			...response,
-			data: response.data.map(
-				(
-					item: RegistrosDeContato & {
-						createdBy?: { nickname?: string } | null;
-					},
-				) => ({
-					id: item.id,
-					id_contrato: item.f_fk_id_contrato,
-					categoria: item.f_categoria,
-					motivo_contato: item.f_resumo_contato,
-					nota_vendas: item.f_nota_vendas,
-					nota_tecnico: item.f_nota_tecnico,
-					pendencia: item.f_ha_pendencia,
-					data_criacao: item.createdAt,
-					criado_por: item.createdBy?.nickname ?? "—",
-				}),
-			),
-		};
+		return nocobaseRepository.list<"t_registros_de_contato">(
+			"t_registros_de_contato",
+			{
+				page: 1,
+				pageSize: 50,
+				filter: eq("f_fk_id_contrato", idContrato),
+				appends: ["createdBy"],
+			},
+		);
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : "Erro desconhecido";
@@ -303,12 +235,7 @@ export async function fetchDadosAdicionaisContrato(
 		const item = response.data[0];
 		if (!item) return null;
 
-		return {
-			f_origem_cliente: item.f_origem_cliente,
-			f_perfil_de_uso: item.f_perfil_de_uso,
-			f_forma_de_pagamento: item.f_forma_de_pagamento,
-			f_pessoas_na_residencia: item.f_pessoas_na_residencia,
-		};
+		return item;
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : "Erro desconhecido";

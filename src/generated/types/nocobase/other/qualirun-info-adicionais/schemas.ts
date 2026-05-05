@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
 import {
 	qualirun_info_adicionaisGrauEscolaridadeSchema,
 	qualirun_info_adicionaisSituacaoCursoSchema,
@@ -44,17 +46,17 @@ export const qualirun_info_adicionaisBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const qualirun_info_adicionaisRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const qualirun_info_adicionaisSchema =
-	qualirun_info_adicionaisBaseSchema.merge(
-		qualirun_info_adicionaisRelationSchema,
+	qualirun_info_adicionaisBaseSchema.extend(
+		qualirun_info_adicionaisRelationSchema.shape,
 	);
 
 // ============================================================

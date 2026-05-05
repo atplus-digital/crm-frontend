@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../users/schemas";
 import {
 	registros_de_contatoCategoriaSchema,
 	registros_de_contatoNotaTecnicoSchema,
@@ -35,15 +36,15 @@ export const registros_de_contatoBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const registros_de_contatoRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const registros_de_contatoSchema = registros_de_contatoBaseSchema.merge(
-	registros_de_contatoRelationSchema,
+export const registros_de_contatoSchema = registros_de_contatoBaseSchema.extend(
+	registros_de_contatoRelationSchema.shape,
 );
 
 // ============================================================

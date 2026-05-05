@@ -10,33 +10,33 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const TELECOMRECURSOS_FINALIDADE_LABELS = {
-	"3": "Insumo para Serviço",
-	"2": "Serviço",
-	"4": "Facilidade",
-	"1": "Acesso",
+	3: "Insumo para Serviço",
+	2: "Serviço",
+	4: "Facilidade",
+	1: "Acesso",
 } as const;
 
 export const TELECOMRECURSOS_STATUS_LABELS = {
-	"1": "Planejado",
-	"2": "Ativo",
-	"3": "Desativado",
+	1: "Planejado",
+	2: "Ativo",
+	3: "Desativado",
 } as const;
 
 export const TELECOMRECURSOS_TIPO_LABELS = {
-	"1": "L2 - PTP",
-	"13": "L3 - PTP",
-	"6": "L2 - P2MP",
-	"4": "L2 - Last Mile",
-	"2": "L3 - Link IP",
-	"7": "L3 - Banda Larga",
-	"5": "L1 - Fibra Apagada",
-	"8": "L1 - Canal DWDM",
-	"3": "Colocation",
-	"9": "VPN",
-	"10": "Trunk Flex",
-	"11": "Transito IP Internet ",
-	"12": "Transito IP CDN",
-	"14": "Contrato",
+	1: "L2 - PTP",
+	13: "L3 - PTP",
+	6: "L2 - P2MP",
+	4: "L2 - Last Mile",
+	2: "L3 - Link IP",
+	7: "L3 - Banda Larga",
+	5: "L1 - Fibra Apagada",
+	8: "L1 - Canal DWDM",
+	3: "Colocation",
+	9: "VPN",
+	10: "Trunk Flex",
+	11: "Transito IP Internet ",
+	12: "Transito IP CDN",
+	14: "Contrato",
 } as const;
 
 // ============================================================

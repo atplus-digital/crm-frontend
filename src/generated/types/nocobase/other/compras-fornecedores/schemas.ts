@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_COMPRAS_FORNECEDORES_TABLE_NAME = "t_compras_fornecedores";
 
 // ============================================================
@@ -23,15 +25,15 @@ export const compras_fornecedoresBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const compras_fornecedoresRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const compras_fornecedoresSchema = compras_fornecedoresBaseSchema.merge(
-	compras_fornecedoresRelationSchema,
+export const compras_fornecedoresSchema = compras_fornecedoresBaseSchema.extend(
+	compras_fornecedoresRelationSchema.shape,
 );
 
 // ============================================================

@@ -10,15 +10,15 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const NEGOCIACOESCOMENTARIOS_INSEREATENDIMENTOIXC_LABELS = {
-	"0": "Não",
-	"1": "Sim",
+	0: "Não",
+	1: "Sim",
 } as const;
 
 export const NEGOCIACOESCOMENTARIOS_SETORPARAOBS_LABELS = {
-	"1": "Equipe de Campo",
-	"2": "Suporte Nível 1",
-	"3": "Suporte Nível 2",
-	"4": "Telefonia (Ativações e/ou Portabilidades)",
+	1: "Equipe de Campo",
+	2: "Suporte Nível 1",
+	3: "Suporte Nível 2",
+	4: "Telefonia (Ativações e/ou Portabilidades)",
 } as const;
 
 // ============================================================

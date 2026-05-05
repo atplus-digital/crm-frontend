@@ -10,19 +10,19 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const TELECOMINTERFACES_CONFIGURACAO_LABELS = {
-	"1": "Acesso",
-	"2": "Tronco",
-	"3": "Hibrida",
+	1: "Acesso",
+	2: "Tronco",
+	3: "Hibrida",
 } as const;
 
 export const TELECOMINTERFACES_TIPO_LABELS = {
-	"1": "SFP",
-	"3": "METALICA",
-	"2": "SFP+",
-	"4": "QSFP",
-	"5": "VLAN",
-	"6": "VPN",
-	"7": "ETH-TRUNK (LAG)",
+	1: "SFP",
+	3: "METALICA",
+	2: "SFP+",
+	4: "QSFP",
+	5: "VLAN",
+	6: "VPN",
+	7: "ETH-TRUNK (LAG)",
 } as const;
 
 // ============================================================

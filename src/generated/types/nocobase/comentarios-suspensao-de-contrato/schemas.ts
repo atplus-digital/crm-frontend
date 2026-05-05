@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../users/schemas";
+
 export const T_COMENTARIOS_SUSPENSAO_DE_CONTRATO_TABLE_NAME =
 	"t_comentarios_suspensao_de_contrato";
 
@@ -23,16 +25,16 @@ export const comentarios_suspensao_de_contratoBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const comentarios_suspensao_de_contratoRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const comentarios_suspensao_de_contratoSchema =
-	comentarios_suspensao_de_contratoBaseSchema.merge(
-		comentarios_suspensao_de_contratoRelationSchema,
+	comentarios_suspensao_de_contratoBaseSchema.extend(
+		comentarios_suspensao_de_contratoRelationSchema.shape,
 	);
 
 // ============================================================

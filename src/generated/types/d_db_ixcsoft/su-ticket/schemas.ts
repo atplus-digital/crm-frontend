@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { clienteBaseSchema } from "../cliente/schemas";
+import { cliente_contratoBaseSchema } from "../cliente-contrato/schemas";
 import {
 	su_ticketIdTicketOrigemSchema,
 	su_ticketInteracaoPendenteSchema,
@@ -77,8 +79,8 @@ export const su_ticketBaseSchema = z.object({
 // ============================================================
 export const su_ticketRelationSchema = z.object({
 	f_assunto: z.number().nullable(),
-	f_cliente: z.number().nullable(),
-	f_contrato: z.number().nullable(),
+	f_cliente: z.lazy(() => clienteBaseSchema.nullable()),
+	f_contrato: z.lazy(() => cliente_contratoBaseSchema.nullable()),
 	f_equipe: z.number().nullable(),
 	f_prioridade: z.number().nullable(),
 	f_responsavel: z.number().nullable(),
@@ -88,8 +90,8 @@ export const su_ticketRelationSchema = z.object({
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const su_ticketSchema = su_ticketBaseSchema.merge(
-	su_ticketRelationSchema,
+export const su_ticketSchema = su_ticketBaseSchema.extend(
+	su_ticketRelationSchema.shape,
 );
 
 // ============================================================

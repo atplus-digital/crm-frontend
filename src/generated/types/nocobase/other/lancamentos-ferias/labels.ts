@@ -12,7 +12,7 @@ import { z } from "zod";
 export const LANCAMENTOSFERIAS_STATUS_LABELS = {
 	cancelada: "Cancelada",
 	planejada: "Planejada",
-	EmAndamento: "Em andamento",
+	"em-andamento": "Em andamento",
 	aprovada: "Aprovada",
 	concluida: "Concluída",
 } as const;

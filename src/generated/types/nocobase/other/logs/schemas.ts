@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import { logsLogLevelSchema } from "./labels";
 
 export const T_LOGS_TABLE_NAME = "t_logs";
@@ -25,14 +26,14 @@ export const logsBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const logsRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const logsSchema = logsBaseSchema.merge(logsRelationSchema);
+export const logsSchema = logsBaseSchema.extend(logsRelationSchema.shape);
 
 // ============================================================
 // CREATE SCHEMA

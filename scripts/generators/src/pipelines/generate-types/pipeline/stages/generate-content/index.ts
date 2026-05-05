@@ -12,19 +12,14 @@ import {
 	generateLabelsContent,
 	generateSchemasContent,
 } from "./content";
-import {
-	createBaseTypeIndex,
-	withMainFileImports,
-} from "./import-injector";
+import { createBaseTypeIndex, withMainFileImports } from "./import-injector";
 import { generateIndexWithAllExportsWithPaths } from "./split-index";
 
 const OTHER_FOLDER = "other";
 
 function getImportPath(collectionName: string, isSplit: boolean): string {
 	const folder = toFileName(collectionName);
-	return isSplit
-		? `./${folder}`
-		: `./${OTHER_FOLDER}/${folder}`;
+	return isSplit ? `./${folder}` : `./${OTHER_FOLDER}/${folder}`;
 }
 
 /**
@@ -36,15 +31,27 @@ function generateCollectionFolderFiles(
 	baseInterfaceNaming: ReturnType<typeof resolveBaseInterfaceNamingConfig>,
 	isSplit: boolean,
 	prefix = "",
+	allCollectionsMap?: CollectionTypesMap,
+	splitCollectionNames: ReadonlySet<string> = new Set<string>(),
 ): Map<string, string> {
 	const result = new Map<string, string>();
 	const header = generateFileHeader();
+	const currentCollectionInOtherFolder = prefix.startsWith(`${OTHER_FOLDER}/`);
 
 	for (const [colName, colTypes] of Object.entries(_types)) {
 		const folder = `${prefix}${toFileName(colName)}`;
 
 		const labelsContent = `${header}\n${generateLabelsContent(colName, colTypes)}`;
-		const schemasContent = `${header}\n${generateSchemasContent(colName, colTypes, baseInterfaceNaming, isSplit ? _types : undefined)}`;
+		const schemasContent = `${header}\n${generateSchemasContent(
+			colName,
+			colTypes,
+			baseInterfaceNaming,
+			{
+				allCollectionsMap: isSplit ? (allCollectionsMap ?? _types) : undefined,
+				splitCollectionNames,
+				currentCollectionInOtherFolder,
+			},
+		)}`;
 		const indexContent = `${header}${generateIndexContent(colName, colTypes, baseInterfaceNaming, isSplit)}`;
 
 		result.set(`${folder}/labels.ts`, labelsContent);
@@ -130,6 +137,9 @@ export async function generateContentStage(
 			types,
 			baseInterfaceNaming,
 			true,
+			"",
+			ctx.collectionTypes,
+			splitCollectionNamesSet,
 		);
 		for (const [path, content] of folderFiles) {
 			fileContents.set(path, content);
@@ -143,6 +153,8 @@ export async function generateContentStage(
 			baseInterfaceNaming,
 			true,
 			`${OTHER_FOLDER}/`,
+			ctx.collectionTypes,
+			splitCollectionNamesSet,
 		);
 		for (const [path, content] of folderFiles) {
 			fileContents.set(path, content);

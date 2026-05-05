@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import { configuracoesEscopoSchema } from "./labels";
 
 export const T_CONFIGURACOES_TABLE_NAME = "t_configuracoes";
@@ -27,15 +28,15 @@ export const configuracoesBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const configuracoesRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const configuracoesSchema = configuracoesBaseSchema.merge(
-	configuracoesRelationSchema,
+export const configuracoesSchema = configuracoesBaseSchema.extend(
+	configuracoesRelationSchema.shape,
 );
 
 // ============================================================

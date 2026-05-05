@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import { telecom_colocation_opcoesEnergiaSchema } from "./labels";
 
 export const T_TELECOM_COLOCATION_OPCOES_TABLE_NAME =
@@ -28,16 +29,16 @@ export const telecom_colocation_opcoesBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const telecom_colocation_opcoesRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const telecom_colocation_opcoesSchema =
-	telecom_colocation_opcoesBaseSchema.merge(
-		telecom_colocation_opcoesRelationSchema,
+	telecom_colocation_opcoesBaseSchema.extend(
+		telecom_colocation_opcoesRelationSchema.shape,
 	);
 
 // ============================================================

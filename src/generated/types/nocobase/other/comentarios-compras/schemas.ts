@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_COMENTARIOS_COMPRAS_TABLE_NAME = "t_comentarios_compras";
 
 // ============================================================
@@ -22,15 +24,15 @@ export const comentarios_comprasBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const comentarios_comprasRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const comentarios_comprasSchema = comentarios_comprasBaseSchema.merge(
-	comentarios_comprasRelationSchema,
+export const comentarios_comprasSchema = comentarios_comprasBaseSchema.extend(
+	comentarios_comprasRelationSchema.shape,
 );
 
 // ============================================================

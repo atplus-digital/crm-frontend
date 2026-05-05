@@ -1,11 +1,12 @@
-import { createBrowserRouter, Outlet, redirect } from "react-router";
+import { createBrowserRouter, redirect } from "react-router";
 import { App } from "#/app";
-import { authStore, validateTokenOnInit } from "#/features/auth";
+import { validateTokenOnInit } from "#/features/auth";
 import { DashboardLayout } from "#/layout/dashboard-layout";
-import { routePaths, toRouterPath } from "#/routes/route-paths";
+import { routePaths } from "#/routes/route-paths";
 import { authRoutes } from "./auth/routes";
+import { configRoutes } from "./config/routes";
 import { csRoutes } from "./cs/routes";
-import { Component as NotFoundPage } from "./error/not-found";
+import { errorRoutes } from "./error/routes";
 
 export const router = createBrowserRouter([
 	{
@@ -13,40 +14,23 @@ export const router = createBrowserRouter([
 		element: <App />,
 		hydrateFallbackElement: <App />,
 		loader: async () => {
-			const state = authStore.state;
-			if (state.token && !state.user) {
-				await validateTokenOnInit();
-			}
+			await validateTokenOnInit();
 			return null;
 		},
 		children: [
 			{
-				element: (
-					<DashboardLayout>
-						<Outlet />
-					</DashboardLayout>
-				),
+				element: <DashboardLayout />,
 				children: [
 					{
 						index: true,
-						loader: () => redirect("/cs"),
+						loader: () => redirect(routePaths.cs_dashboard),
 					},
 					...csRoutes,
-					{
-						path: toRouterPath(routePaths.profile),
-						lazy: () => import("./profile/index"),
-					},
+					...configRoutes,
 				],
 			},
 			...authRoutes,
-			{
-				path: toRouterPath(routePaths.forbidden),
-				lazy: () => import("./error/forbidden/index"),
-			},
-			{
-				path: "*",
-				element: <NotFoundPage />,
-			},
+			...errorRoutes,
 		],
 	},
 ]);

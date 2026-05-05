@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_TELECOM_ANEXOS_TABLE_NAME = "t_telecom_anexos";
 
 // ============================================================
@@ -34,16 +36,16 @@ export const telecom_anexosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const telecom_anexosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
 	storage: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const telecom_anexosSchema = telecom_anexosBaseSchema.merge(
-	telecom_anexosRelationSchema,
+export const telecom_anexosSchema = telecom_anexosBaseSchema.extend(
+	telecom_anexosRelationSchema.shape,
 );
 
 // ============================================================

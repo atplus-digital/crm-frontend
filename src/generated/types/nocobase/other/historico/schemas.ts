@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { cabos_opticosBaseSchema } from "../cabos-opticos/schemas";
+
 export const T_HISTORICO_TABLE_NAME = "t_historico";
 
 // ============================================================
@@ -26,16 +29,16 @@ export const historicoBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const historicoRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_cabos_opticos: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_cabos_opticos: z.lazy(() => cabos_opticosBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const historicoSchema = historicoBaseSchema.merge(
-	historicoRelationSchema,
+export const historicoSchema = historicoBaseSchema.extend(
+	historicoRelationSchema.shape,
 );
 
 // ============================================================

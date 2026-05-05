@@ -18,7 +18,7 @@ export async function runSingleDatasource(
 		stage: "run-datasources",
 	});
 
-	const client = createDataSourceClient(dataSource);
+	const client = createDataSourceClient(dataSource, config);
 	const ctx = createInitialContext(config, dataSource, client, logger);
 	const result = await defaultPipeline(ctx);
 

@@ -11,6 +11,7 @@ import {
 	generateContent,
 	generateContentForCollections,
 	generateFileHeader,
+	generateSchemasContent,
 	generateSplitFiles,
 } from "@scripts/generators/src/pipelines/generate-types/pipeline/stages/generate-content/content";
 import { describe, expect, it } from "vitest";
@@ -309,6 +310,105 @@ describe("content", () => {
 		});
 	});
 
+	describe("generateSchemasContent", () => {
+		it("uses target main schemas for available relations and resolves split-to-main import paths", () => {
+			const types = createMockGeneratedTypes(
+				{ id: "number" },
+				{
+					createdBy: { targetCollection: "users", type: "belongsTo" },
+					f_department: {
+						targetCollection: "departments",
+						type: "belongsTo",
+					},
+				},
+			);
+
+			const allCollections = createMockCollectionTypesMap({
+				t_crm_troca_titularidade: { scalars: { id: "number" } },
+				users: { scalars: { id: "number" } },
+				departments: { scalars: { id: "number" } },
+			});
+
+			const result = generateSchemasContent(
+				"t_crm_troca_titularidade",
+				types,
+				undefined,
+				{
+					allCollectionsMap: allCollections,
+					splitCollectionNames: new Set(["users", "t_crm_troca_titularidade"]),
+					currentCollectionInOtherFolder: false,
+				},
+			);
+
+			expect(result).toContain(
+				'import { usersBaseSchema } from "../users/schemas";',
+			);
+			expect(result).toContain(
+				'import { departmentsBaseSchema } from "../other/departments/schemas";',
+			);
+			expect(result).toContain(
+				"createdBy: z.lazy(() => usersBaseSchema.nullable()),",
+			);
+			expect(result).toContain(
+				"f_department: z.lazy(() => departmentsBaseSchema.nullable()),",
+			);
+		});
+
+		it("resolves imports from other/* collection back to split root", () => {
+			const types = createMockGeneratedTypes(
+				{ id: "number" },
+				{
+					f_owner: { targetCollection: "users", type: "belongsTo" },
+				},
+			);
+
+			const allCollections = createMockCollectionTypesMap({
+				departments: { scalars: { id: "number" } },
+				users: { scalars: { id: "number" } },
+			});
+
+			const result = generateSchemasContent("departments", types, undefined, {
+				allCollectionsMap: allCollections,
+				splitCollectionNames: new Set(["users"]),
+				currentCollectionInOtherFolder: true,
+			});
+
+			expect(result).toContain(
+				'import { usersBaseSchema } from "../../users/schemas";',
+			);
+			expect(result).toContain(
+				"f_owner: z.lazy(() => usersBaseSchema.nullable()),",
+			);
+		});
+
+		it("uses z.lazy for self-referential relations", () => {
+			const types = createMockGeneratedTypes(
+				{ id: "number" },
+				{
+					parent: { targetCollection: "users", type: "belongsTo" },
+					children: { targetCollection: "users", type: "hasMany" },
+				},
+			);
+
+			const allCollections = createMockCollectionTypesMap({
+				users: { scalars: { id: "number" } },
+			});
+
+			const result = generateSchemasContent("users", types, undefined, {
+				allCollectionsMap: allCollections,
+				splitCollectionNames: new Set(["users"]),
+				currentCollectionInOtherFolder: false,
+			});
+
+			expect(result).toContain(
+				"parent: z.lazy(() => usersBaseSchema.nullable()),",
+			);
+			expect(result).toContain(
+				"children: z.lazy(() => usersBaseSchema.array()),",
+			);
+		});
+	});
+
 	describe("generateContent", () => {
 		it("delegates to generateContentForCollections with includeHeader=true", () => {
 			const collections = createMockCollectionTypesMap({
@@ -425,8 +525,8 @@ describe("content", () => {
 
 			const result = generateCollectionEnumMaps("users", types);
 			expect(result).toContain("export const USERS_STATUS_LABELS = {");
-			expect(result).toContain('"active": "Active"');
-			expect(result).toContain('"inactive": "Inactive"');
+			expect(result).toContain("active: 'Active'");
+			expect(result).toContain("inactive: 'Inactive'");
 			expect(result).toContain("} as const;");
 		});
 
@@ -441,7 +541,7 @@ describe("content", () => {
 
 			const result = generateCollectionEnumMaps("users", types);
 			expect(result).toContain("export const USERS_STATUS_LABELS = {");
-			expect(result).toContain('"active": "Active"');
+			expect(result).toContain("active: 'Active'");
 			expect(result).toContain("} as const;");
 		});
 	});

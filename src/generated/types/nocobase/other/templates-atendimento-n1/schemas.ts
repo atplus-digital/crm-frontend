@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import {
 	templates_atendimento_n1AcessaPelaRedeDaAtplusSchema,
 	templates_atendimento_n1AlteracoesSchema,
@@ -77,16 +78,16 @@ export const templates_atendimento_n1BaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const templates_atendimento_n1RelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const templates_atendimento_n1Schema =
-	templates_atendimento_n1BaseSchema.merge(
-		templates_atendimento_n1RelationSchema,
+	templates_atendimento_n1BaseSchema.extend(
+		templates_atendimento_n1RelationSchema.shape,
 	);
 
 // ============================================================

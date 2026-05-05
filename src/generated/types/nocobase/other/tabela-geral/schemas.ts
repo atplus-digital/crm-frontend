@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_TABELA_GERAL_TABLE_NAME = "t_tabela_geral";
 
 // ============================================================
@@ -20,15 +22,15 @@ export const tabela_geralBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const tabela_geralRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const tabela_geralSchema = tabela_geralBaseSchema.merge(
-	tabela_geralRelationSchema,
+export const tabela_geralSchema = tabela_geralBaseSchema.extend(
+	tabela_geralRelationSchema.shape,
 );
 
 // ============================================================

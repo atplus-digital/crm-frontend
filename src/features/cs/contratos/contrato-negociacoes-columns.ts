@@ -10,7 +10,7 @@ import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/types/nocobase/c
 import { NEGOCIACOES_STATUS_LABELS } from "#/generated/types/nocobase/negociacoes";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 
-function formatTrocaStatus(status: TrocaTitularidade["status"]): string {
+function formatTrocaStatus(status: TrocaTitularidade["f_status"]): string {
 	return CRMTROCATITULARIDADE_STATUS_LABELS[status] ?? String(status);
 }
 
@@ -38,35 +38,36 @@ export const trocasTitularidadeTableColumns: ColumnDef<
 	unknown
 >[] = [
 	{
-		accessorKey: "cedente",
+		accessorKey: "f_cedente",
 		header: "Cedente",
-		cell: ({ row }) => detailShortTextCell(row.original.cedente),
+		cell: ({ row }) => detailShortTextCell(row.original.f_cedente),
 	},
 	{
-		accessorKey: "documento_cedente",
+		accessorKey: "f_cedente_documento",
 		header: "Documento Cedente",
-		cell: ({ row }) => detailShortTextCell(row.original.documento_cedente),
+		cell: ({ row }) => detailShortTextCell(row.original.f_cedente_documento),
 	},
 	{
-		accessorKey: "cessionario",
+		accessorKey: "f_cessionario",
 		header: "Cessionário",
-		cell: ({ row }) => detailShortTextCell(row.original.cessionario),
+		cell: ({ row }) => detailShortTextCell(row.original.f_cessionario),
 	},
 	{
-		accessorKey: "documento_cessionario",
+		accessorKey: "f_cessionario_documento",
 		header: "Documento Cessionário",
-		cell: ({ row }) => detailShortTextCell(row.original.documento_cessionario),
+		cell: ({ row }) =>
+			detailShortTextCell(row.original.f_cessionario_documento),
 	},
 	{
-		accessorKey: "status",
+		accessorKey: "f_status",
 		header: "Status",
 		cell: ({ row }) =>
-			detailShortTextCell(formatTrocaStatus(row.original.status)),
+			detailShortTextCell(formatTrocaStatus(row.original.f_status)),
 	},
 	{
-		accessorKey: "id_contrato",
+		accessorKey: "f_id_contrato",
 		header: "Contrato",
-		cell: ({ row }) => detailShortTextCell(row.original.id_contrato),
+		cell: ({ row }) => detailShortTextCell(row.original.f_id_contrato),
 	},
 ];
 

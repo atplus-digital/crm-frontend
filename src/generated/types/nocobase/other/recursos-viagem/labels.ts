@@ -10,16 +10,16 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const RECURSOSVIAGEM_DESTINOVIAGEM_LABELS = {
-	"1": "Curitibanos",
-	"2": "Florianópolis",
-	"3": "Florianópolis",
+	1: "Curitibanos",
+	2: "Florianópolis",
+	3: "Florianópolis",
 } as const;
 
 export const RECURSOSVIAGEM_MEIOTRANSPORTE_LABELS = {
-	"1": "Kwid ATPlus",
-	"2": "Fiorino ATPlus",
-	"3": "Carro Particular",
-	"4": "Outro",
+	1: "Kwid ATPlus",
+	2: "Fiorino ATPlus",
+	3: "Carro Particular",
+	4: "Outro",
 } as const;
 
 // ============================================================

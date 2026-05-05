@@ -5,6 +5,10 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
+import { info_asoBaseSchema } from "../info-aso/schemas";
+
 export const T_ASOS_TABLE_NAME = "t_asos";
 
 // ============================================================
@@ -31,17 +35,17 @@ export const asosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const asosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().nullable(),
-	f_info_aso: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.nullable()),
+	f_info_aso: z.lazy(() => info_asoBaseSchema.nullable()),
 	storage: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const asosSchema = asosBaseSchema.merge(asosRelationSchema);
+export const asosSchema = asosBaseSchema.extend(asosRelationSchema.shape);
 
 // ============================================================
 // CREATE SCHEMA

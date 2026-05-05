@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_CONTRATOS_TABLE_NAME = "t_contratos";
 
 // ============================================================
@@ -32,16 +34,16 @@ export const contratosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const contratosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
 	storage: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const contratosSchema = contratosBaseSchema.merge(
-	contratosRelationSchema,
+export const contratosSchema = contratosBaseSchema.extend(
+	contratosRelationSchema.shape,
 );
 
 // ============================================================

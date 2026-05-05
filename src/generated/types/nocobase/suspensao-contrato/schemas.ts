@@ -5,6 +5,11 @@
  */
 
 import { z } from "zod";
+import { comentarios_suspensao_de_contratoBaseSchema } from "../comentarios-suspensao-de-contrato/schemas";
+import { empresasBaseSchema } from "../empresas/schemas";
+import { contratosBaseSchema } from "../other/contratos/schemas";
+import { pessoasBaseSchema } from "../pessoas/schemas";
+import { usersBaseSchema } from "../users/schemas";
 import { suspensao_contratoStatusSchema } from "./labels";
 
 export const T_SUSPENSAO_CONTRATO_TABLE_NAME = "t_suspensao_contrato";
@@ -36,20 +41,22 @@ export const suspensao_contratoBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const suspensao_contratoRelationSchema = z.object({
-	createdBy: z.any().nullable(),
-	f_comentarios: z.any().array(),
-	f_contratos: z.any().array(),
-	f_pessoas: z.any().nullable(),
-	f_pessoas_pj: z.any().nullable(),
-	f_responsavel: z.any().nullable(),
-	updatedBy: z.any().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_comentarios: z.lazy(() =>
+		comentarios_suspensao_de_contratoBaseSchema.array(),
+	),
+	f_contratos: z.lazy(() => contratosBaseSchema.array()),
+	f_pessoas: z.lazy(() => pessoasBaseSchema.nullable()),
+	f_pessoas_pj: z.lazy(() => empresasBaseSchema.nullable()),
+	f_responsavel: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const suspensao_contratoSchema = suspensao_contratoBaseSchema.merge(
-	suspensao_contratoRelationSchema,
+export const suspensao_contratoSchema = suspensao_contratoBaseSchema.extend(
+	suspensao_contratoRelationSchema.shape,
 );
 
 // ============================================================

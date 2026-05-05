@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
+
 export const T_TURNOS_TABLE_NAME = "t_turnos";
 
 // ============================================================
@@ -21,15 +24,15 @@ export const turnosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const turnosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const turnosSchema = turnosBaseSchema.merge(turnosRelationSchema);
+export const turnosSchema = turnosBaseSchema.extend(turnosRelationSchema.shape);
 
 // ============================================================
 // CREATE SCHEMA

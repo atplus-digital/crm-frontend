@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { p10scfhrhkwBaseSchema } from "../p10scfhrhkw/schemas";
+
 export const T_902CTKE5DHQ_TABLE_NAME = "t_902ctke5dhq";
 
 // ============================================================
@@ -20,16 +23,16 @@ export const _902ctke5dhqBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const _902ctke5dhqRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_bmu9tsi11d4: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_bmu9tsi11d4: z.lazy(() => p10scfhrhkwBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const _902ctke5dhqSchema = _902ctke5dhqBaseSchema.merge(
-	_902ctke5dhqRelationSchema,
+export const _902ctke5dhqSchema = _902ctke5dhqBaseSchema.extend(
+	_902ctke5dhqRelationSchema.shape,
 );
 
 // ============================================================

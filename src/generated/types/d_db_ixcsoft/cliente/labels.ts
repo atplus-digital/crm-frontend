@@ -27,8 +27,8 @@ export const CLIENTE_ATIVO_LABELS = {
 } as const;
 
 export const CLIENTE_ATIVOSERASA_LABELS = {
-	"1": "Sim",
-	"2": "Não",
+	1: "Sim",
+	2: "Não",
 } as const;
 
 export const CLIENTE_CADASTRADOVIAVIABILIDADE_LABELS = {
@@ -72,7 +72,7 @@ export const CLIENTE_ESTADOCIVIL_LABELS = {
 	Casado: "Casado",
 	Solteiro: "Solteiro",
 	Divorciado: "Divorciado",
-	ViaVo: "Viúvo",
+	ViÃºvo: "Viúvo",
 } as const;
 
 export const CLIENTE_FILTRAFILIAL_LABELS = {
@@ -81,19 +81,19 @@ export const CLIENTE_FILTRAFILIAL_LABELS = {
 } as const;
 
 export const CLIENTE_GRAUSATISFACAO_LABELS = {
-	"1": "Nada satisfeito",
-	"2": "Pouco satisfeito",
-	"3": "Satisfeito",
-	"4": "Muito satisfeito",
-	"5": "Completamente satisfeito",
+	1: "Nada satisfeito",
+	2: "Pouco satisfeito",
+	3: "Satisfeito",
+	4: "Muito satisfeito",
+	5: "Completamente satisfeito",
 } as const;
 
 export const CLIENTE_ISSCLASSIFICACAOPADRAO_LABELS = {
-	Value00: "00 - Normal",
-	Value01: "01 - Retido",
-	Value02: "02 - Substituta",
-	Value03: "03 - Isento",
-	"99": "99 - Padrão",
+	"00": "00 - Normal",
+	"01": "01 - Retido",
+	"02": "02 - Substituta",
+	"03": "03 - Isento",
+	99: "99 - Padrão",
 } as const;
 
 export const CLIENTE_MORADIA_LABELS = {
@@ -112,8 +112,8 @@ export const CLIENTE_PARTICIPAPRECOBRANCA_LABELS = {
 } as const;
 
 export const CLIENTE_REGIMEFISCALCOL_LABELS = {
-	"48": "Responsable de IVA",
-	"49": "No responsable de IVA",
+	48: "Responsable de IVA",
+	49: "No responsable de IVA",
 } as const;
 
 export const CLIENTE_REGUACOBRANCACONSIDERA_LABELS = {
@@ -158,53 +158,50 @@ export const CLIENTE_STATUSPROSPECCAO_LABELS = {
 } as const;
 
 export const CLIENTE_TIPOASSINANTE_LABELS = {
-	"1": "Comercial/Industrial",
-	"2": "Poder Público",
-	"3": "Residencial/Pessoa física",
-	"4": "Público",
-	"5": "Semi-Público",
-	"6": "Outros",
+	1: "Comercial/Industrial",
+	2: "Poder Público",
+	3: "Residencial/Pessoa física",
+	4: "Público",
+	5: "Semi-Público",
+	6: "Outros",
 } as const;
 
 export const CLIENTE_TIPOCLIENTESCM_LABELS = {
-	Value01: "01 - Comercial",
-	Value02: "02 - Industrial",
-	Value03: "03 - Residencial/Pessoa Física",
-	Value04: "04 - Produtor Rural",
-	Value05:
-		"05 - Órgão da administração pública estadual direta e suas fundações e autarquias, quando mantidas pelo poder público estadual e regidas por normas de direito público, termos do Convênio ICMS 107/95",
-	Value06:
-		"06 - Prestador de serviço de telecomunicação responsável pelo recolhimento do imposto incidente sobre a cessão dos meios de rede do prestador do serviço ao usuário final, termos do Convênio ICMS 17/13",
-	Value07:
-		"07 - Missões Diplomáticas, Repartições Consulares e Organismos Internacionais, nos termos do Convênio ICMS 158/94",
-	Value08: "08 - Igrejas e Templos de qualquer natureza",
-	"99": "99 - Outros não especificados anteriormente",
-	Value013: "0-13 - Grande contribuinte",
-	Value015: "0-15 - Auto retentor",
-	Value023: "0-23 - Agente de retenção IVA",
-	Value047: "0-47 - Regime simples de tributação",
-	R99Pn: "R-99-PN - Não aplica - Outros",
+	"01": "01 - Comercial",
+	"02": "02 - Industrial",
+	"03": "03 - Residencial/Pessoa Física",
+	"04": "04 - Produtor Rural",
+	"05": "05 - Órgão da administração pública estadual direta e suas fundações e autarquias, quando mantidas pelo poder público estadual e regidas por normas de direito público, termos do Convênio ICMS 107/95",
+	"06": "06 - Prestador de serviço de telecomunicação responsável pelo recolhimento do imposto incidente sobre a cessão dos meios de rede do prestador do serviço ao usuário final, termos do Convênio ICMS 17/13",
+	"07": "07 - Missões Diplomáticas, Repartições Consulares e Organismos Internacionais, nos termos do Convênio ICMS 158/94",
+	"08": "08 - Igrejas e Templos de qualquer natureza",
+	99: "99 - Outros não especificados anteriormente",
+	"0-13": "0-13 - Grande contribuinte",
+	"0-15": "0-15 - Auto retentor",
+	"0-23": "0-23 - Agente de retenção IVA",
+	"0-47": "0-47 - Regime simples de tributação",
+	"R-99-PN": "R-99-PN - Não aplica - Outros",
 } as const;
 
 export const CLIENTE_TIPODOCUMENTOIDENTIFICACAO_LABELS = {
-	"11": "Registro civil",
-	"12": "Tarjeta de identidad",
-	"13": "Cédula de ciudadanía",
-	"21": "Tarjeta de extranjería",
-	"22": "Cédula de extranjería",
-	"31": "NIT",
-	"41": "Pasaporte",
-	"42": "Documento de identificación extranjero",
-	"47": "PEP",
-	"50": "NIT de otro país",
-	"91": "NUIP",
+	11: "Registro civil",
+	12: "Tarjeta de identidad",
+	13: "Cédula de ciudadanía",
+	21: "Tarjeta de extranjería",
+	22: "Cédula de extranjería",
+	31: "NIT",
+	41: "Pasaporte",
+	42: "Documento de identificación extranjero",
+	47: "PEP",
+	50: "NIT de otro país",
+	91: "NUIP",
 	NUIT: "NUIT",
 	RUC: "Registro Único de Contribuyentes",
 	CI: "Cédula de identidad",
-	"4": "Cartão de Residência",
-	"5": "Innominado",
-	"6": "Cartão de Isenção de Imposto Diplomático",
-	"9": "Outro",
+	4: "Cartão de Residência",
+	5: "Innominado",
+	6: "Cartão de Isenção de Imposto Diplomático",
+	9: "Outro",
 	CUIT: "CUIT",
 	CIBOL: "Carnet de Identidad",
 	RUT: "Rol Único Tributario",
@@ -217,10 +214,10 @@ export const CLIENTE_TIPODOCUMENTOIDENTIFICACAO_LABELS = {
 } as const;
 
 export const CLIENTE_TIPOENTEGOVERNAMENTAL_LABELS = {
-	"1": "União",
-	"2": "Estado",
-	"3": "Distrito Federal",
-	"4": "Município",
+	1: "União",
+	2: "Estado",
+	3: "Distrito Federal",
+	4: "Município",
 } as const;
 
 export const CLIENTE_TIPOLOCALIDADE_LABELS = {
@@ -232,9 +229,9 @@ export const CLIENTE_TIPOPESSOA_LABELS = {
 	F: "Física",
 	J: "Jurídica",
 	E: "Estrangeiro",
-	"1": "Juridica",
-	"2": "Natural",
-	"3": "Estrangeiro",
+	1: "Juridica",
+	2: "Natural",
+	3: "Estrangeiro",
 } as const;
 
 export const CLIENTE_TIPOPESSOATITULARCONTA_LABELS = {

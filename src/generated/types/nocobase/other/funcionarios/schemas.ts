@@ -5,6 +5,23 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { aniversariosBaseSchema } from "../aniversarios/schemas";
+import { arquivos_funcionariosBaseSchema } from "../arquivos-funcionarios/schemas";
+import { asosBaseSchema } from "../asos/schemas";
+import { cargosBaseSchema } from "../cargos/schemas";
+import { departamentosBaseSchema } from "../departamentos/schemas";
+import { foto_funcionariosBaseSchema } from "../foto-funcionarios/schemas";
+import { info_arquivosBaseSchema } from "../info-arquivos/schemas";
+import { info_asoBaseSchema } from "../info-aso/schemas";
+import { linha_corporativaBaseSchema } from "../linha-corporativa/schemas";
+import { logs_cargosBaseSchema } from "../logs-cargos/schemas";
+import { parentescoBaseSchema } from "../parentesco/schemas";
+import { patrimonioBaseSchema } from "../patrimonio/schemas";
+import { periodos_feriasBaseSchema } from "../periodos-ferias/schemas";
+import { qualirun_info_adicionaisBaseSchema } from "../qualirun-info-adicionais/schemas";
+import { qualirun_processosBaseSchema } from "../qualirun-processos/schemas";
+import { turnosBaseSchema } from "../turnos/schemas";
 import {
 	f_funcionariosAtivoSchema,
 	f_funcionariosChecklistAdmissionalSchema,
@@ -100,31 +117,35 @@ export const f_funcionariosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const f_funcionariosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_aniversarios: z.number().array(),
-	f_arquivos_funcionarios: z.number().array(),
-	f_asos: z.number().array(),
-	f_cargo: z.number().nullable(),
-	f_chip_corporativo: z.number().array(),
-	f_departamento: z.number().nullable(),
-	f_foto_funcionarios: z.number().array(),
-	f_info_arquivos: z.number().array(),
-	f_info_aso: z.number().array(),
-	f_logs_cargos: z.number().array(),
-	f_parentesco: z.number().array(),
-	f_patrimonio_funcionarios: z.number().array(),
-	f_periodos_ferias: z.number().array(),
-	f_qualirun_processos: z.number().array(),
-	f_turnos: z.number().nullable(),
-	t_qualirun_info_adicionais: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_aniversarios: z.lazy(() => aniversariosBaseSchema.array()),
+	f_arquivos_funcionarios: z.lazy(() =>
+		arquivos_funcionariosBaseSchema.array(),
+	),
+	f_asos: z.lazy(() => asosBaseSchema.array()),
+	f_cargo: z.lazy(() => cargosBaseSchema.nullable()),
+	f_chip_corporativo: z.lazy(() => linha_corporativaBaseSchema.array()),
+	f_departamento: z.lazy(() => departamentosBaseSchema.nullable()),
+	f_foto_funcionarios: z.lazy(() => foto_funcionariosBaseSchema.array()),
+	f_info_arquivos: z.lazy(() => info_arquivosBaseSchema.array()),
+	f_info_aso: z.lazy(() => info_asoBaseSchema.array()),
+	f_logs_cargos: z.lazy(() => logs_cargosBaseSchema.array()),
+	f_parentesco: z.lazy(() => parentescoBaseSchema.array()),
+	f_patrimonio_funcionarios: z.lazy(() => patrimonioBaseSchema.array()),
+	f_periodos_ferias: z.lazy(() => periodos_feriasBaseSchema.array()),
+	f_qualirun_processos: z.lazy(() => qualirun_processosBaseSchema.array()),
+	f_turnos: z.lazy(() => turnosBaseSchema.nullable()),
+	t_qualirun_info_adicionais: z.lazy(() =>
+		qualirun_info_adicionaisBaseSchema.array(),
+	),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const f_funcionariosSchema = f_funcionariosBaseSchema.merge(
-	f_funcionariosRelationSchema,
+export const f_funcionariosSchema = f_funcionariosBaseSchema.extend(
+	f_funcionariosRelationSchema.shape,
 );
 
 // ============================================================

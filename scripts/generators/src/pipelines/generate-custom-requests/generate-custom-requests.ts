@@ -1,6 +1,7 @@
 import type { OrchestrationTaskRunner } from "@scripts/generators/src/lib/cli";
 import type { Logger } from "@scripts/generators/src/lib/logger";
 import { createOrchestrationRunner } from "@scripts/generators/src/lib/pipeline-runner";
+import { resetTypeScriptValidationCache } from "@scripts/generators/src/lib/validation/tsc-validator";
 import type { GenerationContext } from "./@types/orchestration";
 import type { ScriptConfig } from "./@types/script-config";
 import { assertGenerateCustomRequestsResult } from "./assert";
@@ -87,6 +88,7 @@ export async function runGenerateCustomRequests(
 	overrideConfig: Partial<ScriptConfig> | undefined,
 	injectedLogger: Logger,
 ): Promise<GenerationContext> {
+	resetTypeScriptValidationCache();
 	const context = createGenerateCustomRequestsExecutionContext(
 		overrideConfig,
 		injectedLogger,

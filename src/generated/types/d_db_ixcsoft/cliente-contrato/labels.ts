@@ -50,12 +50,6 @@ export const CLIENTECONTRATO_CCPREVISAO_LABELS = {
 	M: "Manual",
 } as const;
 
-export const CLIENTECONTRATO_CONTRATORECORRENCIA_LABELS = {
-	PIX: "Pix automático",
-	CREDIT: "Cartão de crédito",
-	N: "Sem recorrência ativa",
-} as const;
-
 export const CLIENTECONTRATO_CONTRATOSUSPENSO_LABELS = {
 	S: "Sim",
 	N: "Não",
@@ -79,12 +73,12 @@ export const CLIENTECONTRATO_DOCUMENTPHOTO_LABELS = {
 } as const;
 
 export const CLIENTECONTRATO_ESTRATOSOCIALCOL_LABELS = {
-	"1": "1",
-	"2": "2",
-	"3": "3",
-	"4": "4",
-	"5": "5",
-	"6": "6",
+	1: "1",
+	2: "2",
+	3: "3",
+	4: "4",
+	5: "5",
+	6: "6",
 } as const;
 
 export const CLIENTECONTRATO_GERARFINANASSINDIGITALCONTRATO_LABELS = {
@@ -296,16 +290,6 @@ export const cliente_contratoCcPrevisaoSchema = z.enum(["P", "N", "S", "M"], {
 			"cc_previsao: valores válidos são [Configuração padrão (Parâmetros), Competência (Previsão não), Caixa (Previsão sim), Manual]",
 	}),
 });
-
-export const cliente_contratoContratoRecorrenciaSchema = z.enum(
-	["PIX", "CREDIT", "N"],
-	{
-		error: () => ({
-			message:
-				"contrato_recorrencia: valores válidos são [Pix automático, Cartão de crédito, Sem recorrência ativa]",
-		}),
-	},
-);
 
 export const cliente_contratoContratoSuspensoSchema = z.enum(["S", "N"], {
 	error: () => ({
@@ -571,10 +555,6 @@ export type ClienteContratoBloqueioAutomatico = z.infer<
 
 export type ClienteContratoCcPrevisao = z.infer<
 	typeof cliente_contratoCcPrevisaoSchema
->;
-
-export type ClienteContratoContratoRecorrencia = z.infer<
-	typeof cliente_contratoContratoRecorrenciaSchema
 >;
 
 export type ClienteContratoContratoSuspenso = z.infer<

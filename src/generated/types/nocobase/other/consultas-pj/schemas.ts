@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { empresasBaseSchema } from "../../empresas/schemas";
+import { usersBaseSchema } from "../../users/schemas";
 import { consultas_pjStatusConsultaSchema } from "./labels";
 
 export const T_CONSULTAS_PJ_TABLE_NAME = "t_consultas_pj";
@@ -26,16 +28,16 @@ export const consultas_pjBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const consultas_pjRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_id_pessoa: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_id_pessoa: z.lazy(() => empresasBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const consultas_pjSchema = consultas_pjBaseSchema.merge(
-	consultas_pjRelationSchema,
+export const consultas_pjSchema = consultas_pjBaseSchema.extend(
+	consultas_pjRelationSchema.shape,
 );
 
 // ============================================================

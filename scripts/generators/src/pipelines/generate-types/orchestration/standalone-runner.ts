@@ -1,4 +1,5 @@
 import type { Logger } from "@scripts/generators/src/lib/logger";
+import { resetTypeScriptValidationCache } from "@scripts/generators/src/lib/validation/tsc-validator";
 import type { GenerateTypesResult, RuntimeConfig } from "../@types/script";
 import { assertGenerateTypesResult } from "../runtime/assert";
 import {
@@ -19,6 +20,7 @@ export async function runGenerateTypes(
 	overrideConfig: Partial<RuntimeConfig> | undefined,
 	injectedLogger: Logger,
 ): Promise<GenerateTypesResult> {
+	resetTypeScriptValidationCache();
 	const context = createGenerateTypesExecutionContext(
 		overrideConfig,
 		injectedLogger,

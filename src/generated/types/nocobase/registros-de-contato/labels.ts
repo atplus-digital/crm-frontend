@@ -16,21 +16,21 @@ export const REGISTROSDECONTATO_CATEGORIA_LABELS = {
 } as const;
 
 export const REGISTROSDECONTATO_NOTATECNICO_LABELS = {
-	"0": "N/A",
-	"1": "1 ★",
-	"2": "2 ★★",
-	"3": "3 ★★★",
-	"4": "4 ★★★★",
-	"5": "5 ★★★★★",
+	0: "N/A",
+	1: "1 ★",
+	2: "2 ★★",
+	3: "3 ★★★",
+	4: "4 ★★★★",
+	5: "5 ★★★★★",
 } as const;
 
 export const REGISTROSDECONTATO_NOTAVENDAS_LABELS = {
-	"0": "N/A",
-	"1": "1 ★",
-	"2": "2 ★★",
-	"3": "3 ★★★",
-	"4": "4 ★★★★",
-	"5": "5 ★★★★★",
+	0: "N/A",
+	1: "1 ★",
+	2: "2 ★★",
+	3: "3 ★★★",
+	4: "4 ★★★★",
+	5: "5 ★★★★★",
 } as const;
 
 // ============================================================

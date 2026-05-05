@@ -21,21 +21,21 @@ export const CRMTROCATITULARIDADE_ESTADO_LABELS = {
 } as const;
 
 export const CRMTROCATITULARIDADE_STATUS_LABELS = {
-	"0": "Novo",
-	"1": "Aguardando assinatura",
-	"2": "Aguardando Auditoria",
-	"3": "Concluído",
-	"9": "Cancelado",
+	0: "Novo",
+	1: "Aguardando assinatura",
+	2: "Aguardando Auditoria",
+	3: "Concluído",
+	9: "Cancelado",
 } as const;
 
 export const CRMTROCATITULARIDADE_SUBSTATUS_LABELS = {
-	"0": "NA",
-	"1": "APROVADO - Aguardando inserção no IXC",
-	"2": "APROVADO - Erro na integração com o IXC",
-	"3": "APROVADO - Concluído",
-	"4": "REPROVADO - Divergência de Dados",
-	"5": "REPROVADO - Financeiro em Atraso",
-	"6": "AGUARDANDO - Auditoria",
+	0: "NA",
+	1: "APROVADO - Aguardando inserção no IXC",
+	2: "APROVADO - Erro na integração com o IXC",
+	3: "APROVADO - Concluído",
+	4: "REPROVADO - Divergência de Dados",
+	5: "REPROVADO - Financeiro em Atraso",
+	6: "AGUARDANDO - Auditoria",
 } as const;
 
 export const CRMTROCATITULARIDADE_TIPOPESSOA_LABELS = {

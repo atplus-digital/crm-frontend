@@ -1,18 +1,21 @@
-import type { DataSourceGenerationConfig } from "../@types/script-config";
+import type {
+	DataSourceGenerationConfig,
+	RuntimeConfig,
+} from "../@types/script-config";
 import type { DataSourceClient } from "../@types/script-data-source";
-import { config } from "../config";
 import { NocoBaseDataSourceClient } from "./client";
 
 export function createDataSourceClient(
 	dataSource: DataSourceGenerationConfig,
+	runtimeConfig: Pick<RuntimeConfig, "baseUrl" | "token" | "requestTimeoutMs">,
 ): DataSourceClient {
 	switch (dataSource.type) {
 		case "nocobase":
 			return new NocoBaseDataSourceClient(
 				{
-					baseUrl: config.baseUrl,
-					token: config.token,
-					timeoutMs: config.requestTimeoutMs,
+					baseUrl: runtimeConfig.baseUrl,
+					token: runtimeConfig.token,
+					timeoutMs: runtimeConfig.requestTimeoutMs,
 				},
 				{
 					requestHeaders: {

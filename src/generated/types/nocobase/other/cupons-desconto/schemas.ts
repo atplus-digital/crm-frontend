@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { pacotesBaseSchema } from "../pacotes/schemas";
 import {
 	cupons_descontoStatusSchema,
 	cupons_descontoTipoNegociacaoSchema,
@@ -41,17 +43,17 @@ export const cupons_descontoBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const cupons_descontoRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_pacotes: z.number().array(),
-	f_vendedor: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_pacotes: z.lazy(() => pacotesBaseSchema.array()),
+	f_vendedor: z.lazy(() => usersBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const cupons_descontoSchema = cupons_descontoBaseSchema.merge(
-	cupons_descontoRelationSchema,
+export const cupons_descontoSchema = cupons_descontoBaseSchema.extend(
+	cupons_descontoRelationSchema.shape,
 );
 
 // ============================================================

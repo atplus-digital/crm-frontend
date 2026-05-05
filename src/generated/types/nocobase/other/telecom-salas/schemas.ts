@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { telecom_racksBaseSchema } from "../telecom-racks/schemas";
+
 export const T_TELECOM_SALAS_TABLE_NAME = "t_telecom_salas";
 
 // ============================================================
@@ -22,16 +25,16 @@ export const telecom_salasBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const telecom_salasRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_fk_sala_racks: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_fk_sala_racks: z.lazy(() => telecom_racksBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const telecom_salasSchema = telecom_salasBaseSchema.merge(
-	telecom_salasRelationSchema,
+export const telecom_salasSchema = telecom_salasBaseSchema.extend(
+	telecom_salasRelationSchema.shape,
 );
 
 // ============================================================

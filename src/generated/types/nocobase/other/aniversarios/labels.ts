@@ -11,7 +11,7 @@ import { z } from "zod";
 // ============================================================
 export const ANIVERSARIOS_STATUS_LABELS = {
 	novo: "Novo",
-	EmProcesso: "Em processo",
+	"em-processo": "Em processo",
 	concluido: "Concluído",
 	erro: "Erro",
 } as const;

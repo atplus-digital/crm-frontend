@@ -11,12 +11,12 @@ import { z } from "zod";
 // ============================================================
 export const PATRIMONIO_ESTADOUSO_LABELS = {
 	NOVO: "NOVO",
-	UsadoEmEstadoDeNovo: "USADO, EM ESTADO DE NOVO",
-	UsadoComMarcasDeUso: "USADO, COM MARCAS DE USO",
+	"USADO, EM ESTADO DE NOVO": "USADO, EM ESTADO DE NOVO",
+	"USADO, COM MARCAS DE USO": "USADO, COM MARCAS DE USO",
 } as const;
 
 export const PATRIMONIO_TIPOPATRIMONIO_LABELS = {
-	"1": "Equipamento",
+	1: "Equipamento",
 } as const;
 
 // ============================================================

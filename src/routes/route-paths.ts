@@ -2,7 +2,7 @@ const ROUTE_PARAM_REGEX = /:([A-Za-z0-9_]+)/g;
 
 export const routePaths = {
 	home: "/",
-	profile: "/profile",
+	profile: "/config/profile",
 	cs_dashboard: "/cs",
 	cs_pessoas: "/cs/pessoas",
 	cs_pessoas_pj: "/cs/pessoas/pj",

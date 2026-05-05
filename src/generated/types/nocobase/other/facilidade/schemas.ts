@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_FACILIDADE_TABLE_NAME = "t_facilidade";
 
 // ============================================================
@@ -22,15 +24,15 @@ export const facilidadeBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const facilidadeRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const facilidadeSchema = facilidadeBaseSchema.merge(
-	facilidadeRelationSchema,
+export const facilidadeSchema = facilidadeBaseSchema.extend(
+	facilidadeRelationSchema.shape,
 );
 
 // ============================================================

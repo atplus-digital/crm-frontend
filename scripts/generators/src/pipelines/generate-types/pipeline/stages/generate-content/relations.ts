@@ -90,10 +90,6 @@ export function renderRelationValueType(
 	return cardinality === "many" ? `${targetType}[]` : `${targetType} | null`;
 }
 
-/**
- * Gera o nome do schema base para uma collection (ex: usersBaseSchema).
- * Mantido localmente para evitar dependência circular.
- */
 function _toBaseSchemaName(collectionName: string): string {
 	const cleanCollectionName = collectionName.replace(/^t_/, "").toLowerCase();
 	if (!cleanCollectionName || cleanCollectionName === "t") {
@@ -117,7 +113,8 @@ function _ensureValidIdentifier(name: string): string {
  * @param targetCollection - Nome da collection de destino
  * @param cardinality - Cardinalidade da relação ("one" ou "many")
  * @param availableCollections - Set com nomes das collections disponíveis no datasource
- * @returns String com o tipo Zod (ex: "usersBaseSchema.nullable()", "z.number().array()")
+ * @param sourceCollection - Nome da collection de origem (arquivo atual)
+ * @returns String com o tipo Zod (ex: "z.lazy(() => usersBaseSchema.nullable())", "z.number().array()")
  */
 export function renderRelationZodType(
 	targetCollection: string,
@@ -130,11 +127,14 @@ export function renderRelationZodType(
 		availableCollections.has(targetCollectionTrimmed);
 
 	if (isAvailable) {
-		const targetSchemaName = _toBaseSchemaName(targetCollectionTrimmed);
-		if (cardinality === "one") {
-			return `${targetSchemaName}.nullable()`;
-		}
-		return `${targetSchemaName}.array()`;
+		const targetBaseSchemaName = _toBaseSchemaName(targetCollectionTrimmed);
+		const relationType =
+			cardinality === "one"
+				? `${targetBaseSchemaName}.nullable()`
+				: `${targetBaseSchemaName}.array()`;
+
+		// Sempre usa lazy + BaseSchema para evitar ciclos (self e cross-collection).
+		return `z.lazy(() => ${relationType})`;
 	}
 
 	// Fallback para collections não disponíveis no datasource

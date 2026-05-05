@@ -10,8 +10,6 @@ interface CachedEntry {
 	enums: Record<string, EnumAdapterFieldEnum>;
 }
 
-const METADATA_FILE = "metadata.json";
-
 function getCacheDir(): string {
 	const cacheDir = path.join(
 		process.cwd(),
@@ -27,30 +25,6 @@ function getCacheDir(): string {
 
 function getCacheFilePath(collectionName: string): string {
 	return path.join(getCacheDir(), `${collectionName}.json`);
-}
-
-function getMetadataFilePath(): string {
-	return path.join(getCacheDir(), METADATA_FILE);
-}
-
-function loadMetadata(): Record<string, number> {
-	const metadataFile = getMetadataFilePath();
-
-	if (!existsSync(metadataFile)) {
-		return {};
-	}
-
-	try {
-		const content = readFileSync(metadataFile, "utf-8");
-		return JSON.parse(content) as Record<string, number>;
-	} catch {
-		return {};
-	}
-}
-
-function saveMetadata(metadata: Record<string, number>): void {
-	const metadataFile = getMetadataFilePath();
-	writeFileSync(metadataFile, JSON.stringify(metadata, null, 2));
 }
 
 export async function fetchWithCache(
@@ -85,10 +59,6 @@ export async function fetchWithCache(
 	try {
 		const entry: CachedEntry = { url, enums };
 		writeFileSync(cacheFile, JSON.stringify(entry, null, 2));
-
-		const metadata = loadMetadata();
-		metadata[collectionName] = Date.now();
-		saveMetadata(metadata);
 
 		logger.debug(
 			`[Cache] WRITE: ${collectionName} (${Object.keys(enums).length} fields)`,

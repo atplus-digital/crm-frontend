@@ -1,5 +1,6 @@
 import { join } from "node:path";
 import { resolveLogLevel } from "@scripts/generators/src/lib/env-config";
+import { toDataSourceOutputFolder } from "@scripts/generators/src/lib/path-utils";
 import type { RuntimeConfig, ScriptConfig } from "../@types/script";
 import { resolveEnvConfig } from "./load-config";
 
@@ -24,16 +25,6 @@ const defaultConfig: ScriptConfig = {
 		suffix: "",
 	},
 } as const satisfies ScriptConfig;
-
-function toSafePathSegment(value: string): string {
-	return value.replace(/[^a-zA-Z0-9_-]/g, "-");
-}
-
-function toDataSourceOutputFolder(dataSourceKey: string): string {
-	return dataSourceKey === "main"
-		? "nocobase"
-		: toSafePathSegment(dataSourceKey);
-}
 
 function normalizeDatasourceOutputDirs(
 	baseOutputDir: string,

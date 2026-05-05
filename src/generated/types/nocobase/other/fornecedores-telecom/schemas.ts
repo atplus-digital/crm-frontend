@@ -5,6 +5,10 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { telecom_contratosBaseSchema } from "../telecom-contratos/schemas";
+import { telecom_recursosBaseSchema } from "../telecom-recursos/schemas";
+
 export const T_FORNECEDORES_TELECOM_TABLE_NAME = "t_fornecedores_telecom";
 
 // ============================================================
@@ -25,19 +29,19 @@ export const fornecedores_telecomBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const fornecedores_telecomRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_fk_cliente_contrato: z.number().array(),
-	f_fk_contrato_fornecedor: z.number().array(),
-	f_fk_recurso_cliente: z.number().array(),
-	f_fk_recurso_fornecedor: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_fk_cliente_contrato: z.lazy(() => telecom_contratosBaseSchema.array()),
+	f_fk_contrato_fornecedor: z.lazy(() => telecom_contratosBaseSchema.array()),
+	f_fk_recurso_cliente: z.lazy(() => telecom_recursosBaseSchema.array()),
+	f_fk_recurso_fornecedor: z.lazy(() => telecom_recursosBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const fornecedores_telecomSchema = fornecedores_telecomBaseSchema.merge(
-	fornecedores_telecomRelationSchema,
+export const fornecedores_telecomSchema = fornecedores_telecomBaseSchema.extend(
+	fornecedores_telecomRelationSchema.shape,
 );
 
 // ============================================================

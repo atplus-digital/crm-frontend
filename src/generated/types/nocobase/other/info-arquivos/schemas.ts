@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { arquivos_funcionariosBaseSchema } from "../arquivos-funcionarios/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
 import { info_arquivosArquivoExternoSchema } from "./labels";
 
 export const T_INFO_ARQUIVOS_TABLE_NAME = "t_info_arquivos";
@@ -25,17 +28,17 @@ export const info_arquivosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const info_arquivosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_arquivos: z.number().nullable(),
-	f_funcionarios: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_arquivos: z.lazy(() => arquivos_funcionariosBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const info_arquivosSchema = info_arquivosBaseSchema.merge(
-	info_arquivosRelationSchema,
+export const info_arquivosSchema = info_arquivosBaseSchema.extend(
+	info_arquivosRelationSchema.shape,
 );
 
 // ============================================================

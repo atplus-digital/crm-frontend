@@ -11,34 +11,34 @@ import { z } from "zod";
 // ============================================================
 export const TEMPLATESATENDIMENTON1_ACESSAPELAREDEDAATPLUS_LABELS = {
 	Sim: "Sim",
-	Nao: "Nao",
+	Não: "Nao",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_ALTERACOES_LABELS = {
-	SomenteONome: "Somente o nome",
-	SomenteASenha: "Somente a senha",
-	NomeESenha: "Nome e senha",
+	"Somente o nome": "Somente o nome",
+	"Somente a senha": "Somente a senha",
+	"Nome e senha": "Nome e senha",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_APLICATIVO_LABELS = {
 	Deezer: "Deezer",
-	WatchBr: "Watch BR",
-	Paramount: "Paramount+",
-	HboMax: "HBO Max",
-	ViaLivros: "Via Livros",
-	OleTv: "Olé TV",
-	TodosOsAplicativos: "Todos os aplicativos",
+	"Watch BR": "Watch BR",
+	"Paramount+": "Paramount+",
+	"HBO Max": "HBO Max",
+	"Via Livros": "Via Livros",
+	"Olé TV": "Olé TV",
+	"Todos os aplicativos": "Todos os aplicativos",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_APLICATIVOESPECIFICO_LABELS = {
 	Sim: "Sim",
-	Nao: "Não",
+	Não: "Não",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_APNPREENCHIDA_LABELS = {
 	Sim: "Sim",
-	Nao: "Não",
-	NaoSoubeDizer: "Não soube dizer",
+	Não: "Não",
+	"Não soube dizer": "Não soube dizer",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_FABRICANTE_LABELS = {
@@ -52,18 +52,18 @@ export const TEMPLATESATENDIMENTON1_FABRICANTE_LABELS = {
 
 export const TEMPLATESATENDIMENTON1_LOS_LABELS = {
 	Sim: "Sim",
-	Nao: "Não",
+	Não: "Não",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_QUALAPNCONFIGURADA_LABELS = {
-	EaiBr: "eai.br",
-	M2mArqiaBr: "m2m.arqia.br",
-	InternetBr: "internet.br",
+	"eai.br": "eai.br",
+	"m2m.arqia.br": "m2m.arqia.br",
+	"internet.br": "internet.br",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_QUANTIDADEDEDISPOSITIVOS_LABELS = {
-	UmDispositivo: "Um dispositivo",
-	TodosOsDispositivos: "Todos os dispositivos",
+	"Um dispositivo": "Um dispositivo",
+	"Todos os dispositivos": "Todos os dispositivos",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_STATUSDOCIRCUITO_LABELS = {
@@ -72,39 +72,39 @@ export const TEMPLATESATENDIMENTON1_STATUSDOCIRCUITO_LABELS = {
 } as const;
 
 export const TEMPLATESATENDIMENTON1_TELEFONIATIPODEPROBLEMA_LABELS = {
-	NaoRecebeLigacoes: "Não recebe ligações",
-	NaoEfetuaLigacoes: "Não efetua ligações",
-	QuedasNasLigacoes: "Quedas nas ligações",
-	ChiadoVozRobotica: "Chiado / Voz robótica",
-	MudoSemTom: "Mudo / Sem tom",
+	"Não recebe ligações": "Não recebe ligações",
+	"Não efetua ligações": "Não efetua ligações",
+	"Quedas nas ligações": "Quedas nas ligações",
+	"Chiado / Voz robótica": "Chiado / Voz robótica",
+	"Mudo / Sem tom": "Mudo / Sem tom",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_TIPODEATENDIMENTO_LABELS = {
-	Lentidao: "Lentidão/Quedas",
-	SemConexao: "Sem conexão",
-	SiteEspecifico: "Site específico",
+	Lentidão: "Lentidão/Quedas",
+	"Sem conexão": "Sem conexão",
+	"Site específico": "Site específico",
 	Telefonia: "Telefonia",
-	AberturaDePortas: "Abertura de portas",
-	TrocaDeNomeSenha: "Troca de nome/senha",
+	"Abertura de portas": "Abertura de portas",
+	"Troca de nome/senha": "Troca de nome/senha",
 	SVA: "SVA",
 	MVNO: "MVNO",
 	Outro: "Outro",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_TIPODECONEXAODODISPOSITIVO_LABELS = {
-	WiFi: "Wi-Fi",
-	CaboDeRede: "Cabo de rede",
+	"Wi-Fi": "Wi-Fi",
+	"Cabo de rede": "Cabo de rede",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_TIPODEPROBLEMAMVNO_LABELS = {
-	NaoRecebeLigacoes: "Não recebe ligações",
-	NaoEfetuaLigacoes: "Não efetua ligações",
-	DadosMoveisNaoFuncionam: "Dados móveis não funcionam",
+	"Não recebe ligações": "Não recebe ligações",
+	"Não efetua ligações": "Não efetua ligações",
+	"Dados móveis não funcionam": "Dados móveis não funcionam",
 } as const;
 
 export const TEMPLATESATENDIMENTON1_TORREREDE_LABELS = {
-	ComSinal: "Com sinal",
-	SemSinal: "Sem sinal",
+	"Com sinal": "Com sinal",
+	"Sem sinal": "Sem sinal",
 } as const;
 
 // ============================================================

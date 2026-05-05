@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_funcionariosBaseSchema } from "../funcionarios/schemas";
+
 export const T_FOTO_FUNCIONARIOS_TABLE_NAME = "t_foto_funcionarios";
 
 // ============================================================
@@ -30,17 +33,17 @@ export const foto_funcionariosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const foto_funcionariosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_funcionarios: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_funcionarios: z.lazy(() => f_funcionariosBaseSchema.nullable()),
 	storage: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const foto_funcionariosSchema = foto_funcionariosBaseSchema.merge(
-	foto_funcionariosRelationSchema,
+export const foto_funcionariosSchema = foto_funcionariosBaseSchema.extend(
+	foto_funcionariosRelationSchema.shape,
 );
 
 // ============================================================

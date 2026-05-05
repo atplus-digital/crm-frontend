@@ -10,9 +10,9 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const CONSULTASPJ_STATUSCONSULTA_LABELS = {
-	"1": "Aprovado",
-	"2": "Aprovado com Alertas",
-	"9": "Negado",
+	1: "Aprovado",
+	2: "Aprovado com Alertas",
+	9: "Negado",
 } as const;
 
 // ============================================================

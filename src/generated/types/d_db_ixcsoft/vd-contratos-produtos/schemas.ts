@@ -66,7 +66,9 @@ export const vd_contratos_produtosRelationSchema = z.object({
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const vd_contratos_produtosSchema =
-	vd_contratos_produtosBaseSchema.merge(vd_contratos_produtosRelationSchema);
+	vd_contratos_produtosBaseSchema.extend(
+		vd_contratos_produtosRelationSchema.shape,
+	);
 
 // ============================================================
 // CREATE SCHEMA

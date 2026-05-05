@@ -10,18 +10,18 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const DCSERVIDORES_FABRICANTE_LABELS = {
-	"1": "DELL",
-	"2": "HPE",
-	"3": "IBM",
-	"4": "Supermicro",
-	"5": "Outro",
+	1: "DELL",
+	2: "HPE",
+	3: "IBM",
+	4: "Supermicro",
+	5: "Outro",
 } as const;
 
 export const DCSERVIDORES_STATUS_LABELS = {
-	"1": "Disponivel",
-	"2": "Alocado para Cliente",
-	"3": "Manutenção",
-	"4": "Descartado",
+	1: "Disponivel",
+	2: "Alocado para Cliente",
+	3: "Manutenção",
+	4: "Descartado",
 } as const;
 
 // ============================================================

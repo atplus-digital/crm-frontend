@@ -5,6 +5,11 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { f_contatosBaseSchema } from "../contatos/schemas";
+import { equipamentosBaseSchema } from "../equipamentos/schemas";
+import { telecom_anexosBaseSchema } from "../telecom-anexos/schemas";
+import { telecom_racksBaseSchema } from "../telecom-racks/schemas";
 import { sitesStatusSchema, sitesTipoSchema } from "./labels";
 
 export const T_SITES_TABLE_NAME = "t_sites";
@@ -35,18 +40,18 @@ export const sitesBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const sitesRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_anexos: z.number().array(),
-	f_contatos: z.number().nullable(),
-	f_fk_sites_equipamentos: z.number().array(),
-	f_racks: z.number().array(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_anexos: z.lazy(() => telecom_anexosBaseSchema.array()),
+	f_contatos: z.lazy(() => f_contatosBaseSchema.nullable()),
+	f_fk_sites_equipamentos: z.lazy(() => equipamentosBaseSchema.array()),
+	f_racks: z.lazy(() => telecom_racksBaseSchema.array()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const sitesSchema = sitesBaseSchema.merge(sitesRelationSchema);
+export const sitesSchema = sitesBaseSchema.extend(sitesRelationSchema.shape);
 
 // ============================================================
 // CREATE SCHEMA

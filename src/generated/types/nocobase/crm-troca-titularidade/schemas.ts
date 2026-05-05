@@ -5,6 +5,12 @@
  */
 
 import { z } from "zod";
+import { empresasBaseSchema } from "../empresas/schemas";
+import { anexos_troca_titularidadeBaseSchema } from "../other/anexos-troca-titularidade/schemas";
+import { contratosBaseSchema } from "../other/contratos/schemas";
+import { trocasdetitularidade_comentariosBaseSchema } from "../other/trocasdetitularidade-comentarios/schemas";
+import { pessoasBaseSchema } from "../pessoas/schemas";
+import { usersBaseSchema } from "../users/schemas";
 import {
 	crm_troca_titularidadeComplementoSchema,
 	crm_troca_titularidadeEstadoSchema,
@@ -56,21 +62,25 @@ export const crm_troca_titularidadeBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const crm_troca_titularidadeRelationSchema = z.object({
-	createdBy: z.any().nullable(),
-	f_anexos: z.any().array(),
-	f_comentarios: z.any().array(),
-	f_pessoa_pf: z.any().nullable(),
-	f_pessoa_pj: z.any().nullable(),
-	f_trocadetitularidade_contrato: z.any().array(),
-	f_vendedor: z.any().nullable(),
-	updatedBy: z.any().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_anexos: z.lazy(() => anexos_troca_titularidadeBaseSchema.array()),
+	f_comentarios: z.lazy(() =>
+		trocasdetitularidade_comentariosBaseSchema.array(),
+	),
+	f_pessoa_pf: z.lazy(() => pessoasBaseSchema.nullable()),
+	f_pessoa_pj: z.lazy(() => empresasBaseSchema.nullable()),
+	f_trocadetitularidade_contrato: z.lazy(() => contratosBaseSchema.array()),
+	f_vendedor: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const crm_troca_titularidadeSchema =
-	crm_troca_titularidadeBaseSchema.merge(crm_troca_titularidadeRelationSchema);
+	crm_troca_titularidadeBaseSchema.extend(
+		crm_troca_titularidadeRelationSchema.shape,
+	);
 
 // ============================================================
 // CREATE SCHEMA

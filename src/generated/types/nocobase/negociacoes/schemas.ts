@@ -5,6 +5,17 @@
  */
 
 import { z } from "zod";
+import { empresasBaseSchema } from "../empresas/schemas";
+import { anexos_negociacoesBaseSchema } from "../other/anexos-negociacoes/schemas";
+import { contratosBaseSchema } from "../other/contratos/schemas";
+import { cupons_descontoBaseSchema } from "../other/cupons-desconto/schemas";
+import { negociacoes_comentariosBaseSchema } from "../other/negociacoes-comentarios/schemas";
+import { negociacoes_itensBaseSchema } from "../other/negociacoes-itens/schemas";
+import { oe_qualirunBaseSchema } from "../other/oe-qualirun/schemas";
+import { pacotesBaseSchema } from "../other/pacotes/schemas";
+import { qualirun_assinatura_govBaseSchema } from "../other/qualirun-assinatura-gov/schemas";
+import { pessoasBaseSchema } from "../pessoas/schemas";
+import { usersBaseSchema } from "../users/schemas";
 import {
 	negociacoesConfissaoDividaSchema,
 	negociacoesDataVencimentoSchema,
@@ -105,27 +116,29 @@ export const negociacoesBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const negociacoesRelationSchema = z.object({
-	createdBy: z.any().nullable(),
-	f_anexos: z.any().array(),
-	f_comentarios: z.any().array(),
-	f_cupom_desconto: z.any().nullable(),
-	f_fk_oe_qualirun: z.any().array(),
-	f_itens_negociacao: z.any().array(),
-	f_negociacao_contrato: z.any().array(),
-	f_negociacao_pessoa_juridica: z.any().nullable(),
-	f_pacote: z.any().nullable(),
-	f_pacotes_adicionais: z.any().array(),
-	f_pessoa: z.any().nullable(),
-	f_qualirun_assinatura_gov: z.any().array(),
-	f_vendedor: z.any().nullable(),
-	updatedBy: z.any().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_anexos: z.lazy(() => anexos_negociacoesBaseSchema.array()),
+	f_comentarios: z.lazy(() => negociacoes_comentariosBaseSchema.array()),
+	f_cupom_desconto: z.lazy(() => cupons_descontoBaseSchema.nullable()),
+	f_fk_oe_qualirun: z.lazy(() => oe_qualirunBaseSchema.array()),
+	f_itens_negociacao: z.lazy(() => negociacoes_itensBaseSchema.array()),
+	f_negociacao_contrato: z.lazy(() => contratosBaseSchema.array()),
+	f_negociacao_pessoa_juridica: z.lazy(() => empresasBaseSchema.nullable()),
+	f_pacote: z.lazy(() => pacotesBaseSchema.nullable()),
+	f_pacotes_adicionais: z.lazy(() => pacotesBaseSchema.array()),
+	f_pessoa: z.lazy(() => pessoasBaseSchema.nullable()),
+	f_qualirun_assinatura_gov: z.lazy(() =>
+		qualirun_assinatura_govBaseSchema.array(),
+	),
+	f_vendedor: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const negociacoesSchema = negociacoesBaseSchema.merge(
-	negociacoesRelationSchema,
+export const negociacoesSchema = negociacoesBaseSchema.extend(
+	negociacoesRelationSchema.shape,
 );
 
 // ============================================================

@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import { telecom_ips_fixosPossuiIpFixoSchema } from "./labels";
 
 export const T_TELECOM_IPS_FIXOS_TABLE_NAME = "t_telecom_ips_fixos";
@@ -27,15 +28,15 @@ export const telecom_ips_fixosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const telecom_ips_fixosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const telecom_ips_fixosSchema = telecom_ips_fixosBaseSchema.merge(
-	telecom_ips_fixosRelationSchema,
+export const telecom_ips_fixosSchema = telecom_ips_fixosBaseSchema.extend(
+	telecom_ips_fixosRelationSchema.shape,
 );
 
 // ============================================================

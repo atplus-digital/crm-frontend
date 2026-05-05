@@ -10,26 +10,26 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const DATACENTERMEMORIAS_CAPACIDADE_LABELS = {
-	"2": "2 GB",
-	"4": "4 GB",
-	"8": "8 GB",
-	"16": "16 GB",
-	"32": "32 GB",
-	"64": "64 GB",
-	"128": "128 GB",
+	2: "2 GB",
+	4: "4 GB",
+	8: "8 GB",
+	16: "16 GB",
+	32: "32 GB",
+	64: "64 GB",
+	128: "128 GB",
 } as const;
 
 export const DATACENTERMEMORIAS_STATUS_LABELS = {
-	"0": "Descartado",
-	"1": "Disponivel",
-	"2": "Alocado para Servidor",
-	"3": "Manutenção",
+	0: "Descartado",
+	1: "Disponivel",
+	2: "Alocado para Servidor",
+	3: "Manutenção",
 } as const;
 
 export const DATACENTERMEMORIAS_TIPO_LABELS = {
-	"3": "DDR 3",
-	"4": "DDR 4",
-	"2": "DDR 2",
+	3: "DDR 3",
+	4: "DDR 4",
+	2: "DDR 2",
 } as const;
 
 // ============================================================

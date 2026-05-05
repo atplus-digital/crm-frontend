@@ -10,9 +10,9 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const QUALIRUNINFOADICIONAIS_GRAUESCOLARIDADE_LABELS = {
-	EnsinoMedio: "Ensino Médio",
+	"Ensino Médio": "Ensino Médio",
 	Superior: "Superior",
-	PosMba: "Pós, MBA",
+	"Pós, MBA": "Pós, MBA",
 	Mestrado: "Mestrado",
 	Doutorado: "Doutorado",
 } as const;
@@ -31,8 +31,8 @@ export const QUALIRUNINFOADICIONAIS_STATUS_LABELS = {
 
 export const QUALIRUNINFOADICIONAIS_VINCULOCONTATOEMERGENCIA_LABELS = {
 	Pais: "Pais",
-	FilhoAOuEnteadoA: "Filho(a) ou Enteado(a)",
-	Avos: "Avós",
+	"Filho(a) ou Enteado(a)": "Filho(a) ou Enteado(a)",
+	Avós: "Avós",
 	Conjuge: "Conjuge",
 } as const;
 

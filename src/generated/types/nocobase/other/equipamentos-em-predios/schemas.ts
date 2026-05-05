@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_EQUIPAMENTOS_EM_PREDIOS_TABLE_NAME = "t_equipamentos_em_predios";
 
 // ============================================================
@@ -27,16 +29,16 @@ export const equipamentos_em_prediosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const equipamentos_em_prediosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const equipamentos_em_prediosSchema =
-	equipamentos_em_prediosBaseSchema.merge(
-		equipamentos_em_prediosRelationSchema,
+	equipamentos_em_prediosBaseSchema.extend(
+		equipamentos_em_prediosRelationSchema.shape,
 	);
 
 // ============================================================

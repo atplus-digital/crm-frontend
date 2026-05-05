@@ -5,6 +5,10 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { acessosBaseSchema } from "../acessos/schemas";
+import { equipamentosBaseSchema } from "../equipamentos/schemas";
+import { telecom_recursosBaseSchema } from "../telecom-recursos/schemas";
 import {
 	telecom_interfacesConfiguracaoSchema,
 	telecom_interfacesTipoSchema,
@@ -31,22 +35,26 @@ export const telecom_interfacesBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const telecom_interfacesRelationSchema = z.object({
-	children: telecom_interfacesBaseSchema.array(),
-	createdBy: z.number().nullable(),
-	f_fk_equipamento: z.number().array(),
-	f_fk_interfaces_equipamentos: z.number().array(),
-	f_fk_recurso_interface_ponta_a: z.number().array(),
-	f_fk_recurso_interface_ponta_b: z.number().array(),
-	f_s3gs1jjkqzm: z.number().nullable(),
-	parent: telecom_interfacesBaseSchema.nullable(),
-	updatedBy: z.number().nullable(),
+	children: z.lazy(() => telecom_interfacesBaseSchema.array()),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_fk_equipamento: z.lazy(() => equipamentosBaseSchema.array()),
+	f_fk_interfaces_equipamentos: z.lazy(() => equipamentosBaseSchema.array()),
+	f_fk_recurso_interface_ponta_a: z.lazy(() =>
+		telecom_recursosBaseSchema.array(),
+	),
+	f_fk_recurso_interface_ponta_b: z.lazy(() =>
+		telecom_recursosBaseSchema.array(),
+	),
+	f_s3gs1jjkqzm: z.lazy(() => acessosBaseSchema.nullable()),
+	parent: z.lazy(() => telecom_interfacesBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const telecom_interfacesSchema = telecom_interfacesBaseSchema.merge(
-	telecom_interfacesRelationSchema,
+export const telecom_interfacesSchema = telecom_interfacesBaseSchema.extend(
+	telecom_interfacesRelationSchema.shape,
 );
 
 // ============================================================

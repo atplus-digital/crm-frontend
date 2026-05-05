@@ -10,18 +10,18 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const SERVICOS_STATUS_LABELS = {
-	"0": "Cancelado",
-	"1": "Aguardando Ativação",
-	"2": "Ativo",
+	0: "Cancelado",
+	1: "Aguardando Ativação",
+	2: "Ativo",
 } as const;
 
 export const SERVICOS_TIPO_LABELS = {
-	"1": "Link IP",
-	"2": "PTP",
-	"3": "PTMP",
-	"4": "OUTRO",
-	"5": "Lastmile",
-	"6": "Colocation",
+	1: "Link IP",
+	2: "PTP",
+	3: "PTMP",
+	4: "OUTRO",
+	5: "Lastmile",
+	6: "Colocation",
 } as const;
 
 // ============================================================

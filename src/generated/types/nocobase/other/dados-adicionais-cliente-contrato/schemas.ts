@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import {
 	dados_adicionais_cliente_contratoFormaDePagamentoSchema,
 	dados_adicionais_cliente_contratoPerfilDeUsoSchema,
@@ -31,16 +32,16 @@ export const dados_adicionais_cliente_contratoBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const dados_adicionais_cliente_contratoRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const dados_adicionais_cliente_contratoSchema =
-	dados_adicionais_cliente_contratoBaseSchema.merge(
-		dados_adicionais_cliente_contratoRelationSchema,
+	dados_adicionais_cliente_contratoBaseSchema.extend(
+		dados_adicionais_cliente_contratoRelationSchema.shape,
 	);
 
 // ============================================================

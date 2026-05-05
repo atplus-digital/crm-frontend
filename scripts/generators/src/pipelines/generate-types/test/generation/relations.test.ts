@@ -1,6 +1,7 @@
 import {
 	getRelationCardinality,
 	renderRelationValueType,
+	renderRelationZodType,
 	resolveRelationByType,
 	resolveRelationInterface,
 } from "@scripts/generators/src/pipelines/generate-types/pipeline/stages/generate-content/relations";
@@ -281,5 +282,44 @@ describe("renderRelationValueType", () => {
 	it("handles snake_case collection names", () => {
 		const result = renderRelationValueType("order_items", "one");
 		expect(result).toBe("OrderItemsBase | null");
+	});
+});
+
+describe("renderRelationZodType", () => {
+	it("uses z.lazy with target base schema when relation target is available and external", () => {
+		const result = renderRelationZodType(
+			"users",
+			"one",
+			new Set(["users", "t_crm_troca_titularidade"]),
+		);
+		expect(result).toBe("z.lazy(() => usersBaseSchema.nullable())");
+	});
+
+	it("uses z.lazy with target base schema array when relation cardinality is many", () => {
+		const result = renderRelationZodType(
+			"users",
+			"many",
+			new Set(["users", "t_crm_troca_titularidade"]),
+		);
+		expect(result).toBe("z.lazy(() => usersBaseSchema.array())");
+	});
+
+	it("uses z.lazy with base schema for self-relation", () => {
+		const result = renderRelationZodType("users", "one", new Set(["users"]));
+		expect(result).toBe("z.lazy(() => usersBaseSchema.nullable())");
+	});
+
+	it("uses z.lazy with base schema array for self-relation many", () => {
+		const result = renderRelationZodType("users", "many", new Set(["users"]));
+		expect(result).toBe("z.lazy(() => usersBaseSchema.array())");
+	});
+
+	it("keeps primitive fallback when target collection is unavailable", () => {
+		const result = renderRelationZodType(
+			"users",
+			"one",
+			new Set(["t_crm_troca_titularidade"]),
+		);
+		expect(result).toBe("z.number().nullable()");
 	});
 });

@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { clienteBaseSchema } from "../cliente/schemas";
+import { vd_contratos_produtosBaseSchema } from "../vd-contratos-produtos/schemas";
 import {
 	cliente_contratoAgruparFinanceiroContratoSchema,
 	cliente_contratoAplicarDescontoTempoBloqueioSchema,
@@ -248,28 +250,28 @@ export const cliente_contratoBaseSchema = z.object({
 export const cliente_contratoRelationSchema = z.object({
 	f_carteira_cobranca: z.number().nullable(),
 	f_cond_pag_ativ: z.number().nullable(),
-	f_contrato_principal: cliente_contratoBaseSchema.nullable(),
+	f_contrato_principal: z.lazy(() => cliente_contratoBaseSchema.nullable()),
 	f_filial: z.number().nullable(),
 	f_indexador_reajuste: z.number().nullable(),
 	f_indicacao_contrato: z.number().nullable(),
 	f_modelo: z.number().nullable(),
 	f_moeda: z.number().nullable(),
 	f_motivo_inclusao: z.number().nullable(),
-	f_nc_cliente: z.number().nullable(),
+	f_nc_cliente: z.lazy(() => clienteBaseSchema.nullable()),
 	f_produto_ativ: z.number().nullable(),
 	f_responsavel: z.number().nullable(),
 	f_tipo_contrato: z.number().nullable(),
 	f_tipo_doc_ativ: z.number().nullable(),
 	f_tipo_documento: z.number().nullable(),
-	f_vd_contrato: z.number().nullable(),
+	f_vd_contrato: z.lazy(() => vd_contratos_produtosBaseSchema.nullable()),
 	f_vendedor: z.number().nullable(),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const cliente_contratoSchema = cliente_contratoBaseSchema.merge(
-	cliente_contratoRelationSchema,
+export const cliente_contratoSchema = cliente_contratoBaseSchema.extend(
+	cliente_contratoRelationSchema.shape,
 );
 
 // ============================================================

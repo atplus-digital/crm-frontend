@@ -18,8 +18,8 @@ describe("generateEnumLabelMap", () => {
 		]);
 
 		expect(result).toContain("export const PESSOAS_STATUS_LABELS = {");
-		expect(result).toContain('"ativo": "Ativo"');
-		expect(result).toContain('"inativo": "Inativo"');
+		expect(result).toContain("ativo: 'Ativo'");
+		expect(result).toContain("inativo: 'Inativo'");
 		expect(result).toContain("} as const;");
 	});
 
@@ -30,8 +30,8 @@ describe("generateEnumLabelMap", () => {
 		]);
 
 		expect(result).toContain("export const TESTE_TIPOPESSOA_LABELS = {");
-		expect(result).toContain('"pessoa_fisica": "Pessoa Física"');
-		expect(result).toContain('"pessoa_juridica": "Pessoa Jurídica"');
+		expect(result).toContain("pessoa_fisica: 'Pessoa Física'");
+		expect(result).toContain("pessoa_juridica: 'Pessoa Jurídica'");
 		expect(result).toContain("} as const;");
 	});
 
@@ -42,8 +42,8 @@ describe("generateEnumLabelMap", () => {
 		]);
 
 		expect(result).toContain("export const NEGOCIACOES_PRIORIDADE_LABELS = {");
-		expect(result).toContain('"1": "Baixa"');
-		expect(result).toContain('"2": "Média"');
+		expect(result).toContain("1: 'Baixa'");
+		expect(result).toContain("2: 'Média'");
 		expect(result).toContain("} as const;");
 	});
 
@@ -54,7 +54,7 @@ describe("generateEnumLabelMap", () => {
 			{ value: "inativo", label: "Inativo" },
 		]);
 
-		expect(result).toContain('"ativo": "Ativo"');
+		expect(result).toContain("ativo: 'Ativo'");
 		expect(result).not.toContain("Ativo (dup)");
 	});
 
@@ -64,8 +64,8 @@ describe("generateEnumLabelMap", () => {
 			{ value: "MASCULINO", label: "Masculino" },
 		]);
 
-		expect(result).toContain('"M": "Masculino"');
-		expect(result).toContain('"MASCULINO": "Masculino"');
+		expect(result).toContain("M: 'Masculino'");
+		expect(result).toContain("MASCULINO: 'Masculino'");
 	});
 });
 

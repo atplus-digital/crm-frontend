@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import { opcoes_stfc_templatePortabilidadeSchema } from "./labels";
 
 export const T_OPCOES_STFC_TEMPLATE_TABLE_NAME = "t_opcoes_stfc_template";
@@ -28,15 +29,15 @@ export const opcoes_stfc_templateBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const opcoes_stfc_templateRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const opcoes_stfc_templateSchema = opcoes_stfc_templateBaseSchema.merge(
-	opcoes_stfc_templateRelationSchema,
+export const opcoes_stfc_templateSchema = opcoes_stfc_templateBaseSchema.extend(
+	opcoes_stfc_templateRelationSchema.shape,
 );
 
 // ============================================================

@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_QUALIRUN_ASSINATURA_GOV_TABLE_NAME = "t_qualirun_assinatura_gov";
 
 // ============================================================
@@ -30,17 +32,17 @@ export const qualirun_assinatura_govBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const qualirun_assinatura_govRelationSchema = z.object({
-	createdBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
 	storage: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const qualirun_assinatura_govSchema =
-	qualirun_assinatura_govBaseSchema.merge(
-		qualirun_assinatura_govRelationSchema,
+	qualirun_assinatura_govBaseSchema.extend(
+		qualirun_assinatura_govRelationSchema.shape,
 	);
 
 // ============================================================

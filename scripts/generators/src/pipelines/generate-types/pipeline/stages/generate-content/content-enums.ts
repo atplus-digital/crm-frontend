@@ -1,3 +1,4 @@
+import { jsonToSingleQuotedString } from "@scripts/generators/src/lib/strings";
 import type {
 	EnumOption,
 	GeneratedTypes,
@@ -6,7 +7,6 @@ import {
 	removeAccents,
 	toCollectionTypeName,
 } from "@scripts/generators/src/pipelines/generate-types/utils/naming";
-import { jsonToSingleQuotedString } from "@scripts/generators/src/lib/strings";
 
 export interface EnumFieldInfo {
 	/** Nome do campo no formato PascalCase */
@@ -160,13 +160,10 @@ export function generateEnumLabelMap(
 	const entries = dedupedOptions
 		.map((opt) => {
 			const valueStr = String(opt.value);
-			const needsTransformation = !isValidObjectKey(valueStr);
-			const memberName = needsTransformation
-				? toEnumMemberName(opt.value)
-				: valueStr;
 			// Use jsonToSingleQuotedString to properly escape for single-quoted TS strings
 			const label = `'${jsonToSingleQuotedString(JSON.stringify(opt.label))}'`;
-			const keyName = `"${memberName}"`;
+			// Keys must ALWAYS be the original enum values for correct lookup
+			const keyName = isValidObjectKey(valueStr) ? valueStr : `"${valueStr}"`;
 
 			return `\t${keyName}: ${label}`;
 		})
@@ -344,6 +341,7 @@ export function getScalarFieldType(
 		const { schemaName } = getEnumFieldInfo(
 			collectionName,
 			fieldName,
+			// biome-ignore lint/style/noNonNullAssertion: garante que o enumOptions existe para esse fieldName
 			types.enums.get(fieldName)!,
 		);
 		return schemaName;
@@ -365,6 +363,7 @@ export function getScalarFieldZodType(
 		const { schemaName } = getEnumFieldInfo(
 			collectionName,
 			fieldName,
+			// biome-ignore lint/style/noNonNullAssertion: garante que o enumOptions existe para esse fieldName
 			types.enums.get(fieldName)!,
 		);
 		return schemaName;

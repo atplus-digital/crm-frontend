@@ -60,9 +60,13 @@ export function isNetworkError(err: unknown): boolean {
  */
 export async function validateTokenOnInit(): Promise<void> {
 	const state = authStore.state;
-	if (!state.token) return;
+
+	if (!state.token || state.user) {
+		return;
+	}
 
 	log.debug("Validating stored token on init");
+
 	try {
 		const user = await checkAuth();
 		setUser(user);

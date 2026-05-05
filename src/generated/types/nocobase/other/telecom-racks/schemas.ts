@@ -5,6 +5,13 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { equipamentosBaseSchema } from "../equipamentos/schemas";
+import { sitesBaseSchema } from "../sites/schemas";
+import { telecom_filaBaseSchema } from "../telecom-fila/schemas";
+import { telecom_recursosBaseSchema } from "../telecom-recursos/schemas";
+import { telecom_salasBaseSchema } from "../telecom-salas/schemas";
+
 export const T_TELECOM_RACKS_TABLE_NAME = "t_telecom_racks";
 
 // ============================================================
@@ -26,23 +33,23 @@ export const telecom_racksBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const telecom_racksRelationSchema = z.object({
-	children: telecom_racksBaseSchema.array(),
-	createdBy: z.number().nullable(),
-	f_fila: z.number().nullable(),
-	f_fk_rack_a_recursos: z.number().array(),
-	f_fk_rack_ativos: z.number().array(),
-	f_fk_rack_sites: z.number().nullable(),
-	f_fk_recursos_rack_b: z.number().array(),
-	f_sala: z.number().nullable(),
-	parent: telecom_racksBaseSchema.nullable(),
-	updatedBy: z.number().nullable(),
+	children: z.lazy(() => telecom_racksBaseSchema.array()),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_fila: z.lazy(() => telecom_filaBaseSchema.nullable()),
+	f_fk_rack_a_recursos: z.lazy(() => telecom_recursosBaseSchema.array()),
+	f_fk_rack_ativos: z.lazy(() => equipamentosBaseSchema.array()),
+	f_fk_rack_sites: z.lazy(() => sitesBaseSchema.nullable()),
+	f_fk_recursos_rack_b: z.lazy(() => telecom_recursosBaseSchema.array()),
+	f_sala: z.lazy(() => telecom_salasBaseSchema.nullable()),
+	parent: z.lazy(() => telecom_racksBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const telecom_racksSchema = telecom_racksBaseSchema.merge(
-	telecom_racksRelationSchema,
+export const telecom_racksSchema = telecom_racksBaseSchema.extend(
+	telecom_racksRelationSchema.shape,
 );
 
 // ============================================================

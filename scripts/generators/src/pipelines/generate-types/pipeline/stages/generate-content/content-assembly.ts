@@ -3,7 +3,10 @@ import type {
 	GeneratedTypes,
 } from "@scripts/generators/src/pipelines/generate-types/@types/generation";
 import type { BaseInterfaceNamingConfig } from "@scripts/generators/src/pipelines/generate-types/@types/script";
-import { toFileName, toValidIdentifier } from "@scripts/generators/src/pipelines/generate-types/utils/naming";
+import {
+	toFileName,
+	toValidIdentifier,
+} from "@scripts/generators/src/pipelines/generate-types/utils/naming";
 import {
 	generateCollectionEnumMaps,
 	generateCollectionEnumSchemas,
@@ -54,6 +57,41 @@ function _ensureValidIdentifier(name: string): string {
 		return `_${name}`;
 	}
 	return name;
+}
+
+function _toBaseSchemaName(collectionName: string): string {
+	const cleanCollectionName = collectionName.replace(/^t_/, "").toLowerCase();
+	if (!cleanCollectionName || cleanCollectionName === "t") {
+		return _ensureValidIdentifier(`${collectionName.toLowerCase()}BaseSchema`);
+	}
+	return _ensureValidIdentifier(`${cleanCollectionName}BaseSchema`);
+}
+
+function resolveExternalSchemaImportPath(
+	targetFolder: string,
+	targetIsSplitCollection: boolean,
+	currentCollectionInOtherFolder: boolean,
+	hasSplitFolderLayout: boolean,
+): string {
+	if (!hasSplitFolderLayout) {
+		return `../${targetFolder}/schemas`;
+	}
+
+	if (currentCollectionInOtherFolder) {
+		return targetIsSplitCollection
+			? `../../${targetFolder}/schemas`
+			: `../${targetFolder}/schemas`;
+	}
+
+	return targetIsSplitCollection
+		? `../${targetFolder}/schemas`
+		: `../other/${targetFolder}/schemas`;
+}
+
+export interface GenerateSchemasContentOptions {
+	allCollectionsMap?: CollectionTypesMap;
+	splitCollectionNames?: ReadonlySet<string>;
+	currentCollectionInOtherFolder?: boolean;
 }
 
 /**
@@ -127,8 +165,14 @@ export function generateSchemasContent(
 	collectionName: string,
 	types: GeneratedTypes,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
-	allCollectionsMap?: CollectionTypesMap,
+	options: GenerateSchemasContentOptions = {},
 ): string {
+	const {
+		allCollectionsMap,
+		splitCollectionNames = new Set<string>(),
+		currentCollectionInOtherFolder = false,
+	} = options;
+
 	const lines: string[] = [];
 
 	// Available collections para resolver referências de schemas
@@ -167,34 +211,41 @@ export function generateSchemasContent(
 
 	// 3. Cross-collection schema imports (other collections' base schemas)
 	const externalImports = new Map<string, Set<string>>();
+	const hasSplitFolderLayout = splitCollectionNames.size > 0;
 	for (const [_, relation] of types.relations) {
 		const target = relation.targetCollection.trim();
-		if (target && availableCollections.has(target) && target !== collectionName) {
-			const targetCleanName = target.replace(/^t_/, "").toLowerCase();
-			const schemaName = _ensureValidIdentifier(
-				`${targetCleanName || target.toLowerCase()}BaseSchema`,
+		if (
+			target &&
+			availableCollections.has(target) &&
+			target !== collectionName
+		) {
+			const schemaName = _toBaseSchemaName(target);
+			const targetIsSplitCollection = splitCollectionNames.has(target);
+			const importPath = resolveExternalSchemaImportPath(
+				toFileName(target),
+				targetIsSplitCollection,
+				currentCollectionInOtherFolder,
+				hasSplitFolderLayout,
 			);
-			const targetFolder = toFileName(target);
-			const existing = externalImports.get(targetFolder);
+			const existing = externalImports.get(importPath);
 			if (existing) {
 				existing.add(schemaName);
 			} else {
-				externalImports.set(targetFolder, new Set([schemaName]));
+				externalImports.set(importPath, new Set([schemaName]));
 			}
 		}
 	}
 
-	for (const [targetFolder, schemaNames] of externalImports) {
+	for (const [importPath, schemaNames] of externalImports) {
 		const sorted = [...schemaNames].sort();
-		const path = `../${targetFolder}/schemas`;
 		if (sorted.length <= 4) {
-			lines.push(`import { ${sorted.join(", ")} } from "${path}";`);
+			lines.push(`import { ${sorted.join(", ")} } from "${importPath}";`);
 		} else {
 			lines.push("import {");
 			for (const name of sorted) {
 				lines.push(`\t${name},`);
 			}
-			lines.push(`} from "${path}";`);
+			lines.push(`} from "${importPath}";`);
 		}
 	}
 
@@ -593,13 +644,29 @@ export function generateSplitFiles(
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 ): Map<string, string> {
 	const result = new Map<string, string>();
+	const allCollectionsMap: CollectionTypesMap = {};
+	const splitCollectionNames = new Set<string>();
+
+	for (const [collectionName, collections] of splitCollections) {
+		splitCollectionNames.add(collectionName);
+		Object.assign(allCollectionsMap, collections);
+	}
 
 	for (const [_collectionName, collections] of splitCollections) {
 		for (const [colName, types] of Object.entries(collections)) {
 			const header = generateFileHeader();
 
 			const labelsContent = `${header}\n${generateLabelsContent(colName, types)}`;
-			const schemasContent = `${header}\n${generateSchemasContent(colName, types, baseInterfaceNaming, collections)}`;
+			const schemasContent = `${header}\n${generateSchemasContent(
+				colName,
+				types,
+				baseInterfaceNaming,
+				{
+					allCollectionsMap,
+					splitCollectionNames,
+					currentCollectionInOtherFolder: false,
+				},
+			)}`;
 			const indexContent = `${header}${generateIndexContent(colName, types, baseInterfaceNaming, true)}`;
 
 			const folder = toFileName(colName);

@@ -10,17 +10,17 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const TROCAENDERECO_STATUS_LABELS = {
-	"1": "Atendimento Gerado",
-	"2": "Atendimento Concluído",
-	"3": "Atendimento para Campo",
-	"4": "Atendimento para CR",
-	"0": "Erro na Integração",
+	1: "Atendimento Gerado",
+	2: "Atendimento Concluído",
+	3: "Atendimento para Campo",
+	4: "Atendimento para CR",
+	0: "Erro na Integração",
 } as const;
 
 export const TROCAENDERECO_TAXAINSTALACAO_LABELS = {
-	"0": "Não",
-	"1": "R$ 80,00 à vista",
-	"2": "R$ 80,00 em 2 vezes",
+	0: "Não",
+	1: "R$ 80,00 à vista",
+	2: "R$ 80,00 em 2 vezes",
 } as const;
 
 // ============================================================

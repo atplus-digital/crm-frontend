@@ -11,7 +11,7 @@ import { z } from "zod";
 // ============================================================
 export const SOLICITACAOCOMPRAS_CATEGORIA_LABELS = {
 	Produto: "Produto",
-	Servico: "Serviço",
+	Serviço: "Serviço",
 } as const;
 
 export const SOLICITACAOCOMPRAS_DEPARTAMENTO_LABELS = {
@@ -19,7 +19,7 @@ export const SOLICITACAOCOMPRAS_DEPARTAMENTO_LABELS = {
 	Comercial: "Comercial",
 	Financeiro: "Financeiro",
 	Infraestrutura: "Infraestrutura",
-	LaboratorioTecnico: "Laboratório Técnico",
+	"Laboratório Técnico": "Laboratório Técnico",
 	Marketing: "Marketing",
 	NOC: "NOC",
 	Operacional: "Operacional",
@@ -27,47 +27,47 @@ export const SOLICITACAOCOMPRAS_DEPARTAMENTO_LABELS = {
 	Processos: "Processos",
 	Projetos: "Projetos",
 	RH: "RH",
-	ServicosGerais: "Serviços Gerais",
+	"Serviços Gerais": "Serviços Gerais",
 } as const;
 
 export const SOLICITACAOCOMPRAS_METODODEPAGAMENTO_LABELS = {
-	ADefinir: "Á definir",
+	"Á definir": "Á definir",
 	Pix: "Pix",
 	Boleto: "Boleto",
-	Cartao: "Cartão",
+	Cartão: "Cartão",
 } as const;
 
 export const SOLICITACAOCOMPRAS_PRAZO_LABELS = {
-	"1": "Á definir",
-	"2": "Á vista",
-	"3": "1x",
-	"4": "2x",
-	"5": "3x",
-	"6": "4x",
-	"7": "5x",
-	"8": "6x",
-	"9": "7x",
-	"10": "8x",
-	"11": "9x",
-	"12": "10x",
-	"13": "11x",
-	"14": "12x",
+	1: "Á definir",
+	2: "Á vista",
+	3: "1x",
+	4: "2x",
+	5: "3x",
+	6: "4x",
+	7: "5x",
+	8: "6x",
+	9: "7x",
+	10: "8x",
+	11: "9x",
+	12: "10x",
+	13: "11x",
+	14: "12x",
 } as const;
 
 export const SOLICITACAOCOMPRAS_STATUS_LABELS = {
-	CaixaDeEntrada: "Caixa de Entrada",
-	AprovacaoDaGestao: "Aprovação da Gestão",
-	PedidoDeCompra: "Pedido de Compra",
-	ProcessamentoFinanceiro: "Processamento Financeiro",
-	FilaDeEntrega: "Fila de Entrega",
-	Concluido: "Concluído",
+	"Caixa de Entrada": "Caixa de Entrada",
+	"Aprovação da Gestão": "Aprovação da Gestão",
+	"Pedido de Compra": "Pedido de Compra",
+	"Processamento Financeiro": "Processamento Financeiro",
+	"Fila de Entrega": "Fila de Entrega",
+	Concluído: "Concluído",
 	Rejeitado: "Rejeitado",
 	Standby: "Standby",
 } as const;
 
 export const SOLICITACAOCOMPRAS_TIPO_LABELS = {
-	"1": "Pedido de Compra",
-	"2": "Cotação",
+	1: "Pedido de Compra",
+	2: "Cotação",
 } as const;
 
 // ============================================================

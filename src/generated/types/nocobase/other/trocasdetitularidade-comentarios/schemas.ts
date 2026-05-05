@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_TROCASDETITULARIDADE_COMENTARIOS_TABLE_NAME =
 	"t_trocasdetitularidade_comentarios";
 
@@ -23,16 +25,16 @@ export const trocasdetitularidade_comentariosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const trocasdetitularidade_comentariosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const trocasdetitularidade_comentariosSchema =
-	trocasdetitularidade_comentariosBaseSchema.merge(
-		trocasdetitularidade_comentariosRelationSchema,
+	trocasdetitularidade_comentariosBaseSchema.extend(
+		trocasdetitularidade_comentariosRelationSchema.shape,
 	);
 
 // ============================================================

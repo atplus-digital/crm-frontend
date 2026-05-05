@@ -10,7 +10,7 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const OEQUALIRUN_PROCEDIMENTO_LABELS = {
-	Value1776052314044ff9B78615a4b0d7a3e2: "Assinatura via GOV",
+	"17760523-1404-4ff9-b786-15a4b0d7a3e2": "Assinatura via GOV",
 } as const;
 
 export const OEQUALIRUN_STATUS_LABELS = {

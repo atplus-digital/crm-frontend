@@ -10,8 +10,8 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const TELECOMIPSFIXOS_POSSUIIPFIXO_LABELS = {
-	"0": "Não",
-	"1": "Sim",
+	0: "Não",
+	1: "Sim",
 } as const;
 
 // ============================================================

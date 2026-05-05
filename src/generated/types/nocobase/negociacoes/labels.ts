@@ -15,17 +15,17 @@ export const NEGOCIACOES_CONFISSAODIVIDA_LABELS = {
 } as const;
 
 export const NEGOCIACOES_DATAVENCIMENTO_LABELS = {
-	"1": "Dia 01",
-	"5": "Dia 05",
-	"10": "Dia 10",
-	"15": "Dia 15",
-	"20": "Dia 20",
-	"25": "Dia 25",
+	1: "Dia 01",
+	5: "Dia 05",
+	10: "Dia 10",
+	15: "Dia 15",
+	20: "Dia 20",
+	25: "Dia 25",
 } as const;
 
 export const NEGOCIACOES_ENDERECOCOBRANCA_LABELS = {
-	"0": "Não",
-	"1": "Sim",
+	0: "Não",
+	1: "Sim",
 } as const;
 
 export const NEGOCIACOES_ENDERECOCOMPLEMENTO_LABELS = {
@@ -36,12 +36,12 @@ export const NEGOCIACOES_ENDERECOCOMPLEMENTO_LABELS = {
 } as const;
 
 export const NEGOCIACOES_FIDELIDADE_LABELS = {
-	"0": "0 Meses",
-	"12": "12 Meses",
-	"24": "24 Meses",
-	"36": "36 Meses",
-	"48": "48 Meses",
-	"60": "60 Meses",
+	0: "0 Meses",
+	12: "12 Meses",
+	24: "24 Meses",
+	36: "36 Meses",
+	48: "48 Meses",
+	60: "60 Meses",
 } as const;
 
 export const NEGOCIACOES_MOTIVO_LABELS = {
@@ -62,44 +62,44 @@ export const NEGOCIACOES_MOTIVOPONTOS_LABELS = {
 	endereco: "Endereço duplicado",
 	numero: "Número duplicado",
 	telefone: "Telefone duplicado",
-	TelefoneAdc: "Telefone adicional duplicado",
+	"telefone-adc": "Telefone adicional duplicado",
 	email: "E-mail duplicado",
 } as const;
 
 export const NEGOCIACOES_PONTOSATENCAO_LABELS = {
-	"0": "0 Pontos",
-	"1": "1 Ponto",
-	"2": "2 Pontos",
-	"3": "3 Pontos",
-	"4": "4 Pontos",
-	"5": "5 Pontos",
-	"6": "6 Pontos",
+	0: "0 Pontos",
+	1: "1 Ponto",
+	2: "2 Pontos",
+	3: "3 Pontos",
+	4: "4 Pontos",
+	5: "5 Pontos",
+	6: "6 Pontos",
 } as const;
 
 export const NEGOCIACOES_STATUS_LABELS = {
-	"1": "Novo",
-	"2": "Negociando",
-	"3": "Assinatura",
-	"4": "Auditoria",
-	"5": "Concluído",
-	"6": "Arquivado",
+	1: "Novo",
+	2: "Negociando",
+	3: "Assinatura",
+	4: "Auditoria",
+	5: "Concluído",
+	6: "Arquivado",
 } as const;
 
 export const NEGOCIACOES_SUBSTATUS_LABELS = {
-	"13": "EM STANDBY",
-	"2": "AGUARDANDO - Assinatura do contrato pelo cliente",
-	"3": "AGUARDANDO - Auditoria",
-	"4": "APROVADO - Aguardando inserção no IXC",
-	"11": "APROVADO - Aguardando atualização no IXC",
-	"9": "APROVADO - Concluído",
-	"8": "APROVADO - Erro na integração com o IXC",
-	"5": "REPROVADO - Divergência de Dados",
-	"6": "REPROVADO - Fraude",
-	"7": "REPROVADO - Análise de Crédito",
-	"12": "REPROVADO - Financeiro em Atraso",
-	"14": "REPROVADO - Pontos de Atenção",
-	"10": "PERDIDO",
-	"1": "NA",
+	13: "EM STANDBY",
+	2: "AGUARDANDO - Assinatura do contrato pelo cliente",
+	3: "AGUARDANDO - Auditoria",
+	4: "APROVADO - Aguardando inserção no IXC",
+	11: "APROVADO - Aguardando atualização no IXC",
+	9: "APROVADO - Concluído",
+	8: "APROVADO - Erro na integração com o IXC",
+	5: "REPROVADO - Divergência de Dados",
+	6: "REPROVADO - Fraude",
+	7: "REPROVADO - Análise de Crédito",
+	12: "REPROVADO - Financeiro em Atraso",
+	14: "REPROVADO - Pontos de Atenção",
+	10: "PERDIDO",
+	1: "NA",
 } as const;
 
 export const NEGOCIACOES_TIPOPESSOA_LABELS = {

@@ -10,18 +10,21 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const QUALIRUNPROCESSOS_DETALHESPROCEDIMENTO_LABELS = {
-	"1": "Utilizado para novos colaboradores preencherem os dados e a documentação de admissão, que serão utilizados no CRM, aba de Colaboradores.",
-	"2": "Utilizado para novos colaboradores assinarem os termos padrões (Confidencialidade, LGPD e Uso Voz/Imagem) e outros que se enquadram conforme dados do contrato.",
+	1: "Utilizado para novos colaboradores preencherem os dados e a documentação de admissão, que serão utilizados no CRM, aba de Colaboradores.",
+	2: "Utilizado para novos colaboradores assinarem os termos padrões (Confidencialidade, LGPD e Uso Voz/Imagem) e outros que se enquadram conforme dados do contrato.",
 } as const;
 
 export const QUALIRUNPROCESSOS_IDPROCEDIMENTOQUALIRUN_LABELS = {
-	C03f166dA4d742b7Ae73A4c287e171ac: "Complemento de Informações e Documentos",
-	Value0a3d75b429084bc285a664667ec60477: "Assinatura com Identidade Verificada",
+	"c03f166d-a4d7-42b7-ae73-a4c287e171ac":
+		"Complemento de Informações e Documentos",
+	"0a3d75b4-2908-4bc2-85a6-64667ec60477":
+		"Assinatura com Identidade Verificada",
 } as const;
 
 export const QUALIRUNPROCESSOS_PROCEDIMENTO_LABELS = {
-	ComplementoInformacoesDocumentos: "Complemento de Informações e Documentos",
-	ConfidencialidadeLgpdVozImagem:
+	"complemento-informacoes-documentos":
+		"Complemento de Informações e Documentos",
+	"confidencialidade-lgpd-voz-imagem":
 		"Assinatura de Termos (LGPD, Voz e Imagem e Confidencialidade)",
 } as const;
 

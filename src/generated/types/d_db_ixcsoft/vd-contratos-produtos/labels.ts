@@ -10,8 +10,8 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const VDCONTRATOSPRODUTOS_FIXARIP_LABELS = {
-	"1": "Sim",
-	"0": "Não",
+	1: "Sim",
+	0: "Não",
 } as const;
 
 export const VDCONTRATOSPRODUTOS_REPETIR_LABELS = {

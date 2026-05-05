@@ -1,13 +1,12 @@
 import { defaultLogger } from "@scripts/generators/src/lib/logger";
 import { Listr } from "listr2";
-
-import { getSubtaskOptions } from "../lib/cli/defaults";
-import { createListrTask } from "../lib/cli/listr-task";
+import { getSubtaskOptions } from "./defaults";
+import { createListrTask } from "./listr-task";
 import type {
 	CreateGeneratorOptions,
 	GeneratorContext,
 	RunGeneratorCliOptions,
-} from "../lib/cli/types";
+} from "./types";
 
 function buildGeneratorListr<TContext extends object>(
 	options: RunGeneratorCliOptions<TContext>,
@@ -27,7 +26,6 @@ function buildGeneratorListr<TContext extends object>(
 	return new Listr(tasks, {
 		...getSubtaskOptions("main"),
 		ctx: context,
-		// Enable silent renderer when disableOutput is true
 		silentRendererCondition: options.disableOutput ? () => true : undefined,
 	});
 }

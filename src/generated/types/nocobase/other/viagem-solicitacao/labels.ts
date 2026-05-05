@@ -10,35 +10,35 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const VIAGEMSOLICITACAO_DESTINOVIAGEM_LABELS = {
-	BocainaDoSul: "Bocaina do Sul",
-	CampoBeloDoSul: "Campo Belo do Sul",
-	CapaoAlto: "Capão Alto",
-	CerroNegro: "Cerro Negro",
-	CorreiaPinto: "Correia Pinto",
+	"Bocaina do Sul": "Bocaina do Sul",
+	"Campo Belo do Sul": "Campo Belo do Sul",
+	"Capão Alto": "Capão Alto",
+	"Cerro Negro": "Cerro Negro",
+	"Correia Pinto": "Correia Pinto",
 	Curitibanos: "Curitibanos",
-	Florianopolis: "Florianópolis",
+	Florianópolis: "Florianópolis",
 	Painel: "Painel",
 	Outros: "Outros",
 } as const;
 
 export const VIAGEMSOLICITACAO_DIARIA_LABELS = {
-	"5": "8h",
-	"10": "Acima de 8h",
+	5: "8h",
+	10: "Acima de 8h",
 } as const;
 
 export const VIAGEMSOLICITACAO_FASE_LABELS = {
-	CaixaDeEntrada: "Caixa de Entrada",
-	ProcessamentoFinanceiro: "Processamento Financeiro",
-	Concluido: "Concluído",
+	"Caixa de Entrada": "Caixa de Entrada",
+	"Processamento Financeiro": "Processamento Financeiro",
+	Concluído: "Concluído",
 	Arquivado: "Arquivado",
 } as const;
 
 export const VIAGEMSOLICITACAO_MEIOTRANSPORTE_LABELS = {
-	KwidAtplus: "Kwid ATPlus",
-	FiorinoAtplus: "Fiorino ATPlus",
-	FiorinoFhortec: "Fiorino Fhortec",
-	UnoAtplus: "Uno ATPlus",
-	CarroParticular: "Carro Particular",
+	"Kwid ATPlus": "Kwid ATPlus",
+	"Fiorino ATPlus": "Fiorino ATPlus",
+	"Fiorino Fhortec": "Fiorino Fhortec",
+	"Uno ATPlus": "Uno ATPlus",
+	"Carro Particular": "Carro Particular",
 	Outro: "Outro",
 } as const;
 

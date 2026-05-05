@@ -10,9 +10,9 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const ACESSOS_TIPO_LABELS = {
-	"1": "Ponta A",
-	"2": "Ponta B",
-	"3": "Entrega",
+	1: "Ponta A",
+	2: "Ponta B",
+	3: "Entrega",
 } as const;
 
 // ============================================================

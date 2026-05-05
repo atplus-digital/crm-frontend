@@ -5,6 +5,11 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+import { equipamentosBaseSchema } from "../equipamentos/schemas";
+import { servicosBaseSchema } from "../servicos/schemas";
+import { sitesBaseSchema } from "../sites/schemas";
+import { telecom_interfacesBaseSchema } from "../telecom-interfaces/schemas";
 import { acessosTipoSchema } from "./labels";
 
 export const T_ACESSOS_TABLE_NAME = "t_acessos";
@@ -26,19 +31,21 @@ export const acessosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const acessosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	f_equipamento: z.number().nullable(),
-	f_insumos: z.number().array(),
-	f_interface: z.number().nullable(),
-	f_site: z.number().nullable(),
-	f_xzuv9d6zkhr: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	f_equipamento: z.lazy(() => equipamentosBaseSchema.nullable()),
+	f_insumos: z.lazy(() => servicosBaseSchema.array()),
+	f_interface: z.lazy(() => telecom_interfacesBaseSchema.nullable()),
+	f_site: z.lazy(() => sitesBaseSchema.nullable()),
+	f_xzuv9d6zkhr: z.lazy(() => servicosBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const acessosSchema = acessosBaseSchema.merge(acessosRelationSchema);
+export const acessosSchema = acessosBaseSchema.extend(
+	acessosRelationSchema.shape,
+);
 
 // ============================================================
 // CREATE SCHEMA

@@ -10,7 +10,7 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const TELECOMCOLOCATIONOPCOES_ENERGIA_LABELS = {
-	Value0nqbw68srah: "AC 220",
+	"0nqbw68srah": "AC 220",
 	e5b3lklfpq4: "AC 110",
 	mra46p506xo: "DC -48",
 } as const;

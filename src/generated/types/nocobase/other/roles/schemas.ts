@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const ROLES_TABLE_NAME = "roles";
 
 // ============================================================
@@ -31,13 +33,13 @@ export const rolesRelationSchema = z.object({
 	menuUiSchemas: z.number().array(),
 	mobileRoutes: z.number().array(),
 	resources: z.number().array(),
-	users: z.number().array(),
+	users: z.lazy(() => usersBaseSchema.array()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const rolesSchema = rolesBaseSchema.merge(rolesRelationSchema);
+export const rolesSchema = rolesBaseSchema.extend(rolesRelationSchema.shape);
 
 // ============================================================
 // CREATE SCHEMA

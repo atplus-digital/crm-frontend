@@ -297,7 +297,9 @@ export const clienteRelationSchema = z.object({
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const clienteSchema = clienteBaseSchema.merge(clienteRelationSchema);
+export const clienteSchema = clienteBaseSchema.extend(
+	clienteRelationSchema.shape,
+);
 
 // ============================================================
 // CREATE SCHEMA

@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_ANEXOS_TROCA_TITULARIDADE_TABLE_NAME =
 	"t_anexos_troca_titularidade";
 
@@ -32,17 +34,17 @@ export const anexos_troca_titularidadeBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const anexos_troca_titularidadeRelationSchema = z.object({
-	createdBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
 	storage: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
 export const anexos_troca_titularidadeSchema =
-	anexos_troca_titularidadeBaseSchema.merge(
-		anexos_troca_titularidadeRelationSchema,
+	anexos_troca_titularidadeBaseSchema.extend(
+		anexos_troca_titularidadeRelationSchema.shape,
 	);
 
 // ============================================================

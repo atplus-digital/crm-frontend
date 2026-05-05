@@ -10,8 +10,8 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const LINHACORPORATIVA_TIPO_LABELS = {
-	"1": "Chip Corporativo",
-	"2": "DID Fixo",
+	1: "Chip Corporativo",
+	2: "DID Fixo",
 } as const;
 
 // ============================================================

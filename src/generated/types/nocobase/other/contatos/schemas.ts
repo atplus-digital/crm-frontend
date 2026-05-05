@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const F_CONTATOS_TABLE_NAME = "f_contatos";
 
 // ============================================================
@@ -22,15 +24,15 @@ export const f_contatosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const f_contatosRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const f_contatosSchema = f_contatosBaseSchema.merge(
-	f_contatosRelationSchema,
+export const f_contatosSchema = f_contatosBaseSchema.extend(
+	f_contatosRelationSchema.shape,
 );
 
 // ============================================================

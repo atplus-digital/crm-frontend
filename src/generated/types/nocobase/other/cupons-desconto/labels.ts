@@ -10,20 +10,20 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const CUPONSDESCONTO_STATUS_LABELS = {
-	"0": "Inativo",
-	"1": "Ativo",
+	0: "Inativo",
+	1: "Ativo",
 } as const;
 
 export const CUPONSDESCONTO_TIPO_LABELS = {
-	"1": "Baseado no Endereço",
-	"2": "Geral",
-	"3": "Upgrade para para contratos abaixo de R$ 100",
-	"4": "Contratação de Segundo Plano",
+	1: "Baseado no Endereço",
+	2: "Geral",
+	3: "Upgrade para para contratos abaixo de R$ 100",
+	4: "Contratação de Segundo Plano",
 } as const;
 
 export const CUPONSDESCONTO_TIPONEGOCIACAO_LABELS = {
-	"1": "Upgrade",
-	"2": "Venda Nova",
+	1: "Upgrade",
+	2: "Venda Nova",
 	S: "Segunda Contratação",
 } as const;
 

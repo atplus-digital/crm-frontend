@@ -39,10 +39,9 @@ const FATURA_COLUMNS: ColumnDef<Fatura, unknown>[] = [
 			detailDateCell(row.original.data_vencimento, formatDatePtBR),
 	},
 	{
-		accessorKey: "data_pagamento",
-		header: "Data de Pagamento",
-		cell: ({ row }) =>
-			detailDateCell(row.original.data_pagamento, formatDatePtBR),
+		accessorKey: "baixa_data",
+		header: "Data de Pag.",
+		cell: ({ row }) => detailDateCell(row.original.baixa_data, formatDatePtBR),
 	},
 ];
 

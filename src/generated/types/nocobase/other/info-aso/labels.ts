@@ -15,11 +15,11 @@ export const INFOASO_INFORMADO_LABELS = {
 } as const;
 
 export const INFOASO_TIPOEXAME_LABELS = {
-	ExameAdmissional: "Exame Admissional",
-	ExamePeriodico: "Exame Periódico",
-	AtestadoMedico: "Atestado Médico",
-	RetornoTrabalho: "Retorno ao Trabalho",
-	MudancaFuncao: "Mudança de Função",
+	"exame-admissional": "Exame Admissional",
+	"exame-periodico": "Exame Periódico",
+	"atestado-medico": "Atestado Médico",
+	"retorno-trabalho": "Retorno ao Trabalho",
+	"mudanca-funcao": "Mudança de Função",
 	outros: "Outros",
 } as const;
 

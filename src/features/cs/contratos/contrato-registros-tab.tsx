@@ -17,15 +17,15 @@ import {
 } from "#/generated/types/nocobase/registros-de-contato";
 import { formatDatePtBR } from "#/lib/utils";
 
-function formatCategoria(categoria: RegistroContato["categoria"]): string {
+function formatCategoria(categoria: RegistroContato["f_categoria"]): string {
 	return REGISTROSDECONTATO_CATEGORIA_LABELS[categoria] ?? String(categoria);
 }
 
-function formatNota(nota: RegistroContato["nota_vendas"]): string {
+function formatNota(nota: RegistroContato["f_nota_vendas"]): string {
 	return REGISTROSDECONTATO_NOTAVENDAS_LABELS[nota] ?? String(nota);
 }
 
-function formatNotaTecnico(nota: RegistroContato["nota_tecnico"]): string {
+function formatNotaTecnico(nota: RegistroContato["f_nota_tecnico"]): string {
 	return REGISTROSDECONTATO_NOTATECNICO_LABELS[nota] ?? String(nota);
 }
 
@@ -41,49 +41,53 @@ const REGISTROS_COLUMNS = [
 
 const registrosTableColumns: ColumnDef<RegistroContato, unknown>[] = [
 	{
-		accessorKey: "categoria",
+		accessorKey: "f_categoria",
 		header: "Categoria",
 		cell: ({ row }) =>
-			detailShortTextCell(formatCategoria(row.original.categoria)),
+			detailShortTextCell(formatCategoria(row.original.f_categoria)),
 	},
 	{
-		accessorKey: "motivo_contato",
+		accessorKey: "f_resumo_contato",
 		header: "Motivo do Contato",
-		cell: ({ row }) => detailLongTextCell(row.original.motivo_contato),
+		cell: ({ row }) => detailLongTextCell(row.original.f_resumo_contato),
 	},
 	{
-		accessorKey: "nota_vendas",
+		accessorKey: "f_nota_vendas",
 		header: "Nota Vendas",
 		cell: ({ row }) =>
-			detailShortTextCell(formatNota(row.original.nota_vendas)),
+			detailShortTextCell(formatNota(row.original.f_nota_vendas)),
 	},
 	{
-		accessorKey: "nota_tecnico",
+		accessorKey: "f_nota_tecnico",
 		header: "Nota Técnico",
 		cell: ({ row }) =>
-			detailShortTextCell(formatNotaTecnico(row.original.nota_tecnico)),
+			detailShortTextCell(formatNotaTecnico(row.original.f_nota_tecnico)),
 	},
 	{
 		id: "pendencia",
 		header: "Há Pendência?",
 		cell: ({ row }) => (
 			<StatusBadge
-				value={String(row.original.pendencia)}
+				value={String(row.original.f_ha_pendencia)}
 				labels={{ true: "Sim", false: "Não" }}
 				variants={{ true: "outline", false: "default" }}
 			/>
 		),
 	},
 	{
-		accessorKey: "data_criacao",
+		accessorKey: "createdAt",
 		header: "Criado em",
-		cell: ({ row }) =>
-			detailDateCell(row.original.data_criacao, formatDatePtBR),
+		cell: ({ row }) => detailDateCell(row.original.createdAt, formatDatePtBR),
 	},
 	{
 		accessorKey: "criado_por",
 		header: "Criado por",
-		cell: ({ row }) => detailShortTextCell(row.original.criado_por),
+		cell: ({ row }) => {
+			const original = row.original as unknown as {
+				createdBy?: { nickname?: string } | null;
+			};
+			return detailShortTextCell(original.createdBy?.nickname ?? "—");
+		},
 	},
 ];
 
@@ -98,7 +102,7 @@ export function ContratoRegistrosTab({
 	const registros = data?.data ?? [];
 
 	const categoryCounts = registros.reduce<Record<string, number>>((acc, r) => {
-		const cat = formatCategoria(r.categoria);
+		const cat = formatCategoria(r.f_categoria);
 		acc[cat] = (acc[cat] ?? 0) + 1;
 		return acc;
 	}, {});

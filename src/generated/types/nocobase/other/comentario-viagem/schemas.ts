@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
+
 export const T_COMENTARIO_VIAGEM_TABLE_NAME = "t_comentario_viagem";
 
 // ============================================================
@@ -22,15 +24,15 @@ export const comentario_viagemBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const comentario_viagemRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const comentario_viagemSchema = comentario_viagemBaseSchema.merge(
-	comentario_viagemRelationSchema,
+export const comentario_viagemSchema = comentario_viagemBaseSchema.extend(
+	comentario_viagemRelationSchema.shape,
 );
 
 // ============================================================

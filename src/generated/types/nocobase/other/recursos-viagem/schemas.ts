@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../../users/schemas";
 import {
 	recursos_viagemDestinoViagemSchema,
 	recursos_viagemMeioTransporteSchema,
@@ -30,15 +31,15 @@ export const recursos_viagemBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const recursos_viagemRelationSchema = z.object({
-	createdBy: z.number().nullable(),
-	updatedBy: z.number().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const recursos_viagemSchema = recursos_viagemBaseSchema.merge(
-	recursos_viagemRelationSchema,
+export const recursos_viagemSchema = recursos_viagemBaseSchema.extend(
+	recursos_viagemRelationSchema.shape,
 );
 
 // ============================================================

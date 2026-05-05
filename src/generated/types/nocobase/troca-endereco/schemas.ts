@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { usersBaseSchema } from "../users/schemas";
 import {
 	troca_enderecoStatusSchema,
 	troca_enderecoTaxaInstalacaoSchema,
@@ -40,15 +41,15 @@ export const troca_enderecoBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const troca_enderecoRelationSchema = z.object({
-	createdBy: z.any().nullable(),
-	updatedBy: z.any().nullable(),
+	createdBy: z.lazy(() => usersBaseSchema.nullable()),
+	updatedBy: z.lazy(() => usersBaseSchema.nullable()),
 });
 
 // ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const troca_enderecoSchema = troca_enderecoBaseSchema.merge(
-	troca_enderecoRelationSchema,
+export const troca_enderecoSchema = troca_enderecoBaseSchema.extend(
+	troca_enderecoRelationSchema.shape,
 );
 
 // ============================================================

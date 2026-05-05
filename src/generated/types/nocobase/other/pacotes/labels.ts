@@ -10,8 +10,8 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const PACOTES_ABREATENDIMENTO_LABELS = {
-	"0": "NAO",
-	"1": "SIM",
+	0: "NAO",
+	1: "SIM",
 } as const;
 
 export const PACOTES_CLAUSULABONUSVELOCIDADE_LABELS = {
@@ -20,18 +20,18 @@ export const PACOTES_CLAUSULABONUSVELOCIDADE_LABELS = {
 } as const;
 
 export const PACOTES_PACOTEADICIONAL_LABELS = {
-	"0": "NAO",
-	"1": "SIM",
+	0: "NAO",
+	1: "SIM",
 } as const;
 
 export const PACOTES_PACOTEPRINCIPAL_LABELS = {
-	"0": "NAO",
-	"1": "SIM",
+	0: "NAO",
+	1: "SIM",
 } as const;
 
 export const PACOTES_STATUS_LABELS = {
-	"1": "Ativo",
-	"2": "Inativo",
+	1: "Ativo",
+	2: "Inativo",
 } as const;
 
 export const PACOTES_VENDERPARA_LABELS = {

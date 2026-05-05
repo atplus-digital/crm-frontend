@@ -10,11 +10,11 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const SUSPENSAOCONTRATO_STATUS_LABELS = {
-	"0": "Nova Solicitação",
-	"1": "Aguardando Assinatura",
-	"2": "Assinatura Concluída",
-	"3": "Concluído",
-	"4": "Cancelado",
+	0: "Nova Solicitação",
+	1: "Aguardando Assinatura",
+	2: "Assinatura Concluída",
+	3: "Concluído",
+	4: "Cancelado",
 } as const;
 
 // ============================================================
