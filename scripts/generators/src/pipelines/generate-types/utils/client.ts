@@ -48,6 +48,18 @@ export class NocoBaseDataSourceClient
 	extends NocoBaseApiClient
 	implements DataSourceClient
 {
+	// biome-ignore lint/complexity/noUselessConstructor: runtime usage
+	public constructor(
+		credentials: {
+			baseUrl: string;
+			token: string;
+			timeoutMs: number;
+		},
+		options?: { requestHeaders?: Record<string, string> },
+	) {
+		super(credentials, options);
+	}
+
 	public async fetchCollections(): Promise<DataSourceCollection[]> {
 		const response = await this.fetchJson<NocoBaseCollectionsListResponse>(
 			"collections:list?paginate=false",
