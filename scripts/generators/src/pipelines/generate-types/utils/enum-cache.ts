@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import * as path from "node:path";
-import type { Logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
 import { config } from "@scripts/generators/src/pipelines/generate-types/config";
 import type { EnumAdapterFieldEnum } from "../@types/script";
 import { parseWikiText } from "./wiki-parser";

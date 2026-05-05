@@ -1,7 +1,7 @@
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import type { Logger } from "@scripts/generators/src/lib/logger";
-import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
+import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logging";
 import type { CustomRequestsAnalysisReport } from "../write-analysis-report/analysis-collector";
 
 const ANALYSIS_OUTPUT_FILE = "analysis-report.json";

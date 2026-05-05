@@ -15,14 +15,14 @@ import {
 	type GenerateTypesExecutionContext,
 	getPipelineContext,
 } from "../runtime/context";
-import { runOrchestrationStage } from "./stage-executor";
+import { runStage } from "./run-stage";
 
 export function runDatasourcesOrchestrationStage(
 	context: GenerateTypesExecutionContext,
 	task?: OrchestrationTaskRunner,
 ) {
 	if (!task) {
-		return runOrchestrationStage(context, runDatasourcesStage());
+		return runStage(context, runDatasourcesStage());
 	}
 
 	const pipelineContext = getPipelineContext(context);

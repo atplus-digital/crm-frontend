@@ -20,7 +20,10 @@ export function createGeneratorStep<TContext extends object>(
 	return {
 		name: options.name,
 		label: options.label,
-		run: (ctx: GeneratorContext, task: ListrTaskRunner<object>) => {
+		run: (
+			ctx: GeneratorContext,
+			task: ListrTaskRunner<Record<string, never>>,
+		) => {
 			const generatorOptions = createGeneratorOptions({
 				...options.createGenerator(),
 				logger: ctx.logger,
@@ -37,6 +40,7 @@ export function createGeneratorStep<TContext extends object>(
 					step,
 					index,
 					generatorOptions.tasks.length,
+					generatorContext,
 				),
 			);
 

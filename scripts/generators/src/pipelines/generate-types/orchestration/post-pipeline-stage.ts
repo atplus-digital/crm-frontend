@@ -3,7 +3,7 @@ import {
 	getSubtaskOptions,
 	type OrchestrationTaskRunner,
 } from "@scripts/generators/src/lib/cli";
-import type { Logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
 import { runLinterFix } from "@scripts/generators/src/lib/validation/linter-runner";
 import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/validation/tsc-validator";
 import {
@@ -14,7 +14,7 @@ import {
 	type GenerateTypesExecutionContext,
 	getPipelineContext,
 } from "../runtime/context";
-import { runOrchestrationStage } from "./stage-executor";
+import { runStage } from "./run-stage";
 
 function runPostPipelineTask(
 	outputDirs: string[],
@@ -60,7 +60,7 @@ export function runPostPipelineOrchestrationStage(
 	task?: OrchestrationTaskRunner,
 ) {
 	if (!task) {
-		return runOrchestrationStage(context, runPostPipelineStage());
+		return runStage(context, runPostPipelineStage());
 	}
 
 	const pipelineContext = getPipelineContext(context);

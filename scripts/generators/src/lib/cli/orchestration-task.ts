@@ -23,11 +23,9 @@ export function createOrchestrationTask<
 			const stageTasks: OrchestrationListrTask[] = options.stages.map((stage) =>
 				createLoggedSubtask({
 					title: stage.title,
-					logger: context.logger,
 					run: (stageTask) => stage.run(executionContext, stageTask),
 					formatError: (message) =>
 						`Falha na subetapa "${stage.title}": ${message}`,
-					disableOutput,
 				}),
 			);
 

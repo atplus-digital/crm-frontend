@@ -1,7 +1,7 @@
 import {
 	logger as defaultRuntimeLogger,
 	type Logger,
-} from "@scripts/generators/src/lib/logger";
+} from "@scripts/generators/src/lib/logging";
 import { runLinterFix } from "@scripts/generators/src/lib/validation/linter-runner";
 import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/validation/tsc-validator";
 import type { GeneratedFileWrite } from "./datasource-pipeline/types";

@@ -1,6 +1,6 @@
 import { NocoBaseApiClient } from "@scripts/generators/src/lib/http/nocobase-client";
-import type { Logger } from "@scripts/generators/src/lib/logger";
-import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
+import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logging";
 import type {
 	CustomRequestApiEntry,
 	CustomRequestsListResponse,

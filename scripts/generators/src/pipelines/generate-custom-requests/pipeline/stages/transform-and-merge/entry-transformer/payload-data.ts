@@ -1,4 +1,4 @@
-import type { Logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
 
 export function normalizePayloadData(
 	raw: unknown,

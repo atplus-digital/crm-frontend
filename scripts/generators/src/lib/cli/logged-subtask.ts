@@ -1,15 +1,10 @@
-import type { Logger } from "@scripts/generators/src/lib/logger";
-
 import { DEFAULT_TASK_RENDERER_OPTIONS } from "./defaults";
-import {
-	createPersistentOutputWriter,
-	runTaskWithLogger,
-} from "./task-runtime";
+import { runTask } from "./run-helper";
 import type { OrchestrationListrTask, OrchestrationTaskRunner } from "./types";
 
 interface CreateLoggedSubtaskOptions {
 	title: string;
-	logger: Logger;
+	logger?: import("@scripts/generators/src/lib/logging").Logger;
 	run: (task: OrchestrationTaskRunner) => Promise<unknown> | unknown;
 	formatError?: (message: string) => string;
 	disableOutput?: boolean;
@@ -28,17 +23,9 @@ export function createLoggedSubtask(
 	return {
 		title: options.title,
 		task: (_context, task) => {
-			const renderLogs = options.disableOutput
-				? undefined
-				: createPersistentOutputWriter(options.logger, (line) => {
-						task.output = line;
-					});
-
-			return runTaskWithLogger({
-				logger: options.logger,
-				chain: options.title,
+			return runTask({
+				title: options.title,
 				run: () => options.run(task),
-				onEntry: renderLogs,
 				formatError:
 					options.formatError ??
 					((message) => `Falha na subetapa "${options.title}": ${message}`),

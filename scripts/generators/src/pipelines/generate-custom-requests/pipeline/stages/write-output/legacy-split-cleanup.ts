@@ -1,6 +1,6 @@
 import { existsSync, unlinkSync } from "node:fs";
 import { join } from "node:path";
-import type { Logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
 import type { GeneratedRegistryEntry } from "../../../@types/generated-registry";
 
 interface CleanupLegacySplitFilesOptions {

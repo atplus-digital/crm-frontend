@@ -1,4 +1,4 @@
-import type { Logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
 import type { EnumAdapter, EnumAdapterFieldEnum } from "../@types/script";
 import { fetchWithCache } from "../utils/enum-cache";
 

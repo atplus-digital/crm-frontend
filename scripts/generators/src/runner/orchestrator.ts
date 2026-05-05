@@ -5,7 +5,7 @@ import {
 	type ListrTaskRunner,
 	runGeneratorCli,
 } from "@scripts/generators/src/lib/cli";
-import type { Logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
 
 export interface GeneratorContext {
 	logger: Logger;

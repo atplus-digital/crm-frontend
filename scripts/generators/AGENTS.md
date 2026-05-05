@@ -46,14 +46,14 @@ generators/
 
 ## Where to Look
 
-| Task                                     | Location                                       | Notes                                             |
-| ---------------------------------------- | ---------------------------------------------- | ------------------------------------------------- |
-| Understand generator CLI framework       | `src/lib/cli/`                                 | runner.ts → orchestration-task.ts → listr-task.ts |
-| Add shared utility                       | `src/lib/`                                     | No barrel index.ts, direct imports only           |
-| Modify pipeline orchestration            | `src/pipelines/<name>/pipeline/orchestration/` | Each pipeline defines its own stages              |
-| Change how generated files are validated | `src/lib/validation/`                          | Post-pipeline validation                          |
-| Understand atomic write pattern          | `src/lib/io/atomic-writer.ts`                  | Used by both pipelines for safe file writes       |
-| HTTP/API operations                      | `src/lib/http/`                                | NocoBase client and HTTP utilities                |
+| Task                                     | Location                                       | Notes                                                           |
+| ---------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------- |
+| Understand generator CLI framework       | `src/lib/cli/`                                 | runner.ts → orchestration-task.ts → listr-task.ts               |
+| Add shared utility                       | `src/lib/`                                     | Direct imports (except `lib/cli/` barrel for CLI framework API) |
+| Modify pipeline orchestration            | `src/pipelines/<name>/pipeline/orchestration/` | Each pipeline defines its own stages                            |
+| Change how generated files are validated | `src/lib/validation/`                          | Post-pipeline validation                                        |
+| Understand atomic write pattern          | `src/lib/io/atomic-writer.ts`                  | Used by both pipelines for safe file writes                     |
+| HTTP/API operations                      | `src/lib/http/`                                | NocoBase client and HTTP utilities                              |
 
 <!-- AGENTS-GENERATED:END where-to-look -->
 
@@ -113,11 +113,11 @@ import {
 
 ## Anti-Patterns
 
-| ❌ Avoid                              | ✅ Use                         |
-| ------------------------------------- | ------------------------------ |
-| `lib/` importing from `pipelines/`    | One-way only: pipelines → lib  |
-| Adding barrel `index.ts` in `lib/`    | Direct imports to module files |
-| Hardcoding output paths in shared lib | Pass via config/parameters     |
+| ❌ Avoid                              | ✅ Use                                                                                |
+| ------------------------------------- | ------------------------------------------------------------------------------------- |
+| `lib/` importing from `pipelines/`    | One-way only: pipelines → lib                                                         |
+| Unnecessary barrel exports in `lib/`  | Direct imports; `lib/cli/` barrel is the intentional public API for the CLI framework |
+| Hardcoding output paths in shared lib | Pass via config/parameters                                                            |
 
 <!-- AGENTS-GENERATED:END anti-patterns -->
 

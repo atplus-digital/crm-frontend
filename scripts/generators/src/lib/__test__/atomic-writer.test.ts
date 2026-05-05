@@ -11,7 +11,7 @@ vi.mock("@scripts/generators/src/lib/validation/linter-runner", () => ({
 	runLinterFix: vi.fn().mockResolvedValue(undefined),
 }));
 
-vi.mock("@scripts/generators/src/lib/logger", () => ({
+vi.mock("@scripts/generators/src/lib/logging", () => ({
 	logger: {
 		info: vi.fn(),
 		warn: vi.fn(),

@@ -1,8 +1,8 @@
 import { execFile } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import type { Logger } from "@scripts/generators/src/lib/logger";
-import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
+import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logging";
 import type { CollectionSchemaMapping } from "../../../@types/collection-schema";
 import type { GeneratedRegistryEntry } from "../../../@types/generated-registry";
 import type { RequestsMap } from "../../../@types/script-config";
@@ -83,10 +83,14 @@ function buildInlineEntryContent(entry: GeneratedRegistryEntry): string {
 		payloadDataStr,
 	} = serializeEntryFields(entry);
 
+	const collectionSchemaLine = entry.collectionSchemaName
+		? `\n    collectionSchema: ${entry.collectionSchemaName},`
+		: "";
+
 	return `  "${entry.key}": {
     key: "${escapedKey}",
     name: "${escapedName}",
-    collection: "${escapedCollection}",
+    collection: "${escapedCollection}",${collectionSchemaLine}
     dataSourceKey: "${escapedDataSourceKey}",
     method: "${escapedMethod}",
     url: "${escapedUrl}",
@@ -151,6 +155,9 @@ function buildRegistryContent(
 		const splitAlias = splitAliasByKey.get(entry.key);
 		// Only inline entries need schema imports - split entries have their own imports
 		if (!splitAlias) {
+			if (entry.collectionSchemaName) {
+				allSchemaRefs.add(entry.collectionSchemaName);
+			}
 			const refs = extractSchemaReferences(entry.payloadSchema);
 			for (const ref of refs) {
 				allSchemaRefs.add(ref);

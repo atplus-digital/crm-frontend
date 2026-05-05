@@ -19,6 +19,38 @@ import {
 
 const GENERATED_TYPES_ROOT = resolve(process.cwd(), "src/generated/types");
 
+function buildCollectionNameVariants(collectionName: string): string[] {
+	const variants = new Set<string>([collectionName]);
+	if (collectionName.startsWith("t_")) {
+		variants.add(collectionName.slice(2));
+	} else {
+		variants.add(`t_${collectionName}`);
+	}
+
+	return [...variants];
+}
+
+function resolveCollectionNameFromSchemaFile(filePath: string): string | null {
+	const normalizedPath = filePath.replace(/\\/g, "/");
+	const parts = normalizedPath.split("/");
+	const fileName = parts.at(-1);
+	const parentDir = parts.at(-2);
+
+	if (!fileName) {
+		return null;
+	}
+
+	if (fileName === "schemas.ts") {
+		// src/generated/types/<ds>/<segment>/<collection>/schemas.ts
+		if (!parentDir || parentDir === "types") {
+			return null;
+		}
+		return fileNameToCollectionName(parentDir);
+	}
+
+	return fileNameToCollectionName(fileName);
+}
+
 function scanAllSchemas(logger?: {
 	debug: (msg: string) => void;
 }): CollectionSchemaMapping[] {
@@ -46,8 +78,11 @@ function scanAllSchemas(logger?: {
 		const schemaFiles = scanSchemaFiles(datasourcePath);
 
 		for (const filePath of schemaFiles) {
-			const fileName = filePath.split("/").pop() ?? "";
-			const collectionName = fileNameToCollectionName(fileName);
+			const collectionName = resolveCollectionNameFromSchemaFile(filePath);
+			if (!collectionName) {
+				logger?.debug(`Collection não resolvida para arquivo: ${filePath}`);
+				continue;
+			}
 			const fileContent = readFileSync(filePath, "utf-8");
 
 			const schemaInfo = extractSchemaNames(collectionName, fileContent);
@@ -84,11 +119,19 @@ export function createRegistry(
 	const registry = new Map<string, CollectionSchemaMapping>();
 
 	for (const mapping of mappings) {
-		const key = `${mapping.dataSourceKey}:${mapping.collectionName}`;
-		registry.set(key, mapping);
+		const collectionVariants = buildCollectionNameVariants(
+			mapping.collectionName,
+		);
 
-		if (!registry.has(mapping.collectionName)) {
-			registry.set(mapping.collectionName, mapping);
+		for (const variant of collectionVariants) {
+			const dataSourceKey = `${mapping.dataSourceKey}:${variant}`;
+			if (!registry.has(dataSourceKey)) {
+				registry.set(dataSourceKey, mapping);
+			}
+
+			if (!registry.has(variant)) {
+				registry.set(variant, mapping);
+			}
 		}
 	}
 
@@ -113,14 +156,24 @@ export function findSchema(
 	collectionName: string,
 	dataSourceKey?: string,
 ): CollectionSchemaMapping | null {
+	const collectionVariants = buildCollectionNameVariants(collectionName);
+
 	if (dataSourceKey) {
-		const key = `${dataSourceKey}:${collectionName}`;
-		if (registry.has(key)) {
-			return registry.get(key) ?? null;
+		for (const variant of collectionVariants) {
+			const key = `${dataSourceKey}:${variant}`;
+			if (registry.has(key)) {
+				return registry.get(key) ?? null;
+			}
 		}
 	}
 
-	return registry.get(collectionName) ?? null;
+	for (const variant of collectionVariants) {
+		if (registry.has(variant)) {
+			return registry.get(variant) ?? null;
+		}
+	}
+
+	return null;
 }
 
 export type {

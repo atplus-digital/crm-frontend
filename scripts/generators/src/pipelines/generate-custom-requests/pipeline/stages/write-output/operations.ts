@@ -40,6 +40,7 @@ export function writeSplitFilesOutput(context: WriteOutputContext): void {
 		context.mergedEntries,
 		context.config.requests,
 		context.config.outputDir,
+		context.schemaMappings,
 		context.logger,
 	);
 	context.logger.info("Split files processados com sucesso!");

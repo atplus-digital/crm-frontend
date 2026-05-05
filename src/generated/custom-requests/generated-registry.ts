@@ -3,48 +3,32 @@
  * Do not edit manually.
  */
 import { z } from "zod";
+import { cliente_contratoSchema } from "#/generated/types/d_db_ixcsoft/cliente-contrato/schemas";
+import { fn_areceberSchema } from "#/generated/types/d_db_ixcsoft/fn-areceber/schemas";
+import { su_ticketSchema } from "#/generated/types/d_db_ixcsoft/su-ticket/schemas";
+import { vd_contratos_produtosSchema } from "#/generated/types/d_db_ixcsoft/vd-contratos-produtos/schemas";
+import { crm_troca_titularidadeSchema } from "#/generated/types/nocobase/crm-troca-titularidade/schemas";
+import { negociacoesSchema } from "#/generated/types/nocobase/negociacoes/schemas";
+import { atendimentos_ixcSchema } from "#/generated/types/nocobase/other/atendimentos-ixc/schemas";
+import { contratos_ixcSchema } from "#/generated/types/nocobase/other/contratos-ixc/schemas";
+import { dados_adicionais_cliente_contratoSchema } from "#/generated/types/nocobase/other/dados-adicionais-cliente-contrato/schemas";
+import { logsSchema } from "#/generated/types/nocobase/other/logs/schemas";
+import { patrimonioSchema } from "#/generated/types/nocobase/other/patrimonio/schemas";
+import { qualirun_processosSchema } from "#/generated/types/nocobase/other/qualirun-processos/schemas";
+import { telecom_ips_fixosSchema } from "#/generated/types/nocobase/other/telecom-ips-fixos/schemas";
+import { trocasdetitularidade_comentariosSchema } from "#/generated/types/nocobase/other/trocasdetitularidade-comentarios/schemas";
+import { zapsignSchema } from "#/generated/types/nocobase/other/zapsign/schemas";
+import { pessoasSchema } from "#/generated/types/nocobase/pessoas/schemas";
+import { requestEntry as split_d_db_ixcsoft_cliente_contrato_negociacao_atualizadaRequestEntry } from "./d_db_ixcsoft/cliente_contrato/negociacao-atualizada";
+import { requestEntry as split_nocobase_t_logs_cadastro_comercialRequestEntry } from "./nocobase/t_logs/cadastro-comercial";
+import { requestEntry as split_nocobase_t_qualirun_info_adicionais_quali_runRequestEntry } from "./nocobase/t_qualirun_info_adicionais/quali-run";
 
 export const generatedCustomRequestsRegistry = {
-	"0j7f9fuzuo7": {
-		key: "0j7f9fuzuo7",
-		name: "0j7f9fuzuo7",
-		collection: "t_qualirun_info_adicionais",
-		dataSourceKey: "main",
-		method: "POST",
-		url: "https://atplus-rh-n8n-rh.tvs9na.easypanel.host/webhook/9ceda127-997b-49df-8037-f50db4a55e42",
-		payloadSchema: z.object({
-			etapa: z
-				.literal("aprova-informacoes")
-				.default("aprova-informacoes")
-				.readonly(),
-			$nSelectedRecord: z.array(z.unknown()),
-		}),
-		payloadData: {
-			etapa: "aprova-informacoes",
-			info_adicionais: "{{$nSelectedRecord}}",
-		},
-	},
+	"0j7f9fuzuo7":
+		split_nocobase_t_qualirun_info_adicionais_quali_runRequestEntry,
 
-	"23btjo9ohrr": {
-		key: "23btjo9ohrr",
-		name: "23btjo9ohrr",
-		collection: "cliente_contrato",
-		dataSourceKey: "d_db_ixcsoft",
-		method: "POST",
-		url: "https://n8n.atplus.cloud/webhook/5d9eccc3-7091-47f9-bcae-75ea5292b7fd",
-		payloadSchema: z.object({
-			currentRecord: z.object({
-				f_nc_cliente: z.object({
-					id: z.unknown(),
-				}),
-				id: z.unknown(),
-			}),
-		}),
-		payloadData: {
-			id_contrato: "{{currentRecord.id}}",
-			id_cliente: "{{currentRecord.f_nc_cliente.id}}",
-		},
-	},
+	"23btjo9ohrr":
+		split_d_db_ixcsoft_cliente_contrato_negociacao_atualizadaRequestEntry,
 
 	"32fmnujkpaq": {
 		key: "32fmnujkpaq",
@@ -71,16 +55,15 @@ export const generatedCustomRequestsRegistry = {
 		key: "37yaihkravc",
 		name: "37yaihkravc",
 		collection: "cliente_contrato",
+		collectionSchema: cliente_contratoSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/0860593c-859a-4427-9e7e-437b19bed46b",
 		payloadSchema: z.object({
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: cliente_contratoSchema.pick({
+				id: true,
 			}),
-			currentUser: z.object({
-				f_id_vendedor_ixc: z.unknown(),
-			}),
+			currentUser: z.object({ id: z.unknown() }),
 		}),
 		payloadData: {
 			id_contrato: "{{currentRecord.id}}",
@@ -92,6 +75,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "3jd8i67j41e",
 		name: "3jd8i67j41e",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/37cbdc46-4512-43e0-a89d-21e0d45de960",
@@ -142,12 +126,13 @@ export const generatedCustomRequestsRegistry = {
 		key: "5t5w4obvlfl",
 		name: "5t5w4obvlfl",
 		collection: "cliente_contrato",
+		collectionSchema: cliente_contratoSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/5f130ffe-2cf6-4f42-8f05-ef8aed602644",
 		payloadSchema: z.object({
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: cliente_contratoSchema.pick({
+				id: true,
 			}),
 		}),
 		payloadData: {
@@ -159,38 +144,26 @@ export const generatedCustomRequestsRegistry = {
 		key: "6ke3hsmki23",
 		name: "6ke3hsmki23",
 		collection: "cliente_contrato",
+		collectionSchema: cliente_contratoSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:create",
 		payloadSchema: z.object({
-			f_titulo: z
-				.literal("SEGUNDA CONTRATAÇÃO - {{currentRecord.f_nc_cliente.razao}}")
-				.default("SEGUNDA CONTRATAÇÃO - {{currentRecord.f_nc_cliente.razao}}")
-				.readonly(),
-			f_valor_instalacao: z.literal("0").default("0").readonly(),
-			f_endereco_estado: z.literal("SC").default("SC").readonly(),
-			f_motivo: z.literal("S").default("S").readonly(),
-			f_status: z.literal("1").default("1").readonly(),
-			currentRecord: z.object({
-				bairro: z.unknown(),
-				cep: z.unknown(),
-				cidade: z.unknown(),
-				endereco: z.unknown(),
-				f_klf0fxs3rds: z.object({
-					tipo_pessoa: z.unknown(),
-				}),
-				f_nc_cliente: z.object({
-					cnpj_cpf: z.unknown(),
-					email: z.unknown(),
-					razao: z.unknown(),
-					telefone_celular: z.unknown(),
-				}),
-				id: z.unknown(),
-				numero: z.unknown(),
+			currentRecord: cliente_contratoSchema.pick({
+				bairro: true,
+				cep: true,
+				cidade: true,
+				endereco: true,
+				//    f_klf0fxs3rds: true, ! Não Existe na collection
+				f_nc_cliente: true,
+				id: true,
+				numero: true,
 			}),
-			currentUser: z.object({
-				f_id_vendedor_ixc: z.unknown(),
-			}),
+			currentUser: z.object({ id: z.unknown() }),
+			f_endereco_estado: z.string(),
+			f_motivo: z.string(),
+			f_status: z.string(),
+			f_valor_instalacao: z.string(),
 		}),
 		payloadData: {
 			f_fk_negociacao_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
@@ -244,12 +217,13 @@ export const generatedCustomRequestsRegistry = {
 		key: "78d5kny2gwn",
 		name: "78d5kny2gwn",
 		collection: "cliente_contrato",
+		collectionSchema: cliente_contratoSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/5f130ffe-2cf6-4f42-8f05-ef8aed602644",
 		payloadSchema: z.object({
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: cliente_contratoSchema.pick({
+				id: true,
 			}),
 		}),
 		payloadData: {
@@ -261,13 +235,14 @@ export const generatedCustomRequestsRegistry = {
 		key: "7bsfl4wnz5m",
 		name: "7bsfl4wnz5m",
 		collection: "cliente_contrato",
+		collectionSchema: cliente_contratoSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook-test/demandas",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				id: z.string(),
-				id_cliente: z.string(),
+			$nForm: cliente_contratoSchema.pick({
+				id: true,
+				id_cliente: true,
 			}),
 		}),
 		payloadData: {
@@ -280,6 +255,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "7fh1n04ztsu",
 		name: "7fh1n04ztsu",
 		collection: "t_zapsign",
+		collectionSchema: zapsignSchema,
 		dataSourceKey: "main",
 		method: "GET",
 		url: "https://api.zapsign.com.br/api/v1/info-plan/",
@@ -332,18 +308,19 @@ export const generatedCustomRequestsRegistry = {
 		key: "8e9nkpsadjm",
 		name: "8e9nkpsadjm",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/bec8f4d4-b0ad-4e3a-a42e-53e99674fe8d",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_cpf_responsavel_assinatura: z.string(),
-				f_email_cobranca: z.string(),
-				f_responsavel_assinatura: z.string(),
-				f_telefone: z.string(),
+			$nForm: negociacoesSchema.pick({
+				f_cpf_responsavel_assinatura: true,
+				f_email_cobranca: true,
+				f_responsavel_assinatura: true,
+				f_telefone: true,
 			}),
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: negociacoesSchema.pick({
+				id: true,
 			}),
 		}),
 		payloadData: {
@@ -370,12 +347,13 @@ export const generatedCustomRequestsRegistry = {
 		key: "9eedntq884w",
 		name: "9eedntq884w",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes_itens:create",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_pacotes_adicionais: z.string(),
+			$nForm: negociacoesSchema.pick({
+				f_pacotes_adicionais: true,
 			}),
 		}),
 		payloadData: {
@@ -387,56 +365,24 @@ export const generatedCustomRequestsRegistry = {
 		key: "b186501hwq6",
 		name: "b186501hwq6",
 		collection: "t_atendimentos_ixc",
+		collectionSchema: atendimentos_ixcSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/aegis-crm",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_cliente: z.string(),
-				f_contrato: z.string(),
-				f_datafim: z.string(),
-				f_datainicio: z.string(),
-				f_diagnosticos: z.string(),
-				f_finalizaatendimento: z.string(),
-				f_idatendimento: z.string(),
-				f_idos: z.string(),
-				f_responsavel: z.string(),
-				f_tarefas: z.string(),
-				f_templates_atendimentos: z.object({
-					f_acessa_pela_rede_da_atplus: z.string(),
-					f_alteracoes: z.string(),
-					f_aplicativo: z.string(),
-					f_aplicativo_especifico: z.string(),
-					f_apn_preenchida: z.string(),
-					f_descricao_do_cliente: z.string(),
-					"f_e-mail": z.string(),
-					f_endereco_do_site: z.string(),
-					f_fabricante: z.string(),
-					f_ip_fixo: z.string(),
-					f_ip_interno_para_liberacao: z.string(),
-					f_login_pppoe: z.string(),
-					f_los: z.string(),
-					f_melhor_horario_retorno: z.string(),
-					f_nome_do_solicitante: z.string(),
-					f_nome_rede_wifi: z.string(),
-					f_numero_de_A: z.string(),
-					f_numero_de_B: z.string(),
-					f_numero_para_contato: z.string(),
-					f_portas_a_serem_liberadas: z.string(),
-					f_protocolo_do_atendimento: z.string(),
-					f_qual_aplicativo: z.string(),
-					f_qual_apn_configurada: z.string(),
-					f_qual_fabricante: z.string(),
-					f_quantidade_de_dispositivos: z.string(),
-					f_senha_da_rede_wifi: z.string(),
-					f_status_do_circuito: z.string(),
-					f_telefonia_tipo_de_problema: z.string(),
-					f_tipo_de_atendimento: z.string(),
-					f_tipo_de_conexao_do_dispositivo: z.string(),
-					f_tipo_de_problema_mvno: z.string(),
-					f_torre_rede: z.string(),
-				}),
-				f_usuario: z.string(),
+			$nForm: atendimentos_ixcSchema.pick({
+				f_cliente: true,
+				f_contrato: true,
+				f_datafim: true,
+				f_datainicio: true,
+				f_diagnosticos: true,
+				f_finalizaatendimento: true,
+				f_idatendimento: true,
+				f_idos: true,
+				f_responsavel: true,
+				f_tarefas: true,
+				f_templates_atendimentos: true,
+				f_usuario: true,
 			}),
 		}),
 		payloadData: {
@@ -533,13 +479,14 @@ export const generatedCustomRequestsRegistry = {
 		key: "bq0cb339042",
 		name: "bq0cb339042",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/7951a79e-7efc-49ac-bd63-9ec9d9f0b225",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_contrato_ixc: z.string(),
-				id: z.string(),
+			$nForm: negociacoesSchema.pick({
+				f_contrato_ixc: true,
+				id: true,
 			}),
 		}),
 		payloadData: {
@@ -590,6 +537,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "d6ksnfld3et",
 		name: "d6ksnfld3et",
 		collection: "t_pessoas",
+		collectionSchema: pessoasSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook-test/b43a1b28-e8e9-4aaf-86da-2289a4d5e233",
@@ -601,18 +549,19 @@ export const generatedCustomRequestsRegistry = {
 		key: "dubcidu6jmc",
 		name: "dubcidu6jmc",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/bec8f4d4-b0ad-4e3a-a42e-53e99674fe8d",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_cpf_responsavel_assinatura: z.string(),
-				f_email_cobranca: z.string(),
-				f_responsavel_assinatura: z.string(),
-				f_telefone: z.string(),
+			$nForm: negociacoesSchema.pick({
+				f_cpf_responsavel_assinatura: true,
+				f_email_cobranca: true,
+				f_responsavel_assinatura: true,
+				f_telefone: true,
 			}),
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: negociacoesSchema.pick({
+				id: true,
 			}),
 		}),
 		payloadData: {
@@ -628,12 +577,13 @@ export const generatedCustomRequestsRegistry = {
 		key: "f8q6gymke8a",
 		name: "f8q6gymke8a",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook-test/envia-para-assinatura",
 		payloadSchema: z.object({
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: negociacoesSchema.pick({
+				id: true,
 			}),
 		}),
 		payloadData: {
@@ -645,6 +595,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "fiss44qjf20",
 		name: "fiss44qjf20",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
@@ -666,19 +617,20 @@ export const generatedCustomRequestsRegistry = {
 		key: "gehbxharfjz",
 		name: "gehbxharfjz",
 		collection: "t_atendimentos_ixc",
+		collectionSchema: atendimentos_ixcSchema,
 		dataSourceKey: "main",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegisatendimento",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_assunto: z.string(),
-				f_cliente: z.string(),
-				f_contrato: z.string(),
-				f_departamento: z.string(),
-				f_descricao: z.string(),
-				f_id_login: z.string(),
-				f_idcliente: z.string(),
-				f_processo: z.string(),
+			$nForm: atendimentos_ixcSchema.pick({
+				f_assunto: true,
+				f_cliente: true,
+				f_contrato: true,
+				f_departamento: true,
+				f_descricao: true,
+				f_id_login: true,
+				f_idcliente: true,
+				f_processo: true,
 			}),
 		}),
 		payloadData: {
@@ -697,15 +649,18 @@ export const generatedCustomRequestsRegistry = {
 		key: "ghcsm5m6cb8",
 		name: "ghcsm5m6cb8",
 		collection: "t_patrimonio",
+		collectionSchema: patrimonioSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook-test/8dbc006d-f3b1-42a5-a715-7c7025655146",
 		payloadSchema: z.object({
-			$nSelectedRecord: z.object({
-				f_fk_funcionarios: z.array(z.unknown()),
-				f_nome_patrimonio: z.array(z.unknown()),
-				f_numero_serie: z.array(z.unknown()),
-			}),
+			$nSelectedRecord: z.array(
+				patrimonioSchema.pick({
+					f_fk_funcionarios: true,
+					f_nome_patrimonio: true,
+					f_numero_serie: true,
+				}),
+			),
 		}),
 		payloadData: {
 			fk_funcionarios: "{{$nSelectedRecord.f_fk_funcionarios}}",
@@ -755,6 +710,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "h0h7rujhvvj",
 		name: "h0h7rujhvvj",
 		collection: "t_pessoas",
+		collectionSchema: pessoasSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook-test/cb200573-5c18-4a03-bb62-69cad03a2be4",
@@ -766,17 +722,15 @@ export const generatedCustomRequestsRegistry = {
 		key: "h32vk2yid08",
 		name: "h32vk2yid08",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/b2b40644-0463-4d36-8c1b-89db9ffb2880",
 		payloadSchema: z.object({
-			procedimento: z
-				.literal("17760523-1404-4ff9-b786-15a4b0d7a3e2")
-				.default("17760523-1404-4ff9-b786-15a4b0d7a3e2")
-				.readonly(),
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: negociacoesSchema.pick({
+				id: true,
 			}),
+			procedimento: z.string(),
 		}),
 		payloadData: {
 			procedimento: "17760523-1404-4ff9-b786-15a4b0d7a3e2",
@@ -811,6 +765,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "il2pcooj4pr",
 		name: "il2pcooj4pr",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/envia-assinatura",
@@ -822,6 +777,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "im5okkvu9dz",
 		name: "im5okkvu9dz",
 		collection: "vd_contratos_produtos",
+		collectionSchema: vd_contratos_produtosSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "POST",
 		url: "https://45.229.104.23/webservice/v1/su_ticket",
@@ -945,18 +901,19 @@ export const generatedCustomRequestsRegistry = {
 		key: "iwdrxnxtmdq",
 		name: "iwdrxnxtmdq",
 		collection: "t_atendimentos_ixc",
+		collectionSchema: atendimentos_ixcSchema,
 		dataSourceKey: "main",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegisatendimento",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_assunto: z.string(),
-				f_cliente: z.string(),
-				f_contrato: z.string(),
-				f_departamento: z.string(),
-				f_descricao: z.string(),
-				f_idcliente: z.string(),
-				f_processo: z.string(),
+			$nForm: atendimentos_ixcSchema.pick({
+				f_assunto: true,
+				f_cliente: true,
+				f_contrato: true,
+				f_departamento: true,
+				f_descricao: true,
+				f_idcliente: true,
+				f_processo: true,
 			}),
 		}),
 		payloadData: {
@@ -974,18 +931,19 @@ export const generatedCustomRequestsRegistry = {
 		key: "jhzlhxs8owo",
 		name: "jhzlhxs8owo",
 		collection: "t_atendimentos_ixc",
+		collectionSchema: atendimentos_ixcSchema,
 		dataSourceKey: "main",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/demandas",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_assunto: z.string(),
-				f_cliente: z.string(),
-				f_contrato: z.string(),
-				f_departamento: z.string(),
-				f_descricao: z.string(),
-				f_idcliente: z.string(),
-				f_processo: z.string(),
+			$nForm: atendimentos_ixcSchema.pick({
+				f_assunto: true,
+				f_cliente: true,
+				f_contrato: true,
+				f_departamento: true,
+				f_descricao: true,
+				f_idcliente: true,
+				f_processo: true,
 			}),
 		}),
 		payloadData: {
@@ -1003,16 +961,15 @@ export const generatedCustomRequestsRegistry = {
 		key: "kgm9ahtf2yp",
 		name: "kgm9ahtf2yp",
 		collection: "cliente_contrato",
+		collectionSchema: cliente_contratoSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/0860593c-859a-4427-9e7e-437b19bed46b",
 		payloadSchema: z.object({
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: cliente_contratoSchema.pick({
+				id: true,
 			}),
-			currentUser: z.object({
-				f_id_vendedor_ixc: z.unknown(),
-			}),
+			currentUser: z.object({ id: z.unknown() }),
 		}),
 		payloadData: {
 			id_contrato: "{{currentRecord.id}}",
@@ -1024,19 +981,20 @@ export const generatedCustomRequestsRegistry = {
 		key: "lt9r40c3a52",
 		name: "lt9r40c3a52",
 		collection: "t_atendimentos_ixc",
+		collectionSchema: atendimentos_ixcSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/acoesos",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_datafim: z.string(),
-				f_datainicio: z.string(),
-				f_descricao: z.string(),
-				f_diagnosticos: z.string(),
-				f_finalizaatendimento: z.string(),
-				f_idos: z.string(),
-				f_responsavel: z.string(),
-				f_tarefas: z.string(),
+			$nForm: atendimentos_ixcSchema.pick({
+				f_datafim: true,
+				f_datainicio: true,
+				f_descricao: true,
+				f_diagnosticos: true,
+				f_finalizaatendimento: true,
+				f_idos: true,
+				f_responsavel: true,
+				f_tarefas: true,
 			}),
 		}),
 		payloadData: {
@@ -1055,6 +1013,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "m5pu59k8p9s",
 		name: "m5pu59k8p9s",
 		collection: "fn_areceber",
+		collectionSchema: fn_areceberSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/9571dab3-4e39-429e-a602-ae3619819b70",
@@ -1072,6 +1031,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "mp73jhvvcuj",
 		name: "mp73jhvvcuj",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
@@ -1093,19 +1053,20 @@ export const generatedCustomRequestsRegistry = {
 		key: "mzpjc6seq2p",
 		name: "mzpjc6seq2p",
 		collection: "t_atendimentos_ixc",
+		collectionSchema: atendimentos_ixcSchema,
 		dataSourceKey: "main",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegisatendimento",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_assunto: z.string(),
-				f_cliente: z.string(),
-				f_contrato: z.string(),
-				f_departamento: z.string(),
-				f_descricao: z.string(),
-				f_id_login: z.string(),
-				f_idcliente: z.string(),
-				f_processo: z.string(),
+			$nForm: atendimentos_ixcSchema.pick({
+				f_assunto: true,
+				f_cliente: true,
+				f_contrato: true,
+				f_departamento: true,
+				f_descricao: true,
+				f_id_login: true,
+				f_idcliente: true,
+				f_processo: true,
 			}),
 		}),
 		payloadData: {
@@ -1118,6 +1079,21 @@ export const generatedCustomRequestsRegistry = {
 			departamento: "{{$nForm.f_departamento}}",
 			id_login: "{{$nForm.f_id_login}}",
 		},
+	},
+
+	n8nCompras: {
+		key: "n8nCompras",
+		name: "N8N Compras",
+		collection: "compras",
+		dataSourceKey: "main",
+		method: "POST",
+		url: "customRequests:send/n8nCompras",
+		payloadSchema: z.object({
+			id_pedido: z.number(),
+			id_fornecedor: z.number(),
+			valor: z.number(),
+		}),
+		payloadData: null,
 	},
 
 	oj5jwqjdjts: {
@@ -1148,6 +1124,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "q5cd310hudg",
 		name: "q5cd310hudg",
 		collection: "t_contratos_ixc",
+		collectionSchema: contratos_ixcSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook-test/cb200573-5c18-4a03-bb62-69cad03a2be4",
@@ -1155,39 +1132,19 @@ export const generatedCustomRequestsRegistry = {
 		payloadData: null,
 	},
 
-	qbk10nf76um: {
-		key: "qbk10nf76um",
-		name: "qbk10nf76um",
-		collection: "t_logs",
-		dataSourceKey: "main",
-		method: "GET",
-		url: "https://n8n.atplus.cloud/webhook/836d3099-bd29-49d0-8010-a4b5033ecc43",
-		payloadSchema: z.object({
-			a: z.literal(1).default(1).readonly(),
-			currentRecord: z.object({
-				f_log_level: z.unknown(),
-			}),
-			currentUser: z.object({
-				nickname: z.unknown(),
-			}),
-		}),
-		payloadData: {
-			a: 1,
-			b: "{{currentUser.nickname}}",
-			rec: "{{currentRecord.f_log_level}}",
-		},
-	},
+	qbk10nf76um: split_nocobase_t_logs_cadastro_comercialRequestEntry,
 
 	qtd2du574v1: {
 		key: "qtd2du574v1",
 		name: "qtd2du574v1",
 		collection: "cliente_contrato",
+		collectionSchema: cliente_contratoSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "POST",
 		url: "https://{{$env.IXC_Domain}}/webservice/v1/desbloqueio_confianca",
 		payloadSchema: z.object({
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: cliente_contratoSchema.pick({
+				id: true,
 			}),
 		}),
 		payloadData: {
@@ -1199,19 +1156,20 @@ export const generatedCustomRequestsRegistry = {
 		key: "rc6bqjtcfik",
 		name: "rc6bqjtcfik",
 		collection: "t_atendimentos_ixc",
+		collectionSchema: atendimentos_ixcSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/acoesos",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_datafim: z.string(),
-				f_datainicio: z.string(),
-				f_descricao: z.string(),
-				f_diagnosticos: z.string(),
-				f_finalizaatendimento: z.string(),
-				f_idos: z.string(),
-				f_responsavel: z.string(),
-				f_tarefas: z.string(),
+			$nForm: atendimentos_ixcSchema.pick({
+				f_datafim: true,
+				f_datainicio: true,
+				f_descricao: true,
+				f_diagnosticos: true,
+				f_finalizaatendimento: true,
+				f_idos: true,
+				f_responsavel: true,
+				f_tarefas: true,
 			}),
 		}),
 		payloadData: {
@@ -1230,6 +1188,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "rm9a8dyqfzr",
 		name: "rm9a8dyqfzr",
 		collection: "t_crm_troca_titularidade",
+		collectionSchema: crm_troca_titularidadeSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_crm_troca_titularidade:update?filterByTk={{currentRecord.id}}",
@@ -1249,6 +1208,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "s0vwyf6kzdl",
 		name: "s0vwyf6kzdl",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
@@ -1270,6 +1230,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "s1hoaij5zg3",
 		name: "s1hoaij5zg3",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_negociacoes:update?filterByTk={{currentRecord.id}}",
@@ -1291,12 +1252,13 @@ export const generatedCustomRequestsRegistry = {
 		key: "sjohhcwirxz",
 		name: "sjohhcwirxz",
 		collection: "fn_areceber",
+		collectionSchema: fn_areceberSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/c97170a1-15fe-44ca-a302-f9e7b2c54b63",
 		payloadSchema: z.object({
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: fn_areceberSchema.pick({
+				id: true,
 			}),
 		}),
 		payloadData: {
@@ -1308,12 +1270,13 @@ export const generatedCustomRequestsRegistry = {
 		key: "sl7o14v2qhm",
 		name: "sl7o14v2qhm",
 		collection: "fn_areceber",
+		collectionSchema: fn_areceberSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/68c0ddb3-6416-4093-88f3-ba7873581729.pdf",
 		payloadSchema: z.object({
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: fn_areceberSchema.pick({
+				id: true,
 			}),
 		}),
 		payloadData: {
@@ -1325,6 +1288,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "smabb16kusp",
 		name: "smabb16kusp",
 		collection: "t_telecom_ips_fixos",
+		collectionSchema: telecom_ips_fixosSchema,
 		dataSourceKey: "main",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/a24ba316-aed8-4bc2-a949-c6cb038a3fe7",
@@ -1336,6 +1300,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "spn119qrcv8",
 		name: "spn119qrcv8",
 		collection: "fn_areceber",
+		collectionSchema: fn_areceberSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "GET",
 		url: "https://placehold.co/600x400.png",
@@ -1347,6 +1312,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "t3x4cxkvz4l",
 		name: "t3x4cxkvz4l",
 		collection: "vd_contratos_produtos",
+		collectionSchema: vd_contratos_produtosSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "POST",
 		url: "https://45.229.104.23/webservice/v1/su_ticket",
@@ -1470,6 +1436,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "t8csht5gpmi",
 		name: "t8csht5gpmi",
 		collection: "t_contratos_ixc",
+		collectionSchema: contratos_ixcSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook-test/cb200573-5c18-4a03-bb62-69cad03a2be4",
@@ -1481,16 +1448,15 @@ export const generatedCustomRequestsRegistry = {
 		key: "tjt1ajr1tkl",
 		name: "tjt1ajr1tkl",
 		collection: "cliente_contrato",
+		collectionSchema: cliente_contratoSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/segundacontratacao",
 		payloadSchema: z.object({
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: cliente_contratoSchema.pick({
+				id: true,
 			}),
-			currentUser: z.object({
-				f_id_vendedor_ixc: z.unknown(),
-			}),
+			currentUser: z.object({ id: z.unknown() }),
 		}),
 		payloadData: {
 			id_contrato: "{{currentRecord.id}}",
@@ -1534,6 +1500,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "uw77gy8qtte",
 		name: "uw77gy8qtte",
 		collection: "t_dados_adicionais_cliente_contrato",
+		collectionSchema: dados_adicionais_cliente_contratoSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "/",
@@ -1556,6 +1523,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "wr4aj0srq5h",
 		name: "wr4aj0srq5h",
 		collection: "t_trocasdetitularidade_comentarios",
+		collectionSchema: trocasdetitularidade_comentariosSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://crm.atplus.cloud/api/t_crm_troca_titularidade:update/13",
@@ -1571,17 +1539,15 @@ export const generatedCustomRequestsRegistry = {
 		key: "xk24zkcao2z",
 		name: "xk24zkcao2z",
 		collection: "t_negociacoes",
+		collectionSchema: negociacoesSchema,
 		dataSourceKey: "main",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook/b2b40644-0463-4d36-8c1b-89db9ffb2880",
 		payloadSchema: z.object({
-			procedimento: z
-				.literal("17760523-1404-4ff9-b786-15a4b0d7a3e2")
-				.default("17760523-1404-4ff9-b786-15a4b0d7a3e2")
-				.readonly(),
-			currentRecord: z.object({
-				id: z.unknown(),
+			currentRecord: negociacoesSchema.pick({
+				id: true,
 			}),
+			procedimento: z.string(),
 		}),
 		payloadData: {
 			procedimento: "17760523-1404-4ff9-b786-15a4b0d7a3e2",
@@ -1593,14 +1559,13 @@ export const generatedCustomRequestsRegistry = {
 		key: "xk5u4vwbdap",
 		name: "xk5u4vwbdap",
 		collection: "t_logs",
+		collectionSchema: logsSchema,
 		dataSourceKey: "main",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/836d3099-bd29-49d0-8010-a4b5033ecc43",
 		payloadSchema: z.object({
-			$nSelectedRecord: z.array(z.unknown()),
-			currentUser: z.object({
-				id: z.unknown(),
-			}),
+			$nSelectedRecord: z.array(logsSchema),
+			currentUser: z.object({ id: z.unknown() }),
 		}),
 		payloadData: {
 			selected: "{{$nSelectedRecord}}",
@@ -1612,19 +1577,20 @@ export const generatedCustomRequestsRegistry = {
 		key: "xkmkcdnrksu",
 		name: "xkmkcdnrksu",
 		collection: "t_atendimentos_ixc",
+		collectionSchema: atendimentos_ixcSchema,
 		dataSourceKey: "main",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/aegisatendimento",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_assunto: z.string(),
-				f_cliente: z.string(),
-				f_contrato: z.string(),
-				f_departamento: z.string(),
-				f_descricao: z.string(),
-				f_id_login: z.string(),
-				f_idcliente: z.string(),
-				f_processo: z.string(),
+			$nForm: atendimentos_ixcSchema.pick({
+				f_assunto: true,
+				f_cliente: true,
+				f_contrato: true,
+				f_departamento: true,
+				f_descricao: true,
+				f_id_login: true,
+				f_idcliente: true,
+				f_processo: true,
 			}),
 		}),
 		payloadData: {
@@ -1643,18 +1609,19 @@ export const generatedCustomRequestsRegistry = {
 		key: "ychaqev81oe",
 		name: "ychaqev81oe",
 		collection: "t_atendimentos_ixc",
+		collectionSchema: atendimentos_ixcSchema,
 		dataSourceKey: "main",
 		method: "GET",
 		url: "https://n8n.atplus.cloud/webhook/demandas",
 		payloadSchema: z.object({
-			$nForm: z.object({
-				f_assunto: z.string(),
-				f_cliente: z.string(),
-				f_contrato: z.string(),
-				f_departamento: z.string(),
-				f_descricao: z.string(),
-				f_idcliente: z.string(),
-				f_processo: z.string(),
+			$nForm: atendimentos_ixcSchema.pick({
+				f_assunto: true,
+				f_cliente: true,
+				f_contrato: true,
+				f_departamento: true,
+				f_descricao: true,
+				f_idcliente: true,
+				f_processo: true,
 			}),
 		}),
 		payloadData: {
@@ -1689,6 +1656,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "ygimowrypfa",
 		name: "ygimowrypfa",
 		collection: "su_ticket",
+		collectionSchema: su_ticketSchema,
 		dataSourceKey: "d_db_ixcsoft",
 		method: "POST",
 		url: "https://n8n.atplus.cloud/webhook-test/d86bf3fb-47da-4abc-916b-e08ebd07e231",
@@ -1728,6 +1696,7 @@ export const generatedCustomRequestsRegistry = {
 		key: "ysw34sgdr52",
 		name: "ysw34sgdr52",
 		collection: "t_qualirun_processos",
+		collectionSchema: qualirun_processosSchema,
 		dataSourceKey: "main",
 		method: "PUT",
 		url: "https://utxejnodralnuthfwzoo.supabase.co/functions/v1/public-api/execution-orders/{{$nSelectedRecord.f_id_externo}}",
@@ -1743,16 +1712,15 @@ export const generatedCustomRequestsRegistry = {
 		key: "zjhlu1v5rxf",
 		name: "zjhlu1v5rxf",
 		collection: "t_logs",
+		collectionSchema: logsSchema,
 		dataSourceKey: "main",
 		method: "PUT",
 		url: "https://jsonplaceholder.typicode.com/todos/1",
 		payloadSchema: z.object({
-			record: z.literal("").default("").readonly(),
-			xicara: z.literal("cafe").default("cafe").readonly(),
-			$nForm: z.string(),
-			currentUser: z.object({
-				id: z.unknown(),
-			}),
+			$nForm: logsSchema,
+			currentUser: z.object({ id: z.unknown() }),
+			record: z.string(),
+			xicara: z.string(),
 		}),
 		payloadData: {
 			form: "{{$nForm}}",
@@ -1779,6 +1747,7 @@ export const collectionToRequestKeys = {
 		"qtd2du574v1",
 		"tjt1ajr1tkl",
 	],
+	compras: ["n8nCompras"],
 	f_funcionarios: ["81p695ox20f", "yep1cjhq0zp"],
 	fn_areceber: ["m5pu59k8p9s", "sjohhcwirxz", "sl7o14v2qhm", "spn119qrcv8"],
 	radusuarios: [

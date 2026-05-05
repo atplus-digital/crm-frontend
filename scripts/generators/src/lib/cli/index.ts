@@ -9,12 +9,16 @@ export {
 export type {
 	CreateGeneratorOptions,
 	CreateOrchestrationTaskOptions,
+	ExecutionContextState,
 	GeneratorContext,
+	GeneratorContextState,
 	GeneratorOrchestrationStage,
 	GeneratorTask,
 	GeneratorTaskResult,
 	ListrTaskRunner,
 	OrchestrationListrTask,
 	OrchestrationTaskRunner,
+	PipelineLifecycleHooks,
 	RunGeneratorCliOptions,
 } from "@scripts/generators/src/lib/cli/types";
+export { getRequiredExecutionContext } from "@scripts/generators/src/lib/cli/types";

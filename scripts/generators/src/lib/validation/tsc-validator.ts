@@ -1,7 +1,7 @@
 import { spawn } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { logger } from "@scripts/generators/src/lib/logger";
+import { logger } from "@scripts/generators/src/lib/logging";
 
 const TSCONFIG_CANDIDATES = [
 	path.resolve(process.cwd(), "scripts/generators/tsconfig.generated.json"),
@@ -18,10 +18,6 @@ function resolveTsconfigPath(): string {
 	return TSCONFIG_CANDIDATES[0];
 }
 
-/**
- * Runs `tsc --noEmit` once and caches the result for the lifetime of the process.
- * Multiple calls to validateTypeScriptDirectory reuse the same compilation output.
- */
 interface TscExecutionResult {
 	combinedOutput: string;
 	exitCode: number;
@@ -29,52 +25,54 @@ interface TscExecutionResult {
 
 const FILE_DIAGNOSTIC_PATTERN = /\(\d+,\d+\):\s*error TS\d+:/;
 
-let cachedTscOutput: Promise<TscExecutionResult> | null = null;
+const tscCache = new Map<string, Promise<TscExecutionResult>>();
 
 export function resetTypeScriptValidationCache(): void {
-	cachedTscOutput = null;
+	tscCache.clear();
 }
 
-function runTscOnce(): Promise<TscExecutionResult> {
-	if (cachedTscOutput) return cachedTscOutput;
+function runTscOnce(tsconfigPath: string): Promise<TscExecutionResult> {
+	const cached = tscCache.get(tsconfigPath);
+	if (cached) return cached;
 
-	cachedTscOutput = (async () => {
-		const tscPath = path.resolve(process.cwd(), "node_modules/.bin/tsc");
-		const tsconfigPath = resolveTsconfigPath();
-		const args = [
-			"--noEmit",
-			"--pretty",
-			"false",
-			"--skipLibCheck",
-			"--project",
-			tsconfigPath,
-		];
+	const promise = runTsc(tsconfigPath);
+	tscCache.set(tsconfigPath, promise);
+	return promise;
+}
 
-		const tsc = spawn(tscPath, args, {
-			stdio: ["ignore", "pipe", "pipe"],
-			cwd: process.cwd(),
+async function runTsc(tsconfigPath: string): Promise<TscExecutionResult> {
+	const tscPath = path.resolve(process.cwd(), "node_modules/.bin/tsc");
+	const args = [
+		"--noEmit",
+		"--pretty",
+		"false",
+		"--skipLibCheck",
+		"--project",
+		tsconfigPath,
+	];
+
+	const tsc = spawn(tscPath, args, {
+		stdio: ["ignore", "pipe", "pipe"],
+		cwd: process.cwd(),
+	});
+
+	return new Promise<TscExecutionResult>((resolve, reject) => {
+		let stdout = "";
+		let stderr = "";
+		tsc.stdout.on("data", (data: Buffer) => {
+			stdout += data.toString();
 		});
-
-		return new Promise<TscExecutionResult>((resolve, reject) => {
-			let stdout = "";
-			let stderr = "";
-			tsc.stdout.on("data", (data: Buffer) => {
-				stdout += data.toString();
-			});
-			tsc.stderr.on("data", (data: Buffer) => {
-				stderr += data.toString();
-			});
-			tsc.on("error", reject);
-			tsc.on("close", (code) => {
-				resolve({
-					combinedOutput: `${stdout}\n${stderr}`.trim(),
-					exitCode: code ?? 1,
-				});
+		tsc.stderr.on("data", (data: Buffer) => {
+			stderr += data.toString();
+		});
+		tsc.on("error", reject);
+		tsc.on("close", (code) => {
+			resolve({
+				combinedOutput: `${stdout}\n${stderr}`.trim(),
+				exitCode: code ?? 1,
 			});
 		});
-	})();
-
-	return cachedTscOutput;
+	});
 }
 
 export async function validateTypeScriptDirectory(
@@ -93,7 +91,8 @@ export async function validateTypeScriptDirectory(
 	}
 
 	try {
-		const tscResult = await runTscOnce();
+		const tsconfigPath = resolveTsconfigPath();
+		const tscResult = await runTscOnce(tsconfigPath);
 		const combinedOutput = tscResult.combinedOutput.replace(/\\/g, "/");
 		const outputLines = combinedOutput
 			.split("\n")

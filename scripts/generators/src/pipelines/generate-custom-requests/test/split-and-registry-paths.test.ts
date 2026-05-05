@@ -55,7 +55,7 @@ describe("split and registry paths", () => {
 			dataSourceKey: "main",
 		});
 
-		writeSplitFile(entry, "quali-run", outputDir);
+		writeSplitFile(entry, "quali-run", outputDir, new Map());
 
 		const splitPath = join(
 			outputDir,
@@ -79,7 +79,7 @@ describe("split and registry paths", () => {
 			dataSourceKey: "main",
 		});
 
-		writeSplitFile(entry, splitFileName, outputDir);
+		writeSplitFile(entry, splitFileName, outputDir, new Map());
 
 		expect(existsSync(legacyPath)).toBe(false);
 	});

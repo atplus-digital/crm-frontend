@@ -1,5 +1,5 @@
 import type { OrchestrationTaskRunner } from "@scripts/generators/src/lib/cli";
-import type { Logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
 import { createOrchestrationRunner } from "@scripts/generators/src/lib/pipeline-runner";
 import { resetTypeScriptValidationCache } from "@scripts/generators/src/lib/validation/tsc-validator";
 import type { GenerationContext } from "./@types/orchestration";
@@ -101,31 +101,6 @@ export async function runGenerateCustomRequests(
 	await runWriteAnalysisReportOrchestrationStage(context);
 	await runTransformAndMergeOrchestrationStage(context);
 	await runWriteOutputOrchestrationStage(context);
-
-	// Reporta schemas não encontrados ao fim da geração
-	const pipelineContext = getPipelineContext(context);
-	if (
-		pipelineContext.schemasNotFound &&
-		pipelineContext.schemasNotFound.length > 0
-	) {
-		injectedLogger.warn("");
-		injectedLogger.warn("=".repeat(60));
-		injectedLogger.warn("SCHEMAS DE COLLECTIONS NÃO ENCONTRADOS:");
-		injectedLogger.warn("=".repeat(60));
-		for (const notFound of pipelineContext.schemasNotFound) {
-			injectedLogger.warn(
-				`  - Collection: "${notFound.collectionName}" (datasource: ${notFound.dataSourceKey})`,
-			);
-			injectedLogger.warn(
-				"    Essas collections não têm schema gerado em src/generated/types/.",
-			);
-			injectedLogger.warn(
-				"    Considere adicionar ao datasources.config.ts do generate-types.",
-			);
-		}
-		injectedLogger.warn("=".repeat(60));
-		injectedLogger.warn("");
-	}
 
 	return assertGenerateCustomRequestsResult(context);
 }

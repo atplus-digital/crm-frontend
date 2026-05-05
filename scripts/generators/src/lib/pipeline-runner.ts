@@ -1,4 +1,4 @@
-import type { Logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
 
 export type AsyncPipelineStage<TContext> = (
 	context: Readonly<TContext>,
@@ -7,35 +7,6 @@ export type AsyncPipelineStage<TContext> = (
 export interface RuntimePipelineContext<TPipelineContext> {
 	logger: Logger;
 	pipelineContext?: TPipelineContext;
-}
-
-interface RunExecutionStageOptions<
-	TPipelineContext,
-	TRuntimeContext extends RuntimePipelineContext<TPipelineContext>,
-> {
-	runtimeContext: TRuntimeContext;
-	stage: AsyncPipelineStage<TPipelineContext>;
-	createInitialContext: (logger: Logger) => TPipelineContext;
-	onError?: (error: unknown) => void;
-}
-
-export async function runExecutionStage<
-	TPipelineContext,
-	TRuntimeContext extends RuntimePipelineContext<TPipelineContext>,
->(
-	options: RunExecutionStageOptions<TPipelineContext, TRuntimeContext>,
-): Promise<void> {
-	const currentContext =
-		options.runtimeContext.pipelineContext ??
-		options.createInitialContext(options.runtimeContext.logger);
-
-	try {
-		options.runtimeContext.pipelineContext =
-			await options.stage(currentContext);
-	} catch (error) {
-		options.onError?.(error);
-		throw error;
-	}
 }
 
 export async function runPipelineStages<TContext>(
@@ -52,43 +23,32 @@ export async function runPipelineStages<TContext>(
 }
 
 export interface CreateOrchestrationRunnerOptions<TPipelineContext> {
-	/** Creates the initial pipeline context from the logger. */
 	createInitialContext: (logger: Logger) => TPipelineContext;
-	onError?: (
-		error: unknown,
-		context: RuntimePipelineContext<TPipelineContext>,
-	) => void;
+	onError?: (error: unknown) => void;
 }
 
 /**
- * Factory function that creates a `runOrchestrationStage` function with shared error handling.
- * The factory requires `createInitialContext` because each pipeline defines its context shape differently.
+ * Creates a `runOrchestrationStage` function with error handling.
  *
- * Usage:
- * ```ts
- * const runOrchestrationStage = createOrchestrationRunner({
- *   createInitialContext: (logger) => ({ logger } as GenerationContext),
- *   onError: (error, context) => restoreAllSessions(context),
- * });
- *
- * await runOrchestrationStage(context, stage);
- * ```
+ * Each pipeline creates its own runner to handle backup restoration on failure.
  */
 export function createOrchestrationRunner<TPipelineContext>(
 	options: CreateOrchestrationRunnerOptions<TPipelineContext>,
 ) {
-	const { createInitialContext, onError } = options;
-
 	async function runOrchestrationStage(
 		runtimeContext: RuntimePipelineContext<TPipelineContext>,
 		stage: AsyncPipelineStage<TPipelineContext>,
 	): Promise<void> {
-		await runExecutionStage({
-			runtimeContext,
-			stage,
-			createInitialContext,
-			onError: onError ? (error) => onError(error, runtimeContext) : undefined,
-		});
+		const currentContext =
+			runtimeContext.pipelineContext ??
+			options.createInitialContext(runtimeContext.logger);
+
+		try {
+			runtimeContext.pipelineContext = await stage(currentContext);
+		} catch (error) {
+			options.onError?.(error);
+			throw error;
+		}
 	}
 
 	return { runOrchestrationStage };

@@ -1,4 +1,4 @@
-import { createLogger } from "@scripts/generators/src/lib/logger";
+import { createLogger } from "@scripts/generators/src/lib/logging";
 import type {
 	PipelineContext,
 	PipelineStage,

@@ -1,4 +1,4 @@
-import { createLogger } from "@scripts/generators/src/lib/logger";
+import { createLogger } from "@scripts/generators/src/lib/logging";
 import type { DataSourceClient } from "@scripts/generators/src/pipelines/generate-types/@types/script";
 import type { BuildTypesContext } from "@scripts/generators/src/pipelines/generate-types/pipeline/datasource-pipeline/types";
 import { applyEnumAdapter } from "@scripts/generators/src/pipelines/generate-types/pipeline/stages/apply-enum-adapter";

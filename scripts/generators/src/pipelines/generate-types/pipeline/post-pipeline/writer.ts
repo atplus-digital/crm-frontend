@@ -3,7 +3,7 @@ import * as path from "node:path";
 import {
 	logger as defaultRuntimeLogger,
 	type Logger,
-} from "@scripts/generators/src/lib/logger";
+} from "@scripts/generators/src/lib/logging";
 import type { SingleFileResult } from "@scripts/generators/src/pipelines/generate-types/@types/script";
 import { config } from "@scripts/generators/src/pipelines/generate-types/config";
 import { isFileBeingEdited } from "./file-editor-check";

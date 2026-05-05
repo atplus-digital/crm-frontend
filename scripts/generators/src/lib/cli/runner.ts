@@ -1,4 +1,4 @@
-import { defaultLogger } from "@scripts/generators/src/lib/logger";
+import { defaultLogger } from "@scripts/generators/src/lib/logging";
 import { Listr } from "listr2";
 import { getSubtaskOptions } from "./defaults";
 import { createListrTask } from "./listr-task";
@@ -20,13 +20,19 @@ function buildGeneratorListr<TContext extends object>(
 	} as GeneratorContext<TContext>;
 
 	const tasks = options.tasks.map((step, index) =>
-		createListrTask(options.name, step, index, options.tasks.length),
+		createListrTask(options.name, step, index, options.tasks.length, context),
 	);
 
 	return new Listr(tasks, {
 		...getSubtaskOptions("main"),
 		ctx: context,
 		silentRendererCondition: options.disableOutput ? () => true : undefined,
+		rendererOptions: {
+			collapse: false, // Collapses subtasks after completion
+			collapseSkips: false, // Collapses skipped tasks
+			collapseErrors: false, // Collapses errors into the parent task
+			collapseSubtasks: false, // Keep completed subtasks and their output visible
+		},
 	});
 }
 

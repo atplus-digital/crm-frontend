@@ -1,4 +1,4 @@
-import { logger } from "@scripts/generators/src/lib/logger";
+import { logger } from "@scripts/generators/src/lib/logging";
 import type { SchemaRegistry } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/collection-schema";
 import {
 	transformAllEntries,
@@ -7,7 +7,7 @@ import {
 import { collectAnalysisReport } from "@scripts/generators/src/pipelines/generate-custom-requests/pipeline/stages/write-analysis-report/analysis-collector";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@scripts/generators/src/lib/logger", () => ({
+vi.mock("@scripts/generators/src/lib/logging", () => ({
 	logger: {
 		info: vi.fn(),
 		warn: vi.fn(),
@@ -36,6 +36,7 @@ describe("transformApiEntryToRegistry", () => {
 			key: "test-entry",
 			name: "Test Entry",
 			collection: "t_test",
+			collectionSchemaName: null,
 			dataSourceKey: "main",
 			method: "POST",
 			url: "/api/test",
@@ -162,6 +163,48 @@ describe("transformApiEntryToRegistry", () => {
 		expect(result.entry?.payloadSchema).toContain("numero: true,");
 		expect(result.entry?.payloadSchema).toContain(
 			"//    f_klf0fxs3rds: true, ! Não Existe na collection",
+		);
+	});
+
+	it("deve usar schema da collection para placeholder raiz de $nSelectedRecord", () => {
+		const schemaRegistry: SchemaRegistry = new Map([
+			[
+				"main:t_qualirun_info_adicionais",
+				{
+					collectionName: "t_qualirun_info_adicionais",
+					dataSourceKey: "main",
+					schemaImportPath:
+						"#/generated/types/nocobase/other/qualirun-info-adicionais/schemas",
+					schemaName: "qualirun_info_adicionaisSchema",
+					baseSchemaName: "qualirun_info_adicionaisBaseSchema",
+					availableFields: new Set(["id", "f_fk_funcionarios"]),
+				},
+			],
+		]);
+
+		const entry = {
+			key: "schema-selected-root",
+			name: "Schema Selected Root",
+			options: {
+				collectionName: "t_qualirun_info_adicionais",
+				dataSourceKey: "main",
+				method: "POST",
+				url: "/webhook/test",
+				data: {
+					info_adicionais: "{{$nSelectedRecord}}",
+				},
+			},
+		};
+
+		const result = transformApiEntryToRegistry(
+			entry,
+			undefined,
+			schemaRegistry,
+		);
+
+		expect(result.entry).not.toBeNull();
+		expect(result.entry?.payloadSchema).toContain(
+			"$nSelectedRecord: z.array(qualirun_info_adicionaisSchema)",
 		);
 	});
 });

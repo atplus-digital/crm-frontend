@@ -1,6 +1,8 @@
-import type {
-	GeneratorOrchestrationStage,
-	GeneratorTask,
+import {
+	type GeneratorContextState,
+	type GeneratorOrchestrationStage,
+	type GeneratorTask,
+	getRequiredExecutionContext,
 } from "@scripts/generators/src/lib/cli";
 import { resetTypeScriptValidationCache } from "@scripts/generators/src/lib/validation/tsc-validator";
 import type { RuntimeConfig } from "../@types/script";
@@ -11,7 +13,6 @@ import {
 	runLoadConfigOrchestrationStage,
 	runResolveDatasourcesOrchestrationStage,
 } from "../orchestration/stage-runners";
-import { lockGenerateTypesWorkspace } from "../orchestration/workspace";
 import { assertGenerateTypesResult } from "../runtime/assert";
 import {
 	backupGenerateTypesOutputs,
@@ -21,11 +22,12 @@ import {
 	createGenerateTypesExecutionContext,
 	type GenerateTypesExecutionContext,
 } from "../runtime/context";
+import { applyWorkspaceLockIfNeeded as lockGenerateTypesWorkspace } from "../utils/workspace-locker";
 
-export interface GenerateTypesGeneratorContext {
-	overrideConfig?: Partial<RuntimeConfig>;
-	executionContext?: GenerateTypesExecutionContext;
-}
+export type GenerateTypesGeneratorContext = GeneratorContextState<
+	Partial<RuntimeConfig>,
+	GenerateTypesExecutionContext
+>;
 
 export const ORCHESTRATION_STEPS: GeneratorOrchestrationStage<GenerateTypesExecutionContext>[] =
 	[
@@ -54,11 +56,7 @@ export const ORCHESTRATION_STEPS: GeneratorOrchestrationStage<GenerateTypesExecu
 export function getExecutionContext(
 	context: GenerateTypesGeneratorContext,
 ): GenerateTypesExecutionContext {
-	if (!context.executionContext) {
-		throw new Error("Contexto de execução não inicializado");
-	}
-
-	return context.executionContext;
+	return getRequiredExecutionContext(context, "generate-types");
 }
 
 export function createPreparationTasks(): GeneratorTask<GenerateTypesGeneratorContext>[] {

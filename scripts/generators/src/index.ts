@@ -1,5 +1,5 @@
 import { fileURLToPath } from "node:url";
-import { defaultLogger } from "@scripts/generators/src/lib/logger";
+import { defaultLogger } from "@scripts/generators/src/lib/logging";
 import { createGenerateCustomRequestsStep } from "./runner/generate-custom-requests-step";
 import { createGenerateTypesStep } from "./runner/generate-types-step";
 import {

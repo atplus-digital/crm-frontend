@@ -1,4 +1,4 @@
-import { createLogger } from "@scripts/generators/src/lib/logger";
+import { createLogger } from "@scripts/generators/src/lib/logging";
 import { describe, expect, it, vi } from "vitest";
 
 const { writeGeneratedFileMock } = vi.hoisted(() => ({

@@ -1,4 +1,5 @@
 import * as fs from "node:fs";
+import { logger } from "@scripts/generators/src/lib/logging";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("node:fs", () => ({
@@ -32,7 +33,7 @@ vi.mock("@scripts/generators/src/pipelines/generate-types/config", () => ({
 	},
 }));
 
-vi.mock("@scripts/shared/lib/logger", () => ({
+vi.mock("@scripts/generators/src/lib/logging", () => ({
 	logger: {
 		info: vi.fn(),
 		warn: vi.fn(),
@@ -44,19 +45,12 @@ vi.mock("@scripts/shared/lib/logger", () => ({
 }));
 
 describe("workspace-locker", () => {
-	let consoleWarnSpy: ReturnType<typeof vi.spyOn>;
-
 	beforeEach(() => {
 		vi.clearAllMocks();
-		consoleWarnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 		vi.mocked(fs.existsSync).mockReturnValue(false);
 		vi.mocked(fs.readFileSync).mockReturnValue("{}");
 		vi.mocked(fs.mkdirSync).mockImplementation(() => {});
 		vi.mocked(fs.writeFileSync).mockImplementation(() => {});
-	});
-
-	afterEach(() => {
-		consoleWarnSpy.mockRestore();
 	});
 
 	describe("isWorkspaceLocked", () => {
@@ -137,7 +131,7 @@ describe("workspace-locker", () => {
 
 			const result = isWorkspaceLocked();
 			expect(result).toBe(false);
-			expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
+			expect(logger.warn).toHaveBeenCalledTimes(1);
 		});
 	});
 

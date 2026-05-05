@@ -1,4 +1,4 @@
-import type { Logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
 import type {
 	ListrRendererFactory,
 	ListrTask,
@@ -99,4 +99,56 @@ export interface CreateGeneratorOptions<TContext extends object> {
 	logger?: Logger;
 	disableOutput?: boolean;
 	writeOutput?: TaskOutputWriter;
+}
+
+// ──────────────────────────────────────────────
+// Shared generator context patterns (used by both pipelines)
+// ──────────────────────────────────────────────
+
+/**
+ * Base state for a generator wrapper context — holds an optional override config
+ * and a lazily-created execution context.
+ */
+export interface GeneratorContextState<TOverride, TExec> {
+	overrideConfig?: TOverride;
+	executionContext?: TExec;
+}
+
+/**
+ * Base state for a pipeline execution context — holds the logger, optional
+ * override config, and the pipeline context produced by the orchestration stages.
+ */
+export interface ExecutionContextState<TOverride, TPipeline = unknown> {
+	logger: Logger;
+	overrideConfig?: TOverride;
+	pipelineContext?: TPipeline;
+}
+
+/**
+ * Returns the required execution context, throwing if not yet initialized.
+ */
+export function getRequiredExecutionContext<TExec>(
+	state: { executionContext?: TExec },
+	label: string,
+): TExec {
+	if (!state.executionContext) {
+		throw new Error(`Contexto de execução não inicializado: ${label}`);
+	}
+
+	return state.executionContext;
+}
+
+/**
+ * Lifecycle hooks for a generator pipeline.
+ *
+ * Both pipelines follow the same pattern:
+ * 1. backup() — save current state before generation
+ * 2. [run pipeline stages]
+ * 3. restore() — revert on failure (called by error handlers)
+ * 4. cleanup() — remove backup artifacts on success
+ */
+export interface PipelineLifecycleHooks {
+	backup: () => void;
+	restore: () => void;
+	cleanup: () => void;
 }

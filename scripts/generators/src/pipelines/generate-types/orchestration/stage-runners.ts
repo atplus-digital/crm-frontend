@@ -4,12 +4,12 @@ import {
 	resolveDatasourcesStage,
 } from "../pipeline/orchestration/stages";
 import type { GenerateTypesExecutionContext } from "../runtime/context";
-import { runOrchestrationStage } from "./stage-executor";
+import { runStage } from "./run-stage";
 
 export async function runLoadConfigOrchestrationStage(
 	context: GenerateTypesExecutionContext,
 ): Promise<void> {
-	await runOrchestrationStage(
+	await runStage(
 		context,
 		loadConfigStage({ overrideConfig: context.overrideConfig }),
 	);
@@ -18,11 +18,11 @@ export async function runLoadConfigOrchestrationStage(
 export async function runResolveDatasourcesOrchestrationStage(
 	context: GenerateTypesExecutionContext,
 ): Promise<void> {
-	await runOrchestrationStage(context, resolveDatasourcesStage());
+	await runStage(context, resolveDatasourcesStage());
 }
 
 export async function runFormatResultOrchestrationStage(
 	context: GenerateTypesExecutionContext,
 ): Promise<void> {
-	await runOrchestrationStage(context, formatResultStage());
+	await runStage(context, formatResultStage());
 }

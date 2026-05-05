@@ -1,5 +1,5 @@
 import * as path from "node:path";
-import { type LogLevel, logger } from "@scripts/generators/src/lib/logger";
+import { type LogLevel, logger } from "@scripts/generators/src/lib/logging";
 import { config as loadDotEnv } from "dotenv";
 import { z } from "zod";
 

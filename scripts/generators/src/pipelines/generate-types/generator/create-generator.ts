@@ -20,6 +20,10 @@ export function createGenerateTypesGenerator(): RunGeneratorCliOptions<GenerateT
 
 	return createGeneratorOptions({
 		name: "generate-types",
+		context: {
+			executionContext: undefined,
+			overrideConfig: undefined,
+		},
 		tasks: createGeneratorTasks(orchestrationTask),
 	});
 }

@@ -3,7 +3,7 @@ import type { ListrTask } from "listr2";
 export const DEFAULT_TASK_RENDERER_OPTIONS: NonNullable<
 	ListrTask["rendererOptions"]
 > = {
-	outputBar: true,
+	outputBar: Number.POSITIVE_INFINITY,
 	persistentOutput: true,
 };
 

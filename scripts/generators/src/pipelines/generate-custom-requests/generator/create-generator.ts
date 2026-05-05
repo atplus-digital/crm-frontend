@@ -1,13 +1,16 @@
 import {
 	createGeneratorOptions,
 	createOrchestrationTask,
+	type GeneratorContextState,
 	type GeneratorOrchestrationStage,
 	type GeneratorTask,
+	getRequiredExecutionContext,
 	type RunGeneratorCliOptions,
 } from "@scripts/generators/src/lib/cli";
 import { resetTypeScriptValidationCache } from "@scripts/generators/src/lib/validation/tsc-validator";
 import type { ScriptConfig } from "../@types/script-config";
 import { assertGenerateCustomRequestsResult } from "../assert";
+import { config } from "../config";
 import { createGenerateCustomRequestsExecutionContext } from "../context";
 import {
 	lockGenerateCustomRequestsWorkspace,
@@ -19,12 +22,10 @@ import {
 	runWriteOutputOrchestrationStage,
 } from "../generate-custom-requests";
 
-export interface GenerateCustomRequestsGeneratorContext {
-	overrideConfig?: Partial<ScriptConfig>;
-	executionContext?: ReturnType<
-		typeof createGenerateCustomRequestsExecutionContext
-	>;
-}
+export type GenerateCustomRequestsGeneratorContext = GeneratorContextState<
+	Partial<ScriptConfig>,
+	ReturnType<typeof createGenerateCustomRequestsExecutionContext>
+>;
 
 type GenerateCustomRequestsExecutionContext = ReturnType<
 	typeof createGenerateCustomRequestsExecutionContext
@@ -61,11 +62,7 @@ const ORCHESTRATION_STEPS: GeneratorOrchestrationStage<GenerateCustomRequestsExe
 function getExecutionContext(
 	context: GenerateCustomRequestsGeneratorContext,
 ): GenerateCustomRequestsExecutionContext {
-	if (!context.executionContext) {
-		throw new Error("Contexto de execução não inicializado");
-	}
-
-	return context.executionContext;
+	return getRequiredExecutionContext(context, "generate-custom-requests");
 }
 
 function createGeneratorTasks(): GeneratorTask<GenerateCustomRequestsGeneratorContext>[] {
@@ -75,7 +72,7 @@ function createGeneratorTasks(): GeneratorTask<GenerateCustomRequestsGeneratorCo
 			run: (context) => {
 				resetTypeScriptValidationCache();
 				context.executionContext = createGenerateCustomRequestsExecutionContext(
-					context.overrideConfig,
+					context.overrideConfig ?? config,
 					context.logger,
 				);
 			},
@@ -103,6 +100,10 @@ function createGeneratorTasks(): GeneratorTask<GenerateCustomRequestsGeneratorCo
 export function createGenerateCustomRequestsGenerator(): RunGeneratorCliOptions<GenerateCustomRequestsGeneratorContext> {
 	return createGeneratorOptions({
 		name: "generate-custom-requests",
+		context: {
+			executionContext: undefined,
+			overrideConfig: config,
+		},
 		tasks: createGeneratorTasks(),
 	});
 }

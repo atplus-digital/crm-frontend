@@ -1,11 +1,12 @@
-import type { Logger } from "@scripts/generators/src/lib/logger";
-import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
+import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logging";
 import type {
 	CollectionSchemaMapping,
 	SchemaRegistry,
 } from "../../../@types/collection-schema";
 import type { CustomRequestApiEntry } from "../../../@types/custom-request-api";
 import type { GeneratedRegistryEntry } from "../../../@types/generated-registry";
+import { findSchema } from "../../../utils/collection-schema-loader";
 import { inferPayloadSchema } from "../../../utils/schema-inference";
 import { normalizePayloadData } from "./entry-transformer/payload-data";
 import { inferPayloadSchemaWithCollections } from "./entry-transformer/schema-enrichment";
@@ -42,8 +43,18 @@ export function transformApiEntryToRegistry(
 
 	let payloadSchema: string;
 	let schemaUsed = false;
+	let collectionSchemaName: string | null = null;
 
 	if (schemaRegistry) {
+		const schemaMapping = findSchema(
+			schemaRegistry,
+			entry.options.collectionName,
+			dataSourceKey,
+		);
+		if (schemaMapping) {
+			collectionSchemaName = schemaMapping.schemaName;
+		}
+
 		const result = inferPayloadSchemaWithCollections(
 			payloadData,
 			entry.options.collectionName,
@@ -69,6 +80,7 @@ export function transformApiEntryToRegistry(
 			key: entry.key,
 			name,
 			collection: entry.options.collectionName,
+			collectionSchemaName,
 			dataSourceKey,
 			method: entry.options.method ?? "POST",
 			url: entry.options.url ?? "",
@@ -91,7 +103,6 @@ export function transformAllEntries(
 	const transformed: GeneratedRegistryEntry[] = [];
 	const allSchemasNotFound: CollectionSchemaMapping[] = [];
 	let skipped = 0;
-
 	for (const entry of entries) {
 		const result = transformApiEntryToRegistry(
 			entry,

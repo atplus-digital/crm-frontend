@@ -1,4 +1,4 @@
-import { createLogger } from "@scripts/generators/src/lib/logger";
+import { createLogger } from "@scripts/generators/src/lib/logging";
 import type { RuntimeConfig } from "@scripts/generators/src/pipelines/generate-types/@types/script";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

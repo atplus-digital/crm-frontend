@@ -1,7 +1,7 @@
-import { createLogger } from "@scripts/generators/src/lib/logger";
+import { createLogger } from "@scripts/generators/src/lib/logging";
 import {
+	createOrchestrationRunner,
 	type RuntimePipelineContext,
-	runExecutionStage,
 	runPipelineStages,
 } from "@scripts/generators/src/lib/pipeline-runner";
 import { describe, expect, it, vi } from "vitest";
@@ -23,18 +23,20 @@ describe("runPipelineStages", () => {
 	});
 });
 
-describe("runExecutionStage", () => {
+describe("createOrchestrationRunner", () => {
 	it("inicializa contexto com logger quando pipelineContext está vazio", async () => {
 		const logger = createLogger();
 		const runtimeContext: RuntimePipelineContext<{ loggerSeen: boolean }> = {
 			logger,
 		};
 
-		await runExecutionStage({
-			runtimeContext,
+		const { runOrchestrationStage } = createOrchestrationRunner({
 			createInitialContext: () => ({ loggerSeen: false }),
-			stage: async () => ({ loggerSeen: true }),
 		});
+
+		await runOrchestrationStage(runtimeContext, async () => ({
+			loggerSeen: true,
+		}));
 
 		expect(runtimeContext.pipelineContext).toEqual({ loggerSeen: true });
 	});
@@ -47,14 +49,14 @@ describe("runExecutionStage", () => {
 		};
 		const onError = vi.fn();
 
+		const { runOrchestrationStage } = createOrchestrationRunner({
+			createInitialContext: () => ({ value: 0 }),
+			onError,
+		});
+
 		await expect(
-			runExecutionStage({
-				runtimeContext,
-				createInitialContext: () => ({ value: 0 }),
-				stage: async () => {
-					throw new Error("falha");
-				},
-				onError,
+			runOrchestrationStage(runtimeContext, async () => {
+				throw new Error("falha");
 			}),
 		).rejects.toThrow("falha");
 

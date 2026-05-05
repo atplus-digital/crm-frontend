@@ -1,7 +1,8 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
-import type { Logger } from "@scripts/generators/src/lib/logger";
-import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
+import { logger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logging";
+import type { CollectionSchemaMapping } from "../../../@types/collection-schema";
 import type { GeneratedRegistryEntry } from "../../../@types/generated-registry";
 import type { RequestsMap } from "../../../@types/script-config";
 import { serializeEntryFields } from "./entry-serialization";
@@ -11,6 +12,7 @@ import { resolveSplitPathInfo } from "./split-paths";
 function buildSplitFileContent(
 	entry: GeneratedRegistryEntry,
 	displayName: string,
+	schemaMappingsByName: Map<string, CollectionSchemaMapping>,
 ): string {
 	const {
 		escapedCollection,
@@ -22,7 +24,29 @@ function buildSplitFileContent(
 		payloadDataStr,
 	} = serializeEntryFields(entry, displayName);
 
+	const schemaPattern = /([A-Za-z_][A-Za-z0-9_]*Schema)(?=\.pick|\b)/g;
+	const schemaReferences = new Set<string>();
+	for (const match of entry.payloadSchema.matchAll(schemaPattern)) {
+		const schemaName = match[1];
+		if (!["z", "ZodType", "ZodObject", "ZodSchema"].includes(schemaName)) {
+			schemaReferences.add(schemaName);
+		}
+	}
+
+	const schemaImports = [...schemaReferences]
+		.sort()
+		.map((schemaName) => {
+			const mapping = schemaMappingsByName.get(schemaName);
+			if (!mapping) {
+				return null;
+			}
+			return `import { ${mapping.schemaName} } from "${mapping.schemaImportPath}";`;
+		})
+		.filter((line): line is string => Boolean(line))
+		.join("\n");
+
 	return `import { z } from "zod";
+${schemaImports ? `${schemaImports}\n` : ""}
 
 /**
  * Custom request: ${escapedName}
@@ -54,6 +78,7 @@ export function writeSplitFile(
 	entry: GeneratedRegistryEntry,
 	splitFileName: string,
 	outputDir: string,
+	schemaMappingsByName: Map<string, CollectionSchemaMapping>,
 	logger?: Logger,
 ): void {
 	const activeLogger = logger ?? defaultRuntimeLogger;
@@ -62,7 +87,11 @@ export function writeSplitFile(
 
 	mkdirSync(dirname(filePath), { recursive: true });
 
-	const content = buildSplitFileContent(entry, splitFileName);
+	const content = buildSplitFileContent(
+		entry,
+		splitFileName,
+		schemaMappingsByName,
+	);
 	writeFileSync(filePath, content, "utf-8");
 	activeLogger.debug(`Split file atualizado: ${splitFileName}`);
 
@@ -80,17 +109,27 @@ export function writeAllSplitFiles(
 	entries: GeneratedRegistryEntry[],
 	requests: RequestsMap,
 	outputDir: string,
+	schemaMappings: CollectionSchemaMapping[],
 	logger?: Logger,
 ): void {
 	const activeLogger = logger ?? defaultRuntimeLogger;
 	const splitRequestKeys = new Set(Object.keys(requests));
+	const schemaMappingsByName = new Map(
+		schemaMappings.map((mapping) => [mapping.schemaName, mapping]),
+	);
 	const splitEntries = entries.filter((entry) =>
 		splitRequestKeys.has(entry.key),
 	);
 
 	for (const entry of splitEntries) {
 		const splitFileName = requests[entry.key];
-		writeSplitFile(entry, splitFileName, outputDir, activeLogger);
+		writeSplitFile(
+			entry,
+			splitFileName,
+			outputDir,
+			schemaMappingsByName,
+			activeLogger,
+		);
 	}
 
 	activeLogger.info(`${splitEntries.length} split files atualizados`);

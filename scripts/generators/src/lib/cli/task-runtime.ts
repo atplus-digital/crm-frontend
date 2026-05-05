@@ -1,33 +1,54 @@
 import {
-	formatPersistentLog,
-	type LogEntry,
+	type CreateLoggerOptions,
+	createLogger,
 	type Logger,
-	runWithLogger,
-	shouldPersistLog,
-} from "@scripts/generators/src/lib/logger";
+} from "@scripts/generators/src/lib/logging";
+import type { ListrTaskRunner } from "./types";
 
 export type TaskOutputWriter = (line: string) => void;
 
-export function createPersistentOutputWriter(
-	logger: Logger,
-	writeOutput: TaskOutputWriter,
-): (entry: LogEntry) => void {
-	const minimumPersistentLevel = logger.getLevel();
+interface CreateTaskLoggerOptions<TContext extends object> {
+	baseLogger: Logger;
+	task: ListrTaskRunner<TContext>;
+	writeOutput?: TaskOutputWriter;
+}
 
-	return (entry: LogEntry): void => {
-		if (!shouldPersistLog(entry, minimumPersistentLevel)) {
-			return;
-		}
+function createTaskOutputWriter<TContext extends object>(
+	task: ListrTaskRunner<TContext>,
+): TaskOutputWriter {
+	const lines: string[] = [];
 
-		writeOutput(formatPersistentLog(entry));
+	return (line: string) => {
+		lines.push(line);
+		task.output = lines.join("\n");
+	};
+}
+
+export function createTaskLogger<TContext extends object>(
+	options: CreateTaskLoggerOptions<TContext>,
+): Logger {
+	const write = options.writeOutput ?? createTaskOutputWriter(options.task);
+	const loggerOptions: CreateLoggerOptions = {
+		level: options.baseLogger.getLevel(),
+		writeLine: (line) => {
+			write(line);
+		},
+	};
+
+	const taskLogger = createLogger(loggerOptions);
+
+	return {
+		...taskLogger,
+		setLevel: (level) => {
+			options.baseLogger.setLevel(level);
+			taskLogger.setLevel(level);
+		},
+		getLevel: () => taskLogger.getLevel(),
 	};
 }
 
 interface RunTaskWithLoggerOptions<TResult> {
-	logger: Logger;
-	chain: string;
 	run: () => Promise<TResult> | TResult;
-	onEntry?: (entry: LogEntry) => void;
 	formatError: (message: string) => string;
 }
 
@@ -35,10 +56,7 @@ export async function runTaskWithLogger<TResult>(
 	options: RunTaskWithLoggerOptions<TResult>,
 ): Promise<TResult> {
 	try {
-		return await runWithLogger(options.logger, options.run, {
-			chain: options.chain,
-			onEntry: options.onEntry,
-		});
+		return await options.run();
 	} catch (error) {
 		const message = error instanceof Error ? error.message : String(error);
 		throw new Error(options.formatError(message), {

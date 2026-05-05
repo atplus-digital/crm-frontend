@@ -1,4 +1,4 @@
-import type { Logger } from "@scripts/generators/src/lib/logger";
+import type { Logger } from "@scripts/generators/src/lib/logging";
 import type {
 	CollectionSchemaMapping,
 	SchemaRegistry,
@@ -36,10 +36,18 @@ function generatePlaceholderSchema(
 	}
 
 	if (fields.has("*")) {
+		if (placeholder === "$nSelectedRecord") {
+			return `z.array(${collectionSchema.schemaName})`;
+		}
 		return collectionSchema.schemaName;
 	}
 
-	return generateSchemaPickCode(collectionSchema, fields);
+	const pickCode = generateSchemaPickCode(collectionSchema, fields);
+	if (placeholder === "$nSelectedRecord") {
+		return `z.array(${pickCode})`;
+	}
+
+	return pickCode;
 }
 
 function inferFieldSchema(value: unknown): string {

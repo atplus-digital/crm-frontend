@@ -41,7 +41,7 @@ vi.mock("node:child_process", () => ({
 	},
 }));
 
-vi.mock("@scripts/generators/src/lib/logger", () => ({
+vi.mock("@scripts/generators/src/lib/logging", () => ({
 	logger: {
 		debug: vi.fn(),
 		info: vi.fn(),
