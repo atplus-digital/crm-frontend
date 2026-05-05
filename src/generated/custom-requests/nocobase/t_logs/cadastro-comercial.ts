@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { logsSchema } from "#/generated/types/nocobase/other/logs/schemas";
+import { usersSchema } from "#/generated/types/nocobase/users/schemas";
 
 /**
  * Custom request: cadastro-comercial
@@ -15,7 +16,9 @@ export const payloadSchema = z.object({
 	currentRecord: logsSchema.pick({
 		f_log_level: true,
 	}),
-	currentUser: z.object({ id: z.unknown() }),
+	currentUser: usersSchema.pick({
+		nickname: true,
+	}),
 });
 
 export const payloadData = {

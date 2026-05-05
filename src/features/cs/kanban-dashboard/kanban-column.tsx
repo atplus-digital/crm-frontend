@@ -1,4 +1,3 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
@@ -14,49 +13,14 @@ const PAGE_SIZE = 5;
 export interface KanbanColumnProps {
 	status: (typeof UNIFIED_STATUS_COLUMNS)[number];
 	cards: KanbanDashboardCard[];
-	recentCount?: number;
-	olderCount?: number;
 }
 
-export function KanbanColumn({
-	status,
-	cards,
-	recentCount,
-	olderCount,
-}: KanbanColumnProps) {
+export function KanbanColumn({ status, cards }: KanbanColumnProps) {
 	const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-	const [showOlder, setShowOlder] = useState(false);
 
-	const isCancelado = status.key === "Cancelado";
-	const recent =
-		isCancelado && recentCount !== undefined ? recentCount : cards.length;
-	const hiddenOlder = isCancelado && olderCount !== undefined ? olderCount : 0;
-
-	// Recent cards (always first in the list)
-	const recentCards = cards.slice(0, recent);
-
-	// Older cards (after recent)
-	const olderCards = isCancelado ? cards.slice(recent) : [];
-
-	// Visible cards based on current state
-	const visibleCards = showOlder
-		? cards.slice(0, visibleCount)
-		: recentCards.slice(0, visibleCount);
-	const visibleOlderCards = showOlder
-		? olderCards.slice(0, Math.max(0, visibleCount - recent))
-		: [];
-
+	const visibleCards = cards.slice(0, visibleCount);
 	const remaining = cards.length - visibleCards.length;
 	const hasMore = remaining > 0;
-
-	// Show "Ver N mais antigos" if there are hidden older cards and we haven't shown them yet
-	const showExpandOlderButton = isCancelado && hiddenOlder > 0 && !showOlder;
-
-	// Show "Ver mais" for non-Cancelado columns, or for Cancelado when older cards are expanded
-	const showLoadMoreButton = hasMore && (!isCancelado || showOlder);
-
-	// Show "Recolher antigos" if we've expanded older cards
-	const showCollapseButton = isCancelado && hiddenOlder > 0 && showOlder;
 
 	return (
 		<div className="flex w-72 shrink-0 flex-col rounded-xl border border-border bg-muted/30">
@@ -82,46 +46,11 @@ export function KanbanColumn({
 					</div>
 				) : (
 					<>
-						{/* Cards visíveis */}
 						{visibleCards.map((card) => (
 							<KanbanCard key={card.id} card={card} />
 						))}
 
-						{/* Cards antigos (só aparece quando expandido) */}
-						{showOlder && visibleOlderCards.length > 0 && (
-							<>
-								<div className="flex items-center gap-2 py-1">
-									<div className="h-px flex-1 bg-border" />
-									<span className="text-xs text-muted-foreground">
-										Mais antigos
-									</span>
-									<div className="h-px flex-1 bg-border" />
-								</div>
-								{visibleOlderCards.map((card) => (
-									<KanbanCard key={card.id} card={card} />
-								))}
-							</>
-						)}
-
-						{/* Botão para mostrar antigos */}
-						{showExpandOlderButton && (
-							<Button
-								variant="ghost"
-								size="sm"
-								className="mt-1 w-full text-xs text-muted-foreground"
-								onClick={() => {
-									setShowOlder(true);
-									setVisibleCount(recent + PAGE_SIZE);
-								}}
-							>
-								<ChevronDown className="mr-1 size-3" />
-								Ver {hiddenOlder} mais antigo{hiddenOlder !== 1 ? "s" : ""} (5
-								dias+)
-							</Button>
-						)}
-
-						{/* Ver mais */}
-						{showLoadMoreButton && (
+						{hasMore && (
 							<Button
 								variant="ghost"
 								size="sm"
@@ -133,22 +62,6 @@ export function KanbanColumn({
 								}
 							>
 								Ver mais ({remaining})
-							</Button>
-						)}
-
-						{/* Botão para recolher antigos */}
-						{showCollapseButton && (
-							<Button
-								variant="ghost"
-								size="sm"
-								className="mt-1 w-full text-xs text-muted-foreground"
-								onClick={() => {
-									setShowOlder(false);
-									setVisibleCount(PAGE_SIZE);
-								}}
-							>
-								<ChevronUp className="mr-1 size-3" />
-								Recolher antigos
 							</Button>
 						)}
 					</>

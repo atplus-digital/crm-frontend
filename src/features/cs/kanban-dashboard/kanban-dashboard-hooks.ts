@@ -27,6 +27,7 @@ import { nocobaseRepository } from "#/repositories";
 import type {
 	KanbanDashboardCard,
 	KanbanDashboardFilters,
+	KanbanSortField,
 } from "./kanban-dashboard-types";
 import {
 	mapNegociacaoStatus,
@@ -46,6 +47,29 @@ type SuspensaoContratoWithResponsibles = SuspensaoContrato &
 
 type NegociacoesWithVendedor = Negociacoes &
 	Pick<NegociacoesRelations, "f_vendedor">;
+
+// ---------------------------------------------------------------------------
+// Sort parameter converter — converts KanbanSortField to NocoBase sort format
+// ---------------------------------------------------------------------------
+
+function getSortParam(sortField: KanbanSortField | undefined): string[] {
+	// Default sort
+	if (!sortField || sortField === "createdAt_desc") {
+		return ["-createdAt"];
+	}
+
+	switch (sortField) {
+		case "createdAt_asc":
+			return ["createdAt"];
+		case "displayName_asc":
+			// Uses f_cedente/f_cliente/f_titulo depending on collection
+			return ["f_cedente"];
+		case "displayName_desc":
+			return ["-f_cedente"];
+		default:
+			return ["-createdAt"];
+	}
+}
 
 // ---------------------------------------------------------------------------
 // Query options — each collection fetched independently (factory per filter set)
@@ -74,6 +98,9 @@ function trocaTitularidadeQueryOptions(filters: KanbanDashboardFilters) {
 		);
 	}
 
+	// Build sort parameter based on sortField
+	const sortParam = getSortParam(filters.sortField);
+
 	return queryOptions({
 		queryKey: ["kanban-dashboard", "tt", filters] as const,
 		queryFn: async () => {
@@ -81,7 +108,7 @@ function trocaTitularidadeQueryOptions(filters: KanbanDashboardFilters) {
 				"t_crm_troca_titularidade",
 				{
 					pageSize: 200,
-					sort: ["-createdAt"],
+					sort: sortParam,
 					appends: ["f_vendedor"] as Array<keyof CrmTrocaTitularidadeRelations>,
 					...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
 				},
@@ -116,6 +143,15 @@ function trocaEnderecoQueryOptions(filters: KanbanDashboardFilters) {
 		conditions.push(nestedField("createdBy", eq("id", effectiveResponsibleId)));
 	}
 
+	// Build sort parameter based on sortField
+	const sortParam = getSortParam(filters.sortField);
+	// Adjust field name for troca endereco (uses f_cliente instead of f_cedente)
+	const adjustedSort = sortParam.map((s) =>
+		s.startsWith("-")
+			? `-${s.slice(1).replace("f_cedente", "f_cliente")}`
+			: s.replace("f_cedente", "f_cliente"),
+	);
+
 	return queryOptions({
 		queryKey: ["kanban-dashboard", "te", filters] as const,
 		queryFn: async () => {
@@ -123,7 +159,7 @@ function trocaEnderecoQueryOptions(filters: KanbanDashboardFilters) {
 				"t_troca_endereco" as "users",
 				{
 					pageSize: 200,
-					sort: ["-createdAt"],
+					sort: adjustedSort,
 					appends: ["createdBy"] as Array<keyof TrocaEnderecoRelations>,
 					...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
 				},
@@ -169,6 +205,15 @@ function suspensaoContratoQueryOptions(filters: KanbanDashboardFilters) {
 		);
 	}
 
+	// Build sort parameter based on sortField
+	const sortParam = getSortParam(filters.sortField);
+	// Adjust field name for suspensao (uses f_titulo instead of f_cedente)
+	const adjustedSort = sortParam.map((s) =>
+		s.startsWith("-")
+			? `-${s.slice(1).replace("f_cedente", "f_titulo")}`
+			: s.replace("f_cedente", "f_titulo"),
+	);
+
 	return queryOptions({
 		queryKey: ["kanban-dashboard", "sc", filters] as const,
 		queryFn: async () => {
@@ -176,7 +221,7 @@ function suspensaoContratoQueryOptions(filters: KanbanDashboardFilters) {
 				"t_suspensao_contrato" as "users",
 				{
 					pageSize: 200,
-					sort: ["-createdAt"],
+					sort: adjustedSort,
 					appends: ["createdBy", "f_responsavel"],
 					...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
 				} as Parameters<typeof nocobaseRepository.list>[1],
@@ -221,12 +266,21 @@ function negociacoesQueryOptions(filters: KanbanDashboardFilters) {
 		conditions.push(or(...motivoConditions));
 	}
 
+	// Build sort parameter based on sortField
+	const sortParam = getSortParam(filters.sortField);
+	// Adjust field name for negociacoes (uses f_titulo instead of f_cedente)
+	const adjustedSort = sortParam.map((s) =>
+		s.startsWith("-")
+			? `-${s.slice(1).replace("f_cedente", "f_titulo")}`
+			: s.replace("f_cedente", "f_titulo"),
+	);
+
 	return queryOptions({
 		queryKey: ["kanban-dashboard", "neg", filters] as const,
 		queryFn: async () => {
 			const response = await nocobaseRepository.list("t_negociacoes", {
 				pageSize: 200,
-				sort: ["-createdAt"],
+				sort: adjustedSort,
 				appends: ["f_vendedor"] as Array<keyof NegociacoesRelations>,
 				...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
 			});
@@ -399,5 +453,54 @@ export function useKanbanDashboardData(filters: KanbanDashboardFilters = {}) {
 		}
 	}
 
-	return { cards, isLoading, error };
+	const sortField = activeFilters.sortField;
+
+	// Apply client-side sorting after combining all collections
+	let sortedCards = cards;
+	if (
+		sortField &&
+		(sortField === "responsibleName_asc" ||
+			sortField === "responsibleName_desc")
+	) {
+		sortedCards = sortCardsClientSide(cards, sortField);
+	}
+
+	return { cards: sortedCards, isLoading, error };
+}
+
+// ---------------------------------------------------------------------------
+// Client-side sorting — applies after combining all collections
+// Handles responsibleName sorting which requires normalized card data
+// ---------------------------------------------------------------------------
+
+function sortCardsClientSide(
+	cards: KanbanDashboardCard[],
+	sortField: NonNullable<KanbanDashboardFilters["sortField"]>,
+): KanbanDashboardCard[] {
+	// For createdAt sorting, server-side already handles it
+	// For displayName sorting, server-side already handles it per collection
+	// Only client-side sort needed is for responsibleName which requires
+	// accessing the normalized card's responsibleName field
+	if (
+		sortField === "responsibleName_asc" ||
+		sortField === "responsibleName_desc"
+	) {
+		return [...cards].sort((a, b) => {
+			const aName = a.responsibleName ?? "";
+			const bName = b.responsibleName ?? "";
+			if (sortField === "responsibleName_asc") {
+				return (
+					aName.localeCompare(bName) ||
+					a.displayName.localeCompare(b.displayName)
+				);
+			}
+			return (
+				bName.localeCompare(aName) || b.displayName.localeCompare(a.displayName)
+			);
+		});
+	}
+
+	// For other sort fields, server-side already sorted correctly
+	// Just maintain the order as returned from server
+	return cards;
 }

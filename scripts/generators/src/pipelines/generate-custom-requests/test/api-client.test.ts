@@ -25,6 +25,10 @@ function createMockConfig(overrides: Partial<ScriptConfig> = {}): ScriptConfig {
 		requests: {},
 		manualRequests: [],
 		generateAnalysisReport: false,
+		reports: {
+			generateConsolidatedMarkdown: false,
+			consolidatedMarkdownOutputFile: "/tmp/test-report.md",
+		},
 		...overrides,
 	};
 }

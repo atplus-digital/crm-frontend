@@ -2,6 +2,19 @@ import { addJsonReport } from "@scripts/generators/src/lib/reports";
 import type { GenerationStage } from "../../../@types/orchestration";
 import { collectAnalysisReport } from "./analysis-collector";
 
+function toJsonEntries(
+	items: ReturnType<typeof collectAnalysisReport>["withoutOptions"],
+) {
+	return items.map((item) => ({
+		key: item.key,
+		name: item.name ?? null,
+		collectionName: item.collectionName ?? null,
+		method: item.method ?? null,
+		url: item.url ?? null,
+		dataSourceKey: item.dataSourceKey ?? null,
+	}));
+}
+
 export function writeAnalysisReportStage(): GenerationStage {
 	return async (context) => {
 		const analysisReport = collectAnalysisReport(context.entries);
@@ -15,8 +28,10 @@ export function writeAnalysisReportStage(): GenerationStage {
 			},
 			payload: {
 				totalAnalyzed: analysisReport.totalAnalyzed,
-				withoutOptions: analysisReport.withoutOptions,
-				withoutDataSourceKey: analysisReport.withoutDataSourceKey,
+				withoutOptions: toJsonEntries(analysisReport.withoutOptions),
+				withoutDataSourceKey: toJsonEntries(
+					analysisReport.withoutDataSourceKey,
+				),
 			},
 		});
 

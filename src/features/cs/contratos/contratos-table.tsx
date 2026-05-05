@@ -64,13 +64,6 @@ function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 			),
 		},
 		{
-			accessorKey: "ultima_atualizacao",
-			header: ({ column }) => (
-				<DataTableColumnHeader column={column} title="Ultima Atualização" />
-			),
-			cell: ({ row }) => formatDatePtBR(row.original.ultima_atualizacao),
-		},
-		{
 			accessorKey: "status",
 			header: ({ column }) => (
 				<DataTableColumnHeader column={column} title="Status Contrato" />
@@ -101,6 +94,13 @@ function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 			header: ({ column }) => (
 				<DataTableColumnHeader column={column} title="Descrição" />
 			),
+		},
+		{
+			accessorKey: "ultima_atualizacao",
+			header: ({ column }) => (
+				<DataTableColumnHeader column={column} title="Ultima Atualização" />
+			),
+			cell: ({ row }) => formatDatePtBR(row.original.ultima_atualizacao),
 		},
 	];
 }

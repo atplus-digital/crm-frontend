@@ -1,3 +1,4 @@
+import { SlidersHorizontal } from "lucide-react";
 import { useId, useRef } from "react";
 import {
 	FilterActions,
@@ -7,14 +8,24 @@ import {
 	flushFilters,
 } from "#/components/filters";
 import { Label } from "#/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "#/components/ui/select";
 import { Switch } from "#/components/ui/switch";
+import { DEFAULT_KANBAN_FILTERS } from "./kanban-dashboard-filters-url";
 import type {
 	KanbanDashboardFilters,
+	KanbanSortField,
 	NegociacoesMotivo,
 	SourceCollection,
 } from "./kanban-dashboard-types";
 import {
 	EXTRA_NEGOCIACAO_MOTIVO_OPTIONS,
+	KANBAN_SORT_OPTIONS,
 	NEGOCIACAO_MOTIVO_BADGE,
 	PRIMARY_NEGOCIACAO_MOTIVO_OPTIONS,
 	SOURCE_COLLECTION_OPTIONS,
@@ -72,7 +83,8 @@ export function KanbanDashboardFilterBar({
 	);
 
 	const handleClearFilters = () => {
-		onFilter({});
+		// Keep default filters (currentUser: true)
+		onFilter(DEFAULT_KANBAN_FILTERS);
 	};
 
 	const handleSourceChange = (value: SourceCollection[] | undefined) => {
@@ -97,21 +109,48 @@ export function KanbanDashboardFilterBar({
 		onFilter({ ...filters, tipoNegociacao: value });
 	};
 
+	const handleSortChange = (value: string) => {
+		onFilter({
+			...filters,
+			sortField:
+				value === "createdAt_desc" ? undefined : (value as KanbanSortField),
+		});
+	};
+
 	return (
 		<div ref={containerRef}>
 			<FilterLayout
 				className="space-y-4"
 				fieldsClassName="gap-y-2 gap-x-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
 				actions={
-					<FilterActions
-						onApply={() => {
-							flushFilters(containerRef.current);
-							onFilter(filters);
-						}}
-						onClear={handleClearFilters}
-						canClear={hasFilters}
-						clearVariant="ghost"
-					/>
+					<>
+						<div className="flex items-center gap-2">
+							<SlidersHorizontal className="size-4 text-muted-foreground" />
+							<Select
+								value={filters.sortField ?? "createdAt_desc"}
+								onValueChange={handleSortChange}
+							>
+								<SelectTrigger className="h-8 w-[180px]">
+									<SelectValue placeholder="Ordenar por" />
+								</SelectTrigger>
+								<SelectContent>
+									{KANBAN_SORT_OPTIONS.map((option) => (
+										<SelectItem key={option.value} value={option.value}>
+											{option.label}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</div>
+						<FilterActions
+							onApply={() => {
+								flushFilters(containerRef.current);
+							}}
+							onClear={handleClearFilters}
+							canClear={hasFilters}
+							clearVariant="ghost"
+						/>
+					</>
 				}
 			>
 				<FilterInputField
@@ -130,6 +169,7 @@ export function KanbanDashboardFilterBar({
 					onChange={handleSourceChange}
 					compact
 					showAllButton={false}
+					allActive
 				/>
 				<FilterBadgeGroup<NegociacoesMotivo>
 					label="Tipo de Negociação"
@@ -140,13 +180,14 @@ export function KanbanDashboardFilterBar({
 					compact
 					disabled={!showNegociacaoFilter}
 					showAllButton={false}
+					allActive
 				/>
 				<div className="flex items-center gap-2 pt-6">
 					<Switch
 						id="current-user-toggle"
 						checked={filters.currentUser === true}
 						onCheckedChange={(checked) =>
-							onFilter({ ...filters, currentUser: checked || undefined })
+							onFilter({ ...filters, currentUser: checked })
 						}
 					/>
 					<Label htmlFor="current-user-toggle">Apenas meus itens</Label>

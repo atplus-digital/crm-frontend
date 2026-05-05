@@ -19,6 +19,11 @@ interface FilterBadgeGroupProps<T extends string> {
 	compact?: boolean;
 	disabled?: boolean;
 	showAllButton?: boolean;
+	/**
+	 * When true, badges appear visually active when no selection is made,
+	 * indicating all options are included by default.
+	 */
+	allActive?: boolean;
 	className?: string;
 }
 
@@ -28,6 +33,7 @@ export function FilterBadgeGroup<T extends string>({
 	extraOptions,
 	value,
 	onChange,
+	allActive = false,
 	allLabel = "Todos",
 	moreLabel = "+",
 	compact = false,
@@ -55,6 +61,12 @@ export function FilterBadgeGroup<T extends string>({
 		if (disabled) return;
 		if (selectedValues.includes(optionValue)) {
 			const newValue = selectedValues.filter((v) => v !== optionValue);
+			// When allActive is true and we're deselecting the last item,
+			// go back to the "all active" state (undefined)
+			if (allActive && newValue.length === 0) {
+				onChange(undefined);
+				return;
+			}
 			onChange(showAllButton && newValue.length === 0 ? undefined : newValue);
 		} else {
 			onChange([...selectedValues, optionValue]);
@@ -83,6 +95,15 @@ export function FilterBadgeGroup<T extends string>({
 				return next;
 			});
 		}
+	};
+
+	// Determine if a badge should appear visually active
+	const isBadgeActive = (optionValue: T): boolean => {
+		// When allActive is true and nothing is selected, all badges are "active"
+		if (allActive && selectedValues.length === 0) {
+			return true;
+		}
+		return selectedValues.includes(optionValue);
 	};
 
 	const allOptions = hasExtras ? [...options, ...extraOptions] : options;
@@ -124,7 +145,7 @@ export function FilterBadgeGroup<T extends string>({
 
 				{/* Primary options */}
 				{options.map((option) => {
-					const isSelected = selectedValues.includes(option.value);
+					const isSelected = isBadgeActive(option.value);
 					return (
 						<button
 							type="button"
@@ -150,7 +171,7 @@ export function FilterBadgeGroup<T extends string>({
 					extraOptions
 						.filter((opt) => expandedExtraKeys.has(opt.value))
 						.map((option) => {
-							const isSelected = selectedValues.includes(option.value);
+							const isSelected = isBadgeActive(option.value);
 							return (
 								<button
 									type="button"

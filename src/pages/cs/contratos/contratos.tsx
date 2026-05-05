@@ -23,7 +23,7 @@ export function ContratosPage() {
 		handleFilterChange,
 	} = useListPage<ContratosTableFilters>({
 		defaultFilters: DEFAULT_CONTRATOS_TABLE_FILTERS,
-		defaultSort: ["-id"],
+		defaultSort: ["-ultima_atualizacao"],
 	});
 
 	const { data, error } = useContratos({
