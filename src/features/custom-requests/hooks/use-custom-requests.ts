@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import { useCallback, useMemo, useRef } from "react";
 import type { z } from "zod";
 import { authStore } from "#/features/auth";
 import {
@@ -59,7 +60,7 @@ function resolveRequestKey(identifier: CustomRequestIdentifier) {
 		}
 	}
 
-	return identifier as CustomRequestRegistryKey;
+	return null;
 }
 
 function hasCurrentUserTemplate(value: unknown): boolean {
@@ -81,12 +82,24 @@ function hasCurrentUserTemplate(value: unknown): boolean {
 export function useCustomRequest<I extends CustomRequestIdentifier>(
 	identifier: I,
 ) {
-	const key = resolveRequestKey(identifier);
-	const entry = customRequestsRegistry[key];
-	let cachedCurrentUserId: number | null = null;
-	let cachedCurrentUserData: unknown = null;
+	const key = useMemo(() => resolveRequestKey(identifier), [identifier]);
+	const entry = useMemo(
+		() => (key ? customRequestsRegistry[key] : null),
+		[key],
+	);
+	const currentUserCacheRef = useRef<{
+		userId: number | null;
+		data: unknown;
+	}>({
+		userId: null,
+		data: null,
+	});
+	const requestUsesCurrentUser = useMemo(
+		() => hasCurrentUserTemplate(entry?.payloadData),
+		[entry],
+	);
 
-	const resolveCurrentUserData = async () => {
+	const resolveCurrentUserData = useCallback(async () => {
 		const authUser = authStore.state.user;
 		if (!authUser?.id) {
 			throw new Error(
@@ -94,8 +107,11 @@ export function useCustomRequest<I extends CustomRequestIdentifier>(
 			);
 		}
 
-		if (cachedCurrentUserId === authUser.id && cachedCurrentUserData !== null) {
-			return cachedCurrentUserData;
+		if (
+			currentUserCacheRef.current.userId === authUser.id &&
+			currentUserCacheRef.current.data !== null
+		) {
+			return currentUserCacheRef.current.data;
 		}
 
 		try {
@@ -103,22 +119,31 @@ export function useCustomRequest<I extends CustomRequestIdentifier>(
 				"users",
 				authUser.id,
 			);
-			cachedCurrentUserId = authUser.id;
-			cachedCurrentUserData = fullCurrentUser;
+			currentUserCacheRef.current = {
+				userId: authUser.id,
+				data: fullCurrentUser,
+			};
 			return fullCurrentUser;
 		} catch {
-			cachedCurrentUserId = authUser.id;
-			cachedCurrentUserData = authUser;
+			currentUserCacheRef.current = {
+				userId: authUser.id,
+				data: authUser,
+			};
 			return authUser;
 		}
-	};
+	}, []);
 
 	return useMutation({
 		mutationFn: async ({
 			payload,
 			signal,
 		}: UseCustomRequestMutationInput<I>) => {
-			const requestUsesCurrentUser = hasCurrentUserTemplate(entry.payloadData);
+			if (!key || !entry) {
+				throw new Error(
+					`Custom request not found for identifier: ${identifier}`,
+				);
+			}
+
 			const canInjectFromPayload =
 				payload && typeof payload === "object" && !Array.isArray(payload);
 			const payloadAsObject = canInjectFromPayload

@@ -9,7 +9,7 @@ Feature module for custom request operations. Provides typed wrappers around Noc
 The feature consumes a single generated registry source:
 
 1. **API entries** — fetched from NocoBase by `pnpm generate-custom-requests`
-2. **Manual entries** — configured in `scripts/generate-custom-requests/config.ts` via `manualRequests`
+2. **Manual entries** — configured in `scripts/generators/src/pipelines/generate-custom-requests/config.ts` via `manualRequests`
 
 Both are merged during generation and emitted into `src/generated/custom-requests/generated-registry.ts`.
 
@@ -44,18 +44,18 @@ custom-requests/
 
 ## Key Files
 
-| File                                                  | Purpose                                                |
-| ----------------------------------------------------- | ------------------------------------------------------ |
-| `src/generated/custom-requests/generated-registry.ts` | Final generated registry (API + manual config entries) |
-| `scripts/generate-custom-requests/config.ts`          | Declares `splitRequests` and `manualRequests`          |
-| `components/popup-request.tsx`                        | Dialog button component with confirmation flow         |
-| `utils/service.ts`                                    | Core execution and payload validation                  |
-| `hooks/use-custom-requests.ts`                        | React Query mutation wrapper                           |
-| `errors.ts`                                           | CustomRequestError hierarchy                           |
+| File                                                                  | Purpose                                                |
+| --------------------------------------------------------------------- | ------------------------------------------------------ |
+| `src/generated/custom-requests/generated-registry.ts`                 | Final generated registry (API + manual config entries) |
+| `scripts/generators/src/pipelines/generate-custom-requests/config.ts` | Declares `splitRequests` and `manualRequests`          |
+| `components/popup-request.tsx`                                        | Dialog button component with confirmation flow         |
+| `utils/service.ts`                                                    | Core execution and payload validation                  |
+| `hooks/use-custom-requests.ts`                                        | React Query mutation wrapper                           |
+| `errors.ts`                                                           | CustomRequestError hierarchy                           |
 
 ## Adding Enhanced Manual Entries
 
-1. Open `scripts/generate-custom-requests/config.ts`
+1. Open `scripts/generators/src/pipelines/generate-custom-requests/config.ts`
 2. Add entry to `manualRequests` with `key`, `name`, `collection`, `method`, `url`, and `payloadSchema`
 3. Run `pnpm generate-custom-requests`
 4. Run `pnpm test src/features/custom-requests` (or relevant test subset)
@@ -105,7 +105,7 @@ import { PopupRequest } from "#/features/custom-requests";
   Executar
 </PopupRequest>
 
-// With auto close on success (closes after 1.5s by default)
+// With auto close on success
 <PopupRequest
   identifier="qualirun"
   autoCloseOnSuccess
@@ -113,11 +113,10 @@ import { PopupRequest } from "#/features/custom-requests";
   Executar
 </PopupRequest>
 
-// With custom auto close delay (3 seconds)
+// With minimum loading time on button (900ms)
 <PopupRequest
   identifier="qualirun"
-  autoCloseOnSuccess
-  autoCloseDelay={3000}
+  minLoadingMs={900}
 >
   Executar
 </PopupRequest>

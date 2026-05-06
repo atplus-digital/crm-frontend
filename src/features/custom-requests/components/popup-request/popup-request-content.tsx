@@ -1,18 +1,14 @@
-import type { UseQueryResult } from "@tanstack/react-query";
 import { PopupConfirmContent } from "./popup-confirm-content";
 import { PopupErrorContent } from "./popup-error-content";
 import { PopupLoadingContent } from "./popup-loading-content";
 import { PopupPreparingContent } from "./popup-preparing-content";
-import type { DialogMode } from "./popup-request.types";
+import type { DialogMode, PopupMutationState } from "./popup-request.types";
 import { PopupSuccessContent } from "./popup-success-content";
 
 interface PopupRequestContentProps {
 	dialogMode: DialogMode;
 	confirmMessage?: string;
-	mutation: Pick<
-		UseQueryResult,
-		"isError" | "isSuccess" | "isPending" | "error" | "data"
-	>;
+	mutation: PopupMutationState;
 }
 
 export function PopupRequestContent({

@@ -1,9 +1,19 @@
+import type { UseMutationResult } from "@tanstack/react-query";
 import type {
 	CustomRequestIdentifier,
 	CustomRequestPayload,
-} from "../hooks/use-custom-requests";
+} from "../../hooks/use-custom-requests";
 
 export type DialogMode = "confirm" | "result";
+
+export type PopupMutationState = Pick<
+	UseMutationResult<
+		unknown,
+		unknown,
+		{ payload: unknown; signal?: AbortSignal }
+	>,
+	"isError" | "isSuccess" | "isPending" | "error" | "data"
+>;
 
 export interface PopupRequestProps<I extends CustomRequestIdentifier> {
 	/** Custom request identifier (key, name, or fully qualified name) */
@@ -40,14 +50,12 @@ export interface PopupRequestProps<I extends CustomRequestIdentifier> {
 		| "icon-lg";
 	/** Auto close dialog on success (default: false) */
 	autoCloseOnSuccess?: boolean;
-	/** Delay in ms before auto closing on success (default: 1500) */
-	autoCloseDelay?: number;
 }
 
 export interface ErrorVisualizationData {
 	message: string;
 	status?: number;
-	code?: import("../errors").CustomRequestErrorCode;
+	code?: import("../../errors").CustomRequestErrorCode;
 	details?: string;
 	validationIssues?: Array<{
 		path: string;

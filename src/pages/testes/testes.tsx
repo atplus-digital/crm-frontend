@@ -8,6 +8,14 @@ export function TestesPage() {
 				<PopupRequest identifier="log-test" payload={{ $nSelectedRecord: [] }}>
 					Log Test
 				</PopupRequest>
+				<PopupRequest
+					autoCloseOnSuccess={true}
+					identifier="log-test"
+					confirm={false}
+					payload={{ $nSelectedRecord: [] }}
+				>
+					Log Test
+				</PopupRequest>
 			</div>
 		</PageLayout>
 	);

@@ -3,7 +3,7 @@ import {
 	CustomRequestNetworkError,
 	CustomRequestValidationError,
 	mapZodErrorToPortuguese,
-} from "../errors";
+} from "../../errors";
 import type { ErrorVisualizationData } from "./popup-request.types";
 
 export function safeStringify(value: unknown): string {
@@ -14,9 +14,9 @@ export function safeStringify(value: unknown): string {
 	}
 }
 
-const SUCCESS_MESSAGE_FALLBACK = "Requisição executada com sucesso.";
+const SUCCESS_MESSAGE_FALLBACK = "Executado com sucesso.";
 
-function getObjectMessage(data: unknown): string | null {
+export function getObjectMessage(data: unknown): string | null {
 	if (!data || typeof data !== "object") {
 		return null;
 	}
@@ -32,7 +32,7 @@ function getObjectMessage(data: unknown): string | null {
 	return null;
 }
 
-export function getSuccessToastMessage(result: unknown): string {
+export function getSuccessDisplayMessage(result: unknown): string {
 	const fromRoot = getObjectMessage(result);
 	if (fromRoot) {
 		return fromRoot;

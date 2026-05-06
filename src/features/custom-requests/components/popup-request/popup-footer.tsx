@@ -7,6 +7,7 @@ interface PopupFooterProps {
 	isLoading: boolean;
 	onCancel: () => void;
 	onRetry: () => void;
+	disabled?: boolean;
 }
 
 export function PopupFooter({
@@ -14,6 +15,7 @@ export function PopupFooter({
 	isLoading,
 	onCancel,
 	onRetry,
+	disabled,
 }: PopupFooterProps) {
 	if (dialogMode === "confirm") {
 		return (
@@ -21,7 +23,7 @@ export function PopupFooter({
 				<Button variant="outline" onClick={onCancel}>
 					Cancelar
 				</Button>
-				<Button onClick={onRetry} disabled={isLoading}>
+				<Button onClick={onRetry} disabled={isLoading || disabled}>
 					Confirmar
 				</Button>
 			</DialogFooter>

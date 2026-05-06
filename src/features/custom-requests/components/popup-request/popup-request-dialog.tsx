@@ -1,4 +1,3 @@
-import type { UseQueryResult } from "@tanstack/react-query";
 import {
 	Dialog,
 	DialogContent,
@@ -7,23 +6,20 @@ import {
 	DialogTitle,
 } from "#/components/ui/dialog";
 import { PopupFooter } from "./popup-footer";
-import type { DialogMode } from "./popup-request.types";
+import type { DialogMode, PopupMutationState } from "./popup-request.types";
 import { PopupRequestContent } from "./popup-request-content";
 
 interface PopupRequestDialogProps {
 	isOpen: boolean;
 	dialogMode: DialogMode;
-	mutation: Pick<
-		UseQueryResult,
-		"isError" | "isSuccess" | "isPending" | "error" | "data"
-	>;
+	mutation: PopupMutationState;
 	identifier: string;
 	title?: string;
-	registryEntryName?: string;
 	confirmMessage?: string;
 	onOpenChange: (open: boolean) => void;
 	onCancel: () => void;
 	onRetry: () => void;
+	disabled?: boolean;
 }
 
 export function PopupRequestDialog({
@@ -32,13 +28,13 @@ export function PopupRequestDialog({
 	mutation,
 	identifier,
 	title,
-	registryEntryName,
 	confirmMessage,
 	onOpenChange,
 	onCancel,
 	onRetry,
+	disabled,
 }: PopupRequestDialogProps) {
-	const dialogTitle = title ?? registryEntryName ?? identifier;
+	const dialogTitle = title ?? "Confirmar Envio";
 	const isLoading = mutation.isPending;
 
 	return (
@@ -60,6 +56,7 @@ export function PopupRequestDialog({
 					isLoading={isLoading}
 					onCancel={onCancel}
 					onRetry={onRetry}
+					disabled={disabled}
 				/>
 			</DialogContent>
 		</Dialog>
