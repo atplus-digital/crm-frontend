@@ -55,17 +55,14 @@ export const trocaEnderecoQueryOptions = (
 		queryKey: ["troca-endereco", params] as const,
 		placeholderData: keepPreviousData,
 		queryFn: async () => {
-			const response = await nocobaseRepository.list(
-				"t_troca_endereco" as "users",
-				{
-					page,
-					pageSize,
-					appends:
-						appends as (keyof import("#/generated/types/nocobase/troca-endereco").TrocaEnderecoRelations)[],
-					...(sort.length > 0 && { sort }),
-					...(filter && { filter }),
-				},
-			);
+			const response = await nocobaseRepository.list("t_troca_endereco", {
+				page,
+				pageSize,
+				appends:
+					appends as (keyof import("#/generated/types/nocobase/troca-endereco").TrocaEnderecoRelations)[],
+				...(sort.length > 0 && { sort }),
+				...(filter && { filter }),
+			});
 			return response as unknown as {
 				data: TrocaEnderecoWithRelations[];
 				meta: {
@@ -88,15 +85,11 @@ export function useTrocaEnderecoById(id: number) {
 	return useQuery<TrocaEnderecoWithRelations>({
 		queryKey: ["troca-endereco", id],
 		queryFn: async () => {
-			const response = await nocobaseRepository.get(
-				"t_troca_endereco" as "users",
-				id,
-				{
-					appends: [
-						"createdBy",
-					] as (keyof import("#/generated/types/nocobase/troca-endereco").TrocaEnderecoRelations)[],
-				},
-			);
+			const response = await nocobaseRepository.get("t_troca_endereco", id, {
+				appends: [
+					"createdBy",
+				] as (keyof import("#/generated/types/nocobase/troca-endereco").TrocaEnderecoRelations)[],
+			});
 			return response as unknown as TrocaEnderecoWithRelations;
 		},
 		enabled: !Number.isNaN(id),

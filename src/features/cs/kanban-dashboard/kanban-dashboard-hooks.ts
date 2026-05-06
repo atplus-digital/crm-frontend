@@ -155,15 +155,12 @@ function trocaEnderecoQueryOptions(filters: KanbanDashboardFilters) {
 	return queryOptions({
 		queryKey: ["kanban-dashboard", "te", filters] as const,
 		queryFn: async () => {
-			const response = await nocobaseRepository.list(
-				"t_troca_endereco" as "users",
-				{
-					pageSize: 200,
-					sort: adjustedSort,
-					appends: ["createdBy"] as Array<keyof TrocaEnderecoRelations>,
-					...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
-				},
-			);
+			const response = await nocobaseRepository.list("t_troca_endereco", {
+				pageSize: 200,
+				sort: adjustedSort,
+				appends: ["createdBy"] as Array<keyof TrocaEnderecoRelations>,
+				...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
+			});
 			return response as unknown as {
 				data: TrocaEnderecoWithCreatedBy[];
 				meta: { total: number };
@@ -217,15 +214,12 @@ function suspensaoContratoQueryOptions(filters: KanbanDashboardFilters) {
 	return queryOptions({
 		queryKey: ["kanban-dashboard", "sc", filters] as const,
 		queryFn: async () => {
-			const response = await nocobaseRepository.list(
-				"t_suspensao_contrato" as "users",
-				{
-					pageSize: 200,
-					sort: adjustedSort,
-					appends: ["createdBy", "f_responsavel"],
-					...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
-				} as Parameters<typeof nocobaseRepository.list>[1],
-			);
+			const response = await nocobaseRepository.list("t_suspensao_contrato", {
+				pageSize: 200,
+				sort: adjustedSort,
+				appends: ["createdBy", "f_responsavel"],
+				...(conditions.length > 0 ? { filter: buildFilter(conditions) } : {}),
+			} as Parameters<typeof nocobaseRepository.list>[1]);
 			return response as unknown as {
 				data: SuspensaoContratoWithResponsibles[];
 				meta: { total: number };
