@@ -12,6 +12,7 @@ import {
 } from "@tanstack/react-table";
 import { DEFAULT_DATA_TABLE_EMPTY_MESSAGE } from "#/components/table/constants";
 import { useResolvedDataTable } from "#/components/table/data-table-context";
+import { DataTableSkeleton } from "#/components/table/data-table-skeleton";
 import { TableEmptyRow } from "#/components/table/table-empty-row";
 import {
 	TableBody,
@@ -21,6 +22,7 @@ import {
 	Table as TablePrimitive,
 	TableRow,
 } from "#/components/ui/table";
+import { cn } from "#/lib/utils";
 
 interface DataTableProps<TData> {
 	table?: Table<TData>;
@@ -38,11 +40,35 @@ export function DataTable<TData>({
 	const resolvedEmptyMessage =
 		emptyMessage ?? context?.emptyMessage ?? DEFAULT_DATA_TABLE_EMPTY_MESSAGE;
 
+	const isLoading = context?.isLoading ?? false;
+	const hasInitialQueryData = context?.hasInitialQueryData ?? false;
+	const rows = table.getRowModel().rows;
+	const hasRows = rows.length > 0;
+	const isBusyWithPreviousData = isLoading && hasRows;
+	const shouldShowDisabledOverlay =
+		isBusyWithPreviousData && !hasInitialQueryData;
+
 	const columnCount = table.getVisibleLeafColumns().length;
+
+	if (isLoading && !hasRows) {
+		return <DataTableSkeleton />;
+	}
 
 	return (
 		<div className="w-full relative overflow-x-auto rounded-lg border">
-			<TablePrimitive>
+			{shouldShowDisabledOverlay ? (
+				<div
+					className="absolute inset-0 z-10 cursor-wait bg-background/35 backdrop-blur-[1px]"
+					aria-hidden="true"
+				/>
+			) : null}
+			<TablePrimitive
+				className={cn(
+					isBusyWithPreviousData &&
+						"pointer-events-none select-none opacity-60 transition-opacity",
+				)}
+				aria-busy={isBusyWithPreviousData}
+			>
 				<TableHeader>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<TableRow key={headerGroup.id}>
@@ -60,8 +86,8 @@ export function DataTable<TData>({
 					))}
 				</TableHeader>
 				<TableBody>
-					{table.getRowModel().rows.length > 0 ? (
-						table.getRowModel().rows.map((row) => (
+					{hasRows ? (
+						rows.map((row) => (
 							<TableRow key={row.id}>
 								{row.getVisibleCells().map((cell) => (
 									<TableCell key={cell.id}>

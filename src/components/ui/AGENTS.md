@@ -6,7 +6,9 @@
 
 ## Overview
 
-shadcn/ui primitives and styled base components — radix-nova style, fully typed, used by all feature components and pages.
+shadcn/ui primitives components — radix-nova style, fully typed, used by all feature components and pages.
+
+> **⚠️ Restrição:** Não criar novos componentes manualmente nesta pasta. Apenas componentes adicionados via CLI do shadcn (`pnpm dlx shadcn@latest add <component>`) são permitidos.
 
 <!-- AGENTS-GENERATED:END overview -->
 

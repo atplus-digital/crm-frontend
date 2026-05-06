@@ -1,5 +1,5 @@
 import type { OnChangeFn, PaginationState } from "@tanstack/react-table";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { resolveStateUpdater } from "#/components/table/hooks/resolve-state-updater";
 
 interface UsePaginationOptions {
@@ -63,27 +63,82 @@ export function usePagination(
 		pageIndex: initialPage - 1,
 		pageSize: initialPageSize,
 	});
+	const previousPaginationRef = useRef<PaginationState>(pagination);
+	const previousExternalStateRef = useRef({
+		initialPage,
+		initialPageSize,
+	});
+	const syncingFromExternalRef = useRef(false);
 
 	const page = pagination.pageIndex + 1;
 	const pageSize = pagination.pageSize;
 
+	useEffect(() => {
+		const previousExternalState = previousExternalStateRef.current;
+		const externalStateChanged =
+			previousExternalState.initialPage !== initialPage ||
+			previousExternalState.initialPageSize !== initialPageSize;
+
+		previousExternalStateRef.current = {
+			initialPage,
+			initialPageSize,
+		};
+
+		if (!externalStateChanged) {
+			return;
+		}
+
+		const nextPageIndex = Math.max(0, initialPage - 1);
+		const nextPageSize = Math.max(1, initialPageSize);
+		setPagination((currentPagination) => {
+			if (
+				currentPagination.pageIndex === nextPageIndex &&
+				currentPagination.pageSize === nextPageSize
+			) {
+				return currentPagination;
+			}
+
+			syncingFromExternalRef.current = true;
+			return {
+				pageIndex: nextPageIndex,
+				pageSize: nextPageSize,
+			};
+		});
+	}, [initialPage, initialPageSize]);
+
+	useEffect(() => {
+		const previousPagination = previousPaginationRef.current;
+
+		if (
+			previousPagination.pageIndex === pagination.pageIndex &&
+			previousPagination.pageSize === pagination.pageSize
+		) {
+			return;
+		}
+
+		previousPaginationRef.current = pagination;
+
+		if (syncingFromExternalRef.current) {
+			syncingFromExternalRef.current = false;
+			return;
+		}
+
+		if (pagination.pageIndex !== previousPagination.pageIndex) {
+			onPageChange?.(pagination.pageIndex + 1);
+		}
+
+		if (pagination.pageSize !== previousPagination.pageSize) {
+			onPageSizeChange?.(pagination.pageSize);
+		}
+	}, [onPageChange, onPageSizeChange, pagination]);
+
 	const onPaginationChange = useCallback<OnChangeFn<PaginationState>>(
 		(updater) => {
-			setPagination((previousPagination) => {
-				const nextPagination = resolveStateUpdater(updater, previousPagination);
-
-				if (nextPagination.pageIndex !== previousPagination.pageIndex) {
-					onPageChange?.(nextPagination.pageIndex + 1);
-				}
-
-				if (nextPagination.pageSize !== previousPagination.pageSize) {
-					onPageSizeChange?.(nextPagination.pageSize);
-				}
-
-				return nextPagination;
-			});
+			setPagination((previousPagination) =>
+				resolveStateUpdater(updater, previousPagination),
+			);
 		},
-		[onPageChange, onPageSizeChange],
+		[],
 	);
 
 	return {

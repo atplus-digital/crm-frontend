@@ -27,6 +27,8 @@ interface UseDataTableControllerOptions<
 	total?: number;
 	totalPages?: number;
 	emptyMessage?: string;
+	isLoading?: boolean;
+	hasInitialQueryData?: boolean;
 	initialPage?: number;
 	initialPageSize?: number;
 	onPageChange?: (page: number) => void;
@@ -164,6 +166,8 @@ export function useDataTableController<
 		table,
 		total,
 		emptyMessage: emptyMessage ?? DEFAULT_DATA_TABLE_EMPTY_MESSAGE,
+		isLoading: options.isLoading,
+		hasInitialQueryData: options.hasInitialQueryData,
 		pagination,
 		page,
 		pageSize,

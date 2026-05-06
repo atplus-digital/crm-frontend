@@ -20,6 +20,8 @@ interface DataTableContainerProps<
 	total?: number;
 	totalPages?: number;
 	emptyMessage?: string;
+	isLoading?: boolean;
+	hasInitialQueryData?: boolean;
 	onPageChange?: (page: number) => void;
 	onPageSizeChange?: (pageSize: number) => void;
 	initialPage?: number;
@@ -62,6 +64,8 @@ export function DataTableContainer<
 	onFiltersApply,
 	onFiltersClear,
 	showPagination = true,
+	isLoading,
+	hasInitialQueryData,
 	children,
 }: DataTableContainerProps<TData, TFilters>) {
 	const controller = useDataTableController<TData, TFilters>({
@@ -70,6 +74,8 @@ export function DataTableContainer<
 		total,
 		totalPages,
 		emptyMessage,
+		isLoading,
+		hasInitialQueryData,
 		initialPage,
 		initialPageSize,
 		onPageChange,

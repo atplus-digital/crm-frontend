@@ -16,6 +16,8 @@ export interface DataTableController<
 	table: Table<TData>;
 	total?: number;
 	emptyMessage: string;
+	isLoading?: boolean;
+	hasInitialQueryData?: boolean;
 	pagination: PaginationState;
 	page: number;
 	pageSize: number;
