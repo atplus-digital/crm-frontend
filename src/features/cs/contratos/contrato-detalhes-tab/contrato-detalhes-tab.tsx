@@ -1,12 +1,10 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Skeleton } from "#/components/ui/skeleton";
 import { CardSectionSkeleton } from "#/features/cs/components/detail-skeleton";
-import type {
-	ContratoWithCliente,
-	DadosAdicionaisContrato,
-	Fatura,
-	ProdutoContrato,
-} from "#/features/cs/contratos/contratos-types";
+import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
+import type { FnAreceber } from "#/generated/types/d_db_ixcsoft/fn-areceber";
+import type { VdContratosProdutos } from "#/generated/types/d_db_ixcsoft/vd-contratos-produtos";
+import type { DadosAdicionaisClienteContrato } from "#/generated/types/nocobase/other/dados-adicionais-cliente-contrato";
 import { ContratoInfoCard } from "./contrato-info-card";
 import { ContratoSummaryCard } from "./contrato-summary-card";
 import { DadosClienteCard } from "./dados-cliente-card";
@@ -18,13 +16,13 @@ import { ProdutosTable } from "./produtos-table";
 interface ContratoDetalhesTabProps {
 	contrato: ContratoWithCliente | null;
 	isLoading: boolean;
-	produtos: ProdutoContrato[];
+	produtos: VdContratosProdutos[];
 	isLoadingProdutos: boolean;
 	produtosError: Error | null;
-	faturas: Fatura[];
+	faturas: FnAreceber[];
 	isLoadingFaturas: boolean;
 	faturasError: Error | null;
-	dadosAdicionais: DadosAdicionaisContrato | null | undefined;
+	dadosAdicionais: DadosAdicionaisClienteContrato | null | undefined;
 	isLoadingDadosAdicionais: boolean;
 }
 

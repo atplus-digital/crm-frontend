@@ -1,19 +1,19 @@
+import type { FnAreceber } from "#/generated/types/d_db_ixcsoft/fn-areceber";
+import type { LinhaMvno } from "#/generated/types/d_db_ixcsoft/linha-mvno";
+import type { SuTicket } from "#/generated/types/d_db_ixcsoft/su-ticket";
+import type { VdContratosProdutos } from "#/generated/types/d_db_ixcsoft/vd-contratos-produtos";
+import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-titularidade";
+import type { DadosAdicionaisClienteContrato } from "#/generated/types/nocobase/other/dados-adicionais-cliente-contrato";
+import type { RegistrosDeContato } from "#/generated/types/nocobase/registros-de-contato";
 import { getErrorMessage } from "#/lib/api-errors";
 import { buildFilter, eq } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { ixcRepository, nocobaseRepository } from "#/repositories";
 import type { PaginatedResponse } from "#/repositories/types";
 import type {
-	AtendimentoIXC,
 	ContratoFilters,
 	ContratoListParams,
 	ContratoWithCliente,
-	DadosAdicionaisContrato,
-	Fatura,
-	LinhaMovel,
-	ProdutoContrato,
-	RegistroContato,
-	TrocaTitularidade,
 } from "./contratos-types";
 
 const log = createLogger("services:cs:contratos");
@@ -99,9 +99,9 @@ export async function fetchContratoById(
 
 export async function fetchContratoMovel(
 	idContrato: number,
-): Promise<PaginatedResponse<LinhaMovel>> {
+): Promise<PaginatedResponse<LinhaMvno>> {
 	try {
-		return ixcRepository.list<LinhaMovel>("linha_mvno", {
+		return ixcRepository.list<LinhaMvno>("linha_mvno", {
 			page: 1,
 			pageSize: 100,
 			filter: eq("id_contrato", idContrato),
@@ -115,9 +115,9 @@ export async function fetchContratoMovel(
 
 export async function fetchContratoProdutos(
 	idContrato: number,
-): Promise<PaginatedResponse<ProdutoContrato>> {
+): Promise<PaginatedResponse<VdContratosProdutos>> {
 	try {
-		return ixcRepository.list<ProdutoContrato>("vd_contratos_produtos", {
+		return ixcRepository.list<VdContratosProdutos>("vd_contratos_produtos", {
 			page: 1,
 			pageSize: 100,
 			filter: eq("id_contrato", idContrato),
@@ -134,9 +134,9 @@ export async function fetchContratoProdutos(
 
 export async function fetchContratoFaturas(
 	idContrato: number,
-): Promise<PaginatedResponse<Fatura>> {
+): Promise<PaginatedResponse<FnAreceber>> {
 	try {
-		return ixcRepository.list<Fatura>("fn_areceber", {
+		return ixcRepository.list<FnAreceber>("fn_areceber", {
 			page: 1,
 			pageSize: 10,
 			filter: eq("id_contrato", idContrato),
@@ -153,7 +153,7 @@ export async function fetchContratoFaturas(
 
 export async function fetchContratoTrocasTitularidade(
 	idContrato: number,
-): Promise<PaginatedResponse<TrocaTitularidade>> {
+): Promise<PaginatedResponse<CrmTrocaTitularidade>> {
 	try {
 		return nocobaseRepository.list<"t_crm_troca_titularidade">(
 			"t_crm_troca_titularidade",
@@ -175,9 +175,9 @@ export async function fetchContratoTrocasTitularidade(
 
 export async function fetchContratoAtendimentos(
 	idContrato: number,
-): Promise<PaginatedResponse<AtendimentoIXC>> {
+): Promise<PaginatedResponse<SuTicket>> {
 	try {
-		return ixcRepository.list<AtendimentoIXC>("su_ticket", {
+		return ixcRepository.list<SuTicket>("su_ticket", {
 			page: 1,
 			pageSize: 50,
 			filter: eq("id_contrato", idContrato),
@@ -191,7 +191,7 @@ export async function fetchContratoAtendimentos(
 
 export async function fetchContratoRegistros(
 	idContrato: number,
-): Promise<PaginatedResponse<RegistroContato>> {
+): Promise<PaginatedResponse<RegistrosDeContato>> {
 	try {
 		return nocobaseRepository.list<"t_registros_de_contato">(
 			"t_registros_de_contato",
@@ -214,7 +214,7 @@ export async function fetchContratoRegistros(
 
 export async function fetchDadosAdicionaisContrato(
 	clienteContratoId: number,
-): Promise<DadosAdicionaisContrato | null> {
+): Promise<DadosAdicionaisClienteContrato | null> {
 	try {
 		const response = await nocobaseRepository.list(
 			"t_dados_adicionais_cliente_contrato",

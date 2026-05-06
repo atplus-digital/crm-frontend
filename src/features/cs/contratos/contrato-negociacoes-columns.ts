@@ -4,13 +4,13 @@ import {
 	detailMoneyCell,
 	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
-import type { TrocaTitularidade } from "#/features/cs/contratos/contratos-types";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
+import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-titularidade";
 import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/types/nocobase/crm-troca-titularidade";
 import { NEGOCIACOES_STATUS_LABELS } from "#/generated/types/nocobase/negociacoes";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 
-function formatTrocaStatus(status: TrocaTitularidade["f_status"]): string {
+function formatTrocaStatus(status: CrmTrocaTitularidade["f_status"]): string {
 	return CRMTROCATITULARIDADE_STATUS_LABELS[status] ?? String(status);
 }
 
@@ -34,7 +34,7 @@ export const TROCAS_TITULARIDADE_COLUMNS = [
 ];
 
 export const trocasTitularidadeTableColumns: ColumnDef<
-	TrocaTitularidade,
+	CrmTrocaTitularidade,
 	unknown
 >[] = [
 	{

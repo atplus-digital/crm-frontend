@@ -9,7 +9,7 @@ import {
 	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
 import { useContratoRegistros } from "#/features/cs/contratos/contratos-hooks";
-import type { RegistroContato } from "#/features/cs/contratos/contratos-types";
+import type { RegistrosDeContato } from "#/generated/types/nocobase/registros-de-contato";
 import {
 	REGISTROSDECONTATO_CATEGORIA_LABELS,
 	REGISTROSDECONTATO_NOTATECNICO_LABELS,
@@ -17,15 +17,15 @@ import {
 } from "#/generated/types/nocobase/registros-de-contato";
 import { formatDatePtBR } from "#/lib/utils";
 
-function formatCategoria(categoria: RegistroContato["f_categoria"]): string {
+function formatCategoria(categoria: RegistrosDeContato["f_categoria"]): string {
 	return REGISTROSDECONTATO_CATEGORIA_LABELS[categoria] ?? String(categoria);
 }
 
-function formatNota(nota: RegistroContato["f_nota_vendas"]): string {
+function formatNota(nota: RegistrosDeContato["f_nota_vendas"]): string {
 	return REGISTROSDECONTATO_NOTAVENDAS_LABELS[nota] ?? String(nota);
 }
 
-function formatNotaTecnico(nota: RegistroContato["f_nota_tecnico"]): string {
+function formatNotaTecnico(nota: RegistrosDeContato["f_nota_tecnico"]): string {
 	return REGISTROSDECONTATO_NOTATECNICO_LABELS[nota] ?? String(nota);
 }
 
@@ -39,7 +39,7 @@ const REGISTROS_COLUMNS = [
 	"Criado por",
 ];
 
-const registrosTableColumns: ColumnDef<RegistroContato, unknown>[] = [
+const registrosTableColumns: ColumnDef<RegistrosDeContato, unknown>[] = [
 	{
 		accessorKey: "f_categoria",
 		header: "Categoria",

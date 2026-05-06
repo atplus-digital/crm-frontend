@@ -7,10 +7,10 @@ import {
 	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
 import { useContratoMovel } from "#/features/cs/contratos/contratos-hooks";
-import type { LinhaMovel } from "#/features/cs/contratos/contratos-types";
+import type { LinhaMvno } from "#/generated/types/d_db_ixcsoft/linha-mvno";
 import { LINHAMVNO_PORTABILIDADE_LABELS } from "#/generated/types/d_db_ixcsoft/linha-mvno";
 
-function formatPortabilidade(value: LinhaMovel["portabilidade"]): string {
+function formatPortabilidade(value: LinhaMvno["portabilidade"]): string {
 	return LINHAMVNO_PORTABILIDADE_LABELS[value] ?? String(value);
 }
 
@@ -23,7 +23,7 @@ const MOVEL_COLUMNS = [
 	"SIMCARD",
 ];
 
-const movelTableColumns: ColumnDef<LinhaMovel, unknown>[] = [
+const movelTableColumns: ColumnDef<LinhaMvno, unknown>[] = [
 	{
 		accessorKey: "ddd_telefone",
 		header: "DDD",

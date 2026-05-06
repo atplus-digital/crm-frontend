@@ -12,7 +12,7 @@ import {
 import { Badge, type BadgeVariant } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { useContratoAtendimentos } from "#/features/cs/contratos/contratos-hooks";
-import type { AtendimentoIXC } from "#/features/cs/contratos/contratos-types";
+import type { SuTicket } from "#/generated/types/d_db_ixcsoft/su-ticket";
 import { SUTICKET_SUSTATUS_LABELS } from "#/generated/types/d_db_ixcsoft/su-ticket";
 import { formatDatePtBR } from "#/lib/utils";
 
@@ -34,7 +34,7 @@ const ATENDIMENTO_COLUMNS = [
 	"Última Alteração",
 ];
 
-const atendimentosTableColumns: ColumnDef<AtendimentoIXC, unknown>[] = [
+const atendimentosTableColumns: ColumnDef<SuTicket, unknown>[] = [
 	{
 		accessorKey: "id",
 		header: "ID",

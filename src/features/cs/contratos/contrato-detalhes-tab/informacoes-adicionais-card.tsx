@@ -1,22 +1,22 @@
 import { ClipboardList } from "lucide-react";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
-import type { DadosAdicionaisContrato } from "#/features/cs/contratos/contratos-types";
 import {
 	DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS,
 	DADOSADICIONAISCLIENTECONTRATO_PERFILDEUSO_LABELS,
 } from "#/features/cs/contratos/contratos-types";
+import type { DadosAdicionaisClienteContrato } from "#/generated/types/nocobase/other/dados-adicionais-cliente-contrato";
 
 type PerfilDeUsoValue =
 	(keyof typeof DADOSADICIONAISCLIENTECONTRATO_PERFILDEUSO_LABELS)[];
 
 interface InformacoesAdicionaisCardProps {
-	data: DadosAdicionaisContrato | null | undefined;
+	data: DadosAdicionaisClienteContrato | null | undefined;
 	isLoading: boolean;
 }
 
 function formatPerfilDeUso(
-	perfilDeUso: DadosAdicionaisContrato["f_perfil_de_uso"],
+	perfilDeUso: DadosAdicionaisClienteContrato["f_perfil_de_uso"],
 ): string {
 	const values = (
 		Array.isArray(perfilDeUso) ? perfilDeUso : [perfilDeUso]
@@ -30,7 +30,7 @@ function formatPerfilDeUso(
 }
 
 function formatFormaPagamento(
-	forma: DadosAdicionaisContrato["f_forma_de_pagamento"],
+	forma: DadosAdicionaisClienteContrato["f_forma_de_pagamento"],
 ): string {
 	return (
 		DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS[forma] ??

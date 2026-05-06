@@ -6,21 +6,21 @@ import {
 	detailMoneyCell,
 	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
-import type { Fatura } from "#/features/cs/contratos/contratos-types";
+import type { FnAreceber } from "#/generated/types/d_db_ixcsoft/fn-areceber";
 import { FNARECEBER_STATUS_LABELS } from "#/generated/types/d_db_ixcsoft/fn-areceber";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 
-function formatFaturaStatus(status: Fatura["status"]): string {
+function formatFaturaStatus(status: FnAreceber["status"]): string {
 	return FNARECEBER_STATUS_LABELS[status] ?? String(status);
 }
 
 interface FaturasTableProps {
-	faturas: Fatura[];
+	faturas: FnAreceber[];
 	isLoading: boolean;
 	error: Error | null;
 }
 
-const FATURA_COLUMNS: ColumnDef<Fatura, unknown>[] = [
+const FATURA_COLUMNS: ColumnDef<FnAreceber, unknown>[] = [
 	{
 		accessorKey: "status",
 		header: "Status",

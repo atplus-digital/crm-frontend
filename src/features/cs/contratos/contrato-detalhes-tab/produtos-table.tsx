@@ -5,16 +5,16 @@ import {
 	detailMoneyCell,
 	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
-import type { ProdutoContrato } from "#/features/cs/contratos/contratos-types";
+import type { VdContratosProdutos } from "#/generated/types/d_db_ixcsoft/vd-contratos-produtos";
 import { formatCurrency } from "#/lib/utils";
 
 interface ProdutosTableProps {
-	produtos: ProdutoContrato[];
+	produtos: VdContratosProdutos[];
 	isLoading: boolean;
 	error: Error | null;
 }
 
-const PRODUTO_COLUMNS: ColumnDef<ProdutoContrato, unknown>[] = [
+const PRODUTO_COLUMNS: ColumnDef<VdContratosProdutos, unknown>[] = [
 	{
 		accessorKey: "descricao",
 		header: "Descrição",
