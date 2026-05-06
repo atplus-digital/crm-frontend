@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { usePageTab } from "#/hooks/use-page-tab";
 import { cn } from "#/lib/utils";
@@ -49,6 +50,11 @@ export function PageLayout({
 	const hasHeader = Boolean(title || prefixElement);
 	const tabValues = (tabs ?? []).map((tab) => tab.value);
 	const [activeTab, setActiveTab] = usePageTab(defaultTab ?? "", tabValues);
+
+	useEffect(() => {
+		const titleStr = typeof title === "string" ? title : undefined;
+		document.title = titleStr ? `${titleStr} | CRM ATPlus` : "CRM ATPlus";
+	}, [title]);
 
 	return (
 		<div
