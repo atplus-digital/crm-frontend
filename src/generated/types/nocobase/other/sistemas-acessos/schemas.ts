@@ -18,6 +18,7 @@ export const sistemas_acessosBaseSchema = z.object({
 	f_fk_funcionarios: z.string(),
 	f_sistemas_acessos: z.string(),
 	f_url: z.string(),
+	f_url2: z.string(),
 	updatedAt: z.string(),
 	createdAt: z.string(),
 });
