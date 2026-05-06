@@ -39,16 +39,25 @@ export function PopupRequest<I extends CustomRequestIdentifier>({
 	}, [mutation]);
 
 	const executeRequest = useCallback(async () => {
-		setDialogMode("result");
-		const result = await mutation.mutateAsync({
-			payload: (payload ?? {}) as CustomRequestPayload<I>,
-		});
-		onSuccess?.(result);
-		toast.success(getSuccessDisplayMessage(result));
-		if (autoCloseOnSuccess) {
-			closeDialog();
+		try {
+			setDialogMode("result");
+			const result = await mutation.mutateAsync({
+				payload: (payload ?? {}) as CustomRequestPayload<I>,
+			});
+			onSuccess?.(result);
+			toast.success(getSuccessDisplayMessage(result));
+			if (autoCloseOnSuccess) {
+				closeDialog();
+			}
+			return result;
+		} catch (error) {
+			toast.error(
+				error instanceof Error
+					? error.message
+					: "Um erro desconhecido ocorreu ao processar a solicitação.",
+			);
+			throw error;
 		}
-		return result;
 	}, [autoCloseOnSuccess, closeDialog, mutation, onSuccess, payload]);
 
 	const { state: buttonState, run: runWithMinimumLoading } =
