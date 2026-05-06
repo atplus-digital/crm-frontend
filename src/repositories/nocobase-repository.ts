@@ -5,6 +5,7 @@ import type {
 	CollectionName,
 	CollectionRelationsMap,
 } from "#/generated/types/nocobase/collections";
+import { getErrorMessage } from "#/lib/api-errors";
 import { createLogger } from "#/lib/logger";
 import type {
 	ApiRequestConfig,
@@ -181,7 +182,7 @@ export class NocoBaseRepository {
 		} catch (error) {
 			log.error("NocoBase request failed", {
 				url: config.url,
-				error: error instanceof Error ? error.message : String(error),
+				error: getErrorMessage(error, String(error)),
 			});
 			throw error;
 		}

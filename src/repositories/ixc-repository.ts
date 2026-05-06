@@ -1,4 +1,5 @@
 import { nocobaseClient } from "#/features/auth";
+import { getErrorMessage } from "#/lib/api-errors";
 import { buildFilter, eq, includes, nestedField } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import type { ApiRequestConfig, ListParams, PaginatedResponse } from "./types";
@@ -35,7 +36,7 @@ export class IxcRepository {
 		} catch (error) {
 			log.error("IXC request failed", {
 				url: config.url,
-				error: error instanceof Error ? error.message : String(error),
+				error: getErrorMessage(error, String(error)),
 			});
 			throw error;
 		}

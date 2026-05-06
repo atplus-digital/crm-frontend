@@ -1,3 +1,4 @@
+import { getErrorMessage } from "#/lib/api-errors";
 import { buildFilter, eq } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { ixcRepository, nocobaseRepository } from "#/repositories";
@@ -62,8 +63,7 @@ export async function fetchContratos(
 			...(filter && { filter }),
 		});
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch contratos", { error: message });
 		throw error;
 	}
@@ -91,8 +91,7 @@ export async function fetchContratoById(
 
 		return contrato;
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch contrato by ID", { id, error: message });
 		throw error;
 	}
@@ -108,8 +107,7 @@ export async function fetchContratoMovel(
 			filter: eq("id_contrato", idContrato),
 		});
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch contrato móvel", { idContrato, error: message });
 		throw error;
 	}
@@ -125,8 +123,7 @@ export async function fetchContratoProdutos(
 			filter: eq("id_contrato", idContrato),
 		});
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch contrato produtos", {
 			idContrato,
 			error: message,
@@ -145,8 +142,7 @@ export async function fetchContratoFaturas(
 			filter: eq("id_contrato", idContrato),
 		});
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch contrato faturas", {
 			idContrato,
 			error: message,
@@ -168,8 +164,7 @@ export async function fetchContratoTrocasTitularidade(
 			},
 		);
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch trocas de titularidade", {
 			idContrato,
 			error: message,
@@ -188,8 +183,7 @@ export async function fetchContratoAtendimentos(
 			filter: eq("id_contrato", idContrato),
 		});
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch atendimentos", { idContrato, error: message });
 		throw error;
 	}
@@ -209,8 +203,7 @@ export async function fetchContratoRegistros(
 			},
 		);
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch registros de contato", {
 			idContrato,
 			error: message,
@@ -237,8 +230,7 @@ export async function fetchDadosAdicionaisContrato(
 
 		return item;
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch dados adicionais", {
 			clienteContratoId,
 			error: message,

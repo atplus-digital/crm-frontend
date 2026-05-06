@@ -1,4 +1,5 @@
 import { customRequestsRegistry } from "#/generated/custom-requests/generated-registry";
+import { getErrorMessage } from "#/lib/api-errors";
 import { nocobaseRepository } from "#/repositories";
 import {
 	CustomRequestError,
@@ -103,7 +104,7 @@ export async function sendRequest(
 				: undefined;
 		if (typeof status === "number") {
 			throw new CustomRequestNetworkError(
-				error instanceof Error ? error.message : `HTTP ${status}`,
+				getErrorMessage(error, `HTTP ${status}`),
 				status,
 			);
 		}
@@ -114,7 +115,7 @@ export async function sendRequest(
 			throw error;
 		}
 		throw new CustomRequestError(
-			error instanceof Error ? error.message : "Unknown error",
+			getErrorMessage(error, "Unknown error"),
 			CustomRequestErrorCode.UNKNOWN,
 		);
 	}

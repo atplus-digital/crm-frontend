@@ -4,6 +4,7 @@ import type {
 	Pessoas,
 	PessoasAnaliseIxc,
 } from "#/generated/types/nocobase/pessoas";
+import { getErrorMessage } from "#/lib/api-errors";
 import { buildFilter, eq, includes } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";
@@ -91,8 +92,7 @@ export async function fetchPessoasFisicas(
 			meta: response.meta,
 		};
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch pessoas físicas", { error: message });
 		throw error;
 	}
@@ -125,8 +125,7 @@ export async function fetchPessoasJuridicas(
 			meta: response.meta,
 		};
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch pessoas jurídicas", { error: message });
 		throw error;
 	}
@@ -142,8 +141,7 @@ export async function createPessoaFisica(
 		);
 		return result as Pessoas;
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to create pessoa física", { error: message });
 		throw error;
 	}
@@ -161,8 +159,7 @@ export async function updatePessoaFisica(
 		);
 		return result as Pessoas;
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to update pessoa física", { id, error: message });
 		throw error;
 	}
@@ -172,8 +169,7 @@ export async function deletePessoaFisica(id: number): Promise<void> {
 	try {
 		await nocobaseRepository.delete("t_pessoas", id);
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to delete pessoa física", { id, error: message });
 		throw error;
 	}
@@ -189,8 +185,7 @@ export async function createPessoaJuridica(
 		);
 		return result as Empresas;
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to create pessoa jurídica", { error: message });
 		throw error;
 	}
@@ -208,8 +203,7 @@ export async function updatePessoaJuridica(
 		);
 		return result as Empresas;
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to update pessoa jurídica", { id, error: message });
 		throw error;
 	}
@@ -219,8 +213,7 @@ export async function deletePessoaJuridica(id: number): Promise<void> {
 	try {
 		await nocobaseRepository.delete("t_empresas", id);
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to delete pessoa jurídica", { id, error: message });
 		throw error;
 	}

@@ -6,9 +6,10 @@ import {
 	type NegociacaoFilters,
 	normalizeNegociacaoFilters,
 } from "#/features/cs/negociacoes/negociacoes-types";
-import { VendasFilters } from "#/features/cs/vendas/vendas-filters";
+import { VendasFilters } from "#/features/cs/vendas/vendas-filters/vendas-filters";
 import { useVendedores } from "#/features/cs/vendas/vendas-hooks";
 import { useListPage } from "#/hooks/use-list-page";
+import { getErrorMessage } from "#/lib/api-errors";
 
 const DEFAULT_FILTERS: NegociacaoFilters = {
 	motivo: "P",
@@ -52,7 +53,7 @@ export function PropostasListaTabPage() {
 			/>
 			{error ? (
 				<InlineErrorAlert>
-					Erro ao carregar propostas: {(error as Error).message}
+					Erro ao carregar propostas: {getErrorMessage(error)}
 				</InlineErrorAlert>
 			) : (
 				<NegociacoesList

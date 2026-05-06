@@ -5,6 +5,7 @@ import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/layouts/page-layout";
 import { useNegociacao } from "#/features/cs/negociacoes/negociacoes-hooks";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
+import { getErrorMessage } from "#/lib/api-errors";
 import { routePaths } from "#/routes/route-paths";
 
 export interface NegociacaoDetailOutletContext {
@@ -22,7 +23,7 @@ export function NegociacaoDetailPage() {
 			<div className="flex-1 overflow-auto bg-background">
 				<div className="mx-auto max-w-400 p-4">
 					<InlineErrorAlert>
-						Erro ao carregar negociação: {(error as Error).message}
+						Erro ao carregar negociação: {getErrorMessage(error)}
 					</InlineErrorAlert>
 				</div>
 			</div>

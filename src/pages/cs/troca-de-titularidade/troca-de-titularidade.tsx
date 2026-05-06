@@ -5,6 +5,7 @@ import { TrocaTitularidadeFilterBar } from "#/features/cs/troca-titularidade/tro
 import { useTrocaTitularidade } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import type { TrocaTitularidadeFilters } from "#/features/cs/troca-titularidade/troca-titularidade-types";
 import { useListPage } from "#/hooks/use-list-page";
+import { getErrorMessage } from "#/lib/api-errors";
 
 const DEFAULT_FILTERS: TrocaTitularidadeFilters = {};
 
@@ -43,7 +44,7 @@ export function TrocaTitularidadePage() {
 			{error ? (
 				<InlineErrorAlert>
 					Erro ao carregar transferências de titularidade:{" "}
-					{(error as Error).message}
+					{getErrorMessage(error)}
 				</InlineErrorAlert>
 			) : (
 				<TrocaTitularidadeList

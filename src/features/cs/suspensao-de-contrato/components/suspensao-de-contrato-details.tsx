@@ -4,6 +4,7 @@ import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Skeleton } from "#/components/ui/skeleton";
 import { CardSectionSkeleton } from "#/features/cs/components/detail-skeleton";
 import { useSuspensaoContratoById } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks";
+import { getErrorMessage } from "#/lib/api-errors";
 import { routePaths } from "#/routes/route-paths";
 import { SuspensaoContratoTabs } from "./sections/suspensao-contrato-tabs";
 
@@ -22,7 +23,7 @@ export function SuspensaoContratoDetailPage() {
 			<div className="flex-1 overflow-auto bg-background">
 				<div className="mx-auto max-w-400 p-4">
 					<InlineErrorAlert>
-						Erro ao carregar detalhes da suspensão: {(error as Error).message}
+						Erro ao carregar detalhes da suspensão: {getErrorMessage(error)}
 					</InlineErrorAlert>
 				</div>
 			</div>

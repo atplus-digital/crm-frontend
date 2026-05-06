@@ -6,9 +6,10 @@ import {
 	type NegociacaoFilters,
 	normalizeNegociacaoFilters,
 } from "#/features/cs/negociacoes/negociacoes-types";
-import { VendasFilters } from "#/features/cs/vendas/vendas-filters";
+import { VendasFilters } from "#/features/cs/vendas/vendas-filters/vendas-filters";
 import { useVendedores } from "#/features/cs/vendas/vendas-hooks";
 import { useListPage } from "#/hooks/use-list-page";
+import { getErrorMessage } from "#/lib/api-errors";
 
 const DEFAULT_FILTERS: NegociacaoFilters = {};
 
@@ -50,7 +51,7 @@ export function VendasListaTabPage() {
 			/>
 			{error ? (
 				<InlineErrorAlert>
-					Erro ao carregar vendas: {(error as Error).message}
+					Erro ao carregar vendas: {getErrorMessage(error)}
 				</InlineErrorAlert>
 			) : (
 				<NegociacoesList

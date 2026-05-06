@@ -5,6 +5,7 @@ import { TrocaEnderecoFilterBar } from "#/features/cs/troca-de-endereco/troca-en
 import { useTrocaEndereco } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
 import type { TrocaEnderecoFilters } from "#/features/cs/troca-de-endereco/troca-endereco-types";
 import { useListPage } from "#/hooks/use-list-page";
+import { getErrorMessage } from "#/lib/api-errors";
 
 const DEFAULT_FILTERS: TrocaEnderecoFilters = {};
 
@@ -36,7 +37,7 @@ export function TrocaDeEnderecoPage() {
 
 			{error ? (
 				<InlineErrorAlert>
-					Erro ao carregar trocas de endereço: {(error as Error).message}
+					Erro ao carregar trocas de endereço: {getErrorMessage(error)}
 				</InlineErrorAlert>
 			) : (
 				<TrocaEnderecoList

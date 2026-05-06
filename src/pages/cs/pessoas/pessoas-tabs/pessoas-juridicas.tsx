@@ -11,6 +11,7 @@ import {
 } from "#/features/cs/pessoas/pessoas-types";
 import type { Empresas } from "#/generated/types/nocobase/empresas";
 import { useListPage } from "#/hooks/use-list-page";
+import { getErrorMessage } from "#/lib/api-errors";
 
 export function PessoasJuridicasTabPage() {
 	const { page, pageSize, filters, setPage, setPageSize, handleFilterChange } =
@@ -31,7 +32,7 @@ export function PessoasJuridicasTabPage() {
 	if (error) {
 		return (
 			<InlineErrorAlert>
-				Erro ao carregar: {(error as Error).message}
+				Erro ao carregar: {getErrorMessage(error)}
 			</InlineErrorAlert>
 		);
 	}

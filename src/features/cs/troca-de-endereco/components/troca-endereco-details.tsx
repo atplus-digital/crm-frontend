@@ -12,6 +12,7 @@ import {
 	TROCAENDERECO_STATUS_LABELS,
 	TROCAENDERECO_TAXAINSTALACAO_LABELS,
 } from "#/generated/types/nocobase/troca-endereco";
+import { getErrorMessage } from "#/lib/api-errors";
 import { formatDatePtBR, formatPhone } from "#/lib/utils";
 import { routePaths } from "#/routes/route-paths";
 
@@ -31,7 +32,7 @@ export function TrocaEnderecoDetailPage() {
 				<div className="mx-auto max-w-400 p-4">
 					<InlineErrorAlert>
 						Erro ao carregar detalhes da troca de endereço:{" "}
-						{(error as Error).message}
+						{getErrorMessage(error)}
 					</InlineErrorAlert>
 				</div>
 			</div>

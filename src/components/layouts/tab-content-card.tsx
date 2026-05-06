@@ -9,6 +9,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "#/components/ui/card";
+import { getErrorMessage } from "#/lib/api-errors";
 import { TabContentSkeleton } from "./tab-content-skeleton";
 
 interface TabContentCardProps {
@@ -99,7 +100,7 @@ export function TabContentCard({
 	if (error) {
 		return (
 			<InlineErrorAlert>
-				{errorMessage ?? `Erro ao carregar: ${error.message}`}
+				{errorMessage ?? `Erro ao carregar: ${getErrorMessage(error)}`}
 			</InlineErrorAlert>
 		);
 	}

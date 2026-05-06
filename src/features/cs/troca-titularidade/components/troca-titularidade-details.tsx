@@ -4,6 +4,7 @@ import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Skeleton } from "#/components/ui/skeleton";
 import { CardSectionSkeleton } from "#/features/cs/components/detail-skeleton";
 import { useTrocaTitularidadeById } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
+import { getErrorMessage } from "#/lib/api-errors";
 import { routePaths } from "#/routes/route-paths";
 import {
 	AddressSection,
@@ -30,8 +31,7 @@ export function TrocaTitularidadeDetailPage() {
 			<div className="flex-1 overflow-auto bg-background">
 				<div className="mx-auto max-w-400 p-4">
 					<InlineErrorAlert>
-						Erro ao carregar detalhes da transferência:{" "}
-						{(error as Error).message}
+						Erro ao carregar detalhes da transferência: {getErrorMessage(error)}
 					</InlineErrorAlert>
 				</div>
 			</div>

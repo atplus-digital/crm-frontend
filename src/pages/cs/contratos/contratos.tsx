@@ -10,6 +10,7 @@ import {
 	toContratoFilters,
 } from "#/features/cs/contratos/contratos-types";
 import { useListPage } from "#/hooks/use-list-page";
+import { getErrorMessage } from "#/lib/api-errors";
 
 export function ContratosPage() {
 	const {
@@ -37,7 +38,7 @@ export function ContratosPage() {
 		<PageLayout title="Contratos" subtitle="Contratos encontrados no IXC">
 			{error ? (
 				<InlineErrorAlert>
-					Erro ao carregar contratos: {(error as Error).message}
+					Erro ao carregar contratos: {getErrorMessage(error)}
 				</InlineErrorAlert>
 			) : (
 				<ContratosTable

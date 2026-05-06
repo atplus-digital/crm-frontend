@@ -1,6 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import type { ReactNode } from "react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { getErrorMessage } from "#/lib/api-errors";
 import { cn } from "#/lib/utils";
 import { CommentSkeleton } from "./negociacao-comentarios-skeleton";
 
@@ -43,7 +44,7 @@ export function CommentList<T extends CommentItem>({
 	if (error) {
 		return (
 			<InlineErrorAlert>
-				Erro ao carregar comentários: {(error as Error).message}
+				Erro ao carregar comentários: {getErrorMessage(error)}
 			</InlineErrorAlert>
 		);
 	}

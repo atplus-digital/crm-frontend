@@ -9,6 +9,7 @@ import {
 	normalizeNegociacaoFilters,
 } from "#/features/cs/negociacoes/negociacoes-types";
 import { useListPage } from "#/hooks/use-list-page";
+import { getErrorMessage } from "#/lib/api-errors";
 
 const DEFAULT_FILTERS: NegociacaoFilters = {};
 
@@ -51,7 +52,7 @@ export function NegociacoesPage() {
 				<ListaFilters filters={filters} onFilter={handleFilterChange} />
 				{error ? (
 					<InlineErrorAlert>
-						Erro ao carregar negociações: {(error as Error).message}
+						Erro ao carregar negociações: {getErrorMessage(error)}
 					</InlineErrorAlert>
 				) : (
 					<NegociacoesList

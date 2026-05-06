@@ -11,6 +11,7 @@ import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/layouts/page-layout";
 import { useContratoById } from "#/features/cs/contratos/contratos-hooks";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
+import { getErrorMessage } from "#/lib/api-errors";
 import { routePaths } from "#/routes/route-paths";
 
 export interface ContratoDetailOutletContext {
@@ -28,7 +29,7 @@ export function ContratoDetailPage() {
 			<div className="flex-1 overflow-auto bg-background">
 				<div className="mx-auto max-w-400 p-4">
 					<InlineErrorAlert>
-						Erro ao carregar contrato: {(error as Error).message}
+						Erro ao carregar contrato: {getErrorMessage(error)}
 					</InlineErrorAlert>
 				</div>
 			</div>

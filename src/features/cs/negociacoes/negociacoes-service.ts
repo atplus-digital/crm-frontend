@@ -5,6 +5,7 @@ import type {
 	NegociacoesItens,
 	Pacotes,
 } from "#/generated/types/nocobase/index";
+import { getErrorMessage } from "#/lib/api-errors";
 import {
 	buildFilter,
 	eq,
@@ -138,8 +139,7 @@ export async function fetchNegociacoes(
 			meta: response.meta,
 		};
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch negociações", { params, error: message });
 		throw error;
 	}
@@ -174,8 +174,7 @@ export async function fetchNegociacaoById(
 		}
 		return record as unknown as NegociacaoWithRelations;
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch negociação by ID", { id, error: message });
 		throw error;
 	}
@@ -196,8 +195,7 @@ export async function fetchNegociacaoItens(
 			meta: response.meta,
 		};
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch negociação itens", {
 			negociacaoId,
 			error: message,
@@ -221,8 +219,7 @@ export async function fetchNegociacaoAnexos(
 			meta: response.meta,
 		};
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch negociação anexos", {
 			negociacaoId,
 			error: message,
@@ -253,8 +250,7 @@ export async function fetchNegociacaoComentarios(
 			meta: response.meta,
 		};
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch negociação comentários", {
 			negociacaoId,
 			error: message,
@@ -278,8 +274,7 @@ export async function fetchNegociacaoPacotes(
 			meta: response.meta,
 		};
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch negociação pacotes", {
 			negociacaoId,
 			error: message,
@@ -304,8 +299,7 @@ export async function createNegociacao(
 		const result = await nocobaseRepository.create("t_negociacoes", payload);
 		return result as unknown as Negociacao;
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to create negociação", { data, error: message });
 		throw error;
 	}
@@ -332,8 +326,7 @@ export async function updateNegociacao(
 		);
 		return result as unknown as Negociacao;
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to update negociação", { id, error: message });
 		throw error;
 	}
@@ -343,8 +336,7 @@ export async function deleteNegociacao(id: number): Promise<void> {
 	try {
 		await nocobaseRepository.delete("t_negociacoes", id);
 	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Erro desconhecido";
+		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to delete negociação", { id, error: message });
 		throw error;
 	}

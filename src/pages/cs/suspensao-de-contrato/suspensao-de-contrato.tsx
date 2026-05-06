@@ -5,6 +5,7 @@ import { SuspensaoContratoFilterBar as FilterBar } from "#/features/cs/suspensao
 import { useSuspensaoContrato } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks";
 import type { SuspensaoContratoFilters } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { useListPage } from "#/hooks/use-list-page";
+import { getErrorMessage } from "#/lib/api-errors";
 
 const DEFAULT_FILTERS: SuspensaoContratoFilters = {};
 
@@ -39,7 +40,7 @@ export function SuspensaoContratoPage() {
 
 			{error ? (
 				<InlineErrorAlert>
-					Erro ao carregar suspensões de contrato: {(error as Error).message}
+					Erro ao carregar suspensões de contrato: {getErrorMessage(error)}
 				</InlineErrorAlert>
 			) : (
 				<SuspensaoContratoList

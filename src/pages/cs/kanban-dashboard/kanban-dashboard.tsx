@@ -9,6 +9,7 @@ import {
 } from "#/features/cs/kanban-dashboard/kanban-dashboard-filters-url";
 import { useKanbanDashboardData } from "#/features/cs/kanban-dashboard/kanban-dashboard-hooks";
 import type { KanbanDashboardFilters as FiltersType } from "#/features/cs/kanban-dashboard/kanban-dashboard-types";
+import { getErrorMessage } from "#/lib/api-errors";
 
 export function KanbanDashboardPage() {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -62,7 +63,7 @@ export function KanbanDashboardPage() {
 				/>
 				{error ? (
 					<InlineErrorAlert>
-						Erro ao carregar dashboard: {(error as Error).message}
+						Erro ao carregar dashboard: {getErrorMessage(error)}
 					</InlineErrorAlert>
 				) : (
 					<KanbanBoard cards={cards} isLoading={isLoading} />
