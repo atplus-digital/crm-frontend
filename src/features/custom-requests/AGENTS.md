@@ -21,7 +21,17 @@ custom-requests/
 ├── errors.ts                       # Error classes
 ├── components/
 │   ├── index.ts                    # Component exports
-│   └── popup-request.tsx           # Dialog + button component for custom requests
+│   ├── popup-request.tsx           # Main wrapper component
+│   ├── popup-request.types.ts       # Types and interfaces
+│   ├── popup-request.utils.ts       # Utility functions
+│   ├── popup-request-dialog.tsx     # Dialog composition
+│   ├── popup-request-content.tsx    # Content renderer
+│   ├── popup-footer.tsx             # Footer buttons
+│   ├── popup-confirm-content.tsx    # Confirmation content
+│   ├── popup-loading-content.tsx    # Loading spinner content
+│   ├── popup-preparing-content.tsx  # Preparing message
+│   ├── popup-error-content.tsx      # Error display content
+│   └── popup-success-content.tsx    # Success response content
 ├── hooks/
 │   └── use-custom-requests.ts      # React Query hook
 ├── utils/
@@ -91,6 +101,23 @@ import { PopupRequest } from "#/features/custom-requests";
 <PopupRequest
   identifier="qualirun"
   onSuccess={(data) => console.log("Sucesso:", data)}
+>
+  Executar
+</PopupRequest>
+
+// With auto close on success (closes after 1.5s by default)
+<PopupRequest
+  identifier="qualirun"
+  autoCloseOnSuccess
+>
+  Executar
+</PopupRequest>
+
+// With custom auto close delay (3 seconds)
+<PopupRequest
+  identifier="qualirun"
+  autoCloseOnSuccess
+  autoCloseDelay={3000}
 >
   Executar
 </PopupRequest>
