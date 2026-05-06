@@ -15,9 +15,9 @@ const STATE_ICONS: Record<string, typeof Loader2Icon> = {
 const STATE_CLASSES: Record<MinimumLoadingState, string> = {
 	idle: "",
 	loading: "pointer-events-none",
-	success:
-		"pointer-events-none border-emerald-600/50 text-emerald-600 dark:text-emerald-500",
-	error: "border-destructive/50 text-destructive",
+	success: "pointer-events-none text-emerald-500 dark:text-emerald-600",
+	error:
+		"pointer-events-none border-destructive/50 text-destructive dark:text-destructive",
 };
 
 // ── Helpers ────────────────────────────────────────────────────────────
@@ -39,7 +39,7 @@ export function renderStateIcon(state: MinimumLoadingState) {
 
 	return (
 		<Icon
-			className={cn("size-4 shrink-0", state === "loading" && "animate-spin")}
+			className={cn("size-5 shrink-0", state === "loading" && "animate-spin")}
 			aria-hidden="true"
 		/>
 	);

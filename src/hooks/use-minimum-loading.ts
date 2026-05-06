@@ -7,8 +7,8 @@ export type MinimumLoadingState = "idle" | "loading" | "success" | "error";
 
 export function useMinimumLoading<TArgs extends unknown[], TResult>(
 	task: (...args: TArgs) => MaybePromise<TResult>,
-	minDurationMs = 400,
-	settleDurationMs = minDurationMs * 2,
+	minDurationMs = 350,
+	settleDurationMs = minDurationMs * 3,
 ) {
 	const [state, setState] = useState<MinimumLoadingState>("idle");
 	const pendingCountRef = useRef(0);
