@@ -7,15 +7,19 @@ import { getSuccessDisplayMessage, safeStringify } from "./popup-request.utils";
 
 interface PopupSuccessContentProps {
 	data: unknown;
+	identifier?: string;
 }
 
-export function PopupSuccessContent({ data }: PopupSuccessContentProps) {
+export function PopupSuccessContent({
+	data,
+	identifier,
+}: PopupSuccessContentProps) {
 	const [isExpanded, setIsExpanded] = useState(false);
 
 	const displayMessage = getSuccessDisplayMessage(data);
 
 	return (
-		<div className="space-y-4 grid">
+		<div className="space-y-2 grid">
 			<p className="text-sm mb-6 bg-muted p-2 rounded-lg text-foreground font-medium">
 				{displayMessage}
 			</p>
@@ -43,6 +47,9 @@ export function PopupSuccessContent({ data }: PopupSuccessContentProps) {
 					isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
 				)}
 			>
+				<span className="text-sm font-medium text-muted-foreground">
+					{identifier}
+				</span>
 				<pre className="rounded-lg bg-muted p-3 text-xs overflow-auto max-h-64">
 					{safeStringify(data)}
 				</pre>

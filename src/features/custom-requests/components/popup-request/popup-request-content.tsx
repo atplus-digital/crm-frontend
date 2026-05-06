@@ -9,12 +9,14 @@ interface PopupRequestContentProps {
 	dialogMode: DialogMode;
 	confirmMessage?: string;
 	mutation: PopupMutationState;
+	identifier: string;
 }
 
 export function PopupRequestContent({
 	dialogMode,
 	confirmMessage,
 	mutation,
+	identifier,
 }: PopupRequestContentProps) {
 	if (mutation.isPending) {
 		return <PopupLoadingContent />;
@@ -25,7 +27,7 @@ export function PopupRequestContent({
 	}
 
 	if (mutation.isSuccess && mutation.data != null) {
-		return <PopupSuccessContent data={mutation.data} />;
+		return <PopupSuccessContent data={mutation.data} identifier={identifier} />;
 	}
 
 	if (dialogMode === "result") {

@@ -1,7 +1,6 @@
 import {
 	Dialog,
 	DialogContent,
-	DialogDescription,
 	DialogHeader,
 	DialogTitle,
 } from "#/components/ui/dialog";
@@ -36,16 +35,20 @@ export function PopupRequestDialog({
 }: PopupRequestDialogProps) {
 	const dialogTitle = title ?? "Confirmar Envio";
 	const isLoading = mutation.isPending;
-
+	const isSuccess = mutation.isSuccess && mutation.data != null;
 	return (
 		<Dialog open={isOpen} onOpenChange={onOpenChange}>
 			<DialogContent className="sm:max-w-md">
 				<DialogHeader>
-					<DialogTitle>{dialogTitle}</DialogTitle>
-					<DialogDescription>Requisição: {identifier}</DialogDescription>
+					{isSuccess ? (
+						<DialogTitle>Sucesso</DialogTitle>
+					) : (
+						<DialogTitle>{dialogTitle}</DialogTitle>
+					)}
 				</DialogHeader>
 				<div className="min-h-16">
 					<PopupRequestContent
+						identifier={identifier}
 						dialogMode={dialogMode}
 						confirmMessage={confirmMessage}
 						mutation={mutation}
