@@ -1,17 +1,4 @@
-import {
-	ArrowRightLeft,
-	Calendar,
-	DollarSign,
-	FileWarning,
-	Hash,
-	MapPin,
-	Package,
-	Pause,
-	Plus,
-	RefreshCw,
-} from "lucide-react";
-import type { ActionItem } from "#/components/actions-menu";
-import { ActionsMenu } from "#/components/actions-menu";
+import { Calendar, DollarSign, Hash, Package } from "lucide-react";
 import { Card, CardContent, CardHeader } from "#/components/ui/card";
 import {
 	ContratoStatusBadge,
@@ -19,15 +6,7 @@ import {
 } from "#/features/cs/contratos/contrato-status-badge";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
-
-const CONTRATO_ACTIONS: readonly ActionItem[] = [
-	{ icon: Plus, label: "Nova Contratação" },
-	{ icon: ArrowRightLeft, label: "Transferir" },
-	{ icon: RefreshCw, label: "Renegociar" },
-	{ icon: MapPin, label: "Trocar Endereço" },
-	{ icon: Pause, label: "Suspender" },
-	{ icon: FileWarning, label: "Reter" },
-];
+import { ContratoDetalhesActions } from "./contrato-detalhes-actions";
 
 interface ContratoSummaryCardProps {
 	contrato: ContratoWithCliente;
@@ -55,7 +34,7 @@ export function ContratoSummaryCard({ contrato }: ContratoSummaryCardProps) {
 								{contrato.f_nc_cliente?.razao ?? "—"}
 							</h1>
 							<p className="text-sm font-bold text-muted-foreground">
-								#{contrato.id}
+								Id Ixc: #{contrato.id}
 							</p>
 						</div>
 					</div>
@@ -72,7 +51,7 @@ export function ContratoSummaryCard({ contrato }: ContratoSummaryCardProps) {
 							</span>
 							<InternetStatusBadge status={contrato.status_internet} />
 						</div>
-						<ActionsMenu actions={CONTRATO_ACTIONS} />
+						<ContratoDetalhesActions contrato={contrato} />
 					</div>
 				</div>
 			</CardHeader>
