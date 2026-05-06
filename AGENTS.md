@@ -1,6 +1,6 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-04-27 | Last verified: 2026-04-27 -->
+<!-- Last updated: 2026-05-06 | Last verified: 2026-05-06 -->
 
 # AGENTS.md — CRM AT+
 
