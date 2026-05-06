@@ -15,7 +15,12 @@ export function SidebarHeaderComponent() {
 					<SidebarMenuButton size="lg" asChild>
 						<Link to={routePaths.home}>
 							<div className="flex aspect-square size-9 items-center justify-center rounded-lg bg-primary dark:bg-transparent text-primary-foreground text-sm font-bold shadow-sm border border-border">
-								<img src="/logo.svg" alt="Logo" className="size-2/3" />
+								<img
+									src="/logo.svg"
+									alt="Logo"
+									className="size-2/3"
+									loading="lazy"
+								/>
 							</div>
 							<div className="flex flex-col gap-0.5 leading-none">
 								<span className="font-semibold">CRM AtPlus</span>
