@@ -23,7 +23,7 @@ export function TrocaDeEnderecoPage() {
 		defaultSort: ["-createdAt"],
 	});
 
-	const { data, error } = useTrocaEndereco({
+	const { data, error, isLoading, isFetching } = useTrocaEndereco({
 		page,
 		pageSize,
 		sort,
@@ -41,6 +41,8 @@ export function TrocaDeEnderecoPage() {
 			) : (
 				<TrocaEnderecoList
 					trocasEndereco={data?.data ?? []}
+					isLoading={isLoading || isFetching}
+					hasInitialQueryData={data !== undefined}
 					sort={sort}
 					onSort={handleSort}
 					pagination={{

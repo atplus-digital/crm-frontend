@@ -23,7 +23,7 @@ export function SuspensaoContratoPage() {
 		defaultSort: ["-createdAt"],
 	});
 
-	const { data, error } = useSuspensaoContrato({
+	const { data, error, isLoading, isFetching } = useSuspensaoContrato({
 		page,
 		pageSize,
 		sort,
@@ -44,6 +44,8 @@ export function SuspensaoContratoPage() {
 			) : (
 				<SuspensaoContratoList
 					suspensaoContratos={data?.data ?? []}
+					isLoading={isLoading || isFetching}
+					hasInitialQueryData={data !== undefined}
 					sort={sort}
 					onSort={handleSort}
 					pagination={{

@@ -21,7 +21,7 @@ export function PessoasFisicasTabPage() {
 
 	const apiFilters = toPessoaFisicaFilters(filters);
 
-	const { data, error } = usePessoasFisicas({
+	const { data, error, isLoading, isFetching } = usePessoasFisicas({
 		page,
 		pageSize,
 		sort: ["-createdAt"],
@@ -40,6 +40,8 @@ export function PessoasFisicasTabPage() {
 		<DataTableContainer<Pessoas, PessoaFisicaTableFilters>
 			columns={pfColumns}
 			data={(data?.data as unknown as Pessoas[]) ?? []}
+			isLoading={isLoading || isFetching}
+			hasInitialQueryData={data !== undefined}
 			total={data?.meta?.total ?? 0}
 			totalPages={data?.meta?.totalPage ?? 0}
 			onPageChange={setPage}

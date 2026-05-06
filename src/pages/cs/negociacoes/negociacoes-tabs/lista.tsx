@@ -21,7 +21,7 @@ export function NegociacoesListaTabPage() {
 
 	const apiFilters = normalizeNegociacaoFilters(filters);
 
-	const { data, error, refetch } = useNegociacoes({
+	const { data, error, refetch, isLoading, isFetching } = useNegociacoes({
 		page: 1,
 		pageSize: 100,
 		filters: apiFilters,
@@ -50,6 +50,8 @@ export function NegociacoesListaTabPage() {
 			) : (
 				<NegociacoesList
 					negociacoes={negociacoes}
+					isLoading={isLoading || isFetching}
+					hasInitialQueryData={data !== undefined}
 					totalCount={data?.meta?.total ?? 0}
 					pageSize={data?.meta?.pageSize ?? 15}
 					onRefresh={() => refetch()}

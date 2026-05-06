@@ -26,7 +26,7 @@ export function ContratosPage() {
 		defaultSort: ["-ultima_atualizacao"],
 	});
 
-	const { data, error } = useContratos({
+	const { data, error, isLoading, isFetching } = useContratos({
 		page,
 		pageSize,
 		filters: toContratoFilters(filters),
@@ -42,6 +42,8 @@ export function ContratosPage() {
 			) : (
 				<ContratosTable
 					contratos={data?.data ?? []}
+					isLoading={isLoading || isFetching}
+					hasInitialQueryData={data !== undefined}
 					sort={sort}
 					onSort={handleSort}
 					pagination={{

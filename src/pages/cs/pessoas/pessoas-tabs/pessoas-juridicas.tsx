@@ -21,7 +21,7 @@ export function PessoasJuridicasTabPage() {
 
 	const apiFilters = toPessoaJuridicaFilters(filters);
 
-	const { data, error } = usePessoasJuridicas({
+	const { data, error, isLoading, isFetching } = usePessoasJuridicas({
 		page,
 		pageSize,
 		sort: ["-createdAt"],
@@ -40,6 +40,8 @@ export function PessoasJuridicasTabPage() {
 		<DataTableContainer<Empresas, PessoaJuridicaTableFilters>
 			columns={pjColumns}
 			data={(data?.data as unknown as Empresas[]) ?? []}
+			isLoading={isLoading || isFetching}
+			hasInitialQueryData={data !== undefined}
 			total={data?.meta?.total ?? 0}
 			totalPages={data?.meta?.totalPage ?? 0}
 			onPageChange={setPage}

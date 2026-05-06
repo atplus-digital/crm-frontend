@@ -23,7 +23,7 @@ export function TrocaTitularidadePage() {
 		defaultSort: ["-createdAt"],
 	});
 
-	const { data, error } = useTrocaTitularidade({
+	const { data, error, isLoading, isFetching } = useTrocaTitularidade({
 		page,
 		pageSize,
 		sort,
@@ -48,6 +48,8 @@ export function TrocaTitularidadePage() {
 			) : (
 				<TrocaTitularidadeList
 					trocasTitularidade={data?.data ?? []}
+					isLoading={isLoading || isFetching}
+					hasInitialQueryData={data !== undefined}
 					sort={sort}
 					onSort={handleSort}
 					pagination={{
