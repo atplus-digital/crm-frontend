@@ -1,4 +1,8 @@
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import {
+	keepPreviousData,
+	queryOptions,
+	useQuery,
+} from "@tanstack/react-query";
 import type {
 	TrocaEndereco,
 	TrocaEnderecoRelations,
@@ -49,6 +53,7 @@ export const trocaEnderecoQueryOptions = (
 
 	return queryOptions({
 		queryKey: ["troca-endereco", params] as const,
+		placeholderData: keepPreviousData,
 		queryFn: async () => {
 			const response = await nocobaseRepository.list(
 				"t_troca_endereco" as "users",

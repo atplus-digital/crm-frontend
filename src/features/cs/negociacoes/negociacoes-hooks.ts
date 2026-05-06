@@ -1,4 +1,8 @@
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import {
+	keepPreviousData,
+	queryOptions,
+	useQuery,
+} from "@tanstack/react-query";
 import {
 	createNegociacao,
 	deleteNegociacao,
@@ -16,6 +20,7 @@ export const negociacoesQueryOptions = (params: NegociacaoListParams) =>
 	queryOptions({
 		queryKey: ["cs", "negociacoes", params] as const,
 		queryFn: () => fetchNegociacoes(params),
+		placeholderData: keepPreviousData,
 		staleTime: 10_000,
 	});
 

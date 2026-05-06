@@ -17,6 +17,8 @@ interface PaginationInfo {
 
 interface TrocaEnderecoListProps {
 	trocasEndereco: TrocaEnderecoWithRelations[];
+	isLoading?: boolean;
+	hasInitialQueryData?: boolean;
 	sort: string[];
 	onSort: (field: string) => void;
 	pagination: PaginationInfo;
@@ -101,6 +103,8 @@ function getColumns(): ColumnDef<TrocaEnderecoWithRelations, unknown>[] {
 
 export function TrocaEnderecoList({
 	trocasEndereco,
+	isLoading,
+	hasInitialQueryData,
 	sort,
 	onSort,
 	pagination,
@@ -133,6 +137,8 @@ export function TrocaEnderecoList({
 		<DataTableContainer
 			columns={columns}
 			data={trocasEndereco}
+			isLoading={isLoading}
+			hasInitialQueryData={hasInitialQueryData}
 			total={pagination.total}
 			totalPages={pagination.totalPages}
 			emptyMessage="Nenhuma troca de endereço encontrada"

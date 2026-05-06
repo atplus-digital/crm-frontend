@@ -8,6 +8,8 @@ import {
 
 export interface NegociacoesListProps {
 	negociacoes?: NegociacaoItem[];
+	isLoading?: boolean;
+	hasInitialQueryData?: boolean;
 	totalCount?: number;
 	pageSize?: number;
 	onRefresh?: () => void;
@@ -18,6 +20,8 @@ export interface NegociacoesListProps {
 
 export function NegociacoesList({
 	negociacoes = [],
+	isLoading,
+	hasInitialQueryData,
 	totalCount = 0,
 	pageSize = 15,
 	onRefresh,
@@ -29,6 +33,8 @@ export function NegociacoesList({
 		<DataTableContainer
 			columns={columns}
 			data={negociacoes}
+			isLoading={isLoading}
+			hasInitialQueryData={hasInitialQueryData}
 			total={totalCount}
 			initialPageSize={pageSize}
 			emptyMessage="Nenhuma negociação encontrada"

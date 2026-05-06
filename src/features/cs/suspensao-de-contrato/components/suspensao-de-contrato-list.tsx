@@ -20,6 +20,8 @@ interface PaginationInfo {
 
 interface SuspensaoContratoListProps {
 	suspensaoContratos: SuspensaoContratoWithRelations[];
+	isLoading?: boolean;
+	hasInitialQueryData?: boolean;
 	sort: string[];
 	onSort: (field: string) => void;
 	pagination: PaginationInfo;
@@ -95,6 +97,8 @@ function getColumns(): ColumnDef<SuspensaoContratoWithRelations, unknown>[] {
 
 export function SuspensaoContratoList({
 	suspensaoContratos,
+	isLoading,
+	hasInitialQueryData,
 	sort,
 	onSort,
 	pagination,
@@ -127,6 +131,8 @@ export function SuspensaoContratoList({
 		<DataTableContainer
 			columns={columns}
 			data={suspensaoContratos}
+			isLoading={isLoading}
+			hasInitialQueryData={hasInitialQueryData}
 			total={pagination.total}
 			totalPages={pagination.totalPages}
 			emptyMessage="Nenhuma suspensão de contrato encontrada"

@@ -1,4 +1,8 @@
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import {
+	keepPreviousData,
+	queryOptions,
+	useQuery,
+} from "@tanstack/react-query";
 import {
 	fetchContratoAtendimentos,
 	fetchContratoById,
@@ -16,6 +20,7 @@ export const contratosQueryOptions = (params: ContratoListParams) =>
 	queryOptions({
 		queryKey: ["cs", "contratos", params] as const,
 		queryFn: () => fetchContratos(params),
+		placeholderData: keepPreviousData,
 		staleTime: 10_000,
 	});
 

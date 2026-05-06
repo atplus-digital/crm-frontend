@@ -18,6 +18,8 @@ interface PaginationInfo {
 
 interface TrocaTitularidadeListProps {
 	trocasTitularidade: CrmTrocaTitularidadeWithRelations[];
+	isLoading?: boolean;
+	hasInitialQueryData?: boolean;
 	sort: string[];
 	onSort: (field: string) => void;
 	pagination: PaginationInfo;
@@ -109,6 +111,8 @@ function getColumns(): ColumnDef<CrmTrocaTitularidadeWithRelations, unknown>[] {
 
 export function TrocaTitularidadeList({
 	trocasTitularidade,
+	isLoading,
+	hasInitialQueryData,
 	sort,
 	onSort,
 	pagination,
@@ -141,6 +145,8 @@ export function TrocaTitularidadeList({
 		<DataTableContainer
 			columns={columns}
 			data={trocasTitularidade}
+			isLoading={isLoading}
+			hasInitialQueryData={hasInitialQueryData}
 			total={pagination.total}
 			totalPages={pagination.totalPages}
 			emptyMessage="Nenhuma transferência de titularidade encontrada"

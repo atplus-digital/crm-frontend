@@ -1,4 +1,8 @@
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import {
+	keepPreviousData,
+	queryOptions,
+	useQuery,
+} from "@tanstack/react-query";
 import { buildFilter, eq, gte, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
 import type {
@@ -36,6 +40,7 @@ export const suspensaoContratoQueryOptions = (
 
 	return queryOptions({
 		queryKey: ["suspensao-contrato", params] as const,
+		placeholderData: keepPreviousData,
 		queryFn: async () => {
 			const response = await nocobaseRepository.list("t_suspensao_contrato", {
 				page,

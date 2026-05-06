@@ -1,4 +1,8 @@
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import {
+	keepPreviousData,
+	queryOptions,
+	useQuery,
+} from "@tanstack/react-query";
 import type {
 	CrmTrocaTitularidade,
 	CrmTrocaTitularidadeRelations,
@@ -48,6 +52,7 @@ export const trocaTitularidadeQueryOptions = (
 
 	return queryOptions({
 		queryKey: ["troca-titularidade", params] as const,
+		placeholderData: keepPreviousData,
 		queryFn: async () => {
 			const response = await nocobaseRepository.list(
 				"t_crm_troca_titularidade",

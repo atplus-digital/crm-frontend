@@ -1,4 +1,8 @@
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import {
+	keepPreviousData,
+	queryOptions,
+	useQuery,
+} from "@tanstack/react-query";
 import {
 	createPessoaFisica,
 	createPessoaJuridica,
@@ -18,6 +22,7 @@ export const pessoasFisicasQueryOptions = (params: PessoaFisicaListParams) =>
 	queryOptions({
 		queryKey: ["cs", "pessoas", "fisicas", params] as const,
 		queryFn: () => fetchPessoasFisicas(params),
+		placeholderData: keepPreviousData,
 		staleTime: 10_000,
 	});
 
@@ -31,6 +36,7 @@ export const pessoasJuridicasQueryOptions = (
 	queryOptions({
 		queryKey: ["cs", "pessoas", "juridicas", params] as const,
 		queryFn: () => fetchPessoasJuridicas(params),
+		placeholderData: keepPreviousData,
 		staleTime: 10_000,
 	});
 
