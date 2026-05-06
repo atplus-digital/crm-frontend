@@ -1,4 +1,5 @@
 import type { UseMutationResult } from "@tanstack/react-query";
+import type { CustomRequestErrorCode } from "#/features/custom-requests/errors";
 import type {
 	CustomRequestIdentifier,
 	CustomRequestPayload,
@@ -55,7 +56,7 @@ export interface PopupRequestProps<I extends CustomRequestIdentifier> {
 export interface ErrorVisualizationData {
 	message: string;
 	status?: number;
-	code?: import("../../errors").CustomRequestErrorCode;
+	code?: CustomRequestErrorCode;
 	details?: string;
 	validationIssues?: Array<{
 		path: string;
