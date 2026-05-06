@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-27 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-06 -->
 
 # AGENTS.md — cs
 
@@ -19,8 +19,12 @@ Customer Success domain module — contracts, negotiations, and people flows (ty
 | `contratos/`                         | Contract subdomain (types, service, hooks, table, filters)                   |
 | `negociacoes/`                       | Negotiation subdomain (types, service, hooks, kanban, list)                  |
 | `pessoas/`                           | Person subdomain (PF/PJ types, service, hooks, columns)                      |
-| `troca-titularidade/`                | Ownership transfer subdomain (has own `AGENTS.md`)                           |
 | `kanban-dashboard/`                  | Kanban Dashboard subdomain (unified TT/TE/SC/NEG board, has own `AGENTS.md`) |
+| `suspensao-de-contrato/`             | Contract suspension subdomain (list/detail, filters, status lifecycle)       |
+| `troca-de-endereco/`                 | Address change subdomain (list/detail, hooks, filters)                       |
+| `troca-titularidade/`                | Ownership transfer subdomain (ZapSign, status workflow, audit trail)         |
+| `vendas/`                            | Sales subdomain (sellers lookup, list columns, filters)                      |
+| `components/`                        | Cross-CS shared primitives (back-button, detail-field, comments-list, etc.)  |
 | `contratos/contratos-types.ts`       | Contract statuses and list/filter params                                     |
 | `contratos/contratos-service.ts`     | Contract fetch/detail using `ixcRepository`                                  |
 | `contratos/contratos-hooks.ts`       | React Query query options/hooks for contracts                                |
@@ -67,16 +71,3 @@ Customer Success domain module — contracts, negotiations, and people flows (ty
 | Domain table composition         | `src/features/cs/contratos/contratos-table.tsx`    |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
-<!-- AGENTS-GENERATED:END golden-samples -->
-
-| File                     | Purpose                                                                      |
-| ------------------------ | ---------------------------------------------------------------------------- |
-| `contratos/`             | Contract subdomain (types, service, hooks, table, filters)                   |
-| `negociacoes/`           | Negotiation subdomain (types, service, hooks, kanban, list)                  |
-| `pessoas/`               | Person subdomain (PF/PJ types, service, hooks, columns)                      |
-| `kanban-dashboard/`      | Kanban Dashboard subdomain (unified TT/TE/SC/NEG board, has own `AGENTS.md`) |
-| `suspensao-de-contrato/` | Contract suspension subdomain (list/detail, filters, status lifecycle)       |
-| `troca-de-endereco/`     | Address change subdomain (list/detail, hooks, filters)                       |
-| `troca-titularidade/`    | Ownership transfer subdomain (ZapSign, status workflow, audit trail)         |
-| `vendas/`                | Sales subdomain (sellers lookup, list columns, filters)                      |
-| `components/`            | Cross-CS shared primitives (back-button, detail-field, comments-list, etc.)  |

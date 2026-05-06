@@ -226,6 +226,7 @@ export interface PessoaFisica {
 - `./src/lib/AGENTS.md` — Pure utilities and formatting/filter/logging helpers
 - `./src/repositories/AGENTS.md` — NocoBase/IXC data access layer
 - `./src/routes/AGENTS.md` — React Router v7 route definitions and guard patterns
+- `./src/pages/AGENTS.md` — Page composition layer (assembles features into screens)
 - `./scripts/AGENTS.md` — Automation scripts for development workflow
 - `./scripts/generators/AGENTS.md` — Code generation framework (Listr2 CLI, shared lib, pipelines)
 - `./scripts/generators/src/AGENTS.md` — Shared library layer (logger, atomic-writer, workspace-locker)
@@ -259,4 +260,3 @@ export interface PessoaFisica {
 The nearest `AGENTS.md` wins. Explicit user prompts override files.
 
 - For TypeScript/JavaScript patterns, follow Biome config (`biome.json`)
-- `./src/pages/AGENTS.md` — Page composition layer (assembles features into screens)

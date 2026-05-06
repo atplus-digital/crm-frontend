@@ -59,7 +59,7 @@ export function PageLayout({
 		>
 			<main className="flex-1">
 				<div className="p-4">
-					<div className="space-y-4">
+					<div className="space-y-2">
 						{hasHeader ? (
 							<div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
 								<div className="flex items-center gap-4">

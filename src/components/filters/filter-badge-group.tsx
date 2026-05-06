@@ -122,7 +122,7 @@ export function FilterBadgeGroup<T extends string>({
 	return (
 		<div className={cn("flex flex-col gap-1 w-full min-w-0", className)}>
 			<span className="text-sm font-medium text-muted-foreground">{label}</span>
-			<div className="flex flex-nowrap items-center gap-1.5 overflow-x-auto md:flex-wrap">
+			<div className="flex flex-nowrap items-center gap-1.5 overflow-x-auto md:flex-wrap my-auto">
 				{showAllButton && (
 					<button
 						type="button"

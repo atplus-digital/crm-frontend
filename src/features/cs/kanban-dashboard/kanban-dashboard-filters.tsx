@@ -121,7 +121,7 @@ export function KanbanDashboardFilterBar({
 		<div ref={containerRef}>
 			<FilterLayout
 				className="space-y-4"
-				fieldsClassName="gap-y-2 gap-x-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+				fieldsClassName="gap-y-2 gap-x-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 place-items-stretch"
 				actions={
 					<div className="flex items-center gap-4">
 						<FilterActions
