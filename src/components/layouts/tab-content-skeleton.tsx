@@ -1,6 +1,6 @@
 import { Skeleton } from "#/components/ui/skeleton";
 
-export function ContractTabSkeleton() {
+export function TabContentSkeleton() {
 	return (
 		<>
 			<div className="flex items-center gap-2">

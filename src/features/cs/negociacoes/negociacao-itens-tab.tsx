@@ -1,11 +1,11 @@
 import type { ColumnDef } from "@tanstack/react-table";
+import { TabContentCard } from "#/components/layouts/tab-content-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
 	detailHeader,
 	detailLongTextCell,
 	detailMoneyCell,
 } from "#/components/table/detail-table-presets";
-import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useNegociacaoItens } from "#/features/cs/negociacoes/negociacoes-hooks";
 import type { NegociacoesItens } from "#/generated/types/nocobase/index";
 import { formatCurrency } from "#/lib/utils";
@@ -64,7 +64,7 @@ export function NegociacaoItensTab({ negociacaoId }: { negociacaoId: number }) {
 	});
 
 	return (
-		<ContractTabWrapper
+		<TabContentCard
 			title="Itens da Negociação"
 			isLoading={isLoading}
 			error={error}
@@ -74,6 +74,6 @@ export function NegociacaoItensTab({ negociacaoId }: { negociacaoId: number }) {
 			emptyColumns={ITENS_COLUMNS}
 		>
 			<DataTable table={table} />
-		</ContractTabWrapper>
+		</TabContentCard>
 	);
 }

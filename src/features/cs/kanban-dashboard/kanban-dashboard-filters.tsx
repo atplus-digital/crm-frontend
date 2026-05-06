@@ -123,14 +123,32 @@ export function KanbanDashboardFilterBar({
 				className="space-y-4"
 				fieldsClassName="gap-y-2 gap-x-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
 				actions={
-					<>
+					<div className="flex items-center gap-4">
+						<FilterActions
+							onApply={() => {
+								flushFilters(containerRef.current);
+							}}
+							onClear={handleClearFilters}
+							canClear={hasFilters}
+							clearVariant="ghost"
+						/>
+						<div className="flex items-center gap-2 ml-auto">
+							<Switch
+								id="current-user-toggle"
+								checked={filters.currentUser === true}
+								onCheckedChange={(checked) =>
+									onFilter({ ...filters, currentUser: checked })
+								}
+							/>
+							<Label htmlFor="current-user-toggle">Apenas meus itens</Label>
+						</div>
 						<div className="flex items-center gap-2">
 							<SlidersHorizontal className="size-4 text-muted-foreground" />
 							<Select
 								value={filters.sortField ?? "createdAt_desc"}
 								onValueChange={handleSortChange}
 							>
-								<SelectTrigger className="h-8 w-[180px]">
+								<SelectTrigger className="h-8 w-45">
 									<SelectValue placeholder="Ordenar por" />
 								</SelectTrigger>
 								<SelectContent>
@@ -142,15 +160,7 @@ export function KanbanDashboardFilterBar({
 								</SelectContent>
 							</Select>
 						</div>
-						<FilterActions
-							onApply={() => {
-								flushFilters(containerRef.current);
-							}}
-							onClear={handleClearFilters}
-							canClear={hasFilters}
-							clearVariant="ghost"
-						/>
-					</>
+					</div>
 				}
 			>
 				<FilterInputField
@@ -182,16 +192,6 @@ export function KanbanDashboardFilterBar({
 					showAllButton={false}
 					allActive
 				/>
-				<div className="flex items-center gap-2 pt-6">
-					<Switch
-						id="current-user-toggle"
-						checked={filters.currentUser === true}
-						onCheckedChange={(checked) =>
-							onFilter({ ...filters, currentUser: checked })
-						}
-					/>
-					<Label htmlFor="current-user-toggle">Apenas meus itens</Label>
-				</div>
 			</FilterLayout>
 		</div>
 	);

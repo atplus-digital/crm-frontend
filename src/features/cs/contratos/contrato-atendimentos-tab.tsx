@@ -1,6 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
 import { BasicTableCard } from "#/components/basic-table-card";
+import { TabContentCard } from "#/components/layouts/tab-content-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
 	detailActionCell,
@@ -10,7 +11,6 @@ import {
 } from "#/components/table/detail-table-presets";
 import { Badge, type BadgeVariant } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
-import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useContratoAtendimentos } from "#/features/cs/contratos/contratos-hooks";
 import type { AtendimentoIXC } from "#/features/cs/contratos/contratos-types";
 import { SUTICKET_SUSTATUS_LABELS } from "#/generated/types/d_db_ixcsoft/su-ticket";
@@ -151,7 +151,7 @@ export function ContratoAtendimentosTab({
 					))}
 				</div>
 			)}
-			<ContractTabWrapper
+			<TabContentCard
 				title="Atendimentos"
 				count={atendimentos.length}
 				isLoading={isLoading}
@@ -162,7 +162,7 @@ export function ContratoAtendimentosTab({
 				emptyColumns={ATENDIMENTO_COLUMNS}
 			>
 				<DataTable table={table} />
-			</ContractTabWrapper>
+			</TabContentCard>
 		</div>
 	);
 }

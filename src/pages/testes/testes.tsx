@@ -1,4 +1,4 @@
-import { PageLayout } from "#/components/page-layout/page-layout";
+import { PageLayout } from "#/components/layouts/page-layout";
 import { PopupRequest } from "#/features/custom-requests";
 
 export function TestesPage() {

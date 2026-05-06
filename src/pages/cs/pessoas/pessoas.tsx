@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 import { Outlet } from "react-router";
-import { PageLayout } from "#/components/page-layout/page-layout";
+import { PageLayout } from "#/components/layouts/page-layout";
 import { Button } from "#/components/ui/button";
 
 export function CSPessoasPage() {

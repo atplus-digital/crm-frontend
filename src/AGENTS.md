@@ -84,6 +84,7 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 - `./src/lib/AGENTS.md` — Pure utilities and formatting/filter/logging helpers
 - `./src/repositories/AGENTS.md` — NocoBase/IXC data access layer
 - `./src/routes/AGENTS.md` — React Router v7 route definitions and guard patterns
+- `./src/pages/AGENTS.md` — Page composition layer (assembles features into screens)
 
 <!-- AGENTS-GENERATED:END scope-index -->
 

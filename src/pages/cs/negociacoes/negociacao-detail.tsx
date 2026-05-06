@@ -2,7 +2,7 @@ import { Database, FilePlus, FolderOpen, Smartphone } from "lucide-react";
 import { Outlet, useParams } from "react-router";
 import { BackButton } from "#/components/back-button";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { PageLayout } from "#/components/page-layout/page-layout";
+import { PageLayout } from "#/components/layouts/page-layout";
 import { useNegociacao } from "#/features/cs/negociacoes/negociacoes-hooks";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { routePaths } from "#/routes/route-paths";

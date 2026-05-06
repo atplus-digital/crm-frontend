@@ -1,5 +1,5 @@
+import { TabContentCard } from "#/components/layouts/tab-content-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
-import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import {
 	TROCAS_TITULARIDADE_COLUMNS,
 	trocasTitularidadeTableColumns,
@@ -48,7 +48,7 @@ export function ContratoNegociacoesTab({
 
 	return (
 		<div className="flex flex-col gap-6">
-			<ContractTabWrapper
+			<TabContentCard
 				title="Troca de Titularidade"
 				description="Trocas de titularidade para este contrato"
 				isLoading={isLoadingTrocas}
@@ -60,9 +60,9 @@ export function ContratoNegociacoesTab({
 				count={trocas.length}
 			>
 				<DataTable table={trocasTable} />
-			</ContractTabWrapper>
+			</TabContentCard>
 
-			<ContractTabWrapper
+			<TabContentCard
 				title="Renovações"
 				description="Renovações para este contrato"
 				isLoading={isLoadingNegociacoes}
@@ -74,7 +74,7 @@ export function ContratoNegociacoesTab({
 				count={negociacoes.length}
 			>
 				<DataTable table={negociacoesTable} />
-			</ContractTabWrapper>
+			</TabContentCard>
 		</div>
 	);
 }

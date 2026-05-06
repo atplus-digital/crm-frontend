@@ -8,7 +8,7 @@ import {
 import { Outlet, useParams } from "react-router";
 import { BackButton } from "#/components/back-button";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { PageLayout } from "#/components/page-layout/page-layout";
+import { PageLayout } from "#/components/layouts/page-layout";
 import { useContratoById } from "#/features/cs/contratos/contratos-hooks";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
 import { routePaths } from "#/routes/route-paths";

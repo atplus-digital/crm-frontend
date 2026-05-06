@@ -1,11 +1,11 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { BasicTableCard } from "#/components/basic-table-card";
+import { TabContentCard } from "#/components/layouts/tab-content-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
 	detailIdCell,
 	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
-import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useContratoMovel } from "#/features/cs/contratos/contratos-hooks";
 import type { LinhaMovel } from "#/features/cs/contratos/contratos-types";
 import { LINHAMVNO_PORTABILIDADE_LABELS } from "#/generated/types/d_db_ixcsoft/linha-mvno";
@@ -87,7 +87,7 @@ export function ContratoMovelTab({ contratoId }: ContratoMovelTabProps) {
 					/>
 				</div>
 			)}
-			<ContractTabWrapper
+			<TabContentCard
 				title="Móvel"
 				count={linhas.length}
 				isLoading={isLoading}
@@ -98,7 +98,7 @@ export function ContratoMovelTab({ contratoId }: ContratoMovelTabProps) {
 				emptyColumns={MOVEL_COLUMNS}
 			>
 				<DataTable table={table} />
-			</ContractTabWrapper>
+			</TabContentCard>
 		</div>
 	);
 }

@@ -259,3 +259,4 @@ export interface PessoaFisica {
 The nearest `AGENTS.md` wins. Explicit user prompts override files.
 
 - For TypeScript/JavaScript patterns, follow Biome config (`biome.json`)
+- `./src/pages/AGENTS.md` — Page composition layer (assembles features into screens)

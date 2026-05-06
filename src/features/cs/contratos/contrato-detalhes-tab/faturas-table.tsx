@@ -1,11 +1,11 @@
 import type { ColumnDef } from "@tanstack/react-table";
+import { TabContentCard } from "#/components/layouts/tab-content-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
 	detailDateCell,
 	detailMoneyCell,
 	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
-import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import type { Fatura } from "#/features/cs/contratos/contratos-types";
 import { FNARECEBER_STATUS_LABELS } from "#/generated/types/d_db_ixcsoft/fn-areceber";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
@@ -59,7 +59,7 @@ export function FaturasTable({ faturas, isLoading, error }: FaturasTableProps) {
 	});
 
 	return (
-		<ContractTabWrapper
+		<TabContentCard
 			title="Últimas Faturas"
 			description="Últimas faturas geradas para este contrato"
 			isLoading={isLoading}
@@ -70,6 +70,6 @@ export function FaturasTable({ faturas, isLoading, error }: FaturasTableProps) {
 			emptyColumns={FATURA_EMPTY_COLUMNS}
 		>
 			<DataTable table={table} />
-		</ContractTabWrapper>
+		</TabContentCard>
 	);
 }

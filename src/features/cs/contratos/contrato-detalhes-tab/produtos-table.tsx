@@ -1,10 +1,10 @@
 import type { ColumnDef } from "@tanstack/react-table";
+import { TabContentCard } from "#/components/layouts/tab-content-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
 	detailMoneyCell,
 	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
-import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import type { ProdutoContrato } from "#/features/cs/contratos/contratos-types";
 import { formatCurrency } from "#/lib/utils";
 
@@ -43,7 +43,7 @@ export function ProdutosTable({
 	});
 
 	return (
-		<ContractTabWrapper
+		<TabContentCard
 			title="Produtos"
 			description="Produtos vinculados ao contrato"
 			isLoading={isLoading}
@@ -54,6 +54,6 @@ export function ProdutosTable({
 			emptyColumns={["Descrição", "Valor", "Quantidade"]}
 		>
 			<DataTable table={table} />
-		</ContractTabWrapper>
+		</TabContentCard>
 	);
 }

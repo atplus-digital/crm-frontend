@@ -9,9 +9,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "#/components/ui/card";
-import { ContractTabSkeleton } from "./contract-tab-skeleton";
+import { TabContentSkeleton } from "./tab-content-skeleton";
 
-interface ContractTabWrapperProps {
+interface TabContentCardProps {
 	/**
 	 * Título exibido no CardHeader
 	 */
@@ -58,7 +58,7 @@ interface ContractTabWrapperProps {
 	className?: string;
 }
 
-export function ContractTabWrapper({
+export function TabContentCard({
 	title,
 	description,
 	children,
@@ -70,7 +70,7 @@ export function ContractTabWrapper({
 	emptyMessage,
 	emptyColumns,
 	className,
-}: ContractTabWrapperProps) {
+}: TabContentCardProps) {
 	const renderTitle = (titleNode: string) => (
 		<CardTitle className="flex items-center gap-2">
 			{titleNode}
@@ -90,7 +90,7 @@ export function ContractTabWrapper({
 					{description && <CardDescription>{description}</CardDescription>}
 				</CardHeader>
 				<CardContent>
-					<ContractTabSkeleton />
+					<TabContentSkeleton />
 				</CardContent>
 			</Card>
 		);

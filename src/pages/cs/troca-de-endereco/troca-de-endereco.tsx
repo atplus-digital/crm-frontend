@@ -1,5 +1,5 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { PageLayout } from "#/components/page-layout/page-layout";
+import { PageLayout } from "#/components/layouts/page-layout";
 import { TrocaEnderecoList } from "#/features/cs/troca-de-endereco";
 import { TrocaEnderecoFilterBar } from "#/features/cs/troca-de-endereco/troca-endereco-filters";
 import { useTrocaEndereco } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";

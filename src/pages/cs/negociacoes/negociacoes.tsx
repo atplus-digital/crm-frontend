@@ -1,5 +1,5 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { PageLayout } from "#/components/page-layout/page-layout";
+import { PageLayout } from "#/components/layouts/page-layout";
 import { ListaFilters } from "#/features/cs/negociacoes/negociacoes-filters";
 import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
 import { NegociacoesList } from "#/features/cs/negociacoes/negociacoes-list";

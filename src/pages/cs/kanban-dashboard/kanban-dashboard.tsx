@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { PageLayout } from "#/components/page-layout/page-layout";
+import { PageLayout } from "#/components/layouts/page-layout";
 import { KanbanBoard } from "#/features/cs/kanban-dashboard/kanban-board";
 import { KanbanDashboardFilterBar } from "#/features/cs/kanban-dashboard/kanban-dashboard-filters";
 import {

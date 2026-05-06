@@ -1,5 +1,5 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { PageLayout } from "#/components/page-layout/page-layout";
+import { PageLayout } from "#/components/layouts/page-layout";
 import { TrocaTitularidadeList } from "#/features/cs/troca-titularidade";
 import { TrocaTitularidadeFilterBar } from "#/features/cs/troca-titularidade/troca-titularidade-filters";
 import { useTrocaTitularidade } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";

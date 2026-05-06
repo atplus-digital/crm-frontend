@@ -1,13 +1,13 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { StatusBadge } from "#/components/badges/status-badge";
 import { BasicTableCard } from "#/components/basic-table-card";
+import { TabContentCard } from "#/components/layouts/tab-content-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
 	detailDateCell,
 	detailLongTextCell,
 	detailShortTextCell,
 } from "#/components/table/detail-table-presets";
-import { ContractTabWrapper } from "#/features/cs/components/contract-tab-wrapper";
 import { useContratoRegistros } from "#/features/cs/contratos/contratos-hooks";
 import type { RegistroContato } from "#/features/cs/contratos/contratos-types";
 import {
@@ -121,7 +121,7 @@ export function ContratoRegistrosTab({
 					))}
 				</div>
 			)}
-			<ContractTabWrapper
+			<TabContentCard
 				title="Registros de Contato"
 				count={registros.length}
 				isLoading={isLoading}
@@ -132,7 +132,7 @@ export function ContratoRegistrosTab({
 				emptyColumns={REGISTROS_COLUMNS}
 			>
 				<DataTable table={table} />
-			</ContractTabWrapper>
+			</TabContentCard>
 		</div>
 	);
 }

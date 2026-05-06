@@ -24,7 +24,7 @@ export function FilterLayout({
 			>
 				{children}
 			</div>
-			{actions}
+			<div className="w-full">{actions}</div>
 		</div>
 	);
 }
