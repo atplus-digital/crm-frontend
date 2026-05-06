@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { KanbanColumn } from "./kanban-column";
 import type {
 	KanbanDashboardCard,
@@ -45,12 +46,12 @@ function groupCardsByStatus(
 }
 
 export function KanbanBoard({ cards, isLoading }: KanbanBoardProps) {
+	const sortedCards = useMemo(() => sortCardsByCreatedAtDesc(cards), [cards]);
+	const grouped = useMemo(() => groupCardsByStatus(sortedCards), [sortedCards]);
+
 	if (isLoading) {
 		return <KanbanSkeleton />;
 	}
-
-	const sortedCards = sortCardsByCreatedAtDesc(cards);
-	const grouped = groupCardsByStatus(sortedCards);
 
 	return (
 		<div className="overflow-x-auto pb-2">

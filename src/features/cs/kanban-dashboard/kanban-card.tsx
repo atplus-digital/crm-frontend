@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { memo, useCallback } from "react";
 import { useNavigate } from "react-router";
 import {
 	Tooltip,
@@ -18,35 +19,42 @@ interface KanbanCardProps {
 	card: KanbanDashboardCard;
 }
 
-export function KanbanCard({ card }: KanbanCardProps) {
+const routeConfig = {
+	tt: { route: "cs_troca_de_titularidade_id" as const },
+	te: { route: "cs_troca_de_endereco_id" as const },
+	sc: { route: "cs_suspensao_de_contrato_id" as const },
+	neg: { route: "cs_negociacoes_id" as const },
+};
+
+export const KanbanCard = memo(function KanbanCard({ card }: KanbanCardProps) {
 	const navigate = useNavigate();
 
 	const badgeInfo = getCardBadgeInfo(card);
 	const displayName = getCardDisplayName(card);
 	const responsible = getCardResponsible(card);
 
-	const routeConfig = {
-		tt: { route: "cs_troca_de_titularidade_id" as const },
-		te: { route: "cs_troca_de_endereco_id" as const },
-		sc: { route: "cs_suspensao_de_contrato_id" as const },
-		neg: { route: "cs_negociacoes_id" as const },
-	};
+	const handleClick = useCallback(() => {
+		navigate(
+			buildRoute(routeConfig[card.sourceCollection].route, { id: card.id }),
+		);
+	}, [card.id, card.sourceCollection, navigate]);
 
-	const { route } = routeConfig[card.sourceCollection];
-
-	const handleClick = () => {
-		navigate(buildRoute(route, { id: card.id }));
-	};
-
-	const handleKeyDown = (e: React.KeyboardEvent) => {
-		if (e.key === "Enter" || e.key === " ") {
-			e.preventDefault();
-			navigate(buildRoute(route, { id: card.id }));
-		}
-	};
+	const handleKeyDown = useCallback(
+		(e: React.KeyboardEvent) => {
+			if (e.key === "Enter" || e.key === " ") {
+				e.preventDefault();
+				navigate(
+					buildRoute(routeConfig[card.sourceCollection].route, {
+						id: card.id,
+					}),
+				);
+			}
+		},
+		[card.id, card.sourceCollection, navigate],
+	);
 
 	return (
-		// biome-ignore lint/a11y/useSemanticElements: Card component needs to be a clickable container, not a button element
+		// biome-ignore lint/a11y/useSemanticElements: Card component needs to be a clickable container
 		<div
 			className={cn(
 				"cursor-pointer rounded-lg bg-card p-3 shadow-sm transition-shadow",
@@ -92,4 +100,4 @@ export function KanbanCard({ card }: KanbanCardProps) {
 			</div>
 		</div>
 	);
-}
+});
