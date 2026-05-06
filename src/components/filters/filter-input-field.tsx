@@ -1,10 +1,4 @@
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Input } from "#/components/ui/input";
 import { cn } from "#/lib/utils";
 
@@ -74,9 +68,8 @@ function FilterInputFieldComponent({
 		[delay],
 	);
 
-	// Expose flush for "Filtrar" button to apply pending changes immediately
 	const flushRef = useRef<() => void>(() => {});
-	useMemo(() => {
+	useEffect(() => {
 		flushRef.current = () => {
 			if (timeoutRef.current !== null) {
 				clearTimeout(timeoutRef.current);
@@ -88,7 +81,7 @@ function FilterInputFieldComponent({
 
 	// Attach flush to DOM node for parent access
 	const inputRef = useRef<HTMLInputElement>(null);
-	// biome-ignore lint/correctness/useExhaustiveDependencies: flushRef.current depends on localValue via useMemo
+	// biome-ignore lint/correctness/useExhaustiveDependencies: flushRef.current closes over localValue
 	useEffect(() => {
 		if (inputRef.current) {
 			(

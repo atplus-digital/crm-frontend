@@ -41,10 +41,10 @@ export function PopupErrorContent({ error }: PopupErrorContentProps) {
 								className="rounded-md border border-destructive/35 bg-destructive/5 p-2"
 							>
 								<div className="mb-1 flex items-center gap-2">
-									<Badge variant="outline" className="font-mono text-[11px]">
+									<Badge variant="outline" className="font-mono text-xs">
 										{issue.path}
 									</Badge>
-									<span className="text-[11px] opacity-80">{issue.code}</span>
+									<span className="text-xs opacity-80">{issue.code}</span>
 								</div>
 								<p className="text-xs leading-relaxed">{issue.message}</p>
 							</div>

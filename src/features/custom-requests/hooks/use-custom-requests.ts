@@ -6,8 +6,11 @@ import {
 	type CustomRequestRegistryKey,
 	customRequestsRegistry,
 } from "#/generated/custom-requests/generated-registry";
+import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";
 import { sendRequest } from "../utils/service";
+
+const log = createLogger("use-custom-requests:resolveCurrentUserData");
 
 type RequestIdentifierForKey<K extends CustomRequestRegistryKey> =
 	| K
@@ -124,7 +127,11 @@ export function useCustomRequest<I extends CustomRequestIdentifier>(
 				data: fullCurrentUser,
 			};
 			return fullCurrentUser;
-		} catch {
+		} catch (error) {
+			log.warn(
+				"Failed to resolve currentUser data from NocoBase, falling back to auth store",
+				error,
+			);
 			currentUserCacheRef.current = {
 				userId: authUser.id,
 				data: authUser,

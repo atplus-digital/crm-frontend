@@ -1,7 +1,12 @@
 import { PageLayout } from "#/components/layouts/page-layout";
+import { isDev } from "#/env";
 import { PopupRequest } from "#/features/custom-requests";
 
 export function TestesPage() {
+	if (!isDev) {
+		return null;
+	}
+
 	return (
 		<PageLayout title="Testes">
 			<div className="flex gap-4">

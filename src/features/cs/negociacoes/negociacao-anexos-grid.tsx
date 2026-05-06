@@ -1,5 +1,6 @@
 import { Paperclip } from "lucide-react";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { getErrorMessage } from "#/lib/api-errors";
 import { cn } from "#/lib/utils";
 import { AttachmentCard } from "./negociacao-anexos-card";
 import { AttachmentSkeleton } from "./negociacao-anexos-skeleton";
@@ -38,7 +39,7 @@ export function AttachmentGrid({
 	if (error) {
 		return (
 			<InlineErrorAlert>
-				Erro ao carregar anexos: {error.message}
+				Erro ao carregar anexos: {getErrorMessage(error)}
 			</InlineErrorAlert>
 		);
 	}
@@ -83,8 +84,20 @@ export function AttachmentGrid({
 	);
 }
 
+const GRID_COLUMNS_MAP: Record<string, string> = {
+	"1-1": "grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1",
+	"1-2": "grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2",
+	"1-3": "grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3",
+	"2-1": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1",
+	"2-2": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2",
+	"2-3": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+	"3-1": "grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1",
+	"3-2": "grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-2",
+	"3-3": "grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3",
+};
+
 const getGridClasses = (columns: { sm: number; lg: number }): string => {
-	const smCols = `sm:grid-cols-${columns.sm}`;
-	const lgCols = `lg:grid-cols-${columns.lg}`;
-	return `grid grid-cols-1 ${smCols} ${lgCols}`;
+	return (
+		GRID_COLUMNS_MAP[`${columns.sm}-${columns.lg}`] ?? GRID_COLUMNS_MAP["2-3"]
+	);
 };
