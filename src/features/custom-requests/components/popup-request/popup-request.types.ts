@@ -2,7 +2,7 @@ import type { UseMutationResult } from "@tanstack/react-query";
 import type {
 	CustomRequestIdentifier,
 	CustomRequestPayload,
-} from "../../hooks/use-custom-requests";
+} from "#/features/custom-requests/hooks/use-custom-requests";
 
 export type DialogMode = "confirm" | "result";
 

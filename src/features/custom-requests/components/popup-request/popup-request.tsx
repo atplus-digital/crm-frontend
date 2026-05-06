@@ -3,8 +3,8 @@ import {
 	getStateIcon,
 } from "#/components/async-button/async-button-styles";
 import { Button } from "#/components/ui/button";
+import type { CustomRequestIdentifier } from "#/features/custom-requests/hooks/use-custom-requests";
 import { cn } from "#/lib/utils";
-import type { CustomRequestIdentifier } from "../../hooks/use-custom-requests";
 import type { PopupRequestProps } from "./popup-request.types";
 import { PopupRequestDialog } from "./popup-request-dialog";
 import { usePopupRequest } from "./use-popup-request";

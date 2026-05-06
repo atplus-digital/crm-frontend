@@ -1,13 +1,17 @@
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
-import { useMinimumLoading } from "#/hooks/use-minimum-loading";
 import type {
 	CustomRequestIdentifier,
 	CustomRequestPayload,
-} from "../../hooks/use-custom-requests";
-import { useCustomRequest } from "../../hooks/use-custom-requests";
+} from "#/features/custom-requests/hooks/use-custom-requests";
+import { useCustomRequest } from "#/features/custom-requests/hooks/use-custom-requests";
+import { useMinimumLoading } from "#/hooks/use-minimum-loading";
+import { getErrorMessage } from "#/lib/api-errors";
+import { createLogger } from "#/lib/logger";
 import type { DialogMode } from "./popup-request.types";
 import { getSuccessDisplayMessage } from "./popup-request.utils";
+
+const popupLog = createLogger("popup-request");
 
 interface UsePopupRequestOptions<I extends CustomRequestIdentifier> {
 	identifier: I;
@@ -50,9 +54,10 @@ export function usePopupRequest<I extends CustomRequestIdentifier>({
 			return result;
 		} catch (error) {
 			toast.error(
-				error instanceof Error
-					? error.message
-					: "Um erro desconhecido ocorreu ao processar a solicitação.",
+				getErrorMessage(
+					error,
+					"Um erro desconhecido ocorreu ao processar a solicitação.",
+				),
 			);
 			throw error;
 		}
@@ -63,7 +68,7 @@ export function usePopupRequest<I extends CustomRequestIdentifier>({
 
 	const handleRetry = useCallback(() => {
 		void runWithMinimumLoading().catch((error) => {
-			console.error("Error executing custom request:", error);
+			popupLog.error("Error executing custom request:", error);
 		});
 	}, [runWithMinimumLoading]);
 
@@ -73,7 +78,7 @@ export function usePopupRequest<I extends CustomRequestIdentifier>({
 
 		if (!confirm) {
 			void runWithMinimumLoading().catch((error) => {
-				console.error("Error executing custom request:", error);
+				popupLog.error("Error executing custom request:", error);
 			});
 		} else {
 			setIsOpen(true);

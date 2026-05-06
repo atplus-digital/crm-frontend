@@ -1,9 +1,9 @@
-import { extractNocoBaseError } from "#/lib/api-errors";
 import {
 	CustomRequestNetworkError,
 	CustomRequestValidationError,
 	mapZodErrorToPortuguese,
-} from "../../errors";
+} from "#/features/custom-requests/errors";
+import { extractNocoBaseError } from "#/lib/api-errors";
 import type { ErrorVisualizationData } from "./popup-request.types";
 
 export function safeStringify(value: unknown): string {
