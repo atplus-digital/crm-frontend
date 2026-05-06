@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
 import { NegociacoesList } from "#/features/cs/negociacoes/negociacoes-list";
@@ -40,6 +41,7 @@ export function VendasListaTabPage() {
 		link.download = `vendas-${new Date().toISOString().split("T")[0]}.csv`;
 		link.click();
 		URL.revokeObjectURL(url);
+		toast.success(`CSV exportado: ${negociacoes.length} vendas`);
 	};
 
 	return (
