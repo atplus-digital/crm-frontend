@@ -1,14 +1,21 @@
 import {
 	keepPreviousData,
 	queryOptions,
+	useMutation,
 	useQuery,
+	useQueryClient,
 } from "@tanstack/react-query";
+import { toast } from "sonner";
 import type {
 	CrmTrocaTitularidade,
 	CrmTrocaTitularidadeRelations,
 } from "#/generated/types/nocobase/crm-troca-titularidade";
 import { buildFilter, eq, gte, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
+import {
+	type CreateTrocaTitularidadeInput,
+	createTrocaTitularidade,
+} from "./troca-titularidade-service";
 import type {
 	TrocaTitularidadeFilters,
 	TrocaTitularidadeListParams,
@@ -80,6 +87,25 @@ export const trocaTitularidadeQueryOptions = (
 
 export function useTrocaTitularidade(params: TrocaTitularidadeListParams) {
 	return useQuery(trocaTitularidadeQueryOptions(params));
+}
+
+export function useCreateTrocaTitularidade() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: (data: CreateTrocaTitularidadeInput) =>
+			createTrocaTitularidade(data),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["troca-titularidade"] });
+			queryClient.invalidateQueries({
+				queryKey: ["cs", "contratos", "trocas-titularidade"],
+			});
+			toast.success("Transferência criada com sucesso");
+		},
+		onError: (error: Error) => {
+			toast.error(error.message || "Erro ao criar transferência");
+		},
+	});
 }
 
 export function useTrocaTitularidadeById(id: number) {
