@@ -323,4 +323,61 @@ describe("AtomicWriter", () => {
 			expect(fs.existsSync(session.backupDir)).toBe(false);
 		});
 	});
+
+	describe("validateAndFinalize (wrap mode)", () => {
+		it("removes backup when generated output equals original output", async () => {
+			const { createAtomicWriteSession } = await import(
+				"@scripts/generators/src/lib/io/atomic-writer"
+			);
+
+			fs.mkdirSync(outputDir, { recursive: true });
+			fs.writeFileSync(path.join(outputDir, "same.ts"), "export const x = 1;");
+
+			const session = createAtomicWriteSession({
+				outputDir,
+				label: "test-wrap-equal",
+				validate: true,
+				lint: true,
+			});
+
+			session.backup();
+			const result = await session.validateAndFinalize();
+
+			expect(result).toBe(true);
+			expect(fs.existsSync(session.backupDir)).toBe(false);
+		});
+
+		it("keeps backup when generated output differs from original output", async () => {
+			const { createAtomicWriteSession } = await import(
+				"@scripts/generators/src/lib/io/atomic-writer"
+			);
+
+			fs.mkdirSync(outputDir, { recursive: true });
+			fs.writeFileSync(
+				path.join(outputDir, "changed.ts"),
+				"export const x = 1;",
+			);
+
+			const session = createAtomicWriteSession({
+				outputDir,
+				label: "test-wrap-diff",
+				validate: true,
+				lint: true,
+			});
+
+			session.backup();
+			fs.writeFileSync(
+				path.join(outputDir, "changed.ts"),
+				"export const x = 2;",
+			);
+
+			const result = await session.validateAndFinalize();
+
+			expect(result).toBe(true);
+			expect(fs.existsSync(session.backupDir)).toBe(true);
+			expect(fs.readFileSync(path.join(outputDir, "changed.ts"), "utf-8")).toBe(
+				"export const x = 2;",
+			);
+		});
+	});
 });

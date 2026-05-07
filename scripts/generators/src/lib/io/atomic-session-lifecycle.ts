@@ -82,7 +82,5 @@ export async function cleanupAtomicSessions<
 				`Validação falhou para ${session.outputDir}. Alterações restauradas a partir do backup.`,
 			);
 		}
-
-		session.cleanup();
 	}
 }

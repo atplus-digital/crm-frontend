@@ -282,7 +282,7 @@ export class AtomicWriteSession {
 			return false;
 		}
 
-		// Save permanent backup if there were changes (and permanent backup is configured)
+		// Save permanent backup if there were changes (and permanent backup is configured).
 		if (hasChanges && this.permanentBackupBaseDir) {
 			const permanentBackupPath = this.savePermanentBackupFromBackupDir();
 			if (permanentBackupPath) {
@@ -292,9 +292,16 @@ export class AtomicWriteSession {
 			}
 		}
 
-		this.removeBackupDir();
+		if (!hasChanges) {
+			this.removeBackupDir();
+			logger.info(
+				`[AtomicWriter:${this.label}] Validation passed, output sem mudanças. Backup removido.`,
+			);
+			return true;
+		}
+
 		logger.info(
-			`[AtomicWriter:${this.label}] Validation passed, backup cleaned up`,
+			`[AtomicWriter:${this.label}] Validation passed, output alterado. Backup preservado em: ${this.backupDir}`,
 		);
 		return true;
 	}
@@ -375,13 +382,16 @@ export class AtomicWriteSession {
 	 * Used in wrap mode to determine if a permanent backup should be saved.
 	 */
 	private hasWrapModeChanges(): boolean {
-		// If backup doesn't exist, there can't be changes from it
-		if (!fs.existsSync(this.backupDir)) {
+		const backupExists = fs.existsSync(this.backupDir);
+		const outputExists = fs.existsSync(this.outputDir);
+
+		// No previous output and no current output: no changes.
+		if (!backupExists && !outputExists) {
 			return false;
 		}
 
-		// If output doesn't exist but backup does, that's a change (deletion)
-		if (!fs.existsSync(this.outputDir)) {
+		// One side is missing: changed.
+		if (!backupExists || !outputExists) {
 			return true;
 		}
 

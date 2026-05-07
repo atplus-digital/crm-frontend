@@ -23,7 +23,8 @@ async function runCommand(
 		activeLogger.info(`✅ ${label} aplicado com sucesso`);
 	} catch (error) {
 		const message = error instanceof Error ? error.message : String(error);
-		activeLogger.info(`⚠️  ${label} retornou erro: ${message}`);
+		activeLogger.error(`❌ ${label} falhou: ${message}`);
+		throw new Error(`Falha ao executar ${label}: ${message}`);
 	}
 }
 
@@ -36,7 +37,9 @@ export async function runLinterFix(
 	const mdGlobs = dirs.map((d) => `${d}/**/*.md`);
 
 	await Promise.all([
-		runCommand(logger, `Biome (${dirs.length} diretório(s))`, "biome", [
+		runCommand(logger, `Biome (${dirs.length} diretório(s))`, "pnpm", [
+			"exec",
+			"biome",
 			"check",
 			"--write",
 			...dirs,

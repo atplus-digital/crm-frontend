@@ -1,4 +1,3 @@
-import { execFile } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Logger } from "@scripts/generators/src/lib/logging";
@@ -233,25 +232,6 @@ ${collectionMapping}
 `;
 }
 
-function runBiomeFix(filePath: string, logger: Logger): Promise<void> {
-	return new Promise((resolvePromise) => {
-		execFile(
-			"biome",
-			["check", "--write", filePath],
-			(error, stdout, stderr) => {
-				if (stdout) logger.debug(stdout);
-				if (stderr) logger.debug(stderr);
-				if (error) {
-					logger.info(
-						`Biome retornou erro (pode ser apenas warnings): ${error.message}`,
-					);
-				}
-				resolvePromise();
-			},
-		);
-	});
-}
-
 export async function writeGeneratedRegistry(
 	entries: GeneratedRegistryEntry[],
 	outputDir: string,
@@ -268,6 +248,4 @@ export async function writeGeneratedRegistry(
 	mkdirSync(resolve(outputDir), { recursive: true });
 
 	writeFileSync(outputPath, content, "utf-8");
-
-	await runBiomeFix(outputPath, activeLogger);
 }

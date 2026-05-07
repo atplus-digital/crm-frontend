@@ -4,16 +4,13 @@ import {
 	restoreAtomicSessions,
 } from "@scripts/generators/src/lib/io/atomic-session-lifecycle";
 import {
+	alwaysValidatePolicy,
 	evaluateValidationPolicy,
-	type ValidationPolicy,
 } from "@scripts/generators/src/lib/pipeline-policy";
 import type { GenerateCustomRequestsExecutionContext } from "./context";
 
 const CUSTOM_REQUESTS_BACKUP_BASE_DIR =
 	"scripts/generators/.backup/generate-custom-requests";
-const shouldValidateGeneratedOutputs: ValidationPolicy<
-	GenerateCustomRequestsExecutionContext
-> = (context) => Boolean(context.pipelineContext?.mergedEntries?.length);
 
 export function backupGenerateCustomRequestsOutputs(
 	context: GenerateCustomRequestsExecutionContext,
@@ -22,6 +19,8 @@ export function backupGenerateCustomRequestsOutputs(
 		context,
 		labelPrefix: "generate-custom-requests",
 		backupBaseDir: CUSTOM_REQUESTS_BACKUP_BASE_DIR,
+		validate: true,
+		lint: true,
 	});
 }
 
@@ -36,9 +35,6 @@ export async function cleanupGenerateCustomRequestsBackups(
 ): Promise<void> {
 	await cleanupAtomicSessions({
 		context,
-		shouldValidate: evaluateValidationPolicy(
-			context,
-			shouldValidateGeneratedOutputs,
-		),
+		shouldValidate: evaluateValidationPolicy(context, alwaysValidatePolicy),
 	});
 }
