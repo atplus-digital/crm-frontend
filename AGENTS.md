@@ -1,6 +1,6 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-05-06 | Last verified: 2026-05-06 -->
+<!-- Last updated: 2026-05-07 | Last verified: 2026-05-07 -->
 
 # AGENTS.md — CRM AT+
 
@@ -228,7 +228,6 @@ export interface PessoaFisica {
 - `./src/routes/AGENTS.md` — React Router v7 route definitions and guard patterns
 - `./src/pages/AGENTS.md` — Page composition layer (assembles features into screens)
 - `./scripts/AGENTS.md` — Automation scripts for development workflow
-- `./scripts/generators/AGENTS.md` — Code generation framework (Listr2 CLI, shared lib, pipelines)
 - `./scripts/generators/src/AGENTS.md` — Shared library layer (logger, atomic-writer, workspace-locker)
 - `./scripts/generators/src/pipelines/generate-types/AGENTS.md` — Type generation pipeline (NocoBase + IXC schemas)
 - `./scripts/generators/src/pipelines/generate-custom-requests/AGENTS.md` — Custom request registry pipeline

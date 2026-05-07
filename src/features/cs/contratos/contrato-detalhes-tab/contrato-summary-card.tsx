@@ -6,7 +6,7 @@ import {
 } from "#/features/cs/contratos/contrato-status-badge";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
-import { ContratoDetalhesActions } from "./contrato-detalhes-actions";
+import { ContratoDetalhesActions } from "./contrato-detalhes-actions/contrato-detalhes-actions";
 
 interface ContratoSummaryCardProps {
 	contrato: ContratoWithCliente;

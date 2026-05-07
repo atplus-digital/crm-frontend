@@ -31,6 +31,7 @@ function groupCardsByStatus(
 		Assinatura: [],
 		Concluido: [],
 		Cancelado: [],
+		"Aguardando assinatura teste": [],
 	};
 
 	for (const card of cards) {
