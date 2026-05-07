@@ -420,10 +420,12 @@ describe("collectAnalysisReport", () => {
 				collectionName: "t_test",
 				method: "POST",
 				url: "https://example.com",
+				data: null,
 			},
 			{
 				key: "no-options",
 				name: "No Options",
+				data: null,
 			},
 			{
 				key: "with-datasource",
@@ -432,6 +434,7 @@ describe("collectAnalysisReport", () => {
 				method: "POST",
 				url: "https://example.com",
 				dataSourceKey: "main",
+				data: null,
 			},
 		]);
 		expect(result.withoutOptions).toEqual([
@@ -447,6 +450,7 @@ describe("collectAnalysisReport", () => {
 				collectionName: "t_test",
 				method: "POST",
 				url: "https://example.com",
+				data: null,
 			},
 		]);
 	});

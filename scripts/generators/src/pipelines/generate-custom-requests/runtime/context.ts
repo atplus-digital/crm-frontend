@@ -50,3 +50,5 @@ export function getPipelineContext(
 		"Pipeline de geração não foi executado",
 	);
 }
+
+import type { Logger } from "@scripts/generators/src/lib/logging";

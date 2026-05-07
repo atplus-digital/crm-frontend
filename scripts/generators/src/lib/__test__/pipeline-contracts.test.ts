@@ -103,7 +103,9 @@ describe("pipeline contracts", () => {
 		const lockWorkspace = vi.fn(() => events.push("lock"));
 		const backupOutputs = vi.fn(() => events.push("backup"));
 		const assertResult = vi.fn(() => events.push("assert"));
-		const cleanupBackups = vi.fn(async () => events.push("cleanup"));
+		const cleanupBackups = vi.fn(async () => {
+			events.push("cleanup");
+		});
 
 		const getExecutionContext = (ctx: WrapperContext): ExecContext => {
 			if (!ctx.executionContext) {

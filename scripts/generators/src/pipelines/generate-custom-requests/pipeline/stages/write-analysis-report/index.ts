@@ -12,6 +12,7 @@ function toJsonEntries(
 		method: item.method ?? null,
 		url: item.url ?? null,
 		dataSourceKey: item.dataSourceKey ?? null,
+		data: item.data ? JSON.parse(JSON.stringify(item.data)) : null,
 	}));
 }
 

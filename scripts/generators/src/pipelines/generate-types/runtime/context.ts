@@ -51,3 +51,5 @@ export function getPipelineContext(
 		"Pipeline de geração não foi inicializado",
 	);
 }
+
+import type { Logger } from "@scripts/generators/src/lib/logging";

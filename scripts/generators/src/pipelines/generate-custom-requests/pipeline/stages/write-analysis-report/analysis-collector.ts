@@ -7,6 +7,7 @@ interface AnalyzedRequestSummaryItem {
 	method?: string;
 	url?: string;
 	dataSourceKey?: string;
+	data?: Record<string, unknown> | null;
 }
 
 export interface CustomRequestsAnalysisReport {
@@ -31,6 +32,7 @@ export function collectAnalysisReport(
 			method: entry.options?.method,
 			url: entry.options?.url,
 			dataSourceKey: entry.options?.dataSourceKey,
+			data: entry.options?.data ?? null,
 		});
 
 		if (!entry.options) {
@@ -48,6 +50,7 @@ export function collectAnalysisReport(
 				collectionName: entry.options.collectionName,
 				method: entry.options.method,
 				url: entry.options.url,
+				data: entry.options.data ?? null,
 			});
 		}
 	}
