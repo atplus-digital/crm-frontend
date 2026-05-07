@@ -58,7 +58,7 @@ export function PessoasJuridicasTabPage() {
 			}}
 		>
 			<FilterProvider onFilter={handleFilterChange}>
-				<PessoasJuridicasFilters />
+				<PessoasJuridicasFilters filters={filters} />
 			</FilterProvider>
 		</DataTableContainer>
 	);

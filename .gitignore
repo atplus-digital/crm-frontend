@@ -11,3 +11,5 @@ coverage
 .playwright-mcp
 .cache
 crawl
+.weave/analytics
+.weave/runtime

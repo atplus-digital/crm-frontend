@@ -76,7 +76,7 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 - `./src/features/cs/pessoas/AGENTS.md` — Pessoas subdomain (PF/PJ list, types, service, columns)
 - `./src/features/cs/suspensao-de-contrato/AGENTS.md` — Suspensão de Contrato subdomain (list/detail, filters, status lifecycle, ZapSign integration)
 - `./src/features/cs/troca-de-endereco/AGENTS.md` — Troca de Endereço subdomain (list/detail, hooks, and filters)
-- `./src/features/cs/troca-titularidade/AGENTS.md` — Troca de Titularidade subdomain (ZapSign, status workflow, audit trail)
+- `./src/features/cs/contratos/contrato-detalhes-tab/contrato-detalhes-actions/troca-titularidade/AGENTS.md` — Troca de Titularidade subdomain (ZapSign, status workflow, audit trail)
 - `./src/features/cs/vendas/AGENTS.md` — Vendas subdomain (sellers lookup, list columns, and filters)
 - `./src/features/custom-requests/AGENTS.md` — Custom request registry/services/hooks
 - `./src/generated/AGENTS.md` — Auto-generated TypeScript types from NocoBase/IXC schemas

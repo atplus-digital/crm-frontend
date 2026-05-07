@@ -1,8 +1,8 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/layouts/page-layout";
-import { ContratosFilters } from "#/features/cs/contratos/contratos-filters";
 import { useContratos } from "#/features/cs/contratos/contratos-hooks";
 import { ContratosTable } from "#/features/cs/contratos/contratos-table";
+import { ContratosFilters } from "#/features/cs/contratos/contratos-table/contratos-filters";
 import {
 	type ContratoFilters,
 	type ContratosTableFilters,
@@ -62,7 +62,7 @@ export function ContratosPage() {
 						handleFilterChange as (filters: Record<string, unknown>) => void
 					}
 				>
-					<ContratosFilters />
+					<ContratosFilters filters={filters} />
 				</ContratosTable>
 			)}
 		</PageLayout>

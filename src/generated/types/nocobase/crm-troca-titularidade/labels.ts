@@ -26,6 +26,7 @@ export const CRMTROCATITULARIDADE_STATUS_LABELS = {
 	2: "Aguardando Auditoria",
 	3: "Concluído",
 	9: "Cancelado",
+	20: "Aguardando assinatura teste",
 } as const;
 
 export const CRMTROCATITULARIDADE_SUBSTATUS_LABELS = {
@@ -36,6 +37,7 @@ export const CRMTROCATITULARIDADE_SUBSTATUS_LABELS = {
 	4: "REPROVADO - Divergência de Dados",
 	5: "REPROVADO - Financeiro em Atraso",
 	6: "AGUARDANDO - Auditoria",
+	7: "AGUARDANDO - Assinaturas no contrato",
 } as const;
 
 export const CRMTROCATITULARIDADE_TIPOPESSOA_LABELS = {
@@ -61,21 +63,21 @@ export const crm_troca_titularidadeEstadoSchema = z.enum(["SC"], {
 });
 
 export const crm_troca_titularidadeStatusSchema = z.enum(
-	["0", "1", "2", "3", "9"],
+	["0", "1", "2", "3", "9", "20"],
 	{
 		error: () => ({
 			message:
-				"status: valores válidos são [Novo, Aguardando assinatura, Aguardando Auditoria, Concluído, Cancelado]",
+				"status: valores válidos são [Novo, Aguardando assinatura, Aguardando Auditoria, Concluído, Cancelado, Aguardando assinatura teste]",
 		}),
 	},
 );
 
 export const crm_troca_titularidadeSubstatusSchema = z.enum(
-	["0", "1", "2", "3", "4", "5", "6"],
+	["0", "1", "2", "3", "4", "5", "6", "7"],
 	{
 		error: () => ({
 			message:
-				"substatus: valores válidos são [NA, APROVADO - Aguardando inserção no IXC, APROVADO - Erro na integração com o IXC, APROVADO - Concluído, REPROVADO - Divergência de Dados, REPROVADO - Financeiro em Atraso, AGUARDANDO - Auditoria]",
+				"substatus: valores válidos são [NA, APROVADO - Aguardando inserção no IXC, APROVADO - Erro na integração com o IXC, APROVADO - Concluído, REPROVADO - Divergência de Dados, REPROVADO - Financeiro em Atraso, AGUARDANDO - Auditoria, AGUARDANDO - Assinaturas no contrato]",
 		}),
 	},
 );

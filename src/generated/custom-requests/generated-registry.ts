@@ -21,6 +21,7 @@ import { trocasdetitularidade_comentariosSchema } from "#/generated/types/nocoba
 import { zapsignSchema } from "#/generated/types/nocobase/other/zapsign/schemas";
 import { pessoasSchema } from "#/generated/types/nocobase/pessoas/schemas";
 import { usersSchema } from "#/generated/types/nocobase/users/schemas";
+import { requestEntry as split_d_db_ixcsoft_cliente_contrato_abrir_renegociacaoRequestEntry } from "./d_db_ixcsoft/cliente_contrato/abrir-renegociacao";
 import { requestEntry as split_d_db_ixcsoft_cliente_contrato_negociacao_atualizadaRequestEntry } from "./d_db_ixcsoft/cliente_contrato/negociacao-atualizada";
 import { requestEntry as split_d_db_ixcsoft_cliente_contrato_segunda_contratacaoRequestEntry } from "./d_db_ixcsoft/cliente_contrato/segunda-contratacao";
 import { requestEntry as split_nocobase_t_logs_cadastro_comercialRequestEntry } from "./nocobase/t_logs/cadastro-comercial";
@@ -30,6 +31,24 @@ import { requestEntry as split_nocobase_t_qualirun_info_adicionais_quali_runRequ
 export const generatedCustomRequestsRegistry = {
 	"0j7f9fuzuo7":
 		split_nocobase_t_qualirun_info_adicionais_quali_runRequestEntry,
+
+	"0ufodbbez3v": {
+		key: "0ufodbbez3v",
+		name: "0ufodbbez3v",
+		collection: "t_crm_troca_titularidade",
+		collectionSchema: crm_troca_titularidadeSchema,
+		dataSourceKey: "main",
+		method: "POST",
+		url: "https://n8n.atplus.cloud/webhook/8u18dashbd-982hdais-2h8uh289hj-2uijjsm",
+		payloadSchema: z.object({
+			currentRecord: crm_troca_titularidadeSchema.pick({
+				id: true,
+			}),
+		}),
+		payloadData: {
+			id_troca_titularidade: "{{currentRecord.id}}",
+		},
+	},
 
 	"23btjo9ohrr":
 		split_d_db_ixcsoft_cliente_contrato_negociacao_atualizadaRequestEntry,
@@ -56,29 +75,8 @@ export const generatedCustomRequestsRegistry = {
 		},
 	},
 
-	"37yaihkravc": {
-		key: "37yaihkravc",
-		name: "37yaihkravc",
-		collection: "cliente_contrato",
-		collectionSchema: cliente_contratoSchema,
-		dataSourceKey: "d_db_ixcsoft",
-		method: "POST",
-		url: "https://n8n.atplus.cloud/webhook/0860593c-859a-4427-9e7e-437b19bed46b",
-		payloadSchema: z.object({
-			currentRecord: cliente_contratoSchema.pick({
-				id: true,
-			}),
-			currentUser: usersSchema
-				.pick({
-					f_id_vendedor_ixc: true,
-				})
-				.optional(),
-		}),
-		payloadData: {
-			id_contrato: "{{currentRecord.id}}",
-			id_vendedor: "{{currentUser.f_id_vendedor_ixc}}",
-		},
-	},
+	"37yaihkravc":
+		split_d_db_ixcsoft_cliente_contrato_abrir_renegociacaoRequestEntry,
 
 	"3jd8i67j41e": {
 		key: "3jd8i67j41e",
@@ -1790,7 +1788,7 @@ export const collectionToRequestKeys = {
 	],
 	t_comentarios_demandas: ["5kd0wmsvdo2"],
 	t_contratos_ixc: ["q5cd310hudg", "t8csht5gpmi"],
-	t_crm_troca_titularidade: ["rm9a8dyqfzr"],
+	t_crm_troca_titularidade: ["0ufodbbez3v", "rm9a8dyqfzr"],
 	t_dados_adicionais_cliente_contrato: ["uw77gy8qtte"],
 	t_demandas: ["d349ih50xzh", "gp4mrt26bbe", "u1t103p3ra5", "vwl8w2fpjzg"],
 	t_logs: ["qbk10nf76um", "xk5u4vwbdap", "zjhlu1v5rxf"],
