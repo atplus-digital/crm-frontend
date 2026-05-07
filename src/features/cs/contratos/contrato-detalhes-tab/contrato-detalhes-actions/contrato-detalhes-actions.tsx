@@ -1,6 +1,7 @@
 import {
 	ArrowRightLeft,
 	FileWarning,
+	KeyRound,
 	MapPin,
 	Pause,
 	RefreshCw,
@@ -9,6 +10,7 @@ import { useState } from "react";
 import { type ActionItem, ActionsMenu } from "#/components/actions-menu";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
 import { TransferenciaTitularidadeSheet } from "../../../troca-titularidade";
+import { TrocaEnderecoSheet } from "./troca-endereco-action/troca-endereco-sheet";
 
 interface ContratoDetalhesActionsProps {
 	contrato: ContratoWithCliente;
@@ -16,6 +18,7 @@ interface ContratoDetalhesActionsProps {
 
 function ContratoDetalhesActions({ contrato }: ContratoDetalhesActionsProps) {
 	const [transferSheetOpen, setTransferSheetOpen] = useState(false);
+	const [enderecoSheetOpen, setEnderecoSheetOpen] = useState(false);
 
 	const isTransferDisabled =
 		contrato.status === "I" ||
@@ -23,6 +26,17 @@ function ContratoDetalhesActions({ contrato }: ContratoDetalhesActionsProps) {
 		contrato.status === "D";
 
 	const actions: readonly ActionItem[] = [
+		{
+			icon: KeyRound,
+			label: "Desbloqueio em Confiança",
+			popupRequest: {
+				identifier: "78d5kny2gwn",
+				payload: { currentRecord: { id: contrato.id } },
+				title: "Desbloqueio em Confiança",
+				confirmMessage:
+					"Deseja realizar o desbloqueio em confiança para este contrato?",
+			},
+		},
 		{
 			icon: RefreshCw,
 			label: "Nova Contratação",
@@ -41,7 +55,12 @@ function ContratoDetalhesActions({ contrato }: ContratoDetalhesActionsProps) {
 			onClick: () => setTransferSheetOpen(true),
 		},
 		{ icon: RefreshCw, label: "Renegociar" },
-		{ icon: MapPin, label: "Trocar Endereço" },
+		{
+			icon: MapPin,
+			label: "Trocar Endereço",
+			disabled: isTransferDisabled,
+			onClick: () => setEnderecoSheetOpen(true),
+		},
 		{ icon: Pause, label: "Suspender" },
 		{ icon: FileWarning, label: "Reter" },
 	];
@@ -57,6 +76,11 @@ function ContratoDetalhesActions({ contrato }: ContratoDetalhesActionsProps) {
 				contrato={contrato}
 				open={transferSheetOpen}
 				onOpenChange={setTransferSheetOpen}
+			/>
+			<TrocaEnderecoSheet
+				contrato={contrato}
+				open={enderecoSheetOpen}
+				onOpenChange={setEnderecoSheetOpen}
 			/>
 		</>
 	);

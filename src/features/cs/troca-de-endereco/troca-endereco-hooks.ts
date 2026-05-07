@@ -1,14 +1,21 @@
 import {
 	keepPreviousData,
 	queryOptions,
+	useMutation,
 	useQuery,
+	useQueryClient,
 } from "@tanstack/react-query";
+import { toast } from "sonner";
 import type {
 	TrocaEndereco,
 	TrocaEnderecoRelations,
 } from "#/generated/types/nocobase/troca-endereco";
 import { buildFilter, eq, gte, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
+import {
+	type CreateTrocaEnderecoInput,
+	createTrocaEndereco,
+} from "./troca-endereco-service";
 import type { TrocaEnderecoFilters } from "./troca-endereco-types";
 
 export interface TrocaEnderecoListParams {
@@ -93,5 +100,20 @@ export function useTrocaEnderecoById(id: number) {
 			return response as unknown as TrocaEnderecoWithRelations;
 		},
 		enabled: !Number.isNaN(id),
+	});
+}
+
+export function useCreateTrocaEndereco() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: (data: CreateTrocaEnderecoInput) => createTrocaEndereco(data),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["troca-endereco"] });
+			toast.success("Troca de endereço criada com sucesso");
+		},
+		onError: (error: Error) => {
+			toast.error(error.message || "Erro ao criar troca de endereço");
+		},
 	});
 }
