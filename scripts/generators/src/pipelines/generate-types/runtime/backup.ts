@@ -3,6 +3,10 @@ import {
 	cleanupAtomicSessions,
 	restoreAtomicSessions,
 } from "@scripts/generators/src/lib/io/atomic-session-lifecycle";
+import {
+	alwaysValidatePolicy,
+	evaluateValidationPolicy,
+} from "@scripts/generators/src/lib/pipeline-policy";
 import type { GenerateTypesExecutionContext } from "./context";
 
 const GENERATE_TYPES_BACKUP_BASE_DIR =
@@ -31,5 +35,6 @@ export async function cleanupGenerateTypesBackups(
 ): Promise<void> {
 	await cleanupAtomicSessions({
 		context,
+		shouldValidate: evaluateValidationPolicy(context, alwaysValidatePolicy),
 	});
 }

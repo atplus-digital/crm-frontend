@@ -3,10 +3,17 @@ import {
 	cleanupAtomicSessions,
 	restoreAtomicSessions,
 } from "@scripts/generators/src/lib/io/atomic-session-lifecycle";
+import {
+	evaluateValidationPolicy,
+	type ValidationPolicy,
+} from "@scripts/generators/src/lib/pipeline-policy";
 import type { GenerateCustomRequestsExecutionContext } from "./context";
 
 const CUSTOM_REQUESTS_BACKUP_BASE_DIR =
 	"scripts/generators/.backup/generate-custom-requests";
+const shouldValidateGeneratedOutputs: ValidationPolicy<
+	GenerateCustomRequestsExecutionContext
+> = (context) => Boolean(context.pipelineContext?.mergedEntries?.length);
 
 export function backupGenerateCustomRequestsOutputs(
 	context: GenerateCustomRequestsExecutionContext,
@@ -29,6 +36,9 @@ export async function cleanupGenerateCustomRequestsBackups(
 ): Promise<void> {
 	await cleanupAtomicSessions({
 		context,
-		shouldValidate: Boolean(context.pipelineContext?.mergedEntries?.length),
+		shouldValidate: evaluateValidationPolicy(
+			context,
+			shouldValidateGeneratedOutputs,
+		),
 	});
 }

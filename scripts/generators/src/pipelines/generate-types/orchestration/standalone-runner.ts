@@ -1,6 +1,8 @@
 import type { Logger } from "@scripts/generators/src/lib/logging";
+import { runStandardStandalonePipeline } from "@scripts/generators/src/lib/pipeline-lifecycle";
 import { resetTypeScriptValidationCache } from "@scripts/generators/src/lib/validation/tsc-validator";
 import type { GenerateTypesResult, RuntimeConfig } from "../@types/script";
+import { ORCHESTRATION_STEPS } from "../generator/tasks";
 import { assertGenerateTypesResult } from "../runtime/assert";
 import {
 	backupGenerateTypesOutputs,
@@ -8,33 +10,20 @@ import {
 } from "../runtime/backup";
 import { createGenerateTypesExecutionContext } from "../runtime/context";
 import { applyWorkspaceLockIfNeeded as lockGenerateTypesWorkspace } from "../utils/workspace-locker";
-import { runDatasourcesOrchestrationStage } from "./datasource-stage";
-import { runPostPipelineOrchestrationStage } from "./post-pipeline-stage";
-import {
-	runFormatResultOrchestrationStage,
-	runLoadConfigOrchestrationStage,
-	runRenderConsolidatedReportsOrchestrationStage,
-	runResolveDatasourcesOrchestrationStage,
-} from "./stage-runners";
 
 export async function runGenerateTypes(
 	overrideConfig: Partial<RuntimeConfig> | undefined,
 	injectedLogger: Logger,
 ): Promise<GenerateTypesResult> {
-	resetTypeScriptValidationCache();
-	const context = createGenerateTypesExecutionContext(
+	return runStandardStandalonePipeline({
 		overrideConfig,
-		injectedLogger,
-	);
-	lockGenerateTypesWorkspace();
-	backupGenerateTypesOutputs(context);
-	await runLoadConfigOrchestrationStage(context);
-	await runResolveDatasourcesOrchestrationStage(context);
-	await runDatasourcesOrchestrationStage(context);
-	await runPostPipelineOrchestrationStage(context);
-	await runFormatResultOrchestrationStage(context);
-	await runRenderConsolidatedReportsOrchestrationStage(context);
-	const result = assertGenerateTypesResult(context);
-	await cleanupGenerateTypesBackups(context);
-	return result;
+		logger: injectedLogger,
+		onBeforeRun: resetTypeScriptValidationCache,
+		createExecutionContext: createGenerateTypesExecutionContext,
+		lockWorkspace: lockGenerateTypesWorkspace,
+		backupOutputs: backupGenerateTypesOutputs,
+		orchestrationStages: ORCHESTRATION_STEPS,
+		assertResult: assertGenerateTypesResult,
+		cleanupBackups: cleanupGenerateTypesBackups,
+	});
 }

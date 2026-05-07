@@ -28,6 +28,7 @@ export function writeAnalysisReportStage(): GenerationStage {
 			},
 			payload: {
 				totalAnalyzed: analysisReport.totalAnalyzed,
+				allEntriesBeforeProcessing: toJsonEntries(analysisReport.allEntries),
 				withoutOptions: toJsonEntries(analysisReport.withoutOptions),
 				withoutDataSourceKey: toJsonEntries(
 					analysisReport.withoutDataSourceKey,

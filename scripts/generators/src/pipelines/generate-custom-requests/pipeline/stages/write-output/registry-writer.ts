@@ -13,6 +13,10 @@ function toSafeIdentifier(value: string): string {
 	return value.replace(/[^a-zA-Z0-9_]/g, "_");
 }
 
+function toObjectKey(value: string): string {
+	return /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(value) ? value : `"${value}"`;
+}
+
 function createSplitAlias(relativeSplitName: string): string {
 	return `split_${toSafeIdentifier(relativeSplitName)}`;
 }
@@ -87,7 +91,7 @@ function buildInlineEntryContent(entry: GeneratedRegistryEntry): string {
 		? `\n    collectionSchema: ${entry.collectionSchemaName},`
 		: "";
 
-	return `  "${entry.key}": {
+	return `  ${toObjectKey(entry.key)}: {
     key: "${escapedKey}",
     name: "${escapedName}",
     collection: "${escapedCollection}",${collectionSchemaLine}
@@ -148,6 +152,9 @@ function buildRegistryContent(
 			descriptor.alias,
 		]),
 	);
+	const hasInlineEntries = sortedEntries.some(
+		(entry) => !splitAliasByKey.has(entry.key),
+	);
 
 	// Collect all schema references from inline entries
 	const allSchemaRefs = new Set<string>();
@@ -190,7 +197,7 @@ function buildRegistryContent(
 		.map((entry) => {
 			const splitAlias = splitAliasByKey.get(entry.key);
 			if (splitAlias) {
-				return `  "${entry.key}": ${splitAlias}RequestEntry,`;
+				return `  ${toObjectKey(entry.key)}: ${splitAlias}RequestEntry,`;
 			}
 
 			return buildInlineEntryContent(entry);
@@ -201,7 +208,7 @@ function buildRegistryContent(
 
 	// Combine all imports
 	const allImports = [
-		`import { z } from "zod";`,
+		hasInlineEntries ? `import { z } from "zod";` : undefined,
 		...schemaImports,
 		splitImports || undefined,
 	]

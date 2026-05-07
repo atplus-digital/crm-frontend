@@ -528,7 +528,7 @@ export class AtomicWriteSession {
 	 */
 	private createTimestampedBackup(sourceDir: string): string {
 		// Create .backup directory in the base dir
-		const backupRoot = path.join(this.permanentBackupBaseDir!, ".backup");
+		const backupRoot = path.join(this.permanentBackupBaseDir || "", ".backup");
 		if (!fs.existsSync(backupRoot)) {
 			fs.mkdirSync(backupRoot, { recursive: true });
 		}

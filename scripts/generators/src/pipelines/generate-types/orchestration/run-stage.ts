@@ -1,3 +1,4 @@
+import { runWithErrorRecovery } from "@scripts/generators/src/lib/pipeline-runner";
 import type { GenerationContext } from "../pipeline/orchestration/types";
 import { restoreAllSessions } from "../runtime/backup";
 import type { GenerateTypesExecutionContext } from "../runtime/context";
@@ -10,10 +11,12 @@ export async function runStage(
 		context.pipelineContext ??
 		({ logger: context.logger } as GenerationContext);
 
-	try {
-		context.pipelineContext = await stageRunner(currentCtx);
-	} catch (error) {
-		restoreAllSessions(context);
-		throw error;
-	}
+	context.pipelineContext = await runWithErrorRecovery(
+		async () => {
+			return stageRunner(currentCtx);
+		},
+		() => {
+			restoreAllSessions(context);
+		},
+	);
 }

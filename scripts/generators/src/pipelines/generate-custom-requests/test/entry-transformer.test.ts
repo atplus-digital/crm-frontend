@@ -413,6 +413,27 @@ describe("collectAnalysisReport", () => {
 		const result = collectAnalysisReport(entries);
 
 		expect(result.totalAnalyzed).toBe(3);
+		expect(result.allEntries).toEqual([
+			{
+				key: "no-datasource",
+				name: "No DS",
+				collectionName: "t_test",
+				method: "POST",
+				url: "https://example.com",
+			},
+			{
+				key: "no-options",
+				name: "No Options",
+			},
+			{
+				key: "with-datasource",
+				name: "With DS",
+				collectionName: "t_test",
+				method: "POST",
+				url: "https://example.com",
+				dataSourceKey: "main",
+			},
+		]);
 		expect(result.withoutOptions).toEqual([
 			{
 				key: "no-options",

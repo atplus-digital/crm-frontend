@@ -1,4 +1,6 @@
 import {
+	createStandardFinalizationTasks,
+	createStandardPreparationTasks,
 	type GeneratorContextState,
 	type GeneratorOrchestrationStage,
 	type GeneratorTask,
@@ -65,47 +67,21 @@ export function getExecutionContext(
 }
 
 export function createPreparationTasks(): GeneratorTask<GenerateTypesGeneratorContext>[] {
-	return [
-		{
-			title: "prepare-context",
-			run: (context) => {
-				resetTypeScriptValidationCache();
-				context.executionContext = createGenerateTypesExecutionContext(
-					context.overrideConfig,
-					context.logger,
-				);
-			},
-		},
-		{
-			title: "lock-workspace",
-			run: () => {
-				lockGenerateTypesWorkspace();
-			},
-		},
-		{
-			title: "backup-outputs",
-			run: (context) => {
-				backupGenerateTypesOutputs(getExecutionContext(context));
-			},
-		},
-	];
+	return createStandardPreparationTasks({
+		onBeforePrepare: resetTypeScriptValidationCache,
+		createExecutionContext: createGenerateTypesExecutionContext,
+		getExecutionContext,
+		lockWorkspace: lockGenerateTypesWorkspace,
+		backupOutputs: backupGenerateTypesOutputs,
+	});
 }
 
 export function createFinalizationTasks(): GeneratorTask<GenerateTypesGeneratorContext>[] {
-	return [
-		{
-			title: "assert-result",
-			run: (context) => {
-				assertGenerateTypesResult(getExecutionContext(context));
-			},
-		},
-		{
-			title: "cleanup-backups",
-			run: async (context) => {
-				await cleanupGenerateTypesBackups(getExecutionContext(context));
-			},
-		},
-	];
+	return createStandardFinalizationTasks({
+		getExecutionContext,
+		assertResult: assertGenerateTypesResult,
+		cleanupBackups: cleanupGenerateTypesBackups,
+	});
 }
 
 export function createGeneratorTasks(

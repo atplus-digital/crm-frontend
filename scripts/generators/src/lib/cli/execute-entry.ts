@@ -4,6 +4,10 @@ import type { RunGeneratorCliOptions } from "@scripts/generators/src/lib/cli/typ
 import { defaultLogger } from "@scripts/generators/src/lib/logging";
 
 function isExecutedDirectly(moduleUrl: string): boolean {
+	if (process.env.VITEST) {
+		return false;
+	}
+
 	const entryFile = process.argv[1];
 	if (!entryFile) {
 		return false;

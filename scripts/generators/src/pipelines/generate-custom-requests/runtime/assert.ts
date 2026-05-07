@@ -1,3 +1,7 @@
+import {
+	assertWithRestore,
+	getWithRestore,
+} from "@scripts/generators/src/lib/pipeline-assert";
 import type { GenerationContext } from "../pipeline/orchestration/types";
 import { restoreAllSessions } from "./backup";
 import {
@@ -36,23 +40,23 @@ function reportSchemasNotFound(pipelineContext: GenerationContext): void {
 export function assertGenerateCustomRequestsResult(
 	context: GenerateCustomRequestsExecutionContext,
 ): GenerationContext {
-	let pipelineContext: GenerationContext;
-	try {
-		pipelineContext = getPipelineContext(context);
-	} catch (error) {
-		restoreAllSessions(context);
-		throw error;
-	}
+	const restore = () => restoreAllSessions(context);
+	const pipelineContext = getWithRestore(
+		() => getPipelineContext(context),
+		restore,
+	);
 
-	if (!pipelineContext.config) {
-		restoreAllSessions(context);
-		throw new Error("Configuração de runtime não foi carregada");
-	}
+	assertWithRestore(
+		pipelineContext.config,
+		restore,
+		"Configuração de runtime não foi carregada",
+	);
 
-	if (!pipelineContext.mergedEntries) {
-		restoreAllSessions(context);
-		throw new Error("Pipeline não produziu entradas finais");
-	}
+	assertWithRestore(
+		pipelineContext.mergedEntries,
+		restore,
+		"Pipeline não produziu entradas finais",
+	);
 
 	reportSchemasNotFound(pipelineContext);
 

@@ -1,6 +1,5 @@
 import {
-	createGeneratorOptions,
-	createOrchestrationTask,
+	createPipelineGenerator,
 	type RunGeneratorCliOptions,
 } from "@scripts/generators/src/lib/cli";
 import type { GenerateTypesExecutionContext } from "../runtime/context";
@@ -12,19 +11,15 @@ import {
 } from "./tasks";
 
 export function createGenerateTypesGenerator(): RunGeneratorCliOptions<GenerateTypesGeneratorContext> {
-	const orchestrationTask = createOrchestrationTask({
-		title: "orchestration",
-		stages: ORCHESTRATION_STEPS,
-		getExecutionContext,
-	});
-
-	return createGeneratorOptions({
+	return createPipelineGenerator({
 		name: "generate-types",
 		context: {
 			executionContext: undefined,
 			overrideConfig: undefined,
 		},
-		tasks: createGeneratorTasks(orchestrationTask),
+		stages: ORCHESTRATION_STEPS,
+		getExecutionContext,
+		createTasks: createGeneratorTasks,
 	});
 }
 

@@ -1,3 +1,4 @@
+import { assertWithRestore } from "@scripts/generators/src/lib/pipeline-assert";
 import type { GenerateTypesResult } from "../@types/script";
 import { restoreAllSessions } from "./backup";
 import type { GenerateTypesExecutionContext } from "./context";
@@ -6,28 +7,27 @@ export function assertGenerateTypesResult(
 	context: GenerateTypesExecutionContext,
 ): GenerateTypesResult {
 	const pipelineContext = context.pipelineContext;
+	const restore = () => restoreAllSessions(context);
 
-	if (!pipelineContext) {
-		restoreAllSessions(context);
-		throw new Error("Pipeline de geração não foi executado");
-	}
+	assertWithRestore(
+		pipelineContext,
+		restore,
+		"Pipeline de geração não foi executado",
+	);
 
-	if (
+	assertWithRestore(
 		!pipelineContext.dataSourceConfigs ||
-		pipelineContext.dataSourceConfigs.length === 0
-	) {
-		restoreAllSessions(context);
-		throw new Error(
-			"Nenhum datasource configurado para geração de tipos. Verifique datasources.config.ts.",
-		);
-	}
+			pipelineContext.dataSourceConfigs.length > 0,
+		restore,
+		"Nenhum datasource configurado para geração de tipos. Verifique datasources.config.ts.",
+	);
 
 	const successfulCount = pipelineContext.datasourceResults?.filter(
 		(r) => r.status === "fulfilled",
 	).length;
 
 	if (!successfulCount || successfulCount === 0) {
-		restoreAllSessions(context);
+		restore();
 		const failedNames =
 			pipelineContext.datasourceResults
 				?.filter((r) => r.status === "rejected")
@@ -36,10 +36,11 @@ export function assertGenerateTypesResult(
 		throw new Error(`Todos os datasources falharam: ${failedNames}`);
 	}
 
-	if (!pipelineContext.finalResult) {
-		restoreAllSessions(context);
-		throw new Error("Pipeline não produziu resultado final");
-	}
+	assertWithRestore(
+		pipelineContext.finalResult,
+		restore,
+		"Pipeline não produziu resultado final",
+	);
 
 	context.finalResult = pipelineContext.finalResult;
 	return pipelineContext.finalResult;
