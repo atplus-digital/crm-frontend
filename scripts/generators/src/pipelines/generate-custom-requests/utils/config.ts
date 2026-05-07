@@ -9,6 +9,23 @@ import type {
 } from "../@types/script-config";
 
 const SPLIT_REQUEST_NAME_REGEX = /^[a-z][a-z-]*$/;
+const VALID_METHODS = new Set(["GET", "POST", "PUT", "PATCH", "DELETE"]);
+
+const defaultConfig = {
+	outputDir: "src/generated/custom-requests",
+	requests: {},
+	manualRequests: [],
+	generateAnalysisReport: true,
+	lockWorkspaceFolder: true,
+	reports: {
+		generateConsolidatedMarkdown: true,
+		consolidatedMarkdownOutputFile:
+			"scripts/generators/custom-requests-reports.md",
+	},
+} as const satisfies Omit<
+	ScriptConfig,
+	"baseUrl" | "token" | "timeoutMs" | "logLevel"
+>;
 
 function validateRequests(requests: RequestsMap): RequestsMap {
 	for (const [id, name] of Object.entries(requests)) {
@@ -20,10 +37,9 @@ function validateRequests(requests: RequestsMap): RequestsMap {
 			);
 		}
 	}
+
 	return requests;
 }
-
-const VALID_METHODS = new Set(["GET", "POST", "PUT", "PATCH", "DELETE"]);
 
 function validateManualRequests(
 	manualRequests: ManualRegistryEntry[],
@@ -41,7 +57,7 @@ function validateManualRequests(
 		if (!VALID_METHODS.has(entry.method)) {
 			throw new Error(
 				`Manual request "${entry.key}" com método inválido "${entry.method}". ` +
-					`Métodos válidos: GET, POST, PUT, PATCH, DELETE.`,
+					"Métodos válidos: GET, POST, PUT, PATCH, DELETE.",
 			);
 		}
 		if (!entry.url) {
@@ -51,7 +67,43 @@ function validateManualRequests(
 			throw new Error(`Manual request "${entry.key}" sem "payloadSchema".`);
 		}
 	}
+
 	return manualRequests;
+}
+
+function validateMergedConfig(
+	mergedConfig: Partial<ScriptConfig>,
+): asserts mergedConfig is Partial<ScriptConfig> & {
+	outputDir: string;
+	requests: RequestsMap;
+	manualRequests: ManualRegistryEntry[];
+	reports: ScriptConfig["reports"];
+} {
+	const errors: string[] = [];
+
+	if (!mergedConfig.outputDir || mergedConfig.outputDir.trim() === "") {
+		errors.push("outputDir não pode ser vazio");
+	}
+
+	if (!mergedConfig.reports) {
+		errors.push("reports é obrigatório");
+	} else {
+		if (
+			typeof mergedConfig.reports.generateConsolidatedMarkdown !== "boolean"
+		) {
+			errors.push("reports.generateConsolidatedMarkdown deve ser boolean");
+		}
+
+		if (!mergedConfig.reports.consolidatedMarkdownOutputFile?.trim()) {
+			errors.push("reports.consolidatedMarkdownOutputFile não pode ser vazio");
+		}
+	}
+
+	if (errors.length > 0) {
+		throw new Error(
+			`Configuração inválida:\n${errors.map((e) => `  - ${e}`).join("\n")}`,
+		);
+	}
 }
 
 export function parseConfig(
@@ -62,30 +114,25 @@ export function parseConfig(
 		defaultTimeoutMs: 15_000,
 	});
 
-	const requests = validateRequests(overrideConfig.requests ?? {});
-	const manualRequests = validateManualRequests(
-		overrideConfig.manualRequests ?? [],
-	);
-
 	const logLevel = resolveLogLevel(overrideConfig.logLevel);
-	const reports = {
-		generateConsolidatedMarkdown: true,
-		consolidatedMarkdownOutputFile:
-			"scripts/generators/custom-requests-reports.md",
-		...overrideConfig.reports,
+	const mergedConfig = {
+		...defaultConfig,
+		...overrideConfig,
+		logLevel,
+		reports: {
+			...defaultConfig.reports,
+			...overrideConfig.reports,
+		},
 	};
+
+	validateMergedConfig(mergedConfig);
 
 	return {
 		baseUrl: parsed.baseUrl,
 		token: parsed.token,
 		timeoutMs: parsed.timeoutMs,
-		logLevel: logLevel,
-		outputDir: "src/generated/custom-requests",
-		generateAnalysisReport: true,
-		lockWorkspaceFolder: true,
-		...overrideConfig,
-		reports,
-		requests,
-		manualRequests,
+		...mergedConfig,
+		requests: validateRequests(mergedConfig.requests),
+		manualRequests: validateManualRequests(mergedConfig.manualRequests),
 	};
 }

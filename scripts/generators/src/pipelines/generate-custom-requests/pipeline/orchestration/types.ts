@@ -3,10 +3,10 @@ import type { PipelineReportsContext } from "@scripts/generators/src/lib/reports
 import type {
 	CollectionSchemaMapping,
 	SchemaRegistry,
-} from "./collection-schema";
-import type { CustomRequestApiEntry } from "./custom-request-api";
-import type { GeneratedRegistryEntry } from "./generated-registry";
-import type { ScriptConfig } from "./script-config";
+} from "../../@types/collection-schema";
+import type { CustomRequestApiEntry } from "../../@types/custom-request-api";
+import type { GeneratedRegistryEntry } from "../../@types/generated-registry";
+import type { ScriptConfig } from "../../@types/script-config";
 
 export interface PipelineContext {
 	logger: Logger;

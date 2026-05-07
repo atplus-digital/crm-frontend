@@ -1,6 +1,6 @@
-import type { GenerationStage } from "../../../@types/orchestration";
 import type { ScriptConfig } from "../../../@types/script-config";
 import { parseConfig } from "../../../utils/config";
+import type { GenerationStage } from "../../orchestration/types";
 
 export interface LoadConfigStageOptions {
 	overrideConfig?: Partial<ScriptConfig>;

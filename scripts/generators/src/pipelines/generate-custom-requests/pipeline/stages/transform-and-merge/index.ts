@@ -1,5 +1,5 @@
 import { addJsonReport } from "@scripts/generators/src/lib/reports";
-import type { GenerationStage } from "../../../@types/orchestration";
+import type { GenerationStage } from "../../orchestration/types";
 import { transformAllEntries } from "./entry-transformer";
 import { mergeRegistries } from "./merge-registries";
 

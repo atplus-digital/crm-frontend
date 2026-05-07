@@ -1,8 +1,8 @@
-import type { GenerationStage } from "../../../@types/orchestration";
 import {
 	createRegistry,
 	loadCollectionSchemas,
 } from "../../../utils/collection-schema-loader";
+import type { GenerationStage } from "../../orchestration/types";
 
 export function loadSchemasStage(): GenerationStage {
 	return async (context) => {

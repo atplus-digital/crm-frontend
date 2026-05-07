@@ -1,5 +1,5 @@
 import { addJsonReport } from "@scripts/generators/src/lib/reports";
-import type { GenerationStage } from "../../../@types/orchestration";
+import type { GenerationStage } from "../../orchestration/types";
 import { collectAnalysisReport } from "./analysis-collector";
 
 function toJsonEntries(

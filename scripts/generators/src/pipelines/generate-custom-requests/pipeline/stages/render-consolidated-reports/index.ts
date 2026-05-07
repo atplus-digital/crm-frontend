@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { renderReportsMarkdown } from "@scripts/generators/src/lib/reports";
-import type { GenerationStage } from "../../../@types/orchestration";
+import type { GenerationStage } from "../../orchestration/types";
 
 export function renderConsolidatedReportsStage(): GenerationStage {
 	return async (context) => {
