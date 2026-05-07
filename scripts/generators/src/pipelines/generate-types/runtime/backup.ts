@@ -1,4 +1,8 @@
-import { createAtomicWriteSession } from "@scripts/generators/src/lib/io/atomic-writer";
+import {
+	backupAtomicSessions,
+	cleanupAtomicSessions,
+	restoreAtomicSessions,
+} from "@scripts/generators/src/lib/io/atomic-session-lifecycle";
 import type { GenerateTypesExecutionContext } from "./context";
 
 const GENERATE_TYPES_BACKUP_BASE_DIR =
@@ -7,44 +11,25 @@ const GENERATE_TYPES_BACKUP_BASE_DIR =
 export function backupGenerateTypesOutputs(
 	context: GenerateTypesExecutionContext,
 ): void {
-	context.atomicSessions = context.outputDirs.map((outputDir) => {
-		const session = createAtomicWriteSession({
-			outputDir,
-			label: `generate-types (${outputDir})`,
-			validate: false,
-			lint: false,
-			backupBaseDir: GENERATE_TYPES_BACKUP_BASE_DIR,
-			permanentBackupBaseDir: GENERATE_TYPES_BACKUP_BASE_DIR,
-		});
-		session.backup();
-		return session;
+	backupAtomicSessions({
+		context,
+		labelPrefix: "generate-types",
+		backupBaseDir: GENERATE_TYPES_BACKUP_BASE_DIR,
+		validate: false,
+		lint: false,
 	});
 }
 
 export function restoreAllSessions(
 	context: GenerateTypesExecutionContext,
 ): void {
-	for (const session of context.atomicSessions) {
-		try {
-			session.restore();
-		} catch (restoreError) {
-			context.logger.warn(
-				`Failed to restore backup for ${session.outputDir}: ${restoreError}`,
-			);
-		}
-	}
+	restoreAtomicSessions(context);
 }
 
 export async function cleanupGenerateTypesBackups(
 	context: GenerateTypesExecutionContext,
 ): Promise<void> {
-	for (const session of context.atomicSessions) {
-		const validated = await session.validateAndFinalize();
-		if (!validated) {
-			throw new Error(
-				`Validação falhou para ${session.outputDir}. Alterações restauradas a partir do backup.`,
-			);
-		}
-		session.cleanup();
-	}
+	await cleanupAtomicSessions({
+		context,
+	});
 }

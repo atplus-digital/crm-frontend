@@ -68,7 +68,7 @@ export interface GeneratorOrchestrationStage<TExecutionContext> {
 	title: string;
 	run: (
 		context: TExecutionContext,
-		task: OrchestrationTaskRunner,
+		task?: OrchestrationTaskRunner,
 	) => OrchestrationTaskResult;
 }
 

@@ -9,6 +9,18 @@ export interface RuntimePipelineContext<TPipelineContext> {
 	pipelineContext?: TPipelineContext;
 }
 
+export async function runWithErrorRecovery<TResult>(
+	run: () => Promise<TResult>,
+	onError: () => void,
+): Promise<TResult> {
+	try {
+		return await run();
+	} catch (error) {
+		onError();
+		throw error;
+	}
+}
+
 export async function runPipelineStages<TContext>(
 	initialContext: TContext,
 	stages: AsyncPipelineStage<TContext>[],
