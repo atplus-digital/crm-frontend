@@ -101,8 +101,8 @@ export function createFinalizationTasks(): GeneratorTask<GenerateTypesGeneratorC
 		},
 		{
 			title: "cleanup-backups",
-			run: (context) => {
-				cleanupGenerateTypesBackups(getExecutionContext(context));
+			run: async (context) => {
+				await cleanupGenerateTypesBackups(getExecutionContext(context));
 			},
 		},
 	];

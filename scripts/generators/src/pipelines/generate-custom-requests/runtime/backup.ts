@@ -1,20 +1,18 @@
 import { createAtomicWriteSession } from "@scripts/generators/src/lib/io/atomic-writer";
-import type { GenerateTypesExecutionContext } from "./context";
+import type { GenerateCustomRequestsExecutionContext } from "../context";
 
-const GENERATE_TYPES_BACKUP_BASE_DIR =
-	"scripts/generators/.backup/generate-types";
+const CUSTOM_REQUESTS_BACKUP_BASE_DIR =
+	"scripts/generators/.backup/generate-custom-requests";
 
-export function backupGenerateTypesOutputs(
-	context: GenerateTypesExecutionContext,
+export function backupGenerateCustomRequestsOutputs(
+	context: GenerateCustomRequestsExecutionContext,
 ): void {
 	context.atomicSessions = context.outputDirs.map((outputDir) => {
 		const session = createAtomicWriteSession({
 			outputDir,
-			label: `generate-types (${outputDir})`,
-			validate: false,
-			lint: false,
-			backupBaseDir: GENERATE_TYPES_BACKUP_BASE_DIR,
-			permanentBackupBaseDir: GENERATE_TYPES_BACKUP_BASE_DIR,
+			label: `generate-custom-requests (${outputDir})`,
+			backupBaseDir: CUSTOM_REQUESTS_BACKUP_BASE_DIR,
+			permanentBackupBaseDir: CUSTOM_REQUESTS_BACKUP_BASE_DIR,
 		});
 		session.backup();
 		return session;
@@ -22,7 +20,7 @@ export function backupGenerateTypesOutputs(
 }
 
 export function restoreAllSessions(
-	context: GenerateTypesExecutionContext,
+	context: GenerateCustomRequestsExecutionContext,
 ): void {
 	for (const session of context.atomicSessions) {
 		try {
@@ -35,10 +33,19 @@ export function restoreAllSessions(
 	}
 }
 
-export async function cleanupGenerateTypesBackups(
-	context: GenerateTypesExecutionContext,
+export async function cleanupGenerateCustomRequestsBackups(
+	context: GenerateCustomRequestsExecutionContext,
 ): Promise<void> {
+	const shouldValidate = Boolean(
+		context.pipelineContext?.mergedEntries?.length,
+	);
+
 	for (const session of context.atomicSessions) {
+		if (!shouldValidate) {
+			session.cleanup();
+			continue;
+		}
+
 		const validated = await session.validateAndFinalize();
 		if (!validated) {
 			throw new Error(

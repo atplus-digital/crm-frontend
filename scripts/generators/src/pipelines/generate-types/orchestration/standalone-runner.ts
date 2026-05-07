@@ -35,6 +35,6 @@ export async function runGenerateTypes(
 	await runFormatResultOrchestrationStage(context);
 	await runRenderConsolidatedReportsOrchestrationStage(context);
 	const result = assertGenerateTypesResult(context);
-	cleanupGenerateTypesBackups(context);
+	await cleanupGenerateTypesBackups(context);
 	return result;
 }

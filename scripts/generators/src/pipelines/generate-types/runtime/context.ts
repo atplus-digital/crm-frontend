@@ -5,12 +5,7 @@ import { config } from "../config";
 import type { GenerationContext } from "../pipeline/orchestration/types";
 
 function getOutputDirs(runtimeConfig: RuntimeConfig): string[] {
-	return [
-		runtimeConfig.outputDir,
-		...(runtimeConfig.datasources ?? [])
-			.map((d) => d.outputDir)
-			.filter((dir): dir is string => Boolean(dir?.trim())),
-	];
+	return [runtimeConfig.outputDir];
 }
 
 export interface GenerateTypesExecutionContext {

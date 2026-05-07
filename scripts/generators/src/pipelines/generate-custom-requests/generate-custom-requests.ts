@@ -23,6 +23,11 @@ import {
 	runWriteOutputOrchestration,
 	writeOutputStage,
 } from "./pipeline/stages/write-output";
+import {
+	backupGenerateCustomRequestsOutputs,
+	cleanupGenerateCustomRequestsBackups,
+	restoreAllSessions,
+} from "./runtime/backup";
 import { applyWorkspaceLockIfNeeded } from "./utils/workspace-locker";
 
 export { createGenerateCustomRequestsExecutionContext } from "./context";
@@ -43,7 +48,12 @@ async function runStage(
 	context: GenerateCustomRequestsExecutionContext,
 	stage: Parameters<typeof runOrchestrationStage>[1],
 ): Promise<void> {
-	await runOrchestrationStage(context, stage);
+	try {
+		await runOrchestrationStage(context, stage);
+	} catch (error) {
+		restoreAllSessions(context);
+		throw error;
+	}
 }
 
 export async function runLoadConfigOrchestrationStage(
@@ -107,6 +117,7 @@ export async function runGenerateCustomRequests(
 	);
 
 	lockGenerateCustomRequestsWorkspace();
+	backupGenerateCustomRequestsOutputs(context);
 	await runLoadConfigOrchestrationStage(context);
 	await runFetchEntriesOrchestrationStage(context);
 	await runLoadSchemasOrchestrationStage(context);
@@ -114,6 +125,7 @@ export async function runGenerateCustomRequests(
 	await runTransformAndMergeOrchestrationStage(context);
 	await runWriteOutputOrchestrationStage(context);
 	await runRenderConsolidatedReportsOrchestrationStage(context);
-
-	return assertGenerateCustomRequestsResult(context);
+	const result = assertGenerateCustomRequestsResult(context);
+	await cleanupGenerateCustomRequestsBackups(context);
+	return result;
 }

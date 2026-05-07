@@ -2,9 +2,7 @@ import type { GenerationStage } from "../../../@types/orchestration";
 import { executeWriteOutput } from "./operations";
 
 export {
-	createWriteOutputSession,
 	executeWriteOutput,
-	finalizeWriteOutput,
 	hasEntriesToWrite,
 	writeGeneratedRegistryOutput,
 	writeSplitFilesOutput,

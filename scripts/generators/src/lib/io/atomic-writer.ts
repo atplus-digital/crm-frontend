@@ -32,6 +32,14 @@ export interface AtomicWriterOptions {
 	 * @default undefined (backup is created as sibling of outputDir)
 	 */
 	backupBaseDir?: string;
+	/**
+	 * Base directory for permanent backups. When provided, a timestamped backup
+	 * is saved to this directory when there are changes and commit succeeds.
+	 * E.g., `scripts/generators/src/pipelines/generate-types` creates backups at
+	 * `scripts/generators/src/pipelines/generate-types/.backup/2024-01-15_14-30-00/`
+	 * @default undefined (no permanent backup)
+	 */
+	permanentBackupBaseDir?: string;
 }
 
 export interface AtomicWriteResult {
@@ -45,6 +53,8 @@ export interface AtomicWriteResult {
 	backupDir: string;
 	/** Whether the commit succeeded. */
 	committed: boolean;
+	/** The permanent backup directory if one was created, otherwise undefined. */
+	permanentBackupDir?: string;
 }
 
 /**
@@ -73,7 +83,7 @@ export interface AtomicWriteResult {
 export function createAtomicWriteSession(
 	options: AtomicWriterOptions,
 ): AtomicWriteSession {
-	const { outputDir, label, backupBaseDir } = options;
+	const { outputDir, label, backupBaseDir, permanentBackupBaseDir } = options;
 	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
 
 	// Temp dirs are siblings of the output dir (same parent)
@@ -85,6 +95,11 @@ export function createAtomicWriteSession(
 		? path.resolve(process.cwd(), backupBaseDir)
 		: parentDir;
 
+	// Permanent backup base directory (resolved at session creation)
+	const resolvedPermanentBackupBaseDir = permanentBackupBaseDir
+		? path.resolve(process.cwd(), permanentBackupBaseDir)
+		: undefined;
+
 	return new AtomicWriteSession(
 		resolvedOutputDir,
 		path.join(parentDir, `.tmp-${tempId}`),
@@ -92,6 +107,7 @@ export function createAtomicWriteSession(
 		label,
 		options.validate ?? true,
 		options.lint ?? true,
+		resolvedPermanentBackupBaseDir,
 	);
 }
 
@@ -106,6 +122,7 @@ export class AtomicWriteSession {
 		private readonly label: string,
 		private readonly validate: boolean,
 		private readonly lint: boolean,
+		private readonly permanentBackupBaseDir?: string,
 	) {}
 
 	/**
@@ -157,7 +174,14 @@ export class AtomicWriteSession {
 				tempDir: this.tempDir,
 				backupDir: this.backupDir,
 				committed: true,
+				permanentBackupDir: undefined,
 			};
+		}
+
+		// Save permanent backup BEFORE making changes (if configured)
+		let permanentBackupDir: string | undefined;
+		if (this.permanentBackupBaseDir) {
+			permanentBackupDir = this.savePermanentBackup();
 		}
 
 		logger.info(
@@ -185,6 +209,7 @@ export class AtomicWriteSession {
 				tempDir: this.tempDir,
 				backupDir: this.backupDir,
 				committed: false,
+				permanentBackupDir: undefined,
 			};
 		}
 
@@ -194,6 +219,11 @@ export class AtomicWriteSession {
 		logger.info(
 			`[AtomicWriter:${this.label}] Committed ${diff.changedFiles.length} changed files successfully`,
 		);
+		if (permanentBackupDir) {
+			logger.info(
+				`[AtomicWriter:${this.label}] Permanent backup saved at: ${permanentBackupDir}`,
+			);
+		}
 
 		return {
 			changedFiles: diff.changedFiles,
@@ -201,6 +231,7 @@ export class AtomicWriteSession {
 			tempDir: this.tempDir,
 			backupDir: this.backupDir,
 			committed: true,
+			permanentBackupDir,
 		};
 	}
 
@@ -225,6 +256,7 @@ export class AtomicWriteSession {
 
 	/**
 	 * Validates the output directory and restores backup on failure.
+	 * If validation passes and there were changes, a permanent backup is saved.
 	 *
 	 * Returns `true` if validation passed (backup cleaned up).
 	 * Returns `false` if validation failed (backup restored).
@@ -237,6 +269,9 @@ export class AtomicWriteSession {
 		}
 		this.committed = true;
 
+		// Check if there are changes before validation
+		const hasChanges = this.hasWrapModeChanges();
+
 		const validationOk = await this.runValidation();
 
 		if (!validationOk) {
@@ -245,6 +280,16 @@ export class AtomicWriteSession {
 				`[AtomicWriter:${this.label}] Validation FAILED — original files restored from: ${this.backupDir}`,
 			);
 			return false;
+		}
+
+		// Save permanent backup if there were changes (and permanent backup is configured)
+		if (hasChanges && this.permanentBackupBaseDir) {
+			const permanentBackupPath = this.savePermanentBackupFromBackupDir();
+			if (permanentBackupPath) {
+				logger.info(
+					`[AtomicWriter:${this.label}] Permanent backup saved at: ${permanentBackupPath}`,
+				);
+			}
 		}
 
 		this.removeBackupDir();
@@ -325,6 +370,58 @@ export class AtomicWriteSession {
 		return { changedFiles, unchangedFiles, deletedFiles };
 	}
 
+	/**
+	 * Checks if there are any changes between the output directory and the backup directory.
+	 * Used in wrap mode to determine if a permanent backup should be saved.
+	 */
+	private hasWrapModeChanges(): boolean {
+		// If backup doesn't exist, there can't be changes from it
+		if (!fs.existsSync(this.backupDir)) {
+			return false;
+		}
+
+		// If output doesn't exist but backup does, that's a change (deletion)
+		if (!fs.existsSync(this.outputDir)) {
+			return true;
+		}
+
+		const backupFiles = this.listFilesRecursively(this.backupDir);
+		const outputFiles = this.listFilesRecursively(this.outputDir);
+
+		const backupSet = new Set(
+			backupFiles.map((f) => path.relative(this.backupDir, f)),
+		);
+		const outputSet = new Set(
+			outputFiles.map((f) => path.relative(this.outputDir, f)),
+		);
+
+		// Check for deleted files
+		for (const relativePath of backupSet) {
+			if (!outputSet.has(relativePath)) {
+				return true; // File was deleted
+			}
+		}
+
+		// Check for new or modified files
+		for (const relativePath of outputSet) {
+			if (!backupSet.has(relativePath)) {
+				return true; // New file
+			}
+
+			// File exists in both, check content
+			const backupFilePath = path.join(this.backupDir, relativePath);
+			const outputFilePath = path.join(this.outputDir, relativePath);
+			const backupContent = fs.readFileSync(backupFilePath, "utf-8");
+			const outputContent = fs.readFileSync(outputFilePath, "utf-8");
+
+			if (backupContent !== outputContent) {
+				return true; // File was modified
+			}
+		}
+
+		return false;
+	}
+
 	private backupOutputDir(): void {
 		if (!fs.existsSync(this.outputDir)) return;
 
@@ -381,6 +478,77 @@ export class AtomicWriteSession {
 		if (fs.existsSync(this.backupDir)) {
 			fs.rmSync(this.backupDir, { recursive: true, force: true });
 		}
+	}
+
+	/**
+	 * Saves a permanent timestamped backup of the current output directory.
+	 * The backup is saved to `permanentBackupBaseDir/.backup/{timestamp}/`.
+	 *
+	 * @returns The path to the created backup directory, or undefined if no backup was created.
+	 */
+	private savePermanentBackup(): string | undefined {
+		if (!this.permanentBackupBaseDir) {
+			return undefined;
+		}
+
+		if (!fs.existsSync(this.outputDir)) {
+			logger.debug(
+				`[AtomicWriter:${this.label}] No output dir to backup permanently`,
+			);
+			return undefined;
+		}
+
+		return this.createTimestampedBackup(this.outputDir);
+	}
+
+	/**
+	 * Saves a permanent timestamped backup from the backup directory.
+	 * Used in wrap mode after validation passes.
+	 *
+	 * @returns The path to the created backup directory, or undefined if no backup was created.
+	 */
+	private savePermanentBackupFromBackupDir(): string | undefined {
+		if (!this.permanentBackupBaseDir) {
+			return undefined;
+		}
+
+		if (!fs.existsSync(this.backupDir)) {
+			logger.debug(
+				`[AtomicWriter:${this.label}] No backup dir to save permanently`,
+			);
+			return undefined;
+		}
+
+		return this.createTimestampedBackup(this.backupDir);
+	}
+
+	/**
+	 * Creates a timestamped backup of the given directory.
+	 * The backup is saved to `permanentBackupBaseDir/.backup/{timestamp}/`.
+	 */
+	private createTimestampedBackup(sourceDir: string): string {
+		// Create .backup directory in the base dir
+		const backupRoot = path.join(this.permanentBackupBaseDir!, ".backup");
+		if (!fs.existsSync(backupRoot)) {
+			fs.mkdirSync(backupRoot, { recursive: true });
+		}
+
+		// Generate timestamp in YYYY-MM-DD_HH-mm-ss format
+		const now = new Date();
+		const timestamp = now
+			.toISOString()
+			.replace(/T/, "_")
+			.replace(/:/g, "-")
+			.slice(0, 19);
+
+		const permanentBackupPath = path.join(backupRoot, timestamp);
+
+		logger.debug(
+			`[AtomicWriter:${this.label}] Saving permanent backup to: ${permanentBackupPath}`,
+		);
+		fs.cpSync(sourceDir, permanentBackupPath, { recursive: true });
+
+		return permanentBackupPath;
 	}
 
 	private listFilesRecursively(dir: string): string[] {

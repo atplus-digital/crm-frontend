@@ -7,6 +7,7 @@ export const requestsConfig: Partial<ScriptConfig> = {
 		"0j7f9fuzuo7": "quali-run",
 		tjt1ajr1tkl: "segunda-contratacao",
 		xk5u4vwbdap: "log-test",
+		"37yaihkravc": "abrir-renegociacao",
 	},
 	// manualRequests: [
 	// 	{

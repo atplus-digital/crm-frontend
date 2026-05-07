@@ -22,6 +22,10 @@ import {
 	runWriteAnalysisReportOrchestrationStage,
 	runWriteOutputOrchestrationStage,
 } from "../generate-custom-requests";
+import {
+	backupGenerateCustomRequestsOutputs,
+	cleanupGenerateCustomRequestsBackups,
+} from "../runtime/backup";
 
 export type GenerateCustomRequestsGeneratorContext = GeneratorContextState<
 	Partial<ScriptConfig>,
@@ -88,6 +92,12 @@ function createGeneratorTasks(): GeneratorTask<GenerateCustomRequestsGeneratorCo
 				lockGenerateCustomRequestsWorkspace();
 			},
 		},
+		{
+			title: "backup-outputs",
+			run: (context) => {
+				backupGenerateCustomRequestsOutputs(getExecutionContext(context));
+			},
+		},
 		createOrchestrationTask({
 			title: "orchestration",
 			stages: ORCHESTRATION_STEPS,
@@ -97,6 +107,14 @@ function createGeneratorTasks(): GeneratorTask<GenerateCustomRequestsGeneratorCo
 			title: "assert-result",
 			run: (context) => {
 				assertGenerateCustomRequestsResult(getExecutionContext(context));
+			},
+		},
+		{
+			title: "cleanup-backups",
+			run: async (context) => {
+				await cleanupGenerateCustomRequestsBackups(
+					getExecutionContext(context),
+				);
 			},
 		},
 	];

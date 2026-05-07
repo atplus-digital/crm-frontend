@@ -3,6 +3,7 @@ import {
 	type GenerateCustomRequestsExecutionContext,
 	getPipelineContext,
 } from "./context";
+import { restoreAllSessions } from "./runtime/backup";
 
 function reportSchemasNotFound(pipelineContext: GenerationContext): void {
 	if (
@@ -35,13 +36,21 @@ function reportSchemasNotFound(pipelineContext: GenerationContext): void {
 export function assertGenerateCustomRequestsResult(
 	context: GenerateCustomRequestsExecutionContext,
 ): GenerationContext {
-	const pipelineContext = getPipelineContext(context);
+	let pipelineContext: GenerationContext;
+	try {
+		pipelineContext = getPipelineContext(context);
+	} catch (error) {
+		restoreAllSessions(context);
+		throw error;
+	}
 
 	if (!pipelineContext.config) {
+		restoreAllSessions(context);
 		throw new Error("Configuração de runtime não foi carregada");
 	}
 
 	if (!pipelineContext.mergedEntries) {
+		restoreAllSessions(context);
 		throw new Error("Pipeline não produziu entradas finais");
 	}
 
