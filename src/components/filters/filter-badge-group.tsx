@@ -47,6 +47,8 @@ export function FilterBadgeGroup<T extends string>({
 	const [expandedExtraKeys, setExpandedExtraKeys] = useState<Set<T>>(new Set());
 
 	const hasExtras = extraOptions && extraOptions.length > 0;
+	const allOptions = hasExtras ? [...options, ...extraOptions] : options;
+	const allOptionValues = allOptions.map((option) => option.value);
 
 	// Extra options that are currently collapsed (not selected and not expanded)
 	const collapsedExtraOptions = hasExtras
@@ -59,6 +61,15 @@ export function FilterBadgeGroup<T extends string>({
 
 	const handleToggle = (optionValue: T) => {
 		if (disabled) return;
+
+		// In allActive mode, an empty selection means "all are active".
+		// First click should deactivate only the clicked badge.
+		if (allActive && selectedValues.length === 0) {
+			const newValue = allOptionValues.filter((value) => value !== optionValue);
+			onChange(newValue.length === 0 ? undefined : newValue);
+			return;
+		}
+
 		if (selectedValues.includes(optionValue)) {
 			const newValue = selectedValues.filter((v) => v !== optionValue);
 			// When allActive is true and we're deselecting the last item,
@@ -69,7 +80,15 @@ export function FilterBadgeGroup<T extends string>({
 			}
 			onChange(showAllButton && newValue.length === 0 ? undefined : newValue);
 		} else {
-			onChange([...selectedValues, optionValue]);
+			const newValue = [...selectedValues, optionValue];
+
+			// Keep "all active" state normalized as undefined in allActive mode.
+			if (allActive && newValue.length === allOptionValues.length) {
+				onChange(undefined);
+				return;
+			}
+
+			onChange(newValue);
 		}
 	};
 
@@ -106,7 +125,6 @@ export function FilterBadgeGroup<T extends string>({
 		return selectedValues.includes(optionValue);
 	};
 
-	const allOptions = hasExtras ? [...options, ...extraOptions] : options;
 	const isAllSelected =
 		selectedValues.length === 0 || selectedValues.length === allOptions.length;
 

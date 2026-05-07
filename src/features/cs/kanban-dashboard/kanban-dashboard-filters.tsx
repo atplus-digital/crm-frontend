@@ -40,6 +40,16 @@ interface KanbanDashboardFilterBarProps {
 	onFilter: (filters: KanbanDashboardFilters) => void;
 }
 
+function isSourceCollectionActive(
+	sourceCollections: SourceCollection[] | undefined,
+	source: SourceCollection,
+): boolean {
+	if (!sourceCollections || sourceCollections.length === 0) {
+		return true;
+	}
+	return sourceCollections.includes(source);
+}
+
 // ---------------------------------------------------------------------------
 // Build tipo de negociação options from PRIMARY and EXTRA constants
 // ---------------------------------------------------------------------------
@@ -71,10 +81,10 @@ export function KanbanDashboardFilterBar({
 	const searchId = useId();
 
 	// Check if "Negociação" is selected in source collections filter
-	const showNegociacaoFilter =
-		!filters.sourceCollections ||
-		filters.sourceCollections.length === 0 ||
-		filters.sourceCollections.includes("neg");
+	const showNegociacaoFilter = isSourceCollectionActive(
+		filters.sourceCollections,
+		"neg",
+	);
 
 	const hasFilters = Boolean(
 		filters.searchTerm ||
@@ -89,8 +99,11 @@ export function KanbanDashboardFilterBar({
 
 	const handleSourceChange = (value: SourceCollection[] | undefined) => {
 		// If "Negociação" is being deselected, also clear tipoNegociacao filter
-		const wasNegSelected = filters.sourceCollections?.includes("neg");
-		const isNegSelected = value?.includes("neg");
+		const wasNegSelected = isSourceCollectionActive(
+			filters.sourceCollections,
+			"neg",
+		);
+		const isNegSelected = isSourceCollectionActive(value, "neg");
 
 		if (wasNegSelected && !isNegSelected) {
 			onFilter({

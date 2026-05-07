@@ -58,6 +58,12 @@ export const UNIFIED_STATUS_COLUMNS = [
 		colorClass: "bg-red-500 dark:bg-red-600",
 		bgClass: "bg-red-100/70 dark:bg-red-950/40 dark:text-red-300",
 	},
+	{
+		key: "Aguardando assinatura teste",
+		label: "Aguardando assinatura teste",
+		colorClass: "bg-yellow-500 dark:bg-yellow-600",
+		bgClass: "bg-yellow-100/70 dark:bg-yellow-950/40 dark:text-yellow-300",
+	},
 ] as const;
 
 export type UnifiedStatusKey = (typeof UNIFIED_STATUS_COLUMNS)[number]["key"];
@@ -262,6 +268,7 @@ export function mapTrocaTitularidadeStatus(
 		"2": "Em Andamento",
 		"3": "Concluido",
 		"9": "Cancelado",
+		"20": "Aguardando assinatura teste",
 	};
 	return mapping[status] ?? "Novo";
 }

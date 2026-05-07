@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
 	FilterActions,
 	FilterInputField,
@@ -11,22 +10,12 @@ import {
 	type PessoaFisicaTableFilters,
 } from "#/features/cs/pessoas/pessoas-types";
 
-export function PessoasFisicasFilters() {
+interface PessoasFisicasFiltersProps {
+	filters: PessoaFisicaTableFilters;
+}
+
+export function PessoasFisicasFilters({ filters }: PessoasFisicasFiltersProps) {
 	const { onFilter } = useFilterContext();
-
-	const [f_nome, setFNome] = useState(
-		DEFAULT_PESSOA_FISICA_TABLE_FILTERS.f_nome,
-	);
-	const [f_cpf, setFCpf] = useState(DEFAULT_PESSOA_FISICA_TABLE_FILTERS.f_cpf);
-	const [f_analise_ixc, setFAnaliseIxc] = useState<
-		PessoaFisicaTableFilters["f_analise_ixc"]
-	>(DEFAULT_PESSOA_FISICA_TABLE_FILTERS.f_analise_ixc);
-
-	const filters: PessoaFisicaTableFilters = {
-		f_nome,
-		f_cpf,
-		f_analise_ixc,
-	};
 
 	return (
 		<FilterLayout
@@ -36,9 +25,10 @@ export function PessoasFisicasFilters() {
 					onApply={() => onFilter(filters)}
 					onClear={() => onFilter(DEFAULT_PESSOA_FISICA_TABLE_FILTERS)}
 					canClear={
-						Boolean(f_nome) ||
-						Boolean(f_cpf) ||
-						f_analise_ixc !== DEFAULT_PESSOA_FISICA_TABLE_FILTERS.f_analise_ixc
+						Boolean(filters.f_nome) ||
+						Boolean(filters.f_cpf) ||
+						filters.f_analise_ixc !==
+							DEFAULT_PESSOA_FISICA_TABLE_FILTERS.f_analise_ixc
 					}
 					applyVariant="outline"
 					clearVariant="ghost"
@@ -50,9 +40,8 @@ export function PessoasFisicasFilters() {
 					id="filter-pf-nome"
 					label="Nome"
 					placeholder="Filtrar por nome..."
-					value={f_nome}
+					value={filters.f_nome}
 					onChange={(v) => {
-						setFNome(v);
 						onFilter({ ...filters, f_nome: v });
 					}}
 				/>
@@ -62,9 +51,8 @@ export function PessoasFisicasFilters() {
 					id="filter-pf-cpf"
 					label="CPF"
 					placeholder="Filtrar por CPF..."
-					value={f_cpf}
+					value={filters.f_cpf}
 					onChange={(v) => {
-						setFCpf(v);
 						onFilter({ ...filters, f_cpf: v });
 					}}
 				/>
@@ -73,7 +61,7 @@ export function PessoasFisicasFilters() {
 				<FilterSelectField<string>
 					id="filter-pf-analise"
 					label="Análise IXC"
-					value={f_analise_ixc}
+					value={filters.f_analise_ixc}
 					placeholder="Análise IXC"
 					options={[
 						{ value: "1", label: "Sem Pendências" },
@@ -83,7 +71,6 @@ export function PessoasFisicasFilters() {
 						const newValue = (
 							v === undefined ? "all" : v
 						) as PessoaFisicaTableFilters["f_analise_ixc"];
-						setFAnaliseIxc(newValue);
 						onFilter({ ...filters, f_analise_ixc: newValue });
 					}}
 				/>
