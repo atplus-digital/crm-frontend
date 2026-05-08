@@ -18,7 +18,9 @@ export const telecom_filaBaseSchema = z.object({
 	f_fk_fila: z.number(),
 	f_nome: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -43,10 +45,12 @@ export const telecom_filaSchema = telecom_filaBaseSchema.extend(
 export const telecom_filaCreateSchema = telecom_filaSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_fk_fila_rack: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

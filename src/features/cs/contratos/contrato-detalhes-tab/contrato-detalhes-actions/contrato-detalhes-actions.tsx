@@ -8,6 +8,10 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { type ActionItem, ActionsMenu } from "#/components/actions-menu";
+import {
+	CONTRATO_ACTION_LABEL,
+	getDisabledContratoActions,
+} from "#/features/cs/contratos/contratos-action-guards";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
 import { TransferenciaTitularidadeSheet } from "../../../troca-titularidade";
 import { TrocaEnderecoSheet } from "./troca-endereco-action/troca-endereco-sheet";
@@ -20,15 +24,15 @@ function ContratoDetalhesActions({ contrato }: ContratoDetalhesActionsProps) {
 	const [transferSheetOpen, setTransferSheetOpen] = useState(false);
 	const [enderecoSheetOpen, setEnderecoSheetOpen] = useState(false);
 
-	const isTransferDisabled =
-		contrato.status === "I" ||
-		contrato.status === "N" ||
-		contrato.status === "D";
+	const disabledActions = getDisabledContratoActions(contrato);
 
 	const actions: readonly ActionItem[] = [
 		{
 			icon: KeyRound,
-			label: "Desbloqueio em Confiança",
+			label: CONTRATO_ACTION_LABEL.DESBLOQUEIO_CONFIANCA,
+			disabled: disabledActions.has(
+				CONTRATO_ACTION_LABEL.DESBLOQUEIO_CONFIANCA,
+			),
 			popupRequest: {
 				identifier: "78d5kny2gwn",
 				payload: { currentRecord: { id: contrato.id } },
@@ -50,19 +54,19 @@ function ContratoDetalhesActions({ contrato }: ContratoDetalhesActionsProps) {
 		},
 		{
 			icon: ArrowRightLeft,
-			label: "Transferir",
-			disabled: isTransferDisabled,
+			label: CONTRATO_ACTION_LABEL.TRANSFERIR,
+			disabled: disabledActions.has(CONTRATO_ACTION_LABEL.TRANSFERIR),
 			onClick: () => setTransferSheetOpen(true),
 		},
-		{ icon: RefreshCw, label: "Renegociar" },
+		{ icon: RefreshCw, label: CONTRATO_ACTION_LABEL.RENEGOCIAR },
 		{
 			icon: MapPin,
-			label: "Trocar Endereço",
-			disabled: isTransferDisabled,
+			label: CONTRATO_ACTION_LABEL.TROCAR_ENDERECO,
+			disabled: disabledActions.has(CONTRATO_ACTION_LABEL.TROCAR_ENDERECO),
 			onClick: () => setEnderecoSheetOpen(true),
 		},
-		{ icon: Pause, label: "Suspender" },
-		{ icon: FileWarning, label: "Reter" },
+		{ icon: Pause, label: CONTRATO_ACTION_LABEL.SUSPENDER },
+		{ icon: FileWarning, label: CONTRATO_ACTION_LABEL.RETER },
 	];
 
 	return (

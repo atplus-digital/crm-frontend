@@ -25,10 +25,13 @@ export const asosBaseSchema = z.object({
 	path: z.string(),
 	preview: z.string(),
 	size: z.number(),
+	storageId: z.number(),
 	title: z.string(),
 	url: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -53,12 +56,14 @@ export const asosSchema = asosBaseSchema.extend(asosRelationSchema.shape);
 export const asosCreateSchema = asosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_funcionarios: true,
 	f_info_aso: true,
 	id: true,
 	storage: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

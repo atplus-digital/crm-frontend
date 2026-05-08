@@ -26,7 +26,9 @@ export const aegisBaseSchema = z.object({
 	f_statuslogin: aegisStatusloginSchema,
 	f_statusmac: aegisStatusmacSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -48,9 +50,11 @@ export const aegisSchema = aegisBaseSchema.extend(aegisRelationSchema.shape);
 export const aegisCreateSchema = aegisSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

@@ -17,7 +17,9 @@ export const comentario_viagemBaseSchema = z.object({
 	f_comentario: z.string(),
 	f_comentario_viagem: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -41,9 +43,11 @@ export const comentario_viagemSchema = comentario_viagemBaseSchema.extend(
 export const comentario_viagemCreateSchema = comentario_viagemSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

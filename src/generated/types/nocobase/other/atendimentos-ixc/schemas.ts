@@ -41,7 +41,9 @@ export const atendimentos_ixcBaseSchema = z.object({
 	f_tarefas: atendimentos_ixcTarefasSchema,
 	f_usuario: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -68,10 +70,12 @@ export const atendimentos_ixcSchema = atendimentos_ixcBaseSchema.extend(
 export const atendimentos_ixcCreateSchema = atendimentos_ixcSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_templates_atendimentos: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

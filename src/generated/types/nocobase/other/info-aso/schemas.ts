@@ -26,7 +26,9 @@ export const info_asoBaseSchema = z.object({
 	f_obs: z.string(),
 	f_tipo_exame: info_asoTipoExameSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -52,11 +54,13 @@ export const info_asoSchema = info_asoBaseSchema.extend(
 export const info_asoCreateSchema = info_asoSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_aso: true,
 	f_funcionarios_2: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

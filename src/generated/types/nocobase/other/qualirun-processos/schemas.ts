@@ -29,7 +29,9 @@ export const qualirun_processosBaseSchema = z.object({
 	f_procedimento: qualirun_processosProcedimentoSchema,
 	f_status: qualirun_processosStatusSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -54,10 +56,12 @@ export const qualirun_processosSchema = qualirun_processosBaseSchema.extend(
 export const qualirun_processosCreateSchema = qualirun_processosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_funcionarios: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

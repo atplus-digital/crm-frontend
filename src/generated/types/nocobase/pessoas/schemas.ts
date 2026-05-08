@@ -27,7 +27,9 @@ export const pessoasBaseSchema = z.object({
 	f_sexo: pessoasSexoSchema,
 	f_vky78cvjtdw: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -51,9 +53,11 @@ export const pessoasSchema = pessoasBaseSchema.extend(
 export const pessoasCreateSchema = pessoasSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

@@ -5,6 +5,8 @@
  */
 
 import { z } from "zod";
+import { cidadeBaseSchema } from "../cidade/schemas";
+import { ufBaseSchema } from "../uf/schemas";
 import {
 	clienteAcessoAutomaticoCentralSchema,
 	clienteAlterarSenhaPrimeiroAcessoSchema,
@@ -275,22 +277,27 @@ export const clienteBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const clienteRelationSchema = z.object({
+	f_campanha: z.number().nullable(),
 	f_candato_tipo: z.number().nullable(),
-	f_cidade: z.number().nullable(),
-	f_cidade_cob: z.number().nullable(),
-	f_cidade_naturalidade: z.number().nullable(),
+	f_cidade: z.lazy(() => cidadeBaseSchema.nullable()),
+	f_cidade_cob: z.lazy(() => cidadeBaseSchema.nullable()),
+	f_cidade_naturalidade: z.lazy(() => cidadeBaseSchema.nullable()),
+	f_cliente: z.lazy(() => clienteBaseSchema.nullable()),
 	f_concorrente: z.number().nullable(),
+	f_condicoes_pagamento: z.number().nullable(),
 	f_condominio: z.number().nullable(),
 	f_conta: z.number().nullable(),
-	f_estado_nascimento: z.number().nullable(),
+	f_estado_nascimento: z.lazy(() => ufBaseSchema.nullable()),
 	f_fornecedor_conversao: z.number().nullable(),
+	f_funcionarios: z.number().nullable(),
 	f_operadora_celular: z.number().nullable(),
 	f_perfil: z.number().nullable(),
 	f_responsavel: z.number().nullable(),
 	f_segmento: z.number().nullable(),
+	f_tabela_precos: z.number().nullable(),
 	f_tipo_cliente: z.number().nullable(),
-	f_uf: z.number().nullable(),
-	f_uf_cob: z.number().nullable(),
+	f_uf: z.lazy(() => ufBaseSchema.nullable()),
+	f_uf_cob: z.lazy(() => ufBaseSchema.nullable()),
 	f_vendedor: z.number().nullable(),
 });
 
@@ -305,19 +312,24 @@ export const clienteSchema = clienteBaseSchema.extend(
 // CREATE SCHEMA
 // ============================================================
 export const clienteCreateSchema = clienteSchema.omit({
+	f_campanha: true,
 	f_candato_tipo: true,
 	f_cidade: true,
 	f_cidade_cob: true,
 	f_cidade_naturalidade: true,
+	f_cliente: true,
 	f_concorrente: true,
+	f_condicoes_pagamento: true,
 	f_condominio: true,
 	f_conta: true,
 	f_estado_nascimento: true,
 	f_fornecedor_conversao: true,
+	f_funcionarios: true,
 	f_operadora_celular: true,
 	f_perfil: true,
 	f_responsavel: true,
 	f_segmento: true,
+	f_tabela_precos: true,
 	f_tipo_cliente: true,
 	f_uf: true,
 	f_uf_cob: true,

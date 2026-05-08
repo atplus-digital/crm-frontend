@@ -24,7 +24,9 @@ export const lancamentos_feriasBaseSchema = z.object({
 	f_observacoes: z.string(),
 	f_status: lancamentos_feriasStatusSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -49,10 +51,12 @@ export const lancamentos_feriasSchema = lancamentos_feriasBaseSchema.extend(
 export const lancamentos_feriasCreateSchema = lancamentos_feriasSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_periodos_ferias: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

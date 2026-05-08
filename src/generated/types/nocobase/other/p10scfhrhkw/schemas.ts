@@ -17,7 +17,9 @@ export const p10scfhrhkwBaseSchema = z.object({
 	id: z.number(),
 	f_m7vet8zixc9: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -42,10 +44,12 @@ export const p10scfhrhkwSchema = p10scfhrhkwBaseSchema.extend(
 export const p10scfhrhkwCreateSchema = p10scfhrhkwSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_ytw8yxxeul0: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

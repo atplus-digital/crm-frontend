@@ -21,7 +21,9 @@ export const configuracoesBaseSchema = z.object({
 	f_nome: z.string(),
 	f_valor: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -45,9 +47,11 @@ export const configuracoesSchema = configuracoesBaseSchema.extend(
 export const configuracoesCreateSchema = configuracoesSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

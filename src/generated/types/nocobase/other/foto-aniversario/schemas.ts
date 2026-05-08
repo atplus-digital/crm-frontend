@@ -23,10 +23,13 @@ export const foto_aniversarioBaseSchema = z.object({
 	path: z.string(),
 	preview: z.string(),
 	size: z.number(),
+	storageId: z.number(),
 	title: z.string(),
 	url: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -52,11 +55,13 @@ export const foto_aniversarioSchema = foto_aniversarioBaseSchema.extend(
 export const foto_aniversarioCreateSchema = foto_aniversarioSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_aniversarios: true,
 	id: true,
 	storage: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

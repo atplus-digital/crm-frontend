@@ -38,7 +38,9 @@ export const viagem_solicitacaoBaseSchema = z.object({
 	f_valor_diaria: z.number(),
 	f_valor_pedagio: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -63,10 +65,12 @@ export const viagem_solicitacaoSchema = viagem_solicitacaoBaseSchema.extend(
 export const viagem_solicitacaoCreateSchema = viagem_solicitacaoSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_anexos: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

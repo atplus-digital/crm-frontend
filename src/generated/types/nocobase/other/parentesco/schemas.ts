@@ -20,7 +20,9 @@ export const parentescoBaseSchema = z.object({
 	f_nome: z.string(),
 	f_vinculo_colaborador: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -45,10 +47,12 @@ export const parentescoSchema = parentescoBaseSchema.extend(
 export const parentescoCreateSchema = parentescoSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_funcionarios: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

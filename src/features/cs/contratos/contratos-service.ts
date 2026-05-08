@@ -78,7 +78,7 @@ export async function fetchContratoById(
 			{
 				page: 1,
 				pageSize: 1,
-				appends: ["f_nc_cliente"],
+				appends: ["f_nc_cliente", "f_cidade", "f_cidade.f_uf"],
 				filter: eq("id", id),
 			},
 		);

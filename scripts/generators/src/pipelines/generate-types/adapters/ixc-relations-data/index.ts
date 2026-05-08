@@ -1,3 +1,4 @@
+import { CIDADE_RELATIONS } from "./cidade";
 import { CLIENTE_RELATIONS } from "./cliente";
 import { CLIENTE_CONTRATO_RELATIONS } from "./cliente-contrato";
 import {
@@ -8,6 +9,7 @@ import {
 } from "./financeiro";
 
 export const IXC_RELATIONS_MAP = {
+	...CIDADE_RELATIONS,
 	...CLIENTE_RELATIONS,
 	...CLIENTE_CONTRATO_RELATIONS,
 	...FN_ARECEBER_RELATIONS,

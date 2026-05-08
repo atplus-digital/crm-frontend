@@ -55,7 +55,9 @@ export const crm_troca_titularidadeBaseSchema = z.object({
 	f_substatus: crm_troca_titularidadeSubstatusSchema,
 	f_tipo_pessoa: crm_troca_titularidadeTipoPessoaSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -89,6 +91,7 @@ export const crm_troca_titularidadeCreateSchema =
 	crm_troca_titularidadeSchema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		f_anexos: true,
 		f_comentarios: true,
 		f_pessoa_pf: true,
@@ -98,6 +101,7 @@ export const crm_troca_titularidadeCreateSchema =
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

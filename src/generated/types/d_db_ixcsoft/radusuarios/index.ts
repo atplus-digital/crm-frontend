@@ -13,6 +13,8 @@ export * from "./schemas";
 
 // Type inferences
 export type Radusuarios = z.infer<typeof import("./schemas").radusuariosSchema>;
-export type RadusuariosRelations = Record<string, never>;
+export type RadusuariosRelations = z.infer<
+	typeof import("./schemas").radusuariosRelationSchema
+>;
 
 export type RadusuariosRelationKey = keyof RadusuariosRelations;

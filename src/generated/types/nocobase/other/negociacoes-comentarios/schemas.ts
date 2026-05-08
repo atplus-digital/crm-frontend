@@ -23,7 +23,9 @@ export const negociacoes_comentariosBaseSchema = z.object({
 	f_insere_atendimento_ixc: negociacoes_comentariosInsereAtendimentoIxcSchema,
 	f_setor_para_obs: negociacoes_comentariosSetorParaObsSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -49,9 +51,11 @@ export const negociacoes_comentariosCreateSchema =
 	negociacoes_comentariosSchema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

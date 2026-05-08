@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { cidadeBaseSchema } from "../cidade/schemas";
 import { clienteBaseSchema } from "../cliente/schemas";
 import { vd_contratos_produtosBaseSchema } from "../vd-contratos-produtos/schemas";
 import {
@@ -249,22 +250,37 @@ export const cliente_contratoBaseSchema = z.object({
 // ============================================================
 export const cliente_contratoRelationSchema = z.object({
 	f_carteira_cobranca: z.number().nullable(),
+	f_cidade: z.lazy(() => cidadeBaseSchema.nullable()),
+	f_cliente_condominio: z.number().nullable(),
+	f_cliente_contrato_motivo_desistencia: z.number().nullable(),
 	f_cond_pag_ativ: z.number().nullable(),
+	f_condominio: z.number().nullable(),
+	f_contato: z.number().nullable(),
 	f_contrato_principal: z.lazy(() => cliente_contratoBaseSchema.nullable()),
+	f_crm_concorrente: z.number().nullable(),
 	f_filial: z.number().nullable(),
+	f_fn_areceber_mot_cancelamento: z.number().nullable(),
+	f_fn_areceber_mot_cancelamento_adicional: z.number().nullable(),
 	f_indexador_reajuste: z.number().nullable(),
 	f_indicacao_contrato: z.number().nullable(),
+	f_instalador: z.number().nullable(),
 	f_modelo: z.number().nullable(),
 	f_moeda: z.number().nullable(),
+	f_moedas: z.number().nullable(),
 	f_motivo_inclusao: z.number().nullable(),
+	f_motivo_negativacao: z.number().nullable(),
 	f_nc_cliente: z.lazy(() => clienteBaseSchema.nullable()),
 	f_produto_ativ: z.number().nullable(),
 	f_responsavel: z.number().nullable(),
+	f_responsavel_cancelamento: z.number().nullable(),
+	f_responsavel_desistencia: z.number().nullable(),
+	f_responsavel_negativacao: z.number().nullable(),
 	f_tipo_contrato: z.number().nullable(),
 	f_tipo_doc_ativ: z.number().nullable(),
 	f_tipo_documento: z.number().nullable(),
 	f_vd_contrato: z.lazy(() => vd_contratos_produtosBaseSchema.nullable()),
 	f_vendedor: z.number().nullable(),
+	f_vendedor_ativ: z.number().nullable(),
 });
 
 // ============================================================
@@ -279,22 +295,37 @@ export const cliente_contratoSchema = cliente_contratoBaseSchema.extend(
 // ============================================================
 export const cliente_contratoCreateSchema = cliente_contratoSchema.omit({
 	f_carteira_cobranca: true,
+	f_cidade: true,
+	f_cliente_condominio: true,
+	f_cliente_contrato_motivo_desistencia: true,
 	f_cond_pag_ativ: true,
+	f_condominio: true,
+	f_contato: true,
 	f_contrato_principal: true,
+	f_crm_concorrente: true,
 	f_filial: true,
+	f_fn_areceber_mot_cancelamento: true,
+	f_fn_areceber_mot_cancelamento_adicional: true,
 	f_indexador_reajuste: true,
 	f_indicacao_contrato: true,
+	f_instalador: true,
 	f_modelo: true,
 	f_moeda: true,
+	f_moedas: true,
 	f_motivo_inclusao: true,
+	f_motivo_negativacao: true,
 	f_nc_cliente: true,
 	f_produto_ativ: true,
 	f_responsavel: true,
+	f_responsavel_cancelamento: true,
+	f_responsavel_desistencia: true,
+	f_responsavel_negativacao: true,
 	f_tipo_contrato: true,
 	f_tipo_doc_ativ: true,
 	f_tipo_documento: true,
 	f_vd_contrato: true,
 	f_vendedor: true,
+	f_vendedor_ativ: true,
 	id: true,
 });
 

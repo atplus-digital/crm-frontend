@@ -21,7 +21,9 @@ export const telecom_contratosBaseSchema = z.object({
 	f_descricao: z.string(),
 	f_o6r7bgwk9bb: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -48,12 +50,14 @@ export const telecom_contratosSchema = telecom_contratosBaseSchema.extend(
 export const telecom_contratosCreateSchema = telecom_contratosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_cliente: true,
 	f_fornecedor: true,
 	f_servicos: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

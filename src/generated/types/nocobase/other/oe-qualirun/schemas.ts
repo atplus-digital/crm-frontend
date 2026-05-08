@@ -25,7 +25,9 @@ export const oe_qualirunBaseSchema = z.object({
 	f_procedimento: oe_qualirunProcedimentoSchema,
 	f_status: oe_qualirunStatusSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -50,10 +52,12 @@ export const oe_qualirunSchema = oe_qualirunBaseSchema.extend(
 export const oe_qualirunCreateSchema = oe_qualirunSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_negociacoes: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

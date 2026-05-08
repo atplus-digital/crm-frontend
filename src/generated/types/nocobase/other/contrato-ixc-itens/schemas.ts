@@ -20,7 +20,9 @@ export const contrato_ixc_itensBaseSchema = z.object({
 	f_produto: z.string(),
 	f_quantidade: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -44,9 +46,11 @@ export const contrato_ixc_itensSchema = contrato_ixc_itensBaseSchema.extend(
 export const contrato_ixc_itensCreateSchema = contrato_ixc_itensSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

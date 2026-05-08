@@ -36,7 +36,9 @@ export const cupons_descontoBaseSchema = z.object({
 	f_valor: z.number(),
 	f_valor_renovacao: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -62,11 +64,13 @@ export const cupons_descontoSchema = cupons_descontoBaseSchema.extend(
 export const cupons_descontoCreateSchema = cupons_descontoSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_pacotes: true,
 	f_vendedor: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

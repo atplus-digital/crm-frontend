@@ -20,7 +20,9 @@ export const sistemas_acessosBaseSchema = z.object({
 	f_url: z.string(),
 	f_url2: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -45,10 +47,12 @@ export const sistemas_acessosSchema = sistemas_acessosBaseSchema.extend(
 export const sistemas_acessosCreateSchema = sistemas_acessosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_funcionarios: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

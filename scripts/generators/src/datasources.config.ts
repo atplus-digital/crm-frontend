@@ -1,7 +1,7 @@
 import { defaultLogger as logger } from "@scripts/generators/src/lib/logging";
-import type { DataSourceGenerationConfig } from "./@types/script";
-import { createIXCRelationsAdapter } from "./adapters/ixc-relations-adapter";
-import { createIXCWikiAdapter } from "./adapters/ixc-wiki-scraper";
+import type { DataSourceGenerationConfig } from "./pipelines/generate-types/@types/script";
+import { createIXCRelationsAdapter } from "./pipelines/generate-types/adapters/ixc-relations-adapter";
+import { createIXCWikiAdapter } from "./pipelines/generate-types/adapters/ixc-wiki-scraper";
 
 export const dataSourceConfigs = [
 	{
@@ -145,6 +145,8 @@ export const dataSourceConfigs = [
 			"fn_areceber",
 			"su_ticket",
 			"radusuarios",
+			"cidade",
+			"uf",
 			// "cidade",
 			// "cliente_condominio",
 			// "cliente_contrato_indexadores",
@@ -171,9 +173,9 @@ export const dataSourceConfigs = [
 			// "vendedor",
 		],
 		preEnumAdapter: createIXCWikiAdapter(logger),
-		relationsAdapter: createIXCRelationsAdapter(),
-		enumCorrection: [],
+		relationsAdapter: createIXCRelationsAdapter(logger),
+		// enumCorrection: [],
 		generateEnumReport: true,
-		inferRelationsByName: true,
+		// inferRelationsByName: true,
 	},
 ] satisfies DataSourceGenerationConfig[];

@@ -5,6 +5,9 @@
  */
 
 import { z } from "zod";
+import { cidadeBaseSchema } from "../cidade/schemas";
+import { clienteBaseSchema } from "../cliente/schemas";
+import { cliente_contratoBaseSchema } from "../cliente-contrato/schemas";
 import {
 	radusuariosAtivoSchema,
 	radusuariosAutenticacaoPorMacSchema,
@@ -164,14 +167,68 @@ export const radusuariosBaseSchema = z.object({
 });
 
 // ============================================================
+// RELATION SCHEMA (campos de relação)
+// ============================================================
+export const radusuariosRelationSchema = z.object({
+	f_caixa_ftth: z.number().nullable(),
+	f_cidade: z.lazy(() => cidadeBaseSchema.nullable()),
+	f_cliente: z.lazy(() => clienteBaseSchema.nullable()),
+	f_cliente_condominio: z.number().nullable(),
+	f_concentrador: z.number().nullable(),
+	f_condominio: z.number().nullable(),
+	f_contrato: z.lazy(() => cliente_contratoBaseSchema.nullable()),
+	f_df_projeto: z.number().nullable(),
+	f_filial: z.number().nullable(),
+	f_grupo: z.number().nullable(),
+	f_hardware: z.number().nullable(),
+	f_integracao: z.number().nullable(),
+	f_mk_interfaces: z.number().nullable(),
+	f_porta_transmissor: z.number().nullable(),
+	f_predio: z.number().nullable(),
+	f_rad_dns: z.number().nullable(),
+	f_radacessoslte: z.number().nullable(),
+	f_radgrupos_pools: z.number().nullable(),
+	f_radpool: z.number().nullable(),
+	f_radpop_radio_porta: z.number().nullable(),
+	f_radpop_radio_porta_fibra: z.number().nullable(),
+	f_reserva_rede_neutra: z.number().nullable(),
+	f_transmissor: z.number().nullable(),
+});
+
+// ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const radusuariosSchema = radusuariosBaseSchema;
+export const radusuariosSchema = radusuariosBaseSchema.extend(
+	radusuariosRelationSchema.shape,
+);
 
 // ============================================================
 // CREATE SCHEMA
 // ============================================================
 export const radusuariosCreateSchema = radusuariosSchema.omit({
+	f_caixa_ftth: true,
+	f_cidade: true,
+	f_cliente: true,
+	f_cliente_condominio: true,
+	f_concentrador: true,
+	f_condominio: true,
+	f_contrato: true,
+	f_df_projeto: true,
+	f_filial: true,
+	f_grupo: true,
+	f_hardware: true,
+	f_integracao: true,
+	f_mk_interfaces: true,
+	f_porta_transmissor: true,
+	f_predio: true,
+	f_rad_dns: true,
+	f_radacessoslte: true,
+	f_radgrupos_pools: true,
+	f_radpool: true,
+	f_radpop_radio_porta: true,
+	f_radpop_radio_porta_fibra: true,
+	f_reserva_rede_neutra: true,
+	f_transmissor: true,
 	id: true,
 });
 

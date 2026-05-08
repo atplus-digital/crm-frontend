@@ -24,7 +24,9 @@ export const acessosBaseSchema = z.object({
 	f_tipo: acessosTipoSchema,
 	f_x7w60fv71f9: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -53,6 +55,7 @@ export const acessosSchema = acessosBaseSchema.extend(
 export const acessosCreateSchema = acessosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_equipamento: true,
 	f_insumos: true,
 	f_interface: true,
@@ -61,6 +64,7 @@ export const acessosCreateSchema = acessosSchema.omit({
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

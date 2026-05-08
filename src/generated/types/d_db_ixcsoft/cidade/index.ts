@@ -12,11 +12,9 @@ export * from "./labels";
 export * from "./schemas";
 
 // Type inferences
-export type FFuncionarios = z.infer<
-	typeof import("./schemas").f_funcionariosSchema
->;
-export type FFuncionariosRelations = z.infer<
-	typeof import("./schemas").f_funcionariosRelationSchema
+export type Cidade = z.infer<typeof import("./schemas").cidadeSchema>;
+export type CidadeRelations = z.infer<
+	typeof import("./schemas").cidadeRelationSchema
 >;
 
-export type FFuncionariosRelationKey = keyof FFuncionariosRelations;
+export type CidadeRelationKey = keyof CidadeRelations;

@@ -33,7 +33,9 @@ export const patrimonioBaseSchema = z.object({
 	f_tipo_patrimonio: patrimonioTipoPatrimonioSchema,
 	f_valor_patrimonio: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -58,10 +60,12 @@ export const patrimonioSchema = patrimonioBaseSchema.extend(
 export const patrimonioCreateSchema = patrimonioSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_funcionarios: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

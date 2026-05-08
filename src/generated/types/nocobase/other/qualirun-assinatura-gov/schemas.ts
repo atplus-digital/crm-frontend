@@ -22,10 +22,13 @@ export const qualirun_assinatura_govBaseSchema = z.object({
 	path: z.string(),
 	preview: z.string(),
 	size: z.number(),
+	storageId: z.number(),
 	title: z.string(),
 	url: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -52,10 +55,12 @@ export const qualirun_assinatura_govCreateSchema =
 	qualirun_assinatura_govSchema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		storage: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

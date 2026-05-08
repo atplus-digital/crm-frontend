@@ -6,6 +6,7 @@
 
 import { z } from "zod";
 import { usersBaseSchema } from "../../users/schemas";
+import { departmentsBaseSchema } from "../departments/schemas";
 
 export const ROLES_TABLE_NAME = "roles";
 
@@ -15,6 +16,7 @@ export const ROLES_TABLE_NAME = "roles";
 export const rolesBaseSchema = z.object({
 	sort: z.number(),
 	allowConfigure: z.boolean(),
+	allowNewAiEmployee: z.boolean(),
 	allowNewMenu: z.boolean(),
 	allowNewMobileMenu: z.boolean(),
 	default: z.boolean(),
@@ -30,6 +32,9 @@ export const rolesBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const rolesRelationSchema = z.object({
+	aiEmployees: z.number().array(),
+	departments: z.lazy(() => departmentsBaseSchema.array()),
+	desktopRoutes: z.number().array(),
 	menuUiSchemas: z.number().array(),
 	mobileRoutes: z.number().array(),
 	resources: z.number().array(),
@@ -45,6 +50,9 @@ export const rolesSchema = rolesBaseSchema.extend(rolesRelationSchema.shape);
 // CREATE SCHEMA
 // ============================================================
 export const rolesCreateSchema = rolesSchema.omit({
+	aiEmployees: true,
+	departments: true,
+	desktopRoutes: true,
 	menuUiSchemas: true,
 	mobileRoutes: true,
 	resources: true,

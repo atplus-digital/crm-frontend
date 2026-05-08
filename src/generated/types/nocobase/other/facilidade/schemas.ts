@@ -17,7 +17,9 @@ export const facilidadeBaseSchema = z.object({
 	f_descricao: z.string(),
 	f_nome: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -41,9 +43,11 @@ export const facilidadeSchema = facilidadeBaseSchema.extend(
 export const facilidadeCreateSchema = facilidadeSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

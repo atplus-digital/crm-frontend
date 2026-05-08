@@ -1,6 +1,7 @@
 // Tipos para Contratos IXC
 // ⚠️ Usando tipos gerados automaticamente como fonte de verdade
 
+import type { Cidade } from "#/generated/types/d_db_ixcsoft/cidade";
 import type { ClienteContrato } from "#/generated/types/d_db_ixcsoft/cliente-contrato";
 import type { ListParams } from "#/repositories/types";
 
@@ -47,9 +48,10 @@ export const INTERNET_STATUS_LABELS: Record<InternetStatus, string> = {
 /** Cliente do contrato - tipo gerado completo do IXC (cliente) */
 export type Cliente = import("#/generated/types/d_db_ixcsoft/cliente").Cliente;
 
-/** Contrato com dados do cliente (appends) */
+/** Contrato com dados do cliente e cidade (appends) */
 export type ContratoWithCliente = ClienteContrato & {
 	f_nc_cliente?: Cliente | null;
+	f_cidade?: Cidade | null;
 };
 
 // ---------------------------------------------------------------------------

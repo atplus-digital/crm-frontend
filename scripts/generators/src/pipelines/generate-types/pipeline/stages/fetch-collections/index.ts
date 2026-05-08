@@ -20,12 +20,18 @@ export const fetchCollections: PipelineStage<InitContext> = async (ctx) => {
 		...(dataSource.splitCollections ?? []),
 	];
 
-	// Datasources externos (ex.: IXC) podem não expor collections:list.
-	// Nesses casos, priorizamos a lista explícita do config.
-	if (dataSource.dataSource !== "main" && explicitCollections.length > 0) {
-		collections = explicitCollections.map((name) => ({ name }));
+	if (dataSource.dataSource !== "main") {
+		const apiCollections = await client.fetchCollections();
+		if (apiCollections.length > 0) {
+			collections = apiCollections;
+		} else if (explicitCollections.length > 0) {
+			collections = explicitCollections.map((name) => ({ name }));
+		} else {
+			throw new Error(
+				`DataSource '${dataSource.name}' não retornou collections via API e não possui collections/splitCollections configuradas.`,
+			);
+		}
 	} else {
-		// Datasource principal: sempre buscar todas as collections da API.
 		collections = await client.fetchCollections();
 	}
 

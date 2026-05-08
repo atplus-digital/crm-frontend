@@ -1,5 +1,5 @@
+import { requestsConfig } from "../../requests.config";
 import type { ScriptConfig } from "./@types/script-config";
-import { requestsConfig } from "./requests.config";
 import { parseConfig } from "./utils/config";
 
 const scriptConfig: Partial<ScriptConfig> = {

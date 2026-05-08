@@ -21,7 +21,9 @@ export const consultas_pjBaseSchema = z.object({
 	f_retorno_spc: z.string(),
 	f_status_consulta: consultas_pjStatusConsultaSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -46,10 +48,12 @@ export const consultas_pjSchema = consultas_pjBaseSchema.extend(
 export const consultas_pjCreateSchema = consultas_pjSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_id_pessoa: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

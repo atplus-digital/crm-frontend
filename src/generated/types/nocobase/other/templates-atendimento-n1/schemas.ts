@@ -71,7 +71,9 @@ export const templates_atendimento_n1BaseSchema = z.object({
 	f_tipo_de_problema_mvno: templates_atendimento_n1TipoDeProblemaMvnoSchema,
 	f_torre_rede: templates_atendimento_n1TorreRedeSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -97,9 +99,11 @@ export const templates_atendimento_n1CreateSchema =
 	templates_atendimento_n1Schema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

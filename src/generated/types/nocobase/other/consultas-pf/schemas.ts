@@ -21,7 +21,9 @@ export const consultas_pfBaseSchema = z.object({
 	f_retorno_spc: z.string(),
 	f_status_consulta: consultas_pfStatusConsultaSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -46,10 +48,12 @@ export const consultas_pfSchema = consultas_pfBaseSchema.extend(
 export const consultas_pfCreateSchema = consultas_pfSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_id_pessoa: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

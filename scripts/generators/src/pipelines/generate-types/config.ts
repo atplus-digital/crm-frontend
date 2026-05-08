@@ -1,6 +1,6 @@
+import { dataSourceConfigs } from "../../datasources.config";
 import type { ScriptConfig } from "./@types/script";
 import { enumInferenceConfig } from "./adapters/enum-inference.config";
-import { dataSourceConfigs } from "./datasources.config";
 import { parseConfig } from "./utils/config";
 
 const scriptConfig: Partial<ScriptConfig> = {

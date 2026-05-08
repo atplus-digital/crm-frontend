@@ -20,7 +20,9 @@ export const auditoria_automaticaBaseSchema = z.object({
 	f_titulo_negociacao: z.string(),
 	f_valor_mensal: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -46,10 +48,12 @@ export const auditoria_automaticaCreateSchema = auditoria_automaticaSchema.omit(
 	{
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		f_negociacoes: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	},
 );
 

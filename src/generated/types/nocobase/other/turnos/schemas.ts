@@ -17,7 +17,9 @@ export const turnosBaseSchema = z.object({
 	id: z.number(),
 	f_turno: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -40,10 +42,12 @@ export const turnosSchema = turnosBaseSchema.extend(turnosRelationSchema.shape);
 export const turnosCreateSchema = turnosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_funcionarios: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

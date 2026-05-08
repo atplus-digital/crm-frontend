@@ -16,7 +16,9 @@ export const T_902CTKE5DHQ_TABLE_NAME = "t_902ctke5dhq";
 export const _902ctke5dhqBaseSchema = z.object({
 	id: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -41,10 +43,12 @@ export const _902ctke5dhqSchema = _902ctke5dhqBaseSchema.extend(
 export const _902ctke5dhqCreateSchema = _902ctke5dhqSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_bmu9tsi11d4: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

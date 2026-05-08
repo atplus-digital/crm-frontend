@@ -63,7 +63,9 @@ export const linha_mvnoBaseSchema = z.object({
 export const linha_mvnoRelationSchema = z.object({
 	f_chip: z.number().nullable(),
 	f_cliente: z.lazy(() => clienteBaseSchema.nullable()),
+	f_integracao: z.number().nullable(),
 	f_plano: z.number().nullable(),
+	f_prod_ixc_mvno: z.number().nullable(),
 });
 
 // ============================================================
@@ -79,7 +81,9 @@ export const linha_mvnoSchema = linha_mvnoBaseSchema.extend(
 export const linha_mvnoCreateSchema = linha_mvnoSchema.omit({
 	f_chip: true,
 	f_cliente: true,
+	f_integracao: true,
 	f_plano: true,
+	f_prod_ixc_mvno: true,
 	id: true,
 });
 

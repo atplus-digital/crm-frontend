@@ -29,7 +29,11 @@ export function EnderecoCard({ contrato }: EnderecoCardProps) {
 							{contrato.complemento ?? "—"}
 						</DetailField>
 						<DetailField label="Bairro">{contrato.bairro ?? "—"}</DetailField>
-						<DetailField label="Cidade">{contrato.cidade ?? "—"}</DetailField>
+						<DetailField label="Cidade">
+							{contrato.f_cidade
+								? `${contrato.f_cidade.nome}${contrato.f_cidade.f_uf ? ` / ${contrato.f_cidade.f_uf.sigla}` : ""}`
+								: contrato.cidade || "—"}
+						</DetailField>
 						<DetailField label="CEP">{contrato.cep ?? "—"}</DetailField>
 					</div>
 				</div>

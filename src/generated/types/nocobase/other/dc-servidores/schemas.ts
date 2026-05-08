@@ -29,7 +29,9 @@ export const dc_servidoresBaseSchema = z.object({
 	f_sn: z.string(),
 	f_status: dc_servidoresStatusSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -55,11 +57,13 @@ export const dc_servidoresSchema = dc_servidoresBaseSchema.extend(
 export const dc_servidoresCreateSchema = dc_servidoresSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_discos: true,
 	f_memorias: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

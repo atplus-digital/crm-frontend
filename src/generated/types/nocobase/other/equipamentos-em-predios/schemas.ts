@@ -22,7 +22,9 @@ export const equipamentos_em_prediosBaseSchema = z.object({
 	f_sn: z.string(),
 	f_tipo_equipamento: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -48,9 +50,11 @@ export const equipamentos_em_prediosCreateSchema =
 	equipamentos_em_prediosSchema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

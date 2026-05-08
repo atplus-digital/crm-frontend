@@ -24,7 +24,9 @@ export const recursos_viagemBaseSchema = z.object({
 	f_meio_transporte: recursos_viagemMeioTransporteSchema,
 	f_observacoes: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -48,9 +50,11 @@ export const recursos_viagemSchema = recursos_viagemBaseSchema.extend(
 export const recursos_viagemCreateSchema = recursos_viagemSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

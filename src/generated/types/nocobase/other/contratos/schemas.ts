@@ -27,7 +27,9 @@ export const contratosBaseSchema = z.object({
 	title: z.string(),
 	url: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -52,10 +54,12 @@ export const contratosSchema = contratosBaseSchema.extend(
 export const contratosCreateSchema = contratosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	storage: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

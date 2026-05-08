@@ -21,7 +21,9 @@ export const info_arquivosBaseSchema = z.object({
 	f_arquivo_externo: info_arquivosArquivoExternoSchema,
 	f_titulo: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -47,11 +49,13 @@ export const info_arquivosSchema = info_arquivosBaseSchema.extend(
 export const info_arquivosCreateSchema = info_arquivosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_arquivos: true,
 	f_funcionarios: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

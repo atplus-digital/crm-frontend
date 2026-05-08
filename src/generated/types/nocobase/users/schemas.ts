@@ -23,6 +23,7 @@ export const usersBaseSchema = z.object({
 	f_id_vendedor_ixc: z.number(),
 	appLang: z.string(),
 	email: z.string(),
+	mainDepartmentId: z.number(),
 	nickname: z.string(),
 	password: z.string(),
 	passwordChangeTz: z.number(),
@@ -40,6 +41,7 @@ export const usersBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const usersRelationSchema = z.object({
+	aiEmployees: z.number().array(),
 	createdBy: z.lazy(() => usersBaseSchema.nullable()),
 	departments: z.lazy(() => departmentsBaseSchema.array()),
 	mainDepartment: z.lazy(() => departmentsBaseSchema.nullable()),
@@ -56,6 +58,7 @@ export const usersSchema = usersBaseSchema.extend(usersRelationSchema.shape);
 // CREATE SCHEMA
 // ============================================================
 export const usersCreateSchema = usersSchema.omit({
+	aiEmployees: true,
 	createdAt: true,
 	createdBy: true,
 	createdById: true,

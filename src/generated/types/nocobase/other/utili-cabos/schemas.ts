@@ -19,7 +19,9 @@ export const utili_cabosBaseSchema = z.object({
 	f_comprimento_utilizado: z.number(),
 	f_obs_historico: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -44,10 +46,12 @@ export const utili_cabosSchema = utili_cabosBaseSchema.extend(
 export const utili_cabosCreateSchema = utili_cabosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_cabos_opticos: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

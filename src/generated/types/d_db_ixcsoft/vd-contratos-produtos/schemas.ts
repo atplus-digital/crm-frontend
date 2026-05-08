@@ -58,7 +58,10 @@ export const vd_contratos_produtosBaseSchema = z.object({
 export const vd_contratos_produtosRelationSchema = z.object({
 	f_classificacao: z.number().nullable(),
 	f_grupo: z.number().nullable(),
+	f_plano: z.number().nullable(),
+	f_produto: z.number().nullable(),
 	f_subgrupo: z.number().nullable(),
+	f_tipo_documento: z.number().nullable(),
 	f_unidade: z.number().nullable(),
 });
 
@@ -77,7 +80,10 @@ export const vd_contratos_produtosCreateSchema =
 	vd_contratos_produtosSchema.omit({
 		f_classificacao: true,
 		f_grupo: true,
+		f_plano: true,
+		f_produto: true,
 		f_subgrupo: true,
+		f_tipo_documento: true,
 		f_unidade: true,
 		id: true,
 	});

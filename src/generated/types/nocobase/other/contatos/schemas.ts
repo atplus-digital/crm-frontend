@@ -17,7 +17,9 @@ export const f_contatosBaseSchema = z.object({
 	f_contato: z.string(),
 	f_nome: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -41,9 +43,11 @@ export const f_contatosSchema = f_contatosBaseSchema.extend(
 export const f_contatosCreateSchema = f_contatosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

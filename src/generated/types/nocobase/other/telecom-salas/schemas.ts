@@ -18,7 +18,9 @@ export const telecom_salasBaseSchema = z.object({
 	f_fk_salas: z.number(),
 	f_nome: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -43,10 +45,12 @@ export const telecom_salasSchema = telecom_salasBaseSchema.extend(
 export const telecom_salasCreateSchema = telecom_salasSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_fk_sala_racks: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

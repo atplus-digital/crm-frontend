@@ -17,7 +17,9 @@ export const comentarios_comprasBaseSchema = z.object({
 	f_comentarios: z.string(),
 	f_comentarios_compras: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -41,9 +43,11 @@ export const comentarios_comprasSchema = comentarios_comprasBaseSchema.extend(
 export const comentarios_comprasCreateSchema = comentarios_comprasSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

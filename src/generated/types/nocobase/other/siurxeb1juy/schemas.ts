@@ -11,6 +11,7 @@ export const T_SIURXEB1JUY_TABLE_NAME = "t_siurxeb1juy";
 // BASE SCHEMA (campos escalares)
 // ============================================================
 export const siurxeb1juyBaseSchema = z.object({
+	sort: z.number(),
 	f_stgjevi19lg: z.number(),
 	f_vazo5n0bhe5: z.number(),
 });

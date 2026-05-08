@@ -19,7 +19,9 @@ export const contratos_ixcBaseSchema = z.object({
 	f_expiracao: z.string(),
 	f_vencimento: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -44,10 +46,12 @@ export const contratos_ixcSchema = contratos_ixcBaseSchema.extend(
 export const contratos_ixcCreateSchema = contratos_ixcSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_itens_contrato: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

@@ -18,7 +18,9 @@ export const compras_fornecedoresBaseSchema = z.object({
 	f_nome: z.string(),
 	f_site: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -43,9 +45,11 @@ export const compras_fornecedoresCreateSchema = compras_fornecedoresSchema.omit(
 	{
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	},
 );
 

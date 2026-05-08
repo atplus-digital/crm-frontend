@@ -110,7 +110,9 @@ export const f_funcionariosBaseSchema = z.object({
 	f_vinculo_com_colaborador: f_funcionariosVinculoComColaboradorSchema,
 	f_zona_eleitoral: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -154,6 +156,7 @@ export const f_funcionariosSchema = f_funcionariosBaseSchema.extend(
 export const f_funcionariosCreateSchema = f_funcionariosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_aniversarios: true,
 	f_arquivos_funcionarios: true,
 	f_asos: true,
@@ -173,6 +176,7 @@ export const f_funcionariosCreateSchema = f_funcionariosSchema.omit({
 	t_qualirun_info_adicionais: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

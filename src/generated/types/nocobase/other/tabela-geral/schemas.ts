@@ -15,7 +15,9 @@ export const T_TABELA_GERAL_TABLE_NAME = "t_tabela_geral";
 export const tabela_geralBaseSchema = z.object({
 	id: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -39,9 +41,11 @@ export const tabela_geralSchema = tabela_geralBaseSchema.extend(
 export const tabela_geralCreateSchema = tabela_geralSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

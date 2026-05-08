@@ -38,7 +38,9 @@ export const pacotesBaseSchema = z.object({
 	f_status: pacotesStatusSchema,
 	f_vender_para: pacotesVenderParaSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -63,10 +65,12 @@ export const pacotesSchema = pacotesBaseSchema.extend(
 export const pacotesCreateSchema = pacotesSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_itens_do_pacote: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

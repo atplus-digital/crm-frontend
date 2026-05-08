@@ -4,6 +4,7 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+export type { Cidade, CidadeRelationKey, CidadeRelations } from "./cidade";
 export type { Cliente, ClienteRelationKey, ClienteRelations } from "./cliente";
 export type {
 	ClienteContrato,
@@ -30,6 +31,7 @@ export type {
 	SuTicketRelationKey,
 	SuTicketRelations,
 } from "./su-ticket";
+export type { Uf, UfRelationKey, UfRelations } from "./uf";
 export type {
 	VdContratosProdutos,
 	VdContratosProdutosRelationKey,

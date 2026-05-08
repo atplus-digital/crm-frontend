@@ -29,7 +29,9 @@ export const itens_pacotesBaseSchema = z.object({
 	f_tipo_produto: itens_pacotesTipoProdutoSchema,
 	f_vna9rme0f5j: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -53,9 +55,11 @@ export const itens_pacotesSchema = itens_pacotesBaseSchema.extend(
 export const itens_pacotesCreateSchema = itens_pacotesSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

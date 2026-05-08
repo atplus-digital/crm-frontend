@@ -29,7 +29,9 @@ export const registros_de_contatoBaseSchema = z.object({
 	f_resumo_contato: z.string(),
 	f_titulo: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -54,9 +56,11 @@ export const registros_de_contatoCreateSchema = registros_de_contatoSchema.omit(
 	{
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	},
 );
 

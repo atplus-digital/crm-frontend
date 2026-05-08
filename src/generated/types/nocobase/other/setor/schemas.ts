@@ -20,7 +20,9 @@ export const setorBaseSchema = z.object({
 	f_fk_sistemas_acessos: z.string(),
 	f_nome_setor: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -45,12 +47,14 @@ export const setorSchema = setorBaseSchema.extend(setorRelationSchema.shape);
 export const setorCreateSchema = setorSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_funcionarios: true,
 	f_funcionarios_1: true,
 	f_sistemas_acessos: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

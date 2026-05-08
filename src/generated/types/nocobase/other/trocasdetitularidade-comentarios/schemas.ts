@@ -18,7 +18,9 @@ export const trocasdetitularidade_comentariosBaseSchema = z.object({
 	f_comentario: z.string(),
 	f_comentario_troca_de_titularidade: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -44,9 +46,11 @@ export const trocasdetitularidade_comentariosCreateSchema =
 	trocasdetitularidade_comentariosSchema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

@@ -26,7 +26,9 @@ export const empresasBaseSchema = z.object({
 	f_razao_social: z.string(),
 	f_responsavel: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -50,9 +52,11 @@ export const empresasSchema = empresasBaseSchema.extend(
 export const empresasCreateSchema = empresasSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

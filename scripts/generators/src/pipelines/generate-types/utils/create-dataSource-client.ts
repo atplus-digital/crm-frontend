@@ -21,6 +21,7 @@ export function createDataSourceClient(
 					requestHeaders: {
 						"X-Data-Source": dataSource.dataSource,
 					},
+					dataSourceKey: dataSource.dataSource,
 				},
 			);
 		case "rest":

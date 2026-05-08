@@ -43,7 +43,9 @@ export const solicitacao_comprasBaseSchema = z.object({
 	fk_demandas_solicitacao_compras: z.number(),
 	fk_solicitacao_compras: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -70,12 +72,14 @@ export const solicitacao_comprasSchema = solicitacao_comprasBaseSchema.extend(
 export const solicitacao_comprasCreateSchema = solicitacao_comprasSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_anexos: true,
 	f_fornecedor: true,
 	f_produtos: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

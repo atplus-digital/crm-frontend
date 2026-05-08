@@ -48,6 +48,8 @@ export class NocoBaseDataSourceClient
 	extends NocoBaseApiClient
 	implements DataSourceClient
 {
+	private readonly dataSourceKey?: string;
+
 	// biome-ignore lint/complexity/noUselessConstructor: runtime usage
 	public constructor(
 		credentials: {
@@ -55,17 +57,86 @@ export class NocoBaseDataSourceClient
 			token: string;
 			timeoutMs: number;
 		},
-		options?: { requestHeaders?: Record<string, string> },
+		options?: {
+			requestHeaders?: Record<string, string>;
+			dataSourceKey?: string;
+		},
 	) {
 		super(credentials, options);
+		this.dataSourceKey = options?.dataSourceKey;
 	}
 
 	public async fetchCollections(): Promise<DataSourceCollection[]> {
+		if (this.dataSourceKey) {
+			const scopedCollections =
+				await this.fetchCollectionsFromDataSourceScope();
+			if (scopedCollections.length > 0) {
+				return sortByName(scopedCollections);
+			}
+
+			// Fallback genérico pode falhar com 404 quando X-Data-Source
+			// header é enviado para endpoint que não suporta datasources.
+			// Retorna vazio para que o chamador use collections explícitas.
+			try {
+				const response = await this.fetchJson<NocoBaseCollectionsListResponse>(
+					"collections:list?paginate=false",
+				);
+				return sortByName(response.data);
+			} catch (error) {
+				if (error instanceof HttpResponseError) {
+					return [];
+				}
+				throw error;
+			}
+		}
+
 		const response = await this.fetchJson<NocoBaseCollectionsListResponse>(
 			"collections:list?paginate=false",
 		);
 
 		return sortByName(response.data);
+	}
+
+	private async fetchCollectionsFromDataSourceScope(): Promise<
+		DataSourceCollection[]
+	> {
+		if (!this.dataSourceKey) {
+			return [];
+		}
+
+		const params = new URLSearchParams({
+			paginate: "false",
+			filter: JSON.stringify({ dataSourceKey: this.dataSourceKey }),
+		});
+
+		try {
+			const response = await this.fetchJson<{
+				data?: Array<{
+					name?: string;
+					collectionName?: string;
+					title?: string;
+				}>;
+				errors?: Array<{ message?: string }>;
+			}>(`dataSourcesCollections:list?${params.toString()}`);
+
+			if (response.errors?.length) {
+				return [];
+			}
+
+			const mapped = (response.data ?? [])
+				.map((entry) => ({
+					name: entry.collectionName ?? entry.name ?? "",
+					title: entry.title,
+				}))
+				.filter((entry) => entry.name.length > 0);
+
+			return mapped;
+		} catch (error) {
+			if (error instanceof HttpResponseError) {
+				return [];
+			}
+			throw error;
+		}
 	}
 
 	public async fetchCollectionFields(
@@ -77,6 +148,22 @@ export class NocoBaseDataSourceClient
 	public async fetchFieldsWithUISchema(
 		collectionName: string,
 	): Promise<NocoBaseField[]> {
+		if (this.dataSourceKey) {
+			try {
+				const response = await this.fetchJson<{
+					data: NocoBaseField[];
+				}>(
+					`dataSourcesCollections/${this.dataSourceKey}.${collectionName}/fields:list?paginate=false&sort[]=sort`,
+				);
+
+				return sortByName(response.data);
+			} catch (error) {
+				if (!(error instanceof HttpResponseError) || error.status !== 404) {
+					throw error;
+				}
+			}
+		}
+
 		const params = new URLSearchParams({
 			filter: JSON.stringify({ collectionName }),
 		});
@@ -91,6 +178,23 @@ export class NocoBaseDataSourceClient
 	private async fetchCollectionFieldsWithFallback(
 		collectionName: string,
 	): Promise<{ fields: NocoBaseField[]; schemaAvailable: boolean }> {
+		if (this.dataSourceKey) {
+			try {
+				const response = await this.fetchJson<{ data: NocoBaseField[] }>(
+					`dataSourcesCollections/${this.dataSourceKey}.${collectionName}/fields:list?paginate=false&sort[]=sort`,
+				);
+
+				return {
+					fields: sortByName(response.data),
+					schemaAvailable: true,
+				};
+			} catch (error) {
+				if (!(error instanceof HttpResponseError) || error.status !== 404) {
+					throw error;
+				}
+			}
+		}
+
 		try {
 			const params = new URLSearchParams({
 				appends: "fields",

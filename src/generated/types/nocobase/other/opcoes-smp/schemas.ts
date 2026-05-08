@@ -27,7 +27,9 @@ export const opcoes_smpBaseSchema = z.object({
 	f_valor_smp: z.number(),
 	f_valor_sva: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -51,9 +53,11 @@ export const opcoes_smpSchema = opcoes_smpBaseSchema.extend(
 export const opcoes_smpCreateSchema = opcoes_smpSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

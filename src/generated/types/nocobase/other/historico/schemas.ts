@@ -22,7 +22,9 @@ export const historicoBaseSchema = z.object({
 	f_observacao: z.string(),
 	f_solicitante: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -47,10 +49,12 @@ export const historicoSchema = historicoBaseSchema.extend(
 export const historicoCreateSchema = historicoSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_cabos_opticos: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

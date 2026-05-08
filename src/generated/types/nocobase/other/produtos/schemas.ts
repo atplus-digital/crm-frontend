@@ -25,7 +25,9 @@ export const produtosBaseSchema = z.object({
 	f_tipo_ixc: produtosTipoIxcSchema,
 	f_tipo_produto: produtosTipoProdutoSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -51,11 +53,13 @@ export const produtosSchema = produtosBaseSchema.extend(
 export const produtosCreateSchema = produtosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_opcoes_smp_template: true,
 	f_opcoes_STFC: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

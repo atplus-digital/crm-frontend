@@ -34,7 +34,9 @@ export const troca_enderecoBaseSchema = z.object({
 	f_taxa_instalacao: troca_enderecoTaxaInstalacaoSchema,
 	f_telefone_contato: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -58,9 +60,11 @@ export const troca_enderecoSchema = troca_enderecoBaseSchema.extend(
 export const troca_enderecoCreateSchema = troca_enderecoSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

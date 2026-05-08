@@ -20,7 +20,9 @@ export const zapsignBaseSchema = z.object({
 	f_periodo: z.string(),
 	f_status: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -44,9 +46,11 @@ export const zapsignSchema = zapsignBaseSchema.extend(
 export const zapsignCreateSchema = zapsignSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

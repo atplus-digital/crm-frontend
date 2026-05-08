@@ -34,7 +34,9 @@ export const suspensao_contratoBaseSchema = z.object({
 	f_teste: z.number(),
 	f_titulo: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -65,6 +67,7 @@ export const suspensao_contratoSchema = suspensao_contratoBaseSchema.extend(
 export const suspensao_contratoCreateSchema = suspensao_contratoSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_comentarios: true,
 	f_contratos: true,
 	f_pessoas: true,
@@ -73,6 +76,7 @@ export const suspensao_contratoCreateSchema = suspensao_contratoSchema.omit({
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

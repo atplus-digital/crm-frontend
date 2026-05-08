@@ -22,7 +22,9 @@ export const compras_produtosBaseSchema = z.object({
 	f_sub_total: z.string(),
 	f_valor_uni: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -49,10 +51,12 @@ export const compras_produtosSchema = compras_produtosBaseSchema.extend(
 export const compras_produtosCreateSchema = compras_produtosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_fk_produtos_solicitacao_compra: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

@@ -39,7 +39,9 @@ export const qualirun_info_adicionaisBaseSchema = z.object({
 	f_vinculo_contato_emergencia:
 		qualirun_info_adicionaisVinculoContatoEmergenciaSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -66,10 +68,12 @@ export const qualirun_info_adicionaisCreateSchema =
 	qualirun_info_adicionaisSchema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		f_funcionarios: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

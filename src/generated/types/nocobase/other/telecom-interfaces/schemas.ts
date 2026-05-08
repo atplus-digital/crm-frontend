@@ -28,7 +28,9 @@ export const telecom_interfacesBaseSchema = z.object({
 	f_tipo: telecom_interfacesTipoSchema,
 	parentId: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -64,6 +66,7 @@ export const telecom_interfacesCreateSchema = telecom_interfacesSchema.omit({
 	children: true,
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_fk_equipamento: true,
 	f_fk_interfaces_equipamentos: true,
 	f_fk_recurso_interface_ponta_a: true,
@@ -73,6 +76,7 @@ export const telecom_interfacesCreateSchema = telecom_interfacesSchema.omit({
 	parent: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

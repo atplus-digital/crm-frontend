@@ -18,7 +18,9 @@ export const comentarios_suspensao_de_contratoBaseSchema = z.object({
 	f_fk_suspensao: z.number(),
 	f_comentario: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -44,9 +46,11 @@ export const comentarios_suspensao_de_contratoCreateSchema =
 	comentarios_suspensao_de_contratoSchema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

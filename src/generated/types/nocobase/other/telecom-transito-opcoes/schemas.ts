@@ -18,7 +18,9 @@ export const telecom_transito_opcoesBaseSchema = z.object({
 	f_ips: z.string(),
 	f_velocidade: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -44,9 +46,11 @@ export const telecom_transito_opcoesCreateSchema =
 	telecom_transito_opcoesSchema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

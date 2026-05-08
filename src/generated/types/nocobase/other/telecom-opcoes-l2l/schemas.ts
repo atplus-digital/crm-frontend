@@ -17,7 +17,9 @@ export const telecom_opcoes_l2lBaseSchema = z.object({
 	f_rmfqnk0k53u: z.number(),
 	f_velocidade: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -41,9 +43,11 @@ export const telecom_opcoes_l2lSchema = telecom_opcoes_l2lBaseSchema.extend(
 export const telecom_opcoes_l2lCreateSchema = telecom_opcoes_l2lSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

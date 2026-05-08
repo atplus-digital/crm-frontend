@@ -7,6 +7,7 @@
 import { z } from "zod";
 import { clienteBaseSchema } from "../cliente/schemas";
 import { cliente_contratoBaseSchema } from "../cliente-contrato/schemas";
+import { radusuariosBaseSchema } from "../radusuarios/schemas";
 import {
 	su_ticketIdTicketOrigemSchema,
 	su_ticketInteracaoPendenteSchema,
@@ -79,12 +80,23 @@ export const su_ticketBaseSchema = z.object({
 // ============================================================
 export const su_ticketRelationSchema = z.object({
 	f_assunto: z.number().nullable(),
+	f_canal_atendimento: z.number().nullable(),
 	f_cliente: z.lazy(() => clienteBaseSchema.nullable()),
 	f_contrato: z.lazy(() => cliente_contratoBaseSchema.nullable()),
 	f_equipe: z.number().nullable(),
+	f_estrutura: z.number().nullable(),
+	f_evento_status_processo: z.number().nullable(),
+	f_filial: z.number().nullable(),
+	f_login: z.lazy(() => radusuariosBaseSchema.nullable()),
 	f_prioridade: z.number().nullable(),
 	f_responsavel: z.number().nullable(),
+	f_responsavel_tecnico: z.number().nullable(),
+	f_resposta: z.number().nullable(),
 	f_status: z.number().nullable(),
+	f_su_diagnostico: z.number().nullable(),
+	f_ticket_setor: z.number().nullable(),
+	f_usuarios: z.number().nullable(),
+	f_wfl_processo: z.number().nullable(),
 });
 
 // ============================================================
@@ -99,12 +111,23 @@ export const su_ticketSchema = su_ticketBaseSchema.extend(
 // ============================================================
 export const su_ticketCreateSchema = su_ticketSchema.omit({
 	f_assunto: true,
+	f_canal_atendimento: true,
 	f_cliente: true,
 	f_contrato: true,
 	f_equipe: true,
+	f_estrutura: true,
+	f_evento_status_processo: true,
+	f_filial: true,
+	f_login: true,
 	f_prioridade: true,
 	f_responsavel: true,
+	f_responsavel_tecnico: true,
+	f_resposta: true,
 	f_status: true,
+	f_su_diagnostico: true,
+	f_ticket_setor: true,
+	f_usuarios: true,
+	f_wfl_processo: true,
 	id: true,
 });
 

@@ -30,7 +30,9 @@ export const servicosBaseSchema = z.object({
 	f_tipo: servicosTipoSchema,
 	f_velocidade: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -59,6 +61,7 @@ export const servicosSchema = servicosBaseSchema.extend(
 export const servicosCreateSchema = servicosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_acessos: true,
 	f_arquivos: true,
 	f_kyyzn4kut6e: true,
@@ -67,6 +70,7 @@ export const servicosCreateSchema = servicosSchema.omit({
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

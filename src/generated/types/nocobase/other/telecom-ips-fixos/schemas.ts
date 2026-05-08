@@ -21,7 +21,9 @@ export const telecom_ips_fixosBaseSchema = z.object({
 	f_login: z.string(),
 	f_possui_ip_fixo: telecom_ips_fixosPossuiIpFixoSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -45,9 +47,11 @@ export const telecom_ips_fixosSchema = telecom_ips_fixosBaseSchema.extend(
 export const telecom_ips_fixosCreateSchema = telecom_ips_fixosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

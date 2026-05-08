@@ -30,7 +30,9 @@ export const equipamentosBaseSchema = z.object({
 	f_sigla: z.string(),
 	f_sn: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -60,6 +62,7 @@ export const equipamentosSchema = equipamentosBaseSchema.extend(
 export const equipamentosCreateSchema = equipamentosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_fwvce6bqigw: true,
 	f_hcqrd9qhcid: true,
 	f_interfaces: true,
@@ -69,6 +72,7 @@ export const equipamentosCreateSchema = equipamentosSchema.omit({
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

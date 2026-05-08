@@ -16,7 +16,9 @@ export const vlan_tagsBaseSchema = z.object({
 	id: z.number(),
 	f_tag: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -40,9 +42,11 @@ export const vlan_tagsSchema = vlan_tagsBaseSchema.extend(
 export const vlan_tagsCreateSchema = vlan_tagsSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

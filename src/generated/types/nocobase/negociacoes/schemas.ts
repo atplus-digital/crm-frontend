@@ -109,7 +109,9 @@ export const negociacoesBaseSchema = z.object({
 	f_valor_multa_mes_faltante: z.number(),
 	f_zapsign: z.boolean(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -147,6 +149,7 @@ export const negociacoesSchema = negociacoesBaseSchema.extend(
 export const negociacoesCreateSchema = negociacoesSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_anexos: true,
 	f_comentarios: true,
 	f_cupom_desconto: true,
@@ -162,6 +165,7 @@ export const negociacoesCreateSchema = negociacoesSchema.omit({
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

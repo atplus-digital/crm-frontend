@@ -28,7 +28,9 @@ export const datacenter_memoriasBaseSchema = z.object({
 	f_tipo: datacenter_memoriasTipoSchema,
 	f_valor_locacao: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -53,10 +55,12 @@ export const datacenter_memoriasSchema = datacenter_memoriasBaseSchema.extend(
 export const datacenter_memoriasCreateSchema = datacenter_memoriasSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_fk_servidor: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

@@ -167,10 +167,41 @@ describe("fetchCollections", () => {
 	});
 
 	describe("NocoBase externo - usa collections explícitas", () => {
-		it("deve usar splitCollections configuradas sem chamar API", async () => {
+		it("deve usar collections da API quando disponíveis", async () => {
 			const { fetchCollections } = await import(
 				"@scripts/generators/src/pipelines/generate-types/pipeline/stages/fetch-collections"
 			);
+
+			mockFetchCollections.mockResolvedValue([
+				{ name: "cliente" },
+				{ name: "cliente_contrato" },
+			]);
+
+			const ctx = createMockInitContext({
+				dataSource: {
+					name: "ixc",
+					type: "nocobase",
+					dataSource: "d_db_ixcsoft",
+					outputDir: "/tmp/test",
+					splitCollections: ["fallback_1", "fallback_2"],
+				} as InitContext["dataSource"],
+			});
+
+			const result = await fetchCollections(ctx);
+
+			expect(mockFetchCollections).toHaveBeenCalledOnce();
+			expect(result.collections).toEqual([
+				{ name: "cliente" },
+				{ name: "cliente_contrato" },
+			]);
+		});
+
+		it("deve usar splitCollections configuradas quando API retornar vazio", async () => {
+			const { fetchCollections } = await import(
+				"@scripts/generators/src/pipelines/generate-types/pipeline/stages/fetch-collections"
+			);
+
+			mockFetchCollections.mockResolvedValue([]);
 
 			const ctx = createMockInitContext({
 				dataSource: {
@@ -184,11 +215,32 @@ describe("fetchCollections", () => {
 
 			const result = await fetchCollections(ctx);
 
-			expect(mockFetchCollections).not.toHaveBeenCalled();
+			expect(mockFetchCollections).toHaveBeenCalledOnce();
 			expect(result.collections).toEqual([
 				{ name: "cliente" },
 				{ name: "cliente_contrato" },
 			]);
+		});
+
+		it("deve lançar erro quando API retornar vazio e não houver collections explícitas", async () => {
+			const { fetchCollections } = await import(
+				"@scripts/generators/src/pipelines/generate-types/pipeline/stages/fetch-collections"
+			);
+
+			mockFetchCollections.mockResolvedValue([]);
+
+			const ctx = createMockInitContext({
+				dataSource: {
+					name: "ixc",
+					type: "nocobase",
+					dataSource: "d_db_ixcsoft",
+					outputDir: "/tmp/test",
+				} as InitContext["dataSource"],
+			});
+
+			await expect(fetchCollections(ctx)).rejects.toThrow(
+				"DataSource 'ixc' não retornou collections via API e não possui collections/splitCollections configuradas.",
+			);
 		});
 	});
 });

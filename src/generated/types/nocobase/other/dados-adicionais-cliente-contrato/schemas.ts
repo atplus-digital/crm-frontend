@@ -25,7 +25,9 @@ export const dados_adicionais_cliente_contratoBaseSchema = z.object({
 	f_perfil_de_uso: dados_adicionais_cliente_contratoPerfilDeUsoSchema,
 	f_pessoas_na_residencia: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -51,9 +53,11 @@ export const dados_adicionais_cliente_contratoCreateSchema =
 	dados_adicionais_cliente_contratoSchema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

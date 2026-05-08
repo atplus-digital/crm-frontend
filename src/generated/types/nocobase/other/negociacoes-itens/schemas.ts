@@ -31,7 +31,9 @@ export const negociacoes_itensBaseSchema = z.object({
 	f_tipo_ixc: z.string(),
 	f_tipo_produto: negociacoes_itensTipoProdutoSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -57,11 +59,13 @@ export const negociacoes_itensSchema = negociacoes_itensBaseSchema.extend(
 export const negociacoes_itensCreateSchema = negociacoes_itensSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_opcoes_smp: true,
 	f_opcoes_stfc: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

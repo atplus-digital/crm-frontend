@@ -21,7 +21,9 @@ export const linha_corporativaBaseSchema = z.object({
 	f_numero_movel_corporativo: z.string(),
 	f_tipo: linha_corporativaTipoSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -46,10 +48,12 @@ export const linha_corporativaSchema = linha_corporativaBaseSchema.extend(
 export const linha_corporativaCreateSchema = linha_corporativaSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_funcionarios: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

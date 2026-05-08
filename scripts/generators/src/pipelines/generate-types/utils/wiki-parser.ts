@@ -3,6 +3,14 @@ import type { EnumAdapterFieldEnum } from "../@types/script";
 export interface ParsedField {
 	name: string;
 	valoresDisponiveis?: string;
+	relationTarget?: string;
+}
+
+export interface ParsedWikiRelation {
+	fieldName: string;
+	target: string;
+	type: "belongsTo";
+	relationFieldName: string;
 }
 
 export function parseWikiText(
@@ -61,7 +69,57 @@ export function parseFieldsFromHtml(rawHtml: string): ParsedField[] {
 		fields.push({ name, valoresDisponiveis: valoresRaw });
 	}
 
+	for (let i = 0; i < h3Matches.length; i++) {
+		const { name, index: blockStart } = h3Matches[i];
+		const blockEnd =
+			i + 1 < h3Matches.length ? h3Matches[i + 1].index : rawHtml.length;
+		const block = rawHtml.slice(blockStart, blockEnd);
+
+		const relationMatch = block.match(/redirectForm\('([^']+)'\)/i);
+		if (!relationMatch) continue;
+
+		const existing = fields.find((field) => field.name === name);
+		if (existing) {
+			existing.relationTarget = relationMatch[1].trim();
+			continue;
+		}
+
+		fields.push({
+			name,
+			relationTarget: relationMatch[1].trim(),
+		});
+	}
+
 	return fields;
+}
+
+export function parseWikiRelations(rawHtml: string): ParsedWikiRelation[] {
+	const fields = parseFieldsFromHtml(rawHtml);
+	const relations: ParsedWikiRelation[] = [];
+
+	for (const field of fields) {
+		if (!field.relationTarget) continue;
+
+		relations.push({
+			fieldName: field.name,
+			target: field.relationTarget,
+			type: "belongsTo",
+			relationFieldName: inferRelationFieldName(
+				field.name,
+				field.relationTarget,
+			),
+		});
+	}
+
+	return relations;
+}
+
+function inferRelationFieldName(fieldName: string, target: string): string {
+	if (fieldName.startsWith("id_")) {
+		return `f_${fieldName.slice(3)}`;
+	}
+
+	return `f_${target}`;
 }
 
 export function parseEnumValues(raw: string): EnumAdapterFieldEnum {

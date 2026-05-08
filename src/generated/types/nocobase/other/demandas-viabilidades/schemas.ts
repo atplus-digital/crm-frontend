@@ -29,7 +29,9 @@ export const demandas_viabilidadesBaseSchema = z.object({
 	f_valor_investimento: z.number(),
 	f_velocidade_pretendida: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -55,9 +57,11 @@ export const demandas_viabilidadesCreateSchema =
 	demandas_viabilidadesSchema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

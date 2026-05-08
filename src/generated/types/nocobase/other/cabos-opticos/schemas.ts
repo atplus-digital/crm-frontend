@@ -25,7 +25,9 @@ export const cabos_opticosBaseSchema = z.object({
 	f_quantidade_fibras: z.string(),
 	f_tipo: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -51,11 +53,13 @@ export const cabos_opticosSchema = cabos_opticosBaseSchema.extend(
 export const cabos_opticosCreateSchema = cabos_opticosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_historico: true,
 	f_utilizacao_cabos: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

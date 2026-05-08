@@ -22,7 +22,9 @@ export const fornecedores_telecomBaseSchema = z.object({
 	f_nome_fantasia: z.string(),
 	f_razao_social: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -51,6 +53,7 @@ export const fornecedores_telecomCreateSchema = fornecedores_telecomSchema.omit(
 	{
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		f_fk_cliente_contrato: true,
 		f_fk_contrato_fornecedor: true,
 		f_fk_recurso_cliente: true,
@@ -58,6 +61,7 @@ export const fornecedores_telecomCreateSchema = fornecedores_telecomSchema.omit(
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	},
 );
 

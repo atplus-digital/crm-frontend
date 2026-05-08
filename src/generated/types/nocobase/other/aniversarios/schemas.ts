@@ -22,7 +22,9 @@ export const aniversariosBaseSchema = z.object({
 	f_dia_mes: z.string(),
 	f_status: aniversariosStatusSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -48,11 +50,13 @@ export const aniversariosSchema = aniversariosBaseSchema.extend(
 export const aniversariosCreateSchema = aniversariosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_foto_aniversario: true,
 	f_funcionarios: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

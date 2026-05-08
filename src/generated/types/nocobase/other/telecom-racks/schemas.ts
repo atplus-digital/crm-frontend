@@ -26,7 +26,9 @@ export const telecom_racksBaseSchema = z.object({
 	f_sigla: z.string(),
 	parentId: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -59,6 +61,7 @@ export const telecom_racksCreateSchema = telecom_racksSchema.omit({
 	children: true,
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_fila: true,
 	f_fk_rack_a_recursos: true,
 	f_fk_rack_ativos: true,
@@ -69,6 +72,7 @@ export const telecom_racksCreateSchema = telecom_racksSchema.omit({
 	parent: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

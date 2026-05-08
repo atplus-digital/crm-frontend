@@ -23,7 +23,9 @@ export const logs_cargosBaseSchema = z.object({
 	f_descricao: z.string(),
 	f_nome_cargo: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -48,10 +50,12 @@ export const logs_cargosSchema = logs_cargosBaseSchema.extend(
 export const logs_cargosCreateSchema = logs_cargosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_funcionarios: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

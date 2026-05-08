@@ -47,7 +47,9 @@ export const telecom_recursosBaseSchema = z.object({
 	f_tipo: telecom_recursosTipoSchema,
 	parentId: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -89,6 +91,7 @@ export const telecom_recursosCreateSchema = telecom_recursosSchema.omit({
 	children: true,
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_anexos: true,
 	f_cliente: true,
 	f_equipamento_a: true,
@@ -106,6 +109,7 @@ export const telecom_recursosCreateSchema = telecom_recursosSchema.omit({
 	parent: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

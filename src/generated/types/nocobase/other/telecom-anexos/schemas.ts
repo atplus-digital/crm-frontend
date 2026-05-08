@@ -29,7 +29,9 @@ export const telecom_anexosBaseSchema = z.object({
 	title: z.string(),
 	url: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -54,10 +56,12 @@ export const telecom_anexosSchema = telecom_anexosBaseSchema.extend(
 export const telecom_anexosCreateSchema = telecom_anexosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	storage: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

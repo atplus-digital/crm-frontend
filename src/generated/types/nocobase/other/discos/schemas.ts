@@ -25,7 +25,9 @@ export const discosBaseSchema = z.object({
 	f_SN: z.string(),
 	f_tipo: discosTipoSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -47,9 +49,11 @@ export const discosSchema = discosBaseSchema.extend(discosRelationSchema.shape);
 export const discosCreateSchema = discosSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================

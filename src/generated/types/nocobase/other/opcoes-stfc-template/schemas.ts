@@ -22,7 +22,9 @@ export const opcoes_stfc_templateBaseSchema = z.object({
 	f_portabilidade: opcoes_stfc_templatePortabilidadeSchema,
 	f_terminais: z.string(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -47,9 +49,11 @@ export const opcoes_stfc_templateCreateSchema = opcoes_stfc_templateSchema.omit(
 	{
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	},
 );
 

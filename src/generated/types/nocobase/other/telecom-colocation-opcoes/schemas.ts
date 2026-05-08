@@ -22,7 +22,9 @@ export const telecom_colocation_opcoesBaseSchema = z.object({
 	f_espaco_rack: z.string(),
 	fk_opcoes_colocation: z.number(),
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -48,9 +50,11 @@ export const telecom_colocation_opcoesCreateSchema =
 	telecom_colocation_opcoesSchema.omit({
 		createdAt: true,
 		createdBy: true,
+		createdById: true,
 		id: true,
 		updatedAt: true,
 		updatedBy: true,
+		updatedById: true,
 	});
 
 // ============================================================

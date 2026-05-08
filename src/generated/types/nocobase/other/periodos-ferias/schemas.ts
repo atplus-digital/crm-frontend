@@ -25,7 +25,9 @@ export const periodos_feriasBaseSchema = z.object({
 	f_periodo_concessivo_inicio: z.string(),
 	f_status_periodo: periodos_feriasStatusPeriodoSchema,
 	updatedAt: z.string(),
+	updatedById: z.string(),
 	createdAt: z.string(),
+	createdById: z.string(),
 });
 
 // ============================================================
@@ -51,11 +53,13 @@ export const periodos_feriasSchema = periodos_feriasBaseSchema.extend(
 export const periodos_feriasCreateSchema = periodos_feriasSchema.omit({
 	createdAt: true,
 	createdBy: true,
+	createdById: true,
 	f_funcionarios: true,
 	f_lancamentos_ferias: true,
 	id: true,
 	updatedAt: true,
 	updatedBy: true,
+	updatedById: true,
 });
 
 // ============================================================
