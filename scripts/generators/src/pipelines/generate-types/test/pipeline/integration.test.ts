@@ -21,7 +21,7 @@ const mockConfigFactory = vi.hoisted(() => {
 				outputDir: "/tmp/test-generated",
 				splitCollections: [],
 			},
-		],
+		] as RuntimeConfig["datasources"],
 		baseUrl: "https://example.com/api",
 		token: "test-token",
 		timeoutMs: 30_000,
@@ -96,14 +96,14 @@ describe("Pipeline End-to-End", () => {
 			(overrideConfig: Partial<RuntimeConfig> = {}): RuntimeConfig => {
 				const base = mockConfigFactory();
 				const outputDir = overrideConfig.outputDir ?? base.outputDir;
-				const datasourcesBase =
+				const datasourcesBase: RuntimeConfig["datasources"] =
 					overrideConfig.datasources ?? base.datasources ?? [];
 
 				return {
 					...base,
 					...overrideConfig,
 					outputDir,
-					datasources: datasourcesBase.map((dataSource) => ({
+					datasources: datasourcesBase?.map((dataSource) => ({
 						...dataSource,
 						outputDir: join(outputDir, dataSource.dataSource),
 					})),
