@@ -85,7 +85,7 @@ describe("content", () => {
 				schemaAvailable: true,
 			};
 			const result = generateCollectionBaseInterface("empresas", types);
-			expect(result).toContain("f_analise_ixc: empresasAnaliseIxcSchema;");
+			expect(result).toContain("f_analise_ixc: EmpresasAnaliseIxc;");
 			expect(result).not.toContain('f_analise_ixc: "0" | "1"');
 		});
 	});
@@ -205,6 +205,17 @@ describe("content", () => {
 			);
 			expect(result).toContain("USER_ROLES_TABLE_NAME");
 		});
+
+		it("adds zod import for non-split collections with enums", () => {
+			const types = createMockGeneratedTypes({ f_status: "string" });
+			types.enums.set("f_status", [
+				{ value: "active", label: "Active" },
+				{ value: "inactive", label: "Inactive" },
+			]);
+
+			const result = generateCollectionTypes("users", types);
+			expect(result).toContain('import { z } from "zod";');
+		});
 	});
 
 	describe("generateContentForCollections", () => {
@@ -253,6 +264,25 @@ describe("content", () => {
 			const result = generateContentForCollections(collections, false);
 			// Check for blank line between collection types (type alias closes with })
 			expect(result).toMatch(/}\n\nexport (interface|type)/);
+		});
+
+		it("keeps a single zod import in consolidated non-split output", () => {
+			const collections = createMockCollectionTypesMap({
+				users: { scalars: { f_status: "string" } },
+				roles: { scalars: { f_status: "string" } },
+			});
+			collections.users.enums = new Map([
+				["f_status", [{ value: "active", label: "Active" }]],
+			]);
+			collections.roles.enums = new Map([
+				["f_status", [{ value: "active", label: "Active" }]],
+			]);
+
+			const result = generateContentForCollections(collections, false);
+			const importCount = result
+				.split("\n")
+				.filter((line) => line.trim() === 'import { z } from "zod";').length;
+			expect(importCount).toBe(1);
 		});
 
 		it("passes includeSourceTableConst to generateCollectionTypes", () => {

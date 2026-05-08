@@ -27,6 +27,12 @@ export interface AtomicWriterOptions {
 	 */
 	lint?: boolean;
 	/**
+	 * Base directory for temp staging files. When provided, temp dirs are created here
+	 * instead of as siblings of outputDir.
+	 * @default undefined (temp dir is created as sibling of outputDir)
+	 */
+	tempBaseDir?: string;
+	/**
 	 * Base directory for backup files. When provided, backups are stored here instead of
 	 * being siblings of the output dir.
 	 * @default undefined (backup is created as sibling of outputDir)
@@ -83,12 +89,20 @@ export interface AtomicWriteResult {
 export function createAtomicWriteSession(
 	options: AtomicWriterOptions,
 ): AtomicWriteSession {
-	const { outputDir, label, backupBaseDir, permanentBackupBaseDir } = options;
+	const {
+		outputDir,
+		label,
+		tempBaseDir,
+		backupBaseDir,
+		permanentBackupBaseDir,
+	} = options;
 	const resolvedOutputDir = path.resolve(process.cwd(), outputDir);
 
-	// Temp dirs are siblings of the output dir (same parent)
 	const parentDir = path.dirname(resolvedOutputDir);
 	const tempId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+	const resolvedTempBaseDir = tempBaseDir
+		? path.resolve(process.cwd(), tempBaseDir)
+		: parentDir;
 
 	// Backup location: use provided baseDir or parent of outputDir
 	const resolvedBackupDir = backupBaseDir
@@ -102,7 +116,7 @@ export function createAtomicWriteSession(
 
 	return new AtomicWriteSession(
 		resolvedOutputDir,
-		path.join(parentDir, `.tmp-${tempId}`),
+		path.join(resolvedTempBaseDir, `tmp-${tempId}`),
 		path.join(resolvedBackupDir, `.backup-${tempId}`),
 		label,
 		options.validate ?? true,
@@ -195,7 +209,7 @@ export class AtomicWriteSession {
 		this.swapTempToOutput();
 
 		// Step 3: Validate on the real output path
-		const validationOk = await this.runValidation();
+		const validationOk = await this.runValidation(this.outputDir);
 
 		if (!validationOk) {
 			// Step 4a: Restore backup
@@ -272,7 +286,7 @@ export class AtomicWriteSession {
 		// Check if there are changes before validation
 		const hasChanges = this.hasWrapModeChanges();
 
-		const validationOk = await this.runValidation();
+		const validationOk = await this.runValidation(this.outputDir);
 
 		if (!validationOk) {
 			this.restoreBackup();
@@ -304,6 +318,85 @@ export class AtomicWriteSession {
 			`[AtomicWriter:${this.label}] Validation passed, output alterado. Backup preservado em: ${this.backupDir}`,
 		);
 		return true;
+	}
+
+	/**
+	 * Finaliza escrita em modo staged:
+	 * 1) valida/linta no tempDir
+	 * 2) compara tempDir com output atual
+	 * 3) aplica swap atômico somente se houver diferença
+	 * 4) remove backup quando não houver mudança
+	 */
+	async finalizeStagedWrite(): Promise<AtomicWriteResult> {
+		if (this.committed) {
+			throw new Error(`[AtomicWriter:${this.label}] Session already committed`);
+		}
+		this.committed = true;
+
+		if (!fs.existsSync(this.tempDir)) {
+			logger.info(
+				`[AtomicWriter:${this.label}] Nenhum arquivo gerado em staging, removendo backup`,
+			);
+			this.removeBackupDir();
+			return {
+				changedFiles: [],
+				unchangedFiles: [],
+				tempDir: this.tempDir,
+				backupDir: this.backupDir,
+				committed: true,
+				permanentBackupDir: undefined,
+			};
+		}
+
+		const validationOk = await this.runValidation(this.tempDir);
+		if (!validationOk) {
+			this.restoreBackup();
+			logger.error(
+				`[AtomicWriter:${this.label}] Validation FAILED em staging — original restaurado de: ${this.backupDir}`,
+			);
+			return {
+				changedFiles: [],
+				unchangedFiles: [],
+				tempDir: this.tempDir,
+				backupDir: this.backupDir,
+				committed: false,
+				permanentBackupDir: undefined,
+			};
+		}
+
+		const diff = this.computeDiff();
+		if (diff.changedFiles.length === 0 && diff.deletedFiles.length === 0) {
+			logger.info(
+				`[AtomicWriter:${this.label}] Sem diferenças detectadas, removendo staging e backup`,
+			);
+			this.removeTempDir();
+			this.removeBackupDir();
+			return {
+				changedFiles: [],
+				unchangedFiles: diff.unchangedFiles,
+				tempDir: this.tempDir,
+				backupDir: this.backupDir,
+				committed: true,
+				permanentBackupDir: undefined,
+			};
+		}
+
+		this.swapTempToOutput();
+		logger.info(
+			`[AtomicWriter:${this.label}] Atomic write aplicado: ${diff.changedFiles.length} alterado(s), ${diff.deletedFiles.length} removido(s)`,
+		);
+		logger.info(
+			`[AtomicWriter:${this.label}] Backup preservado em: ${this.backupDir}`,
+		);
+
+		return {
+			changedFiles: diff.changedFiles,
+			unchangedFiles: diff.unchangedFiles,
+			tempDir: this.tempDir,
+			backupDir: this.backupDir,
+			committed: true,
+			permanentBackupDir: undefined,
+		};
 	}
 
 	/**
@@ -447,18 +540,24 @@ export class AtomicWriteSession {
 			fs.rmSync(this.outputDir, { recursive: true, force: true });
 		}
 
+		// Garante que o diretório pai exista (ex.: src/generated pode não existir).
+		const outputParent = path.dirname(this.outputDir);
+		if (!fs.existsSync(outputParent)) {
+			fs.mkdirSync(outputParent, { recursive: true });
+		}
+
 		// Rename temp → output (atomic on same filesystem)
 		fs.renameSync(this.tempDir, this.outputDir);
 	}
 
-	private async runValidation(): Promise<boolean> {
+	private async runValidation(targetDir: string): Promise<boolean> {
 		if (this.validate) {
-			const isValid = await validateTypeScriptDirectory(this.outputDir);
+			const isValid = await validateTypeScriptDirectory(targetDir);
 			if (!isValid) return false;
 		}
 
 		if (this.lint) {
-			await runLinterFix([this.outputDir], logger);
+			await runLinterFix([targetDir], logger);
 		}
 
 		return true;

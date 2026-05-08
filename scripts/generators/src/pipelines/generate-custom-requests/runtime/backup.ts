@@ -11,6 +11,7 @@ import type { GenerateCustomRequestsExecutionContext } from "./context";
 
 const CUSTOM_REQUESTS_BACKUP_BASE_DIR =
 	"scripts/generators/.backup/generate-custom-requests";
+const GENERATORS_TEMP_BASE_DIR = "scripts/generators/.temp";
 
 export function backupGenerateCustomRequestsOutputs(
 	context: GenerateCustomRequestsExecutionContext,
@@ -18,10 +19,22 @@ export function backupGenerateCustomRequestsOutputs(
 	backupAtomicSessions({
 		context,
 		labelPrefix: "generate-custom-requests",
+		tempBaseDir: GENERATORS_TEMP_BASE_DIR,
 		backupBaseDir: CUSTOM_REQUESTS_BACKUP_BASE_DIR,
 		validate: true,
 		lint: true,
 	});
+
+	const session = context.atomicSessions[0];
+	if (!session) {
+		return;
+	}
+
+	context.overrideConfig = {
+		...context.runtimeConfig,
+		...context.overrideConfig,
+		outputDir: session.tempDir,
+	};
 }
 
 export function restoreAllSessions(
@@ -36,5 +49,6 @@ export async function cleanupGenerateCustomRequestsBackups(
 	await cleanupAtomicSessions({
 		context,
 		shouldValidate: evaluateValidationPolicy(context, alwaysValidatePolicy),
+		mode: "staged",
 	});
 }

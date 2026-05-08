@@ -426,8 +426,8 @@ export function generateCollectionTypes(
 		allCollectionsMap ? Object.keys(allCollectionsMap) : [],
 	);
 
-	// 1. Import do zod (apenas para collections split)
-	if (isSplitCollection) {
+	// 1. Import do zod quando há infer/schema (split) ou enums (non-split)
+	if (isSplitCollection || types.enums.size > 0) {
 		lines.push(generateZodImport());
 		lines.push("");
 	}
@@ -626,7 +626,26 @@ export function generateContentForCollections(
 		lines.push("");
 	}
 
-	return lines.join("\n");
+	const content = lines.join("\n");
+
+	// Arquivo consolidado (non-split): mantém apenas um import do zod no topo.
+	if (isSplitCollection) {
+		return content;
+	}
+
+	const zodImport = 'import { z } from "zod";';
+	const firstImportIndex = content.indexOf(zodImport);
+	if (firstImportIndex === -1) {
+		return content;
+	}
+
+	const beforeFirstImport = content.slice(
+		0,
+		firstImportIndex + zodImport.length,
+	);
+	const afterFirstImport = content.slice(firstImportIndex + zodImport.length);
+	const dedupedAfter = afterFirstImport.replaceAll(`\n${zodImport}`, "");
+	return `${beforeFirstImport}${dedupedAfter}`;
 }
 
 /**

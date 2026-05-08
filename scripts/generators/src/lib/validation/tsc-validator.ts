@@ -23,8 +23,6 @@ interface TscExecutionResult {
 	exitCode: number;
 }
 
-const FILE_DIAGNOSTIC_PATTERN = /\(\d+,\d+\):\s*error TS\d+:/;
-
 const tscCache = new Map<string, Promise<TscExecutionResult>>();
 
 export function resetTypeScriptValidationCache(): void {
@@ -38,6 +36,34 @@ function runTscOnce(tsconfigPath: string): Promise<TscExecutionResult> {
 	const promise = runTsc(tsconfigPath);
 	tscCache.set(tsconfigPath, promise);
 	return promise;
+}
+
+function createScopedTsconfigPath(
+	baseTsconfigPath: string,
+	targetDir: string,
+): string {
+	const cacheDir = path.resolve(
+		process.cwd(),
+		"scripts/generators/.cache/tsc-validator",
+	);
+	if (!fs.existsSync(cacheDir)) {
+		fs.mkdirSync(cacheDir, { recursive: true });
+	}
+
+	const slug = targetDir
+		.replace(/[\\/]+/g, "_")
+		.replace(/[^a-zA-Z0-9_.-]/g, "_");
+	const scopedPath = path.join(cacheDir, `${slug}.json`);
+	const normalizedTarget = targetDir.replace(/\\/g, "/");
+	const normalizedBase = baseTsconfigPath.replace(/\\/g, "/");
+
+	const scopedConfig = {
+		extends: normalizedBase,
+		include: [`${normalizedTarget}/**/*.ts`, `${normalizedTarget}/**/*.d.ts`],
+	};
+
+	fs.writeFileSync(scopedPath, JSON.stringify(scopedConfig, null, 2));
+	return scopedPath;
 }
 
 async function runTsc(tsconfigPath: string): Promise<TscExecutionResult> {
@@ -92,50 +118,19 @@ export async function validateTypeScriptDirectory(
 
 	try {
 		const tsconfigPath = resolveTsconfigPath();
-		const tscResult = await runTscOnce(tsconfigPath);
-		const combinedOutput = tscResult.combinedOutput.replace(/\\/g, "/");
-		const outputLines = combinedOutput
+		const scopedTsconfigPath = createScopedTsconfigPath(
+			tsconfigPath,
+			resolvedDir,
+		);
+		const tscResult = await runTscOnce(scopedTsconfigPath);
+		const outputLines = tscResult.combinedOutput
 			.split("\n")
 			.map((line) => line.trim())
 			.filter((line) => line.length > 0);
 
-		const generatedDirPrefix = resolvedDir.replace(/\\/g, "/");
-		const relativeDirPrefix = path
-			.relative(process.cwd(), resolvedDir)
-			.replace(/\\/g, "/");
-		const diagnostics = outputLines.filter((line) => line.includes("error TS"));
-		const errorsInDir = diagnostics.filter(
-			(line) =>
-				line.includes(generatedDirPrefix) || line.includes(relativeDirPrefix),
-		);
-
-		if (errorsInDir.length > 0) {
+		if (tscResult.exitCode !== 0) {
 			logger.warn(
 				`⚠️  TypeScript inválido em: ${path.relative(process.cwd(), resolvedDir)}/`,
-			);
-			for (const err of errorsInDir.slice(0, 10)) {
-				logger.debug(err);
-			}
-			return false;
-		}
-
-		if (tscResult.exitCode !== 0) {
-			const hasGlobalDiagnostic = diagnostics.some(
-				(line) => !FILE_DIAGNOSTIC_PATTERN.test(line),
-			);
-
-			if (!hasGlobalDiagnostic && diagnostics.length > 0) {
-				logger.warn(
-					`⚠️  TypeScript com erro fora de ${path.relative(process.cwd(), resolvedDir)}/ (ignorado nesta validação local)`,
-				);
-				for (const err of diagnostics.slice(0, 10)) {
-					logger.debug(err);
-				}
-				return true;
-			}
-
-			logger.warn(
-				`⚠️  Validação TypeScript retornou erro (${tscResult.exitCode}) para: ${path.relative(process.cwd(), resolvedDir)}/`,
 			);
 			for (const err of outputLines.slice(0, 10)) {
 				logger.debug(err);

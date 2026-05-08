@@ -13,14 +13,17 @@ interface AtomicSessionState {
 interface CreateAtomicSessionOptions {
 	context: AtomicSessionState;
 	labelPrefix: string;
+	tempBaseDir?: string;
 	backupBaseDir: string;
 	validate?: boolean;
 	lint?: boolean;
+	enablePermanentBackup?: boolean;
 }
 
 interface CleanupAtomicSessionOptions<TContext extends AtomicSessionState> {
 	context: TContext;
 	shouldValidate?: boolean | ((context: TContext) => boolean);
+	mode?: "wrap" | "staged";
 }
 
 function resolveShouldValidate<TContext extends AtomicSessionState>(
@@ -41,8 +44,11 @@ export function backupAtomicSessions(
 			const session = createAtomicWriteSession({
 				outputDir,
 				label: `${options.labelPrefix} (${outputDir})`,
+				tempBaseDir: options.tempBaseDir,
 				backupBaseDir: options.backupBaseDir,
-				permanentBackupBaseDir: options.backupBaseDir,
+				permanentBackupBaseDir: options.enablePermanentBackup
+					? options.backupBaseDir
+					: undefined,
 				validate: options.validate,
 				lint: options.lint,
 			});
@@ -69,6 +75,7 @@ export async function cleanupAtomicSessions<
 	TContext extends AtomicSessionState,
 >(options: CleanupAtomicSessionOptions<TContext>): Promise<void> {
 	const shouldValidate = resolveShouldValidate(options);
+	const mode = options.mode ?? "wrap";
 
 	for (const session of options.context.atomicSessions) {
 		if (!shouldValidate) {
@@ -76,11 +83,23 @@ export async function cleanupAtomicSessions<
 			continue;
 		}
 
-		const validated = await session.validateAndFinalize();
-		if (!validated) {
-			throw new Error(
-				`Validação falhou para ${session.outputDir}. Alterações restauradas a partir do backup.`,
-			);
+		if (mode === "staged") {
+			const result = await session.finalizeStagedWrite();
+			if (!result.committed) {
+				throw new Error(
+					`Validação falhou para ${session.outputDir}. Alterações restauradas a partir do backup.`,
+				);
+			}
+			continue;
 		}
+
+		const validated = await session.validateAndFinalize();
+		if (validated) {
+			continue;
+		}
+
+		throw new Error(
+			`Validação falhou para ${session.outputDir}. Alterações restauradas a partir do backup.`,
+		);
 	}
 }

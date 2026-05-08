@@ -329,7 +329,7 @@ export function generateCollectionEnumTypes(
 
 /**
  * Gera o tipo para um campo escalar, usando enum se disponível.
- * Retorna o nome do schema Zod se existir, ou o tipo escalar.
+ * Retorna o type alias inferido do enum quando existir, ou o tipo escalar.
  */
 export function getScalarFieldType(
 	fieldName: string,
@@ -338,13 +338,13 @@ export function getScalarFieldType(
 	collectionName: string,
 ): string {
 	if (types.enums.has(fieldName)) {
-		const { schemaName } = getEnumFieldInfo(
+		const { typeName } = getEnumFieldInfo(
 			collectionName,
 			fieldName,
 			// biome-ignore lint/style/noNonNullAssertion: garante que o enumOptions existe para esse fieldName
 			types.enums.get(fieldName)!,
 		);
-		return schemaName;
+		return typeName;
 	}
 
 	return fieldType;

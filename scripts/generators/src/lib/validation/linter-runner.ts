@@ -42,6 +42,7 @@ export async function runLinterFix(
 			"biome",
 			"check",
 			"--write",
+			"--vcs-use-ignore-file=false",
 			...dirs,
 		]),
 		runCommand(logger, "Prettier (markdown)", "pnpm", [

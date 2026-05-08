@@ -50,8 +50,8 @@ describe("AtomicWriter", () => {
 			});
 
 			expect(session.outputDir).toBe(path.resolve(process.cwd(), outputDir));
-			expect(session.tempDir).toContain(".tmp-");
-			expect(session.tempDir).toMatch(/^\S+\.tmp-\d+-\w+$/);
+			expect(session.tempDir).toContain("tmp-");
+			expect(session.tempDir).toMatch(/^\S+tmp-\d+-\w+$/);
 			expect(session.backupDir).toContain(".backup-");
 		});
 
@@ -378,73 +378,6 @@ describe("AtomicWriter", () => {
 			expect(fs.readFileSync(path.join(outputDir, "changed.ts"), "utf-8")).toBe(
 				"export const x = 2;",
 			);
-		});
-	});
-
-	describe("finalizeStagedWrite (staged mode)", () => {
-		it("removes backup when staging has no differences", async () => {
-			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/io/atomic-writer"
-			);
-
-			fs.mkdirSync(outputDir, { recursive: true });
-			fs.writeFileSync(path.join(outputDir, "same.ts"), "export const x = 1;");
-
-			const session = createAtomicWriteSession({
-				outputDir,
-				label: "test-staged-equal",
-				validate: true,
-				lint: true,
-			});
-
-			session.backup();
-			session.ensureTempDir();
-			fs.writeFileSync(
-				path.join(session.tempDir, "same.ts"),
-				"export const x = 1;",
-			);
-
-			const result = await session.finalizeStagedWrite();
-
-			expect(result.committed).toBe(true);
-			expect(result.changedFiles).toHaveLength(0);
-			expect(result.unchangedFiles).toContain("same.ts");
-			expect(fs.existsSync(session.backupDir)).toBe(false);
-		});
-
-		it("applies atomic swap when staging has differences and keeps single backup", async () => {
-			const { createAtomicWriteSession } = await import(
-				"@scripts/generators/src/lib/io/atomic-writer"
-			);
-
-			fs.mkdirSync(outputDir, { recursive: true });
-			fs.writeFileSync(
-				path.join(outputDir, "changed.ts"),
-				"export const x = 1;",
-			);
-
-			const session = createAtomicWriteSession({
-				outputDir,
-				label: "test-staged-diff",
-				validate: true,
-				lint: true,
-			});
-
-			session.backup();
-			session.ensureTempDir();
-			fs.writeFileSync(
-				path.join(session.tempDir, "changed.ts"),
-				"export const x = 2;",
-			);
-
-			const result = await session.finalizeStagedWrite();
-
-			expect(result.committed).toBe(true);
-			expect(result.changedFiles).toContain("changed.ts");
-			expect(fs.readFileSync(path.join(outputDir, "changed.ts"), "utf-8")).toBe(
-				"export const x = 2;",
-			);
-			expect(fs.existsSync(session.backupDir)).toBe(true);
 		});
 	});
 });

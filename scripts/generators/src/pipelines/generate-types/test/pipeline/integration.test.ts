@@ -1,3 +1,4 @@
+import { join } from "node:path";
 import { createLogger } from "@scripts/generators/src/lib/logging";
 import type { RuntimeConfig } from "@scripts/generators/src/pipelines/generate-types/@types/script";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -32,6 +33,15 @@ vi.mock("@scripts/generators/src/pipelines/generate-types/config", () => ({
 		return mockConfigFactory();
 	},
 }));
+
+const mockParseConfig = vi.hoisted(() => vi.fn());
+
+vi.mock(
+	"@scripts/generators/src/pipelines/generate-types/utils/config",
+	() => ({
+		parseConfig: mockParseConfig,
+	}),
+);
 
 const mockDefaultPipeline = vi.hoisted(() => vi.fn());
 
@@ -82,6 +92,24 @@ describe("Pipeline End-to-End", () => {
 			],
 		});
 		mockLinterRunBiome.mockResolvedValue(undefined);
+		mockParseConfig.mockImplementation(
+			(overrideConfig: Partial<RuntimeConfig> = {}): RuntimeConfig => {
+				const base = mockConfigFactory();
+				const outputDir = overrideConfig.outputDir ?? base.outputDir;
+				const datasourcesBase =
+					overrideConfig.datasources ?? base.datasources ?? [];
+
+				return {
+					...base,
+					...overrideConfig,
+					outputDir,
+					datasources: datasourcesBase.map((dataSource) => ({
+						...dataSource,
+						outputDir: join(outputDir, dataSource.dataSource),
+					})),
+				};
+			},
+		);
 	});
 
 	afterEach(() => {
@@ -121,9 +149,14 @@ describe("Pipeline End-to-End", () => {
 		expect(mockDefaultPipeline).toHaveBeenCalledOnce();
 		expect(result).toMatchObject({
 			resultType: "single",
-			outputPath: "/tmp/test-output/index.ts",
 			changed: true,
 		});
+		expect(mockParseConfig).toHaveBeenCalled();
+		const stagedConfigCall = mockParseConfig.mock.calls.find(
+			([arg]) =>
+				typeof arg?.outputDir === "string" && arg.outputDir.includes("tmp-"),
+		);
+		expect(stagedConfigCall).toBeTruthy();
 	});
 
 	it("deve repassar collections explícitas ao contexto", async () => {

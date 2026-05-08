@@ -111,7 +111,9 @@ describe("runGenerateTypes", () => {
 
 		await expect(
 			generateTypesModule.runGenerateTypes(undefined, createLogger()),
-		).rejects.toThrow("Nenhum datasource configurado para geração de tipos");
+		).rejects.toThrow(
+			"datasources deve conter ao menos um datasource configurado",
+		);
 	});
 });
 

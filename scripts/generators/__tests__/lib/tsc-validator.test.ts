@@ -1,4 +1,5 @@
 import { EventEmitter } from "node:events";
+import * as fs from "node:fs";
 import * as path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -73,9 +74,16 @@ describe("tsc-validator", () => {
 		expect(result).toBe(true);
 		expect(spawnCalls).toHaveLength(1);
 		expect(spawnCalls[0]?.args).toContain("--project");
-		expect(spawnCalls[0]?.args).toContain(
-			path.resolve(process.cwd(), "scripts/generators/tsconfig.generated.json"),
+
+		const projectArgIndex = spawnCalls[0]?.args.indexOf("--project") ?? -1;
+		expect(projectArgIndex).toBeGreaterThanOrEqual(0);
+
+		const scopedTsconfigPath = spawnCalls[0]?.args[projectArgIndex + 1];
+		expect(scopedTsconfigPath).toBeDefined();
+		expect(scopedTsconfigPath).toContain(
+			path.normalize("scripts/generators/.cache/tsc-validator"),
 		);
+		expect(fs.existsSync(scopedTsconfigPath ?? "")).toBe(true);
 	});
 
 	it("retorna false quando o tsc falha mesmo sem erro vinculado ao diretório", async () => {
@@ -93,7 +101,7 @@ describe("tsc-validator", () => {
 		expect(result).toBe(false);
 	});
 
-	it("ignora erro de TypeScript quando o diagnóstico é apenas de outro diretório", async () => {
+	it("retorna false quando o TypeScript falha em qualquer diagnóstico", async () => {
 		const { validateTypeScriptDirectory } = await import(
 			"@scripts/generators/src/lib/validation/tsc-validator"
 		);
@@ -108,7 +116,7 @@ describe("tsc-validator", () => {
 			"src/generated/custom-requests",
 		);
 
-		expect(result).toBe(true);
+		expect(result).toBe(false);
 	});
 
 	it("reseta o cache entre execuções quando solicitado", async () => {

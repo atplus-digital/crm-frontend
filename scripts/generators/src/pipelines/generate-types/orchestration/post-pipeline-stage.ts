@@ -34,11 +34,21 @@ function runPostPipelineTask(
 				title: "validate-typescript",
 				logger,
 				run: async () => {
-					await Promise.all(
-						outputDirs.map((outputDir) =>
-							validateTypeScriptDirectory(outputDir),
-						),
+					const validationResults = await Promise.all(
+						outputDirs.map(async (outputDir) => ({
+							outputDir,
+							isValid: await validateTypeScriptDirectory(outputDir),
+						})),
 					);
+					const invalidOutputs = validationResults
+						.filter((result) => !result.isValid)
+						.map((result) => result.outputDir);
+
+					if (invalidOutputs.length > 0) {
+						throw new Error(
+							`TypeScript inválido em: ${invalidOutputs.join(", ")}. Escrita atômica cancelada.`,
+						);
+					}
 				},
 			}),
 			createLoggedSubtask({

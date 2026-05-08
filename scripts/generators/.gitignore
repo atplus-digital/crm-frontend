@@ -6,3 +6,5 @@ analysis-report.json
 *-reports.md
 
 .backup
+.cache
+.temp
