@@ -1,9 +1,9 @@
-import type { CollectionTypesMap } from "@scripts/generators/src/pipelines/generate-types/@types/generation";
-import type { BaseInterfaceNamingConfig } from "@scripts/generators/src/pipelines/generate-types/@types/script";
+import type { CollectionTypesMap } from "@generators/pipelines/generate-types/@types/generation";
+import type { BaseInterfaceNamingConfig } from "@generators/pipelines/generate-types/@types/script";
 import {
 	toCollectionBaseTypeName,
 	toFileName,
-} from "@scripts/generators/src/pipelines/generate-types/utils/naming";
+} from "@generators/pipelines/generate-types/utils/naming";
 
 const IDENTIFIER_REFERENCE_REGEX = /[$A-Z_a-z][$0-9A-Z_a-z]*/g;
 

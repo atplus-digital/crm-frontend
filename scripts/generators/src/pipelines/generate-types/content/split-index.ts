@@ -1,9 +1,9 @@
-import type { BaseInterfaceNamingConfig } from "@scripts/generators/src/pipelines/generate-types/@types/script";
+import type { BaseInterfaceNamingConfig } from "@generators/pipelines/generate-types/@types/script";
 import {
 	toCollectionBaseTypeName,
 	toCollectionTypeName,
 	toFileName,
-} from "@scripts/generators/src/pipelines/generate-types/utils/naming";
+} from "@generators/pipelines/generate-types/utils/naming";
 import { generateFileHeader } from "./content";
 
 export function generateIndexFileWithReexports(

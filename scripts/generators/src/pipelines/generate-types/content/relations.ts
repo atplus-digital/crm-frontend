@@ -2,9 +2,9 @@ import type {
 	RelationCardinality,
 	RelationInfo,
 	RelationInterface,
-} from "@scripts/generators/src/pipelines/generate-types/@types/generation";
-import type { BaseInterfaceNamingConfig } from "@scripts/generators/src/pipelines/generate-types/@types/script";
-import { toCollectionBaseTypeName } from "@scripts/generators/src/pipelines/generate-types/utils/naming";
+} from "@generators/pipelines/generate-types/@types/generation";
+import type { BaseInterfaceNamingConfig } from "@generators/pipelines/generate-types/@types/script";
+import { toCollectionBaseTypeName } from "@generators/pipelines/generate-types/utils/naming";
 
 // ============================================================
 // Relation interface resolution

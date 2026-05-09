@@ -1,18 +1,19 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import {
 	backupDir,
 	computeDiff,
 	removeDir,
 	runValidation,
 	swapTempToOutput,
-} from "@scripts/generators/src/lib/io/atomic-writer";
+} from "@generators/lib/io/atomic-writer";
 import {
 	countReports,
+	type PipelineReportsContext,
 	renderReportsMarkdown,
-} from "@scripts/generators/src/lib/reports";
-import type { PipelineExecutionContext } from "./context";
+} from "@generators/lib/pipeline/reports";
+import type { TaskRunner } from "@generators/lib/types";
+import type { PipelineExecutionContext } from "../pipeline/context";
 
 // ──────────────────────────────────────────────
 // Shared types
@@ -27,6 +28,12 @@ export interface DiffSummary {
 export interface LifecycleCtx {
 	diffs?: DiffSummary[];
 	hasChanges: boolean;
+}
+
+export interface PipelineJsonReportResult {
+	label: string;
+	hasChanges: boolean;
+	reports: PipelineReportsContext;
 }
 
 // ──────────────────────────────────────────────
@@ -46,6 +53,7 @@ export interface LifecycleTaskParams<
 	cwd: string;
 	timestamp: number;
 	randomId: string;
+	onReportReady?: (result: PipelineJsonReportResult) => void;
 }
 
 // ──────────────────────────────────────────────
@@ -113,10 +121,15 @@ export async function handleNoChanges(
 ): Promise<void> {
 	removeDir(params.tempDir);
 
-	const reportMd = renderReportsMarkdown(params.context.reports, {
-		title: `Relatório — ${params.label}`,
+	params.onReportReady?.({
+		label: params.label,
+		hasChanges: false,
+		reports: params.context.reports,
 	});
 	if (params.reportsOutputPath) {
+		const reportMd = renderReportsMarkdown(params.context.reports, {
+			title: `Relatório — ${params.label}`,
+		});
 		fs.mkdirSync(path.dirname(params.reportsOutputPath), {
 			recursive: true,
 		});
@@ -169,10 +182,15 @@ export async function renderReportsSummary(
 	ctx: LifecycleCtx,
 	params: LifecycleTaskParams<unknown, unknown>,
 ): Promise<void> {
-	const reportMd = renderReportsMarkdown(params.context.reports, {
-		title: `Relatório — ${params.label}`,
+	params.onReportReady?.({
+		label: params.label,
+		hasChanges: true,
+		reports: params.context.reports,
 	});
 	if (params.reportsOutputPath) {
+		const reportMd = renderReportsMarkdown(params.context.reports, {
+			title: `Relatório — ${params.label}`,
+		});
 		fs.mkdirSync(path.dirname(params.reportsOutputPath), {
 			recursive: true,
 		});

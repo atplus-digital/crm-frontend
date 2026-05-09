@@ -1,4 +1,4 @@
-import type { ScriptConfig } from "../pipelines/generate-custom-requests/@types/script-config";
+import type { ScriptConfig } from "../src/pipelines/generate-custom-requests/@types/script-config";
 
 export const requestsConfig: Partial<ScriptConfig> = {
 	requests: {

@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import * as fs from "node:fs";
+import * as os from "node:os";
 import * as path from "node:path";
 
 const TSCONFIG_CANDIDATES = [
@@ -41,13 +42,8 @@ function createScopedTsconfigPath(
 	baseTsconfigPath: string,
 	targetDir: string,
 ): string {
-	const cacheDir = path.resolve(
-		process.cwd(),
-		"scripts/generators/.cache/tsc-validator",
-	);
-	if (!fs.existsSync(cacheDir)) {
-		fs.mkdirSync(cacheDir, { recursive: true });
-	}
+	const cacheDir = path.resolve(os.tmpdir(), "crm-atplus-tsc-validator");
+	fs.mkdirSync(cacheDir, { recursive: true });
 
 	const slug = targetDir
 		.replace(/[\\/]+/g, "_")
@@ -59,6 +55,9 @@ function createScopedTsconfigPath(
 	const scopedConfig = {
 		extends: normalizedBase,
 		include: [`${normalizedTarget}/**/*.ts`, `${normalizedTarget}/**/*.d.ts`],
+		compilerOptions: {
+			types: [],
+		},
 	};
 
 	fs.writeFileSync(scopedPath, JSON.stringify(scopedConfig, null, 2));
@@ -116,6 +115,7 @@ export async function validateTypeScriptDirectory(
 			resolvedDir,
 		);
 		const tscResult = await runTscOnce(scopedTsconfigPath);
+		fs.rmSync(scopedTsconfigPath, { force: true });
 		const outputLines = tscResult.combinedOutput
 			.split("\n")
 			.map((line) => line.trim())

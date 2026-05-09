@@ -1,6 +1,6 @@
-import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
-import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
-import { addJsonReport } from "@scripts/generators/src/lib/reports";
+import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
+import { addJsonReport } from "@generators/lib/pipeline/reports";
+import type { TaskRunner } from "@generators/lib/types";
 import type { CustomRequestApiEntry } from "../@types/custom-request-api";
 import type { ScriptConfig } from "../@types/script-config";
 import type { CustomRequestsPipelineCtx } from "./load-schemas";
@@ -19,7 +19,7 @@ function toJsonEntries(
 	items: AnalyzedItem[],
 ): Record<
 	string,
-	import("@scripts/generators/src/lib/reports").ReportJsonValue
+	import("@generators/lib/pipeline/reports").ReportJsonValue
 >[] {
 	return items.map((item) => ({
 		key: item.key,

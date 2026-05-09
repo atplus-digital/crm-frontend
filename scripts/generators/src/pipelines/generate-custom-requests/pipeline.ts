@@ -1,9 +1,9 @@
 import { join } from "node:path";
-import type { OrchestrationTaskRunner } from "../../lib/cli/types";
+import { runStandardPipeline } from "../../lib/lifecycle/lifecycle";
 import type { PipelineExecutionContext } from "../../lib/pipeline/context";
-import { runStandardPipeline } from "../../lib/pipeline/lifecycle";
-import type { RunGeneratorCliOptions } from "../../lib/pipeline/orchestrator";
+import type { RunGeneratorCliOptions } from "../../lib/pipeline/create-script-definition";
 import type { AsyncPipelineStage } from "../../lib/pipeline/runner";
+import type { OrchestrationTaskRunner } from "../../lib/types";
 import type { ScriptConfig } from "./@types/script-config";
 import { fetchEntriesStage } from "./stages/fetch-entries";
 import { loadConfigStage } from "./stages/load-config";
@@ -51,6 +51,7 @@ export function createCustomRequestsPipeline(): RunGeneratorCliOptions<object> {
 
 	return {
 		name: "generate-custom-requests",
+		reportsOutputPath: REPORTS_OUTPUT,
 		stages: [
 			{
 				title: "📦 Custom Requests",
@@ -72,6 +73,7 @@ export function createCustomRequestsPipeline(): RunGeneratorCliOptions<object> {
 						} satisfies ScriptConfig,
 						getOutputDirs: () => [OUTPUT_DIR],
 						label: "generate-custom-requests",
+						reportsOutputPath: REPORTS_OUTPUT,
 						stages: [
 							loadConfigStage,
 							fetchEntriesStage,
@@ -80,7 +82,6 @@ export function createCustomRequestsPipeline(): RunGeneratorCliOptions<object> {
 							writeOutputToTempStage,
 							writeReportsStage,
 						],
-						reportsOutputPath: REPORTS_OUTPUT,
 					}),
 			},
 		],

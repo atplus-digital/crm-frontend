@@ -1,4 +1,4 @@
-import type { BaseInterfaceNamingConfig } from "@scripts/generators/src/pipelines/generate-types/@types/script";
+import type { BaseInterfaceNamingConfig } from "@generators/pipelines/generate-types/@types/script";
 
 const VALID_IDENTIFIER = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
 

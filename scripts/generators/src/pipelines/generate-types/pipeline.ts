@@ -1,14 +1,17 @@
 import * as path from "node:path";
-import type { OrchestrationTaskRunner } from "@scripts/generators/src/lib/cli/types";
-import { NocoBaseApiClient } from "@scripts/generators/src/lib/http/nocobase-client";
-import { toDataSourceOutputFolder } from "@scripts/generators/src/lib/path-utils";
-import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
-import { runStandardPipeline } from "@scripts/generators/src/lib/pipeline/lifecycle";
-import type { RunGeneratorCliOptions } from "@scripts/generators/src/lib/pipeline/orchestrator";
-import type { AsyncPipelineStage } from "@scripts/generators/src/lib/pipeline/runner";
+import { NocoBaseApiClient } from "@generators/lib/http/nocobase-client";
+import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
+import {
+	type AsyncPipelineStage,
+	runPipelineStages,
+} from "@generators/lib/pipeline/runner";
+import type { OrchestrationTaskRunner } from "@generators/lib/types";
+import { toDataSourceOutputFolder } from "@generators/lib/utils/path-utils";
+import { runStandardPipeline } from "@scripts/generators/src/lib/lifecycle/lifecycle";
 import type { ListrTaskResult } from "listr2";
-import { dataSourceConfigs } from "../../config/datasources";
-import { resolveNocoBaseEnv } from "../../config/env";
+import { dataSourceConfigs } from "../../../config/datasources";
+import type { RunGeneratorCliOptions } from "../../lib/pipeline/create-script-definition";
+import { resolveNocoBaseEnv } from "../../lib/utils/env";
 import type {
 	DataSourceClient,
 	DataSourceCollection,
@@ -25,7 +28,7 @@ import { writeReportsStage } from "./stages/write-reports";
 // Reports output directory
 // ──────────────────────────────────────────────
 
-const REPORTS_DIR = "scripts/generators/reports/generate-types";
+const REPORTS_OUTPUT = "scripts/generators/reports/generate-types/report.md";
 
 // ──────────────────────────────────────────────
 // DataSource client factory (composition over NocoBaseApiClient)
@@ -81,135 +84,109 @@ type TypesCtx = PipelineExecutionContext<
 
 type TypesStage = AsyncPipelineStage<TypesCtx>;
 
-type GenerateTypesBootstrapCtx = Pick<
-	GenerateTypesPipelineCtx,
-	"client" | "dataSource"
->;
-
-type DataSourceTaskCtx = {
-	client?: DataSourceClient;
-	outputDirRelative?: string;
-	pipelineContext?: GenerateTypesBootstrapCtx;
-};
-
 /**
  * Creates a Listr2 task tree for the generate-types pipeline.
  */
 export function createGenerateTypesPipeline(): RunGeneratorCliOptions<object> {
-	const stages = dataSourceConfigs.map((dataSource) => ({
-		title: `📦 ${dataSource.name}`,
-		run: (
-			_ctx: object,
-			task?: OrchestrationTaskRunner,
-		): ListrTaskResult<unknown> => {
-			if (!task) {
-				throw new Error(
-					"generate-types: task wrapper não fornecido pelo Listr2",
-				);
-			}
-
-			return task.newListr<DataSourceTaskCtx>(
-				[
-					{
-						title: "Resolver cliente da datasource",
-						task: (ctx): void => {
-							const env = resolveNocoBaseEnv();
-
-							ctx.client = createDataSourceClient({
-								baseUrl: env.baseUrl,
-								token: env.token,
-								timeoutMs: env.timeoutMs,
-							});
-						},
-					},
-					{
-						title: "Preparar contexto da pipeline",
-						task: (ctx): void => {
-							if (!ctx.client) {
-								throw new Error("generate-types: cliente não inicializado");
-							}
-
-							const outputFolder = toDataSourceOutputFolder(
-								dataSource.dataSource,
-							);
-							ctx.outputDirRelative = `src/generated/types/${outputFolder}/`;
-							ctx.pipelineContext = {
-								client: ctx.client,
-								dataSource,
-							};
-						},
-					},
-					{
-						title: "Executar pipeline",
-						task: (ctx, task) => {
-							if (!ctx.outputDirRelative) {
-								throw new Error("generate-types: outputDir não inicializado");
-							}
-
-							if (!ctx.pipelineContext) {
-								throw new Error(
-									"generate-types: pipelineContext não inicializado",
-								);
-							}
-
-							const outputDirRelative = ctx.outputDirRelative;
-							const pipelineContext = ctx.pipelineContext;
-
-							const writeFilesToTempStage: TypesStage =
-								async function writeFilesToTempStage(stageCtx, task) {
-									const tempOutputDir = path.join(
-										stageCtx.tempDir,
-										outputDirRelative,
-									);
-									const patchedConfig = {
-										...stageCtx.runtimeConfig,
-										outputDir: tempOutputDir,
-									};
-
-									return writeFilesStage(
-										{
-											...stageCtx,
-											runtimeConfig: patchedConfig,
-										},
-										task,
-									);
-								};
-
-							return runStandardPipeline<
-								DataSourceGenerationConfig,
-								GenerateTypesPipelineCtx
-							>({
-								task,
-								defaultConfig: dataSource,
-								overrideConfig: {
-									outputDir: outputDirRelative,
-								},
-								pipelineContext: pipelineContext as GenerateTypesPipelineCtx,
-								getOutputDirs: () => [outputDirRelative],
-								label: `generate-types:${dataSource.name}`,
-								stages: [
-									fetchSchemas,
-									buildTypes,
-									generateContentStage,
-									writeFilesToTempStage,
-									writeReportsStage,
-								],
-								reportsOutputPath: `${REPORTS_DIR}/${dataSource.name}-report.md`,
-							}) as ListrTaskResult<DataSourceTaskCtx>;
-						},
-					},
-				],
-				{
-					concurrent: false,
-					ctx: {},
-				},
-			);
-		},
-	}));
+	const outputDirs = dataSourceConfigs.map(
+		(dataSource) =>
+			`src/generated/types/${toDataSourceOutputFolder(dataSource.dataSource)}/`,
+	);
 
 	return {
 		name: "generate-types",
-		stages,
+		reportsOutputPath: REPORTS_OUTPUT,
+		stages: [
+			{
+				title: "📦 Generate Types",
+				run: (
+					_ctx: object,
+					task?: OrchestrationTaskRunner,
+				): ListrTaskResult<unknown> => {
+					if (!task) {
+						throw new Error(
+							"generate-types: task wrapper não fornecido pelo Listr2",
+						);
+					}
+
+					const env = resolveNocoBaseEnv();
+					const client = createDataSourceClient({
+						baseUrl: env.baseUrl,
+						token: env.token,
+						timeoutMs: env.timeoutMs,
+					});
+
+					const executeAllDataSourcesStage: AsyncPipelineStage<
+						PipelineExecutionContext<Record<string, never>, unknown>
+					> = function executeAllDataSourcesStage(context, lifecycleTask) {
+						return lifecycleTask.newListr(
+							dataSourceConfigs.map((dataSource) => ({
+								title: `📦 ${dataSource.name}`,
+								task: (_listrCtx, dataSourceTask) => {
+									const outputDirRelative = `src/generated/types/${toDataSourceOutputFolder(dataSource.dataSource)}/`;
+
+									const writeFilesToTempStage: TypesStage =
+										async function writeFilesToTempStage(stageCtx, writeTask) {
+											const tempOutputDir = path.join(
+												stageCtx.tempDir,
+												outputDirRelative,
+											);
+											const patchedConfig = {
+												...stageCtx.runtimeConfig,
+												outputDir: tempOutputDir,
+											};
+
+											return writeFilesStage(
+												{
+													...stageCtx,
+													runtimeConfig: patchedConfig,
+												},
+												writeTask,
+											);
+										};
+
+									const dataSourceContext: TypesCtx = {
+										...context,
+										runtimeConfig: {
+											...dataSource,
+											outputDir: outputDirRelative,
+										},
+										pipelineContext: {
+											client,
+											dataSource,
+										} as GenerateTypesPipelineCtx,
+									};
+
+									return runPipelineStages(
+										dataSourceContext,
+										[
+											fetchSchemas,
+											buildTypes,
+											generateContentStage,
+											writeFilesToTempStage,
+											writeReportsStage,
+										],
+										dataSourceTask,
+									);
+								},
+							})),
+							{
+								concurrent: true,
+							},
+						);
+					};
+
+					return runStandardPipeline<Record<string, never>, unknown>({
+						task,
+						defaultConfig: {},
+						getOutputDirs: () => outputDirs,
+						label: "generate-types",
+						reportsOutputPath: REPORTS_OUTPUT,
+						stages: [executeAllDataSourcesStage],
+					});
+				},
+			},
+		],
 		context: {},
 	};
 }

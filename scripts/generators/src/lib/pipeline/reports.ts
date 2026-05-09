@@ -96,16 +96,12 @@ export function addJsonReport(
 		payload: input.payload,
 	};
 
-	return {
-		...context,
-		namespaces: {
-			...context.namespaces,
-			[namespaceKey]: {
-				...currentNamespace,
-				entries: [...currentNamespace.entries, entry],
-			},
-		},
+	context.namespaces[namespaceKey] = {
+		...currentNamespace,
+		entries: [...currentNamespace.entries, entry],
 	};
+
+	return context;
 }
 
 export function countReports(context: PipelineReportsContext): number {

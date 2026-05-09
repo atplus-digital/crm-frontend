@@ -1,4 +1,6 @@
-import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
+import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
+import type { AsyncPipelineStage } from "@generators/lib/pipeline/runner";
+import type { PipelineJsonReportResult } from "@scripts/generators/src/lib/lifecycle/lifecycle-tasks";
 import type { ListrTaskResult, ListrTaskWrapper } from "listr2";
 
 // ──────────────────────────────────────────────
@@ -28,7 +30,6 @@ export interface GeneratorDefinition<TRuntimeConfig = unknown> {
 	description: string;
 	createPipelineOptions: (
 		config: TRuntimeConfig,
-		task: TaskRunner,
 	) => StandardPipelineFactoryInput<TRuntimeConfig>;
 	defaultConfig?: TRuntimeConfig;
 	getOutputDirs: (config: TRuntimeConfig) => string[];
@@ -46,14 +47,12 @@ export interface StandardPipelineInput<
 	overrideConfig?: Partial<TRuntimeConfig>;
 	defaultConfig: TRuntimeConfig;
 	getOutputDirs: (config: TRuntimeConfig) => string[];
-	stages: Array<
-		(
-			context: PipelineExecutionContext<TRuntimeConfig, TPipelineContext>,
-			task: TaskRunner,
-		) => Promise<PipelineExecutionContext<TRuntimeConfig, TPipelineContext>>
-	>;
-	reportsOutputPath?: string;
+	stages: AsyncPipelineStage<
+		PipelineExecutionContext<TRuntimeConfig, TPipelineContext>
+	>[];
 	label?: string;
+	reportsOutputPath?: string;
+	onReportReady?: (result: PipelineJsonReportResult) => void;
 }
 
 export type StandardPipelineFactoryInput<
@@ -78,10 +77,7 @@ export type OrchestrationTaskRunner = TaskRunner;
 
 export type NestedTaskList = ReturnType<OrchestrationTaskRunner["newListr"]>;
 
-export type OrchestrationTaskResult =
-	| void
-	| NestedTaskList
-	| ListrTaskResult<unknown>;
+export type OrchestrationTaskResult = NestedTaskList | ListrTaskResult<unknown>;
 
 /**
  * A single orchestration stage — runs a step in the generator pipeline.

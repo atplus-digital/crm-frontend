@@ -1,10 +1,9 @@
-import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
+import type { TaskRunner } from "@generators/lib/types";
 import type { ListrTaskResult } from "listr2";
 
 export type PipelineStageResult<TContext> =
 	| Promise<TContext>
-	| ReturnType<TaskRunner["newListr"]>
-	| void;
+	| ReturnType<TaskRunner["newListr"]>;
 
 export type AsyncPipelineStage<TContext> = (
 	context: TContext,
@@ -40,8 +39,30 @@ export function runPipelineStages<TContext>(
 	initialContext: TContext,
 	stages: AsyncPipelineStage<TContext>[],
 	task: TaskRunner,
-): ListrTaskResult<any> {
+): ListrTaskResult<unknown> | undefined {
 	let currentContext = initialContext;
+
+	if (stages.length === 1) {
+		const [stage] = stages;
+		if (!stage) return;
+		const result = stage(currentContext, task);
+		if (result === undefined) return;
+
+		if (
+			typeof result === "object" &&
+			result !== null &&
+			"run" in result &&
+			typeof result.run === "function"
+		) {
+			return result;
+		}
+
+		return Promise.resolve(result).then((nextContext) => {
+			if (nextContext !== undefined) {
+				currentContext = nextContext as TContext;
+			}
+		});
+	}
 
 	const subTasks = stages.map((stage, index) => ({
 		title: getStageTitle(stage, index),

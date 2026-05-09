@@ -244,7 +244,7 @@ export class NocoBaseDataSourceClient {
 ### CLI entry point pattern (unchanged)
 
 ```typescript
-import { executeEntry } from "@scripts/generators/src/lib/cli/runner";
+import { executeEntry } from "@scripts/generators/src/lib/pipeline/runner";
 export default executeEntry(import.meta.url, createGenerateTypesPipeline);
 ```
 
@@ -297,7 +297,7 @@ export default executeEntry(import.meta.url, createGenerateTypesPipeline);
 | Step 1  | `scripts/generators/` skeleton exists, all unchanged lib files copied, `nocobase-client.ts` has only `fetchCollections()` + `fetchPaginated()` + `fetchJson()` |
 | Step 2  | `lib/pipeline/` has 5 files, no `Logger` import anywhere, `PipelineExecutionContext` uses `task: ListrTaskWrapper`                                             |
 | Step 3  | `lib/io/locker.ts` exists as single file, no `Logger` dependency                                                                                               |
-| Step 4  | `lib/cli/` has exactly 3 files, no `Logger` reference in types                                                                                                 |
+| Step 4  | `lib/pipeline/` has exactly 3 files, no `Logger` reference in types                                                                                            |
 | Step 5  | `config/` has `datasources.ts`, `env.ts`, `requests.ts`; `datasources.ts` has no `preEnumAdapter`, `relationsAdapter`, `generateEnumReport`                    |
 | Step 6  | `generate-types/@types/` has no `script-adapters.ts`                                                                                                           |
 | Step 9  | `generate-types/stages/` has exactly 4 files: `fetch-schemas.ts`, `build-types.ts`, `generate-content.ts`, `write-files.ts`                                    |
@@ -317,7 +317,7 @@ export default executeEntry(import.meta.url, createGenerateTypesPipeline);
 
 1. **Should we keep `resolveLogLevel()` in `env.ts`?** Old `env-config.ts` reads `LOG_LEVEL` from env but Logger is removed. **Decision: Remove.**
 
-2. **Should `create-generator-step.ts` and `lib/cli/run-helper.ts` be removed?** Plan says not used. Verify by grepping before removing.
+2. **Should `create-generator-step.ts` and `lib/pipeline/run-helper.ts` be removed?** Plan says not used. Verify by grepping before removing.
 
 3. **Should pipeline lifecycle be async?** Old `runStandardStandalonePipeline` was async. New `runStandardPipeline` should also be async.
 
@@ -330,7 +330,7 @@ Phase A — Foundation
   Step 1:  Directory skeleton + unchanged lib files
   Step 2:  lib/pipeline/ (shared framework)
   Step 3:  lib/io/locker.ts (unified locker)
-  Step 4:  lib/cli/ (simplified CLI)
+  Step 4:  lib/pipeline/ (simplified CLI)
 
 Phase B — Config
   Step 5:  config/ (env, datasources, requests)

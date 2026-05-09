@@ -1,15 +1,15 @@
 import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
-import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
+import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
+import type { TaskRunner } from "@generators/lib/types";
 import {
 	toDataSourceOutputFolder,
 	toSafePathSegment,
-} from "@scripts/generators/src/lib/path-utils";
-import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
+} from "@generators/lib/utils/path-utils";
 import {
 	escapeString,
 	serializePayloadData,
-} from "@scripts/generators/src/lib/strings";
+} from "@scripts/generators/src/lib/utils/strings";
 import type { CollectionSchemaMapping } from "../@types/collection-schema";
 import type { GeneratedRegistryEntry } from "../@types/generated-registry";
 import type { RequestsMap, ScriptConfig } from "../@types/script-config";

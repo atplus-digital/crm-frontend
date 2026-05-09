@@ -1,4 +1,4 @@
-import type { PipelineReportsContext } from "@scripts/generators/src/lib/reports";
+import type { PipelineReportsContext } from "@generators/lib/pipeline/reports";
 
 export interface PipelineExecutionContext<
 	TRuntimeConfig,

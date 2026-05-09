@@ -1,13 +1,7 @@
-import { parseGeneratorFlags } from "@scripts/generators/src/lib/cli/args";
 import { runOrchestrator } from "@scripts/generators/src/lib/pipeline/orchestrator";
+import { parseGeneratorFlags } from "@scripts/generators/src/lib/utils/args";
 import { GENERATOR_REGISTRY } from "./generator-registry";
 
-/**
- * Runs all registered generators via the orchestrator CLI.
- *
- * Each generator runs its own pipeline stages sequentially via Listr2.
- * One failing does not prevent others from running.
- */
 async function main(): Promise<void> {
 	const selectedFlags = parseGeneratorFlags(
 		process.argv.slice(2),

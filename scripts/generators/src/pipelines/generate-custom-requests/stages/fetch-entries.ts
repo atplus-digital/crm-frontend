@@ -1,5 +1,5 @@
-import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
-import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
+import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
+import type { TaskRunner } from "@generators/lib/types";
 import type { ScriptConfig } from "../@types/script-config";
 import { CustomRequestsApiClient } from "../api/client";
 import type { CustomRequestsPipelineCtx } from "./load-schemas";

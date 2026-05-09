@@ -9,7 +9,8 @@
 		"paths": {
 			"#/*": ["./src/*"],
 			"@/*": ["./src/*"],
-			"@scripts/*": ["./scripts/*"]
+			"@scripts/*": ["./scripts/*"],
+			"@generators/*": ["./scripts/generators/src/*"]
 		},
 		"lib": ["ES2022", "DOM", "DOM.Iterable"],
 		"types": ["vite/client"],

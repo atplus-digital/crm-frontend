@@ -1,13 +1,13 @@
-import type { GeneratorDefinition } from "@scripts/generators/src/lib/cli/types";
-import type { RunGeneratorCliOptions } from "@scripts/generators/src/lib/pipeline/orchestrator";
-import { createScriptTasks } from "./lib/pipeline/create-script-definition";
+import type { GeneratorDefinition } from "@generators/lib/types";
+import {
+	createScriptTasks,
+	type RunGeneratorCliOptions,
+} from "./lib/pipeline/create-script-definition";
 import { createCustomRequestsPipeline } from "./pipelines/generate-custom-requests/pipeline";
 import { createGenerateTypesPipeline } from "./pipelines/generate-types/pipeline";
 
-export type GeneratorFlag = "--types" | "--requests";
-
-type GeneratorRegistryEntry = {
-	flag: GeneratorFlag;
+type GeneratorRegistryEntry<TFlag extends string = string> = {
+	flag: TFlag;
 	definition: GeneratorDefinition;
 };
 
@@ -17,7 +17,7 @@ export type CreateScriptTasksInput = {
 	createCliOptions: () => RunGeneratorCliOptions<object>;
 };
 
-const GENERATOR_REGISTRY: GeneratorRegistryEntry[] = [
+const GENERATOR_REGISTRY = [
 	{
 		flag: "--types",
 		definition: createScriptTasks({
@@ -34,7 +34,9 @@ const GENERATOR_REGISTRY: GeneratorRegistryEntry[] = [
 			createCliOptions: createCustomRequestsPipeline,
 		}),
 	},
-];
+] as const satisfies readonly GeneratorRegistryEntry[];
+
+export type GeneratorFlag = (typeof GENERATOR_REGISTRY)[number]["flag"];
 
 export type { GeneratorRegistryEntry };
 export { GENERATOR_REGISTRY };

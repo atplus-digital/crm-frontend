@@ -1,8 +1,8 @@
 import type {
 	NocoBaseApiClientOptions,
 	NocoBaseApiCredentials,
-} from "@scripts/generators/src/lib/http/nocobase-client";
-import { NocoBaseApiClient } from "@scripts/generators/src/lib/http/nocobase-client";
+} from "@generators/lib/http/nocobase-client";
+import { NocoBaseApiClient } from "@generators/lib/http/nocobase-client";
 import type {
 	CustomRequestApiEntry,
 	CustomRequestsListResponse,

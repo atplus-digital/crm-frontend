@@ -1,12 +1,12 @@
-import { jsonToSingleQuotedString } from "@scripts/generators/src/lib/strings";
 import type {
 	EnumOption,
 	GeneratedTypes,
-} from "@scripts/generators/src/pipelines/generate-types/@types/generation";
+} from "@generators/pipelines/generate-types/@types/generation";
 import {
 	removeAccents,
 	toCollectionTypeName,
-} from "@scripts/generators/src/pipelines/generate-types/utils/naming";
+} from "@generators/pipelines/generate-types/utils/naming";
+import { jsonToSingleQuotedString } from "@scripts/generators/src/lib/utils/strings";
 
 export interface EnumFieldInfo {
 	/** Nome do campo no formato PascalCase */

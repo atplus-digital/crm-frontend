@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { runLinterFix } from "@scripts/generators/src/lib/validation/linter-runner";
-import { validateTypeScriptDirectory } from "@scripts/generators/src/lib/validation/tsc-validator";
+import { runLinterFix } from "@generators/lib/validation/linter-runner";
+import { validateTypeScriptDirectory } from "@generators/lib/validation/tsc-validator";
 
 export interface DiffResult {
 	changedFiles: string[];

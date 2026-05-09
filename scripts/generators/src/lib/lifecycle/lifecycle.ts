@@ -1,10 +1,15 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
-import { applyWorkspaceLockIfNeeded } from "@scripts/generators/src/lib/io/locker";
-import { createReportsContext } from "@scripts/generators/src/lib/reports";
-import type { PipelineExecutionContext } from "./context";
-import type { LifecycleCtx, LifecycleTaskParams } from "./lifecycle-tasks";
+import { applyWorkspaceLockIfNeeded } from "@generators/lib/io/locker";
+import { createReportsContext } from "@generators/lib/pipeline/reports";
+import type { TaskRunner } from "@generators/lib/types";
+import type { PipelineExecutionContext } from "../pipeline/context";
+import { type AsyncPipelineStage, runPipelineStages } from "../pipeline/runner";
+import type {
+	LifecycleCtx,
+	LifecycleTaskParams,
+	PipelineJsonReportResult,
+} from "./lifecycle-tasks";
 import {
 	backupCurrentOutput,
 	diffTempVsOutput,
@@ -13,7 +18,6 @@ import {
 	swapTempToOutputDirs,
 	validateGeneratedOutput,
 } from "./lifecycle-tasks";
-import { type AsyncPipelineStage, runPipelineStages } from "./runner";
 
 export interface StandardPipelineOptions<TRuntimeConfig, TPipelineContext> {
 	task: TaskRunner;
@@ -24,8 +28,9 @@ export interface StandardPipelineOptions<TRuntimeConfig, TPipelineContext> {
 	stages: AsyncPipelineStage<
 		PipelineExecutionContext<TRuntimeConfig, TPipelineContext>
 	>[];
-	reportsOutputPath?: string;
 	label?: string;
+	reportsOutputPath?: string;
+	onReportReady?: (result: PipelineJsonReportResult) => void;
 }
 
 export function runStandardPipeline<TRuntimeConfig, TPipelineContext>(
@@ -66,7 +71,25 @@ export function runStandardPipeline<TRuntimeConfig, TPipelineContext>(
 		cwd,
 		timestamp,
 		randomId,
+		onReportReady: options.onReportReady,
 	};
+
+	if (outputDirs.length === 0) {
+		return options.task.newListr(
+			[
+				{
+					title: "Pipeline",
+					task: (_ctx, subTask: TaskRunner) =>
+						runPipelineStages(context, options.stages, subTask),
+				},
+			],
+			{
+				concurrent: false,
+				exitOnError: true,
+				ctx: { hasChanges: false } satisfies LifecycleCtx,
+			},
+		) as ReturnType<TaskRunner["newListr"]>;
+	}
 
 	return options.task.newListr(
 		[
@@ -77,52 +100,52 @@ export function runStandardPipeline<TRuntimeConfig, TPipelineContext>(
 					applyWorkspaceLockIfNeeded(outputDirs, true);
 				},
 			},
-			// 1. Run pipeline stages (each becomes a nested subtask)
+			// 1. Run pipeline stages
 			{
-				title: `Executando ${options.stages.length} estágio(s)`,
-				task: (_, subTask) =>
+				title: "Pipeline",
+				task: (_ctx, subTask: TaskRunner) =>
 					runPipelineStages(context, options.stages, subTask),
 			},
-			// 2. Validate generated output
+			// 1. Validate generated output
 			{
 				title: "Validando saída gerada",
 				task: async (): Promise<void> => validateGeneratedOutput(taskParams),
 			},
-			// 3. Diff temp vs output
+			// 2. Diff temp vs output
 			{
 				title: "Comparando alterações",
-				task: async (ctx: LifecycleCtx): Promise<void> =>
-					diffTempVsOutput(ctx, taskParams),
+				task: async (ctx): Promise<void> =>
+					diffTempVsOutput(ctx as LifecycleCtx, taskParams),
 			},
-			// 4. No changes → cleanup and render reports
+			// 3. No changes → cleanup and render reports
 			{
 				title: "Sem alterações",
-				skip: (ctx: LifecycleCtx): string | boolean =>
-					ctx.hasChanges ? "Alterações detectadas" : false,
-				task: async (ctx: LifecycleCtx): Promise<void> =>
-					handleNoChanges(ctx, taskParams),
+				skip: (ctx): string | boolean =>
+					(ctx as LifecycleCtx).hasChanges ? "Alterações detectadas" : false,
+				task: async (ctx): Promise<void> =>
+					handleNoChanges(ctx as LifecycleCtx, taskParams),
 			},
-			// 5. Backup current output (only when changes exist)
+			// 4. Backup current output (only when changes exist)
 			{
 				title: "Realizando backup",
-				skip: (ctx: LifecycleCtx): string | boolean =>
-					!ctx.hasChanges ? "Sem alterações" : false,
+				skip: (ctx): string | boolean =>
+					!(ctx as LifecycleCtx).hasChanges ? "Sem alterações" : false,
 				task: async (): Promise<void> => backupCurrentOutput(taskParams),
 			},
-			// 6. Swap temp → output (only when changes exist)
+			// 5. Swap temp → output (only when changes exist)
 			{
 				title: "Aplicando alterações",
-				skip: (ctx: LifecycleCtx): string | boolean =>
-					!ctx.hasChanges ? "Sem alterações" : false,
+				skip: (ctx): string | boolean =>
+					!(ctx as LifecycleCtx).hasChanges ? "Sem alterações" : false,
 				task: async (): Promise<void> => swapTempToOutputDirs(taskParams),
 			},
-			// 7. Render reports + summary (only when changes exist)
+			// 6. Emit report JSON + summary (only when changes exist)
 			{
 				title: "Gerando relatórios",
-				skip: (ctx: LifecycleCtx): string | boolean =>
-					!ctx.hasChanges ? "Sem alterações" : false,
-				task: async (ctx: LifecycleCtx): Promise<void> =>
-					renderReportsSummary(ctx, taskParams),
+				skip: (ctx): string | boolean =>
+					!(ctx as LifecycleCtx).hasChanges ? "Sem alterações" : false,
+				task: async (ctx): Promise<void> =>
+					renderReportsSummary(ctx as LifecycleCtx, taskParams),
 			},
 		],
 		{
