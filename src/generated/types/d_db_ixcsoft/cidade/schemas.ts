@@ -16,7 +16,7 @@ export const CIDADE_TABLE_NAME = "cidade";
 export const cidadeBaseSchema = z.object({
 	id: z.number(),
 	api_id: z.number(),
-	cod_cidade_nfse_forquilhinha_sc: z.string(),
+	cod_cidade_nfse_forquilhinha_sc: z.number(),
 	cod_ibge: z.number(),
 	cod_siafi: z.string(),
 	codigo: z.string(),

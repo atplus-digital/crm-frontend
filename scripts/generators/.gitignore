@@ -1,10 +1,2 @@
-analysis-report.json
-
-*-report.json
-*-reports.json
-*-report.md
-*-reports.md
-
-.backup
 .cache
-.temp
+reports

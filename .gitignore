@@ -15,3 +15,6 @@ crawl
 .weave/*
 !.weave/plans/
 !.weave/designs/
+
+.temp
+.backup

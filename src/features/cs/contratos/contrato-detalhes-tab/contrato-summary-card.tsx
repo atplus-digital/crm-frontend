@@ -18,7 +18,6 @@ export function ContratoSummaryCard({ contrato }: ContratoSummaryCardProps) {
 	const hasValorUnitario =
 		contrato.valor_unitario !== null &&
 		contrato.valor_unitario !== undefined &&
-		contrato.valor_unitario !== "" &&
 		Number(contrato.valor_unitario) > 0;
 
 	return (

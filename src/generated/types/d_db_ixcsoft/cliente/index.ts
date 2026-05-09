@@ -13,8 +13,6 @@ export * from "./schemas";
 
 // Type inferences
 export type Cliente = z.infer<typeof import("./schemas").clienteSchema>;
-export type ClienteRelations = z.infer<
-	typeof import("./schemas").clienteRelationSchema
->;
+export type ClienteRelations = Record<string, never>;
 
 export type ClienteRelationKey = keyof ClienteRelations;

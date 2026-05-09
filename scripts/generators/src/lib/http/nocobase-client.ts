@@ -6,7 +6,7 @@ export interface NocoBaseApiCredentials {
 	timeoutMs: number;
 }
 
-interface NocoBaseApiClientOptions {
+export interface NocoBaseApiClientOptions {
 	requestHeaders?: Record<string, string>;
 }
 
@@ -71,5 +71,21 @@ export abstract class NocoBaseApiClient {
 		}
 
 		return allEntries;
+	}
+
+	protected async fetchCollections(dataSourceKey: string): Promise<unknown[]> {
+		const response = await this.fetchJson<
+			unknown[] | { data?: unknown[] | null }
+		>(`dataSources/${dataSourceKey}/collections:list?paginate=false`);
+
+		if (Array.isArray(response)) {
+			return response;
+		}
+
+		if (Array.isArray(response.data)) {
+			return response.data;
+		}
+
+		return [];
 	}
 }

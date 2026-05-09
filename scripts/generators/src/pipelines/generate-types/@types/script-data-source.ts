@@ -1,6 +1,8 @@
 export interface DataSourceCollection {
 	name: string;
 	title?: string;
+	/** Fields returned by the API (collections:list returns fields embedded) */
+	fields?: DataSourceField[];
 }
 
 export interface RejectedField {
@@ -38,31 +40,11 @@ export interface InferredEnumsMap {
 }
 
 /**
- * Interface genérica para clientes de datasource
- * Permite que o script seja agnóstico em relação à fonte de dados
+ * Interface genérica para clientes de datasource.
+ * Permite que o script seja agnóstico em relação à fonte de dados.
  */
 export interface DataSourceClient {
 	readonly baseUrl: string;
 
-	fetchCollections(): Promise<DataSourceCollection[]>;
-
-	/**
-	 * Busca campos de uma collection.
-	 * @returns Objeto com campos e flag indicando se o schema foi obtido pela rota primária.
-	 *         `schemaAvailable: false` indica que a rota primária falhou (ex: 404) e foi usado fallback.
-	 */
-	fetchCollectionFields(
-		collectionName: string,
-	): Promise<{ fields: DataSourceField[]; schemaAvailable: boolean }>;
-
-	inferEnumsFromData(
-		collectionName: string,
-		fieldNames: string[],
-		sampleSize?: number,
-	): Promise<{ enums: InferredEnumsMap; rejected: RejectedFieldsMap }>;
-
-	fetchCollectionSample(
-		collectionName: string,
-		pageSize?: number,
-	): Promise<Array<Record<string, unknown>>>;
+	fetchCollections(dataSourceKey: string): Promise<DataSourceCollection[]>;
 }

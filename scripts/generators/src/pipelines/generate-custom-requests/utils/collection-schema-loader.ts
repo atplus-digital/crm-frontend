@@ -51,15 +51,10 @@ function resolveCollectionNameFromSchemaFile(filePath: string): string | null {
 	return fileNameToCollectionName(fileName);
 }
 
-function scanAllSchemas(logger?: {
-	debug: (msg: string) => void;
-}): CollectionSchemaMapping[] {
+function scanAllSchemas(): CollectionSchemaMapping[] {
 	const mappings: CollectionSchemaMapping[] = [];
 
 	if (!existsSync(GENERATED_TYPES_ROOT)) {
-		logger?.debug(
-			`Diretório de schemas não encontrado: ${GENERATED_TYPES_ROOT}`,
-		);
 		return mappings;
 	}
 
@@ -73,21 +68,17 @@ function scanAllSchemas(logger?: {
 		const dataSourceKey = dataSourceDir.name;
 		const datasourcePath = join(GENERATED_TYPES_ROOT, dataSourceDir.name);
 
-		logger?.debug(`Escaneando datasource: ${dataSourceKey}`);
-
 		const schemaFiles = scanSchemaFiles(datasourcePath);
 
 		for (const filePath of schemaFiles) {
 			const collectionName = resolveCollectionNameFromSchemaFile(filePath);
 			if (!collectionName) {
-				logger?.debug(`Collection não resolvida para arquivo: ${filePath}`);
 				continue;
 			}
 			const fileContent = readFileSync(filePath, "utf-8");
 
 			const schemaInfo = extractSchemaNames(collectionName, fileContent);
 			if (!schemaInfo) {
-				logger?.debug(`Schema não encontrado em: ${filePath}`);
 				continue;
 			}
 
@@ -103,10 +94,6 @@ function scanAllSchemas(logger?: {
 				baseSchemaName: schemaInfo.baseSchemaName,
 				availableFields,
 			});
-
-			logger?.debug(
-				`  ${collectionName} -> ${schemaInfo.schemaName} (${importPath})`,
-			);
 		}
 	}
 
@@ -138,10 +125,8 @@ export function createRegistry(
 	return registry;
 }
 
-export function loadCollectionSchemas(logger?: {
-	debug: (msg: string) => void;
-}): SchemaLoadResult {
-	const mappings = scanAllSchemas(logger);
+export function loadCollectionSchemas(): SchemaLoadResult {
+	const mappings = scanAllSchemas();
 	const registry = createRegistry(mappings);
 
 	return {

@@ -1,8 +1,6 @@
-import "./config";
-import { executeEntry } from "@scripts/generators/src/lib/cli/execute-entry";
-import { createGenerateCustomRequestsGenerator } from "./generator/create-generator";
+import { executeEntry } from "../../lib/cli/runner";
+import { createCustomRequestsTasks } from "./pipeline";
 
-export { config } from "./config";
-export { createGenerateCustomRequestsGenerator } from "./generator/create-generator";
+executeEntry(import.meta.url, createCustomRequestsTasks);
 
-executeEntry(import.meta.url, createGenerateCustomRequestsGenerator);
+export { createCustomRequestsTasks } from "./pipeline";

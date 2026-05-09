@@ -5,12 +5,10 @@
  */
 
 import { z } from "zod";
-import { clienteBaseSchema } from "../cliente/schemas";
 import {
 	linha_mvnoApiSchema,
 	linha_mvnoEsimSchema,
 	linha_mvnoPortabilidadeSchema,
-	linha_mvnoTipoNumeroSchema,
 } from "./labels";
 
 export const LINHA_MVNO_TABLE_NAME = "linha_mvno";
@@ -26,7 +24,7 @@ export const linha_mvnoBaseSchema = z.object({
 	data_agendamento: z.string(),
 	data_recarga: z.string(),
 	ddd_telefone: z.number(),
-	dia_recorrencia: z.string(),
+	dia_recorrencia: z.number(),
 	esim: linha_mvnoEsimSchema,
 	expiracao_dados: z.string(),
 	id_account_mvno: z.string(),
@@ -52,38 +50,20 @@ export const linha_mvnoBaseSchema = z.object({
 	simcard: z.string(),
 	sms: z.string(),
 	status_aplicativo: z.string(),
-	tipo_numero: linha_mvnoTipoNumeroSchema,
+	tipo_numero: z.string(),
 	token_validacao: z.string(),
 	voz: z.string(),
 });
 
 // ============================================================
-// RELATION SCHEMA (campos de relação)
-// ============================================================
-export const linha_mvnoRelationSchema = z.object({
-	f_chip: z.number().nullable(),
-	f_cliente: z.lazy(() => clienteBaseSchema.nullable()),
-	f_integracao: z.number().nullable(),
-	f_plano: z.number().nullable(),
-	f_prod_ixc_mvno: z.number().nullable(),
-});
-
-// ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const linha_mvnoSchema = linha_mvnoBaseSchema.extend(
-	linha_mvnoRelationSchema.shape,
-);
+export const linha_mvnoSchema = linha_mvnoBaseSchema;
 
 // ============================================================
 // CREATE SCHEMA
 // ============================================================
 export const linha_mvnoCreateSchema = linha_mvnoSchema.omit({
-	f_chip: true,
-	f_cliente: true,
-	f_integracao: true,
-	f_plano: true,
-	f_prod_ixc_mvno: true,
 	id: true,
 });
 

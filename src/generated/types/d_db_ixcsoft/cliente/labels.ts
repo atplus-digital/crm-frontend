@@ -9,300 +9,377 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
-export const CLIENTE_ACESSOAUTOMATICOCENTRAL_LABELS = {
-	S: "Sim",
-	N: "Não",
-	P: "Padrão",
+export const CLIENTE_ALTERARSENHAPRIMEIROACESSO_LABELS = {
+	S: "S",
+	N: "N",
+	P: "P",
 } as const;
 
-export const CLIENTE_ALTERARSENHAPRIMEIROACESSO_LABELS = {
-	S: "Sim",
-	N: "Não",
-	P: "Padrão",
+export const CLIENTE_ANTIGOACESSOCENTRAL_LABELS = {
+	S: "S",
+	N: "N",
+	A: "A",
 } as const;
 
 export const CLIENTE_ATIVO_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
 } as const;
 
-export const CLIENTE_ATIVOSERASA_LABELS = {
-	1: "Sim",
-	2: "Não",
+export const CLIENTE_ATUALIZARCADASTROGALAXPAY_LABELS = {
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_AVISOATRASO_LABELS = {
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_BLOQUEIOAUTOMATICO_LABELS = {
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_CADASTRADONOGALAXPAY_LABELS = {
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_CADASTRADOVIAVIABILIDADE_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_CLIDESCONTAISSRETIDOTOTAL_LABELS = {
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_COBENVIAEMAIL_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_COBENVIASMS_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_COFINSRETEM_LABELS = {
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_CONTRIBUINTEICMS_LABELS = {
-	S: "Sim",
-	N: "Não",
-	I: "Isento",
-	E: "Excluido",
+	S: "S",
+	N: "N",
+	I: "I",
 } as const;
 
 export const CLIENTE_CONVERTCLIENTEFORN_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_CRM_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_CSLLRETEM_LABELS = {
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_DESCONTOIRRFVALORINFERIOR_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_ESTADOCIVIL_LABELS = {
 	Casado: "Casado",
 	Solteiro: "Solteiro",
 	Divorciado: "Divorciado",
-	ViÃºvo: "Viúvo",
+	Viúvo: "Viúvo",
 } as const;
 
 export const CLIENTE_FILTRAFILIAL_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_GRAUSATISFACAO_LABELS = {
-	1: "Nada satisfeito",
-	2: "Pouco satisfeito",
-	3: "Satisfeito",
-	4: "Muito satisfeito",
-	5: "Completamente satisfeito",
+	1: "1",
+	2: "2",
+	3: "3",
+	4: "4",
+	5: "5",
 } as const;
 
-export const CLIENTE_ISSCLASSIFICACAOPADRAO_LABELS = {
-	"00": "00 - Normal",
-	"01": "01 - Retido",
-	"02": "02 - Substituta",
-	"03": "03 - Isento",
-	99: "99 - Padrão",
+export const CLIENTE_INSSRETEM_LABELS = {
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_IRRFRETEM_LABELS = {
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_MELHORPERIODORESERVAAUTOVIAB_LABELS = {
+	M: "M",
+	N: "N",
+	T: "T",
 } as const;
 
 export const CLIENTE_MORADIA_LABELS = {
-	P: "Própria",
-	A: "Alugada",
+	P: "P",
+	A: "A",
 } as const;
 
 export const CLIENTE_ORGAOPUBLICO_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_PARTICIPACOBRANCA_LABELS = {
+	S: "S",
+	N: "N",
+	P: "P",
 } as const;
 
 export const CLIENTE_PARTICIPAPRECOBRANCA_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_PERMITEARMAZENARCARTOES_LABELS = {
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_PISRETEM_LABELS = {
+	S: "S",
+	N: "N",
+} as const;
+
+export const CLIENTE_REDEATIVACAO_LABELS = {
+	P: "P",
+	N: "N",
 } as const;
 
 export const CLIENTE_REGIMEFISCALCOL_LABELS = {
-	48: "Responsable de IVA",
-	49: "No responsable de IVA",
+	48: "48",
+	49: "49",
 } as const;
 
 export const CLIENTE_REGUACOBRANCACONSIDERA_LABELS = {
-	S: "Sim",
-	N: "Não",
-	P: "Padrão",
+	S: "S",
+	N: "N",
+	P: "P",
 } as const;
 
 export const CLIENTE_REGUACOBRANCANOTIFICACAO_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_REGUACOBRANCAWPP_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_SENHAHOTSITEMD5_LABELS = {
-	S: "Sim",
-	N: "Não",
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_SEXO_LABELS = {
-	F: "Feminino",
-	M: "Masculino",
-	NB: "Não binário",
-	O: "Outro",
-	PNI: "Prefiro não dizer",
+	F: "F",
+	M: "M",
+	NB: "NB",
+	O: "O",
+	PNI: "PNI",
+} as const;
+
+export const CLIENTE_STATUSINTERNET_LABELS = {
+	N: "N",
+	A: "A",
+	D: "D",
+	CM: "CM",
+	CA: "CA",
+	CE: "CE",
+	FA: "FA",
 } as const;
 
 export const CLIENTE_STATUSPROSPECCAO_LABELS = {
-	C: "Novo",
-	S: "Sondagem",
-	A: "Apresentando",
-	N: "Negociando",
-	V: "Vencemos",
-	P: "Perdemos",
-	AB: "Abortamos",
-	SV: "Sem viabilidade",
-	SP: "Sem porta disponível",
+	C: "C",
+	S: "S",
+	A: "A",
+	N: "N",
+	V: "V",
+	P: "P",
+	AB: "AB",
+	SV: "SV",
+	SP: "SP",
+	AC: "AC",
+} as const;
+
+export const CLIENTE_STATUSVIABILIDADE_LABELS = {
+	S: "S",
+	N: "N",
 } as const;
 
 export const CLIENTE_TIPOASSINANTE_LABELS = {
-	1: "Comercial/Industrial",
-	2: "Poder Público",
-	3: "Residencial/Pessoa física",
-	4: "Público",
-	5: "Semi-Público",
-	6: "Outros",
+	1: "1",
+	2: "2",
+	3: "3",
+	4: "4",
+	5: "5",
+	6: "6",
 } as const;
 
 export const CLIENTE_TIPOCLIENTESCM_LABELS = {
-	"01": "01 - Comercial",
-	"02": "02 - Industrial",
-	"03": "03 - Residencial/Pessoa Física",
-	"04": "04 - Produtor Rural",
-	"05": "05 - Órgão da administração pública estadual direta e suas fundações e autarquias, quando mantidas pelo poder público estadual e regidas por normas de direito público, termos do Convênio ICMS 107/95",
-	"06": "06 - Prestador de serviço de telecomunicação responsável pelo recolhimento do imposto incidente sobre a cessão dos meios de rede do prestador do serviço ao usuário final, termos do Convênio ICMS 17/13",
-	"07": "07 - Missões Diplomáticas, Repartições Consulares e Organismos Internacionais, nos termos do Convênio ICMS 158/94",
-	"08": "08 - Igrejas e Templos de qualquer natureza",
-	99: "99 - Outros não especificados anteriormente",
-	"0-13": "0-13 - Grande contribuinte",
-	"0-15": "0-15 - Auto retentor",
-	"0-23": "0-23 - Agente de retenção IVA",
-	"0-47": "0-47 - Regime simples de tributação",
-	"R-99-PN": "R-99-PN - Não aplica - Outros",
-} as const;
-
-export const CLIENTE_TIPODOCUMENTOIDENTIFICACAO_LABELS = {
-	11: "Registro civil",
-	12: "Tarjeta de identidad",
-	13: "Cédula de ciudadanía",
-	21: "Tarjeta de extranjería",
-	22: "Cédula de extranjería",
-	31: "NIT",
-	41: "Pasaporte",
-	42: "Documento de identificación extranjero",
-	47: "PEP",
-	50: "NIT de otro país",
-	91: "NUIP",
-	NUIT: "NUIT",
-	RUC: "Registro Único de Contribuyentes",
-	CI: "Cédula de identidad",
-	4: "Cartão de Residência",
-	5: "Innominado",
-	6: "Cartão de Isenção de Imposto Diplomático",
-	9: "Outro",
-	CUIT: "CUIT",
-	CIBOL: "Carnet de Identidad",
-	RUT: "Rol Único Tributario",
-	TIN: "Tax Identification Number",
-	RIF: "Registro de Información Fiscal (RIF)",
-	DNI: "Documento Nacional de Indentidad",
-	NIR: "Número de sécurité sociale",
-	SIREN: "Système d'Identification du Répertoire des Entreprises",
-	RUTURU: "Registro Único de Tributario",
+	"01": "01",
+	"02": "02",
+	"03": "03",
+	"04": "04",
+	"05": "05",
+	"06": "06",
+	"07": "07",
+	"08": "08",
+	99: "99",
+	"0-13": "0-13",
+	"0-15": "0-15",
+	"0-23": "0-23",
+	"0-47": "0-47",
+	"R-99-PN": "R-99-PN",
 } as const;
 
 export const CLIENTE_TIPOENTEGOVERNAMENTAL_LABELS = {
-	1: "União",
-	2: "Estado",
-	3: "Distrito Federal",
-	4: "Município",
+	1: "1",
+	2: "2",
+	3: "3",
+	4: "4",
 } as const;
 
 export const CLIENTE_TIPOLOCALIDADE_LABELS = {
-	R: "Zona rural",
-	U: "Zona urbana",
+	R: "R",
+	U: "U",
 } as const;
 
 export const CLIENTE_TIPOPESSOA_LABELS = {
-	F: "Física",
-	J: "Jurídica",
-	E: "Estrangeiro",
-	1: "Juridica",
-	2: "Natural",
-	3: "Estrangeiro",
+	J: "J",
+	F: "F",
+	E: "E",
+	1: "1",
+	2: "2",
+	3: "3",
 } as const;
 
 export const CLIENTE_TIPOPESSOATITULARCONTA_LABELS = {
-	F: "Física",
-	J: "Jurídica",
+	F: "F",
+	J: "J",
+} as const;
+
+export const CLIENTE_TIPOREDE_LABELS = {
+	P: "P",
+	N: "N",
+	A: "A",
 } as const;
 
 // ============================================================
 // ENUM SCHEMAS (validação em runtime)
 // ============================================================
-export const clienteAcessoAutomaticoCentralSchema = z.enum(["S", "N", "P"], {
+export const clienteAlterarSenhaPrimeiroAcessoSchema = z.enum(["S", "N", "P"], {
 	error: () => ({
-		message:
-			"acesso_automatico_central: valores válidos são [Sim, Não, Padrão]",
+		message: "alterar_senha_primeiro_acesso: valores válidos são [S, N, P]",
 	}),
 });
 
-export const clienteAlterarSenhaPrimeiroAcessoSchema = z.enum(["S", "N", "P"], {
+export const clienteAntigoAcessoCentralSchema = z.enum(["S", "N", "A"], {
 	error: () => ({
-		message:
-			"alterar_senha_primeiro_acesso: valores válidos são [Sim, Não, Padrão]",
+		message: "antigo_acesso_central: valores válidos são [S, N, A]",
 	}),
 });
 
 export const clienteAtivoSchema = z.enum(["S", "N"], {
-	error: () => ({ message: "ativo: valores válidos são [Sim, Não]" }),
+	error: () => ({ message: "ativo: valores válidos são [S, N]" }),
 });
 
-export const clienteAtivoSerasaSchema = z.enum(["1", "2"], {
-	error: () => ({ message: "ativo_serasa: valores válidos são [Sim, Não]" }),
+export const clienteAtualizarCadastroGalaxpaySchema = z.enum(["S", "N"], {
+	error: () => ({
+		message: "atualizar_cadastro_galaxPay: valores válidos são [S, N]",
+	}),
+});
+
+export const clienteAvisoAtrasoSchema = z.enum(["S", "N"], {
+	error: () => ({ message: "aviso_atraso: valores válidos são [S, N]" }),
+});
+
+export const clienteBloqueioAutomaticoSchema = z.enum(["S", "N"], {
+	error: () => ({ message: "bloqueio_automatico: valores válidos são [S, N]" }),
+});
+
+export const clienteCadastradoNoGalaxpaySchema = z.enum(["S", "N"], {
+	error: () => ({
+		message: "cadastrado_no_galaxPay: valores válidos são [S, N]",
+	}),
 });
 
 export const clienteCadastradoViaViabilidadeSchema = z.enum(["S", "N"], {
 	error: () => ({
-		message: "cadastrado_via_viabilidade: valores válidos são [Sim, Não]",
+		message: "cadastrado_via_viabilidade: valores válidos são [S, N]",
+	}),
+});
+
+export const clienteCliDescontaIssRetidoTotalSchema = z.enum(["S", "N"], {
+	error: () => ({
+		message: "cli_desconta_iss_retido_total: valores válidos são [S, N]",
 	}),
 });
 
 export const clienteCobEnviaEmailSchema = z.enum(["S", "N"], {
-	error: () => ({ message: "cob_envia_email: valores válidos são [Sim, Não]" }),
+	error: () => ({ message: "cob_envia_email: valores válidos são [S, N]" }),
 });
 
 export const clienteCobEnviaSmsSchema = z.enum(["S", "N"], {
-	error: () => ({ message: "cob_envia_sms: valores válidos são [Sim, Não]" }),
+	error: () => ({ message: "cob_envia_sms: valores válidos são [S, N]" }),
 });
 
-export const clienteContribuinteIcmsSchema = z.enum(["S", "N", "I", "E"], {
+export const clienteCofinsRetemSchema = z.enum(["S", "N"], {
+	error: () => ({ message: "cofins_retem: valores válidos são [S, N]" }),
+});
+
+export const clienteContribuinteIcmsSchema = z.enum(["S", "N", "I"], {
 	error: () => ({
-		message:
-			"contribuinte_icms: valores válidos são [Sim, Não, Isento, Excluido]",
+		message: "contribuinte_icms: valores válidos são [S, N, I]",
 	}),
 });
 
 export const clienteConvertClienteFornSchema = z.enum(["S", "N"], {
 	error: () => ({
-		message: "convert_cliente_forn: valores válidos são [Sim, Não]",
+		message: "convert_cliente_forn: valores válidos são [S, N]",
 	}),
 });
 
 export const clienteCrmSchema = z.enum(["S", "N"], {
-	error: () => ({ message: "crm: valores válidos são [Sim, Não]" }),
+	error: () => ({ message: "crm: valores válidos são [S, N]" }),
+});
+
+export const clienteCsllRetemSchema = z.enum(["S", "N"], {
+	error: () => ({ message: "csll_retem: valores válidos são [S, N]" }),
 });
 
 export const clienteDescontoIrrfValorInferiorSchema = z.enum(["S", "N"], {
 	error: () => ({
-		message: "desconto_irrf_valor_inferior: valores válidos são [Sim, Não]",
+		message: "desconto_irrf_valor_inferior: valores válidos são [S, N]",
 	}),
 });
 
 export const clienteEstadoCivilSchema = z.enum(
-	["Casado", "Solteiro", "Divorciado", "ViÃºvo"],
+	["Casado", "Solteiro", "Divorciado", "Viúvo"],
 	{
 		error: () => ({
 			message:
@@ -312,94 +389,123 @@ export const clienteEstadoCivilSchema = z.enum(
 );
 
 export const clienteFiltraFilialSchema = z.enum(["S", "N"], {
-	error: () => ({ message: "filtra_filial: valores válidos são [Sim, Não]" }),
+	error: () => ({ message: "filtra_filial: valores válidos são [S, N]" }),
 });
 
 export const clienteGrauSatisfacaoSchema = z.enum(["1", "2", "3", "4", "5"], {
 	error: () => ({
-		message:
-			"grau_satisfacao: valores válidos são [Nada satisfeito, Pouco satisfeito, Satisfeito, Muito satisfeito, Completamente satisfeito]",
+		message: "grau_satisfacao: valores válidos são [1, 2, 3, 4, 5]",
 	}),
 });
 
-export const clienteIssClassificacaoPadraoSchema = z.enum(
-	["00", "01", "02", "03", "99"],
+export const clienteInssRetemSchema = z.enum(["S", "N"], {
+	error: () => ({ message: "inss_retem: valores válidos são [S, N]" }),
+});
+
+export const clienteIrrfRetemSchema = z.enum(["S", "N"], {
+	error: () => ({ message: "irrf_retem: valores válidos são [S, N]" }),
+});
+
+export const clienteMelhorPeriodoReservaAutoViabSchema = z.enum(
+	["M", "N", "T"],
 	{
 		error: () => ({
 			message:
-				"iss_classificacao_padrao: valores válidos são [00 - Normal, 01 - Retido, 02 - Substituta, 03 - Isento, 99 - Padrão]",
+				"melhor_periodo_reserva_auto_viab: valores válidos são [M, N, T]",
 		}),
 	},
 );
 
 export const clienteMoradiaSchema = z.enum(["P", "A"], {
-	error: () => ({ message: "moradia: valores válidos são [Própria, Alugada]" }),
+	error: () => ({ message: "moradia: valores válidos são [P, A]" }),
 });
 
 export const clienteOrgaoPublicoSchema = z.enum(["S", "N"], {
-	error: () => ({ message: "orgao_publico: valores válidos são [Sim, Não]" }),
+	error: () => ({ message: "orgao_publico: valores válidos são [S, N]" }),
+});
+
+export const clienteParticipaCobrancaSchema = z.enum(["S", "N", "P"], {
+	error: () => ({
+		message: "participa_cobranca: valores válidos são [S, N, P]",
+	}),
 });
 
 export const clienteParticipaPreCobrancaSchema = z.enum(["S", "N"], {
 	error: () => ({
-		message: "participa_pre_cobranca: valores válidos são [Sim, Não]",
+		message: "participa_pre_cobranca: valores válidos são [S, N]",
 	}),
 });
 
-export const clienteRegimeFiscalColSchema = z.enum(["48", "49"], {
+export const clientePermiteArmazenarCartoesSchema = z.enum(["S", "N"], {
 	error: () => ({
-		message:
-			"regime_fiscal_col: valores válidos são [Responsable de IVA, No responsable de IVA]",
+		message: "permite_armazenar_cartoes: valores válidos são [S, N]",
 	}),
+});
+
+export const clientePisRetemSchema = z.enum(["S", "N"], {
+	error: () => ({ message: "pis_retem: valores válidos são [S, N]" }),
+});
+
+export const clienteRedeAtivacaoSchema = z.enum(["P", "N"], {
+	error: () => ({ message: "rede_ativacao: valores válidos são [P, N]" }),
+});
+
+export const clienteRegimeFiscalColSchema = z.enum(["48", "49"], {
+	error: () => ({ message: "regime_fiscal_col: valores válidos são [48, 49]" }),
 });
 
 export const clienteReguaCobrancaConsideraSchema = z.enum(["S", "N", "P"], {
 	error: () => ({
-		message: "regua_cobranca_considera: valores válidos são [Sim, Não, Padrão]",
+		message: "regua_cobranca_considera: valores válidos são [S, N, P]",
 	}),
 });
 
 export const clienteReguaCobrancaNotificacaoSchema = z.enum(["S", "N"], {
 	error: () => ({
-		message: "regua_cobranca_notificacao: valores válidos são [Sim, Não]",
+		message: "regua_cobranca_notificacao: valores válidos são [S, N]",
 	}),
 });
 
 export const clienteReguaCobrancaWppSchema = z.enum(["S", "N"], {
-	error: () => ({
-		message: "regua_cobranca_wpp: valores válidos são [Sim, Não]",
-	}),
+	error: () => ({ message: "regua_cobranca_wpp: valores válidos são [S, N]" }),
 });
 
 export const clienteSenhaHotsiteMd5Schema = z.enum(["S", "N"], {
-	error: () => ({
-		message: "senha_hotsite_md5: valores válidos são [Sim, Não]",
-	}),
+	error: () => ({ message: "senha_hotsite_md5: valores válidos são [S, N]" }),
 });
 
 export const clienteSexoSchema = z.enum(["F", "M", "NB", "O", "PNI"], {
-	error: () => ({
-		message:
-			"Sexo: valores válidos são [Feminino, Masculino, Não binário, Outro, Prefiro não dizer]",
-	}),
+	error: () => ({ message: "Sexo: valores válidos são [F, M, NB, O, PNI]" }),
 });
 
-export const clienteStatusProspeccaoSchema = z.enum(
-	["C", "S", "A", "N", "V", "P", "AB", "SV", "SP"],
+export const clienteStatusInternetSchema = z.enum(
+	["N", "A", "D", "CM", "CA", "CE", "FA"],
 	{
 		error: () => ({
-			message:
-				"status_prospeccao: valores válidos são [Novo, Sondagem, Apresentando, Negociando, Vencemos, Perdemos, Abortamos, Sem viabilidade, Sem porta disponível]",
+			message: "status_internet: valores válidos são [N, A, D, CM, CA, CE, FA]",
 		}),
 	},
 );
+
+export const clienteStatusProspeccaoSchema = z.enum(
+	["C", "S", "A", "N", "V", "P", "AB", "SV", "SP", "AC"],
+	{
+		error: () => ({
+			message:
+				"status_prospeccao: valores válidos são [C, S, A, N, V, P, AB, SV, SP, AC]",
+		}),
+	},
+);
+
+export const clienteStatusViabilidadeSchema = z.enum(["S", "N"], {
+	error: () => ({ message: "status_viabilidade: valores válidos são [S, N]" }),
+});
 
 export const clienteTipoAssinanteSchema = z.enum(
 	["1", "2", "3", "4", "5", "6"],
 	{
 		error: () => ({
-			message:
-				"tipo_assinante: valores válidos são [Comercial/Industrial, Poder Público, Residencial/Pessoa física, Público, Semi-Público, Outros]",
+			message: "tipo_assinante: valores válidos são [1, 2, 3, 4, 5, 6]",
 		}),
 	},
 );
@@ -424,98 +530,77 @@ export const clienteTipoClienteScmSchema = z.enum(
 	{
 		error: () => ({
 			message:
-				"tipo_cliente_scm: valores válidos são [01 - Comercial, 02 - Industrial, 03 - Residencial/Pessoa Física, 04 - Produtor Rural, 05 - Órgão da administração pública estadual direta e suas fundações e autarquias, quando mantidas pelo poder público estadual e regidas por normas de direito público, termos do Convênio ICMS 107/95, 06 - Prestador de serviço de telecomunicação responsável pelo recolhimento do imposto incidente sobre a cessão dos meios de rede do prestador do serviço ao usuário final, termos do Convênio ICMS 17/13, 07 - Missões Diplomáticas, Repartições Consulares e Organismos Internacionais, nos termos do Convênio ICMS 158/94, 08 - Igrejas e Templos de qualquer natureza, 99 - Outros não especificados anteriormente, 0-13 - Grande contribuinte, 0-15 - Auto retentor, 0-23 - Agente de retenção IVA, 0-47 - Regime simples de tributação, R-99-PN - Não aplica - Outros]",
-		}),
-	},
-);
-
-export const clienteTipoDocumentoIdentificacaoSchema = z.enum(
-	[
-		"11",
-		"12",
-		"13",
-		"21",
-		"22",
-		"31",
-		"41",
-		"42",
-		"47",
-		"50",
-		"91",
-		"NUIT",
-		"RUC",
-		"CI",
-		"4",
-		"5",
-		"6",
-		"9",
-		"CUIT",
-		"CIBOL",
-		"RUT",
-		"TIN",
-		"RIF",
-		"DNI",
-		"NIR",
-		"SIREN",
-		"RUTURU",
-	],
-	{
-		error: () => ({
-			message:
-				"tipo_documento_identificacao: valores válidos são [Registro civil, Tarjeta de identidad, Cédula de ciudadanía, Tarjeta de extranjería, Cédula de extranjería, NIT, Pasaporte, Documento de identificación extranjero, PEP, NIT de otro país, NUIP, NUIT, Registro Único de Contribuyentes, Cédula de identidad, Cartão de Residência, Innominado, Cartão de Isenção de Imposto Diplomático, Outro, CUIT, Carnet de Identidad, Rol Único Tributario, Tax Identification Number, Registro de Información Fiscal (RIF), Documento Nacional de Indentidad, Número de sécurité sociale, Système d'Identification du Répertoire des Entreprises, Registro Único de Tributario]",
+				"tipo_cliente_scm: valores válidos são [01, 02, 03, 04, 05, 06, 07, 08, 99, 0-13, 0-15, 0-23, 0-47, R-99-PN]",
 		}),
 	},
 );
 
 export const clienteTipoEnteGovernamentalSchema = z.enum(["1", "2", "3", "4"], {
 	error: () => ({
-		message:
-			"tipo_ente_governamental: valores válidos são [União, Estado, Distrito Federal, Município]",
+		message: "tipo_ente_governamental: valores válidos são [1, 2, 3, 4]",
 	}),
 });
 
 export const clienteTipoLocalidadeSchema = z.enum(["R", "U"], {
-	error: () => ({
-		message: "tipo_localidade: valores válidos são [Zona rural, Zona urbana]",
-	}),
+	error: () => ({ message: "tipo_localidade: valores válidos são [R, U]" }),
 });
 
-export const clienteTipoPessoaSchema = z.enum(["F", "J", "E", "1", "2", "3"], {
+export const clienteTipoPessoaSchema = z.enum(["J", "F", "E", "1", "2", "3"], {
 	error: () => ({
-		message:
-			"tipo_pessoa: valores válidos são [Física, Jurídica, Estrangeiro, Juridica, Natural, Estrangeiro]",
+		message: "tipo_pessoa: valores válidos são [J, F, E, 1, 2, 3]",
 	}),
 });
 
 export const clienteTipoPessoaTitularContaSchema = z.enum(["F", "J"], {
 	error: () => ({
-		message:
-			"tipo_pessoa_titular_conta: valores válidos são [Física, Jurídica]",
+		message: "tipo_pessoa_titular_conta: valores válidos são [F, J]",
 	}),
+});
+
+export const clienteTipoRedeSchema = z.enum(["P", "N", "A"], {
+	error: () => ({ message: "tipo_rede: valores válidos são [P, N, A]" }),
 });
 
 // ============================================================
 // ENUM TYPES (inferidos dos schemas)
 // ============================================================
-export type ClienteAcessoAutomaticoCentral = z.infer<
-	typeof clienteAcessoAutomaticoCentralSchema
->;
-
 export type ClienteAlterarSenhaPrimeiroAcesso = z.infer<
 	typeof clienteAlterarSenhaPrimeiroAcessoSchema
 >;
 
+export type ClienteAntigoAcessoCentral = z.infer<
+	typeof clienteAntigoAcessoCentralSchema
+>;
+
 export type ClienteAtivo = z.infer<typeof clienteAtivoSchema>;
 
-export type ClienteAtivoSerasa = z.infer<typeof clienteAtivoSerasaSchema>;
+export type ClienteAtualizarCadastroGalaxpay = z.infer<
+	typeof clienteAtualizarCadastroGalaxpaySchema
+>;
+
+export type ClienteAvisoAtraso = z.infer<typeof clienteAvisoAtrasoSchema>;
+
+export type ClienteBloqueioAutomatico = z.infer<
+	typeof clienteBloqueioAutomaticoSchema
+>;
+
+export type ClienteCadastradoNoGalaxpay = z.infer<
+	typeof clienteCadastradoNoGalaxpaySchema
+>;
 
 export type ClienteCadastradoViaViabilidade = z.infer<
 	typeof clienteCadastradoViaViabilidadeSchema
 >;
 
+export type ClienteCliDescontaIssRetidoTotal = z.infer<
+	typeof clienteCliDescontaIssRetidoTotalSchema
+>;
+
 export type ClienteCobEnviaEmail = z.infer<typeof clienteCobEnviaEmailSchema>;
 
 export type ClienteCobEnviaSms = z.infer<typeof clienteCobEnviaSmsSchema>;
+
+export type ClienteCofinsRetem = z.infer<typeof clienteCofinsRetemSchema>;
 
 export type ClienteContribuinteIcms = z.infer<
 	typeof clienteContribuinteIcmsSchema
@@ -527,6 +612,8 @@ export type ClienteConvertClienteForn = z.infer<
 
 export type ClienteCrm = z.infer<typeof clienteCrmSchema>;
 
+export type ClienteCsllRetem = z.infer<typeof clienteCsllRetemSchema>;
+
 export type ClienteDescontoIrrfValorInferior = z.infer<
 	typeof clienteDescontoIrrfValorInferiorSchema
 >;
@@ -537,17 +624,33 @@ export type ClienteFiltraFilial = z.infer<typeof clienteFiltraFilialSchema>;
 
 export type ClienteGrauSatisfacao = z.infer<typeof clienteGrauSatisfacaoSchema>;
 
-export type ClienteIssClassificacaoPadrao = z.infer<
-	typeof clienteIssClassificacaoPadraoSchema
+export type ClienteInssRetem = z.infer<typeof clienteInssRetemSchema>;
+
+export type ClienteIrrfRetem = z.infer<typeof clienteIrrfRetemSchema>;
+
+export type ClienteMelhorPeriodoReservaAutoViab = z.infer<
+	typeof clienteMelhorPeriodoReservaAutoViabSchema
 >;
 
 export type ClienteMoradia = z.infer<typeof clienteMoradiaSchema>;
 
 export type ClienteOrgaoPublico = z.infer<typeof clienteOrgaoPublicoSchema>;
 
+export type ClienteParticipaCobranca = z.infer<
+	typeof clienteParticipaCobrancaSchema
+>;
+
 export type ClienteParticipaPreCobranca = z.infer<
 	typeof clienteParticipaPreCobrancaSchema
 >;
+
+export type ClientePermiteArmazenarCartoes = z.infer<
+	typeof clientePermiteArmazenarCartoesSchema
+>;
+
+export type ClientePisRetem = z.infer<typeof clientePisRetemSchema>;
+
+export type ClienteRedeAtivacao = z.infer<typeof clienteRedeAtivacaoSchema>;
 
 export type ClienteRegimeFiscalCol = z.infer<
 	typeof clienteRegimeFiscalColSchema
@@ -571,17 +674,19 @@ export type ClienteSenhaHotsiteMd5 = z.infer<
 
 export type ClienteSexo = z.infer<typeof clienteSexoSchema>;
 
+export type ClienteStatusInternet = z.infer<typeof clienteStatusInternetSchema>;
+
 export type ClienteStatusProspeccao = z.infer<
 	typeof clienteStatusProspeccaoSchema
+>;
+
+export type ClienteStatusViabilidade = z.infer<
+	typeof clienteStatusViabilidadeSchema
 >;
 
 export type ClienteTipoAssinante = z.infer<typeof clienteTipoAssinanteSchema>;
 
 export type ClienteTipoClienteScm = z.infer<typeof clienteTipoClienteScmSchema>;
-
-export type ClienteTipoDocumentoIdentificacao = z.infer<
-	typeof clienteTipoDocumentoIdentificacaoSchema
->;
 
 export type ClienteTipoEnteGovernamental = z.infer<
 	typeof clienteTipoEnteGovernamentalSchema
@@ -594,3 +699,5 @@ export type ClienteTipoPessoa = z.infer<typeof clienteTipoPessoaSchema>;
 export type ClienteTipoPessoaTitularConta = z.infer<
 	typeof clienteTipoPessoaTitularContaSchema
 >;
+
+export type ClienteTipoRede = z.infer<typeof clienteTipoRedeSchema>;

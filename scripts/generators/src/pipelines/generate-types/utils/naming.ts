@@ -18,7 +18,7 @@ export const UNNAMED_COLLECTION_TYPE_NAME = "__UnnamedCollection__";
 
 export const DEFAULT_BASE_INTERFACE_NAMING: BaseInterfaceNamingConfig = {
 	prefix: "",
-	suffix: "Base",
+	suffix: "",
 };
 
 export function resolveBaseInterfaceNamingConfig(
@@ -136,8 +136,9 @@ export function toCollectionTypeName(collectionName: string): string {
  * @example
  * ```typescript
  * toCollectionBaseTypeName("users")         // "Users"
- * toCollectionBaseTypeName("t_negociacoes") // "NegociacoesBase"
+ * toCollectionBaseTypeName("t_negociacoes") // "Negociacoes"
  * toCollectionBaseTypeName("users", { prefix: "I" }) // "IUsers"
+ * toCollectionBaseTypeName("t_negociacoes", { suffix: "Base" }) // "NegociacoesBase"
  * toCollectionBaseTypeName("")              // "__UnnamedCollection__"
  * ```
  */

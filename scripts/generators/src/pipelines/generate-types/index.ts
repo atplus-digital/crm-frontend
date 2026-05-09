@@ -1,8 +1,4 @@
-import "./config";
-import { executeEntry } from "@scripts/generators/src/lib/cli/execute-entry";
-import { createGenerateTypesGenerator } from "./generator/create-generator";
+import { executeEntry } from "@scripts/generators/src/lib/cli/runner";
+import { createGenerateTypesTasks } from "./pipeline";
 
-export { config } from "./config";
-export { createGenerateTypesGenerator } from "./generator/create-generator";
-
-executeEntry(import.meta.url, createGenerateTypesGenerator);
+export default executeEntry(import.meta.url, createGenerateTypesTasks);

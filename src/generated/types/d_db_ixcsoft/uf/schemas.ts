@@ -24,22 +24,14 @@ export const ufBaseSchema = z.object({
 });
 
 // ============================================================
-// RELATION SCHEMA (campos de relação)
-// ============================================================
-export const ufRelationSchema = z.object({
-	f_pais: z.number().nullable(),
-});
-
-// ============================================================
 // SCHEMA PRINCIPAL (validação completa)
 // ============================================================
-export const ufSchema = ufBaseSchema.extend(ufRelationSchema.shape);
+export const ufSchema = ufBaseSchema;
 
 // ============================================================
 // CREATE SCHEMA
 // ============================================================
 export const ufCreateSchema = ufSchema.omit({
-	f_pais: true,
 	id: true,
 });
 

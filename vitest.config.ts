@@ -9,10 +9,7 @@ export default defineConfig({
 		],
 		environment: "jsdom",
 		globalSetup: ["./src/_tests/global-setup.ts"],
-		setupFiles: [
-			"./src/_tests/mock-env.ts",
-			"./scripts/generators/__tests__/setup.ts",
-		],
+		setupFiles: ["./src/_tests/mock-env.ts"],
 		onConsoleLog() {
 			return false;
 		},

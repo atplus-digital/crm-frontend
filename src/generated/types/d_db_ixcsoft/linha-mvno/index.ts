@@ -13,8 +13,6 @@ export * from "./schemas";
 
 // Type inferences
 export type LinhaMvno = z.infer<typeof import("./schemas").linha_mvnoSchema>;
-export type LinhaMvnoRelations = z.infer<
-	typeof import("./schemas").linha_mvnoRelationSchema
->;
+export type LinhaMvnoRelations = Record<string, never>;
 
 export type LinhaMvnoRelationKey = keyof LinhaMvnoRelations;

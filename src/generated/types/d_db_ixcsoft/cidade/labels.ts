@@ -10,17 +10,15 @@ import { z } from "zod";
 // LABELS (single source of truth)
 // ============================================================
 export const CIDADE_ORIGEM_LABELS = {
-	N: "Nacional",
-	I: "Internacional",
+	N: "N",
+	I: "I",
 } as const;
 
 // ============================================================
 // ENUM SCHEMAS (validação em runtime)
 // ============================================================
 export const cidadeOrigemSchema = z.enum(["N", "I"], {
-	error: () => ({
-		message: "origem: valores válidos são [Nacional, Internacional]",
-	}),
+	error: () => ({ message: "origem: valores válidos são [N, I]" }),
 });
 
 // ============================================================

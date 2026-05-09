@@ -1,11 +1,22 @@
 import type { NocoBaseCredentials } from "./nocobase";
-import type {
-	BaseInterfaceNamingConfig,
-	EnumAdapter,
-	EnumCorrectionConfig,
-	ManualRelationMapping,
-	RelationsAdapter,
-} from "./script-adapters";
+
+export interface BaseInterfaceNamingConfig {
+	prefix: string;
+	suffix: string;
+}
+
+/**
+ * Definição de relação manual para datasource.
+ * Usado para mapear explicitamente campos de relação que não são detectados automaticamente.
+ */
+export interface ManualRelationMapping {
+	[fieldName: string]: {
+		/** Collection alvo da relação */
+		target: string;
+		/** Tipo de relação (belongsTo, hasMany, m2m, hasOne) */
+		type: "belongsTo" | "hasMany" | "m2m" | "hasOne";
+	};
+}
 
 /**
  * Configuração para inferência de enums aplicada globalmente ou por datasource.
@@ -76,6 +87,13 @@ export interface BaseDataSourceGenerationConfig {
 	type: "nocobase" | "rest";
 	dataSource: string;
 	/**
+	 * Inclui todas as collections retornadas pela API do datasource.
+	 * Collections explícitas e splitCollections continuam sendo respeitadas
+	 * (split apenas altera onde o arquivo é escrito).
+	 * @default false
+	 */
+	includeAllCollections?: boolean;
+	/**
 	 * Diretório de saída opcional por datasource.
 	 * Quando omitido, o script deriva automaticamente de ScriptConfig.outputDir
 	 * usando a chave dataSource (ex: "main" -> "nocobase").
@@ -90,32 +108,12 @@ export interface BaseDataSourceGenerationConfig {
 	excludeFields?: string[];
 	collections?: string[];
 	baseInterfaceNaming?: BaseInterfaceNamingConfig;
-	/**
-	 * Adapter opcional chamado ANTES do fallback sample-based de enums.
-	 * Se o adapter falhar ou retornar {}, o pipeline usa a inferência por amostragem normalmente.
-	 */
-	preEnumAdapter?: EnumAdapter;
-	enumCorrection?: EnumCorrectionConfig;
-	/**
-	 * Gera relatório de enum inference (_ixc-enum-inference.md) para esta datasource.
-	 * @default false
-	 */
-	generateEnumReport?: boolean;
-	/**
-	 * Configuração de inferência de enums específica para esta datasource.
-	 * Sobrescreve configurações globais do config.ts.
-	 */
 	enumInference?: EnumInferenceConfig;
 	/**
 	 * Mapeamento manual de relações para esta datasource.
 	 * Usado como primeira camada antes do adapter e inferência automática.
 	 */
 	relationsMapping?: Record<string, ManualRelationMapping>;
-	/**
-	 * Adapter opcional para buscar relações de fonte externa.
-	 * Chamado após relationsMapping e antes do fallback por inferência de convenção.
-	 */
-	relationsAdapter?: RelationsAdapter;
 	/**
 	 * Habilita inferência automática de relações por convenção de nomes.
 	 * Padrão: true para IXC, false para NocoBase (que já tem relações via API).

@@ -1,69 +1,80 @@
-import type { Logger } from "@scripts/generators/src/lib/logging";
-import type {
-	ListrRendererFactory,
-	ListrTask,
-	ListrTaskResult,
-	ListrTaskWrapper,
-} from "listr2";
+import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
+import type { ListrTaskWrapper } from "listr2";
 
-export type TaskOutputWriter = (line: string) => void;
+// ──────────────────────────────────────────────
+// Shared types
+// ──────────────────────────────────────────────
 
-export type GeneratorContext<TContext extends object> = TContext & {
-	logger: Logger;
-	writeOutput?: TaskOutputWriter;
-	disableOutput?: boolean;
-};
+/**
+ * Type alias for the Listr2 task wrapper used across pipeline orchestration.
+ *
+ * Listr2's generic params are <Context, Renderer, FallthroughRenderer>.
+ * We default to `unknown` for Context and leave the renderer params
+ * unconstrained since they are not used in our pipeline code.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: Listr2 requires unconstrained renderer generics
+export type TaskRunner = ListrTaskWrapper<any, any, any>;
 
-export type ListrTaskRunner<TContext extends object> = ListrTaskWrapper<
-	GeneratorContext<TContext>,
-	ListrRendererFactory,
-	ListrRendererFactory
->;
+// ──────────────────────────────────────────────
+// Generator definitions
+// ──────────────────────────────────────────────
 
-export type GeneratorTaskResult<TContext extends object> =
-	| undefined
-	| ListrTaskResult<GeneratorContext<TContext>>;
-
-export type GeneratorListrTask<TContext extends object> = ListrTask<
-	GeneratorContext<TContext>,
-	ListrRendererFactory,
-	ListrRendererFactory
->;
-
-export type OrchestrationListrTask = ListrTask<
-	unknown,
-	ListrRendererFactory,
-	ListrRendererFactory
->;
-
-type NativeGeneratorTaskOptions<TContext extends object> = Pick<
-	GeneratorListrTask<TContext>,
-	| "enabled"
-	| "skip"
-	| "retry"
-	| "rollback"
-	| "exitOnError"
-	| "rendererOptions"
-	| "fallbackRendererOptions"
->;
-
-export interface GeneratorTask<TContext extends object>
-	extends NativeGeneratorTaskOptions<TContext> {
-	title: string;
-	run: (
-		context: GeneratorContext<TContext>,
-		task: ListrTaskRunner<TContext>,
-	) => GeneratorTaskResult<TContext>;
+/**
+ * A single generator definition — registered in a registry and invoked by the
+ * orchestrator CLI.
+ */
+export interface GeneratorDefinition<TRuntimeConfig = unknown> {
+	name: string;
+	description: string;
+	createPipelineOptions: (config: TRuntimeConfig) => StandardPipelineInput;
+	defaultConfig: TRuntimeConfig;
+	getOutputDirs: (config: TRuntimeConfig) => string[];
 }
 
-export type OrchestrationTaskRunner = ListrTaskWrapper<
-	unknown,
-	ListrRendererFactory,
-	ListrRendererFactory
->;
+/**
+ * Input for runStandardPipeline — the common entry point used by all generators.
+ * Carries the Listr task (not a logger) for progress reporting.
+ */
+export interface StandardPipelineInput<
+	TRuntimeConfig = unknown,
+	TPipelineContext = unknown,
+> {
+	task: TaskRunner;
+	overrideConfig?: Partial<TRuntimeConfig>;
+	defaultConfig: TRuntimeConfig;
+	getOutputDirs: (config: TRuntimeConfig) => string[];
+	stages: Array<
+		(
+			context: PipelineExecutionContext<TRuntimeConfig, TPipelineContext>,
+		) => Promise<PipelineExecutionContext<TRuntimeConfig, TPipelineContext>>
+	>;
+	lockWorkspace: () => void;
+	unlockWorkspace: () => void;
+	reportsOutputPath?: string;
+	label?: string;
+}
 
-export type OrchestrationTaskResult = undefined | ListrTaskResult<unknown>;
+/**
+ * Generator runtime config for the orchestrator — credentials and HTTP settings.
+ */
+export interface GeneratorRuntimeConfig {
+	nocoBaseUrl: string;
+	nocoToken: string;
+	requestTimeoutMs: number;
+}
 
+// ──────────────────────────────────────────────
+// Orchestration stages
+// ──────────────────────────────────────────────
+
+export type OrchestrationTaskRunner = TaskRunner;
+
+export type OrchestrationTaskResult = undefined | undefined;
+
+/**
+ * A single orchestration stage — runs a step in the generator pipeline.
+ * The context type is PipelineExecutionContext from the pipeline layer.
+ */
 export interface GeneratorOrchestrationStage<TExecutionContext> {
 	title: string;
 	run: (
@@ -72,56 +83,22 @@ export interface GeneratorOrchestrationStage<TExecutionContext> {
 	) => OrchestrationTaskResult;
 }
 
-export interface CreateOrchestrationTaskOptions<
-	TContext extends object,
-	TExecutionContext,
-> {
-	title?: string;
-	stages: GeneratorOrchestrationStage<TExecutionContext>[];
-	getExecutionContext: (
-		context: GeneratorContext<TContext>,
-	) => TExecutionContext;
-}
-
-export interface RunGeneratorCliOptions<TContext extends object> {
-	name: string;
-	context: TContext;
-	tasks: GeneratorTask<TContext>[];
-	logger?: Logger;
-	disableOutput?: boolean;
-	writeOutput?: TaskOutputWriter;
-}
-
-export interface CreateGeneratorOptions<TContext extends object> {
-	name: string;
-	tasks: GeneratorTask<TContext>[];
-	context?: TContext;
-	logger?: Logger;
-	disableOutput?: boolean;
-	writeOutput?: TaskOutputWriter;
-}
-
 // ──────────────────────────────────────────────
-// Shared generator context patterns (used by both pipelines)
+// Pipeline lifecycle hooks
 // ──────────────────────────────────────────────
 
 /**
- * Base state for a generator wrapper context — holds an optional override config
- * and a lazily-created execution context.
+ * Lifecycle hooks for a generator pipeline.
+ *
+ * 1. backup() — save current state before generation
+ * 2. [run pipeline stages]
+ * 3. restore() — revert on failure (called by error handlers)
+ * 4. cleanup() — remove backup artifacts on success
  */
-export interface GeneratorContextState<TOverride, TExec> {
-	overrideConfig?: TOverride;
-	executionContext?: TExec;
-}
-
-/**
- * Base state for a pipeline execution context — holds the logger, optional
- * override config, and the pipeline context produced by the orchestration stages.
- */
-export interface ExecutionContextState<TOverride, TPipeline = unknown> {
-	logger: Logger;
-	overrideConfig?: TOverride;
-	pipelineContext?: TPipeline;
+export interface PipelineLifecycleHooks {
+	backup: () => void;
+	restore: () => void;
+	cleanup: () => void;
 }
 
 /**
@@ -136,19 +113,4 @@ export function getRequiredExecutionContext<TExec>(
 	}
 
 	return state.executionContext;
-}
-
-/**
- * Lifecycle hooks for a generator pipeline.
- *
- * Both pipelines follow the same pattern:
- * 1. backup() — save current state before generation
- * 2. [run pipeline stages]
- * 3. restore() — revert on failure (called by error handlers)
- * 4. cleanup() — remove backup artifacts on success
- */
-export interface PipelineLifecycleHooks {
-	backup: () => void;
-	restore: () => void;
-	cleanup: () => void;
 }

@@ -9,64 +9,64 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
-export const VDCONTRATOSPRODUTOS_FIXARIP_LABELS = {
-	1: "Sim",
-	0: "Não",
+export const VDCONTRATOSPRODUTOS_DESCONTOPROPORCIONAL_LABELS = {
+	S: "S",
+	N: "N",
 } as const;
 
 export const VDCONTRATOSPRODUTOS_REPETIR_LABELS = {
-	V: "Quantidade",
-	S: "Sempre",
+	V: "V",
+	S: "S",
 } as const;
 
 export const VDCONTRATOSPRODUTOS_TIPO_LABELS = {
-	I: "Internet",
-	T: "Telefonia",
-	S: "Serviços",
+	I: "I",
+	T: "T",
+	S: "S",
 	SVA: "SVA",
 	TV: "TV",
-	SMP: "MVNO/Telefonia Móvel",
+	SMP: "SMP",
 } as const;
 
 export const VDCONTRATOSPRODUTOS_TIPODESCONTO_LABELS = {
-	V: "Valor",
-	P: "Percentual",
+	V: "V",
+	P: "P",
 } as const;
 
 // ============================================================
 // ENUM SCHEMAS (validação em runtime)
 // ============================================================
-export const vd_contratos_produtosFixarIpSchema = z.enum(["1", "0"], {
-	error: () => ({ message: "fixar_ip: valores válidos são [Sim, Não]" }),
-});
+export const vd_contratos_produtosDescontoProporcionalSchema = z.enum(
+	["S", "N"],
+	{
+		error: () => ({
+			message: "desconto_proporcional: valores válidos são [S, N]",
+		}),
+	},
+);
 
 export const vd_contratos_produtosRepetirSchema = z.enum(["V", "S"], {
-	error: () => ({
-		message: "repetir: valores válidos são [Quantidade, Sempre]",
-	}),
+	error: () => ({ message: "repetir: valores válidos são [V, S]" }),
 });
 
 export const vd_contratos_produtosTipoSchema = z.enum(
 	["I", "T", "S", "SVA", "TV", "SMP"],
 	{
 		error: () => ({
-			message:
-				"tipo: valores válidos são [Internet, Telefonia, Serviços, SVA, TV, MVNO/Telefonia Móvel]",
+			message: "tipo: valores válidos são [I, T, S, SVA, TV, SMP]",
 		}),
 	},
 );
 
 export const vd_contratos_produtosTipoDescontoSchema = z.enum(["V", "P"], {
-	error: () => ({
-		message: "tipo_desconto: valores válidos são [Valor, Percentual]",
-	}),
+	error: () => ({ message: "tipo_desconto: valores válidos são [V, P]" }),
 });
 
 // ============================================================
 // ENUM TYPES (inferidos dos schemas)
 // ============================================================
-export type VdContratosProdutosFixarIp = z.infer<
-	typeof vd_contratos_produtosFixarIpSchema
+export type VdContratosProdutosDescontoProporcional = z.infer<
+	typeof vd_contratos_produtosDescontoProporcionalSchema
 >;
 
 export type VdContratosProdutosRepetir = z.infer<

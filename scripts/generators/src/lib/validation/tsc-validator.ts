@@ -1,7 +1,6 @@
 import { spawn } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { defaultLogger as logger } from "@scripts/generators/src/lib/logging";
 
 const TSCONFIG_CANDIDATES = [
 	path.resolve(process.cwd(), "scripts/generators/tsconfig.generated.json"),
@@ -104,15 +103,9 @@ async function runTsc(tsconfigPath: string): Promise<TscExecutionResult> {
 export async function validateTypeScriptDirectory(
 	dirPath: string,
 ): Promise<boolean> {
-	logger.debug(`Validando TypeScript em: ${dirPath}`, {
-		stage: "post-pipeline",
-		dir: dirPath,
-	});
-
 	const resolvedDir = path.resolve(process.cwd(), dirPath);
 
 	if (!fs.existsSync(resolvedDir)) {
-		logger.debug(`⏭️  Diretório não existe, pulando validação: ${resolvedDir}`);
 		return true;
 	}
 
@@ -129,23 +122,14 @@ export async function validateTypeScriptDirectory(
 			.filter((line) => line.length > 0);
 
 		if (tscResult.exitCode !== 0) {
-			logger.warn(
-				`⚠️  TypeScript inválido em: ${path.relative(process.cwd(), resolvedDir)}/`,
-			);
 			for (const err of outputLines.slice(0, 10)) {
-				logger.debug(err);
+				console.error(err);
 			}
 			return false;
 		}
 
-		logger.info(
-			`✓ TypeScript válido: ${path.relative(process.cwd(), resolvedDir)}/`,
-		);
 		return true;
 	} catch (_spawnError) {
-		logger.warn(
-			`⚠️  Falha ao executar validação TypeScript para: ${path.relative(process.cwd(), resolvedDir)}/`,
-		);
 		return false;
 	}
 }

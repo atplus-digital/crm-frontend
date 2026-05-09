@@ -14,10 +14,13 @@ import type {
 	TemplateContext,
 } from "./types";
 
-const customRequestsRegistryByKey = customRequestsRegistry as Record<
-	string,
-	CustomRequestEntry
->;
+const customRequestsRegistryByKey: Record<string, CustomRequestEntry> =
+	Object.fromEntries(
+		Object.entries(customRequestsRegistry).map(([key, entry]) => [
+			key,
+			entry as CustomRequestEntry,
+		]),
+	);
 
 export function validatePayload(key: string, payload: unknown) {
 	const entry = customRequestsRegistryByKey[key];
@@ -140,6 +143,6 @@ export function getRequestsByCollection(_collection: string) {
 	return Object.entries(customRequestsRegistry).map(([key, entry]) => ({
 		key,
 		method: entry.method,
-		url: entry.url,
+		url: `/api/customRequests:send/${entry.key}`,
 	}));
 }

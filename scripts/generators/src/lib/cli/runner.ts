@@ -1,56 +1,163 @@
-import { defaultLogger } from "@scripts/generators/src/lib/logging";
+import { fileURLToPath } from "node:url";
+import type { ListrRendererFactory } from "listr2";
 import { Listr } from "listr2";
-import { getSubtaskOptions } from "./defaults";
-import { createListrTask } from "./listr-task";
-import type {
-	CreateGeneratorOptions,
-	GeneratorContext,
-	RunGeneratorCliOptions,
-} from "./types";
+import { createOrchestrationTasks } from "./tasks";
+import type { GeneratorDefinition, OrchestrationTaskRunner } from "./types";
 
-function buildGeneratorListr<TContext extends object>(
-	options: RunGeneratorCliOptions<TContext>,
-) {
-	const logger = options.logger ?? defaultLogger;
-	const context = {
-		...options.context,
-		logger,
-		writeOutput: options.writeOutput,
-		disableOutput: options.disableOutput,
-	} as GeneratorContext<TContext>;
+// ──────────────────────────────────────────────
+// Local types (no Logger)
+// ──────────────────────────────────────────────
 
-	const tasks = options.tasks.map((step, index) =>
-		createListrTask(options.name, step, index, options.tasks.length, context),
-	);
-
-	return new Listr(tasks, {
-		...getSubtaskOptions("main"),
-		ctx: context,
-		silentRendererCondition: options.disableOutput ? () => true : undefined,
-		rendererOptions: {
-			collapse: false, // Collapses subtasks after completion
-			collapseSkips: false, // Collapses skipped tasks
-			collapseErrors: false, // Collapses errors into the parent task
-			collapseSubtasks: false, // Keep completed subtasks and their output visible
-		},
-	});
+/**
+ * A single CLI stage — maps to one Listr2 task.
+ * Carries no Logger — progress is reported via the Listr2 task handle.
+ */
+export interface CliStage<TContext = unknown> {
+	title: string;
+	run: (
+		context: TContext,
+		task?: OrchestrationTaskRunner,
+	) => void | Promise<void>;
 }
 
-export function createGeneratorOptions<TContext extends object>(
+/**
+ * Fully resolved options for running a generator CLI via Listr2.
+ */
+export interface RunGeneratorCliOptions<TContext = unknown> {
+	name: string;
+	stages: CliStage<TContext>[];
+	context: TContext;
+	disableOutput?: boolean;
+}
+
+/**
+ * Input for {@link createGeneratorOptions} — partial context allowed.
+ */
+export interface CreateGeneratorOptions<TContext = unknown> {
+	name: string;
+	stages: CliStage<TContext>[];
+	context?: TContext;
+	disableOutput?: boolean;
+}
+
+// ──────────────────────────────────────────────
+// executeEntry — self-executing entry point
+// ──────────────────────────────────────────────
+
+/**
+ * Checks whether a module is being executed directly (not imported).
+ * Always returns `false` under Vitest.
+ */
+function isExecutedDirectly(moduleUrl: string): boolean {
+	if (process.env.VITEST) return false;
+
+	const entryFile = process.argv[1];
+	if (!entryFile) return false;
+
+	return fileURLToPath(moduleUrl) === entryFile;
+}
+
+/**
+ * Self-executing entry point pattern.
+ *
+ * Runs the generator if the module is executed directly (via `pnpm` or `node`).
+ * If imported as a module by another script (e.g., the orchestrator), does nothing.
+ *
+ * Uses `console.error` for error reporting (no Logger).
+ *
+ * @param moduleUrl — `import.meta.url` of the calling module
+ * @param createGenerator — factory that returns the generator options
+ */
+export function executeEntry(
+	moduleUrl: string,
+	createGenerator: () => RunGeneratorCliOptions<object>,
+): void {
+	if (!isExecutedDirectly(moduleUrl)) return;
+
+	void main().catch((error: unknown) => {
+		const message = error instanceof Error ? error.message : String(error);
+		console.error(message);
+		process.exitCode = 1;
+	});
+
+	async function main(): Promise<void> {
+		await runGeneratorCli(createGenerator());
+	}
+}
+
+// ──────────────────────────────────────────────
+// createGeneratorOptions — build CLI options from input
+// ──────────────────────────────────────────────
+
+/**
+ * Creates a fully resolved {@link RunGeneratorCliOptions} from partial input.
+ * Fills missing context with an empty object.
+ */
+export function createGeneratorOptions<TContext>(
 	options: CreateGeneratorOptions<TContext>,
 ): RunGeneratorCliOptions<TContext> {
 	return {
 		name: options.name,
-		tasks: options.tasks,
+		stages: options.stages,
 		context: options.context ?? ({} as TContext),
-		logger: options.logger,
 		disableOutput: options.disableOutput,
-		writeOutput: options.writeOutput,
 	};
 }
 
-export async function runGeneratorCli<TContext extends object>(
+// ──────────────────────────────────────────────
+// runGeneratorCli — build Listr2 task list and run
+// ──────────────────────────────────────────────
+
+/**
+ * Builds a Listr2 task list from the given stages and executes it.
+ *
+ * @param options — resolved CLI options
+ */
+export async function runGeneratorCli<TContext>(
 	options: RunGeneratorCliOptions<TContext>,
 ): Promise<void> {
-	await buildGeneratorListr(options).run();
+	const tasks = options.stages.map((stage) => ({
+		title: stage.title,
+		task: (
+			ctx: TContext,
+			task: OrchestrationTaskRunner,
+		): void | Promise<void> => stage.run(ctx, task),
+		rendererOptions: { persistentOutput: true },
+	}));
+
+	const listr = new Listr<
+		TContext,
+		"default" | "silent" | "verbose",
+		ListrRendererFactory
+	>(tasks, {
+		concurrent: false,
+		ctx: options.context,
+		rendererOptions: {
+			collapseSkips: false,
+			collapseErrors: false,
+			collapseSubtasks: false,
+		},
+	});
+
+	await listr.run();
+}
+
+// ──────────────────────────────────────────────
+// runOrchestrator — orchestrate multiple generators
+// ──────────────────────────────────────────────
+
+/**
+ * Creates an orchestration task list from {@link GeneratorDefinition}s and
+ * executes them sequentially via Listr2.
+ *
+ * Each generator runs its own pipeline stages; one failing does not
+ * prevent others from running.
+ *
+ * @param generators — array of generator definitions to orchestrate
+ */
+export async function runOrchestrator(
+	generators: GeneratorDefinition[],
+): Promise<void> {
+	const tasks = createOrchestrationTasks(generators);
+	await tasks.run();
 }

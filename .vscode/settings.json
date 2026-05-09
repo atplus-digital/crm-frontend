@@ -9,7 +9,9 @@
 		"**/routeTree.gen.ts": true,
 		".husky/**": true,
 		"src/generated/**": true,
-		"src/generated/custom-requests/index.ts": true
+		"src/generated/custom-requests/index.ts": true,
+		"src/generated/types/nocobase/index.ts": true,
+		"src/generated/types/d_db_ixcsoft/index.ts": true
 	},
 	"[javascript]": {
 		"editor.defaultFormatter": "biomejs.biome"

@@ -14,7 +14,7 @@ export interface CustomRequestEntry {
 	name: string;
 	collection: string;
 	method: CustomRequestMethod;
-	url: string;
+	url?: string;
 	timeout?: number;
 	headers?: Record<string, string>;
 	payloadSchema: z.ZodType<unknown>;

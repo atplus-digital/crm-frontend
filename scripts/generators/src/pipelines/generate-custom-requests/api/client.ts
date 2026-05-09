@@ -1,11 +1,12 @@
+import type {
+	NocoBaseApiClientOptions,
+	NocoBaseApiCredentials,
+} from "@scripts/generators/src/lib/http/nocobase-client";
 import { NocoBaseApiClient } from "@scripts/generators/src/lib/http/nocobase-client";
-import type { Logger } from "@scripts/generators/src/lib/logging";
-import { defaultLogger as defaultRuntimeLogger } from "@scripts/generators/src/lib/logging";
 import type {
 	CustomRequestApiEntry,
 	CustomRequestsListResponse,
-} from "@scripts/generators/src/pipelines/generate-custom-requests/@types/custom-request-api";
-import type { ScriptConfig } from "@scripts/generators/src/pipelines/generate-custom-requests/@types/script-config";
+} from "../@types/custom-request-api";
 
 /**
  * Cliente HTTP para buscar custom requests da API NocoBase.
@@ -17,11 +18,16 @@ import type { ScriptConfig } from "@scripts/generators/src/pipelines/generate-cu
  * ```
  */
 export class CustomRequestsApiClient extends NocoBaseApiClient {
+	/**
+	 * @param credentials Credenciais de acesso à API NocoBase
+	 * @param options Opções adicionais do cliente HTTP
+	 */
+	// biome-ignore lint/complexity/noUselessConstructor: visibility change from protected to public is meaningful
 	public constructor(
-		config: ScriptConfig,
-		private readonly logger: Logger = defaultRuntimeLogger,
+		credentials: NocoBaseApiCredentials,
+		options?: NocoBaseApiClientOptions,
 	) {
-		super(config);
+		super(credentials, options);
 	}
 
 	/**
@@ -36,7 +42,6 @@ export class CustomRequestsApiClient extends NocoBaseApiClient {
 					`customRequests:list?pageSize=${currentPageSize}&page=${page}`,
 				);
 				const entries = response.data ?? [];
-				this.logger.debug(`Página ${page}: ${entries.length} custom requests`);
 				return {
 					entries,
 					hasNextPage: entries.length >= currentPageSize,
@@ -44,7 +49,6 @@ export class CustomRequestsApiClient extends NocoBaseApiClient {
 			},
 		});
 
-		this.logger.debug(`Total: ${allEntries.length} custom requests`);
 		return allEntries;
 	}
 

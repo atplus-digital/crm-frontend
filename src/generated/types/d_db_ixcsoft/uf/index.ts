@@ -10,6 +10,6 @@ export * from "./schemas";
 
 // Type inferences
 export type Uf = z.infer<typeof import("./schemas").ufSchema>;
-export type UfRelations = z.infer<typeof import("./schemas").ufRelationSchema>;
+export type UfRelations = Record<string, never>;
 
 export type UfRelationKey = keyof UfRelations;

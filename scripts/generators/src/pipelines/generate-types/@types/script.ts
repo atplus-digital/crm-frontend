@@ -1,18 +1,11 @@
 export type { NocoBaseCredentials } from "./nocobase";
 export type {
-	BaseInterfaceNamingConfig,
-	EnumAdapter,
-	EnumAdapterFieldEnum,
-	EnumCorrectionConfig,
-	EnumCorrectionRule,
-	ManualRelationMapping,
-	RelationsAdapter,
-} from "./script-adapters";
-export type {
 	BaseDataSourceGenerationConfig,
+	BaseInterfaceNamingConfig,
 	DataSourceGenerationConfig,
 	EnumInferenceConfig,
 	EnvConfig,
+	ManualRelationMapping,
 	RuntimeConfig,
 	ScriptConfig,
 } from "./script-config";
