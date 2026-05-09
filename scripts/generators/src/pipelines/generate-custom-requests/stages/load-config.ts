@@ -1,11 +1,13 @@
 import { resolveNocoBaseEnv } from "@scripts/generators/src/config/env";
 import { requestsConfig } from "@scripts/generators/src/config/requests";
+import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
 import type {
 	ManualRegistryEntry,
 	RequestsMap,
 	ScriptConfig,
 } from "../@types/script-config";
+import type { CustomRequestsPipelineCtx } from "./load-schemas";
 
 const SPLIT_REQUEST_NAME_REGEX = /^[a-z][a-z-]*$/;
 const VALID_METHODS = new Set(["GET", "POST", "PUT", "PATCH", "DELETE"]);
@@ -67,9 +69,10 @@ function validateManualRequests(
 }
 
 export async function loadConfigStage(
-	context: PipelineExecutionContext<ScriptConfig>,
-): Promise<PipelineExecutionContext<ScriptConfig>> {
-	context.task.output = "Carregando configuração...";
+	context: PipelineExecutionContext<ScriptConfig, CustomRequestsPipelineCtx>,
+	task: TaskRunner,
+): Promise<PipelineExecutionContext<ScriptConfig, CustomRequestsPipelineCtx>> {
+	task.output = "Carregando configuração...";
 
 	const env = resolveNocoBaseEnv();
 
@@ -96,7 +99,7 @@ export async function loadConfigStage(
 		},
 	} satisfies ScriptConfig;
 
-	context.task.output = `Configuração carregada: ${Object.keys(cfg.requests).length} requests configurados, ${cfg.manualRequests.length} manuais`;
+	task.output = `Configuração carregada: ${Object.keys(cfg.requests).length} requests configurados, ${cfg.manualRequests.length} manuais`;
 
 	return {
 		...context,

@@ -1,3 +1,4 @@
+import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
 import type { CollectionTypesMap } from "../@types/generation";
 import type { DataSourceGenerationConfig } from "../@types/script";
@@ -64,9 +65,15 @@ function splitCollectionsByConfig(
  * This stage merges the old build-types + split-collections logic into one.
  */
 export async function buildTypes(
-	context: PipelineExecutionContext<DataSourceGenerationConfig>,
-): Promise<PipelineExecutionContext<DataSourceGenerationConfig>> {
-	const { task, runtimeConfig: dataSource } = context;
+	context: PipelineExecutionContext<
+		DataSourceGenerationConfig,
+		GenerateTypesPipelineCtx
+	>,
+	task: TaskRunner,
+): Promise<
+	PipelineExecutionContext<DataSourceGenerationConfig, GenerateTypesPipelineCtx>
+> {
+	const { runtimeConfig: dataSource } = context;
 	const pipelineCtx = context.pipelineContext as
 		| GenerateTypesPipelineCtx
 		| undefined;

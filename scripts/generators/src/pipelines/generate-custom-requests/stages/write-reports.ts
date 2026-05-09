@@ -1,3 +1,4 @@
+import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
 import { addJsonReport } from "@scripts/generators/src/lib/reports";
 import type { CustomRequestApiEntry } from "../@types/custom-request-api";
@@ -82,13 +83,14 @@ function collectAnalysisReport(entries: CustomRequestApiEntry[]): {
 }
 
 export async function writeReportsStage(
-	context: PipelineExecutionContext<ScriptConfig>,
-): Promise<PipelineExecutionContext<ScriptConfig>> {
+	context: PipelineExecutionContext<ScriptConfig, CustomRequestsPipelineCtx>,
+	task: TaskRunner,
+): Promise<PipelineExecutionContext<ScriptConfig, CustomRequestsPipelineCtx>> {
 	const pipelineCtx = (context.pipelineContext ??
 		{}) as CustomRequestsPipelineCtx;
 	const entries = pipelineCtx.entries ?? [];
 
-	context.task.output = "Gerando relatórios de análise...";
+	task.output = "Gerando relatórios de análise...";
 
 	const analysis = collectAnalysisReport(entries);
 
@@ -108,7 +110,7 @@ export async function writeReportsStage(
 		},
 	});
 
-	context.task.output = `Relatórios: ${analysis.totalAnalyzed} entradas analisadas, ${analysis.withoutOptions.length} sem options, ${analysis.withoutDataSourceKey.length} sem dataSourceKey`;
+	task.output = `Relatórios: ${analysis.totalAnalyzed} entradas analisadas, ${analysis.withoutOptions.length} sem options, ${analysis.withoutDataSourceKey.length} sem dataSourceKey`;
 
 	return {
 		...context,

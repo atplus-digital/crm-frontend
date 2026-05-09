@@ -32,3 +32,18 @@ export interface SchemaLoadResult {
  * Coleção de schemas carregados indexados por collection name.
  */
 export type SchemaRegistry = Map<string, CollectionSchemaMapping>;
+
+/**
+ * Representa uma collection de relação que não foi encontrada nos schemas.
+ * Usado para reportar ao usuário quais collections ele precisa inserir
+ * para completar as relações referenciadas nos custom requests.
+ */
+export interface RelationCollectionNotFound {
+	[key: string]: string;
+	relationCollectionName: string;
+	relationFieldName: string;
+	dataSourceKey: string;
+	parentCollectionName: string;
+	requestKey: string;
+	requestName: string;
+}

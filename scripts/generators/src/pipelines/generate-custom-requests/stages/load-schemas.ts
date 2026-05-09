@@ -1,3 +1,4 @@
+import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
 import type {
 	CollectionSchemaMapping,
@@ -19,9 +20,10 @@ export interface CustomRequestsPipelineCtx {
 }
 
 export async function loadSchemasStage(
-	context: PipelineExecutionContext<ScriptConfig>,
-): Promise<PipelineExecutionContext<ScriptConfig>> {
-	context.task.output = "Carregando schemas de collections...";
+	context: PipelineExecutionContext<ScriptConfig, CustomRequestsPipelineCtx>,
+	task: TaskRunner,
+): Promise<PipelineExecutionContext<ScriptConfig, CustomRequestsPipelineCtx>> {
+	task.output = "Carregando schemas de collections...";
 
 	const loadResult = loadCollectionSchemas();
 	const registry = createRegistry(loadResult.mappings);
@@ -33,7 +35,7 @@ export async function loadSchemasStage(
 		schemasNotFound: [],
 	};
 
-	context.task.output = `${loadResult.mappings.length} schemas de collections carregados`;
+	task.output = `${loadResult.mappings.length} schemas de collections carregados`;
 
 	return {
 		...context,

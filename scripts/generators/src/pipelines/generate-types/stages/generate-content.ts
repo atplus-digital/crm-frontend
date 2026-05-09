@@ -1,3 +1,4 @@
+import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
 import type { CollectionTypesMap } from "../@types/generation";
 import type {
@@ -88,9 +89,15 @@ function generateCollectionFolderFiles(
  * 4. Stores the generated file map in pipelineContext.
  */
 export async function generateContentStage(
-	context: PipelineExecutionContext<DataSourceGenerationConfig>,
-): Promise<PipelineExecutionContext<DataSourceGenerationConfig>> {
-	const { task, runtimeConfig: dataSource } = context;
+	context: PipelineExecutionContext<
+		DataSourceGenerationConfig,
+		GenerateTypesPipelineCtx
+	>,
+	task: TaskRunner,
+): Promise<
+	PipelineExecutionContext<DataSourceGenerationConfig, GenerateTypesPipelineCtx>
+> {
+	const { runtimeConfig: dataSource } = context;
 	const pipelineCtx = context.pipelineContext as
 		| GenerateTypesPipelineCtx
 		| undefined;

@@ -1,5 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
+import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
 import type { DataSourceGenerationConfig } from "../@types/script";
 import type {
@@ -21,9 +22,15 @@ import type {
  * 5. Tracks write results (changed, skipped).
  */
 export async function writeFilesStage(
-	context: PipelineExecutionContext<DataSourceGenerationConfig>,
-): Promise<PipelineExecutionContext<DataSourceGenerationConfig>> {
-	const { task, runtimeConfig: dataSource, tempDir } = context;
+	context: PipelineExecutionContext<
+		DataSourceGenerationConfig,
+		GenerateTypesPipelineCtx
+	>,
+	task: TaskRunner,
+): Promise<
+	PipelineExecutionContext<DataSourceGenerationConfig, GenerateTypesPipelineCtx>
+> {
+	const { runtimeConfig: dataSource, tempDir } = context;
 	const pipelineCtx = context.pipelineContext as
 		| GenerateTypesPipelineCtx
 		| undefined;
@@ -44,7 +51,15 @@ export async function writeFilesStage(
 
 	const writeResults: GenerateFileWrite[] = [];
 
+	const totalFiles = pipelineCtx.fileContents.size;
+	let processed = 0;
+
 	for (const [relativePath, content] of pipelineCtx.fileContents.entries()) {
+		processed += 1;
+		if (processed === 1 || processed % 200 === 0 || processed === totalFiles) {
+			task.output = `💾 Escrevendo arquivos [${processed}/${totalFiles}] em '${path.relative(process.cwd(), outputDir)}'...`;
+		}
+
 		const fullPath = path.join(outputDir, relativePath);
 		const directoryPath = path.dirname(fullPath);
 

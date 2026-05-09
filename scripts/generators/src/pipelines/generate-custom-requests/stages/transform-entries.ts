@@ -1,6 +1,10 @@
+import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
 import { addJsonReport } from "@scripts/generators/src/lib/reports";
-import type { CollectionSchemaMapping } from "../@types/collection-schema";
+import type {
+	CollectionSchemaMapping,
+	RelationCollectionNotFound,
+} from "../@types/collection-schema";
 import type { CustomRequestApiEntry } from "../@types/custom-request-api";
 import type { GeneratedRegistryEntry } from "../@types/generated-registry";
 import type { RequestsMap, ScriptConfig } from "../@types/script-config";
@@ -28,6 +32,20 @@ const USER_PLACEHOLDERS = ["currentUser"] as const;
 const MAIN_DATASOURCE_KEY = "main";
 const MAIN_USER_COLLECTION = "users";
 
+// ── Relation field detection constants ──
+
+/**
+ * Padrão para detectar campos de relação no payload.
+ * Campos de relação começam com 'f_' seguido do nome da relação.
+ * Exemplos: f_pessoa, f_vendedor, f_cliente, f_empresa
+ */
+const RELATION_FIELD_PATTERN = /^f_[a-zA-Z][a-zA-Z0-9_]*$/;
+
+/**
+ * Prefixo que indica um campo de relação no NocoBase.
+ */
+const RELATION_PREFIX = "f_";
+
 // ── Payload data normalization ──
 
 function normalizePayloadData(
@@ -50,6 +68,52 @@ function normalizePayloadData(
 		}
 	}
 	return null;
+}
+
+// ── Relation field extraction ──
+
+/**
+ * Extrai todos os campos de relação detectados nos placeholders.
+ * Exemplo: {{currentRecord.f_pessoa.nome}} → extrai "f_pessoa"
+ */
+function extractRelationFieldsFromPlaceholderFields(
+	placeholderFields: Record<string, Set<string>>,
+): Set<string> {
+	const relationFields = new Set<string>();
+
+	for (const fields of Object.values(placeholderFields)) {
+		for (const field of fields) {
+			// Skip wildcards
+			if (field === "*" || field.startsWith("*")) continue;
+
+			// Check if this is a relation field (nested path like f_pessoa.nome)
+			const parts = field.split(".");
+			for (const part of parts) {
+				if (RELATION_FIELD_PATTERN.test(part)) {
+					relationFields.add(part);
+				}
+			}
+		}
+	}
+
+	return relationFields;
+}
+
+/**
+ * Infere o nome da collection alvo a partir do nome do campo de relação.
+ * Padrão NocoBase: f_<collection_name> → <collection_name>
+ * Exemplo: f_pessoa → pessoas, f_vendedor → vendedor, f_cliente → cliente
+ */
+function inferRelationTargetCollection(relationField: string): string {
+	// Remove prefixo 'f_'
+	if (relationField.startsWith(RELATION_PREFIX)) {
+		const rest = relationField.slice(RELATION_PREFIX.length);
+		// Converter para plural (padrão do NocoBase)
+		// Se já termina com 's', manter como está
+		// Caso contrário, adicionar 's'
+		return rest.endsWith("s") ? rest : `${rest}s`;
+	}
+	return relationField;
 }
 
 // ── Schema enrichment (ported from schema-enrichment.ts) ──
@@ -247,6 +311,42 @@ function inferPayloadSchemaWithCollections(
 	};
 }
 
+/**
+ * Valida campos de relação e retorna collections não encontradas.
+ */
+function validateRelationFields(
+	placeholderFields: Record<string, Set<string>>,
+	collectionName: string,
+	dataSourceKey: string,
+	requestKey: string,
+	requestName: string,
+	registry: import("../@types/collection-schema").SchemaRegistry,
+): RelationCollectionNotFound[] {
+	const relationFields =
+		extractRelationFieldsFromPlaceholderFields(placeholderFields);
+	const notFound: RelationCollectionNotFound[] = [];
+
+	for (const field of relationFields) {
+		const targetCollection = inferRelationTargetCollection(field);
+
+		// Verificar se a collection existe no registry
+		const schema = findSchema(registry, targetCollection, dataSourceKey);
+
+		if (!schema) {
+			notFound.push({
+				relationCollectionName: targetCollection,
+				relationFieldName: field,
+				dataSourceKey,
+				parentCollectionName: collectionName,
+				requestKey,
+				requestName,
+			});
+		}
+	}
+
+	return notFound;
+}
+
 // ── Entry transformer ──
 
 function deduplicateSchemasNotFound(
@@ -264,6 +364,24 @@ function deduplicateSchemasNotFound(
 	return result;
 }
 
+/**
+ * Remove duplicatas de collections de relação não encontradas.
+ */
+function deduplicateRelationCollectionsNotFound(
+	items: RelationCollectionNotFound[],
+): RelationCollectionNotFound[] {
+	const seen = new Set<string>();
+	const result: RelationCollectionNotFound[] = [];
+	for (const item of items) {
+		const key = `${item.dataSourceKey}:${item.relationCollectionName}`;
+		if (!seen.has(key)) {
+			seen.add(key);
+			result.push(item);
+		}
+	}
+	return result;
+}
+
 function transformApiEntryToRegistry(
 	entry: CustomRequestApiEntry,
 	warnings: string[],
@@ -271,16 +389,18 @@ function transformApiEntryToRegistry(
 ): {
 	entry: GeneratedRegistryEntry | null;
 	schemasNotFound: CollectionSchemaMapping[];
+	relationCollectionsNotFound: RelationCollectionNotFound[];
 } {
 	const schemasNotFound: CollectionSchemaMapping[] = [];
+	const relationCollectionsNotFound: RelationCollectionNotFound[] = [];
 
 	if (!entry.options) {
 		warnings.push(`Entrada "${entry.key}": sem options, pulando`);
-		return { entry: null, schemasNotFound };
+		return { entry: null, schemasNotFound, relationCollectionsNotFound };
 	}
 	if (!entry.options.collectionName) {
 		warnings.push(`Entrada "${entry.key}": sem collectionName, pulando`);
-		return { entry: null, schemasNotFound };
+		return { entry: null, schemasNotFound, relationCollectionsNotFound };
 	}
 	if (!entry.options.url) {
 		warnings.push(`Entrada "${entry.key}": sem url, usando string vazia`);
@@ -317,6 +437,20 @@ function transformApiEntryToRegistry(
 		payloadSchema = result.schemaString;
 		schemaUsed = result.schemaUsed;
 		schemasNotFound.push(...result.notFound);
+
+		// Validar campos de relação
+		if (payloadData) {
+			const placeholderFields = extractPlaceholderFields(payloadData);
+			const relationsNotFound = validateRelationFields(
+				placeholderFields,
+				entry.options.collectionName,
+				dataSourceKey,
+				entry.key,
+				name,
+				schemaRegistry,
+			);
+			relationCollectionsNotFound.push(...relationsNotFound);
+		}
 	} else {
 		payloadSchema = inferPayloadSchema(payloadData);
 	}
@@ -340,6 +474,7 @@ function transformApiEntryToRegistry(
 			payloadData,
 		},
 		schemasNotFound,
+		relationCollectionsNotFound,
 	};
 }
 
@@ -349,10 +484,12 @@ function transformAllEntries(
 ): {
 	transformed: GeneratedRegistryEntry[];
 	schemasNotFound: CollectionSchemaMapping[];
+	relationCollectionsNotFound: RelationCollectionNotFound[];
 	warnings: string[];
 } {
 	const transformed: GeneratedRegistryEntry[] = [];
 	const allSchemasNotFound: CollectionSchemaMapping[] = [];
+	const allRelationCollectionsNotFound: RelationCollectionNotFound[] = [];
 	const warnings: string[] = [];
 	let skipped = 0;
 
@@ -364,24 +501,42 @@ function transformAllEntries(
 			skipped++;
 		}
 		allSchemasNotFound.push(...result.schemasNotFound);
+		allRelationCollectionsNotFound.push(...result.relationCollectionsNotFound);
 	}
 
 	transformed.sort((a, b) => a.key.localeCompare(b.key));
-	const uniqueNotFound = deduplicateSchemasNotFound(allSchemasNotFound);
+	const uniqueSchemasNotFound = deduplicateSchemasNotFound(allSchemasNotFound);
+	const uniqueRelationCollectionsNotFound =
+		deduplicateRelationCollectionsNotFound(allRelationCollectionsNotFound);
 
 	warnings.push(
 		`Transformação: ${transformed.length} entradas, ${skipped} puladas`,
 	);
-	if (uniqueNotFound.length > 0) {
+	if (uniqueSchemasNotFound.length > 0) {
 		warnings.push(
-			`${uniqueNotFound.length} collections sem schema encontrado:`,
+			`${uniqueSchemasNotFound.length} collections sem schema encontrado:`,
 		);
-		for (const nf of uniqueNotFound) {
+		for (const nf of uniqueSchemasNotFound) {
 			warnings.push(`  - ${nf.collectionName} (${nf.dataSourceKey})`);
 		}
 	}
+	if (uniqueRelationCollectionsNotFound.length > 0) {
+		warnings.push(
+			`${uniqueRelationCollectionsNotFound.length} collections de relação não encontradas para inserir:`,
+		);
+		for (const nf of uniqueRelationCollectionsNotFound) {
+			warnings.push(
+				`  - ${nf.relationCollectionName} (via ${nf.relationFieldName} em ${nf.parentCollectionName}, request: ${nf.requestName})`,
+			);
+		}
+	}
 
-	return { transformed, schemasNotFound: uniqueNotFound, warnings };
+	return {
+		transformed,
+		schemasNotFound: uniqueSchemasNotFound,
+		relationCollectionsNotFound: uniqueRelationCollectionsNotFound,
+		warnings,
+	};
 }
 
 // ── Merge registries ──
@@ -424,9 +579,10 @@ function filterGeneratedEntriesByConfiguredRequests(
 // ── Stage ──
 
 export async function transformEntriesStage(
-	context: PipelineExecutionContext<ScriptConfig>,
-): Promise<PipelineExecutionContext<ScriptConfig>> {
-	context.task.output = "Transformando e mesclando entradas...";
+	context: PipelineExecutionContext<ScriptConfig, CustomRequestsPipelineCtx>,
+	task: TaskRunner,
+): Promise<PipelineExecutionContext<ScriptConfig, CustomRequestsPipelineCtx>> {
+	task.output = "Transformando e mesclando entradas...";
 
 	const pipelineCtx = (context.pipelineContext ??
 		{}) as CustomRequestsPipelineCtx;
@@ -437,6 +593,7 @@ export async function transformEntriesStage(
 	const {
 		transformed,
 		schemasNotFound,
+		relationCollectionsNotFound,
 		warnings: _transformWarnings,
 	} = transformAllEntries(entries, schemaRegistry);
 
@@ -481,10 +638,12 @@ export async function transformEntriesStage(
 		},
 		payload: {
 			totalMissing: allNotFound.length,
+			totalRelationCollectionsNotFound: relationCollectionsNotFound.length,
 			missingSchemas: allNotFound.map((item) => ({
 				collectionName: item.collectionName,
 				dataSourceKey: item.dataSourceKey,
 			})),
+			relationCollectionsNotFound: relationCollectionsNotFound,
 		},
 	});
 
@@ -496,8 +655,13 @@ export async function transformEntriesStage(
 	if (allNotFound.length > 0) {
 		summary.push(`${allNotFound.length} collections sem schema`);
 	}
+	if (relationCollectionsNotFound.length > 0) {
+		summary.push(
+			`${relationCollectionsNotFound.length} collections de relação para inserir`,
+		);
+	}
 
-	context.task.output = summary.join(" | ");
+	task.output = summary.join(" | ");
 
 	return {
 		...context,

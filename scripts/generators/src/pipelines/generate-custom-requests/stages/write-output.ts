@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
+import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import {
 	toDataSourceOutputFolder,
 	toSafePathSegment,
@@ -420,6 +421,7 @@ function writeAllSplitFiles(
 
 export async function writeOutputStage(
 	context: PipelineExecutionContext<ScriptConfig, CustomRequestsPipelineCtx>,
+	task: TaskRunner,
 ): Promise<PipelineExecutionContext<ScriptConfig, CustomRequestsPipelineCtx>> {
 	const pipelineCtx = (context.pipelineContext ??
 		{}) as CustomRequestsPipelineCtx;
@@ -428,20 +430,20 @@ export async function writeOutputStage(
 	const requests = context.runtimeConfig.requests;
 
 	if (mergedEntries.length === 0) {
-		context.task.output = "Nenhuma entrada válida para escrever. Pulando.";
+		task.output = "Nenhuma entrada válida para escrever. Pulando.";
 		return context;
 	}
 
 	// Write to tempDir so the lifecycle can validate and swap atomically
 	const outputDir = resolve(context.tempDir, context.runtimeConfig.outputDir);
 
-	context.task.output = "Escrevendo registry...";
+	task.output = "Escrevendo registry...";
 	writeGeneratedRegistry(mergedEntries, outputDir, requests, schemaMappings);
 
-	context.task.output = "Escrevendo split files...";
+	task.output = "Escrevendo split files...";
 	writeAllSplitFiles(mergedEntries, requests, outputDir, schemaMappings);
 
-	context.task.output = `${mergedEntries.length} entradas escritas em ${context.runtimeConfig.outputDir}`;
+	task.output = `${mergedEntries.length} entradas escritas em ${context.runtimeConfig.outputDir}`;
 
 	return context;
 }

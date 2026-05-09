@@ -1,3 +1,4 @@
+import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
 import { addJsonReport } from "@scripts/generators/src/lib/reports";
 import type { DataSourceGenerationConfig } from "../@types/script";
@@ -19,9 +20,15 @@ import type { GenerateTypesPipelineCtx } from "./fetch-schemas";
  * Does NOT write markdown — the pipeline lifecycle handles that.
  */
 export async function writeReportsStage(
-	context: PipelineExecutionContext<DataSourceGenerationConfig>,
-): Promise<PipelineExecutionContext<DataSourceGenerationConfig>> {
-	const { task, runtimeConfig: dataSource, reports } = context;
+	context: PipelineExecutionContext<
+		DataSourceGenerationConfig,
+		GenerateTypesPipelineCtx
+	>,
+	task: TaskRunner,
+): Promise<
+	PipelineExecutionContext<DataSourceGenerationConfig, GenerateTypesPipelineCtx>
+> {
+	const { runtimeConfig: dataSource, reports } = context;
 	const pipelineCtx = context.pipelineContext as
 		| GenerateTypesPipelineCtx
 		| undefined;

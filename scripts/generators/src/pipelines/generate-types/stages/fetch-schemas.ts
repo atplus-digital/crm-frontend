@@ -1,3 +1,4 @@
+import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
 import type { CollectionTypesMap, RelationInfo } from "../@types/generation";
 import type {
@@ -90,9 +91,15 @@ function extractRelationFromField(
  * 4. Stores the results in context.pipelineContext.
  */
 export async function fetchSchemas(
-	context: PipelineExecutionContext<DataSourceGenerationConfig>,
-): Promise<PipelineExecutionContext<DataSourceGenerationConfig>> {
-	const { task, runtimeConfig: dataSource } = context;
+	context: PipelineExecutionContext<
+		DataSourceGenerationConfig,
+		GenerateTypesPipelineCtx
+	>,
+	task: TaskRunner,
+): Promise<
+	PipelineExecutionContext<DataSourceGenerationConfig, GenerateTypesPipelineCtx>
+> {
+	const { runtimeConfig: dataSource } = context;
 	const pipelineCtx = context.pipelineContext as
 		| GenerateTypesPipelineCtx
 		| undefined;
@@ -164,7 +171,11 @@ export async function fetchSchemas(
 		unresolved: Array<{ field: string; target: string }>;
 	}> = [];
 
-	for (const collectionName of normalizedCollections) {
+	for (const [index, collectionName] of normalizedCollections.entries()) {
+		if (index % 25 === 0) {
+			task.output = `📦 [${index + 1}/${normalizedCollections.length}] Processando collection '${collectionName}'...`;
+		}
+
 		const apiCollection = collectionLookup.get(collectionName);
 		const fields = (apiCollection?.fields ?? []) as DataSourceField[];
 		const schemaAvailable = !!apiCollection;

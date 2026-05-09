@@ -1,11 +1,9 @@
-import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
 import type { PipelineReportsContext } from "@scripts/generators/src/lib/reports";
 
 export interface PipelineExecutionContext<
 	TRuntimeConfig,
 	TPipelineContext = unknown,
 > {
-	task: TaskRunner;
 	tempDir: string;
 	outputDirs: string[];
 	runtimeConfig: TRuntimeConfig;
