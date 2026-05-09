@@ -5,7 +5,7 @@ export const dataSourceConfigs = [
 		name: "nocobase",
 		type: "nocobase",
 		dataSource: "main",
-		// includeAllCollections: true,
+		includeAllCollections: true,
 		inferRelationsByName: false,
 		splitCollections: [
 			"users",
@@ -134,7 +134,7 @@ export const dataSourceConfigs = [
 		name: "ixc",
 		type: "nocobase",
 		dataSource: "d_db_ixcsoft",
-		// includeAllCollections: true,
+		includeAllCollections: true,
 		splitCollections: [
 			"cliente",
 			"cliente_contrato",
