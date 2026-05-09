@@ -1,19 +1,18 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import type { TaskRunner } from "@scripts/generators/src/lib/cli/types";
-import {
-	backupDir,
-	computeDiff,
-	removeDir,
-	runValidation,
-	swapTempToOutput,
-} from "@scripts/generators/src/lib/io/atomic-writer";
-import {
-	countReports,
-	createReportsContext,
-	renderReportsMarkdown,
-} from "@scripts/generators/src/lib/reports";
+import { applyWorkspaceLockIfNeeded } from "@scripts/generators/src/lib/io/locker";
+import { createReportsContext } from "@scripts/generators/src/lib/reports";
 import type { PipelineExecutionContext } from "./context";
+import type { LifecycleCtx, LifecycleTaskParams } from "./lifecycle-tasks";
+import {
+	backupCurrentOutput,
+	diffTempVsOutput,
+	handleNoChanges,
+	renderReportsSummary,
+	swapTempToOutputDirs,
+	validateGeneratedOutput,
+} from "./lifecycle-tasks";
 import { type AsyncPipelineStage, runPipelineStages } from "./runner";
 
 export interface StandardPipelineOptions<TRuntimeConfig, TPipelineContext> {
@@ -21,192 +20,115 @@ export interface StandardPipelineOptions<TRuntimeConfig, TPipelineContext> {
 	overrideConfig?: Partial<TRuntimeConfig>;
 	defaultConfig: TRuntimeConfig;
 	getOutputDirs: (config: TRuntimeConfig) => string[];
+	pipelineContext?: TPipelineContext;
 	stages: AsyncPipelineStage<
 		PipelineExecutionContext<TRuntimeConfig, TPipelineContext>
 	>[];
-	lockWorkspace: () => void;
-	unlockWorkspace: () => void;
 	reportsOutputPath?: string;
 	label?: string;
 }
 
-interface DiffSummary {
-	changedFiles: string[];
-	unchangedFiles: string[];
-	deletedFiles: string[];
-}
-
-export async function runStandardPipeline<TRuntimeConfig, TPipelineContext>(
+export function runStandardPipeline<TRuntimeConfig, TPipelineContext>(
 	options: StandardPipelineOptions<TRuntimeConfig, TPipelineContext>,
-): Promise<PipelineExecutionContext<TRuntimeConfig, TPipelineContext>> {
+): ReturnType<TaskRunner["newListr"]> {
 	const label = options.label ?? "pipeline";
 	const cwd = process.cwd();
 	const timestamp = Date.now();
 	const randomId = Math.random().toString(36).slice(2, 8);
 	const tempDir = path.join(cwd, ".temp", `${timestamp}-${randomId}`);
+
 	const runtimeConfig: TRuntimeConfig = options.overrideConfig
 		? { ...options.defaultConfig, ...options.overrideConfig }
 		: options.defaultConfig;
+
 	const outputDirs = options.getOutputDirs(runtimeConfig);
 
 	const context: PipelineExecutionContext<TRuntimeConfig, TPipelineContext> = {
-		task: options.task,
 		tempDir,
 		outputDirs,
 		runtimeConfig,
 		overrideConfig: options.overrideConfig,
 		reports: createReportsContext(),
+		pipelineContext: options.pipelineContext,
 	};
 
-	options.task.output = `🔧 Iniciando pipeline "${label}"`;
+	// Ensure temp dir exists
+	fs.mkdirSync(tempDir, { recursive: true });
 
-	options.lockWorkspace();
+	// Run all lifecycle phases as Listr2 subtasks for proper rendering
+	const taskParams: LifecycleTaskParams<TRuntimeConfig, TPipelineContext> = {
+		tempDir,
+		outputDirs,
+		context,
+		label,
+		reportsOutputPath: options.reportsOutputPath,
+		task: options.task,
+		cwd,
+		timestamp,
+		randomId,
+	};
 
-	try {
-		// Ensure temp dir exists
-		fs.mkdirSync(tempDir, { recursive: true });
-
-		// 1. Run pipeline stages
-		options.task.output = `▶ Executando ${options.stages.length} estágio(s)...`;
-		const finalContext = await runPipelineStages(context, options.stages);
-
-		// 2. Validate temp output
-		options.task.output = "🔍 Validando saída gerada...";
-		for (const outputDir of outputDirs) {
-			const tempOutputDir = path.join(tempDir, outputDir);
-			if (!fs.existsSync(tempOutputDir)) continue;
-
-			const isValid = await runValidation(tempOutputDir);
-			if (!isValid) {
-				removeDir(tempDir);
-				throw new Error(
-					`❌ Validação falhou para ${outputDir}. Alterações descartadas.`,
-				);
-			}
-		}
-
-		// 3. Diff temp vs output for each output dir
-		options.task.output = "📋 Comparando alterações...";
-		const diffs: DiffSummary[] = [];
-		let hasChanges = false;
-
-		for (const outputDir of outputDirs) {
-			const tempOutputDir = path.join(tempDir, outputDir);
-			const resolvedOutputDir = path.resolve(outputDir);
-
-			if (!fs.existsSync(tempOutputDir)) {
-				diffs.push({ changedFiles: [], unchangedFiles: [], deletedFiles: [] });
-				continue;
-			}
-
-			const diffResult = computeDiff(tempOutputDir, resolvedOutputDir);
-			diffs.push(diffResult);
-
-			if (
-				diffResult.changedFiles.length > 0 ||
-				diffResult.deletedFiles.length > 0
-			) {
-				hasChanges = true;
-			}
-		}
-
-		if (!hasChanges) {
-			// No changes — clean up temp and render reports
-			removeDir(tempDir);
-
-			const reportMd = renderReportsMarkdown(finalContext.reports, {
-				title: `Relatório — ${label}`,
-			});
-			if (options.reportsOutputPath) {
-				fs.mkdirSync(path.dirname(options.reportsOutputPath), {
-					recursive: true,
-				});
-				fs.writeFileSync(options.reportsOutputPath, reportMd, "utf-8");
-			}
-
-			const totalReports = countReports(finalContext.reports);
-			const totalUnchanged = diffs.reduce(
-				(sum, d) => sum + d.unchangedFiles.length,
-				0,
-			);
-
-			options.task.output = `ℹ Nenhuma alteração detectada em "${label}". ${totalUnchanged} arquivo(s) inalterado(s). ${totalReports} report(s) gerado(s).`;
-
-			return finalContext;
-		}
-
-		// 4. Backup current output directories
-		options.task.output = "💾 Realizando backup...";
-		const backupId = `${timestamp}-${randomId}`;
-		const backupRootDir = path.join(cwd, ".backup", backupId);
-		for (const outputDir of outputDirs) {
-			const resolvedOutputDir = path.resolve(outputDir);
-			const relativeOutputDir = path.relative(cwd, resolvedOutputDir);
-			const backupPath = path.join(backupRootDir, relativeOutputDir);
-			fs.mkdirSync(path.dirname(backupPath), { recursive: true });
-			backupDir(resolvedOutputDir, backupPath);
-		}
-
-		// 5. Swap temp → output for each output dir
-		options.task.output = "🔄 Aplicando alterações...";
-		for (const outputDir of outputDirs) {
-			const tempOutputDir = path.join(tempDir, outputDir);
-			const resolvedOutputDir = path.resolve(outputDir);
-
-			if (!fs.existsSync(tempOutputDir)) continue;
-			swapTempToOutput(tempOutputDir, resolvedOutputDir);
-		}
-
-		// Remove temp root (subdirs already moved)
-		removeDir(tempDir);
-
-		// 6. Render reports
-		const reportMd = renderReportsMarkdown(finalContext.reports, {
-			title: `Relatório — ${label}`,
-		});
-		if (options.reportsOutputPath) {
-			fs.mkdirSync(path.dirname(options.reportsOutputPath), {
-				recursive: true,
-			});
-			fs.writeFileSync(options.reportsOutputPath, reportMd, "utf-8");
-		}
-
-		// 7. Summary
-		const totalChanged = diffs.reduce(
-			(sum, d) => sum + d.changedFiles.length,
-			0,
-		);
-		const totalDeleted = diffs.reduce(
-			(sum, d) => sum + d.deletedFiles.length,
-			0,
-		);
-		const totalUnchanged = diffs.reduce(
-			(sum, d) => sum + d.unchangedFiles.length,
-			0,
-		);
-		const totalReports = countReports(finalContext.reports);
-
-		const summaryParts: string[] = [`✓ Pipeline "${label}" concluído`];
-		if (totalChanged > 0)
-			summaryParts.push(`${totalChanged} arquivo(s) alterado(s)`);
-		if (totalDeleted > 0)
-			summaryParts.push(`${totalDeleted} arquivo(s) removido(s)`);
-		if (totalUnchanged > 0)
-			summaryParts.push(`${totalUnchanged} arquivo(s) inalterado(s)`);
-		summaryParts.push(`${totalReports} report(s) gerado(s)`);
-
-		options.task.output = summaryParts.join(" | ");
-
-		return finalContext;
-	} catch (error) {
-		// Clean up temp on any error
-		removeDir(tempDir);
-		console.error(
-			`❌ Pipeline "${label}" falhou:`,
-			error instanceof Error ? error.message : String(error),
-		);
-		throw error;
-	} finally {
-		options.unlockWorkspace();
-	}
+	return options.task.newListr(
+		[
+			// 0. Lock generated output folders in workspace editor settings
+			{
+				title: "Bloqueando workspace para saídas geradas",
+				task: async (): Promise<void> => {
+					applyWorkspaceLockIfNeeded(outputDirs, true);
+				},
+			},
+			// 1. Run pipeline stages (each becomes a nested subtask)
+			{
+				title: `Executando ${options.stages.length} estágio(s)`,
+				task: (_, subTask) =>
+					runPipelineStages(context, options.stages, subTask),
+			},
+			// 2. Validate generated output
+			{
+				title: "Validando saída gerada",
+				task: async (): Promise<void> => validateGeneratedOutput(taskParams),
+			},
+			// 3. Diff temp vs output
+			{
+				title: "Comparando alterações",
+				task: async (ctx: LifecycleCtx): Promise<void> =>
+					diffTempVsOutput(ctx, taskParams),
+			},
+			// 4. No changes → cleanup and render reports
+			{
+				title: "Sem alterações",
+				skip: (ctx: LifecycleCtx): string | boolean =>
+					ctx.hasChanges ? "Alterações detectadas" : false,
+				task: async (ctx: LifecycleCtx): Promise<void> =>
+					handleNoChanges(ctx, taskParams),
+			},
+			// 5. Backup current output (only when changes exist)
+			{
+				title: "Realizando backup",
+				skip: (ctx: LifecycleCtx): string | boolean =>
+					!ctx.hasChanges ? "Sem alterações" : false,
+				task: async (): Promise<void> => backupCurrentOutput(taskParams),
+			},
+			// 6. Swap temp → output (only when changes exist)
+			{
+				title: "Aplicando alterações",
+				skip: (ctx: LifecycleCtx): string | boolean =>
+					!ctx.hasChanges ? "Sem alterações" : false,
+				task: async (): Promise<void> => swapTempToOutputDirs(taskParams),
+			},
+			// 7. Render reports + summary (only when changes exist)
+			{
+				title: "Gerando relatórios",
+				skip: (ctx: LifecycleCtx): string | boolean =>
+					!ctx.hasChanges ? "Sem alterações" : false,
+				task: async (ctx: LifecycleCtx): Promise<void> =>
+					renderReportsSummary(ctx, taskParams),
+			},
+		],
+		{
+			concurrent: false,
+			exitOnError: true,
+			ctx: { hasChanges: false } satisfies LifecycleCtx,
+		},
+	) as ReturnType<TaskRunner["newListr"]>;
 }

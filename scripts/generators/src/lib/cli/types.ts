@@ -1,5 +1,5 @@
 import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
-import type { ListrTaskWrapper } from "listr2";
+import type { ListrTaskResult, ListrTaskWrapper } from "listr2";
 
 // ──────────────────────────────────────────────
 // Shared types
@@ -26,8 +26,11 @@ export type TaskRunner = ListrTaskWrapper<any, any, any>;
 export interface GeneratorDefinition<TRuntimeConfig = unknown> {
 	name: string;
 	description: string;
-	createPipelineOptions: (config: TRuntimeConfig) => StandardPipelineInput;
-	defaultConfig: TRuntimeConfig;
+	createPipelineOptions: (
+		config: TRuntimeConfig,
+		task: TaskRunner,
+	) => StandardPipelineFactoryInput<TRuntimeConfig>;
+	defaultConfig?: TRuntimeConfig;
 	getOutputDirs: (config: TRuntimeConfig) => string[];
 }
 
@@ -46,13 +49,17 @@ export interface StandardPipelineInput<
 	stages: Array<
 		(
 			context: PipelineExecutionContext<TRuntimeConfig, TPipelineContext>,
+			task: TaskRunner,
 		) => Promise<PipelineExecutionContext<TRuntimeConfig, TPipelineContext>>
 	>;
-	lockWorkspace: () => void;
-	unlockWorkspace: () => void;
 	reportsOutputPath?: string;
 	label?: string;
 }
+
+export type StandardPipelineFactoryInput<
+	TRuntimeConfig = unknown,
+	TPipelineContext = unknown,
+> = Omit<StandardPipelineInput<TRuntimeConfig, TPipelineContext>, "task">;
 
 /**
  * Generator runtime config for the orchestrator — credentials and HTTP settings.
@@ -69,7 +76,12 @@ export interface GeneratorRuntimeConfig {
 
 export type OrchestrationTaskRunner = TaskRunner;
 
-export type OrchestrationTaskResult = undefined | undefined;
+export type NestedTaskList = ReturnType<OrchestrationTaskRunner["newListr"]>;
+
+export type OrchestrationTaskResult =
+	| void
+	| NestedTaskList
+	| ListrTaskResult<unknown>;
 
 /**
  * A single orchestration stage — runs a step in the generator pipeline.
@@ -79,7 +91,7 @@ export interface GeneratorOrchestrationStage<TExecutionContext> {
 	title: string;
 	run: (
 		context: TExecutionContext,
-		task?: OrchestrationTaskRunner,
+		task: OrchestrationTaskRunner,
 	) => OrchestrationTaskResult;
 }
 

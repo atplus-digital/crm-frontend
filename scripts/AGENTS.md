@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-30 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-09 -->
 
 # AGENTS.md — scripts/
 
@@ -35,14 +35,14 @@ scripts/
 
 ## Where to Look
 
-| Task                                   | Location                                             | Notes                                                                 |
-| -------------------------------------- | ---------------------------------------------------- | --------------------------------------------------------------------- |
-| Add a new NocoBase/IXC collection type | `generators/src/pipelines/generate-types/`           | Add to `datasources.config.ts`, then run `pnpm generate-types`        |
-| Add a new custom request               | `generators/src/pipelines/generate-custom-requests/` | Add to `requests.config.ts`, then run `pnpm generate-custom-requests` |
-| Fix generation pipeline bugs           | `generators/src/pipelines/<pipeline>/`               | Follow the stage-by-stage pipeline pattern                            |
-| Add shared utility                     | `generators/src/lib/`                                | No barrel `index.ts` — direct imports only                            |
-| Fix incremental type checking          | `code-check/typecheck-staged.ts`                     | Standalone, no dependency on generators                               |
-| Modify generator CLI framework         | `generators/src/lib/generator-cli/`                  | Listr2-based runner, shared by both pipelines                         |
+| Task                                   | Location                                             | Notes                                                          |
+| -------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------- |
+| Add a new NocoBase/IXC collection type | `generators/src/pipelines/generate-types/`           | Add to `datasources.config.ts`, then run `pnpm generate:types` |
+| Add a new custom request               | `generators/src/pipelines/generate-custom-requests/` | Add to `requests.config.ts`, then run `pnpm generate:requests` |
+| Fix generation pipeline bugs           | `generators/src/pipelines/<pipeline>/`               | Follow the stage-by-stage pipeline pattern                     |
+| Add shared utility                     | `generators/src/lib/`                                | No barrel `index.ts` — direct imports only                     |
+| Fix incremental type checking          | `code-check/typecheck-staged.ts`                     | Standalone, no dependency on generators                        |
+| Modify generator CLI framework         | `generators/src/lib/generator-cli/`                  | Listr2-based runner, shared by both pipelines                  |
 
 <!-- AGENTS-GENERATED:END where-to-look -->
 
@@ -51,8 +51,9 @@ scripts/
 ## Commands
 
 ```bash
-pnpm generate-types              # Generate TypeScript types from NocoBase + IXC schemas
-pnpm generate-custom-requests    # Generate custom request registry from NocoBase API
+pnpm generate                    # Run all generators (types + custom requests)
+pnpm generate:types              # Generate TypeScript types from NocoBase + IXC schemas
+pnpm generate:requests           # Generate custom request registry from NocoBase API
 pnpm test scripts/generate-types # Run type generation tests
 pnpm test scripts/generate-custom-requests  # Run custom request tests
 ```

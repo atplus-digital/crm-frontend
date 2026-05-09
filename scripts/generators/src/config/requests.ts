@@ -10,18 +10,4 @@ export const requestsConfig: Partial<ScriptConfig> = {
 		"37yaihkravc": "abrir-renegociacao",
 		"78d5kny2gwn": "desbloqueio-confianca",
 	},
-	// manualRequests: [
-	// 	{
-	// 		key: "n8nCompras",
-	// 		name: "N8N Compras",
-	// 		collection: "compras",
-	// 		method: "POST",
-	// 		url: "customRequests:send/n8nCompras",
-	// 		payloadSchema: `z.object({
-	// 			id_pedido: z.number(),
-	// 			id_fornecedor: z.number(),
-	// 			valor: z.number(),
-	// 		})`,
-	// 	},
-	// ],
 };

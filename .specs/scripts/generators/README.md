@@ -84,8 +84,8 @@ scripts/generators/
             └── linter-runner.ts    # Unchanged
     └── pipelines/
         ├── generate-types/
-        │   ├── index.ts            # executeEntry(import.meta.url, createGenerateTypesTasks())
-        │   ├── pipeline.ts         # createGenerateTypesTasks(), runDatasourcePipeline()
+        │   ├── index.ts            # executeEntry(import.meta.url, createGenerateTypesPipeline())
+        │   ├── pipeline.ts         # createGenerateTypesPipeline(), runDatasourcePipeline()
         │   ├── @types/             # Type defs (NO script-adapters.ts)
         │   ├── utils/naming.ts     # Unchanged logic
         │   ├── content/            # 10 files — logic unchanged, updated imports
@@ -95,8 +95,8 @@ scripts/generators/
         │       ├── generate-content.ts
         │       └── write-files.ts
         └── generate-custom-requests/
-            ├── index.ts            # executeEntry(import.meta.url, createCustomRequestsTasks())
-            ├── pipeline.ts         # createCustomRequestsTasks()
+            ├── index.ts            # executeEntry(import.meta.url, createCustomRequestsPipeline())
+            ├── pipeline.ts         # createCustomRequestsPipeline()
             ├── @types/             # Unchanged
             ├── utils/              # schema-loader, schema-inference, NO workspace-locker
             ├── api/client.ts       # Unchanged
@@ -245,7 +245,7 @@ export class NocoBaseDataSourceClient {
 
 ```typescript
 import { executeEntry } from "@scripts/generators/src/lib/cli/runner";
-export default executeEntry(import.meta.url, createGenerateTypesTasks);
+export default executeEntry(import.meta.url, createGenerateTypesPipeline);
 ```
 
 ## Testing Strategy

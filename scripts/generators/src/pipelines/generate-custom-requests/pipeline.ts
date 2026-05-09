@@ -1,9 +1,8 @@
-import * as path from "node:path";
-import type { RunGeneratorCliOptions } from "../../lib/cli/runner";
+import { join } from "node:path";
 import type { OrchestrationTaskRunner } from "../../lib/cli/types";
-import { lockWorkspace } from "../../lib/io/locker";
 import type { PipelineExecutionContext } from "../../lib/pipeline/context";
 import { runStandardPipeline } from "../../lib/pipeline/lifecycle";
+import type { RunGeneratorCliOptions } from "../../lib/pipeline/orchestrator";
 import type { AsyncPipelineStage } from "../../lib/pipeline/runner";
 import type { ScriptConfig } from "./@types/script-config";
 import { fetchEntriesStage } from "./stages/fetch-entries";
@@ -31,25 +30,32 @@ const REPORTS_OUTPUT = "scripts/generators/reports/custom-requests-report.md";
  *   5. write-output    — write registry + split files to tempDir
  *   6. write-reports   — populate context.reports with analysis
  *
- * @returns CLI generator options consumable by runGeneratorCli()
+ * @returns CLI generator options consumable by createScriptTasks()
  */
-export function createCustomRequestsTasks(): RunGeneratorCliOptions<object> {
+export function createCustomRequestsPipeline(): RunGeneratorCliOptions<object> {
+	const writeOutputToTempStage: Stage = async function writeOutputToTempStage(
+		ctx,
+		task,
+	): Promise<Ctx> {
+		const tempOutputDir = join(ctx.tempDir, OUTPUT_DIR);
+		const patched: Ctx = {
+			...ctx,
+			runtimeConfig: {
+				...ctx.runtimeConfig,
+				outputDir: tempOutputDir,
+			},
+		};
+
+		return writeOutputStage(patched, task);
+	};
+
 	return {
 		name: "generate-custom-requests",
 		stages: [
 			{
 				title: "📦 Custom Requests",
-				run: async (
-					_ctx: object,
-					task?: OrchestrationTaskRunner,
-				): Promise<void> => {
-					if (!task) {
-						throw new Error(
-							"generate-custom-requests: task wrapper não fornecido pelo Listr2",
-						);
-					}
-
-					await runStandardPipeline<ScriptConfig, CustomRequestsPipelineCtx>({
+				run: (_ctx: object, task: OrchestrationTaskRunner) =>
+					runStandardPipeline<ScriptConfig, CustomRequestsPipelineCtx>({
 						task,
 						defaultConfig: {
 							baseUrl: "",
@@ -67,29 +73,15 @@ export function createCustomRequestsTasks(): RunGeneratorCliOptions<object> {
 						getOutputDirs: () => [OUTPUT_DIR],
 						label: "generate-custom-requests",
 						stages: [
-							loadConfigStage as Stage,
-							fetchEntriesStage as Stage,
-							loadSchemasStage as Stage,
-							transformEntriesStage as Stage,
-							// Write to tempDir so lifecycle validates + swaps atomically
-							async (ctx: Ctx): Promise<Ctx> => {
-								const tempOutputDir = path.join(ctx.tempDir, OUTPUT_DIR);
-								const patched = {
-									...ctx,
-									runtimeConfig: {
-										...ctx.runtimeConfig,
-										outputDir: tempOutputDir,
-									},
-								};
-								return await writeOutputStage(patched);
-							},
-							writeReportsStage as Stage,
+							loadConfigStage,
+							fetchEntriesStage,
+							loadSchemasStage,
+							transformEntriesStage,
+							writeOutputToTempStage,
+							writeReportsStage,
 						],
-						lockWorkspace: () => lockWorkspace([OUTPUT_DIR]),
-						unlockWorkspace: () => {},
 						reportsOutputPath: REPORTS_OUTPUT,
-					});
-				},
+					}),
 			},
 		],
 		context: {},

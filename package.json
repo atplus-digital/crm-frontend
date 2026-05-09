@@ -16,12 +16,12 @@
 		"knip": "knip",
 		"knip:silent": "knip --exclude dependencies --no-config-hints",
 		"lint:fix": "pnpm biome:fix && pnpm format:md",
-		"lint-staged": "lint-staged",
 		"typecheck": "tsc --noEmit",
-		"analyze-bundle": "pnpx vite-bundle-analyzer",
-		"generate-types": "tsx scripts/generators/src/pipelines/generate-types/index.ts",
-		"generate-custom-requests": "tsx scripts/generators/src/pipelines/generate-custom-requests/index.ts",
-		"generate-all": "tsx scripts/generators/src/index.ts"
+		"lint-staged": "lint-staged",
+		"generate": "tsx scripts/generators/src/index.ts",
+		"generate:types": "pnpm generate --types",
+		"generate:requests": "pnpm generate --requests",
+		"analyze-bundle": "pnpx vite-bundle-analyzer"
 	},
 	"dependencies": {
 		"@fontsource-variable/geist": "^5.2.8",

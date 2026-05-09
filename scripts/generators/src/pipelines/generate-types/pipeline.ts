@@ -1,11 +1,12 @@
 import * as path from "node:path";
-import type { RunGeneratorCliOptions } from "@scripts/generators/src/lib/cli/runner";
 import type { OrchestrationTaskRunner } from "@scripts/generators/src/lib/cli/types";
 import { NocoBaseApiClient } from "@scripts/generators/src/lib/http/nocobase-client";
-import { lockWorkspace } from "@scripts/generators/src/lib/io/locker";
 import { toDataSourceOutputFolder } from "@scripts/generators/src/lib/path-utils";
 import type { PipelineExecutionContext } from "@scripts/generators/src/lib/pipeline/context";
 import { runStandardPipeline } from "@scripts/generators/src/lib/pipeline/lifecycle";
+import type { RunGeneratorCliOptions } from "@scripts/generators/src/lib/pipeline/orchestrator";
+import type { AsyncPipelineStage } from "@scripts/generators/src/lib/pipeline/runner";
+import type { ListrTaskResult } from "listr2";
 import { dataSourceConfigs } from "../../config/datasources";
 import { resolveNocoBaseEnv } from "../../config/env";
 import type {
@@ -73,71 +74,136 @@ function createDataSourceClient(credentials: {
 // Pipeline definition
 // ──────────────────────────────────────────────
 
+type TypesCtx = PipelineExecutionContext<
+	DataSourceGenerationConfig,
+	GenerateTypesPipelineCtx
+>;
+
+type TypesStage = AsyncPipelineStage<TypesCtx>;
+
+type GenerateTypesBootstrapCtx = Pick<
+	GenerateTypesPipelineCtx,
+	"client" | "dataSource"
+>;
+
+type DataSourceTaskCtx = {
+	client?: DataSourceClient;
+	outputDirRelative?: string;
+	pipelineContext?: GenerateTypesBootstrapCtx;
+};
+
 /**
  * Creates a Listr2 task tree for the generate-types pipeline.
  */
-export function createGenerateTypesTasks(): RunGeneratorCliOptions<object> {
+export function createGenerateTypesPipeline(): RunGeneratorCliOptions<object> {
 	const stages = dataSourceConfigs.map((dataSource) => ({
 		title: `📦 ${dataSource.name}`,
-		run: async (
+		run: (
 			_ctx: object,
 			task?: OrchestrationTaskRunner,
-		): Promise<void> => {
+		): ListrTaskResult<unknown> => {
 			if (!task) {
 				throw new Error(
 					"generate-types: task wrapper não fornecido pelo Listr2",
 				);
 			}
 
-			const env = resolveNocoBaseEnv();
+			return task.newListr<DataSourceTaskCtx>(
+				[
+					{
+						title: "Resolver cliente da datasource",
+						task: (ctx): void => {
+							const env = resolveNocoBaseEnv();
 
-			const client = createDataSourceClient({
-				baseUrl: env.baseUrl,
-				token: env.token,
-				timeoutMs: env.timeoutMs,
-			});
-
-			const outputFolder = toDataSourceOutputFolder(dataSource.dataSource);
-			const outputDirRelative = `src/generated/types/${outputFolder}/`;
-
-			await runStandardPipeline({
-				task,
-				defaultConfig: dataSource,
-				overrideConfig: {
-					outputDir: outputDirRelative,
-				},
-				getOutputDirs: () => [outputDirRelative],
-				label: `generate-types:${dataSource.name}`,
-				stages: [
-					async (
-						ctx: PipelineExecutionContext<DataSourceGenerationConfig>,
-					) => ({
-						...ctx,
-						pipelineContext: {
-							client,
-							dataSource,
-						} as GenerateTypesPipelineCtx,
-					}),
-					fetchSchemas,
-					buildTypes,
-					generateContentStage,
-					async (ctx: PipelineExecutionContext<DataSourceGenerationConfig>) => {
-						const tempOutputDir = path.join(ctx.tempDir, outputDirRelative);
-						const patchedConfig = {
-							...ctx.runtimeConfig,
-							outputDir: tempOutputDir,
-						};
-						return writeFilesStage({
-							...ctx,
-							runtimeConfig: patchedConfig,
-						});
+							ctx.client = createDataSourceClient({
+								baseUrl: env.baseUrl,
+								token: env.token,
+								timeoutMs: env.timeoutMs,
+							});
+						},
 					},
-					writeReportsStage,
+					{
+						title: "Preparar contexto da pipeline",
+						task: (ctx): void => {
+							if (!ctx.client) {
+								throw new Error("generate-types: cliente não inicializado");
+							}
+
+							const outputFolder = toDataSourceOutputFolder(
+								dataSource.dataSource,
+							);
+							ctx.outputDirRelative = `src/generated/types/${outputFolder}/`;
+							ctx.pipelineContext = {
+								client: ctx.client,
+								dataSource,
+							};
+						},
+					},
+					{
+						title: "Executar pipeline",
+						task: (ctx, task) => {
+							if (!ctx.outputDirRelative) {
+								throw new Error("generate-types: outputDir não inicializado");
+							}
+
+							if (!ctx.pipelineContext) {
+								throw new Error(
+									"generate-types: pipelineContext não inicializado",
+								);
+							}
+
+							const outputDirRelative = ctx.outputDirRelative;
+							const pipelineContext = ctx.pipelineContext;
+
+							const writeFilesToTempStage: TypesStage =
+								async function writeFilesToTempStage(stageCtx, task) {
+									const tempOutputDir = path.join(
+										stageCtx.tempDir,
+										outputDirRelative,
+									);
+									const patchedConfig = {
+										...stageCtx.runtimeConfig,
+										outputDir: tempOutputDir,
+									};
+
+									return writeFilesStage(
+										{
+											...stageCtx,
+											runtimeConfig: patchedConfig,
+										},
+										task,
+									);
+								};
+
+							return runStandardPipeline<
+								DataSourceGenerationConfig,
+								GenerateTypesPipelineCtx
+							>({
+								task,
+								defaultConfig: dataSource,
+								overrideConfig: {
+									outputDir: outputDirRelative,
+								},
+								pipelineContext: pipelineContext as GenerateTypesPipelineCtx,
+								getOutputDirs: () => [outputDirRelative],
+								label: `generate-types:${dataSource.name}`,
+								stages: [
+									fetchSchemas,
+									buildTypes,
+									generateContentStage,
+									writeFilesToTempStage,
+									writeReportsStage,
+								],
+								reportsOutputPath: `${REPORTS_DIR}/${dataSource.name}-report.md`,
+							}) as ListrTaskResult<DataSourceTaskCtx>;
+						},
+					},
 				],
-				lockWorkspace: () => lockWorkspace([outputDirRelative]),
-				unlockWorkspace: () => {},
-				reportsOutputPath: `${REPORTS_DIR}/${dataSource.name}-report.md`,
-			});
+				{
+					concurrent: false,
+					ctx: {},
+				},
+			);
 		},
 	}));
 

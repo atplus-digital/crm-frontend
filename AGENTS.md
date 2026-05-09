@@ -1,6 +1,6 @@
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-05-07 | Last verified: 2026-05-07 -->
+<!-- Last updated: 2026-05-09 | Last verified: 2026-05-09 -->
 
 # AGENTS.md — CRM AT+
 
@@ -20,9 +20,10 @@
 | Test                     | `pnpm test`                                 | ~30s  |
 | Build                    | `pnpm build`                                | ~30s  |
 | Preview build            | `pnpm preview`                              | —     |
-| Generate types           | `pnpm generate-types`                       | ~10s  |
+| Generate all             | `pnpm generate`                             | ~15s  |
+| Generate types           | `pnpm generate:types`                       | ~10s  |
+| Generate custom requests | `pnpm generate:requests`                    | ~15s  |
 | Check unused code        | `pnpm knip`                                 | ~10s  |
-| Generate custom requests | `pnpm generate-custom-requests`             | ~15s  |
 
 <!-- AGENTS-GENERATED:END commands -->
 
