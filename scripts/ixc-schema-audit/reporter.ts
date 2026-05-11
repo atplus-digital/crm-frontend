@@ -4,7 +4,12 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import type { CollectionDiff, DiffItem, ScalarType, EnumOption } from "./config";
+import type {
+	CollectionDiff,
+	DiffItem,
+	EnumOption,
+	ScalarType,
+} from "./config";
 import { CONFIG } from "./config";
 
 interface RelationInfo {
@@ -40,9 +45,7 @@ function formatEnumDiff(diff: DiffItem<EnumOption[]>): string[] {
 
 	switch (diff.side) {
 		case "match":
-			lines.push(
-				`| \`${diff.fieldName}\` | — | — | ✅ OK |`,
-			);
+			lines.push(`| \`${diff.fieldName}\` | — | — | ✅ OK |`);
 			if (diff.ixcValue) {
 				lines.push(
 					`| | ${formatEnumOptions(diff.ixcValue)} | ${formatEnumOptions(diff.ixcValue)} | |`,
@@ -54,9 +57,7 @@ function formatEnumDiff(diff: DiffItem<EnumOption[]>): string[] {
 				`| \`${diff.fieldName}\` | — | — | ❌ Enum ausente no NocoBase |`,
 			);
 			if (diff.ixcValue) {
-				lines.push(
-					`| | ${formatEnumOptions(diff.ixcValue)} | — | |`,
-				);
+				lines.push(`| | ${formatEnumOptions(diff.ixcValue)} | — | |`);
 			}
 			break;
 		case "nocobase_only":
@@ -64,9 +65,7 @@ function formatEnumDiff(diff: DiffItem<EnumOption[]>): string[] {
 				`| \`${diff.fieldName}\` | — | — | ⚠️ Enum extra no NocoBase |`,
 			);
 			if (diff.nocobaseValue) {
-				lines.push(
-					`| | — | ${formatEnumOptions(diff.nocobaseValue)} | |`,
-				);
+				lines.push(`| | — | ${formatEnumOptions(diff.nocobaseValue)} | |`);
 			}
 			break;
 		case "both_different":
@@ -123,7 +122,10 @@ function formatRelationDiff(diff: DiffItem<RelationInfo>): string {
 	}
 }
 
-function generateCollectionReport(diff: CollectionDiff, verbose: boolean): string {
+function generateCollectionReport(
+	diff: CollectionDiff,
+	verbose: boolean,
+): string {
 	const lines: string[] = [];
 
 	lines.push(`# ${diff.collectionName}`);
@@ -187,9 +189,16 @@ function generateCollectionReport(diff: CollectionDiff, verbose: boolean): strin
 			lines.push("|-------|------------|-----------------|");
 
 			for (const name of [...allFieldNames].sort()) {
-				const inIxc = diff.metadata.ixcRawFieldNames.includes(name) ? "✅" : "❌";
-				const inNb = diff.metadata.nocobaseRawFieldNames.includes(name) ? "✅" : "❌";
-				const status = inIxc === "✅" && inNb === "✅" ? "`" + name + "`" : `**\`${name}\`**`;
+				const inIxc = diff.metadata.ixcRawFieldNames.includes(name)
+					? "✅"
+					: "❌";
+				const inNb = diff.metadata.nocobaseRawFieldNames.includes(name)
+					? "✅"
+					: "❌";
+				const status =
+					inIxc === "✅" && inNb === "✅"
+						? "`" + name + "`"
+						: `**\`${name}\`**`;
 				lines.push(`| ${status} | ${inIxc} | ${inNb} |`);
 			}
 			lines.push("");
@@ -284,9 +293,7 @@ function generateCollectionReport(diff: CollectionDiff, verbose: boolean): strin
 			lines.push("| Campo | Target IXC | Target NocoBase | Status |");
 			lines.push("|-------|------------|-----------------|--------|");
 			for (const d of relMatches) {
-				lines.push(
-					formatRelationDiff(d as unknown as DiffItem<RelationInfo>),
-				);
+				lines.push(formatRelationDiff(d as unknown as DiffItem<RelationInfo>));
 			}
 			lines.push("");
 		} else {
@@ -303,9 +310,7 @@ function generateCollectionReport(diff: CollectionDiff, verbose: boolean): strin
 		lines.push("| Campo | Target IXC | Target NocoBase | Status |");
 		lines.push("|-------|------------|-----------------|--------|");
 		for (const d of relDiffs) {
-			lines.push(
-				formatRelationDiff(d as unknown as DiffItem<RelationInfo>),
-			);
+			lines.push(formatRelationDiff(d as unknown as DiffItem<RelationInfo>));
 		}
 	}
 	lines.push("");
@@ -365,7 +370,10 @@ function generateIndexReport(allDiffs: CollectionDiff[]): string {
 	return lines.join("\n");
 }
 
-export function writeReports(allDiffs: CollectionDiff[], verbose: boolean = false): string[] {
+export function writeReports(
+	allDiffs: CollectionDiff[],
+	verbose: boolean = false,
+): string[] {
 	ensureOutputDir();
 	const writtenPaths: string[] = [];
 
@@ -376,10 +384,7 @@ export function writeReports(allDiffs: CollectionDiff[], verbose: boolean = fals
 
 	for (const diff of allDiffs) {
 		const content = generateCollectionReport(diff, verbose);
-		const filePath = path.join(
-			CONFIG.OUTPUT_DIR,
-			`${diff.collectionName}.md`,
-		);
+		const filePath = path.join(CONFIG.OUTPUT_DIR, `${diff.collectionName}.md`);
 		fs.writeFileSync(filePath, content, "utf-8");
 		writtenPaths.push(filePath);
 	}

@@ -8,11 +8,11 @@
  */
 
 import type {
-	CollectionSchema,
 	CollectionDiff,
+	CollectionSchema,
 	DiffItem,
-	ScalarType,
 	EnumOption,
+	ScalarType,
 } from "./config";
 
 interface RelationInfo {
@@ -65,7 +65,8 @@ function compareScalars(
 				ixcValue: ixcType,
 			});
 		} else {
-			const nbEntry = nbNorm.get(normKey)!;
+			const nbEntry = nbNorm.get(normKey);
+			if (!nbEntry) continue;
 			const nbType = nbEntry.value;
 			if (ixcType !== nbType) {
 				diffs.push({
@@ -133,7 +134,8 @@ function compareEnums(
 				ixcValue: ixcOpts,
 			});
 		} else {
-			const nbEntry = nbNorm.get(normKey)!;
+			const nbEntry = nbNorm.get(normKey);
+			if (!nbEntry) continue;
 			const nbOpts = nbEntry.value;
 			if (!enumOptionsEqual(ixcOpts, nbOpts)) {
 				diffs.push({
@@ -171,9 +173,7 @@ function compareEnums(
 
 function relationsEqual(a: RelationInfo, b: RelationInfo): boolean {
 	// Normalize target names for comparison (case-insensitive)
-	return (
-		a.target.toLowerCase() === b.target.toLowerCase() && a.type === b.type
-	);
+	return a.target.toLowerCase() === b.target.toLowerCase() && a.type === b.type;
 }
 
 function compareRelations(
@@ -195,7 +195,8 @@ function compareRelations(
 				ixcValue: ixcRel,
 			});
 		} else {
-			const nbEntry = nbNorm.get(normKey)!;
+			const nbEntry = nbNorm.get(normKey);
+			if (!nbEntry) continue;
 			const nbRel = nbEntry.value;
 			if (!relationsEqual(ixcRel, nbRel)) {
 				diffs.push({
@@ -258,7 +259,9 @@ export function compareCollections(
 	const actualRelationDiffs = relationDiffs.filter((d) => d.side !== "match");
 
 	const diffCount =
-		actualScalarDiffs.length + actualEnumDiffs.length + actualRelationDiffs.length;
+		actualScalarDiffs.length +
+		actualEnumDiffs.length +
+		actualRelationDiffs.length;
 
 	const ixcTotalFields =
 		ixcSchema.scalars.size + ixcSchema.enums.size + ixcSchema.relations.size;

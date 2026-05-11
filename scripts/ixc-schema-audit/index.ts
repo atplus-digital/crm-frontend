@@ -9,13 +9,18 @@
  *   --collection=NOME  Apenas a collection especificada
  */
 
-import { CONFIG, type CollectionSchema, type CollectionDiff, type CliOptions } from "./config";
+import { compareCollections } from "./comparator";
+import {
+	type CliOptions,
+	CONFIG,
+	type CollectionDiff,
+	type CollectionSchema,
+} from "./config";
 import { discoverCollections } from "./discovery";
 import { extractCollectionSchema } from "./extractor";
-import { getIXCSchemaFromWiki } from "./sources/ixc-wiki";
-import { getIXCRelations } from "./sources/ixc-relations";
-import { compareCollections } from "./comparator";
 import { writeReports } from "./reporter";
+import { getIXCRelations } from "./sources/ixc-relations";
+import { getIXCSchemaFromWiki } from "./sources/ixc-wiki";
 
 function parseCliArgs(): CliOptions {
 	const args = process.argv.slice(2);
@@ -77,7 +82,9 @@ async function main(): Promise<void> {
 		);
 		if (filtered.length === 0) {
 			console.error(`❌ Collection "${cliOptions.collection}" não encontrada`);
-			console.error(`   Disponíveis: ${collections.map((c) => c.name).join(", ")}`);
+			console.error(
+				`   Disponíveis: ${collections.map((c) => c.name).join(", ")}`,
+			);
 			process.exit(1);
 		}
 		collections = filtered;
@@ -98,15 +105,12 @@ async function main(): Promise<void> {
 
 		try {
 			console.log(`   📦 Extraindo schema NocoBase...`);
-			const nocobaseSchema =
-				await extractCollectionSchema(collection);
+			const nocobaseSchema = await extractCollectionSchema(collection);
 			console.log(`      Scalars: ${nocobaseSchema.scalars.size}`);
 			console.log(`      Enums: ${nocobaseSchema.enums.size}`);
 			console.log(`      Relations: ${nocobaseSchema.relations.size}`);
 
-			console.log(
-				`   🌐 Buscando schema IXC (Wiki API + Relations Map)...`,
-			);
+			console.log(`   🌐 Buscando schema IXC (Wiki API + Relations Map)...`);
 			let ixcSchema: CollectionSchema;
 			try {
 				ixcSchema = await getIXCSchemaFromWiki(collection.name);
@@ -125,12 +129,14 @@ async function main(): Promise<void> {
 			}
 
 			ixcSchema = mergeIXCRelations(ixcSchema, collection.name);
-			console.log(
-				`      Relations Map: ${ixcSchema.relations.size} relações`,
-			);
+			console.log(`      Relations Map: ${ixcSchema.relations.size} relações`);
 
 			console.log(`   🔄 Comparando...`);
-			const diff = compareCollections(ixcSchema, nocobaseSchema, cliOptions.verbose);
+			const diff = compareCollections(
+				ixcSchema,
+				nocobaseSchema,
+				cliOptions.verbose,
+			);
 			console.log(`      Diffs: ${diff.diffCount}`);
 
 			allDiffs.push(diff);
@@ -138,16 +144,28 @@ async function main(): Promise<void> {
 			if (diff.diffCount === 0) {
 				console.log(`   ✅ Nenhum diff!`);
 			} else {
-				const actualScalarDiffs = diff.scalars.filter((d) => d.side !== "match").length;
-				const actualEnumDiffs = diff.enums.filter((d) => d.side !== "match").length;
-				const actualRelDiffs = diff.relations.filter((d) => d.side !== "match").length;
+				const actualScalarDiffs = diff.scalars.filter(
+					(d) => d.side !== "match",
+				).length;
+				const actualEnumDiffs = diff.enums.filter(
+					(d) => d.side !== "match",
+				).length;
+				const actualRelDiffs = diff.relations.filter(
+					(d) => d.side !== "match",
+				).length;
 				console.log(
 					`   ⚠️ ${actualScalarDiffs} scalars, ${actualEnumDiffs} enums, ${actualRelDiffs} relations com diff`,
 				);
 				if (cliOptions.verbose) {
-					const scalarMatches = diff.scalars.filter((d) => d.side === "match").length;
-					const enumMatches = diff.enums.filter((d) => d.side === "match").length;
-					const relMatches = diff.relations.filter((d) => d.side === "match").length;
+					const scalarMatches = diff.scalars.filter(
+						(d) => d.side === "match",
+					).length;
+					const enumMatches = diff.enums.filter(
+						(d) => d.side === "match",
+					).length;
+					const relMatches = diff.relations.filter(
+						(d) => d.side === "match",
+					).length;
 					console.log(
 						`      (e ${scalarMatches + enumMatches + relMatches} matches no modo verbose)`,
 					);
@@ -166,7 +184,9 @@ async function main(): Promise<void> {
 	const writtenPaths = writeReports(allDiffs, cliOptions.verbose);
 	console.log(`   Escritos: ${writtenPaths.length} arquivos`);
 	console.log(`   Diretório: ${CONFIG.OUTPUT_DIR}`);
-	console.log(`   Modo verbose: ${cliOptions.verbose ? "ativado" : "desativado"}`);
+	console.log(
+		`   Modo verbose: ${cliOptions.verbose ? "ativado" : "desativado"}`,
+	);
 
 	console.log("\n" + "=".repeat(60));
 	console.log("📊 Resumo Final");
@@ -174,8 +194,14 @@ async function main(): Promise<void> {
 
 	const totalDiffs = allDiffs.reduce((sum, d) => sum + d.diffCount, 0);
 	const collectionsWithDiffs = allDiffs.filter((d) => d.diffCount > 0).length;
-	const totalIxcFields = allDiffs.reduce((sum, d) => sum + d.metadata.ixcTotalFields, 0);
-	const totalNbFields = allDiffs.reduce((sum, d) => sum + d.metadata.nocobaseTotalFields, 0);
+	const totalIxcFields = allDiffs.reduce(
+		(sum, d) => sum + d.metadata.ixcTotalFields,
+		0,
+	);
+	const totalNbFields = allDiffs.reduce(
+		(sum, d) => sum + d.metadata.nocobaseTotalFields,
+		0,
+	);
 
 	console.log(`Collections processadas: ${collections.length}`);
 	console.log(`Collections com diffs: ${collectionsWithDiffs}`);
@@ -193,7 +219,9 @@ async function main(): Promise<void> {
 	console.log("\n" + "=".repeat(60));
 	console.log(`Relatório principal: ${CONFIG.OUTPUT_DIR}/index.md`);
 	if (cliOptions.verbose) {
-		console.log("💡 Dica: Abra os relatórios .md para ver a comparação completa");
+		console.log(
+			"💡 Dica: Abra os relatórios .md para ver a comparação completa",
+		);
 		console.log("   de todos os campos, incluindo nomes brutos e matches.");
 	}
 	console.log("=".repeat(60));
