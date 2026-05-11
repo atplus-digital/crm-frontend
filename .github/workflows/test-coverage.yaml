@@ -1,8 +1,8 @@
-name: Deploy Test Coverage to GitHub Pages
+name: Test Coverage
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
