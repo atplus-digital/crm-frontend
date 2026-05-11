@@ -125,12 +125,14 @@ export function TrocaEnderecoSheet({
 	};
 
 	// Reset form when sheet closes
+	// biome-ignore lint/correctness/useExhaustiveDependencies: reset/mutation are stable but including them in deps causes infinite loop
 	useEffect(() => {
 		if (!open) {
 			reset();
 			mutation.reset();
 		}
-	}, [open, reset, mutation]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [open]);
 
 	// -----------------------------------------------------------------------
 	// Render

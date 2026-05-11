@@ -258,6 +258,7 @@ export function TransferenciaTitularidadeSheet({
 	// Reset form on close
 	// -----------------------------------------------------------------------
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: reset/mutation are stable but including them in deps causes infinite loop
 	useEffect(() => {
 		if (!open) {
 			setTipoPessoa("PF");
@@ -273,7 +274,8 @@ export function TransferenciaTitularidadeSheet({
 			reset();
 			mutation.reset();
 		}
-	}, [open, reset, mutation]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [open]);
 
 	// -----------------------------------------------------------------------
 	// Complemento / Estado options
