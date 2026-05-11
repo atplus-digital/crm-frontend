@@ -6,7 +6,7 @@ import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-
 import type { DadosAdicionaisClienteContrato } from "#/generated/types/nocobase/other/dados-adicionais-cliente-contrato";
 import type { RegistrosDeContato } from "#/generated/types/nocobase/registros-de-contato";
 import { getErrorMessage } from "#/lib/api-errors";
-import { buildFilter, eq } from "#/lib/filter-builder";
+import { buildFilter, eq, inFilter } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { ixcRepository, nocobaseRepository } from "#/repositories";
 import type { PaginatedResponse } from "#/repositories/types";
@@ -38,7 +38,11 @@ function buildContratoFilter(
 	}
 
 	if (filters.status) {
-		conditions.push(eq("status", filters.status));
+		conditions.push(inFilter("status", filters.status));
+	}
+
+	if (filters.servicoStatus) {
+		conditions.push(inFilter("status_internet", filters.servicoStatus));
 	}
 
 	if (filters.contratoId) {

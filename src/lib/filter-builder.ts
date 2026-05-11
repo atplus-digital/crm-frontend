@@ -115,3 +115,14 @@ export function nestedField(
 ): Record<string, unknown> {
 	return { [field]: nestedCondition };
 }
+
+/**
+ * Helper to create an "in" filter condition for multiple values.
+ * Uses NocoBase/IXC $in operator.
+ */
+export function inFilter<T extends string | number>(
+	field: string,
+	values: T[],
+): Record<string, unknown> {
+	return { [field]: { $in: values } };
+}

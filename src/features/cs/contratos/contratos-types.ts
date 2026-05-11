@@ -82,7 +82,8 @@ export {
 export interface ContratoFilters {
 	cpfCnpj?: string;
 	nome?: string;
-	status?: ContratoStatus;
+	status?: ContratoStatus[];
+	servicoStatus?: InternetStatus[];
 	contratoId?: number;
 }
 
@@ -99,26 +100,36 @@ export interface ContratosTableFilters {
 	[key: string]: string;
 	cpfCnpj: string;
 	nome: string;
-	status: string;
+	status: string; // JSON stringified string[]
+	servicoStatus: string; // JSON stringified string[]
 	contratoId: string;
 }
 
 export const DEFAULT_CONTRATOS_TABLE_FILTERS: ContratosTableFilters = {
 	cpfCnpj: "",
 	nome: "",
-	status: "all",
+	status: JSON.stringify([ContratoStatus.PreContrato, ContratoStatus.Ativo]),
+	servicoStatus: JSON.stringify([]),
 	contratoId: "",
 };
 
 export function toContratoFilters(
 	filters: ContratosTableFilters,
 ): ContratoFilters {
+	const statusValues = JSON.parse(filters.status) as string[];
+	const servicoStatusValues = JSON.parse(filters.servicoStatus) as string[];
+
 	return {
 		cpfCnpj: filters.cpfCnpj || undefined,
 		nome: filters.nome || undefined,
-		status: (filters.status === "all"
-			? undefined
-			: filters.status) as ContratoFilters["status"],
+		status:
+			statusValues.length === 0
+				? undefined
+				: (statusValues as ContratoFilters["status"]),
+		servicoStatus:
+			servicoStatusValues.length === 0
+				? undefined
+				: (servicoStatusValues as ContratoFilters["servicoStatus"]),
 		contratoId: filters.contratoId ? Number(filters.contratoId) : undefined,
 	};
 }
