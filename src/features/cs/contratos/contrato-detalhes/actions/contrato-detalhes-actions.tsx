@@ -13,7 +13,7 @@ import {
 	getDisabledContratoActions,
 } from "#/features/cs/contratos/contrato-detalhes/contratos-action-guards";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
-import { TransferenciaTitularidadeSheet } from "../../../../troca-titularidade";
+import { TransferenciaTitularidadeSheet } from "../../../troca-titularidade";
 import { TrocaEnderecoSheet } from "./troca-endereco-sheet";
 
 interface ContratoDetalhesActionsProps {

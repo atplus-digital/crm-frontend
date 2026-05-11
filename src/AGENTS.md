@@ -38,6 +38,59 @@ Frontend application layer for CRM AT+ — React 19 + TypeScript + React Router 
 - **Always use `cn()` from `#/lib/utils` for className interpolation.** Never use template literals (`` `class ${var}` ``) or string concatenation for class merging — `cn()` handles deduplication, falsy values, and Tailwind conflict resolution via `clsx` + `tailwind-merge`.
 - **Always use `<Link to="...">` from `react-router` for internal navigation.** Never use `<a href="...">` for routes that exist in the app — it causes full-page reloads and breaks SPA behavior. Only use `<a>` for external links (off-site URLs).
 
+## Forms
+
+**Use `react-hook-form` + `zod` for all forms** — never manage form state with `useState`.
+
+### Required Pattern
+
+1. **Define a Zod schema** with field validation
+2. **Use `useForm` with `zodResolver`**
+3. **Register fields** with `{...register("fieldName")}`
+4. **Handle submit** with `handleSubmit`
+
+```typescript
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const schema = z.object({
+  field1: z.string().min(1, "Required"),
+  field2: z.string().email("Invalid email"),
+});
+
+type FormValues = z.infer<typeof schema>;
+
+function MyForm() {
+  const form = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: { field1: "", field2: "" },
+  });
+
+  const onSubmit: SubmitHandler<FormValues> = (values) => { /* ... */ };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register("field1")} />
+      <input {...register("field2")} />
+    </form>
+  );
+}
+```
+
+### Exceptions
+
+- **Lookup/search state** (e.g., debounced search results) may use `useState` — this is UI state, not form data.
+- **Read-only fields** pre-filled from external data may use `useState` but prefer `defaultValues`.
+
+### Anti-Patterns
+
+| ❌ Never                             | ✅ Always                       |
+| ------------------------------------ | ------------------------------- |
+| `const [field, setField] = useState` | `useForm` + `register("field")` |
+| Manual validation on submit          | Zod schema validation           |
+| Multiple `useState` for form fields  | Single `useForm` instance       |
+
 <!-- AGENTS-GENERATED:END patterns -->
 
 <!-- AGENTS-GENERATED:START golden-samples -->
