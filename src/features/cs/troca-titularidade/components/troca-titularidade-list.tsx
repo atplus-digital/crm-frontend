@@ -1,4 +1,4 @@
-import type { ColumnDef, SortingState } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { StatusBadge } from "#/components/badges/status-badge";
 import { ViewActionButton } from "#/components/table/columns/view-action";
@@ -7,6 +7,7 @@ import { DataTableContainer } from "#/components/table/data-table-container";
 import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import { TROCA_STATUS_VARIANTS } from "#/features/cs/troca-titularidade/troca-titularidade-types";
 import { CRMTROCATITULARIDADE_STATUS_LABELS } from "#/generated/types/nocobase/crm-troca-titularidade";
+import { useListSorting } from "#/hooks/use-list-sorting";
 import { formatDatePtBR } from "#/lib/utils";
 
 interface PaginationInfo {
@@ -119,25 +120,7 @@ export function TrocaTitularidadeList({
 	onPageChange,
 	onPageSizeChange,
 }: TrocaTitularidadeListProps) {
-	const sorting = useMemo<SortingState>(() => {
-		const field = sort[0];
-		if (!field) return [];
-		const isDesc = field.startsWith("-");
-		const id = isDesc ? field.slice(1) : field;
-		return [{ id, desc: isDesc }];
-	}, [sort]);
-
-	const onSortingChange = (
-		updater: SortingState | ((old: SortingState) => SortingState),
-	) => {
-		const next = typeof updater === "function" ? updater(sorting) : updater;
-		const first = next[0];
-		if (!first) {
-			onSort("");
-			return;
-		}
-		onSort(first.desc ? `-${first.id}` : first.id);
-	};
+	const { sorting, onSortingChange } = useListSorting({ sort, onSort });
 
 	const columns = useMemo(() => getColumns(), []);
 

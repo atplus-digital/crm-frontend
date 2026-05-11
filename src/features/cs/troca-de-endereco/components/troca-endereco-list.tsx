@@ -1,4 +1,4 @@
-import type { ColumnDef, SortingState } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { StatusBadge } from "#/components/badges/status-badge";
 import { ViewActionButton } from "#/components/table/columns/view-action";
@@ -6,6 +6,7 @@ import { DataTableColumnHeader } from "#/components/table/data-table-column-head
 import { DataTableContainer } from "#/components/table/data-table-container";
 import type { TrocaEnderecoWithRelations } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
 import { TROCAENDERECO_STATUS_LABELS } from "#/generated/types/nocobase/troca-endereco";
+import { useListSorting } from "#/hooks/use-list-sorting";
 import { formatDatePtBR } from "#/lib/utils";
 
 interface PaginationInfo {
@@ -111,25 +112,7 @@ export function TrocaEnderecoList({
 	onPageChange,
 	onPageSizeChange,
 }: TrocaEnderecoListProps) {
-	const sorting = useMemo<SortingState>(() => {
-		const field = sort[0];
-		if (!field) return [];
-		const isDesc = field.startsWith("-");
-		const id = isDesc ? field.slice(1) : field;
-		return [{ id, desc: isDesc }];
-	}, [sort]);
-
-	const onSortingChange = (
-		updater: SortingState | ((old: SortingState) => SortingState),
-	) => {
-		const next = typeof updater === "function" ? updater(sorting) : updater;
-		const first = next[0];
-		if (!first) {
-			onSort("");
-			return;
-		}
-		onSort(first.desc ? `-${first.id}` : first.id);
-	};
+	const { sorting, onSortingChange } = useListSorting({ sort, onSort });
 
 	const columns = useMemo(() => getColumns(), []);
 

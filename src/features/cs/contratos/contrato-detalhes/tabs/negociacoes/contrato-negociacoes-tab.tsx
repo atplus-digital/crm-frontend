@@ -1,11 +1,11 @@
 import { TabContentCard } from "#/components/layouts/tab-content-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
+import { useContratoTrocasTitularidade } from "#/features/cs/contratos/contratos-hooks";
+import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
 import {
 	TROCAS_TITULARIDADE_COLUMNS,
 	trocasTitularidadeTableColumns,
-} from "#/features/cs/contratos/contrato-detalhes/contrato-negociacoes-tab/contrato-negociacoes-columns";
-import { useContratoTrocasTitularidade } from "#/features/cs/contratos/contratos-hooks";
-import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
+} from "./contrato-negociacoes-columns";
 import {
 	RENOVACOES_COLUMNS,
 	renovacoesTableColumns,

@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-11 -->
 
 # AGENTS.md — cs/contratos
 
@@ -23,11 +23,12 @@ contract-specific table, tabs, filters, and status badges.
 | `contratos-table.tsx`             | Main contracts list table composition                       |
 | `contratos-filters.tsx`           | Form filters for cpf/cnpj, nome, status, and contrato ID    |
 | `contrato-status-badge.tsx`       | Status and internet badge renderers                         |
-| `contrato-atendimentos-tab.tsx`   | Contract support tickets tab section                        |
-| `contrato-negociacoes-tab.tsx`    | Contract negotiations tab section                           |
-| `contrato-registros-tab.tsx`      | Contract contact/history records tab section                |
-| `contrato-movel-tab.tsx`          | Mobile/line-related contract tab section                    |
-| `contrato-detalhes-tab/`          | Detail tab subfolder (summary, info, cliente, endereco)     |
+| `tabs/atendimentos/`              | Contract support tickets tab section                        |
+| `tabs/negociacoes/`               | Contract negotiations tab section                           |
+| `tabs/registros/`                 | Contract contact/history records tab section                |
+| `tabs/movel/`                     | Mobile/line-related contract tab section                    |
+| `tabs/detalhes/`                  | Detail tab (summary, info, cliente, endereço, faturas)      |
+| `tabs/actions/`                   | Sheet actions (troca-endereco, transferencia-titularidade)  |
 | `informacoes-adicionais-card.tsx` | Informações Adicionais section (4 fields from NocoBase)     |
 
 <!-- AGENTS-GENERATED:END filemap -->

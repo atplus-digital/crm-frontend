@@ -1,5 +1,5 @@
 import { useOutletContext } from "react-router";
-import { ContratoDetalhesTab } from "#/features/cs/contratos/contrato-detalhes/contrato-detalhes-tab/contrato-detalhes-tab";
+import { ContratoDetalhesTab } from "#/features/cs/contratos/contrato-detalhes/tabs/detalhes/contrato-detalhes-tab";
 import {
 	useContratoFaturas,
 	useContratoProdutos,
