@@ -10,7 +10,7 @@
  *     - "Valores disponíveis: A = Label A\nB = Label B"
  */
 
-import type { ScalarType, EnumOption } from "../config";
+import type { EnumOption, ScalarType } from "../config";
 
 export interface WikiField {
 	fieldName: string;
@@ -72,9 +72,10 @@ export function parseWikiHtml(html: string): WikiField[] {
 	const h3Pattern =
 		/<h3[^>]*>([^<]*)<\/h3>[\s\S]*?<div[^>]*style="[^"]*display\s*:\s*none[^"]*"[^>]*>([\s\S]*?)<\/div>/gi;
 
-	let match: RegExpExecArray | null;
+	while (true) {
+		const match = h3Pattern.exec(html);
+		if (!match) break;
 
-	while ((match = h3Pattern.exec(html)) !== null) {
 		const fieldName = match[1].trim();
 		const detailsHtml = match[2];
 
@@ -135,7 +136,8 @@ export function wikiFieldToType(field: WikiField): {
 } {
 	if (field.enumOptions && field.enumOptions.length > 0) {
 		const firstVal = field.enumOptions[0].value;
-		const scalarType: ScalarType = typeof firstVal === "number" ? "number" : "string";
+		const scalarType: ScalarType =
+			typeof firstVal === "number" ? "number" : "string";
 
 		return {
 			scalarType,

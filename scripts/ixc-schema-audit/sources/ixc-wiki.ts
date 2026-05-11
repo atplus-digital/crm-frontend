@@ -43,6 +43,17 @@ function saveToCache(collectionName: string, html: string): void {
 	fs.writeFileSync(cachePath, html, "utf-8");
 }
 
+function getCharsetFromContentType(contentType: string | null): string {
+	if (!contentType) return "ISO-8859-1";
+
+	const match = contentType.match(/charset=([^;]+)/i);
+	if (match) {
+		return match[1].trim();
+	}
+
+	return "ISO-8859-1";
+}
+
 async function fetchWikiHtml(collectionName: string): Promise<string> {
 	const cached = loadFromCache(collectionName);
 	if (cached) {
@@ -69,7 +80,21 @@ async function fetchWikiHtml(collectionName: string): Promise<string> {
 		);
 	}
 
-	const html = await response.text();
+	// Wiki API retorna charset=ISO-8859-1, precisamos decodificar corretamente
+	const charset = getCharsetFromContentType(
+		response.headers.get("content-type"),
+	);
+	const arrayBuffer = await response.arrayBuffer();
+
+	let html: string;
+	try {
+		const decoder = new TextDecoder(charset);
+		html = decoder.decode(arrayBuffer);
+	} catch {
+		// Fallback para ISO-8859-1 se o charset for inválido
+		const decoder = new TextDecoder("ISO-8859-1");
+		html = decoder.decode(arrayBuffer);
+	}
 
 	saveToCache(collectionName, html);
 
