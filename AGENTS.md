@@ -92,6 +92,31 @@ export interface PessoaFisica {
 }
 ```
 
+### Labels, Enums, and Color Maps
+
+8. **ALWAYS** use generated `*_LABELS` from `src/generated/` — never recreate label maps manually
+9. **ALWAYS** type `Record` keys with `keyof typeof SOME_GENERATED_LABELS` — never use `Record<string, string>` for enum-keyed maps (colors, variants, etc.)
+10. When a generated `*_LABELS` doesn't exist for a field, verify the type generator config in `scripts/generators/` and regenerate before creating manual labels
+
+**Example:**
+
+```typescript
+// ✅ CORRECT - generated labels + typed keys
+import { PESSOAS_CREDITO_LABELS } from "#/generated/types/nocobase/pessoas";
+
+const CREDITO_COLORS: Record<keyof typeof PESSOAS_CREDITO_LABELS, string> = {
+  1: "bg-green-500/10 text-green-600",
+  2: "bg-amber-500/10 text-amber-600",
+  9: "bg-red-500/10 text-red-600",
+};
+
+// ❌ WRONG - manual labels + string key
+const CREDITO_LABELS: Record<string, string> = {
+  Aprovado: "Aprovado",
+  Negado: "Negado",
+};
+```
+
 <!-- AGENTS-GENERATED:START golden-samples -->
 
 | For                 | Reference                                          | Key patterns                                             |

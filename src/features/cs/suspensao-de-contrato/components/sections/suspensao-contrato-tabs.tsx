@@ -5,7 +5,7 @@ import { CommentsList } from "#/features/cs/components/comments-list";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
 import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
-import { SUSPENSAO_CONTRATO_STATUS_LABELS } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
+import { SUSPENSAOCONTRATO_STATUS_LABELS } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { formatPhone } from "#/lib/utils";
 import { SuspensaoContratoActions } from "./suspensao-contrato-actions";
 
@@ -32,7 +32,7 @@ export function SuspensaoContratoTabs({
 					<div className="flex items-center gap-2">
 						<SharedStatusBadge
 							value={suspensaoContrato.f_status}
-							labels={SUSPENSAO_CONTRATO_STATUS_LABELS}
+							labels={SUSPENSAOCONTRATO_STATUS_LABELS}
 							variant="inline"
 							defaultVariant="secondary"
 						/>

@@ -6,7 +6,7 @@ import { DataTableColumnHeader } from "#/components/table/data-table-column-head
 import { DataTableContainer } from "#/components/table/data-table-container";
 import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import {
-	SUSPENSAO_CONTRATO_STATUS_LABELS,
+	SUSPENSAOCONTRATO_STATUS_LABELS,
 	SUSPENSAO_CONTRATO_STATUS_VARIANTS,
 } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { formatDatePtBR } from "#/lib/utils";
@@ -81,7 +81,7 @@ function getColumns(): ColumnDef<SuspensaoContratoWithRelations, unknown>[] {
 			cell: ({ row }) => (
 				<StatusBadge
 					value={row.original.f_status}
-					labels={SUSPENSAO_CONTRATO_STATUS_LABELS}
+					labels={SUSPENSAOCONTRATO_STATUS_LABELS}
 					variants={SUSPENSAO_CONTRATO_STATUS_VARIANTS}
 					defaultVariant="secondary"
 				/>

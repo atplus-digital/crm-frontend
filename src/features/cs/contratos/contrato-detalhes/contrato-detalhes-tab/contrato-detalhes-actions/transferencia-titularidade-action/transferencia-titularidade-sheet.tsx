@@ -57,10 +57,10 @@ type SelectedPJ = Pick<Empresas, "id" | "f_razao_social" | "f_cnpj"> | null;
 // Credit Badge Helper
 // ============================================================================
 
-const CREDITO_COLORS: Record<string, string> = {
-	"1": "bg-blue-100 text-blue-800",
-	"2": "bg-amber-100 text-amber-800",
-	"9": "bg-red-100 text-red-800",
+const CREDITO_COLORS: Record<keyof typeof PESSOAS_CREDITO_LABELS, string> = {
+	1: "bg-blue-100 text-blue-800",
+	2: "bg-amber-100 text-amber-800",
+	9: "bg-red-100 text-red-800",
 };
 
 // ============================================================================

@@ -75,7 +75,7 @@ export type Negociacao = Omit<Negociacoes, "f_contrato_ixc"> & {
 export type NegociacaoWithRelations = Negociacoes & NegociacoesRelations;
 
 export const NEGOCIACAO_STATUS_VARIANTS: Record<
-	string,
+	keyof typeof NEGOCIACOES_STATUS_LABELS,
 	"default" | "secondary" | "destructive"
 > = {
 	"1": "default",
@@ -87,7 +87,7 @@ export const NEGOCIACAO_STATUS_VARIANTS: Record<
 };
 
 export const NEGOCIACAO_SUBSTATUS_VARIANTS: Record<
-	string,
+	keyof typeof NEGOCIACOES_SUBSTATUS_LABELS,
 	"default" | "secondary" | "destructive"
 > = {
 	"1": "secondary",
@@ -103,6 +103,7 @@ export const NEGOCIACAO_SUBSTATUS_VARIANTS: Record<
 	"11": "default",
 	"12": "destructive",
 	"13": "secondary",
+	"14": "destructive",
 };
 
 export interface NegociacaoFilters {

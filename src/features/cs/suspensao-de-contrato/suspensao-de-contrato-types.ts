@@ -1,39 +1,41 @@
 import type {
 	SuspensaoContrato,
 	SuspensaoContratoRelations,
+	SuspensaoContratoStatus,
 } from "#/generated/types/nocobase/suspensao-contrato";
+import { SUSPENSAOCONTRATO_STATUS_LABELS } from "#/generated/types/nocobase/suspensao-contrato";
 import type { ListParams } from "#/repositories/types";
 
-export const SUSPENSAO_CONTRATO_STATUS_LABELS = {
-	"1": "Nova Solicitação",
-	"2": "Aguardando Assinatura",
-	"3": "Assinatura Concluída",
-	"4": "Concluído",
-	"5": "Cancelado",
-} as const;
+export type { SuspensaoContratoStatus };
+// Re-export generated labels and status type for consumers
+export { SUSPENSAOCONTRATO_STATUS_LABELS };
 
-export type SuspensaoContratoStatus =
-	keyof typeof SUSPENSAO_CONTRATO_STATUS_LABELS;
+const STATUS_KEYS = Object.keys(
+	SUSPENSAOCONTRATO_STATUS_LABELS,
+) as SuspensaoContratoStatus[];
 
 export const SUSPENSAO_CONTRATO_STATUS_FILTER_OPTIONS: {
 	value: SuspensaoContratoStatus;
 	label: string;
-}[] = Object.entries(SUSPENSAO_CONTRATO_STATUS_LABELS).map(
-	([value, label]) => ({
-		value: value as SuspensaoContratoStatus,
-		label,
-	}),
-);
+}[] = STATUS_KEYS.map((value) => ({
+	value,
+	label:
+		SUSPENSAOCONTRATO_STATUS_LABELS[
+			Number(value) as keyof typeof SUSPENSAOCONTRATO_STATUS_LABELS
+		],
+}));
 
-export const SUSPENSAO_CONTRATO_STATUS_VARIANTS: Record<
-	string,
-	"default" | "secondary" | "destructive" | "outline"
+export const SUSPENSAO_CONTRATO_STATUS_VARIANTS: Partial<
+	Record<
+		SuspensaoContratoStatus,
+		"default" | "secondary" | "destructive" | "outline"
+	>
 > = {
+	"0": "secondary",
 	"1": "secondary",
 	"2": "default",
 	"3": "outline",
-	"4": "default",
-	"5": "destructive",
+	"4": "destructive",
 };
 
 export interface SuspensaoContratoFilters {

@@ -6,7 +6,10 @@ import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociac
 import { NEGOCIACAO_STATUS_LABELS } from "#/features/cs/negociacoes/negociacoes-types";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 
-const negociacaoStatusColorClasses: Record<string, string> = {
+const negociacaoStatusColorClasses: Record<
+	keyof typeof NEGOCIACAO_STATUS_LABELS,
+	string
+> = {
 	"1": "bg-blue-500/10 text-blue-600 border-blue-500/20 hover:bg-blue-500/20",
 	"2": "bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20",
 	"3": "bg-purple-500/10 text-purple-600 border-purple-500/20 hover:bg-purple-500/20",

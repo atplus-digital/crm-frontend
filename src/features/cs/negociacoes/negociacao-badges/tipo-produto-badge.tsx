@@ -1,7 +1,11 @@
 import { StatusBadge } from "#/components/badges/status-badge";
-import type { NegociacoesItens } from "#/generated/types/nocobase";
+import type { NegociacoesItensTipoProduto } from "#/generated/types/nocobase/other/negociacoes-itens";
+import { NEGOCIACOESITENS_TIPOPRODUTO_LABELS } from "#/generated/types/nocobase/other/negociacoes-itens";
 
-export const TIPO_PRODUTO_COLORS: Record<string, string> = {
+export const TIPO_PRODUTO_COLORS: Record<
+	keyof typeof NEGOCIACOESITENS_TIPOPRODUTO_LABELS,
+	string
+> = {
 	INTERNET: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
 	TV: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
 	STFC: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
@@ -10,14 +14,14 @@ export const TIPO_PRODUTO_COLORS: Record<string, string> = {
 };
 
 export interface TipoProdutoBadgeProps {
-	tipo: NegociacoesItens["f_tipo_produto"];
+	tipo: NegociacoesItensTipoProduto;
 }
 
 export function TipoProdutoBadge({ tipo }: TipoProdutoBadgeProps) {
 	return (
 		<StatusBadge
 			value={tipo}
-			labels={{ [tipo]: tipo }}
+			labels={NEGOCIACOESITENS_TIPOPRODUTO_LABELS}
 			colorClasses={TIPO_PRODUTO_COLORS}
 			variant="inline"
 		/>

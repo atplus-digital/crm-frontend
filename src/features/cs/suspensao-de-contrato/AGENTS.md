@@ -51,11 +51,11 @@ Contract suspension feature — manages suspension requests with ZapSign digital
 
 | Value | Label                 |
 | ----- | --------------------- |
-| `1`   | Nova Solicitação      |
-| `2`   | Aguardando Assinatura |
-| `3`   | Assinatura Concluída  |
-| `4`   | Concluído             |
-| `5`   | Cancelado             |
+| `0`   | Nova Solicitação      |
+| `1`   | Aguardando Assinatura |
+| `2`   | Assinatura Concluída  |
+| `3`   | Concluído             |
+| `4`   | Cancelado             |
 
 <!-- AGENTS-GENERATED:END status -->
 
@@ -71,7 +71,7 @@ Contract suspension feature — manages suspension requests with ZapSign digital
 ## Patterns
 
 - Hooks call `nocobaseRepository` directly (no service file) — same as `troca-titularidade`.
-- Status labels use a local override — never import `SUSPENSAOCONTRATO_STATUS_LABELS` from generated.
+- Status labels use `SUSPENSAOCONTRATO_STATUS_LABELS` from generated (`src/generated/types/nocobase/suspensao-contrato`), re-exported via `suspensao-de-contrato-types.ts`.
 - Detail page uses Tabs component with two tabs: "Detalhes Suspensão" and "Contrato".
 - Action buttons (Enviar, Concluir, Arquivar) are disabled UI-only — mutation logic is out of scope.
 

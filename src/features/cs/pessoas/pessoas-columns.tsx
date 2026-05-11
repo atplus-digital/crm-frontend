@@ -1,41 +1,44 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { StatusBadge } from "#/components/badges/status-badge";
 import type { Pessoas } from "#/generated/types/nocobase/pessoas";
+import {
+	PESSOAS_ANALISEIXC_LABELS,
+	PESSOAS_CREDITO_LABELS,
+} from "#/generated/types/nocobase/pessoas";
 import { formatDatePtBR } from "#/lib/utils";
 
-const CREDITO_LABELS: Record<string, string> = {
-	Aprovado: "Aprovado",
-	"Aprovado com Atenção": "Aprovado com Atenção",
-	Negado: "Negado",
-};
-
-const CREDITO_COLOR_CLASSES: Record<string, string> = {
-	Aprovado: "bg-green-500/10 text-green-600 hover:bg-green-500/20",
-	"Aprovado com Atenção":
-		"bg-yellow-500/10 text-yellow-600 hover:bg-yellow-500/20",
+const CREDITO_COLOR_CLASSES: Record<
+	keyof typeof PESSOAS_CREDITO_LABELS,
+	string
+> = {
+	1: "bg-green-500/10 text-green-600 hover:bg-green-500/20",
+	2: "bg-yellow-500/10 text-yellow-600 hover:bg-yellow-500/20",
+	9: "bg-red-500/10 text-red-600 hover:bg-red-500/20",
 };
 
 const CREDITO_VARIANTS: Record<
-	string,
+	keyof typeof PESSOAS_CREDITO_LABELS,
 	"default" | "destructive" | "secondary"
 > = {
-	Aprovado: "default",
-	Negado: "destructive",
+	1: "default",
+	2: "default",
+	9: "destructive",
 };
 
-const ANALISE_IXC_LABELS: Record<string, string> = {
-	"Sem Pendências": "Sem Pendências",
-};
-
-const ANALISE_IXC_COLOR_CLASSES: Record<string, string> = {
-	"Sem Pendências": "bg-green-500/10 text-green-600 hover:bg-green-500/20",
+const ANALISE_IXC_COLOR_CLASSES: Record<
+	keyof typeof PESSOAS_ANALISEIXC_LABELS,
+	string
+> = {
+	0: "bg-red-500/10 text-red-600 hover:bg-red-500/20",
+	1: "bg-green-500/10 text-green-600 hover:bg-green-500/20",
 };
 
 const ANALISE_IXC_VARIANTS: Record<
-	string,
+	keyof typeof PESSOAS_ANALISEIXC_LABELS,
 	"default" | "destructive" | "secondary"
 > = {
-	"Sem Pendências": "default",
+	0: "destructive",
+	1: "default",
 };
 
 export const pfColumns: ColumnDef<Pessoas, unknown>[] = [
@@ -67,7 +70,7 @@ export const pfColumns: ColumnDef<Pessoas, unknown>[] = [
 			return (
 				<StatusBadge
 					value={value}
-					labels={CREDITO_LABELS}
+					labels={PESSOAS_CREDITO_LABELS}
 					variants={CREDITO_VARIANTS}
 					colorClasses={CREDITO_COLOR_CLASSES}
 					defaultVariant="secondary"
@@ -92,7 +95,7 @@ export const pfColumns: ColumnDef<Pessoas, unknown>[] = [
 			return (
 				<StatusBadge
 					value={value}
-					labels={ANALISE_IXC_LABELS}
+					labels={PESSOAS_ANALISEIXC_LABELS}
 					variants={ANALISE_IXC_VARIANTS}
 					colorClasses={ANALISE_IXC_COLOR_CLASSES}
 					defaultVariant="destructive"
