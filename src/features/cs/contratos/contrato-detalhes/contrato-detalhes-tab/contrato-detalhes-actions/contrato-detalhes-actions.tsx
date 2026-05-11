@@ -11,9 +11,9 @@ import { type ActionItem, ActionsMenu } from "#/components/actions-menu";
 import {
 	CONTRATO_ACTION_LABEL,
 	getDisabledContratoActions,
-} from "#/features/cs/contratos/contratos-action-guards";
+} from "#/features/cs/contratos/contrato-detalhes/contratos-action-guards";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
-import { TransferenciaTitularidadeSheet } from "../../../troca-titularidade";
+import { TransferenciaTitularidadeSheet } from "../../../../troca-titularidade";
 import { TrocaEnderecoSheet } from "./troca-endereco-action/troca-endereco-sheet";
 
 interface ContratoDetalhesActionsProps {
@@ -34,7 +34,7 @@ function ContratoDetalhesActions({ contrato }: ContratoDetalhesActionsProps) {
 				CONTRATO_ACTION_LABEL.DESBLOQUEIO_CONFIANCA,
 			),
 			popupRequest: {
-				identifier: "78d5kny2gwn",
+				identifier: "desbloqueio-confianca",
 				payload: { currentRecord: { id: contrato.id } },
 				title: "Desbloqueio em Confiança",
 				confirmMessage:

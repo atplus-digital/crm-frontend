@@ -14,11 +14,11 @@ Deliver a replication-ready spec for a CRM/NocoBase screen so another engineer c
 
 ## Primary Deliverables
 
-Always save outputs under `/crawl/[nome-da-pagina]/` and produce:
+Always save outputs under `/.crawl/[nome-da-pagina]/` and produce:
 
-1. `/crawl/[nome-da-pagina]/replication-report.md`
-2. `/crawl/[nome-da-pagina]/replication-spec.json`
-3. `/crawl/[nome-da-pagina]/evidence/screenshots/` (visual proof of crawled screens)
+1. `/.crawl/[nome-da-pagina]/replication-report.md`
+2. `/.crawl/[nome-da-pagina]/replication-spec.json`
+3. `/.crawl/[nome-da-pagina]/evidence/screenshots/` (visual proof of crawled screens)
 
 Default depth is `complete` (full extraction + validation).
 
@@ -69,11 +69,11 @@ If any mandatory input is missing, ask a concise clarification question first.
 
 ### 0. Prepare output folder
 
-- Create `/crawl/[nome-da-pagina]/` before crawling.
+- Create `/.crawl/[nome-da-pagina]/` before crawling.
 - Ensure this structure exists:
-  - `/crawl/[nome-da-pagina]/replication-report.md`
-  - `/crawl/[nome-da-pagina]/replication-spec.json`
-  - `/crawl/[nome-da-pagina]/evidence/screenshots/`
+  - `/.crawl/[nome-da-pagina]/replication-report.md`
+  - `/.crawl/[nome-da-pagina]/replication-spec.json`
+  - `/.crawl/[nome-da-pagina]/evidence/screenshots/`
 - Never write crawl artifacts outside this folder.
 
 ### 1. Validate scope and access
@@ -183,7 +183,7 @@ await page.waitForTimeout(5000);
 
 ### 5. Capture screenshot evidence
 
-- Create `/crawl/[nome-da-pagina]/evidence/screenshots/` and save screenshots using deterministic names.
+- Create `/.crawl/[nome-da-pagina]/evidence/screenshots/` and save screenshots using deterministic names.
 - Mandatory screenshots:
   - `list-default.png`
   - `list-filters-open.png`
@@ -217,7 +217,7 @@ await page.waitForTimeout(5000);
 
 ### 8. Produce replication package
 
-- Write `/crawl/[nome-da-pagina]/replication-report.md` with:
+- Write `/.crawl/[nome-da-pagina]/replication-report.md` with:
   - page inventory
   - UI schema
   - field dictionary
@@ -226,7 +226,7 @@ await page.waitForTimeout(5000);
   - behavior rules and edge cases
   - screenshot evidence map
   - implementation checklist
-- Export `/crawl/[nome-da-pagina]/replication-spec.json` with machine-readable sections:
+- Export `/.crawl/[nome-da-pagina]/replication-spec.json` with machine-readable sections:
   - `scope`
   - `pages.list`
   - `pages.detail`
@@ -329,7 +329,7 @@ Use this skeleton:
   "evidence": {
     "screenshots": [
       {
-        "file": "/crawl/[nome-da-pagina]/evidence/screenshots/list-default.png",
+        "file": "/.crawl/[nome-da-pagina]/evidence/screenshots/list-default.png",
         "page": "list|detail|popup",
         "state": "",
         "supports": ["column-mapping", "filter-behavior"],

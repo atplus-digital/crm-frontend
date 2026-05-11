@@ -16,6 +16,13 @@ export type PopupMutationState = Pick<
 	"isError" | "isSuccess" | "isPending" | "error" | "data"
 >;
 
+/**
+ * Redirect target after successful request.
+ * - `string`: Static URL to redirect to
+ * - `function`: Receives the response payload and returns the URL
+ */
+export type RedirectTo<T = unknown> = string | ((payload: T) => string);
+
 export interface PopupRequestProps<I extends CustomRequestIdentifier> {
 	/** Custom request identifier (key, name, or fully qualified name) */
 	identifier: I;
@@ -51,6 +58,8 @@ export interface PopupRequestProps<I extends CustomRequestIdentifier> {
 		| "icon-lg";
 	/** Auto close dialog on success (default: false) */
 	autoCloseOnSuccess?: boolean;
+	/** Redirect to URL after success (string or function receiving payload) */
+	redirectTo?: RedirectTo;
 }
 
 export interface ErrorVisualizationData {

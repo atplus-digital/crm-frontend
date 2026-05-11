@@ -5,17 +5,16 @@ dist
 .env
 .env.*
 !.env.example
-__unconfig*
-todos.json
+
 coverage
-.playwright-mcp
-.cache
-crawl
 
 .weave/*
 !.weave/plans/
 !.weave/designs/
 
+.playwright-mcp
+.cache
+.crawl
 .temp
 .backup
 .reports

@@ -113,6 +113,22 @@ import { PopupRequest } from "#/features/custom-requests";
   Executar
 </PopupRequest>
 
+// With redirect to static URL after success
+<PopupRequest
+  identifier="qualirun"
+  redirectTo="/dashboard"
+>
+  Executar
+</PopupRequest>
+
+// With redirect using payload data
+<PopupRequest
+  identifier="qualirun"
+  redirectTo={(payload) => `/contratos/${payload.id}`}
+>
+  Executar
+</PopupRequest>
+
 // With minimum loading time on button (900ms)
 <PopupRequest
   identifier="qualirun"

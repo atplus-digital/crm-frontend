@@ -42,8 +42,8 @@ export function ViewActionButton({
 			}}
 			disabled={isNavigating}
 		>
-			<ChevronRight className="size-4" />
-			<span>{title}</span>
+			<ChevronRight className="size-4 shrink-0" />
+			<span className="leading-none">{title}</span>
 		</Button>
 	);
 }

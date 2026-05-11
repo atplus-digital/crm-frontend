@@ -3,13 +3,13 @@ import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
 	TROCAS_TITULARIDADE_COLUMNS,
 	trocasTitularidadeTableColumns,
-} from "#/features/cs/contratos/contrato-negociacoes-columns";
+} from "#/features/cs/contratos/contrato-detalhes/contrato-negociacoes-tab/contrato-negociacoes-columns";
 import { useContratoTrocasTitularidade } from "#/features/cs/contratos/contratos-hooks";
 import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
 import {
 	RENOVACOES_COLUMNS,
 	renovacoesTableColumns,
-} from "../contrato-negociacoes-columns";
+} from "./contrato-negociacoes-columns.tsx";
 
 interface ContratoNegociacoesTabProps {
 	contratoId: number;

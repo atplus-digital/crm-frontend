@@ -1,4 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
+import { ViewActionButton } from "#/components/table/columns/view-action";
 import {
 	detailDateCell,
 	detailMoneyCell,
@@ -76,6 +77,7 @@ export const trocasTitularidadeTableColumns: ColumnDef<
 // ---------------------------------------------------------------------------
 
 export const RENOVACOES_COLUMNS = [
+	"Acessar",
 	"Título",
 	"Valor Mensal",
 	"Criado em",
@@ -89,6 +91,16 @@ export const renovacoesTableColumns: ColumnDef<
 	NegociacaoWithRelations,
 	unknown
 >[] = [
+	{
+		id: "acessar",
+		header: "Acessar",
+		cell: ({ row }) => (
+			<ViewActionButton
+				routeKey="cs_negociacoes_id"
+				params={{ id: row.original.id }}
+			/>
+		),
+	},
 	{
 		accessorKey: "f_titulo",
 		header: "Título",

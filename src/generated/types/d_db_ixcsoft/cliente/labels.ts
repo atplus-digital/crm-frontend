@@ -270,9 +270,9 @@ export const CLIENTE_TIPOLOCALIDADE_LABELS = {
 } as const;
 
 export const CLIENTE_TIPOPESSOA_LABELS = {
-	J: "J",
-	F: "F",
-	E: "E",
+	J: "Pessoa Jurídica",
+	F: "Pessoa Física",
+	E: "Estrangeiro",
 	1: "1",
 	2: "2",
 	3: "3",
@@ -547,7 +547,8 @@ export const clienteTipoLocalidadeSchema = z.enum(["R", "U"], {
 
 export const clienteTipoPessoaSchema = z.enum(["J", "F", "E", "1", "2", "3"], {
 	error: () => ({
-		message: "tipo_pessoa: valores válidos são [J, F, E, 1, 2, 3]",
+		message:
+			"tipo_pessoa: valores válidos são [Pessoa Jurídica, Pessoa Física, Estrangeiro, 1, 2, 3]",
 	}),
 });
 

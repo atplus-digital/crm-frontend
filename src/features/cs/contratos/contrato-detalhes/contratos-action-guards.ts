@@ -2,7 +2,7 @@ import {
 	ContratoStatus,
 	type ContratoWithCliente,
 	InternetStatus,
-} from "./contratos-types";
+} from "../contratos-types";
 
 // ---------------------------------------------------------------------------
 // Guard funtions — puras, testáveis, uma por ação

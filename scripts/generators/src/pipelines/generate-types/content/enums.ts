@@ -8,6 +8,93 @@ import {
 } from "@generators/pipelines/generate-types/utils/naming";
 import { jsonToSingleQuotedString } from "@scripts/generators/src/lib/utils/strings";
 
+/**
+ * Labels padrão para campos enum comuns do IXC.
+ * Quando a API não fornece labels descritivas, usamos estas.
+ * Chave: "{collectionName}.{fieldName}"
+ */
+const DEFAULT_ENUM_LABELS: Record<string, Record<string, string>> = {
+	// cliente
+	"cliente.tipo_pessoa": {
+		F: "Pessoa Física",
+		J: "Pessoa Jurídica",
+		E: "Estrangeiro",
+	},
+	"cliente.estado_civil": {
+		Casado: "Casado",
+		Solteiro: "Solteiro",
+		Divorciado: "Divorciado",
+		Viúvo: "Viúvo",
+	},
+	"cliente.sexo": {
+		F: "Feminino",
+		M: "Masculino",
+		NB: "Não Binário",
+		O: "Outro",
+		PNI: "Prefiro não informar",
+	},
+	// cliente_contrato
+	"cliente_contrato.tipo": {
+		I: "Internet",
+		T: "Telefonia",
+		S: "TV por Assinatura",
+		SVA: "SVA",
+	},
+	"cliente_contrato.tipo_cobranca": {
+		P: "Pré-pago",
+		I: "Iteração",
+		E: "Especial",
+	},
+	"cliente_contrato.tipo_localidade": {
+		R: "Rural",
+		U: "Urbano",
+	},
+	"cliente_contrato.status": {
+		A: "Ativo",
+		I: "Cancelado",
+		P: "Pré-Contrato",
+		N: "Negativado",
+		D: "Desistiu",
+	},
+	"cliente_contrato.status_internet": {
+		A: "Ativo",
+		D: "Desativado",
+		CM: "Bloqueio Manual",
+		CA: "Bloqueio Automático",
+		CE: "Bloqueio Financeiro",
+		FA: "Financeiro Atraso",
+		AA: "Aguardando Assinatura",
+	},
+	"cliente_contrato.situacao_financeira_contrato": {
+		R: "Regular",
+		IR: "Irregular",
+		I: "Inadimplente",
+	},
+};
+
+/**
+ * Obtém label padrão para um valor de enum, se disponível.
+ */
+function getDefaultLabel(
+	collectionName: string,
+	fieldName: string,
+	value: string | number,
+): string | undefined {
+	const key = `${collectionName}.${fieldName}`;
+	const fieldDefaults = DEFAULT_ENUM_LABELS[key];
+	if (fieldDefaults) {
+		return fieldDefaults[String(value)];
+	}
+	return undefined;
+}
+
+/**
+ * Verifica se uma label é apenas o valor repetido (indica que não há label descritiva).
+ */
+function isGenericLabel(value: string | number, label: string): boolean {
+	return String(value) === label;
+}
+
 export interface EnumFieldInfo {
 	/** Nome do campo no formato PascalCase */
 	fieldName: string;
@@ -161,7 +248,11 @@ export function generateEnumLabelMap(
 		.map((opt) => {
 			const valueStr = String(opt.value);
 			// Use jsonToSingleQuotedString to properly escape for single-quoted TS strings
-			const label = `'${jsonToSingleQuotedString(JSON.stringify(opt.label))}'`;
+			// Apply default labels if the API didn't provide descriptive labels
+			const labelValue = isGenericLabel(opt.value, opt.label)
+				? (getDefaultLabel(collectionName, fieldName, opt.value) ?? opt.label)
+				: opt.label;
+			const label = `'${jsonToSingleQuotedString(JSON.stringify(labelValue))}'`;
 			// Keys must ALWAYS be the original enum values for correct lookup
 			const keyName = isValidObjectKey(valueStr) ? valueStr : `"${valueStr}"`;
 

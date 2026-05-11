@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import type {
 	CustomRequestIdentifier,
@@ -8,7 +9,7 @@ import { useCustomRequest } from "#/features/custom-requests/hooks/use-custom-re
 import { useMinimumLoading } from "#/hooks/use-minimum-loading";
 import { getErrorMessage } from "#/lib/api-errors";
 import { createLogger } from "#/lib/logger";
-import type { DialogMode } from "./popup-request.types";
+import type { DialogMode, RedirectTo } from "./popup-request.types";
 import { getSuccessDisplayMessage } from "./popup-request.utils";
 
 const popupLog = createLogger("popup-request");
@@ -20,6 +21,7 @@ interface UsePopupRequestOptions<I extends CustomRequestIdentifier> {
 	confirm?: boolean;
 	autoCloseOnSuccess?: boolean;
 	minimumLoading?: boolean;
+	redirectTo?: RedirectTo;
 }
 
 export function usePopupRequest<I extends CustomRequestIdentifier>({
@@ -29,10 +31,33 @@ export function usePopupRequest<I extends CustomRequestIdentifier>({
 	confirm = true,
 	autoCloseOnSuccess = false,
 	minimumLoading = true,
+	redirectTo,
 }: UsePopupRequestOptions<I>) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [dialogMode, setDialogMode] = useState<DialogMode>("confirm");
 	const mutation = useCustomRequest(identifier);
+	const navigate = useNavigate();
+
+	const computeRedirectUrl = useCallback(
+		(data: unknown): string | undefined => {
+			if (!redirectTo) return undefined;
+			if (typeof redirectTo === "function") {
+				return redirectTo(data);
+			}
+			return redirectTo;
+		},
+		[redirectTo],
+	);
+
+	const performRedirect = useCallback(
+		(data: unknown) => {
+			const url = computeRedirectUrl(data);
+			if (url) {
+				navigate(url);
+			}
+		},
+		[computeRedirectUrl, navigate],
+	);
 
 	const closeDialog = useCallback(() => {
 		setIsOpen(false);
@@ -48,6 +73,7 @@ export function usePopupRequest<I extends CustomRequestIdentifier>({
 			});
 			onSuccess?.(result);
 			toast.success(getSuccessDisplayMessage(result));
+			performRedirect(result);
 			if (autoCloseOnSuccess) {
 				closeDialog();
 			}
@@ -61,7 +87,14 @@ export function usePopupRequest<I extends CustomRequestIdentifier>({
 			);
 			throw error;
 		}
-	}, [autoCloseOnSuccess, closeDialog, mutation, onSuccess, payload]);
+	}, [
+		autoCloseOnSuccess,
+		closeDialog,
+		mutation,
+		onSuccess,
+		payload,
+		performRedirect,
+	]);
 
 	const { state: buttonState, run: runWithMinimumLoading } =
 		useMinimumLoading(executeRequest);

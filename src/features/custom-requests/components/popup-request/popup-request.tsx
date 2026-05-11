@@ -20,6 +20,7 @@ export function PopupRequest<I extends CustomRequestIdentifier>({
 	variant = "default",
 	size = "default",
 	autoCloseOnSuccess = false,
+	redirectTo,
 }: PopupRequestProps<I>) {
 	const {
 		isOpen,
@@ -36,6 +37,7 @@ export function PopupRequest<I extends CustomRequestIdentifier>({
 		onSuccess,
 		confirm,
 		autoCloseOnSuccess,
+		redirectTo,
 	});
 
 	const StateIcon = getStateIcon(buttonState);

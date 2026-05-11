@@ -14,6 +14,8 @@ export const ContratoStatus = {
 	Inativo: "I",
 	Desativado: "D",
 	Cancelado: "C",
+	PreContrato: "P",
+	Negativado: "N",
 } as const;
 
 export type ContratoStatus =
@@ -24,12 +26,18 @@ export const CONTRATO_STATUS_LABELS: Record<ContratoStatus, string> = {
 	[ContratoStatus.Inativo]: "Inativo",
 	[ContratoStatus.Desativado]: "Desativado",
 	[ContratoStatus.Cancelado]: "Cancelado",
+	[ContratoStatus.PreContrato]: "Pré-Contrato",
+	[ContratoStatus.Negativado]: "Negativado",
 };
 
 export const InternetStatus = {
 	Ativo: "A",
 	Desconectado: "D",
 	FinanceiroAtraso: "FA",
+	BloqueioManual: "CM",
+	BloqueioAuto: "CA",
+	CreditoEstorno: "CE",
+	AguardandoAssinatura: "AA",
 } as const;
 
 export type InternetStatus =
@@ -39,6 +47,10 @@ export const INTERNET_STATUS_LABELS: Record<InternetStatus, string> = {
 	[InternetStatus.Ativo]: "Ativo",
 	[InternetStatus.Desconectado]: "Desconectado",
 	[InternetStatus.FinanceiroAtraso]: "Financeiro Atraso",
+	[InternetStatus.BloqueioManual]: "Bloqueio Manual",
+	[InternetStatus.BloqueioAuto]: "Bloqueio Automático",
+	[InternetStatus.CreditoEstorno]: "Crédito Estorno",
+	[InternetStatus.AguardandoAssinatura]: "Aguardando Assinatura",
 };
 
 // ---------------------------------------------------------------------------

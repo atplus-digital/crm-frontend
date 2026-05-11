@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { ContratoRegistrosTab } from "#/features/cs/contratos/contrato-registros-tab/contrato-registros-tab";
+import { ContratoRegistrosTab } from "#/features/cs/contratos/contrato-detalhes/contrato-registros-tab/contrato-registros-tab";
 
 export function ContratoRegistrosTabPage() {
 	const { id } = useParams<{ id: string }>();

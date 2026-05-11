@@ -209,9 +209,9 @@ export const CLIENTECONTRATO_SELFIEPHOTO_LABELS = {
 } as const;
 
 export const CLIENTECONTRATO_SITUACAOFINANCEIRACONTRATO_LABELS = {
-	R: "R",
-	IR: "IR",
-	I: "I",
+	R: "Regular",
+	IR: "Irregular",
+	I: "Inadimplente",
 } as const;
 
 export const CLIENTECONTRATO_STATUS_LABELS = {
@@ -241,21 +241,21 @@ export const CLIENTECONTRATO_STATUSRECORRENCIA_LABELS = {
 } as const;
 
 export const CLIENTECONTRATO_TIPO_LABELS = {
-	I: "I",
-	T: "T",
-	S: "S",
+	I: "Internet",
+	T: "Telefonia",
+	S: "TV por Assinatura",
 	SVA: "SVA",
 } as const;
 
 export const CLIENTECONTRATO_TIPOCOBRANCA_LABELS = {
-	P: "P",
-	I: "I",
-	E: "E",
+	P: "Pré-pago",
+	I: "Iteração",
+	E: "Especial",
 } as const;
 
 export const CLIENTECONTRATO_TIPOLOCALIDADE_LABELS = {
-	R: "R",
-	U: "U",
+	R: "Rural",
+	U: "Urbano",
 } as const;
 
 export const CLIENTECONTRATO_TIPOPRODUTOSPLANO_LABELS = {
