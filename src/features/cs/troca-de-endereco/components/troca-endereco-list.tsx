@@ -1,7 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { StatusBadge } from "#/components/badges/status-badge";
-import { ViewActionButton } from "#/components/table/columns/view-action";
+import { ViewActionButton } from "#/components/table/columns/view-action-button";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
 import { DataTableContainer } from "#/components/table/data-table-container";
 import type { TrocaEnderecoWithRelations } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";

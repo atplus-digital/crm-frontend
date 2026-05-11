@@ -1,6 +1,6 @@
 import { LogOut, Moon, Sun, User } from "lucide-react";
 import { Link } from "react-router";
-import { useTheme } from "#/components/theme-provider";
+import { useTheme } from "#/components/providers/theme-provider";
 import { Avatar, AvatarFallback } from "#/components/ui/avatar";
 import {
 	DropdownMenu,

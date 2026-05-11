@@ -5,8 +5,8 @@ import { Suspense } from "react";
 import { Outlet } from "react-router";
 
 import { ErrorBoundary } from "./components/error-boundary";
-import { getQueryContext } from "./components/query-provider";
-import { ThemeProvider } from "./components/theme-provider";
+import { getQueryContext } from "./components/providers/query-provider";
+import { ThemeProvider } from "./components/providers/theme-provider";
 import { Toaster } from "./components/ui/sonner";
 import { env, isDev } from "./env";
 

@@ -1,6 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { StatusBadge } from "#/components/badges/status-badge";
-import { ViewActionButton } from "#/components/table/columns/view-action";
+import { ViewActionButton } from "#/components/table/columns/view-action-button";
 import { MotivoBadge } from "#/features/cs/negociacoes/negociacao-badges/motivo-badge";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { NEGOCIACAO_STATUS_LABELS } from "#/features/cs/negociacoes/negociacoes-types";

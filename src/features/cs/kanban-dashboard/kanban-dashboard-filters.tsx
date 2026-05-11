@@ -1,4 +1,3 @@
-import { SlidersHorizontal } from "lucide-react";
 import { useId, useRef } from "react";
 import {
 	FilterActions,
@@ -7,16 +6,8 @@ import {
 	FilterLayout,
 	flushFilters,
 } from "#/components/filters";
-import { Label } from "#/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "#/components/ui/select";
-import { Switch } from "#/components/ui/switch";
 import { DEFAULT_KANBAN_FILTERS } from "./kanban-dashboard-filters-url";
+import { KanbanSortControls } from "./kanban-dashboard-sort-controls";
 import type {
 	KanbanDashboardFilters,
 	KanbanSortField,
@@ -25,7 +16,6 @@ import type {
 } from "./kanban-dashboard-types";
 import {
 	EXTRA_NEGOCIACAO_MOTIVO_OPTIONS,
-	KANBAN_SORT_OPTIONS,
 	NEGOCIACAO_MOTIVO_BADGE,
 	PRIMARY_NEGOCIACAO_MOTIVO_OPTIONS,
 	SOURCE_COLLECTION_OPTIONS,
@@ -145,34 +135,14 @@ export function KanbanDashboardFilterBar({
 							canClear={hasFilters}
 							clearVariant="ghost"
 						/>
-						<div className="flex items-center gap-2 ml-auto">
-							<Switch
-								id="current-user-toggle"
-								checked={filters.currentUser === true}
-								onCheckedChange={(checked) =>
-									onFilter({ ...filters, currentUser: checked })
-								}
-							/>
-							<Label htmlFor="current-user-toggle">Apenas meus itens</Label>
-						</div>
-						<div className="flex items-center gap-2">
-							<SlidersHorizontal className="size-4 text-muted-foreground" />
-							<Select
-								value={filters.sortField ?? "createdAt_desc"}
-								onValueChange={handleSortChange}
-							>
-								<SelectTrigger className="h-8 w-45">
-									<SelectValue placeholder="Ordenar por" />
-								</SelectTrigger>
-								<SelectContent>
-									{KANBAN_SORT_OPTIONS.map((option) => (
-										<SelectItem key={option.value} value={option.value}>
-											{option.label}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</div>
+						<KanbanSortControls
+							sortField={filters.sortField}
+							currentUser={filters.currentUser === true}
+							onSortChange={handleSortChange}
+							onCurrentUserChange={(checked) =>
+								onFilter({ ...filters, currentUser: checked })
+							}
+						/>
 					</div>
 				}
 			>

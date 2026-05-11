@@ -1,5 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { ViewActionButton } from "#/components/table/columns/view-action";
+import { ViewActionButton } from "#/components/table/columns/view-action-button";
 import { DataTableColumnHeader } from "#/components/table/data-table-column-header";
 import {
 	ContratoStatusBadge,

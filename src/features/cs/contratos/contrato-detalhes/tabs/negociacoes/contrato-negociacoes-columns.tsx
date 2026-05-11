@@ -1,5 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { ViewActionButton } from "#/components/table/columns/view-action";
+import { ViewActionButton } from "#/components/table/columns/view-action-button";
 import {
 	detailDateCell,
 	detailMoneyCell,

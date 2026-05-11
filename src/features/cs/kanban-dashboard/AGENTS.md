@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-27 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-11 -->
 
 # AGENTS.md — kanban-dashboard
 
@@ -14,13 +14,16 @@ Kanban Dashboard subdomain — unified Kanban board combining four NocoBase coll
 
 ## Key Files
 
-| File                        | Purpose                                                                             |
-| --------------------------- | ----------------------------------------------------------------------------------- |
-| `kanban-dashboard-types.ts` | Unified status columns, discriminated card union, status mapping fns, badge configs |
-| `kanban-dashboard-hooks.ts` | Parallel `useQueries` fetch for TT/TE/SC/NEG + normalization to cards               |
-| `kanban-card.tsx`           | Individual card component with source-collection badge and navigation               |
-| `kanban-column.tsx`         | Single column component with pagination and card rendering                          |
-| `kanban-board.tsx`          | Board layout composing columns from grouped status cards                            |
+| File                                 | Purpose                                                                          |
+| ------------------------------------ | -------------------------------------------------------------------------------- |
+| `types/index.ts`                     | Barrel: status columns, card types, source collections, status mappings, filters |
+| `hooks/use-kanban-dashboard-data.ts` | Main hook: parallel `useQueries` fetch for TT/TE/SC/NEG + normalization to cards |
+| `hooks/query-options.ts`             | Private query option factories for each collection                               |
+| `hooks/normalizers.ts`               | Private normalization helpers for each collection type                           |
+| `kanban-dashboard-sort-controls.tsx` | Sort select + current-user toggle (extracted from filters)                       |
+| `kanban-card.tsx`                    | Individual card component with source-collection badge and navigation            |
+| `kanban-column.tsx`                  | Single column component with pagination and card rendering                       |
+| `kanban-board.tsx`                   | Board layout composing columns from grouped status cards                         |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -33,7 +36,7 @@ Kanban Dashboard subdomain — unified Kanban board combining four NocoBase coll
 - Data fetching uses `useQueries` with four independent `queryOptions` (query keys: `["kanban-dashboard", "tt"|"te"|"sc"|"neg"]`), each with `staleTime: 10_000` and `pageSize: 200`.
 - Cards navigate to their source detail page via `buildRoute()` using the collection-specific route name from `SOURCE_COLLECTION_OPTIONS`.
 - Badge colors and labels for source collections are centralized in `SOURCE_COLLECTION_BADGE` in `kanban-dashboard-types.ts` (not inline in card component).
-- Keep types, hooks, and UI components colocated in this folder — no barrel `index.ts` exists; import directly from the file path.
+- Types and hooks are split into `types/` and `hooks/` subdirectories for maintainability; the legacy files (`kanban-dashboard-types.ts`, `kanban-dashboard-hooks.ts`) remain as barrel re-exports for backward compatibility. New imports should use `./types` or `./hooks/use-kanban-dashboard-data` directly.
 
 <!-- AGENTS-GENERATED:END patterns -->
 
@@ -41,11 +44,11 @@ Kanban Dashboard subdomain — unified Kanban board combining four NocoBase coll
 
 ## Golden Samples
 
-| Pattern                            | Reference file                                               |
-| ---------------------------------- | ------------------------------------------------------------ |
-| Unified discriminated union types  | `src/features/cs/kanban-dashboard/kanban-dashboard-types.ts` |
-| Parallel multi-collection fetching | `src/features/cs/kanban-dashboard/kanban-dashboard-hooks.ts` |
-| Kanban card with navigation        | `src/features/cs/kanban-dashboard/kanban-card.tsx`           |
-| Board column grouping              | `src/features/cs/kanban-dashboard/kanban-board.tsx`          |
+| Pattern                            | Reference file                                                        |
+| ---------------------------------- | --------------------------------------------------------------------- |
+| Unified discriminated union types  | `src/features/cs/kanban-dashboard/types/card-types.ts`                |
+| Parallel multi-collection fetching | `src/features/cs/kanban-dashboard/hooks/use-kanban-dashboard-data.ts` |
+| Kanban card with navigation        | `src/features/cs/kanban-dashboard/kanban-card.tsx`                    |
+| Board column grouping              | `src/features/cs/kanban-dashboard/kanban-board.tsx`                   |
 
 <!-- AGENTS-GENERATED:END golden-samples -->

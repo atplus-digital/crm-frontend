@@ -41,9 +41,10 @@ export function ViewActionButton({
 				void navigate(to);
 			}}
 			disabled={isNavigating}
+			className="flex items-center gap-1"
 		>
-			<ChevronRight className="size-4 shrink-0" />
-			<span className="leading-none">{title}</span>
+			<span className="">{title}</span>
+			<ChevronRight className="size-4" />
 		</Button>
 	);
 }
