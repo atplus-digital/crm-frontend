@@ -1,0 +1,241 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowRightLeft, Loader2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "#/components/ui/button";
+import {
+	Sheet,
+	SheetContent,
+	SheetFooter,
+	SheetHeader,
+	SheetTitle,
+} from "#/components/ui/sheet";
+import { useCreateTrocaTitularidade } from "@/features/cs/troca-titularidade/troca-titularidade-hooks";
+import type { CreateTrocaTitularidadeInput } from "@/features/cs/troca-titularidade/troca-titularidade-service";
+
+import { CedenteSection } from "./transferencia-titularidade-cedente-section";
+import { CessionarioSection } from "./transferencia-titularidade-cessionario-section";
+import { ContratoSection } from "./transferencia-titularidade-contrato-section";
+import {
+	type CessionarioState,
+	DEFAULT_CESSIONARIO_STATE,
+	DEFAULT_FORM_VALUES,
+	type SelectedPF,
+	type TipoPessoa,
+} from "./transferencia-titularidade-types";
+
+// ============================================================================
+// Schema
+// ============================================================================
+
+const transferenciaTitularidadeSchema = z.object({
+	// Cedente
+	f_cedente_responsavel_legal: z
+		.string()
+		.min(1, "Responsável legal é obrigatório"),
+	f_cedente_telefone: z.string().min(1, "Telefone é obrigatório"),
+	f_cedente_email: z.string().email("E-mail inválido"),
+
+	// Cessionário
+	f_cessionario: z.string().min(1, "Nome é obrigatório"),
+	f_cessionario_documento: z.string().min(1, "Documento é obrigatório"),
+	f_cessionario_responsavel: z.string().optional(),
+	f_cessionario_telefone: z.string().min(1, "Telefone é obrigatório"),
+	f_cessionario_email: z.string().email("E-mail inválido"),
+
+	// Endereço
+	f_cep: z.string().min(1, "CEP é obrigatório"),
+	f_endereco: z.string().min(1, "Endereço é obrigatório"),
+	f_numero: z.string().min(1, "Número é obrigatório"),
+	f_bairro: z.string().min(1, "Bairro é obrigatório"),
+	f_complemento: z.string().min(1, "Complemento é obrigatório"),
+	f_cidade: z.string().min(1, "Cidade é obrigatória"),
+	f_estado: z.string().min(1, "Estado é obrigatório"),
+});
+
+type FormValues = z.infer<typeof transferenciaTitularidadeSchema>;
+
+// ============================================================================
+// Props
+// ============================================================================
+
+interface SheetProps {
+	contrato: {
+		id: number | string;
+		f_nc_cliente?: { razao?: string; cnpj_cpf?: string } | null;
+	};
+	open: boolean;
+	onOpenChange: (open: boolean) => void;
+}
+
+// ============================================================================
+// Main Component
+// ============================================================================
+
+export function TransferenciaTitularidadeSheet({
+	contrato,
+	open,
+	onOpenChange,
+}: SheetProps) {
+	const cedente = contrato.f_nc_cliente;
+
+	// Pre-filled read-only fields
+	const cedenteNome = cedente?.razao ?? "";
+	const cedenteDoc = cedente?.cnpj_cpf ?? "";
+	const contratoId = String(contrato.id);
+
+	// Form
+	const form = useForm<FormValues>({
+		resolver: zodResolver(transferenciaTitularidadeSchema),
+		defaultValues: DEFAULT_FORM_VALUES,
+	});
+
+	const {
+		handleSubmit,
+		reset,
+		control,
+		register,
+		setValue,
+		formState: { errors },
+	} = form;
+
+	// UI state
+	const [tipoPessoa, setTipoPessoa] = useState<TipoPessoa>("PF");
+	const [cessionario, setCessionario] = useState<CessionarioState>(
+		DEFAULT_CESSIONARIO_STATE,
+	);
+	const [selectedPF, setSelectedPF] = useState<SelectedPF>(null);
+	const [, setSelectedPJ] = useState<null>(null);
+
+	// Submit
+	const mutation = useCreateTrocaTitularidade();
+
+	const submitDisabled = useMemo(() => {
+		if (tipoPessoa === "PF" && selectedPF?.f_credito === "9") return true;
+		return false;
+	}, [tipoPessoa, selectedPF?.f_credito]);
+
+	const onSubmit: SubmitHandler<FormValues> = (values) => {
+		const payload: CreateTrocaTitularidadeInput = {
+			f_cedente: cedenteNome,
+			f_cedente_documento: cedenteDoc,
+			f_cedente_responsavel_legal: values.f_cedente_responsavel_legal,
+			f_cedente_telefone: values.f_cedente_telefone,
+			f_cedente_email: values.f_cedente_email,
+			f_tipo_pessoa: tipoPessoa,
+			f_pessoa_pf: tipoPessoa === "PF" ? (selectedPF?.id ?? null) : null,
+			f_pessoa_pj: null,
+			f_cessionario: values.f_cessionario,
+			f_cessionario_documento: values.f_cessionario_documento,
+			f_cessionario_responsavel: values.f_cessionario_responsavel ?? "",
+			f_cessionario_telefone: values.f_cessionario_telefone,
+			f_cessionario_email: values.f_cessionario_email,
+			f_id_contrato: contratoId,
+			f_cep: values.f_cep,
+			f_endereco: values.f_endereco,
+			f_numero: values.f_numero.trim(),
+			f_bairro: values.f_bairro,
+			// biome-ignore lint/suspicious/noExplicitAny: enum type from NocoBase
+			f_complemento: values.f_complemento as any,
+			f_cidade: values.f_cidade,
+			// biome-ignore lint/suspicious/noExplicitAny: enum type from NocoBase
+			f_estado: values.f_estado as any,
+		};
+
+		mutation.mutate(payload, {
+			onSuccess: () => onOpenChange(false),
+		});
+	};
+
+	// Reset form on close
+	// biome-ignore lint/correctness/useExhaustiveDependencies: reset/mutation are stable but including them causes infinite loop
+	useEffect(() => {
+		if (!open) {
+			setTipoPessoa("PF");
+			setCessionario(DEFAULT_CESSIONARIO_STATE);
+			setSelectedPF(null);
+			setSelectedPJ(null);
+			reset();
+			mutation.reset();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [open]);
+
+	return (
+		<Sheet open={open} onOpenChange={onOpenChange}>
+			<SheetContent
+				side="right"
+				className="flex flex-col data-[side=right]:sm:max-w-2xl"
+			>
+				<SheetHeader>
+					<SheetTitle className="flex items-center gap-2">
+						<ArrowRightLeft className="size-5" />
+						Transferência de Titularidade
+					</SheetTitle>
+				</SheetHeader>
+
+				<form
+					onSubmit={handleSubmit(onSubmit)}
+					className="flex flex-1 flex-col overflow-hidden"
+				>
+					<div className="flex-1 space-y-6 overflow-y-auto px-4 py-4">
+						<CedenteSection
+							cedenteNome={cedenteNome}
+							cedenteDoc={cedenteDoc}
+							register={register}
+							errors={errors}
+						/>
+
+						<CessionarioSection
+							tipoPessoa={tipoPessoa}
+							onTipoPessoaChange={setTipoPessoa}
+							cessionario={cessionario}
+							onCessionarioChange={setCessionario}
+							selectedPF={selectedPF}
+							onSelectedPFChange={setSelectedPF}
+							onClearPJSearch={() => setSelectedPJ(null)}
+							setValue={setValue}
+							errors={errors}
+						/>
+
+						<ContratoSection
+							contratoId={contratoId}
+							register={register}
+							setValue={setValue}
+							control={control}
+							errors={errors}
+						/>
+
+						{mutation.isError && (
+							<div className="rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive">
+								{mutation.error?.message ?? "Erro ao criar transferência"}
+							</div>
+						)}
+					</div>
+
+					<SheetFooter className="border-t px-4 py-4">
+						<Button
+							type="button"
+							variant="outline"
+							onClick={() => onOpenChange(false)}
+							disabled={mutation.isPending}
+						>
+							Cancelar
+						</Button>
+						<Button
+							type="submit"
+							disabled={submitDisabled || mutation.isPending}
+						>
+							{mutation.isPending && (
+								<Loader2 className="mr-2 size-4 animate-spin" />
+							)}
+							Salvar
+						</Button>
+					</SheetFooter>
+				</form>
+			</SheetContent>
+		</Sheet>
+	);
+}
