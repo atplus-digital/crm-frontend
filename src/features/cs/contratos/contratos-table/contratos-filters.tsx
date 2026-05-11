@@ -9,10 +9,10 @@ import {
 	CONTRATO_STATUS_LABELS,
 	type ContratoStatus,
 	type ContratosTableFilters,
-	DEFAULT_CONTRATOS_TABLE_FILTERS,
 	INTERNET_STATUS_LABELS,
 	type InternetStatus,
 } from "#/features/cs/contratos/contratos-types";
+import { DEFAULT_CONTRATOS_TABLE_FILTERS } from ".";
 
 interface ContratosFiltersProps {
 	filters: ContratosTableFilters;
@@ -68,7 +68,7 @@ export function ContratosFilters({ filters }: ContratosFiltersProps) {
 
 	return (
 		<FilterLayout
-			fieldsClassName="lg:grid-cols-3 xl:grid-cols-6"
+			fieldsClassName="lg:grid-cols-3 xl:grid-cols-5"
 			actions={
 				<FilterActions
 					onApply={() => onFilter(filters)}

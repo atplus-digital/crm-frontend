@@ -1,12 +1,14 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/layouts/page-layout";
 import { useContratos } from "#/features/cs/contratos/contratos-hooks";
-import { ContratosTable } from "#/features/cs/contratos/contratos-table";
+import {
+	ContratosTable,
+	DEFAULT_CONTRATOS_TABLE_FILTERS,
+} from "#/features/cs/contratos/contratos-table";
 import { ContratosFilters } from "#/features/cs/contratos/contratos-table/contratos-filters";
 import {
 	type ContratoFilters,
 	type ContratosTableFilters,
-	DEFAULT_CONTRATOS_TABLE_FILTERS,
 	toContratoFilters,
 } from "#/features/cs/contratos/contratos-types";
 import { useListPage } from "#/hooks/use-list-page";

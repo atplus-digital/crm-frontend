@@ -105,14 +105,6 @@ export interface ContratosTableFilters {
 	contratoId: string;
 }
 
-export const DEFAULT_CONTRATOS_TABLE_FILTERS: ContratosTableFilters = {
-	cpfCnpj: "",
-	nome: "",
-	status: JSON.stringify([ContratoStatus.PreContrato, ContratoStatus.Ativo]),
-	servicoStatus: JSON.stringify([]),
-	contratoId: "",
-};
-
 export function toContratoFilters(
 	filters: ContratosTableFilters,
 ): ContratoFilters {
