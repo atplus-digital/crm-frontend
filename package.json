@@ -21,7 +21,8 @@
 		"generate": "tsx scripts/generators/src/index.ts",
 		"generate:types": "pnpm generate --types",
 		"generate:requests": "pnpm generate --requests",
-		"analyze-bundle": "pnpx vite-bundle-analyzer"
+		"analyze-bundle": "pnpx vite-bundle-analyzer",
+		"ixc:audit": "tsx scripts/ixc-schema-audit/index.ts"
 	},
 	"dependencies": {
 		"@fontsource-variable/geist": "^5.2.8",
