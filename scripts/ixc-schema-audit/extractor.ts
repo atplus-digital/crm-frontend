@@ -25,26 +25,19 @@ function isZodType(obj: unknown): obj is ZodType {
 }
 
 function mapZodType(typeDef: ZodTypeDef): ScalarType | "enum" | "lazy" | "array" | "nullable" | "other" {
-	switch (typeDef.type) {
-		case "ZodString":
-			return "string";
-		case "ZodNumber":
-			return "number";
-		case "ZodBoolean":
-			return "boolean";
-		case "ZodEnum":
-		case "ZodNativeEnum":
-			return "enum";
-		case "ZodLazy":
-			return "lazy";
-		case "ZodArray":
-			return "array";
-		case "ZodNullable":
-		case "ZodOptional":
-			return "nullable";
-		default:
-			return "other";
-	}
+	// Zod v4 usa tipos em minúsculas: "string", "number", "boolean"
+	// Zod v3 usava: "ZodString", "ZodNumber", "ZodBoolean"
+	const type = typeDef.type?.toLowerCase() || "";
+
+	if (type === "string" || type === "zodstring") return "string";
+	if (type === "number" || type === "zodnumber") return "number";
+	if (type === "boolean" || type === "zodboolean") return "boolean";
+	if (type === "enum" || type === "zodenum" || type === "nativeenum" || type === "zodnativeenum") return "enum";
+	if (type === "lazy" || type === "zodlazy") return "lazy";
+	if (type === "array" || type === "zodarray") return "array";
+	if (type === "nullable" || type === "optional" || type === "zodnullable" || type === "zodoptional") return "nullable";
+
+	return "other";
 }
 
 function unwrapZodType(schema: ZodType): {
