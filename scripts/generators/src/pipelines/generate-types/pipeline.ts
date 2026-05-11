@@ -28,7 +28,7 @@ import { writeReportsStage } from "./stages/write-reports";
 // Reports output directory
 // ──────────────────────────────────────────────
 
-const REPORTS_OUTPUT = "scripts/generators/reports/generate-types/report.md";
+const REPORTS_OUTPUT = ".reports/generate-types/report.md";
 
 // ──────────────────────────────────────────────
 // DataSource client factory (composition over NocoBaseApiClient)

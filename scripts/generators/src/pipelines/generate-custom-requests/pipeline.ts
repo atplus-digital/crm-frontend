@@ -17,7 +17,7 @@ type Ctx = PipelineExecutionContext<ScriptConfig, CustomRequestsPipelineCtx>;
 type Stage = AsyncPipelineStage<Ctx>;
 
 const OUTPUT_DIR = "src/generated/custom-requests";
-const REPORTS_OUTPUT = "scripts/generators/reports/custom-requests-report.md";
+const REPORTS_OUTPUT = ".reports/custom-requests-report.md";
 
 /**
  * Creates a Listr2 task definition for the generate-custom-requests pipeline.

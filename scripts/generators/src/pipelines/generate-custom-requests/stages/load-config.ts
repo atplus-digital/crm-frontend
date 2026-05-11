@@ -20,8 +20,7 @@ const defaults = {
 	lockWorkspaceFolder: true,
 	reports: {
 		generateConsolidatedMarkdown: true,
-		consolidatedMarkdownOutputFile:
-			"scripts/generators/reports/custom-requests-report.md",
+		consolidatedMarkdownOutputFile: ".reports/custom-requests-report.md",
 	},
 };
 
