@@ -32,11 +32,13 @@ export interface CollectionSchema {
 	scalars: Map<string, ScalarType>;
 	enums: Map<string, EnumOption[]>;
 	relations: Map<string, { target: string; type: string }>;
+	/** Raw data for verbose output - field names as they appear in source */
+	rawFields?: Map<string, { type: string; rawType?: string }>;
 }
 
 export interface DiffItem<T = unknown> {
 	fieldName: string;
-	side: "ixc_only" | "nocobase_only" | "both_different";
+	side: "ixc_only" | "nocobase_only" | "both_different" | "match";
 	ixcValue?: T;
 	nocobaseValue?: T;
 }
@@ -47,4 +49,16 @@ export interface CollectionDiff {
 	enums: DiffItem<EnumOption[]>[];
 	relations: DiffItem<{ target: string; type: string }>[];
 	diffCount: number;
+	/** Metadata for verbose reporting */
+	metadata: {
+		ixcTotalFields: number;
+		nocobaseTotalFields: number;
+		ixcRawFieldNames: string[];
+		nocobaseRawFieldNames: string[];
+	};
+}
+
+export interface CliOptions {
+	verbose: boolean;
+	collection?: string;
 }

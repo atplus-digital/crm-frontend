@@ -24,6 +24,8 @@ function formatEnumOptions(opts: EnumOption[]): string {
 
 function formatScalarDiff(diff: DiffItem<ScalarType>): string {
 	switch (diff.side) {
+		case "match":
+			return `| \`${diff.fieldName}\` | \`${diff.ixcValue}\` | \`${diff.nocobaseValue}\` | ✅ OK |`;
 		case "ixc_only":
 			return `| \`${diff.fieldName}\` | \`${diff.ixcValue}\` | — | ❌ Ausente no NocoBase |`;
 		case "nocobase_only":
@@ -37,6 +39,16 @@ function formatEnumDiff(diff: DiffItem<EnumOption[]>): string[] {
 	const lines: string[] = [];
 
 	switch (diff.side) {
+		case "match":
+			lines.push(
+				`| \`${diff.fieldName}\` | — | — | ✅ OK |`,
+			);
+			if (diff.ixcValue) {
+				lines.push(
+					`| | ${formatEnumOptions(diff.ixcValue)} | ${formatEnumOptions(diff.ixcValue)} | |`,
+				);
+			}
+			break;
 		case "ixc_only":
 			lines.push(
 				`| \`${diff.fieldName}\` | — | — | ❌ Enum ausente no NocoBase |`,
@@ -100,6 +112,8 @@ function formatEnumDiff(diff: DiffItem<EnumOption[]>): string[] {
 
 function formatRelationDiff(diff: DiffItem<RelationInfo>): string {
 	switch (diff.side) {
+		case "match":
+			return `| \`${diff.fieldName}\` | \`${diff.ixcValue?.target}\` (${diff.ixcValue?.type}) | \`${diff.nocobaseValue?.target}\` (${diff.nocobaseValue?.type}) | ✅ OK |`;
 		case "ixc_only":
 			return `| \`${diff.fieldName}\` | \`${diff.ixcValue?.target}\` (${diff.ixcValue?.type}) | — | ❌ Relação ausente no NocoBase |`;
 		case "nocobase_only":
@@ -109,7 +123,7 @@ function formatRelationDiff(diff: DiffItem<RelationInfo>): string {
 	}
 }
 
-function generateCollectionReport(diff: CollectionDiff): string {
+function generateCollectionReport(diff: CollectionDiff, verbose: boolean): string {
 	const lines: string[] = [];
 
 	lines.push(`# ${diff.collectionName}`);
@@ -117,14 +131,102 @@ function generateCollectionReport(diff: CollectionDiff): string {
 	lines.push(`**Diffs encontrados:** ${diff.diffCount}`);
 	lines.push("");
 
+	// Verbose: mostrar todos os campos encontrados
+	if (verbose) {
+		lines.push("## 📋 Resumo Geral");
+		lines.push("");
+		lines.push(`| Fonte | Total de Campos |`);
+		lines.push(`|-------|-----------------|`);
+		lines.push(`| IXC (Wiki + Relations) | ${diff.metadata.ixcTotalFields} |`);
+		lines.push(`| NocoBase | ${diff.metadata.nocobaseTotalFields} |`);
+		lines.push("");
+
+		lines.push("### 📝 Nomes dos Campos (Brutos)");
+		lines.push("");
+		lines.push("<details>");
+		lines.push("<summary>Ver lista completa de campos</summary>");
+		lines.push("");
+		lines.push("**IXC:**");
+		lines.push("");
+		if (diff.metadata.ixcRawFieldNames.length === 0) {
+			lines.push("_Nenhum campo encontrado_");
+		} else {
+			lines.push("```");
+			for (const name of diff.metadata.ixcRawFieldNames.sort()) {
+				lines.push(name);
+			}
+			lines.push("```");
+		}
+		lines.push("");
+		lines.push("**NocoBase:**");
+		lines.push("");
+		if (diff.metadata.nocobaseRawFieldNames.length === 0) {
+			lines.push("_Nenhum campo encontrado_");
+		} else {
+			lines.push("```");
+			for (const name of diff.metadata.nocobaseRawFieldNames.sort()) {
+				lines.push(name);
+			}
+			lines.push("```");
+		}
+		lines.push("");
+		lines.push("</details>");
+		lines.push("");
+
+		// Campo a Campo - comparação lado a lado
+		lines.push("## 🔍 Comparação Campo a Campo");
+		lines.push("");
+
+		const allFieldNames = new Set([
+			...diff.metadata.ixcRawFieldNames,
+			...diff.metadata.nocobaseRawFieldNames,
+		]);
+
+		if (allFieldNames.size > 0) {
+			lines.push("| Campo | Status IXC | Status NocoBase |");
+			lines.push("|-------|------------|-----------------|");
+
+			for (const name of [...allFieldNames].sort()) {
+				const inIxc = diff.metadata.ixcRawFieldNames.includes(name) ? "✅" : "❌";
+				const inNb = diff.metadata.nocobaseRawFieldNames.includes(name) ? "✅" : "❌";
+				const status = inIxc === "✅" && inNb === "✅" ? "`" + name + "`" : `**\`${name}\`**`;
+				lines.push(`| ${status} | ${inIxc} | ${inNb} |`);
+			}
+			lines.push("");
+		}
+	}
+
 	lines.push("## Scalars");
 	lines.push("");
-	if (diff.scalars.length === 0) {
+
+	// Separate matches from diffs for display
+	const scalarMatches = diff.scalars.filter((d) => d.side === "match");
+	const scalarDiffs = diff.scalars.filter((d) => d.side !== "match");
+
+	if (verbose && scalarMatches.length > 0) {
+		lines.push(`### ✅ Matches (${scalarMatches.length})`);
+		lines.push("");
+		if (verbose) {
+			lines.push("| Campo | IXC | NocoBase | Status |");
+			lines.push("|-------|-----|----------|--------|");
+			for (const d of scalarMatches) {
+				lines.push(formatScalarDiff(d));
+			}
+			lines.push("");
+		} else {
+			lines.push(`${scalarMatches.length} campos com tipo correspondente.`);
+			lines.push("");
+		}
+	}
+
+	if (scalarDiffs.length === 0) {
 		lines.push("✅ Nenhum diff encontrado.");
 	} else {
+		lines.push(`### ❌ Diffs (${scalarDiffs.length})`);
+		lines.push("");
 		lines.push("| Campo | IXC | NocoBase | Status |");
 		lines.push("|-------|-----|----------|--------|");
-		for (const d of diff.scalars) {
+		for (const d of scalarDiffs) {
 			lines.push(formatScalarDiff(d));
 		}
 	}
@@ -132,12 +234,36 @@ function generateCollectionReport(diff: CollectionDiff): string {
 
 	lines.push("## Enums");
 	lines.push("");
-	if (diff.enums.length === 0) {
+
+	const enumMatches = diff.enums.filter((d) => d.side === "match");
+	const enumDiffs = diff.enums.filter((d) => d.side !== "match");
+
+	if (verbose && enumMatches.length > 0) {
+		lines.push(`### ✅ Matches (${enumMatches.length})`);
+		lines.push("");
+		if (verbose) {
+			lines.push("| Campo | Valores IXC | Valores NocoBase | Status |");
+			lines.push("|-------|-------------|------------------|--------|");
+			for (const d of enumMatches) {
+				for (const line of formatEnumDiff(d)) {
+					lines.push(line);
+				}
+			}
+			lines.push("");
+		} else {
+			lines.push(`${enumMatches.length} enums com valores correspondentes.`);
+			lines.push("");
+		}
+	}
+
+	if (enumDiffs.length === 0) {
 		lines.push("✅ Nenhum diff encontrado.");
 	} else {
+		lines.push(`### ❌ Diffs (${enumDiffs.length})`);
+		lines.push("");
 		lines.push("| Campo | Valores IXC | Valores NocoBase | Status |");
 		lines.push("|-------|-------------|------------------|--------|");
-		for (const d of diff.enums) {
+		for (const d of enumDiffs) {
 			for (const line of formatEnumDiff(d)) {
 				lines.push(line);
 			}
@@ -147,12 +273,36 @@ function generateCollectionReport(diff: CollectionDiff): string {
 
 	lines.push("## Relações");
 	lines.push("");
-	if (diff.relations.length === 0) {
+
+	const relMatches = diff.relations.filter((d) => d.side === "match");
+	const relDiffs = diff.relations.filter((d) => d.side !== "match");
+
+	if (verbose && relMatches.length > 0) {
+		lines.push(`### ✅ Matches (${relMatches.length})`);
+		lines.push("");
+		if (verbose) {
+			lines.push("| Campo | Target IXC | Target NocoBase | Status |");
+			lines.push("|-------|------------|-----------------|--------|");
+			for (const d of relMatches) {
+				lines.push(
+					formatRelationDiff(d as unknown as DiffItem<RelationInfo>),
+				);
+			}
+			lines.push("");
+		} else {
+			lines.push(`${relMatches.length} relações com target correspondente.`);
+			lines.push("");
+		}
+	}
+
+	if (relDiffs.length === 0) {
 		lines.push("✅ Nenhum diff encontrado.");
 	} else {
+		lines.push(`### ❌ Diffs (${relDiffs.length})`);
+		lines.push("");
 		lines.push("| Campo | Target IXC | Target NocoBase | Status |");
 		lines.push("|-------|------------|-----------------|--------|");
-		for (const d of diff.relations) {
+		for (const d of relDiffs) {
 			lines.push(
 				formatRelationDiff(d as unknown as DiffItem<RelationInfo>),
 			);
@@ -175,21 +325,25 @@ function generateIndexReport(allDiffs: CollectionDiff[]): string {
 	lines.push("## Resumo por Collection");
 	lines.push("");
 	lines.push(
-		"| Collection | Scalars | Enums | Relations | **Total** |",
+		"| Collection | Total IXC | Total NocoBase | Scalars | Enums | Relations | **Total Diffs** |",
 	);
 	lines.push(
-		"|------------|---------|-------|-----------|-----------|",
+		"|------------|-----------|----------------|---------|-------|-----------|-----------------|",
 	);
 
+	let totalIxcFields = 0;
+	let totalNbFields = 0;
 	let totalScalars = 0;
 	let totalEnums = 0;
 	let totalRelations = 0;
 	let totalDiffs = 0;
 
 	for (const diff of allDiffs) {
-		totalScalars += diff.scalars.length;
-		totalEnums += diff.enums.length;
-		totalRelations += diff.relations.length;
+		totalIxcFields += diff.metadata.ixcTotalFields;
+		totalNbFields += diff.metadata.nocobaseTotalFields;
+		totalScalars += diff.scalars.filter((d) => d.side !== "match").length;
+		totalEnums += diff.enums.filter((d) => d.side !== "match").length;
+		totalRelations += diff.relations.filter((d) => d.side !== "match").length;
 		totalDiffs += diff.diffCount;
 
 		const collectionLink = `[${diff.collectionName}](./${diff.collectionName}.md)`;
@@ -198,20 +352,20 @@ function generateIndexReport(allDiffs: CollectionDiff[]): string {
 			diff.diffCount === 0 ? "✅" : diff.diffCount < 5 ? "⚠️" : "❌";
 
 		lines.push(
-			`| ${collectionLink} | ${diff.scalars.length} | ${diff.enums.length} | ${diff.relations.length} | ${statusEmoji} ${diff.diffCount} |`,
+			`| ${collectionLink} | ${diff.metadata.ixcTotalFields} | ${diff.metadata.nocobaseTotalFields} | ${diff.scalars.filter((d) => d.side !== "match").length} | ${diff.enums.filter((d) => d.side !== "match").length} | ${diff.relations.filter((d) => d.side !== "match").length} | ${statusEmoji} ${diff.diffCount} |`,
 		);
 	}
 
 	lines.push("");
 	lines.push(
-		`**Totais:** ${totalScalars} scalars, ${totalEnums} enums, ${totalRelations} relations = **${totalDiffs} diffs**`,
+		`**Totais:** ${totalIxcFields} campos IXC, ${totalNbFields} campos NocoBase → ${totalDiffs} diffs`,
 	);
 	lines.push("");
 
 	return lines.join("\n");
 }
 
-export function writeReports(allDiffs: CollectionDiff[]): string[] {
+export function writeReports(allDiffs: CollectionDiff[], verbose: boolean = false): string[] {
 	ensureOutputDir();
 	const writtenPaths: string[] = [];
 
@@ -221,7 +375,7 @@ export function writeReports(allDiffs: CollectionDiff[]): string[] {
 	writtenPaths.push(indexPath);
 
 	for (const diff of allDiffs) {
-		const content = generateCollectionReport(diff);
+		const content = generateCollectionReport(diff, verbose);
 		const filePath = path.join(
 			CONFIG.OUTPUT_DIR,
 			`${diff.collectionName}.md`,
