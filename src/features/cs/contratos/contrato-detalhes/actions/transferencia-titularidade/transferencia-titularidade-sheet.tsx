@@ -3,7 +3,6 @@ import { ArrowRightLeft, Loader2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "#/components/ui/button";
 import {
 	Sheet,
@@ -24,44 +23,11 @@ import {
 	DEFAULT_FORM_VALUES,
 	type SelectedPF,
 	type TipoPessoa,
+	type TransferenciaTitularidadeFormValues,
+	transferenciaTitularidadeSchema,
 } from "./transferencia-titularidade-types";
 
-// ============================================================================
-// Schema
-// ============================================================================
-
-const transferenciaTitularidadeSchema = z.object({
-	// Cedente
-	f_cedente_responsavel_legal: z
-		.string()
-		.min(1, "Responsável legal é obrigatório"),
-	f_cedente_telefone: z.string().min(1, "Telefone é obrigatório"),
-	f_cedente_email: z.string().email("E-mail inválido"),
-
-	// Cessionário
-	f_cessionario: z.string().min(1, "Nome é obrigatório"),
-	f_cessionario_documento: z.string().min(1, "Documento é obrigatório"),
-	f_cessionario_responsavel: z.string().optional(),
-	f_cessionario_telefone: z.string().min(1, "Telefone é obrigatório"),
-	f_cessionario_email: z.string().email("E-mail inválido"),
-
-	// Endereço
-	f_cep: z.string().min(1, "CEP é obrigatório"),
-	f_endereco: z.string().min(1, "Endereço é obrigatório"),
-	f_numero: z.string().min(1, "Número é obrigatório"),
-	f_bairro: z.string().min(1, "Bairro é obrigatório"),
-	f_complemento: z.string().min(1, "Complemento é obrigatório"),
-	f_cidade: z.string().min(1, "Cidade é obrigatória"),
-	f_estado: z.string().min(1, "Estado é obrigatório"),
-});
-
-type FormValues = z.infer<typeof transferenciaTitularidadeSchema>;
-
-// ============================================================================
-// Props
-// ============================================================================
-
-interface SheetProps {
+interface Props {
 	contrato: {
 		id: number | string;
 		f_nc_cliente?: { razao?: string; cnpj_cpf?: string } | null;
@@ -70,24 +36,18 @@ interface SheetProps {
 	onOpenChange: (open: boolean) => void;
 }
 
-// ============================================================================
-// Main Component
-// ============================================================================
-
 export function TransferenciaTitularidadeSheet({
 	contrato,
 	open,
 	onOpenChange,
-}: SheetProps) {
+}: Props) {
 	const cedente = contrato.f_nc_cliente;
 
-	// Pre-filled read-only fields
 	const cedenteNome = cedente?.razao ?? "";
 	const cedenteDoc = cedente?.cnpj_cpf ?? "";
 	const contratoId = String(contrato.id);
 
-	// Form
-	const form = useForm<FormValues>({
+	const form = useForm<TransferenciaTitularidadeFormValues>({
 		resolver: zodResolver(transferenciaTitularidadeSchema),
 		defaultValues: DEFAULT_FORM_VALUES,
 	});
@@ -101,15 +61,12 @@ export function TransferenciaTitularidadeSheet({
 		formState: { errors },
 	} = form;
 
-	// UI state
 	const [tipoPessoa, setTipoPessoa] = useState<TipoPessoa>("PF");
 	const [cessionario, setCessionario] = useState<CessionarioState>(
 		DEFAULT_CESSIONARIO_STATE,
 	);
 	const [selectedPF, setSelectedPF] = useState<SelectedPF>(null);
-	const [, setSelectedPJ] = useState<null>(null);
 
-	// Submit
 	const mutation = useCreateTrocaTitularidade();
 
 	const submitDisabled = useMemo(() => {
@@ -117,7 +74,9 @@ export function TransferenciaTitularidadeSheet({
 		return false;
 	}, [tipoPessoa, selectedPF?.f_credito]);
 
-	const onSubmit: SubmitHandler<FormValues> = (values) => {
+	const onSubmit: SubmitHandler<TransferenciaTitularidadeFormValues> = (
+		values,
+	) => {
 		const payload: CreateTrocaTitularidadeInput = {
 			f_cedente: cedenteNome,
 			f_cedente_documento: cedenteDoc,
@@ -149,14 +108,12 @@ export function TransferenciaTitularidadeSheet({
 		});
 	};
 
-	// Reset form on close
 	// biome-ignore lint/correctness/useExhaustiveDependencies: reset/mutation are stable but including them causes infinite loop
 	useEffect(() => {
 		if (!open) {
 			setTipoPessoa("PF");
 			setCessionario(DEFAULT_CESSIONARIO_STATE);
 			setSelectedPF(null);
-			setSelectedPJ(null);
 			reset();
 			mutation.reset();
 		}
@@ -195,7 +152,7 @@ export function TransferenciaTitularidadeSheet({
 							onCessionarioChange={setCessionario}
 							selectedPF={selectedPF}
 							onSelectedPFChange={setSelectedPF}
-							onClearPJSearch={() => setSelectedPJ(null)}
+							onClearPJSearch={() => {}}
 							setValue={setValue}
 							errors={errors}
 						/>
@@ -203,7 +160,6 @@ export function TransferenciaTitularidadeSheet({
 						<ContratoSection
 							contratoId={contratoId}
 							register={register}
-							setValue={setValue}
 							control={control}
 							errors={errors}
 						/>
