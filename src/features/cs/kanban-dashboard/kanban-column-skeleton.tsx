@@ -1,7 +1,7 @@
 import { Skeleton } from "#/components/ui/skeleton";
 import { cn } from "#/lib/utils";
 import { KanbanCardSkeleton } from "./kanban-card-skeleton";
-import type { UNIFIED_STATUS_COLUMNS } from "./kanban-dashboard-types";
+import type { UNIFIED_STATUS_COLUMNS } from "./types";
 
 interface KanbanColumnSkeletonProps {
 	status: (typeof UNIFIED_STATUS_COLUMNS)[number];

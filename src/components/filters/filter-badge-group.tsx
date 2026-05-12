@@ -4,9 +4,6 @@ import {
 	useBadgeGroupLogic,
 } from "./filter-badge-group.logic";
 
-// Re-export for backwards compatibility
-export type { BadgeOption } from "./filter-badge-group.logic";
-
 interface FilterBadgeGroupProps<T extends string> {
 	label: string;
 	options: readonly BadgeOption<T>[];

@@ -1,11 +1,8 @@
 import { useMemo } from "react";
 import { KanbanColumn } from "./kanban-column";
-import type {
-	KanbanDashboardCard,
-	UnifiedStatusKey,
-} from "./kanban-dashboard-types";
-import { UNIFIED_STATUS_COLUMNS } from "./kanban-dashboard-types";
 import { KanbanSkeleton } from "./kanban-skeleton";
+import type { KanbanDashboardCard, UnifiedStatusKey } from "./types";
+import { UNIFIED_STATUS_COLUMNS } from "./types";
 
 interface KanbanBoardProps {
 	cards: KanbanDashboardCard[];

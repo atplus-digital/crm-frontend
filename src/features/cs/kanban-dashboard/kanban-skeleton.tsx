@@ -1,5 +1,6 @@
 import { KanbanColumnSkeleton } from "./kanban-column-skeleton";
-import { UNIFIED_STATUS_COLUMNS } from "./kanban-dashboard-types";
+
+import { UNIFIED_STATUS_COLUMNS } from "./types";
 
 interface KanbanSkeletonProps {
 	/** Number of cards per column (default: 3) */

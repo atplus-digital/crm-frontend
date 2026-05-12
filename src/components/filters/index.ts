@@ -1,5 +1,4 @@
 export { FilterActions } from "./filter-actions";
-export type { BadgeOption } from "./filter-badge-group";
 export { FilterBadgeGroup } from "./filter-badge-group";
 export {
 	FilterBarContainer,

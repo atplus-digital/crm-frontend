@@ -1,14 +1,14 @@
 import { useSearchParams } from "react-router";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/layouts/page-layout";
+import { useKanbanDashboardData } from "#/features/cs/kanban-dashboard/hooks/use-kanban-dashboard-data";
 import { KanbanBoard } from "#/features/cs/kanban-dashboard/kanban-board";
 import { KanbanDashboardFilterBar } from "#/features/cs/kanban-dashboard/kanban-dashboard-filters";
 import {
 	DEFAULT_KANBAN_FILTERS,
 	searchParamsToFilters,
 } from "#/features/cs/kanban-dashboard/kanban-dashboard-filters-url";
-import { useKanbanDashboardData } from "#/features/cs/kanban-dashboard/kanban-dashboard-hooks";
-import type { KanbanDashboardFilters as FiltersType } from "#/features/cs/kanban-dashboard/kanban-dashboard-types";
+import type { KanbanDashboardFilters as FiltersType } from "#/features/cs/kanban-dashboard/types";
 import { getErrorMessage } from "#/lib/api-errors";
 
 export function KanbanDashboardPage() {

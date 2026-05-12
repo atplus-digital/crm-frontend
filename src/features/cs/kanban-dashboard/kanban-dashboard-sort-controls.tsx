@@ -10,8 +10,8 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Switch } from "#/components/ui/switch";
-import type { KanbanSortField } from "./kanban-dashboard-types";
-import { KANBAN_SORT_OPTIONS } from "./kanban-dashboard-types";
+import type { KanbanSortField } from "./types";
+import { KANBAN_SORT_OPTIONS } from "./types";
 
 // ---------------------------------------------------------------------------
 // Props

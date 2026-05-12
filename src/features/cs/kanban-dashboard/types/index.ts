@@ -1,5 +1,6 @@
 // Barrel export — re-exports everything from the original kanban-dashboard-types.ts
 
+// Public API barrel export for kanban-dashboard types
 export {
 	getCardBadgeInfo,
 	getCardDisplayName,

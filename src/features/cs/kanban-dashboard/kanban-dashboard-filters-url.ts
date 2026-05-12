@@ -2,8 +2,8 @@ import type {
 	KanbanDashboardFilters,
 	NegociacoesMotivo,
 	SourceCollection,
-} from "./kanban-dashboard-types";
-import { NEGOCIACAO_MOTIVO_BADGE } from "./kanban-dashboard-types";
+} from "./types";
+import { NEGOCIACAO_MOTIVO_BADGE } from "./types";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Parse URLSearchParams → filters

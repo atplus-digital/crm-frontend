@@ -1,4 +1,4 @@
-import type { BadgeOption } from "#/components/filters";
+import type { BadgeOption } from "#/components/filters/filter-badge-group.logic";
 import {
 	NEGOCIACOES_MOTIVO_LABELS,
 	type NegociacoesMotivo,

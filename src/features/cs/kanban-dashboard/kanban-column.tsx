@@ -3,10 +3,7 @@ import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { cn } from "#/lib/utils";
 import { KanbanCard } from "./kanban-card";
-import type {
-	KanbanDashboardCard,
-	UNIFIED_STATUS_COLUMNS,
-} from "./kanban-dashboard-types";
+import type { KanbanDashboardCard, UNIFIED_STATUS_COLUMNS } from "./types";
 
 const PAGE_SIZE = 5;
 

@@ -420,8 +420,7 @@ export function generateIndexContent(
 }
 
 /**
- * @deprecated Use generateLabelsContent, generateSchemasContent e generateIndexContent.
- * Mantido para compatibilidade com chamadas existentes.
+ **
  *
  * Gera a definição completa de tipos para uma collection em um único arquivo.
  */

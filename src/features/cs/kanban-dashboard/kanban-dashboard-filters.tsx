@@ -13,13 +13,13 @@ import type {
 	KanbanSortField,
 	NegociacoesMotivo,
 	SourceCollection,
-} from "./kanban-dashboard-types";
+} from "./types";
 import {
 	EXTRA_NEGOCIACAO_MOTIVO_OPTIONS,
 	NEGOCIACAO_MOTIVO_BADGE,
 	PRIMARY_NEGOCIACAO_MOTIVO_OPTIONS,
 	SOURCE_COLLECTION_OPTIONS,
-} from "./kanban-dashboard-types";
+} from "./types";
 
 // ---------------------------------------------------------------------------
 // Props

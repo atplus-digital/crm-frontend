@@ -8,12 +8,12 @@ import {
 } from "#/components/ui/tooltip";
 import { cn } from "#/lib/utils";
 import { buildRoute } from "#/routes/route-paths";
-import type { KanbanDashboardCard } from "./kanban-dashboard-types";
+import type { KanbanDashboardCard } from "./types";
 import {
 	getCardBadgeInfo,
 	getCardDisplayName,
 	getCardResponsible,
-} from "./kanban-dashboard-types";
+} from "./types";
 
 interface KanbanCardProps {
 	card: KanbanDashboardCard;

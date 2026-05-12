@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-11 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-12 -->
 
 # AGENTS.md — kanban-dashboard
 
@@ -36,7 +36,7 @@ Kanban Dashboard subdomain — unified Kanban board combining four NocoBase coll
 - Data fetching uses `useQueries` with four independent `queryOptions` (query keys: `["kanban-dashboard", "tt"|"te"|"sc"|"neg"]`), each with `staleTime: 10_000` and `pageSize: 200`.
 - Cards navigate to their source detail page via `buildRoute()` using the collection-specific route name from `SOURCE_COLLECTION_OPTIONS`.
 - Badge colors and labels for source collections are centralized in `SOURCE_COLLECTION_BADGE` in `kanban-dashboard-types.ts` (not inline in card component).
-- Types and hooks are split into `types/` and `hooks/` subdirectories for maintainability; the legacy files (`kanban-dashboard-types.ts`, `kanban-dashboard-hooks.ts`) remain as barrel re-exports for backward compatibility. New imports should use `./types` or `./hooks/use-kanban-dashboard-data` directly.
+- Types and hooks are split into `types/` and `hooks/` subdirectories for maintainability; All imports should use `./types` or `./hooks/use-kanban-dashboard-data` directly.
 
 <!-- AGENTS-GENERATED:END patterns -->
 
