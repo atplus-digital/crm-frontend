@@ -13,7 +13,7 @@
 		"preview": "vite preview",
 		"biome:fix": "biome check --write",
 		"format:md": "pnpm dlx prettier --write \"**/*.{md,mdx}\" --log-level=warn --no-error-on-unmatched-pattern  --cache",
-		"knip": "knip --production",
+		"knip": "knip",
 		"knip:prod": "knip --production",
 		"knip:silent": "knip --production --exclude dependencies --no-config-hints",
 		"lint:fix": "pnpm biome:fix && pnpm format:md",
