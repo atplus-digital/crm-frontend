@@ -1,17 +1,9 @@
 import type { LucideIcon } from "lucide-react";
-import { MoreHorizontal } from "lucide-react";
-import { useState } from "react";
 import {
 	getStateClasses,
 	getStateIcon,
 } from "#/components/async-button/async-button-styles";
-import { Button } from "#/components/ui/button";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "#/components/ui/dropdown-menu";
+import { DropdownMenuItem } from "#/components/ui/dropdown-menu";
 import { PopupRequestDialog } from "#/features/custom-requests/components/popup-request/popup-request-dialog";
 import { usePopupRequest } from "#/features/custom-requests/components/popup-request/use-popup-request";
 import type {
@@ -52,27 +44,13 @@ export type ActionItem<
 			popupRequest?: never;
 	  };
 
-interface ActionsMenuProps {
-	actions: readonly ActionItem[];
-	triggerLabel?: string;
-	triggerVariant?:
-		| "default"
-		| "outline"
-		| "secondary"
-		| "ghost"
-		| "destructive"
-		| "link";
-	align?: "start" | "center" | "end";
-	className?: string;
-}
-
 /**
  * Renders a DropdownMenuItem that opens a PopupRequestDialog.
  * Uses `onSelect` with `preventDefault()` to prevent the dropdown from
  * closing, since the dialog renders via Radix Portal and is independent
  * of the dropdown's DOM tree. The dropdown closes when the dialog closes.
  */
-function PopupRequestActionItem<
+export function PopupRequestActionItem<
 	I extends CustomRequestIdentifier = CustomRequestIdentifier,
 >({
 	icon: Icon,
@@ -109,7 +87,7 @@ function PopupRequestActionItem<
 		<>
 			<DropdownMenuItem
 				onSelect={(e) => {
-					e.preventDefault(); // prevent dropdown from closing
+					e.preventDefault();
 					openDialog();
 				}}
 				disabled={disabled || buttonState === "loading"}
@@ -142,62 +120,12 @@ function PopupRequestActionItem<
 				onOpenChange={(open) => {
 					handleOpenChange(open);
 					if (!open) {
-						onDialogClose(); // close dropdown when dialog closes
+						onDialogClose();
 					}
 				}}
 				onCancel={closeDialog}
 				onRetry={handleRetry}
 			/>
 		</>
-	);
-}
-
-export function ActionsMenu({
-	actions,
-	triggerLabel = "Ações",
-	triggerVariant = "default",
-	align = "end",
-	className,
-}: ActionsMenuProps) {
-	const [dropdownOpen, setDropdownOpen] = useState(false);
-
-	return (
-		<DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
-			<DropdownMenuTrigger asChild>
-				<Button variant={triggerVariant} size="sm" className={className}>
-					<MoreHorizontal className="size-4" />
-					<span className="hidden sm:inline">{triggerLabel}</span>
-				</Button>
-			</DropdownMenuTrigger>
-			<DropdownMenuContent align={align} className="w-48">
-				{actions.map((action) =>
-					action.popupRequest ? (
-						<PopupRequestActionItem
-							key={action.label}
-							icon={action.icon}
-							label={action.label}
-							disabled={action.disabled}
-							variant={action.variant}
-							popupRequest={action.popupRequest}
-							onDialogClose={() => setDropdownOpen(false)}
-						/>
-					) : (
-						<DropdownMenuItem
-							key={action.label}
-							onClick={action.onClick}
-							disabled={action.disabled}
-							className={
-								action.variant === "destructive"
-									? "text-destructive focus:text-destructive"
-									: undefined
-							}
-						>
-							<action.icon className="size-4" />
-							{action.label}
-						</DropdownMenuItem>
-					),
-				)}
-			</DropdownMenuContent>
-		</DropdownMenu>
 	);
 }

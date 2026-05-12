@@ -15,21 +15,21 @@ contract-specific table, tabs, filters, and status badges.
 
 ## Key Files
 
-| File                              | Purpose                                                     |
-| --------------------------------- | ----------------------------------------------------------- |
-| `contratos-types.ts`              | Contract entities, filters, sorting, and metadata contracts |
-| `contratos-service.ts`            | IXC list/detail calls and filter mapping                    |
-| `contratos-hooks.ts`              | React Query hooks for list/detail cache keys                |
-| `contratos-table.tsx`             | Main contracts list table composition                       |
-| `contratos-filters.tsx`           | Form filters for cpf/cnpj, nome, status, and contrato ID    |
-| `contrato-status-badge.tsx`       | Status and internet badge renderers                         |
-| `tabs/atendimentos/`              | Contract support tickets tab section                        |
-| `tabs/negociacoes/`               | Contract negotiations tab section                           |
-| `tabs/registros/`                 | Contract contact/history records tab section                |
-| `tabs/movel/`                     | Mobile/line-related contract tab section                    |
-| `tabs/detalhes/`                  | Detail tab (summary, info, cliente, endereço, faturas)      |
-| `tabs/actions/`                   | Sheet actions (troca-endereco, transferencia-titularidade)  |
-| `informacoes-adicionais-card.tsx` | Informações Adicionais section (4 fields from NocoBase)     |
+| File                                   | Purpose                                                     |
+| -------------------------------------- | ----------------------------------------------------------- |
+| `contratos-types.ts`                   | Contract entities, filters, sorting, and metadata contracts |
+| `contratos-service.ts`                 | IXC list/detail calls and filter mapping                    |
+| `contratos-hooks.ts`                   | React Query hooks for list/detail cache keys                |
+| `contratos-table.tsx`                  | Main contracts list table composition                       |
+| `contratos-filters.tsx`                | Form filters for cpf/cnpj, nome, status, and contrato ID    |
+| `contrato-status-badge.tsx`            | Status and internet badge renderers                         |
+| `contrato-detalhes/tabs/atendimentos/` | Contract support tickets tab section                        |
+| `contrato-detalhes/tabs/negociacoes/`  | Contract negotiations tab section                           |
+| `contrato-detalhes/tabs/registros/`    | Contract contact/history records tab section                |
+| `contrato-detalhes/tabs/movel/`        | Mobile/line-related contract tab section                    |
+| `contrato-detalhes/tabs/detalhes/`     | Detail tab (summary, info, cliente, endereço, faturas)      |
+| `contrato-detalhes/actions/`           | Sheet actions (troca-endereco, transferencia-titularidade)  |
+| `informacoes-adicionais-card.tsx`      | Informações Adicionais section (4 fields from NocoBase)     |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

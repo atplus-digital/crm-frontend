@@ -30,7 +30,7 @@ features.
 | `feedback/inline-error-alert.tsx` | Reusable inline destructive feedback block              |
 | `theme-provider.tsx`              | Theme context/provider used by the app shell            |
 | `error-boundary.tsx`              | Global render error boundary fallback UI                |
-| `actions-menu.tsx`                | Generic dropdown action menu with icon support          |
+| `actions-menu/actions-menu.tsx`   | Generic dropdown action menu with icon support          |
 | `basic-table-card.tsx`            | Metric card (label + value) with children slot          |
 
 **Scoped Docs:**
