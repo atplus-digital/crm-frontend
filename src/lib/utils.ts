@@ -81,12 +81,3 @@ export function formatFileSize(size: number): string {
 	const formattedSize = (size / 1024 ** i).toFixed(2);
 	return `${parseFloat(formattedSize)} ${units[i]}`;
 }
-
-export function toFilterOptions<T extends string>(
-	labels: Record<string, string>,
-): { value: T; label: string }[] {
-	return Object.entries(labels).map(([value, label]) => ({
-		value: value as T,
-		label,
-	}));
-}

@@ -1,6 +1,5 @@
 import { CheckCircle2Icon, Loader2Icon, XCircleIcon } from "lucide-react";
 import type { MinimumLoadingState } from "#/hooks/use-minimum-loading";
-import { cn } from "#/lib/utils";
 
 // ── State → icon mapping ───────────────────────────────────────────────
 
@@ -33,14 +32,3 @@ export function getStateClasses(state: MinimumLoadingState) {
 }
 
 /** Renders the state icon with the correct animation, or null for idle. */
-export function renderStateIcon(state: MinimumLoadingState) {
-	const Icon = STATE_ICONS[state];
-	if (!Icon) return null;
-
-	return (
-		<Icon
-			className={cn("size-5 shrink-0", state === "loading" && "animate-spin")}
-			aria-hidden="true"
-		/>
-	);
-}

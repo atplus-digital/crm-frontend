@@ -25,10 +25,6 @@ export function canTransferir(contrato: ContratoWithCliente): boolean {
 	);
 }
 
-export function canTrocarEndereco(contrato: ContratoWithCliente): boolean {
-	return canTransferir(contrato); // mesma regra
-}
-
 // ---------------------------------------------------------------------------
 // Labels — evita magic strings no resto do código
 // ---------------------------------------------------------------------------

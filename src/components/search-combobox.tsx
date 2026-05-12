@@ -1,4 +1,5 @@
 import type { ComponentProps, Key, ReactNode } from "react";
+import { useMemo } from "react";
 import {
 	Combobox,
 	ComboboxContent,
@@ -67,6 +68,16 @@ export function SearchCombobox<T>({
 	const compareItems =
 		isItemEqualToValue ?? ((item: T, selectedItem: T) => item === selectedItem);
 
+	const availableItems = useMemo(() => {
+		if (value === null || value === undefined) return items;
+		const selectedValue = value as T;
+		const hasSelectedItem = items.some((item) =>
+			compareItems(item, selectedValue),
+		);
+		if (hasSelectedItem) return items;
+		return [selectedValue, ...items];
+	}, [compareItems, items, value]);
+
 	const resolveItemKey = (item: T) => {
 		if (getItemKey) return getItemKey(item);
 		if (typeof item === "string" || typeof item === "number") return item;
@@ -79,7 +90,7 @@ export function SearchCombobox<T>({
 
 	return (
 		<Combobox
-			items={items}
+			items={availableItems}
 			value={value}
 			onValueChange={handleValueChange}
 			onInputValueChange={handleInputChange}
