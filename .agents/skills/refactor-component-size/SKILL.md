@@ -1,13 +1,17 @@
 ---
 name: refactor-component-size
 description: >-
-  Enforce file size limits and one-component-per-file rules for React/TypeScript
-  projects. Use this skill whenever you are editing, creating, or refactoring
-  .tsx or .ts files — especially when files exceed 150 lines (.tsx) or 250
-  lines (.ts), when splitting large components, when extracting sub-components,
-  or when the user mentions "refactor", "split", "extract", "too long", "too
-  big", "component size", "file size", or "clean up". Also trigger when
-  reviewing code that violates the one-component-per-file rule.
+  Enforce file size limits, one-component-per-file rules, and detect repeated
+  JSX patterns for React/TypeScript projects. Use this skill whenever you are
+  editing, creating, or refactoring .tsx or .ts files — especially when files
+  exceed 150 lines (.tsx) or 250 lines (.ts), when splitting large components,
+  when extracting sub-components, when you spot duplicated JSX blocks, when
+  replacing raw HTML inputs/labels with shadcn/ui primitives, or when the user
+  mentions "refactor", "split", "extract", "duplicate", "repeated code", "DRY",
+  "too long", "too big", "component size", "file size", "clean up", "form
+  field", or "shadcn form". Also trigger when reviewing code that violates the
+  one-component-per-file rule or uses bare label+input in forms instead of the
+  shadcn Field+Input pattern.
 user-invocable: true
 ---
 
@@ -115,11 +119,158 @@ self-explanatory.
 When a file exceeds limits, extract in this priority order:
 
 1. **Sub-components** — distinct UI sections (cards, sections, panels)
-2. **Complex render logic** — large JSX blocks → dedicated components with
+2. **Repeated JSX blocks** — 3+ near-identical JSX structures within a component → extract into a reusable sub-component with variant props. Apply this even when under the line limit — repetition is a separate code smell from file size. See the [Repeated JSX patterns](#repeated-jsx-patterns) section below.
+3. **Complex render logic** — large JSX blocks → dedicated components with
    descriptive props
-3. **Custom hooks** — `useEffect` + state clusters → separate `.ts` hook file
-4. **Utility functions** — pure logic → separate `.ts` util file
-5. **Type definitions** — shared types → separate `.ts` types file
+4. **Custom hooks** — `useEffect` + state clusters → separate `.ts` hook file
+5. **Utility functions** — pure logic → separate `.ts` util file
+6. **Type definitions** — shared types → separate `.ts` types file
+
+### Repeated JSX patterns
+
+When a component repeats the same JSX structure with only label/id/name/placeholder
+changing, extract the repeated structure into a reusable sub-component. This is
+different from size-based extraction — duplication is a code smell regardless
+of file length.
+
+**Recognition signals (triggers for extraction):**
+
+- 3+ blocks of `<div className="space-y-1.5"><label>...</label><input ...>{errors.x && <p>...</p>}</div>`
+- 3+ blocks of identical JSX layout with only text/name/id varying
+- Any JSX pattern repeated near-verbatim within a single component
+
+**How to extract:**
+
+1. Identify the **invariant** structure (layout classes, conditionals, error display)
+2. Identify the **variant** parts (label text, field name, placeholder, `required` marker, `maxLength`)
+3. Create a sub-component that receives variants as **typed props**
+4. Replace all occurrences with the sub-component, passing variant values
+
+**Example — form field repetition:**
+
+```
+Before (10 repeated blocks):
+  <div className="space-y-1.5">
+    <label htmlFor="f_cep" className="text-sm font-medium">
+      CEP <span className="text-destructive">*</span>
+    </label>
+    <input id="f_cep" className="flex h-9 w-full rounded-md border..." {...register("f_cep")} />
+    {errors.f_cep && <p className="text-xs text-destructive">{errors.f_cep.message}</p>}
+  </div>
+  <!-- ... 9 more identical blocks, only label/id/name differ ... -->
+
+After (extracted component):
+  // form-field.tsx
+  export function FormField({ id, label, required, placeholder, register, error }: Props) {
+    return (
+      <div className="space-y-1.5">
+        <label htmlFor={id} className="text-sm font-medium">
+          {label} {required && <span className="text-destructive">*</span>}
+        </label>
+        <input id={id} className="flex h-9 w-full rounded-md border..." placeholder={placeholder} {...register(id)} />
+        {error?.message && <p className="text-xs text-destructive">{error.message}</p>}
+      </div>
+    );
+  }
+```
+
+**Important:** This intermediate extraction is a first step. Always also check
+whether the extracted component should use existing UI primitives — see next
+section.
+
+---
+
+### UI primitives first
+
+Before writing any form field, label, input, button, or layout wrapper, check
+`src/components/ui/` for existing primitives. The shadcn/ui primitives handle
+accessibility (`aria-*`, `htmlFor`, `role`), error states, focus rings, dark
+mode, and consistent styling automatically — raw HTML elements replicate none
+of this.
+
+**Priority for form elements:**
+
+1. `<Form>` + `<Field>` + `<FieldLabel>` + `<FieldControl>` + `<Input>` (or `<Textarea>`) + `<FieldError>`
+   — from `#/components/ui/form` and `#/components/ui/input`
+2. `<Label>` + `<Input>` — from `#/components/ui/label` and `#/components/ui/input` (for non-`<Form>`
+   contexts)
+3. Raw `<label>` + `<input>` — only when UI primitives genuinely don't fit (extremely rare)
+
+**Priority for other elements:**
+
+| Instead of raw HTML    | Use shadcn primitive                                                           |
+| ---------------------- | ------------------------------------------------------------------------------ |
+| `<button>`             | `<Button>` from `#/components/ui/button`                                       |
+| `<select>`             | `<Select>` from `#/components/ui/select`                                       |
+| Modal/popup containers | `<Dialog>` / `<Sheet>` from `#/components/ui/dialog` / `#/components/ui/sheet` |
+| Tab containers         | `<Tabs>` from `#/components/ui/tabs`                                           |
+
+---
+
+### Form field pattern (react-hook-form + shadcn)
+
+When refactoring forms, migrate from bare `<label>` + `<input>` + manual error
+blocks to the canonical react-hook-form + shadcn pattern. This is the
+project-wide standard (see `src/AGENTS.md` > Forms and `src/components/ui/AGENTS.md`).
+
+**Before (legacy — manual duplication):**
+
+```tsx
+<div className="space-y-1.5">
+  <label htmlFor="f_cep" className="text-sm font-medium">
+    CEP <span className="text-destructive">*</span>
+  </label>
+  <input
+    id="f_cep"
+    placeholder="Somente números"
+    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
+    {...register("f_cep")}
+  />
+  {errors.f_cep && (
+    <p className="text-xs text-destructive">{errors.f_cep.message}</p>
+  )}
+</div>
+```
+
+**After (canonical shadcn pattern):**
+
+```tsx
+<Field name="f_cep">
+  <FieldLabel>
+    CEP <span className="text-destructive">*</span>
+  </FieldLabel>
+  <FieldControl>
+    <Input placeholder="Somente números" {...form.register("f_cep")} />
+  </FieldControl>
+  <FieldError />
+</Field>
+```
+
+**Imports required:**
+
+```tsx
+import {
+  Form,
+  Field,
+  FieldControl,
+  FieldError,
+  FieldLabel,
+} from "#/components/ui/form";
+import { Input } from "#/components/ui/input";
+```
+
+**When to combine both refactorings:**
+When 3+ form fields share the same structure, extract a reusable sub-component
+that uses the shadcn primitives internally. The sub-component takes `name`,
+`label`, `required`, and `placeholder` as props — avoiding both JSX duplication
+and raw HTML. See [Repeated JSX patterns](#repeated-jsx-patterns) for the
+general approach, then apply the shadcn primitives inside the sub-component.
+
+> **Note:** `<Field>` requires a `<Form>` (RHF Provider) ancestor. If the
+> component receives `register` / `errors` as props (not via `useForm` context),
+> you must either lift `useForm` into the component or wrap the tree in
+> `<FormProvider>`. The canonical pattern is to keep `useForm` at the form
+> root and use `<Form>` + `<Field>` throughout.
 
 ---
 
