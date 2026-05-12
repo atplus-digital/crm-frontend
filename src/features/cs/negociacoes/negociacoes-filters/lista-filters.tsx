@@ -16,7 +16,7 @@ import {
 	NEGOCIACAO_SUBSTATUS_FILTER_OPTIONS,
 } from "#/features/cs/negociacoes/negociacoes-types";
 
-export interface ListaFiltersProps {
+interface ListaFiltersProps {
 	filters: NegociacaoFilters;
 	onFilter: (filters: NegociacaoFilters) => void;
 }

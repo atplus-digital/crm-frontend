@@ -8,16 +8,14 @@ import {
 // Guard funtions — puras, testáveis, uma por ação
 // ---------------------------------------------------------------------------
 
-export function canDesbloquearConfianca(
-	contrato: ContratoWithCliente,
-): boolean {
+function canDesbloquearConfianca(contrato: ContratoWithCliente): boolean {
 	return (
 		contrato.status === ContratoStatus.Ativo &&
 		contrato.status_internet !== InternetStatus.Ativo
 	);
 }
 
-export function canTransferir(contrato: ContratoWithCliente): boolean {
+function canTransferir(contrato: ContratoWithCliente): boolean {
 	return (
 		contrato.status !== "I" &&
 		contrato.status !== "N" &&

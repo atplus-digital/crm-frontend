@@ -39,7 +39,7 @@ interface FilterSelectFieldMultipleProps<T extends string>
 	onChange: (value: T[]) => void;
 }
 
-export type FilterSelectFieldProps<T extends string> =
+type FilterSelectFieldProps<T extends string> =
 	| FilterSelectFieldSingleProps<T>
 	| FilterSelectFieldMultipleProps<T>;
 

@@ -1,7 +1,7 @@
 import { StatusBadge } from "#/components/badges/status-badge";
 import { PONTOS_ATENCAO_LABELS } from "#/features/cs/negociacoes/negociacoes-types";
 
-export interface PontosAtencaoBadgeProps {
+interface PontosAtencaoBadgeProps {
 	value: string | number;
 }
 

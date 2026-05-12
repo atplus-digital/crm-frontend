@@ -13,7 +13,7 @@ import { PontosAtencaoCard } from "./pontos-atencao-card";
 import { SistemaCard } from "./sistema-card";
 import { ValoresFinanceirosCard } from "./valores-financeiros-card";
 
-export interface NegociacaoDetalhesTabProps {
+interface NegociacaoDetalhesTabProps {
 	negociacao: NegociacaoWithRelations | undefined;
 	isLoading: boolean;
 }

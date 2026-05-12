@@ -161,7 +161,7 @@ class TypedNocoBaseClient {
 	}
 }
 
-export class NocoBaseRepository {
+class NocoBaseRepository {
 	private client: NocoBaseClient;
 	private typedClient: TypedNocoBaseClient;
 

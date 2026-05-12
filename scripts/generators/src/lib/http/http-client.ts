@@ -1,4 +1,4 @@
-export class HttpResponseError extends Error {
+class HttpResponseError extends Error {
 	public constructor(
 		public readonly status: number,
 		public readonly statusText: string,
@@ -12,7 +12,7 @@ export class HttpResponseError extends Error {
 /**
  * Retorna preview do body de erro HTTP (primeiros 200 caracteres, sem quebras de linha).
  */
-export function getErrorBodyPreview(rawBody: string): string {
+function getErrorBodyPreview(rawBody: string): string {
 	return rawBody.replaceAll(/\s+/g, " ").trim().slice(0, 200);
 }
 

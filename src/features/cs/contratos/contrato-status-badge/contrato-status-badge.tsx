@@ -4,7 +4,7 @@ import {
 	type ContratoStatus,
 } from "#/features/cs/contratos/contratos-types";
 
-export const contratoStatusClasses: Record<ContratoStatus, string> = {
+const contratoStatusClasses: Record<ContratoStatus, string> = {
 	A: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400",
 	I: "bg-gray-100 text-gray-800 dark:bg-gray-800/30 dark:text-gray-400",
 	D: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",

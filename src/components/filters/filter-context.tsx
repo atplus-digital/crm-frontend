@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { createContext, useContext } from "react";
 
-export interface FilterContextValue<
+interface FilterContextValue<
 	TFilters extends Record<string, unknown> = Record<string, unknown>,
 > {
 	onFilter: (filters: TFilters) => void;

@@ -75,5 +75,3 @@ export function ActionsMenu({
 		</DropdownMenu>
 	);
 }
-
-export type { ActionItem, PopupRequestAction } from "./actions-menu.actions";

@@ -25,7 +25,7 @@ function buildSuspensaoContratoFilter(
 	return buildFilter(conditions);
 }
 
-export const suspensaoContratoQueryOptions = (
+const suspensaoContratoQueryOptions = (
 	params: SuspensaoContratoListParams = {},
 ) => {
 	const {

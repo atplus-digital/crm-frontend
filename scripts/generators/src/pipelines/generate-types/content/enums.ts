@@ -95,7 +95,7 @@ function isGenericLabel(value: string | number, label: string): boolean {
 	return String(value) === label;
 }
 
-export interface EnumFieldInfo {
+interface EnumFieldInfo {
 	/** Nome do campo no formato PascalCase */
 	fieldName: string;
 	/** Nome do schema Zod em camelCase */
@@ -140,7 +140,7 @@ export function toEnumMemberName(value: string | number): string {
  * Para keys de objeto TypeScript, strings numéricas puras são válidas.
  * Regras: letras/números/underscore, OU apenas números (sem leading zeros).
  */
-export function isValidObjectKey(str: string): boolean {
+function isValidObjectKey(str: string): boolean {
 	// Strings numéricas puras SEM leading zeros são válidas
 	if (/^[1-9]\d*$|^0$/.test(str)) {
 		return true;
@@ -189,7 +189,7 @@ function toEnumTypeName(collectionName: string, fieldName: string): string {
 /**
  * Extrai as informações de um campo enum.
  */
-export function getEnumFieldInfo(
+function getEnumFieldInfo(
 	collectionName: string,
 	fieldName: string,
 	_enumOptions: EnumOption[],
@@ -210,7 +210,7 @@ export function getEnumFieldInfo(
  * Single source of truth para os valores de enum.
  * Ex: export const PESSOAS_SEXO_LABELS = { M: "MASCULINO", F: "FEMININO" } as const;
  */
-export function generateEnumLabelMap(
+function generateEnumLabelMap(
 	collectionName: string,
 	fieldName: string,
 	enumOptions: EnumOption[],
@@ -296,7 +296,7 @@ function escapeLabelForMessage(label: string): string {
  * Usa labels no message de erro para melhor UX.
  * Ex: export const pessoasSexoSchema = z.enum(["M", "F"], { error: ... });
  */
-export function generateEnumSchema(
+function generateEnumSchema(
 	collectionName: string,
 	fieldName: string,
 	enumOptions: EnumOption[],
@@ -335,7 +335,7 @@ export function generateEnumSchema(
  * Gera o type alias para um campo enum, inferido do schema Zod.
  * Ex: export type PessoasSexo = z.infer<typeof pessoasSexoSchema>;
  */
-export function generateEnumType(
+function generateEnumType(
 	collectionName: string,
 	fieldName: string,
 	_enumOptions: EnumOption[],

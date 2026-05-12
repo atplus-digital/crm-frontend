@@ -42,7 +42,7 @@ const createTrocaTitularidadeAddressSchema =
 		f_numero: true,
 	});
 
-export const createTrocaTitularidadeSchema = createTrocaTitularidadeInputSchema
+const createTrocaTitularidadeSchema = createTrocaTitularidadeInputSchema
 	.merge(createTrocaTitularidadeAddressSchema)
 	.extend({
 		f_pessoa_pf: z.number().int().positive().nullable().optional(),

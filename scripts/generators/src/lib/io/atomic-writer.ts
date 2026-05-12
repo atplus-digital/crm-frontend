@@ -3,13 +3,13 @@ import * as path from "node:path";
 import { runLinterFix } from "@generators/lib/validation/linter-runner";
 import { validateTypeScriptDirectory } from "@generators/lib/validation/tsc-validator";
 
-export interface DiffResult {
+interface DiffResult {
 	changedFiles: string[];
 	unchangedFiles: string[];
 	deletedFiles: string[];
 }
 
-export interface ValidationOptions {
+interface ValidationOptions {
 	validate?: boolean;
 	lint?: boolean;
 }

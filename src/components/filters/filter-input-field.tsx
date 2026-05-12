@@ -5,7 +5,7 @@ import { cn } from "#/lib/utils";
 
 const DEFAULT_DEBOUNCE_MS = 300;
 
-export interface FilterInputFieldProps {
+interface FilterInputFieldProps {
 	id: string;
 	label: string;
 	placeholder: string;

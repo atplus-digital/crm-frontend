@@ -1,14 +1,14 @@
 import type { SortingState } from "@tanstack/react-table";
 import { useCallback, useMemo } from "react";
 
-export interface UseListSortingOptions {
+interface UseListSortingOptions {
 	/** Sort array de strings (ex: ["-createdAt"]) */
 	sort: string[];
 	/** Callback chamado quando o usuário muda a ordenação */
 	onSort: (field: string) => void;
 }
 
-export interface UseListSortingReturn {
+interface UseListSortingReturn {
 	sorting: SortingState;
 	onSortingChange: (
 		updater: SortingState | ((old: SortingState) => SortingState),

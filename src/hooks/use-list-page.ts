@@ -35,7 +35,7 @@ function deserializeFilters<T extends object>(
 	return result as T;
 }
 
-export interface UseListPageOptions<TFilters extends object = object> {
+interface UseListPageOptions<TFilters extends object = object> {
 	defaultFilters?: TFilters;
 	defaultPageSize?: number;
 	/** Default sort to use when no sort is specified in URL (e.g., ["-createdAt"] for descending createdAt) */
@@ -43,7 +43,7 @@ export interface UseListPageOptions<TFilters extends object = object> {
 	syncSortToUrl?: boolean;
 }
 
-export interface UseListPageReturn<TFilters extends object = object> {
+interface UseListPageReturn<TFilters extends object = object> {
 	page: number;
 	pageSize: number;
 	sorting: SortingState;

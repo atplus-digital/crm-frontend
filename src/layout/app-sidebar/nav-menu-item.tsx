@@ -6,7 +6,7 @@ interface NavItemWithChildren extends NavItem {
 	children?: NavItemWithChildren[];
 }
 
-export function hasChildren(item: NavItem): item is NavItemWithChildren {
+function hasChildren(item: NavItem): item is NavItemWithChildren {
 	return Array.isArray(item.children) && item.children.length > 0;
 }
 

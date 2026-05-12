@@ -3,7 +3,7 @@ import { DetailSection } from "#/features/cs/components/detail-section";
 import { formatDatePtBR } from "#/lib/utils";
 
 /** Common shape for all NocoBase comment types */
-export interface CommentBase {
+interface CommentBase {
 	id: number;
 	f_comentario: string;
 	createdAt: string;

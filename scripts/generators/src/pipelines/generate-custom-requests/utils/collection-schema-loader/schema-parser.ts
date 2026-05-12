@@ -1,6 +1,6 @@
 import { snakeToCamelCase, snakeToPascalCase } from "./case-utils";
 
-export interface ExtractedSchemaNames {
+interface ExtractedSchemaNames {
 	schemaName: string;
 	baseSchemaName: string;
 }

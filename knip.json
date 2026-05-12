@@ -27,6 +27,7 @@
 	"ignore": [
 		"src/generated/**",
 		"src/components/ui/**",
+		"scripts/generators/src/lib/pipeline/reports.ts",
 		"src/features/custom-requests/**",
 		"src/features/auth/permissions/hooks.ts",
 		"src/features/auth/permissions/matchers.ts"

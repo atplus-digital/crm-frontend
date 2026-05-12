@@ -6,7 +6,7 @@ import {
 	NEGOCIACAO_SUBSTATUS_VARIANTS,
 } from "#/features/cs/negociacoes/negociacoes-types";
 
-export interface StatusBadgeProps {
+interface StatusBadgeProps {
 	status: string;
 	substatus?: string;
 }

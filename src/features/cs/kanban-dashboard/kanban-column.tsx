@@ -7,7 +7,7 @@ import type { KanbanDashboardCard, UNIFIED_STATUS_COLUMNS } from "./types";
 
 const PAGE_SIZE = 5;
 
-export interface KanbanColumnProps {
+interface KanbanColumnProps {
 	status: (typeof UNIFIED_STATUS_COLUMNS)[number];
 	cards: KanbanDashboardCard[];
 }

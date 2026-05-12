@@ -1,5 +1,2 @@
-export { StatusBadge, type StatusBadgeProps } from "./status-badge";
-export {
-	StatusBadgeGroup,
-	type StatusBadgeGroupProps,
-} from "./status-badge-group";
+export { StatusBadge } from "./status-badge";
+export { StatusBadgeGroup } from "./status-badge-group";

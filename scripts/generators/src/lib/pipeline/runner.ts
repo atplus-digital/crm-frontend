@@ -1,7 +1,7 @@
 import type { TaskRunner } from "@generators/lib/types";
 import type { ListrTaskResult } from "listr2";
 
-export type PipelineStageResult<TContext> =
+type PipelineStageResult<TContext> =
 	| Promise<TContext>
 	| ReturnType<TaskRunner["newListr"]>;
 

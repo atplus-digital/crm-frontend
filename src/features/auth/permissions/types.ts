@@ -41,7 +41,7 @@ export const permissionRoleSchema = z.object({
 
 export type PermissionRole = z.infer<typeof permissionRoleSchema>;
 
-export const permissionStateSchema = z.object({
+const permissionStateSchema = z.object({
 	effectiveActions: z.array(z.string()),
 	effectiveSnippets: z.array(z.string()),
 	roleNames: z.array(z.string()),

@@ -58,7 +58,7 @@ export const INTERNET_STATUS_LABELS: Record<InternetStatus, string> = {
 // ---------------------------------------------------------------------------
 
 /** Cliente do contrato - tipo gerado completo do IXC (cliente) */
-export type Cliente = import("#/generated/types/d_db_ixcsoft/cliente").Cliente;
+type Cliente = import("#/generated/types/d_db_ixcsoft/cliente").Cliente;
 
 /** Contrato com dados do cliente e cidade (appends) */
 export type ContratoWithCliente = ClienteContrato & {

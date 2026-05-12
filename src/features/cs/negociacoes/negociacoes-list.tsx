@@ -6,7 +6,7 @@ import {
 	type NegociacaoItem,
 } from "#/features/cs/negociacoes/negociacoes-list-columns";
 
-export interface NegociacoesListProps {
+interface NegociacoesListProps {
 	negociacoes?: NegociacaoItem[];
 	isLoading?: boolean;
 	hasInitialQueryData?: boolean;

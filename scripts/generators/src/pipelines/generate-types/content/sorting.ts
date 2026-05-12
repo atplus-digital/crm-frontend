@@ -5,7 +5,7 @@
  * A inclusão/exclusão de campos é determinada pela API do NocoBase, não por estes padrões.
  * Campos de sistema (createdById, updatedById, etc.) só aparecem se a API os retornar.
  */
-export const SORT_PATTERNS = {
+const SORT_PATTERNS = {
 	/** Chaves primárias e de identificação (id, sort, uid, etc.) */
 	ID: /^(id|sort|uid)$/i,
 	/** Chaves estrangeiras de relação (f_fk_*) */
@@ -18,7 +18,7 @@ export const SORT_PATTERNS = {
 	AUDIT_CREATE: /^created(byid|at)$/i,
 } as const;
 
-export type FieldCategory =
+type FieldCategory =
 	| "id"
 	| "fk"
 	| "tech_id"
@@ -37,7 +37,7 @@ export type FieldCategory =
  * 5. audit_update (updatedById, updatedAt)
  * 6. audit_create (createdById, createdAt)
  */
-export function _categorizeField(fieldName: string): FieldCategory {
+function _categorizeField(fieldName: string): FieldCategory {
 	const name = fieldName;
 	if (SORT_PATTERNS.ID.test(name)) return "id";
 	if (SORT_PATTERNS.FK.test(name)) return "fk";
@@ -48,7 +48,7 @@ export function _categorizeField(fieldName: string): FieldCategory {
 }
 
 /** Ordem de prioridade para cada categoria (menor = aparece primeiro) */
-export const CATEGORY_ORDER: Record<FieldCategory, number> = {
+const CATEGORY_ORDER: Record<FieldCategory, number> = {
 	id: 0,
 	fk: 1,
 	tech_id: 2,

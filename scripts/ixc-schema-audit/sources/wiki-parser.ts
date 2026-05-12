@@ -12,7 +12,7 @@
 
 import type { EnumOption, ScalarType } from "../config";
 
-export interface WikiField {
+interface WikiField {
 	fieldName: string;
 	fieldType: string;
 	isRequired: boolean;

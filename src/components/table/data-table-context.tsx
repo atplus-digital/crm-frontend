@@ -63,7 +63,7 @@ export function DataTableProvider<
 	);
 }
 
-export function useOptionalDataTableContext<
+function useOptionalDataTableContext<
 	TData,
 	TFilters extends TableFilters = TableFilters,
 >() {

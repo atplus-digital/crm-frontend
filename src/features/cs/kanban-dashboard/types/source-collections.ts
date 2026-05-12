@@ -1,8 +1,5 @@
 import type { BadgeOption } from "#/components/filters/filter-badge-group.logic";
-import {
-	NEGOCIACOES_MOTIVO_LABELS,
-	type NegociacoesMotivo,
-} from "#/generated/types/nocobase/negociacoes";
+import type { NegociacoesMotivo } from "#/generated/types/nocobase/negociacoes";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Source collection discriminator
@@ -13,8 +10,6 @@ import {
 export type SourceCollection = "tt" | "te" | "sc" | "neg";
 
 export type { NegociacoesMotivo };
-// Tipo de negociação options derived from f_motivo field
-export { NEGOCIACOES_MOTIVO_LABELS };
 
 // Primary tipo de negociação options (always visible in filter)
 export const PRIMARY_NEGOCIACAO_MOTIVO_OPTIONS: readonly NegociacoesMotivo[] = [

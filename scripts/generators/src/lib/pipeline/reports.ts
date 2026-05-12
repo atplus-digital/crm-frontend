@@ -1,21 +1,21 @@
-export type ReportJsonPrimitive = string | number | boolean | null;
+type ReportJsonPrimitive = string | number | boolean | null;
 
 export type ReportJsonValue =
 	| ReportJsonPrimitive
 	| ReportJsonObject
 	| ReportJsonValue[];
 
-export interface ReportJsonObject {
+interface ReportJsonObject {
 	[key: string]: ReportJsonValue;
 }
 
-export interface ReportEntryScope {
+interface ReportEntryScope {
 	pipeline: string;
 	stage: string;
 	dataSourceKey?: string;
 }
 
-export interface JsonReportEntry {
+interface JsonReportEntry {
 	entryId: string;
 	key: string;
 	title: string;
@@ -24,7 +24,7 @@ export interface JsonReportEntry {
 	payload: ReportJsonObject;
 }
 
-export interface JsonReportNamespace {
+interface JsonReportNamespace {
 	name: string;
 	entries: JsonReportEntry[];
 }
@@ -34,7 +34,7 @@ export interface PipelineReportsContext {
 	namespaces: Record<string, JsonReportNamespace>;
 }
 
-export interface AddJsonReportInput {
+interface AddJsonReportInput {
 	namespace: string;
 	key: string;
 	title: string;

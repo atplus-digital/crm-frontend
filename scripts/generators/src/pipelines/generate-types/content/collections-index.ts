@@ -10,7 +10,7 @@ import { generateFileHeader } from "./content";
  * Gera o tipo union com todas as collections disponíveis.
  * Ex: "users" | "departments" | "roles"
  */
-export function generateCollectionNameUnion(collectionNames: string[]): string {
+function generateCollectionNameUnion(collectionNames: string[]): string {
 	const sorted = [...collectionNames].sort((a, b) => a.localeCompare(b));
 
 	if (sorted.length === 0) {
@@ -34,7 +34,7 @@ export function generateCollectionNameUnion(collectionNames: string[]): string {
  * Gera a interface de mapeamento collection → interface TypeScript.
  * Ex: { users: Users; departments: Departments; }
  */
-export function generateCollectionMapInterface(
+function generateCollectionMapInterface(
 	collectionTypes: CollectionTypesMap,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 	useNamespacePrefix = false,
@@ -66,7 +66,7 @@ export function generateCollectionMapInterface(
  * Gera a interface de mapeamento collection → relations interface.
  * Ex: { users: UsersRelations; departments: DepartmentsRelations; }
  */
-export function generateCollectionRelationsMapInterface(
+function generateCollectionRelationsMapInterface(
 	collectionTypes: CollectionTypesMap,
 	useNamespacePrefix = false,
 ): string {
@@ -96,7 +96,7 @@ export function generateCollectionRelationsMapInterface(
  * Gera constantes com os nomes das collections para uso em runtime.
  * Ex: export const COLLECTIONS = ["users", "departments", ...] as const;
  */
-export function generateCollectionsConst(collectionNames: string[]): string {
+function generateCollectionsConst(collectionNames: string[]): string {
 	const sorted = [...collectionNames].sort((a, b) => a.localeCompare(b));
 
 	if (sorted.length === 0) {

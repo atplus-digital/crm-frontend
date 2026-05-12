@@ -1,6 +1,6 @@
 import type { CollectionSchemaMapping } from "../../@types/collection-schema";
 
-export interface PlaceholderFields {
+interface PlaceholderFields {
 	$nForm: Set<string>;
 	$nPopupRecord: Set<string>;
 	$nSelectedRecord: Set<string>;

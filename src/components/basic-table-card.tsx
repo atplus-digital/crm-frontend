@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "#/lib/utils";
 
-export type BasicTableCardProps = {
+type BasicTableCardProps = {
 	label: string;
 	value: string | number;
 	className?: string;

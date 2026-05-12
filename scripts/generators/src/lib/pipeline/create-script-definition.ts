@@ -15,7 +15,7 @@ import type {
  * A single CLI stage — maps to one Listr2 task.
  * Carries no Logger — progress is reported via the Listr2 task handle.
  */
-export interface CliStage<TContext = unknown> {
+interface CliStage<TContext = unknown> {
 	title: string;
 	run: (
 		context: TContext,

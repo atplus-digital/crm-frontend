@@ -12,7 +12,7 @@ import type {
 } from "#/features/custom-requests/hooks/use-custom-requests";
 import { cn } from "#/lib/utils";
 
-export type PopupRequestAction<
+type PopupRequestAction<
 	I extends CustomRequestIdentifier = CustomRequestIdentifier,
 > = {
 	identifier: I;
