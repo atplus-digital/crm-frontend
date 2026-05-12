@@ -129,7 +129,7 @@ function extractEnumValues(schema: ZodType): (string | number)[] | null {
 			// Tentar converter para number se aplicável
 			return keys.map((k) => {
 				const num = Number(k);
-				return !isNaN(num) && num.toString() === k ? num : k;
+				return !Number.isNaN(num) && num.toString() === k ? num : k;
 			});
 		}
 	}
@@ -172,7 +172,7 @@ function extractEnumLabels(
 		for (const [key, val] of Object.entries(def.entries)) {
 			const numKey = Number(key);
 			const finalKey =
-				!isNaN(numKey) && numKey.toString() === key ? numKey : key;
+				!Number.isNaN(numKey) && numKey.toString() === key ? numKey : key;
 			result[finalKey] = val;
 		}
 		return result;

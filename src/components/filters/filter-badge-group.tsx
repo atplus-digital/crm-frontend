@@ -115,8 +115,8 @@ export function FilterBadgeGroup<T extends string>({
 				})}
 
 				{hasExtras &&
-					extraOptions!
-						.filter((opt) => expandedExtraKeys.has(opt.value))
+					extraOptions
+						?.filter((opt) => expandedExtraKeys.has(opt.value))
 						.map((option) => {
 							const isSelected = isBadgeActive(option.value);
 							return (

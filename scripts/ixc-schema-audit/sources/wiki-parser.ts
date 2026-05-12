@@ -44,7 +44,7 @@ function parseEnumValues(valuesStr: string): EnumOption[] {
 	const lines = valuesStr
 		.split(/<br\s*\/?>|\n/)
 		.map((l) => l.trim())
-		.filter((l) => l && l.includes("="));
+		.filter((l) => l?.includes("="));
 
 	const results: EnumOption[] = [];
 
@@ -56,7 +56,7 @@ function parseEnumValues(valuesStr: string): EnumOption[] {
 		const label = line.slice(eqIndex + 1).trim();
 
 		const numValue = Number(value);
-		if (!isNaN(numValue) && numValue.toString() === value) {
+		if (!Number.isNaN(numValue) && numValue.toString() === value) {
 			results.push({ value: numValue, label });
 		} else {
 			results.push({ value, label });
@@ -117,7 +117,7 @@ export function parseWikiHtml(html: string): WikiField[] {
 				const valuesPattern2 =
 					/Valores disponíveis[:\s]*([\s\S]{1,500}?)(?:<(?:ul|div|b)[\s>]|\s{2,}|$)/i;
 				const valuesMatch2 = detailsHtml.match(valuesPattern2);
-				if (valuesMatch2 && valuesMatch2[1].includes("=")) {
+				if (valuesMatch2?.[1].includes("=")) {
 					field.enumOptions = parseEnumValues(valuesMatch2[1]);
 				}
 			}

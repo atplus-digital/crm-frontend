@@ -1,9 +1,11 @@
+import { z } from "zod";
 import type { CollectionRelationsMap } from "#/generated/types/nocobase/collections";
 import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-titularidade";
+import { crm_troca_titularidadeBaseSchema } from "#/generated/types/nocobase/crm-troca-titularidade/schemas";
 import type { Empresas } from "#/generated/types/nocobase/empresas";
 import type { Pessoas } from "#/generated/types/nocobase/pessoas";
 import { getErrorMessage } from "#/lib/api-errors";
-import { includes } from "#/lib/filter-builder";
+import { includes, or } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";
 
@@ -13,31 +15,43 @@ const log = createLogger("services:cs:troca-titularidade");
 // Create
 // ---------------------------------------------------------------------------
 
-export type CreateTrocaTitularidadeInput = Pick<
-	CrmTrocaTitularidade,
-	| "f_cedente"
-	| "f_cedente_documento"
-	| "f_cedente_responsavel_legal"
-	| "f_cedente_telefone"
-	| "f_cedente_email"
-	| "f_tipo_pessoa"
-	| "f_cessionario"
-	| "f_cessionario_documento"
-	| "f_cessionario_responsavel"
-	| "f_cessionario_telefone"
-	| "f_cessionario_email"
-	| "f_id_contrato"
-	| "f_cep"
-	| "f_endereco"
-	| "f_numero"
-	| "f_bairro"
-	| "f_complemento"
-	| "f_cidade"
-	| "f_estado"
-> & {
-	f_pessoa_pf?: number | null;
-	f_pessoa_pj?: number | null;
-};
+const createTrocaTitularidadeInputSchema =
+	crm_troca_titularidadeBaseSchema.pick({
+		f_cedente: true,
+		f_cedente_documento: true,
+		f_cedente_email: true,
+		f_cedente_responsavel_legal: true,
+		f_cedente_telefone: true,
+		f_cessionario: true,
+		f_cessionario_documento: true,
+		f_cessionario_email: true,
+		f_cessionario_responsavel: true,
+		f_cessionario_telefone: true,
+		f_id_contrato: true,
+		f_tipo_pessoa: true,
+	});
+
+const createTrocaTitularidadeAddressSchema =
+	crm_troca_titularidadeBaseSchema.pick({
+		f_bairro: true,
+		f_cep: true,
+		f_cidade: true,
+		f_complemento: true,
+		f_endereco: true,
+		f_estado: true,
+		f_numero: true,
+	});
+
+export const createTrocaTitularidadeSchema = createTrocaTitularidadeInputSchema
+	.merge(createTrocaTitularidadeAddressSchema)
+	.extend({
+		f_pessoa_pf: z.number().int().positive().nullable().optional(),
+		f_pessoa_pj: z.number().int().positive().nullable().optional(),
+	});
+
+export type CreateTrocaTitularidadeInput = z.infer<
+	typeof createTrocaTitularidadeSchema
+>;
 
 export async function createTrocaTitularidade(
 	data: CreateTrocaTitularidadeInput,
@@ -87,7 +101,7 @@ export async function searchPessoasFisicas(
 	if (!query || query.length < 2) return [];
 
 	try {
-		const filter = includes("f_nome", query);
+		const filter = or(includes("f_nome", query), includes("f_cpf", query));
 		const response = await nocobaseRepository.list("t_pessoas", {
 			page: 1,
 			pageSize: 20,
@@ -114,7 +128,10 @@ export async function searchPessoasJuridicas(
 	if (!query || query.length < 2) return [];
 
 	try {
-		const filter = includes("f_razao_social", query);
+		const filter = or(
+			includes("f_razao_social", query),
+			includes("f_cnpj", query),
+		);
 		const response = await nocobaseRepository.list("t_empresas", {
 			page: 1,
 			pageSize: 20,

@@ -1,8 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRightLeft, Loader2 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "#/components/ui/alert-dialog";
 import { Button } from "#/components/ui/button";
 import {
 	Sheet,
@@ -13,7 +23,6 @@ import {
 } from "#/components/ui/sheet";
 import { useCreateTrocaTitularidade } from "@/features/cs/troca-titularidade/troca-titularidade-hooks";
 import type { CreateTrocaTitularidadeInput } from "@/features/cs/troca-titularidade/troca-titularidade-service";
-
 import { CedenteSection } from "./transferencia-titularidade-cedente-section";
 import { CessionarioSection } from "./transferencia-titularidade-cessionario-section";
 import { ContratoSection } from "./transferencia-titularidade-contrato-section";
@@ -58,10 +67,13 @@ export function TransferenciaTitularidadeSheet({
 		control,
 		register,
 		setValue,
-		formState: { errors },
+		formState: { errors, isDirty },
 	} = form;
 
 	const [tipoPessoa, setTipoPessoa] = useState<TipoPessoa>("PF");
+	const [showDiscardDialog, setShowDiscardDialog] = useState(false);
+	const pendingOpenChangeRef = useRef<boolean | null>(null);
+
 	const [cessionario, setCessionario] = useState<CessionarioState>(
 		DEFAULT_CESSIONARIO_STATE,
 	);
@@ -108,6 +120,31 @@ export function TransferenciaTitularidadeSheet({
 		});
 	};
 
+	const handleOpenChange = useCallback(
+		(nextOpen: boolean) => {
+			if (!nextOpen && isDirty) {
+				pendingOpenChangeRef.current = nextOpen;
+				setShowDiscardDialog(true);
+				return;
+			}
+			onOpenChange(nextOpen);
+		},
+		[isDirty, onOpenChange],
+	);
+
+	const handleDiscardConfirm = useCallback(() => {
+		setShowDiscardDialog(false);
+		if (pendingOpenChangeRef.current !== null) {
+			onOpenChange(pendingOpenChangeRef.current);
+			pendingOpenChangeRef.current = null;
+		}
+	}, [onOpenChange]);
+
+	const handleDiscardCancel = useCallback(() => {
+		setShowDiscardDialog(false);
+		pendingOpenChangeRef.current = null;
+	}, []);
+
 	// biome-ignore lint/correctness/useExhaustiveDependencies: reset/mutation are stable but including them causes infinite loop
 	useEffect(() => {
 		if (!open) {
@@ -121,77 +158,98 @@ export function TransferenciaTitularidadeSheet({
 	}, [open]);
 
 	return (
-		<Sheet open={open} onOpenChange={onOpenChange}>
-			<SheetContent
-				side="right"
-				className="flex flex-col data-[side=right]:sm:max-w-2xl"
-			>
-				<SheetHeader>
-					<SheetTitle className="flex items-center gap-2">
-						<ArrowRightLeft className="size-5" />
-						Transferência de Titularidade
-					</SheetTitle>
-				</SheetHeader>
-
-				<form
-					onSubmit={handleSubmit(onSubmit)}
-					className="flex flex-1 flex-col overflow-hidden"
+		<>
+			<Sheet open={open} onOpenChange={handleOpenChange}>
+				<SheetContent
+					side="right"
+					className="flex flex-col data-[side=right]:sm:max-w-2xl"
 				>
-					<div className="flex-1 space-y-6 overflow-y-auto px-4 py-4">
-						<CedenteSection
-							cedenteNome={cedenteNome}
-							cedenteDoc={cedenteDoc}
-							register={register}
-							errors={errors}
-						/>
+					<SheetHeader>
+						<SheetTitle className="flex items-center gap-2">
+							<ArrowRightLeft className="size-5" />
+							Transferência de Titularidade
+						</SheetTitle>
+					</SheetHeader>
 
-						<CessionarioSection
-							tipoPessoa={tipoPessoa}
-							onTipoPessoaChange={setTipoPessoa}
-							cessionario={cessionario}
-							onCessionarioChange={setCessionario}
-							selectedPF={selectedPF}
-							onSelectedPFChange={setSelectedPF}
-							onClearPJSearch={() => {}}
-							setValue={setValue}
-							errors={errors}
-						/>
+					<form
+						onSubmit={handleSubmit(onSubmit)}
+						className="flex flex-1 flex-col overflow-hidden"
+					>
+						<div className="flex-1 space-y-6 overflow-y-auto px-4 py-4">
+							<CedenteSection
+								cedenteNome={cedenteNome}
+								cedenteDoc={cedenteDoc}
+								register={register}
+								errors={errors}
+							/>
 
-						<ContratoSection
-							contratoId={contratoId}
-							register={register}
-							control={control}
-							errors={errors}
-						/>
+							<CessionarioSection
+								tipoPessoa={tipoPessoa}
+								onTipoPessoaChange={setTipoPessoa}
+								cessionario={cessionario}
+								onCessionarioChange={setCessionario}
+								selectedPF={selectedPF}
+								onSelectedPFChange={setSelectedPF}
+								onClearPJSearch={() => {}}
+								setValue={setValue}
+								errors={errors}
+							/>
 
-						{mutation.isError && (
-							<div className="rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive">
-								{mutation.error?.message ?? "Erro ao criar transferência"}
-							</div>
-						)}
-					</div>
+							<ContratoSection
+								contratoId={contratoId}
+								register={register}
+								control={control}
+								errors={errors}
+							/>
 
-					<SheetFooter className="border-t px-4 py-4">
-						<Button
-							type="button"
-							variant="outline"
-							onClick={() => onOpenChange(false)}
-							disabled={mutation.isPending}
-						>
-							Cancelar
-						</Button>
-						<Button
-							type="submit"
-							disabled={submitDisabled || mutation.isPending}
-						>
-							{mutation.isPending && (
-								<Loader2 className="mr-2 size-4 animate-spin" />
+							{mutation.isError && (
+								<div className="rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive">
+									{mutation.error?.message ?? "Erro ao criar transferência"}
+								</div>
 							)}
-							Salvar
-						</Button>
-					</SheetFooter>
-				</form>
-			</SheetContent>
-		</Sheet>
+						</div>
+
+						<SheetFooter className="border-t px-4 py-4">
+							<Button
+								type="button"
+								variant="outline"
+								onClick={() => handleOpenChange(false)}
+								disabled={mutation.isPending}
+							>
+								Cancelar
+							</Button>
+							<Button
+								type="submit"
+								disabled={submitDisabled || mutation.isPending}
+							>
+								{mutation.isPending && (
+									<Loader2 className="mr-2 size-4 animate-spin" />
+								)}
+								Salvar
+							</Button>
+						</SheetFooter>
+					</form>
+				</SheetContent>
+			</Sheet>
+
+			<AlertDialog open={showDiscardDialog} onOpenChange={setShowDiscardDialog}>
+				<AlertDialogContent size="sm">
+					<AlertDialogHeader>
+						<AlertDialogTitle>Descartar alterações?</AlertDialogTitle>
+						<AlertDialogDescription>
+							Você tem alterações não salvas. Deseja sair sem salvar?
+						</AlertDialogDescription>
+					</AlertDialogHeader>
+					<AlertDialogFooter>
+						<AlertDialogCancel onClick={handleDiscardCancel}>
+							Cancelar
+						</AlertDialogCancel>
+						<AlertDialogAction onClick={handleDiscardConfirm}>
+							Descartar
+						</AlertDialogAction>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
+		</>
 	);
 }

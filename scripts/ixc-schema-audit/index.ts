@@ -178,7 +178,7 @@ async function main(): Promise<void> {
 		}
 	}
 
-	console.log("\n" + "=".repeat(60));
+	console.log(`\n${"=".repeat(60)}`);
 	console.log("📝 Gerando relatórios...");
 
 	const writtenPaths = writeReports(allDiffs, cliOptions.verbose);
@@ -188,7 +188,7 @@ async function main(): Promise<void> {
 		`   Modo verbose: ${cliOptions.verbose ? "ativado" : "desativado"}`,
 	);
 
-	console.log("\n" + "=".repeat(60));
+	console.log(`\n${"=".repeat(60)}`);
 	console.log("📊 Resumo Final");
 	console.log("=".repeat(60));
 
@@ -216,7 +216,7 @@ async function main(): Promise<void> {
 		}
 	}
 
-	console.log("\n" + "=".repeat(60));
+	console.log(`\n${"=".repeat(60)}`);
 	console.log(`Relatório principal: ${CONFIG.OUTPUT_DIR}/index.md`);
 	if (cliOptions.verbose) {
 		console.log(

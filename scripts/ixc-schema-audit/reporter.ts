@@ -196,9 +196,7 @@ function generateCollectionReport(
 					? "✅"
 					: "❌";
 				const status =
-					inIxc === "✅" && inNb === "✅"
-						? "`" + name + "`"
-						: `**\`${name}\`**`;
+					inIxc === "✅" && inNb === "✅" ? `\`${name}\`` : `**\`${name}\`**`;
 				lines.push(`| ${status} | ${inIxc} | ${inNb} |`);
 			}
 			lines.push("");
@@ -338,17 +336,17 @@ function generateIndexReport(allDiffs: CollectionDiff[]): string {
 
 	let totalIxcFields = 0;
 	let totalNbFields = 0;
-	let totalScalars = 0;
-	let totalEnums = 0;
-	let totalRelations = 0;
+	let _totalScalars = 0;
+	let _totalEnums = 0;
+	let _totalRelations = 0;
 	let totalDiffs = 0;
 
 	for (const diff of allDiffs) {
 		totalIxcFields += diff.metadata.ixcTotalFields;
 		totalNbFields += diff.metadata.nocobaseTotalFields;
-		totalScalars += diff.scalars.filter((d) => d.side !== "match").length;
-		totalEnums += diff.enums.filter((d) => d.side !== "match").length;
-		totalRelations += diff.relations.filter((d) => d.side !== "match").length;
+		_totalScalars += diff.scalars.filter((d) => d.side !== "match").length;
+		_totalEnums += diff.enums.filter((d) => d.side !== "match").length;
+		_totalRelations += diff.relations.filter((d) => d.side !== "match").length;
 		totalDiffs += diff.diffCount;
 
 		const collectionLink = `[${diff.collectionName}](./${diff.collectionName}.md)`;

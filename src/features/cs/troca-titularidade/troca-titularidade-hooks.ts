@@ -93,8 +93,10 @@ export function useCreateTrocaTitularidade() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (data: CreateTrocaTitularidadeInput) =>
-			createTrocaTitularidade(data),
+		mutationFn: (data: CreateTrocaTitularidadeInput) => {
+			console.log("Creating troca de titularidade with data:", data);
+			return createTrocaTitularidade(data);
+		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["troca-titularidade"] });
 			queryClient.invalidateQueries({

@@ -1,4 +1,12 @@
 import { useEffect, useState } from "react";
+import {
+	SearchCombobox,
+	SearchComboboxContent,
+	SearchComboboxEmpty,
+	SearchComboboxInput,
+	SearchComboboxItem,
+	SearchComboboxList,
+} from "#/components/search-combobox";
 import { searchPessoasFisicas } from "@/features/cs/troca-titularidade/troca-titularidade-service";
 import type { SelectedPF } from "./transferencia-titularidade-types";
 
@@ -45,6 +53,8 @@ export function PfSearch({ onSelect, onClear }: PfSearchProps) {
 
 	const handleClear = () => {
 		setSelected(null);
+		setSearch("");
+		setResults([]);
 		onClear();
 	};
 
@@ -53,30 +63,34 @@ export function PfSearch({ onSelect, onClear }: PfSearchProps) {
 			<label htmlFor="pf-search" className="text-sm font-medium">
 				Pessoa (PF) <span className="text-destructive">*</span>
 			</label>
-			<input
+			<SearchCombobox
 				id="pf-search"
-				type="text"
-				placeholder="Buscar por nome..."
-				value={search}
-				onChange={(e) => setSearch(e.target.value)}
-				className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-			/>
-			{loading && <p className="text-xs text-muted-foreground">Buscando...</p>}
-			{results.length > 0 && (
-				<ul className="border max-h-40 overflow-y-auto rounded-md">
-					{results.map((result) => (
-						<li key={result?.id}>
-							<button
-								type="button"
-								onClick={() => handleSelect(result)}
-								className="w-full px-3 py-2 text-left text-sm hover:bg-muted"
-							>
-								{result?.f_nome} — {result?.f_cpf}
-							</button>
-						</li>
-					))}
-				</ul>
-			)}
+				items={results}
+				value={selected}
+				onValueChange={handleSelect}
+				onSearchChange={setSearch}
+				getItemLabel={(item) => `${item?.f_nome} — ${item?.f_cpf}`}
+				placeholder="Buscar por nome ou CPF..."
+			>
+				<SearchComboboxInput placeholder="Digite nome ou CPF..." />
+				<SearchComboboxContent>
+					{loading && <SearchComboboxEmpty>Buscando...</SearchComboboxEmpty>}
+					{!loading && search.length >= 2 && results.length === 0 && (
+						<SearchComboboxEmpty>
+							Nenhum resultado encontrado.
+						</SearchComboboxEmpty>
+					)}
+					{!loading && (
+						<SearchComboboxList>
+							{(item: SelectedPF) => (
+								<SearchComboboxItem key={item?.id} value={item}>
+									{item?.f_nome} — {item?.f_cpf}
+								</SearchComboboxItem>
+							)}
+						</SearchComboboxList>
+					)}
+				</SearchComboboxContent>
+			</SearchCombobox>
 			{selected && (
 				<div className="mt-1 flex items-center gap-2">
 					<span className="text-xs text-muted-foreground">

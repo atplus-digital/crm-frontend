@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UseFormRegister } from "react-hook-form";
+import type { TrocaEnderecoFormValues } from "./troca-endereco-form";
 
 interface FormFieldError {
 	readonly message?: string;
@@ -7,7 +7,7 @@ interface FormFieldError {
 
 interface CobrancaFieldsSectionProps {
 	readonly taxaOptions: [string, string][];
-	readonly register: UseFormRegister<any>;
+	readonly register: UseFormRegister<TrocaEnderecoFormValues>;
 	readonly errors: Record<string, FormFieldError | undefined>;
 }
 
