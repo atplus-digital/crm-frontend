@@ -12,7 +12,6 @@ import type {
 	NegociacoesTipoPessoa,
 } from "#/generated/types/nocobase/negociacoes";
 import {
-	NEGOCIACOES_MOTIVO_LABELS,
 	NEGOCIACOES_STATUS_LABELS,
 	NEGOCIACOES_SUBSTATUS_LABELS,
 } from "#/generated/types/nocobase/negociacoes";
@@ -52,14 +51,6 @@ export const NEGOCIACAO_SUBSTATUS_FILTER_OPTIONS: {
 	label: string;
 }[] = Object.entries(NEGOCIACOES_SUBSTATUS_LABELS).map(([value, label]) => ({
 	value: value as NegociacoesSubstatus,
-	label,
-}));
-
-export const MOTIVO_FILTER_OPTIONS: {
-	value: NegociacoesMotivo;
-	label: string;
-}[] = Object.entries(NEGOCIACOES_MOTIVO_LABELS).map(([value, label]) => ({
-	value: value as NegociacoesMotivo,
 	label,
 }));
 

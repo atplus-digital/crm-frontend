@@ -109,13 +109,6 @@ export function useContratoRegistros(id: number) {
 	return useQuery(contratoRegistrosQueryOptions(id));
 }
 
-export const dadosAdicionaisContratoQueryOptions = (id: number) =>
-	queryOptions({
-		queryKey: ["cs", "contratos", "dados-adicionais", id] as const,
-		queryFn: () => fetchDadosAdicionaisContrato(id),
-		staleTime: 10_000,
-	});
-
 export function useDadosAdicionaisContrato(id: number | null) {
 	return useQuery({
 		queryKey: ["cs", "contratos", "dados-adicionais", id] as const,

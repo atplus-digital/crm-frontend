@@ -6,40 +6,6 @@ import type {
 import { NEGOCIACAO_MOTIVO_BADGE } from "./kanban-dashboard-types";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Serialize filters → URLSearchParams
-// ─────────────────────────────────────────────────────────────────────────────
-
-export function filtersToSearchParams(
-	filters: KanbanDashboardFilters,
-): URLSearchParams {
-	const params = new URLSearchParams();
-
-	if (filters.searchTerm) {
-		params.set("q", filters.searchTerm);
-	}
-
-	if (filters.sourceCollections && filters.sourceCollections.length > 0) {
-		params.set("s", filters.sourceCollections.join(","));
-	}
-
-	if (filters.tipoNegociacao && filters.tipoNegociacao.length > 0) {
-		params.set("t", filters.tipoNegociacao.join(","));
-	}
-
-	if (filters.currentUser === true) {
-		params.set("u", "1");
-	} else if (filters.currentUser === false) {
-		params.set("u", "0");
-	}
-
-	if (filters.sortField) {
-		params.set("sort", filters.sortField);
-	}
-
-	return params;
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Parse URLSearchParams → filters
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -90,19 +56,6 @@ export function searchParamsToFilters(
 	}
 
 	return filters;
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Build URL with filters
-// ─────────────────────────────────────────────────────────────────────────────
-
-export function buildKanbanUrl(
-	basePath: string,
-	filters: KanbanDashboardFilters,
-): string {
-	const params = filtersToSearchParams(filters);
-	const queryString = params.toString();
-	return queryString ? `${basePath}?${queryString}` : basePath;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

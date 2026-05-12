@@ -73,21 +73,6 @@ export function useOptionalDataTableContext<
 	> | null;
 }
 
-export function useDataTableContext<
-	TData,
-	TFilters extends TableFilters = TableFilters,
->() {
-	const context = useOptionalDataTableContext<TData, TFilters>();
-
-	if (!context) {
-		throw new Error(
-			"useDataTableContext must be used within a DataTableProvider.",
-		);
-	}
-
-	return context;
-}
-
 export function useResolvedDataTable<TData>({
 	table: tableProp,
 	componentName,

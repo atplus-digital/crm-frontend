@@ -16,16 +16,8 @@
 		"src/generated/**",
 		"src/components/ui/**",
 		"src/features/custom-requests/**",
-		"src/components/table/data-table-context.tsx",
 		"src/features/auth/permissions/hooks.ts",
-		"src/features/auth/permissions/matchers.ts",
-		"src/features/cs/contratos/contratos-hooks.ts",
-		"src/features/cs/kanban-dashboard/kanban-dashboard-filters-url.ts",
-		"src/features/cs/negociacoes/negociacoes-filters/kanban-filters.tsx",
-		"src/features/cs/negociacoes/negociacoes-types.ts",
-		"scripts/generators/src/pipelines/generate-custom-requests/generate-custom-requests.ts",
-		"scripts/generators/src/pipelines/generate-types/pipeline/stages/generate-content/content-interfaces.ts",
-		"scripts/generators/src/pipelines/generate-types/test/mock-config.ts"
+		"src/features/auth/permissions/matchers.ts"
 	],
 	"ignoreDependencies": [
 		"@fontsource-variable/geist",
@@ -34,6 +26,5 @@
 		"shadcn",
 		"tailwindcss",
 		"tw-animate-css"
-	],
-	"ignoreExportsUsedInFile": true
+	]
 }
