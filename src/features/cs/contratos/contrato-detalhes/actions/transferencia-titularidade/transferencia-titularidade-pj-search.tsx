@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-	SearchCombobox,
-	SearchComboboxContent,
-	SearchComboboxEmpty,
-	SearchComboboxInput,
-	SearchComboboxItem,
-	SearchComboboxList,
-} from "#/components/search-combobox";
+import { SearchCombobox } from "#/components/search-combobox";
 import { searchPessoasJuridicas } from "@/features/cs/troca-titularidade/troca-titularidade-service";
 import type { SelectedPJ } from "./transferencia-titularidade-types";
 
@@ -70,27 +63,19 @@ export function PjSearch({ onSelect, onClear }: PjSearchProps) {
 				onValueChange={handleSelect}
 				onSearchChange={setSearch}
 				getItemLabel={(item) => `${item?.f_razao_social} — ${item?.f_cnpj}`}
-				placeholder="Buscar por razão social ou CNPJ..."
-			>
-				<SearchComboboxInput placeholder="Digite razão social ou CNPJ..." />
-				<SearchComboboxContent>
-					{loading && <SearchComboboxEmpty>Buscando...</SearchComboboxEmpty>}
-					{!loading && search.length >= 2 && results.length === 0 && (
-						<SearchComboboxEmpty>
-							Nenhum resultado encontrado.
-						</SearchComboboxEmpty>
-					)}
-					{!loading && (
-						<SearchComboboxList>
-							{(item: SelectedPJ) => (
-								<SearchComboboxItem key={item?.id} value={item}>
-									{item?.f_razao_social} — {item?.f_cnpj}
-								</SearchComboboxItem>
-							)}
-						</SearchComboboxList>
-					)}
-				</SearchComboboxContent>
-			</SearchCombobox>
+				getItemKey={(item) => item?.id ?? item?.f_cnpj ?? "pj-empty-item"}
+				renderItem={(item) => `${item?.f_razao_social} — ${item?.f_cnpj}`}
+				isItemEqualToValue={(item, selectedItem) =>
+					item?.id === selectedItem?.id
+				}
+				placeholder="Digite razão social ou CNPJ..."
+				loading={loading}
+				emptyText={
+					search.length < 2
+						? "Digite pelo menos 2 caracteres."
+						: "Nenhum resultado encontrado."
+				}
+			/>
 			{selected && (
 				<div className="mt-1 flex items-center gap-2">
 					<span className="text-xs text-muted-foreground">

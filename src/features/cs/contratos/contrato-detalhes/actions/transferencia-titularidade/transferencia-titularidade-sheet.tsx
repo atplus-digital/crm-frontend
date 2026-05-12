@@ -173,9 +173,9 @@ export function TransferenciaTitularidadeSheet({
 
 					<form
 						onSubmit={handleSubmit(onSubmit)}
-						className="flex flex-1 flex-col overflow-hidden"
+						className="flex flex-1 flex-col overflow-hidden "
 					>
-						<div className="flex-1 space-y-6 overflow-y-auto px-4 py-4">
+						<div className="flex-1 space-y-6 overflow-y-auto px-4 pt-4 pb-12">
 							<CedenteSection
 								cedenteNome={cedenteNome}
 								cedenteDoc={cedenteDoc}
@@ -199,6 +199,7 @@ export function TransferenciaTitularidadeSheet({
 								contratoId={contratoId}
 								register={register}
 								control={control}
+								setValue={setValue}
 								errors={errors}
 							/>
 
@@ -209,9 +210,10 @@ export function TransferenciaTitularidadeSheet({
 							)}
 						</div>
 
-						<SheetFooter className="border-t px-4 py-4">
+						<SheetFooter className="border-t flex-row px-4 py-4">
 							<Button
 								type="button"
+								className="flex-1"
 								variant="outline"
 								onClick={() => handleOpenChange(false)}
 								disabled={mutation.isPending}
@@ -220,7 +222,12 @@ export function TransferenciaTitularidadeSheet({
 							</Button>
 							<Button
 								type="submit"
-								disabled={submitDisabled || mutation.isPending}
+								className="flex-1"
+								disabled={
+									submitDisabled ||
+									mutation.isPending ||
+									!form.formState.isDirty
+								}
 							>
 								{mutation.isPending && (
 									<Loader2 className="mr-2 size-4 animate-spin" />

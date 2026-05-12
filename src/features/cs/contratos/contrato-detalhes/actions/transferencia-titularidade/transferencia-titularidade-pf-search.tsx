@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-	SearchCombobox,
-	SearchComboboxContent,
-	SearchComboboxEmpty,
-	SearchComboboxInput,
-	SearchComboboxItem,
-	SearchComboboxList,
-} from "#/components/search-combobox";
+import { SearchCombobox } from "#/components/search-combobox";
 import { searchPessoasFisicas } from "@/features/cs/troca-titularidade/troca-titularidade-service";
 import type { SelectedPF } from "./transferencia-titularidade-types";
 
@@ -70,27 +63,19 @@ export function PfSearch({ onSelect, onClear }: PfSearchProps) {
 				onValueChange={handleSelect}
 				onSearchChange={setSearch}
 				getItemLabel={(item) => `${item?.f_nome} — ${item?.f_cpf}`}
-				placeholder="Buscar por nome ou CPF..."
-			>
-				<SearchComboboxInput placeholder="Digite nome ou CPF..." />
-				<SearchComboboxContent>
-					{loading && <SearchComboboxEmpty>Buscando...</SearchComboboxEmpty>}
-					{!loading && search.length >= 2 && results.length === 0 && (
-						<SearchComboboxEmpty>
-							Nenhum resultado encontrado.
-						</SearchComboboxEmpty>
-					)}
-					{!loading && (
-						<SearchComboboxList>
-							{(item: SelectedPF) => (
-								<SearchComboboxItem key={item?.id} value={item}>
-									{item?.f_nome} — {item?.f_cpf}
-								</SearchComboboxItem>
-							)}
-						</SearchComboboxList>
-					)}
-				</SearchComboboxContent>
-			</SearchCombobox>
+				getItemKey={(item) => item?.id ?? item?.f_cpf ?? ""}
+				renderItem={(item) => `${item?.f_nome} — ${item?.f_cpf}`}
+				isItemEqualToValue={(item, selectedItem) =>
+					item?.id === selectedItem?.id
+				}
+				placeholder="Digite nome ou CPF..."
+				loading={loading}
+				emptyText={
+					search.length < 2
+						? "Digite pelo menos 2 caracteres."
+						: "Nenhum resultado encontrado."
+				}
+			/>
 			{selected && (
 				<div className="mt-1 flex items-center gap-2">
 					<span className="text-xs text-muted-foreground">

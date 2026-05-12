@@ -1,5 +1,4 @@
-import type { ReactNode } from "react";
-import { createContext, useContext, useMemo, useState } from "react";
+import type { ComponentProps, Key, ReactNode } from "react";
 import {
 	Combobox,
 	ComboboxContent,
@@ -9,36 +8,21 @@ import {
 	ComboboxList,
 } from "#/components/ui/combobox";
 
-interface SearchComboboxContextValue<T> {
-	selected: T | null;
-	getItemLabel: (item: T) => string;
-	placeholder: string;
-	id?: string;
-}
-
-const SearchComboboxContext =
-	createContext<SearchComboboxContextValue<unknown> | null>(null);
-
-function useSearchComboboxContext<T>() {
-	const context = useContext(SearchComboboxContext);
-	if (!context) {
-		throw new Error(
-			"SearchCombobox components must be used inside <SearchCombobox>.",
-		);
-	}
-
-	return context as SearchComboboxContextValue<T>;
-}
-
 interface SearchComboboxProps<T> {
 	id?: string;
 	items: T[];
 	value?: T | null;
 	onValueChange?: (item: T) => void;
 	getItemLabel?: (item: T) => string;
+	getItemKey?: (item: T) => Key;
+	renderItem?: (item: T) => ReactNode;
 	onSearchChange?: (value: string) => void;
+	isItemEqualToValue?: (item: T, selectedItem: T) => boolean;
 	placeholder?: string;
-	children: ReactNode;
+	loading?: boolean;
+	loadingText?: ReactNode;
+	emptyText?: ReactNode;
+	inputProps?: Omit<ComponentProps<typeof ComboboxInput>, "id" | "placeholder">;
 }
 
 export function SearchCombobox<T>({
@@ -47,115 +31,73 @@ export function SearchCombobox<T>({
 	value = null,
 	onValueChange,
 	getItemLabel,
+	getItemKey,
+	renderItem,
 	onSearchChange,
+	isItemEqualToValue,
 	placeholder = "Selecione...",
-	children,
+	loading = false,
+	loadingText = "Buscando...",
+	emptyText = "Nada encontrado",
+	inputProps,
 }: SearchComboboxProps<T>) {
-	const [query, setQuery] = useState("");
+	const itemLabel =
+		getItemLabel ??
+		((item: T) => (typeof item === "string" ? item : String(item ?? "")));
 
-	const itemLabel = useMemo(
-		() =>
-			getItemLabel ??
-			((item: T) => (typeof item === "string" ? item : String(item ?? ""))),
-		[getItemLabel],
-	);
+	const handleInputChange: NonNullable<
+		ComponentProps<typeof Combobox>["onInputValueChange"]
+	> = (nextValue, eventDetails) => {
+		if (
+			eventDetails.reason !== "input-change" &&
+			eventDetails.reason !== "input-clear" &&
+			eventDetails.reason !== "clear-press"
+		) {
+			return;
+		}
 
-	const handleInputChange = (nextValue: string) => {
-		setQuery(nextValue);
 		onSearchChange?.(nextValue);
 	};
 
 	const handleValueChange = (nextValue: T | null) => {
-		if (!nextValue) return;
+		if (nextValue === null) return;
 		onValueChange?.(nextValue);
-		setQuery(itemLabel(nextValue));
+	};
+
+	const compareItems =
+		isItemEqualToValue ?? ((item: T, selectedItem: T) => item === selectedItem);
+
+	const resolveItemKey = (item: T) => {
+		if (getItemKey) return getItemKey(item);
+		if (typeof item === "string" || typeof item === "number") return item;
+		if (item && typeof item === "object" && "id" in item) {
+			const id = (item as { id?: unknown }).id;
+			if (typeof id === "string" || typeof id === "number") return id;
+		}
+		return itemLabel(item);
 	};
 
 	return (
-		<SearchComboboxContext.Provider
-			value={{
-				selected: value,
-				getItemLabel: (item) => itemLabel(item as T),
-				placeholder,
-				id,
-			}}
+		<Combobox
+			items={items}
+			value={value}
+			onValueChange={handleValueChange}
+			onInputValueChange={handleInputChange}
+			itemToStringLabel={itemLabel}
+			itemToStringValue={itemLabel}
+			isItemEqualToValue={compareItems}
 		>
-			<Combobox
-				items={items}
-				filteredItems={items}
-				value={value}
-				onValueChange={(nextValue) => handleValueChange(nextValue as T | null)}
-				inputValue={query}
-				onInputValueChange={handleInputChange}
-				itemToStringLabel={(item) => itemLabel(item as T)}
-				isItemEqualToValue={(item, selectedItem) => item === selectedItem}
-			>
-				{children}
-			</Combobox>
-		</SearchComboboxContext.Provider>
-	);
-}
-
-interface SearchComboboxInputProps {
-	id?: string;
-	placeholder?: string;
-}
-
-export function SearchComboboxInput({
-	id,
-	placeholder = "Buscar...",
-}: SearchComboboxInputProps) {
-	const { placeholder: defaultPlaceholder, id: rootId } =
-		useSearchComboboxContext<unknown>();
-
-	return (
-		<ComboboxInput
-			autoFocus
-			id={id ?? rootId}
-			placeholder={
-				placeholder === "Buscar..." ? defaultPlaceholder : placeholder
-			}
-			showClear
-			showTrigger
-		/>
-	);
-}
-
-export function SearchComboboxContent({ children }: { children: ReactNode }) {
-	return <ComboboxContent>{children}</ComboboxContent>;
-}
-
-export function SearchComboboxEmpty({ children }: { children: ReactNode }) {
-	return <ComboboxEmpty>{children}</ComboboxEmpty>;
-}
-
-interface SearchComboboxListProps<T> {
-	children: (item: T) => ReactNode;
-}
-
-export function SearchComboboxList<T>({
-	children,
-}: SearchComboboxListProps<T>) {
-	return (
-		<ComboboxList>{children as (item: unknown) => ReactNode}</ComboboxList>
-	);
-}
-
-interface SearchComboboxItemProps<T> {
-	value: T;
-	children: ReactNode;
-}
-
-export function SearchComboboxItem<T>({
-	value,
-	children,
-}: SearchComboboxItemProps<T>) {
-	const { selected } = useSearchComboboxContext<T>();
-	const isSelected = selected === value;
-
-	return (
-		<ComboboxItem value={value} data-checked={isSelected}>
-			{children}
-		</ComboboxItem>
+			<ComboboxInput id={id} placeholder={placeholder} {...inputProps} />
+			<ComboboxContent>
+				<ComboboxEmpty>{loading ? loadingText : emptyText}</ComboboxEmpty>
+				<ComboboxList>
+					{(item) => (
+						<ComboboxItem key={resolveItemKey(item as T)} value={item}>
+							{renderItem ? renderItem(item as T) : itemLabel(item as T)}
+						</ComboboxItem>
+					)}
+				</ComboboxList>
+			</ComboboxContent>
+		</Combobox>
 	);
 }

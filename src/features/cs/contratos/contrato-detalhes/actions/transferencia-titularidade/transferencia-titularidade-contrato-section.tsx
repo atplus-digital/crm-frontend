@@ -1,5 +1,9 @@
-import type { Control, UseFormRegister } from "react-hook-form";
-import { EnderecoSection } from "./contrato-endereco-section";
+import type {
+	Control,
+	UseFormRegister,
+	UseFormSetValue,
+} from "react-hook-form";
+import { EnderecoSection } from "./endereco-section";
 import type { TransferenciaTitularidadeFormValues } from "./transferencia-titularidade-types";
 
 // ============================================================================
@@ -10,6 +14,7 @@ interface ContratoSectionProps {
 	contratoId: string;
 	register: UseFormRegister<TransferenciaTitularidadeFormValues>;
 	control: Control<TransferenciaTitularidadeFormValues>;
+	setValue: UseFormSetValue<TransferenciaTitularidadeFormValues>;
 	errors: Record<string, { message?: string }>;
 }
 
@@ -21,6 +26,7 @@ export function ContratoSection({
 	contratoId,
 	register,
 	control,
+	setValue,
 	errors,
 }: ContratoSectionProps) {
 	return (
@@ -45,22 +51,6 @@ export function ContratoSection({
 						disabled
 						className="flex h-9 w-full rounded-md border border-input bg-muted/50 px-3 py-1 text-sm shadow-sm"
 					/>
-				</div>
-
-				{/* CEP */}
-				<div className="space-y-1.5">
-					<label htmlFor="f_cep" className="text-sm font-medium">
-						CEP <span className="text-destructive">*</span>
-					</label>
-					<input
-						id="f_cep"
-						placeholder="Exemplo: 88523-000"
-						className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-						{...register("f_cep")}
-					/>
-					{errors.f_cep && (
-						<p className="text-xs text-destructive">{errors.f_cep.message}</p>
-					)}
 				</div>
 
 				{/* Endereço + Número */}
@@ -100,6 +90,7 @@ export function ContratoSection({
 				<EnderecoSection
 					control={control}
 					register={register}
+					setValue={setValue}
 					errors={errors}
 				/>
 			</div>
