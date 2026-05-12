@@ -42,7 +42,7 @@ export function requireGuest(): Response {
  * Classify an error as a network/transport error (vs an auth error).
  * Network errors should NOT log the user out — they're transient.
  */
-export function isNetworkError(err: unknown): boolean {
+function isNetworkError(err: unknown): boolean {
 	if (err instanceof TypeError) return true;
 	if (
 		err instanceof Error &&

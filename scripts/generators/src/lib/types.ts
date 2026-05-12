@@ -27,7 +27,7 @@ export interface GeneratorDefinition<TRuntimeConfig = unknown> {
 	getOutputDirs: (config: TRuntimeConfig) => string[];
 }
 
-export interface StandardPipelineInput<
+interface StandardPipelineInput<
 	TRuntimeConfig = unknown,
 	TPipelineContext = unknown,
 > {
@@ -43,7 +43,7 @@ export interface StandardPipelineInput<
 	onReportReady?: (result: PipelineJsonReportResult) => void;
 }
 
-export type StandardPipelineFactoryInput<
+type StandardPipelineFactoryInput<
 	TRuntimeConfig = unknown,
 	TPipelineContext = unknown,
 > = Omit<StandardPipelineInput<TRuntimeConfig, TPipelineContext>, "task">;
@@ -54,6 +54,6 @@ export type StandardPipelineFactoryInput<
 
 export type OrchestrationTaskRunner = TaskRunner;
 
-export type NestedTaskList = ReturnType<OrchestrationTaskRunner["newListr"]>;
+type NestedTaskList = ReturnType<OrchestrationTaskRunner["newListr"]>;
 
 export type OrchestrationTaskResult = NestedTaskList | ListrTaskResult<unknown>;

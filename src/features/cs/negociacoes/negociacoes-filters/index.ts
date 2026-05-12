@@ -1,1 +1,1 @@
-export { ListaFilters, type ListaFiltersProps } from "./lista-filters";
+export { ListaFilters } from "./lista-filters";

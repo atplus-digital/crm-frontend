@@ -19,7 +19,7 @@ import type { PipelineExecutionContext } from "../pipeline/context";
 // Shared types
 // ──────────────────────────────────────────────
 
-export interface DiffSummary {
+interface DiffSummary {
 	changedFiles: string[];
 	unchangedFiles: string[];
 	deletedFiles: string[];

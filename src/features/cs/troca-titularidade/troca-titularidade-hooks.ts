@@ -44,7 +44,7 @@ function buildTrocaTitularidadeFilter(
 	return buildFilter(conditions);
 }
 
-export const trocaTitularidadeQueryOptions = (
+const trocaTitularidadeQueryOptions = (
 	params: TrocaTitularidadeListParams = {},
 ) => {
 	const {

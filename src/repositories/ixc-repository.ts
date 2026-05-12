@@ -17,7 +17,7 @@ function normalizeSortForIXC(sort: string[]): string[] {
 
 const IXC_DATASOURCE_HEADER = { "X-Data-Source": "d_db_ixcsoft" } as const;
 
-export class IxcRepository {
+class IxcRepository {
 	async request<T>(config: ApiRequestConfig): Promise<T> {
 		log.debug("IXC request", {
 			url: config.url,

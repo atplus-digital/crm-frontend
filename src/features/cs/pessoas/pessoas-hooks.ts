@@ -3,22 +3,13 @@ import {
 	queryOptions,
 	useQuery,
 } from "@tanstack/react-query";
-import {
-	createPessoaFisica,
-	createPessoaJuridica,
-	deletePessoaFisica,
-	deletePessoaJuridica,
-	fetchPessoasFisicas,
-	fetchPessoasJuridicas,
-	updatePessoaFisica,
-	updatePessoaJuridica,
-} from "./pessoas-service";
+import { fetchPessoasFisicas, fetchPessoasJuridicas } from "./pessoas-service";
 import type {
 	PessoaFisicaListParams,
 	PessoaJuridicaListParams,
 } from "./pessoas-types";
 
-export const pessoasFisicasQueryOptions = (params: PessoaFisicaListParams) =>
+const pessoasFisicasQueryOptions = (params: PessoaFisicaListParams) =>
 	queryOptions({
 		queryKey: ["cs", "pessoas", "fisicas", params] as const,
 		queryFn: () => fetchPessoasFisicas(params),
@@ -30,9 +21,7 @@ export function usePessoasFisicas(params: PessoaFisicaListParams) {
 	return useQuery(pessoasFisicasQueryOptions(params));
 }
 
-export const pessoasJuridicasQueryOptions = (
-	params: PessoaJuridicaListParams,
-) =>
+const pessoasJuridicasQueryOptions = (params: PessoaJuridicaListParams) =>
 	queryOptions({
 		queryKey: ["cs", "pessoas", "juridicas", params] as const,
 		queryFn: () => fetchPessoasJuridicas(params),
@@ -43,12 +32,3 @@ export const pessoasJuridicasQueryOptions = (
 export function usePessoasJuridicas(params: PessoaJuridicaListParams) {
 	return useQuery(pessoasJuridicasQueryOptions(params));
 }
-
-export {
-	createPessoaFisica,
-	createPessoaJuridica,
-	deletePessoaFisica,
-	deletePessoaJuridica,
-	updatePessoaFisica,
-	updatePessoaJuridica,
-};

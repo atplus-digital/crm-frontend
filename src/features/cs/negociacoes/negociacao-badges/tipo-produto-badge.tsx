@@ -2,7 +2,7 @@ import { StatusBadge } from "#/components/badges/status-badge";
 import type { NegociacoesItensTipoProduto } from "#/generated/types/nocobase/other/negociacoes-itens";
 import { NEGOCIACOESITENS_TIPOPRODUTO_LABELS } from "#/generated/types/nocobase/other/negociacoes-itens";
 
-export const TIPO_PRODUTO_COLORS: Record<
+const TIPO_PRODUTO_COLORS: Record<
 	keyof typeof NEGOCIACOESITENS_TIPOPRODUTO_LABELS,
 	string
 > = {
@@ -13,7 +13,7 @@ export const TIPO_PRODUTO_COLORS: Record<
 	SVA: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200",
 };
 
-export interface TipoProdutoBadgeProps {
+interface TipoProdutoBadgeProps {
 	tipo: NegociacoesItensTipoProduto;
 }
 

@@ -10,7 +10,6 @@ import { scanSchemaFiles } from "./collection-schema-loader/file-scanner";
 import {
 	extractPlaceholderFields,
 	generateSchemaPickCode,
-	type PlaceholderFields,
 } from "./collection-schema-loader/placeholders";
 import {
 	extractSchemaFieldNames,
@@ -161,13 +160,4 @@ export function findSchema(
 	return null;
 }
 
-export type {
-	CollectionSchemaMapping,
-	SchemaLoadResult,
-	SchemaRegistry,
-} from "../@types/collection-schema";
-export {
-	extractPlaceholderFields,
-	generateSchemaPickCode,
-	type PlaceholderFields,
-};
+export { extractPlaceholderFields, generateSchemaPickCode };

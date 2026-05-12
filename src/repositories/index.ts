@@ -1,8 +1,2 @@
-export { IxcRepository, ixcRepository } from "./ixc-repository";
-export { NocoBaseRepository, nocobaseRepository } from "./nocobase-repository";
-export type {
-	ApiRequestConfig,
-	ListParams,
-	NocoBaseClient,
-	PaginatedResponse,
-} from "./types";
+export { ixcRepository } from "./ixc-repository";
+export { nocobaseRepository } from "./nocobase-repository";

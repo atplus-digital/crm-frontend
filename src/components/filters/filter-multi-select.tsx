@@ -10,12 +10,12 @@ import {
 import { Label } from "#/components/ui/label";
 import { cn } from "#/lib/utils";
 
-export interface MultiSelectOption<T extends string> {
+interface MultiSelectOption<T extends string> {
 	value: T;
 	label: string;
 }
 
-export interface FilterMultiSelectProps<T extends string> {
+interface FilterMultiSelectProps<T extends string> {
 	id: string;
 	label: string;
 	placeholder?: string;

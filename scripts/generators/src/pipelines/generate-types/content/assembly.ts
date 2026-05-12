@@ -88,7 +88,7 @@ function resolveExternalSchemaImportPath(
 		: `../other/${targetFolder}/schemas`;
 }
 
-export interface GenerateSchemasContentOptions {
+interface GenerateSchemasContentOptions {
 	allCollectionsMap?: CollectionTypesMap;
 	splitCollectionNames?: ReadonlySet<string>;
 	currentCollectionInOtherFolder?: boolean;
@@ -425,7 +425,7 @@ export function generateIndexContent(
  *
  * Gera a definição completa de tipos para uma collection em um único arquivo.
  */
-export function generateCollectionTypes(
+function generateCollectionTypes(
 	collectionName: string,
 	types: GeneratedTypes,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
@@ -609,7 +609,7 @@ export function generateCollectionTypes(
  * Gera conteúdo TypeScript para um subset de collections.
  * Permite gerar múltiplos arquivos com diferentes collections.
  */
-export function generateContentForCollections(
+function generateContentForCollections(
 	collections: CollectionTypesMap,
 	includeHeader = true,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
@@ -686,5 +686,3 @@ export function generateContent(
 		baseInterfaceNaming,
 	);
 }
-
-export { _sortMapEntries, _sortScalarEntries };

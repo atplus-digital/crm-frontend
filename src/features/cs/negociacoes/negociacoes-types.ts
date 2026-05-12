@@ -19,11 +19,7 @@ import type { Pessoas } from "#/generated/types/nocobase/pessoas";
 import type { Users } from "#/generated/types/nocobase/users";
 import type { ListParams } from "#/repositories/types";
 
-export type {
-	NegociacoesMotivo as MotivoRenegociacao,
-	NegociacoesStatus as NegociacaoStatus,
-	NegociacoesSubstatus as NegociacaoSubstatus,
-} from "#/generated/types/nocobase/negociacoes";
+export type { NegociacoesStatus as NegociacaoStatus } from "#/generated/types/nocobase/negociacoes";
 
 export {
 	NEGOCIACOES_CONFISSAODIVIDA_LABELS as CONFISAO_DIVIDA_LABELS,
@@ -54,7 +50,7 @@ export const NEGOCIACAO_SUBSTATUS_FILTER_OPTIONS: {
 	label,
 }));
 
-export type NegociacaoVendedor = Pick<Users, "id" | "nickname" | "email">;
+type NegociacaoVendedor = Pick<Users, "id" | "nickname" | "email">;
 
 export type Negociacao = Omit<Negociacoes, "f_contrato_ixc"> & {
 	f_vendedor?: NegociacaoVendedor | null;
@@ -95,6 +91,7 @@ export const NEGOCIACAO_SUBSTATUS_VARIANTS: Record<
 	"12": "destructive",
 	"13": "secondary",
 	"14": "destructive",
+	"15": "destructive",
 };
 
 export interface NegociacaoFilters {

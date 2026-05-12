@@ -17,7 +17,7 @@ import {
 } from "#/features/cs/negociacoes/negociacoes-types";
 import type { Users } from "#/generated/types/nocobase/users";
 
-export interface VendasFiltersProps {
+interface VendasFiltersProps {
 	filters: NegociacaoFilters;
 	onFilter: (filters: NegociacaoFilters) => void;
 	vendedores?: Users[];

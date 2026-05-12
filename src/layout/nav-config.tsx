@@ -36,7 +36,7 @@ export interface NavItem {
  * A top-level app section rendered in the header.
  * Each section owns the sidebar items rendered while it is active.
  */
-export interface NavSection {
+interface NavSection {
 	label: string;
 	/** Optional JSX icon rendered next to the section label. */
 	icon?: ReactNode;

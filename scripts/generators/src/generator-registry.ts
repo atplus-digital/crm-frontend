@@ -36,5 +36,4 @@ const GENERATOR_REGISTRY = [
 	},
 ] as const satisfies readonly GeneratorRegistryEntry[];
 
-export type { GeneratorRegistryEntry };
 export { GENERATOR_REGISTRY };

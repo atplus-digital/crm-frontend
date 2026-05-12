@@ -2,7 +2,7 @@ import type { BadgeVariant } from "#/components/ui/badge";
 import { cn } from "#/lib/utils";
 import { StatusBadge } from "./status-badge";
 
-export interface StatusBadgeGroupProps {
+interface StatusBadgeGroupProps {
 	status: string;
 	substatus?: string;
 	statusLabels: Record<string, string>;

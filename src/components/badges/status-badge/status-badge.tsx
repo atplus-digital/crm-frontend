@@ -34,7 +34,7 @@ import { getColorClass, getStatusVariant } from "../utils";
  *   variant="inline"
  * />
  */
-export interface StatusBadgeProps {
+interface StatusBadgeProps {
 	/** Valor do status */
 	value: string;
 	/** Mapeamento valor → label exibido */

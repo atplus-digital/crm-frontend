@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export interface PageTab {
+interface PageTab {
 	value: string;
 	label: string;
 	icon?: ReactNode;

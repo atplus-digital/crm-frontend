@@ -33,7 +33,7 @@ function readSettings(settingsPath: string): VSCodeSettings {
  * @param outputDirs Lista de diretórios de saída a serem verificados
  * @returns Verdadeiro se os arquivos gerados estiverem protegidos contra escrita
  */
-export function isWorkspaceLocked(outputDirs: string[]): boolean {
+function isWorkspaceLocked(outputDirs: string[]): boolean {
 	try {
 		const settingsPath = path.join(process.cwd(), ".vscode", "settings.json");
 
@@ -67,7 +67,7 @@ export function isWorkspaceLocked(outputDirs: string[]): boolean {
  * ao arquivo .vscode/settings.json
  * @param outputDirs Lista de diretórios de saída a serem bloqueados
  */
-export function lockWorkspace(outputDirs: string[]): void {
+function lockWorkspace(outputDirs: string[]): void {
 	try {
 		const vscodeDir = path.join(process.cwd(), ".vscode");
 		const settingsPath = path.join(vscodeDir, "settings.json");

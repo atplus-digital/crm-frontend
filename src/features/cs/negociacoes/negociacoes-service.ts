@@ -138,7 +138,7 @@ export async function fetchNegociacaoAnexos(
 	}
 }
 
-export type NegociacaoComentarioWithRelations = NegociacoesComentarios &
+type NegociacaoComentarioWithRelations = NegociacoesComentarios &
 	NegociacoesComentariosRelations;
 
 export async function fetchNegociacaoComentarios(

@@ -18,7 +18,7 @@ import {
 } from "./troca-endereco-service";
 import type { TrocaEnderecoFilters } from "./troca-endereco-types";
 
-export interface TrocaEnderecoListParams {
+interface TrocaEnderecoListParams {
 	page?: number;
 	pageSize?: number;
 	sort?: string[];
@@ -45,9 +45,7 @@ function buildTrocaEnderecoFilter(
 	return buildFilter(conditions);
 }
 
-export const trocaEnderecoQueryOptions = (
-	params: TrocaEnderecoListParams = {},
-) => {
+const trocaEnderecoQueryOptions = (params: TrocaEnderecoListParams = {}) => {
 	const {
 		page = 1,
 		pageSize = 15,

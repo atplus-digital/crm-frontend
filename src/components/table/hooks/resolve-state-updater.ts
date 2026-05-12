@@ -1,4 +1,4 @@
-export type StateUpdater<TState> = TState | ((previous: TState) => TState);
+type StateUpdater<TState> = TState | ((previous: TState) => TState);
 
 export function resolveStateUpdater<TState>(
 	updater: StateUpdater<TState>,

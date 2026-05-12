@@ -2,7 +2,7 @@ import { StatusBadge } from "#/components/badges/status-badge";
 import type { NegociacoesItensRelacao } from "#/generated/types/nocobase/other/negociacoes-itens";
 import { NEGOCIACOESITENS_RELACAO_LABELS } from "#/generated/types/nocobase/other/negociacoes-itens";
 
-export const RELACAO_COLORS: Record<
+const RELACAO_COLORS: Record<
 	keyof typeof NEGOCIACOESITENS_RELACAO_LABELS,
 	string
 > = {
@@ -11,7 +11,7 @@ export const RELACAO_COLORS: Record<
 		"bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
 };
 
-export interface RelacaoBadgeProps {
+interface RelacaoBadgeProps {
 	relacao: NegociacoesItensRelacao;
 }
 

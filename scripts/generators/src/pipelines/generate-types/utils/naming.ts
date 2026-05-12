@@ -14,9 +14,9 @@ export function removeAccents(str: string): string {
  * Nome usado quando uma collection chega sem identificador válido.
  * Usa um sentinel improvável de colidir com nomes reais.
  */
-export const UNNAMED_COLLECTION_TYPE_NAME = "__UnnamedCollection__";
+const UNNAMED_COLLECTION_TYPE_NAME = "__UnnamedCollection__";
 
-export const DEFAULT_BASE_INTERFACE_NAMING: BaseInterfaceNamingConfig = {
+const DEFAULT_BASE_INTERFACE_NAMING: BaseInterfaceNamingConfig = {
 	prefix: "",
 	suffix: "",
 };
@@ -30,7 +30,7 @@ export function resolveBaseInterfaceNamingConfig(
 	};
 }
 
-export function formatBaseInterfaceName(
+function formatBaseInterfaceName(
 	typeName: string,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
 ): string {
@@ -52,7 +52,7 @@ export function formatBaseInterfaceName(
  * toPascalCase("departments")      // "Departments"
  * ```
  */
-export function toPascalCase(name: string): string {
+function toPascalCase(name: string): string {
 	const withoutPrefix = name.startsWith("t_") ? name.slice(2) : name;
 	return withoutPrefix
 		.split(/[^a-zA-Z0-9]+/)

@@ -103,4 +103,4 @@ function inferObjectZod(obj: Record<string, unknown>): string {
 	return `z.object({\n${[...regularLines, ...placeholderLines].join("\n")}\n  })`;
 }
 
-export { inferObjectZod, inferPrimitiveLiteralZod, inferValueZod };
+export { inferObjectZod, inferPrimitiveLiteralZod };

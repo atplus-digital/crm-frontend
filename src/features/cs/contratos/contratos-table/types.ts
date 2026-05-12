@@ -4,7 +4,7 @@ import type {
 	ContratoWithCliente,
 } from "#/features/cs/contratos/contratos-types";
 
-export interface PaginationInfo {
+interface PaginationInfo {
 	page: number;
 	pageSize: number;
 	total: number;

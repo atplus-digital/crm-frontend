@@ -14,7 +14,7 @@ const MOTIVO_COLOR_CLASSES: Record<keyof typeof MOTIVO_LABELS, string> = {
 	P: "bg-gray-500/10 text-gray-600 border-gray-500/20",
 };
 
-export interface MotivoBadgeProps {
+interface MotivoBadgeProps {
 	value: keyof typeof MOTIVO_LABELS;
 }
 

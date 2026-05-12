@@ -153,5 +153,4 @@ function ContactFields({
 // Exports
 // ============================================================================
 
-export type { FormFieldsProps };
 export { ContactFields, NomeDocumentoFields };

@@ -16,7 +16,7 @@ import {
 } from "./relations";
 import { _sortMapEntries, _sortScalarEntries } from "./sorting";
 
-export interface CollectionInterfacesOutput {
+interface CollectionInterfacesOutput {
 	baseInterface: string;
 	relationsInterface: string;
 	relationKeyType: string;
@@ -123,7 +123,7 @@ function _toUpdateSchemaName(collectionName: string): string {
 /**
  * Gera a interface Base de uma collection (apenas campos escalares/FKs).
  */
-export function generateCollectionBaseInterface(
+function generateCollectionBaseInterface(
 	collectionName: string,
 	types: GeneratedTypes,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
@@ -153,7 +153,7 @@ export function generateCollectionBaseInterface(
 /**
  * Gera a interface Relations de uma collection (manual, para non-split).
  */
-export function generateCollectionRelationsInterface(
+function generateCollectionRelationsInterface(
 	collectionName: string,
 	types: GeneratedTypes,
 	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
@@ -180,9 +180,7 @@ export function generateCollectionRelationsInterface(
 /**
  * Gera o tipo RelationKey de uma collection.
  */
-export function generateCollectionRelationKeyType(
-	collectionName: string,
-): string {
+function generateCollectionRelationKeyType(collectionName: string): string {
 	const typeName = toCollectionTypeName(collectionName);
 	const relationKeyLine = `export type ${typeName}RelationKey = keyof ${typeName}Relations;`;
 

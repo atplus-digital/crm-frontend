@@ -4,7 +4,7 @@ import { FilterActions } from "./filter-actions";
 import { FilterLayout } from "./filter-layout";
 import { flushFilters } from "./flush-filters";
 
-export interface FilterBarContainerProps {
+interface FilterBarContainerProps {
 	/** Campos de filtro (FilterSelectField, FilterInputField, FilterDateField, etc.) */
 	children: ReactNode;
 	/** Chamado quando o usuário clica em "Filtrar" */

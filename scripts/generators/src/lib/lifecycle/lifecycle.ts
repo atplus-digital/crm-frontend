@@ -19,7 +19,7 @@ import {
 	validateGeneratedOutput,
 } from "./lifecycle-tasks";
 
-export interface StandardPipelineOptions<TRuntimeConfig, TPipelineContext> {
+interface StandardPipelineOptions<TRuntimeConfig, TPipelineContext> {
 	task: TaskRunner;
 	overrideConfig?: Partial<TRuntimeConfig>;
 	defaultConfig: TRuntimeConfig;

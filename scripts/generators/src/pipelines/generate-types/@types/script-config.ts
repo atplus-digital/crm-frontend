@@ -19,7 +19,7 @@ export interface ManualRelationMapping {
 /**
  * Configuração para inferência de enums aplicada globalmente ou por datasource.
  */
-export interface EnumInferenceConfig {
+interface EnumInferenceConfig {
 	/**
 	 * Threshold de cardinalidade para considerar um campo como enum.
 	 * Campos com cardinalidade menor que este valor são candidatos a enum.
@@ -80,7 +80,7 @@ export interface EnumInferenceConfig {
 	patternThreshold?: number;
 }
 
-export interface BaseDataSourceGenerationConfig {
+interface BaseDataSourceGenerationConfig {
 	name: string;
 	type: "nocobase" | "rest";
 	dataSource: string;
@@ -121,46 +121,3 @@ export interface BaseDataSourceGenerationConfig {
 }
 
 export type DataSourceGenerationConfig = BaseDataSourceGenerationConfig;
-
-export interface ScriptConfig {
-	outputDir: string;
-	splitCollections: string[];
-	datasources?: DataSourceGenerationConfig[];
-	logLevel?: "debug" | "info" | "error";
-	defaultEnvPath: string;
-	requestTimeoutMs: number;
-	requestConcurrency: number;
-	maxConcurrency: number;
-	lockWorkspaceFolder?: boolean;
-	baseInterfaceNaming: BaseInterfaceNamingConfig;
-	/**
-	 * Configuração global de inferência de enums.
-	 * Pode ser sobrescrita por datasource em DataSourceGenerationConfig.enumInference.
-	 */
-	enumInference?: EnumInferenceConfig;
-	/**
-	 * Habilita cache para adapters de enum (ex: IXC Wiki).
-	 * Cache persiste indefinidamente até ser deletado manualmente.
-	 * @default true
-	 */
-	cacheEnums?: boolean;
-	/**
-	 * Diretório de cache para adapters.
-	 * @default ".cache/ixc-wiki"
-	 */
-	cacheDir?: string;
-	/**
-	 * Modo dry-run — não escreve arquivos, apenas mostra o que seria feito.
-	 * @default false
-	 */
-	dryRun?: boolean;
-	/**
-	 * Valida tipos TypeScript após geração usando tsc --noEmit.
-	 * @default true
-	 */
-	validateTypes?: boolean;
-	reports?: {
-		generateConsolidatedMarkdown?: boolean;
-		consolidatedMarkdownOutputFile?: string;
-	};
-}

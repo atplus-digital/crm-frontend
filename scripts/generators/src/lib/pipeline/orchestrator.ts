@@ -33,7 +33,7 @@ export async function runOrchestrator(
 
 type GeneratorCliTask = ListrTask<unknown, never, never>;
 
-export function createOrchestrationTasks(
+function createOrchestrationTasks(
 	generators: GeneratorDefinition[],
 ): GeneratorCliTask[] {
 	return generators.map((generator) => ({
