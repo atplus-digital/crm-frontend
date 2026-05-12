@@ -1,12 +1,11 @@
-import { useState } from "react";
 import { cn } from "#/lib/utils";
+import {
+	type BadgeOption,
+	useBadgeGroupLogic,
+} from "./filter-badge-group.logic";
 
-export interface BadgeOption<T extends string> {
-	value: T;
-	label: string;
-	colorClass?: string;
-	bgClass?: string;
-}
+// Re-export for backwards compatibility
+export type { BadgeOption } from "./filter-badge-group.logic";
 
 interface FilterBadgeGroupProps<T extends string> {
 	label: string;
@@ -41,92 +40,24 @@ export function FilterBadgeGroup<T extends string>({
 	showAllButton = true,
 	className,
 }: FilterBadgeGroupProps<T>) {
-	const selectedValues = value ?? [];
-
-	// Extra options that are currently visible (not collapsed in "+" badge)
-	const [expandedExtraKeys, setExpandedExtraKeys] = useState<Set<T>>(new Set());
-
-	const hasExtras = extraOptions && extraOptions.length > 0;
-	const allOptions = hasExtras ? [...options, ...extraOptions] : options;
-	const allOptionValues = allOptions.map((option) => option.value);
-
-	// Extra options that are currently collapsed (not selected and not expanded)
-	const collapsedExtraOptions = hasExtras
-		? extraOptions.filter(
-				(opt) =>
-					!selectedValues.includes(opt.value) &&
-					!expandedExtraKeys.has(opt.value),
-			)
-		: [];
-
-	const handleToggle = (optionValue: T) => {
-		if (disabled) return;
-
-		// In allActive mode, an empty selection means "all are active".
-		// First click should deactivate only the clicked badge.
-		if (allActive && selectedValues.length === 0) {
-			const newValue = allOptionValues.filter((value) => value !== optionValue);
-			onChange(newValue.length === 0 ? undefined : newValue);
-			return;
-		}
-
-		if (selectedValues.includes(optionValue)) {
-			const newValue = selectedValues.filter((v) => v !== optionValue);
-			// When allActive is true and we're deselecting the last item,
-			// go back to the "all active" state (undefined)
-			if (allActive && newValue.length === 0) {
-				onChange(undefined);
-				return;
-			}
-			onChange(showAllButton && newValue.length === 0 ? undefined : newValue);
-		} else {
-			const newValue = [...selectedValues, optionValue];
-
-			// Keep "all active" state normalized as undefined in allActive mode.
-			if (allActive && newValue.length === allOptionValues.length) {
-				onChange(undefined);
-				return;
-			}
-
-			onChange(newValue);
-		}
-	};
-
-	// Handle clicking the "+" badge to expand/collapse extras
-	const handleToggleExtras = () => {
-		if (disabled || !hasExtras) return;
-		if (expandedExtraKeys.size > 0) {
-			setExpandedExtraKeys(new Set());
-		} else {
-			setExpandedExtraKeys(new Set(extraOptions.map((opt) => opt.value)));
-		}
-	};
-
-	// When an expanded extra option is deselected, collapse it
-	const handleExpandedOptionChange = (optionValue: T) => {
-		if (disabled) return;
-		handleToggle(optionValue);
-		const willBeSelected = !selectedValues.includes(optionValue);
-		if (!willBeSelected) {
-			setExpandedExtraKeys((prev) => {
-				const next = new Set(prev);
-				next.delete(optionValue);
-				return next;
-			});
-		}
-	};
-
-	// Determine if a badge should appear visually active
-	const isBadgeActive = (optionValue: T): boolean => {
-		// When allActive is true and nothing is selected, all badges are "active"
-		if (allActive && selectedValues.length === 0) {
-			return true;
-		}
-		return selectedValues.includes(optionValue);
-	};
-
-	const isAllSelected =
-		selectedValues.length === 0 || selectedValues.length === allOptions.length;
+	const {
+		expandedExtraKeys,
+		hasExtras,
+		collapsedExtraOptions,
+		handleToggle,
+		handleToggleExtras,
+		handleExpandedOptionChange,
+		isBadgeActive,
+		isAllSelected,
+	} = useBadgeGroupLogic({
+		options,
+		extraOptions,
+		value,
+		onChange,
+		allActive,
+		disabled,
+		showAllButton,
+	});
 
 	const badgeClass = compact ? "px-2 py-0.5 text-xs" : "px-3 py-1 text-sm";
 	const badgeClassSm = compact
@@ -161,7 +92,6 @@ export function FilterBadgeGroup<T extends string>({
 					</button>
 				)}
 
-				{/* Primary options */}
 				{options.map((option) => {
 					const isSelected = isBadgeActive(option.value);
 					return (
@@ -184,9 +114,8 @@ export function FilterBadgeGroup<T extends string>({
 					);
 				})}
 
-				{/* Expanded extra options */}
 				{hasExtras &&
-					extraOptions
+					extraOptions!
 						.filter((opt) => expandedExtraKeys.has(opt.value))
 						.map((option) => {
 							const isSelected = isBadgeActive(option.value);
@@ -210,7 +139,6 @@ export function FilterBadgeGroup<T extends string>({
 							);
 						})}
 
-				{/* "+" badge for collapsed extras */}
 				{collapsedExtraOptions.length > 0 && (
 					<button
 						type="button"
