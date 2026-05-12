@@ -9,16 +9,7 @@
 	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"files": {
 		"ignoreUnknown": false,
-		"includes": [
-			"**",
-			"**/src/**/*",
-			"**/vite.config.ts",
-			"**/vitest.config.ts",
-			"**/scripts/**/*",
-			"!**/coverage/**/*",
-			"!**/dist/**/*",
-			"!**/.sisyphus/**/*"
-		]
+		"includes": ["**", "!**/coverage/**/*", "!**/dist/**/*"]
 	},
 	"formatter": {
 		"enabled": true,
