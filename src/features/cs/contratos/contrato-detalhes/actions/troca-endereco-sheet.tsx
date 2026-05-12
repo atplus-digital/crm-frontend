@@ -15,21 +15,17 @@ import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-type
 import { useCreateTrocaEndereco } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
 import type { TrocaEnderecoTaxaInstalacao } from "#/generated/types/nocobase/troca-endereco";
 import { TROCAENDERECO_TAXAINSTALACAO_LABELS } from "#/generated/types/nocobase/troca-endereco";
+import { CobrancaFieldsSection } from "./cobranca-fields-section";
+import { EnderecoFieldsSection } from "./endereco-fields-section";
 
-// ============================================================================
 // Types
-// ============================================================================
-
 interface TrocaEnderecoSheetProps {
 	contrato: ContratoWithCliente;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 }
 
-// ============================================================================
 // Schema
-// ============================================================================
-
 const trocaEnderecoSchema = z.object({
 	f_cep: z.string().min(1, "CEP é obrigatório"),
 	f_bairro: z.string().min(1, "Bairro é obrigatório"),
@@ -46,10 +42,7 @@ const trocaEnderecoSchema = z.object({
 
 type TrocaEnderecoFormValues = z.infer<typeof trocaEnderecoSchema>;
 
-// ============================================================================
 // Main Component
-// ============================================================================
-
 export function TrocaEnderecoSheet({
 	contrato,
 	open,
@@ -93,10 +86,7 @@ export function TrocaEnderecoSheet({
 	// Mutation
 	const mutation = useCreateTrocaEndereco();
 
-	// -----------------------------------------------------------------------
-	// Submit
-	// -----------------------------------------------------------------------
-
+	// Submit handler
 	const onSubmit: SubmitHandler<TrocaEnderecoFormValues> = (values) => {
 		mutation.mutate(
 			{
@@ -125,7 +115,7 @@ export function TrocaEnderecoSheet({
 	};
 
 	// Reset form when sheet closes
-	// biome-ignore lint/correctness/useExhaustiveDependencies: reset/mutation are stable but including them in deps causes infinite loop
+	// biome-ignore lint/correctness/useExhaustiveDependencies: reset/mutation are stable
 	useEffect(() => {
 		if (!open) {
 			reset();
@@ -133,10 +123,6 @@ export function TrocaEnderecoSheet({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [open]);
-
-	// -----------------------------------------------------------------------
-	// Render
-	// -----------------------------------------------------------------------
 
 	return (
 		<Sheet open={open} onOpenChange={onOpenChange}>
@@ -156,230 +142,13 @@ export function TrocaEnderecoSheet({
 					className="flex flex-1 flex-col overflow-hidden"
 				>
 					<div className="flex-1 space-y-6 overflow-y-auto px-4 py-4">
-						{/* Section: Preencha abaixo o novo endereço */}
-						<fieldset>
-							<div className="mb-4 flex items-center gap-3">
-								<div className="h-px flex-1 bg-border" />
-								<span className="text-xs font-medium text-muted-foreground">
-									PREENCHA ABAIXO O NOVO ENDEREÇO
-								</span>
-								<div className="h-px flex-1 bg-border" />
-							</div>
+						<EnderecoFieldsSection register={register} errors={errors} />
+						<CobrancaFieldsSection
+							taxaOptions={taxaOptions}
+							register={register}
+							errors={errors}
+						/>
 
-							<div className="mb-4 space-y-3">
-								<div className="grid grid-cols-4 gap-3">
-									<div className="space-y-1.5">
-										<label htmlFor="f_cep" className="text-sm font-medium">
-											CEP <span className="text-destructive">*</span>
-										</label>
-										<input
-											id="f_cep"
-											placeholder="Somente números"
-											className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-											{...register("f_cep")}
-										/>
-										{errors.f_cep && (
-											<p className="text-xs text-destructive">
-												{errors.f_cep.message}
-											</p>
-										)}
-									</div>
-									<div className="space-y-1.5">
-										<label htmlFor="f_bairro" className="text-sm font-medium">
-											Bairro <span className="text-destructive">*</span>
-										</label>
-										<input
-											id="f_bairro"
-											className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-											{...register("f_bairro")}
-										/>
-										{errors.f_bairro && (
-											<p className="text-xs text-destructive">
-												{errors.f_bairro.message}
-											</p>
-										)}
-									</div>
-									<div className="space-y-1.5">
-										<label
-											htmlFor="f_endereco_cidade"
-											className="text-sm font-medium"
-										>
-											Cidade <span className="text-destructive">*</span>
-										</label>
-										<input
-											id="f_endereco_cidade"
-											className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-											{...register("f_endereco_cidade")}
-										/>
-										{errors.f_endereco_cidade && (
-											<p className="text-xs text-destructive">
-												{errors.f_endereco_cidade.message}
-											</p>
-										)}
-									</div>
-									<div className="space-y-1.5">
-										<label
-											htmlFor="f_endereco_estado"
-											className="text-sm font-medium"
-										>
-											UF <span className="text-destructive">*</span>
-										</label>
-										<input
-											id="f_endereco_estado"
-											placeholder="Ex: SC"
-											maxLength={2}
-											className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm uppercase"
-											{...register("f_endereco_estado")}
-										/>
-										{errors.f_endereco_estado && (
-											<p className="text-xs text-destructive">
-												{errors.f_endereco_estado.message}
-											</p>
-										)}
-									</div>
-								</div>
-
-								<div className="grid grid-cols-[4fr_1fr] gap-3">
-									<div className="space-y-1.5">
-										<label htmlFor="f_endereco" className="text-sm font-medium">
-											Endereço <span className="text-destructive">*</span>
-										</label>
-										<input
-											id="f_endereco"
-											className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-											{...register("f_endereco")}
-										/>
-										{errors.f_endereco && (
-											<p className="text-xs text-destructive">
-												{errors.f_endereco.message}
-											</p>
-										)}
-									</div>
-									<div className="space-y-1.5">
-										<label
-											htmlFor="f_endereco_numero"
-											className="text-sm font-medium"
-										>
-											Número <span className="text-destructive">*</span>
-										</label>
-										<input
-											id="f_endereco_numero"
-											placeholder="SN para sem número"
-											className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-											{...register("f_endereco_numero")}
-										/>
-										{errors.f_endereco_numero && (
-											<p className="text-xs text-destructive">
-												{errors.f_endereco_numero.message}
-											</p>
-										)}
-									</div>
-								</div>
-
-								<div className="grid grid-cols-2 gap-3">
-									<div className="space-y-1.5">
-										<label
-											htmlFor="f_endereco_complemento"
-											className="text-sm font-medium"
-										>
-											Complemento <span className="text-destructive">*</span>
-										</label>
-										<input
-											id="f_endereco_complemento"
-											className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-											{...register("f_endereco_complemento")}
-										/>
-										{errors.f_endereco_complemento && (
-											<p className="text-xs text-destructive">
-												{errors.f_endereco_complemento.message}
-											</p>
-										)}
-									</div>
-									<div className="space-y-1.5">
-										<label
-											htmlFor="f_endereco_referencia"
-											className="text-sm font-medium"
-										>
-											Ponto de Referência
-										</label>
-										<input
-											id="f_endereco_referencia"
-											className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-											{...register("f_endereco_referencia")}
-										/>
-									</div>
-								</div>
-
-								<div className="grid grid-cols-2 gap-3">
-									<div className="space-y-1.5">
-										<label htmlFor="f_obs" className="text-sm font-medium">
-											Observações
-										</label>
-										<input
-											id="f_obs"
-											placeholder="Observações para a troca de endereço"
-											className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-											{...register("f_obs")}
-										/>
-									</div>
-									<div className="space-y-1.5">
-										<label
-											htmlFor="f_telefone_contato"
-											className="text-sm font-medium"
-										>
-											Telefone para Contato
-										</label>
-										<input
-											id="f_telefone_contato"
-											className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-											{...register("f_telefone_contato")}
-										/>
-									</div>
-								</div>
-							</div>
-						</fieldset>
-
-						{/* Section: Cobrança */}
-						<fieldset>
-							<div className="mb-4 flex items-center gap-3">
-								<div className="h-px flex-1 bg-border" />
-								<span className="text-xs font-medium text-muted-foreground">
-									COBRANÇA
-								</span>
-								<div className="h-px flex-1 bg-border" />
-							</div>
-
-							<div className="mb-4 space-y-3">
-								<div className="space-y-1.5">
-									<label
-										htmlFor="f_taxa_instalacao"
-										className="text-sm font-medium"
-									>
-										Taxa de Instalação{" "}
-										<span className="text-destructive">*</span>
-									</label>
-									<select
-										id="f_taxa_instalacao"
-										className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-										{...register("f_taxa_instalacao")}
-									>
-										<option value="">Selecionar...</option>
-										{taxaOptions.map(([value, label]) => (
-											<option key={value} value={value}>
-												{label}
-											</option>
-										))}
-									</select>
-									{errors.f_taxa_instalacao && (
-										<p className="text-xs text-destructive">
-											{errors.f_taxa_instalacao.message}
-										</p>
-									)}
-								</div>
-							</div>
-						</fieldset>
-
-						{/* Error display */}
 						{mutation.isError && (
 							<div className="rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive">
 								{mutation.error?.message ?? "Erro ao criar troca de endereço"}
