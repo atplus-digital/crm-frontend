@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { SearchCombobox } from "#/components/search-combobox";
+import { Label } from "#/components/ui/label";
 import { searchPessoasFisicas } from "@/features/cs/troca-titularidade/troca-titularidade-service";
 import type { SelectedPF } from "./transferencia-titularidade-types";
 
@@ -53,9 +54,9 @@ export function PfSearch({ onSelect, onClear }: PfSearchProps) {
 
 	return (
 		<div className="space-y-1.5">
-			<label htmlFor="pf-search" className="text-sm font-medium">
+			<Label htmlFor="pf-search">
 				Pessoa (PF) <span className="text-destructive">*</span>
-			</label>
+			</Label>
 			<SearchCombobox
 				id="pf-search"
 				items={results}
@@ -63,7 +64,10 @@ export function PfSearch({ onSelect, onClear }: PfSearchProps) {
 				onValueChange={handleSelect}
 				onSearchChange={setSearch}
 				getItemLabel={(item) => `${item?.f_nome} — ${item?.f_cpf}`}
-				getItemKey={(item) => item?.id ?? item?.f_cpf ?? ""}
+				getItemKey={(item) => {
+					if (!item) return "pf-empty-item";
+					return item.id;
+				}}
 				renderItem={(item) => `${item?.f_nome} — ${item?.f_cpf}`}
 				isItemEqualToValue={(item, selectedItem) =>
 					item?.id === selectedItem?.id

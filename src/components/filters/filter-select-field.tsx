@@ -7,6 +7,7 @@ import {
 	DropdownMenuGroup,
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
+import { Label } from "#/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -65,12 +66,12 @@ export function FilterSelectField<T extends string>({
 
 		return (
 			<div className="w-full min-w-0 space-y-2">
-				<label
+				<Label
 					htmlFor={id}
 					className="text-xs font-medium text-muted-foreground"
 				>
 					{label}
-				</label>
+				</Label>
 				<DropdownMenu modal={false}>
 					<DropdownMenuTrigger asChild>
 						<Button
@@ -133,9 +134,9 @@ export function FilterSelectField<T extends string>({
 
 	return (
 		<div className="w-full min-w-0 space-y-2">
-			<label htmlFor={id} className="text-xs font-medium text-muted-foreground">
+			<Label htmlFor={id} className="text-xs font-medium text-muted-foreground">
 				{label}
-			</label>
+			</Label>
 			<Select
 				value={value}
 				onValueChange={(v) => onChange(v === "all" ? undefined : (v as T))}

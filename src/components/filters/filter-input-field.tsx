@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Input } from "#/components/ui/input";
+import { Label } from "#/components/ui/label";
 import { cn } from "#/lib/utils";
 
 const DEFAULT_DEBOUNCE_MS = 300;
@@ -92,9 +93,9 @@ function FilterInputFieldComponent({
 
 	return (
 		<div className={cn("space-y-2", className)}>
-			<label htmlFor={id} className="text-xs font-medium text-muted-foreground">
+			<Label htmlFor={id} className="text-xs font-medium text-muted-foreground">
 				{label}
-			</label>
+			</Label>
 			<Input
 				ref={inputRef}
 				id={id}

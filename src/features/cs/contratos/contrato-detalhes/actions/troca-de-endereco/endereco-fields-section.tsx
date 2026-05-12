@@ -1,4 +1,6 @@
 import type { UseFormRegister } from "react-hook-form";
+import { Input } from "#/components/ui/input";
+import { Label } from "#/components/ui/label";
 import type { TrocaEnderecoFormValues } from "./troca-endereco-form";
 
 interface FormFieldError {
@@ -27,13 +29,12 @@ export function EnderecoFieldsSection({
 			<div className="mb-4 space-y-3">
 				<div className="grid grid-cols-4 gap-3">
 					<div className="space-y-1.5">
-						<label htmlFor="f_cep" className="text-sm font-medium">
+						<Label htmlFor="f_cep">
 							CEP <span className="text-destructive">*</span>
-						</label>
-						<input
+						</Label>
+						<Input
 							id="f_cep"
 							placeholder="Somente números"
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
 							{...register("f_cep")}
 						/>
 						{errors.f_cep && (
@@ -41,14 +42,10 @@ export function EnderecoFieldsSection({
 						)}
 					</div>
 					<div className="space-y-1.5">
-						<label htmlFor="f_bairro" className="text-sm font-medium">
+						<Label htmlFor="f_bairro">
 							Bairro <span className="text-destructive">*</span>
-						</label>
-						<input
-							id="f_bairro"
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-							{...register("f_bairro")}
-						/>
+						</Label>
+						<Input id="f_bairro" {...register("f_bairro")} />
 						{errors.f_bairro && (
 							<p className="text-xs text-destructive">
 								{errors.f_bairro.message}
@@ -56,14 +53,10 @@ export function EnderecoFieldsSection({
 						)}
 					</div>
 					<div className="space-y-1.5">
-						<label htmlFor="f_endereco_cidade" className="text-sm font-medium">
+						<Label htmlFor="f_endereco_cidade">
 							Cidade <span className="text-destructive">*</span>
-						</label>
-						<input
-							id="f_endereco_cidade"
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-							{...register("f_endereco_cidade")}
-						/>
+						</Label>
+						<Input id="f_endereco_cidade" {...register("f_endereco_cidade")} />
 						{errors.f_endereco_cidade && (
 							<p className="text-xs text-destructive">
 								{errors.f_endereco_cidade.message}
@@ -71,14 +64,14 @@ export function EnderecoFieldsSection({
 						)}
 					</div>
 					<div className="space-y-1.5">
-						<label htmlFor="f_endereco_estado" className="text-sm font-medium">
+						<Label htmlFor="f_endereco_estado">
 							UF <span className="text-destructive">*</span>
-						</label>
-						<input
+						</Label>
+						<Input
 							id="f_endereco_estado"
 							placeholder="Ex: SC"
 							maxLength={2}
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm uppercase"
+							className="uppercase"
 							{...register("f_endereco_estado")}
 						/>
 						{errors.f_endereco_estado && (
@@ -91,14 +84,10 @@ export function EnderecoFieldsSection({
 
 				<div className="grid grid-cols-[4fr_1fr] gap-3">
 					<div className="space-y-1.5">
-						<label htmlFor="f_endereco" className="text-sm font-medium">
+						<Label htmlFor="f_endereco">
 							Endereço <span className="text-destructive">*</span>
-						</label>
-						<input
-							id="f_endereco"
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-							{...register("f_endereco")}
-						/>
+						</Label>
+						<Input id="f_endereco" {...register("f_endereco")} />
 						{errors.f_endereco && (
 							<p className="text-xs text-destructive">
 								{errors.f_endereco.message}
@@ -106,13 +95,12 @@ export function EnderecoFieldsSection({
 						)}
 					</div>
 					<div className="space-y-1.5">
-						<label htmlFor="f_endereco_numero" className="text-sm font-medium">
+						<Label htmlFor="f_endereco_numero">
 							Número <span className="text-destructive">*</span>
-						</label>
-						<input
+						</Label>
+						<Input
 							id="f_endereco_numero"
 							placeholder="SN para sem número"
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
 							{...register("f_endereco_numero")}
 						/>
 						{errors.f_endereco_numero && (
@@ -125,15 +113,11 @@ export function EnderecoFieldsSection({
 
 				<div className="grid grid-cols-2 gap-3">
 					<div className="space-y-1.5">
-						<label
-							htmlFor="f_endereco_complemento"
-							className="text-sm font-medium"
-						>
+						<Label htmlFor="f_endereco_complemento">
 							Complemento <span className="text-destructive">*</span>
-						</label>
-						<input
+						</Label>
+						<Input
 							id="f_endereco_complemento"
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
 							{...register("f_endereco_complemento")}
 						/>
 						{errors.f_endereco_complemento && (
@@ -143,15 +127,9 @@ export function EnderecoFieldsSection({
 						)}
 					</div>
 					<div className="space-y-1.5">
-						<label
-							htmlFor="f_endereco_referencia"
-							className="text-sm font-medium"
-						>
-							Ponto de Referência
-						</label>
-						<input
+						<Label htmlFor="f_endereco_referencia">Ponto de Referência</Label>
+						<Input
 							id="f_endereco_referencia"
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
 							{...register("f_endereco_referencia")}
 						/>
 					</div>
@@ -159,23 +137,17 @@ export function EnderecoFieldsSection({
 
 				<div className="grid grid-cols-2 gap-3">
 					<div className="space-y-1.5">
-						<label htmlFor="f_obs" className="text-sm font-medium">
-							Observações
-						</label>
-						<input
+						<Label htmlFor="f_obs">Observações</Label>
+						<Input
 							id="f_obs"
 							placeholder="Observações para a troca de endereço"
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
 							{...register("f_obs")}
 						/>
 					</div>
 					<div className="space-y-1.5">
-						<label htmlFor="f_telefone_contato" className="text-sm font-medium">
-							Telefone para Contato
-						</label>
-						<input
+						<Label htmlFor="f_telefone_contato">Telefone para Contato</Label>
+						<Input
 							id="f_telefone_contato"
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
 							{...register("f_telefone_contato")}
 						/>
 					</div>

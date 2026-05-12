@@ -1,4 +1,12 @@
-import type { UseFormRegister } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
+import { Label } from "#/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "#/components/ui/select";
 import type { TrocaEnderecoFormValues } from "./troca-endereco-form";
 
 interface FormFieldError {
@@ -7,15 +15,14 @@ interface FormFieldError {
 
 interface CobrancaFieldsSectionProps {
 	readonly taxaOptions: [string, string][];
-	readonly register: UseFormRegister<TrocaEnderecoFormValues>;
 	readonly errors: Record<string, FormFieldError | undefined>;
 }
 
 export function CobrancaFieldsSection({
 	taxaOptions,
-	register,
 	errors,
 }: CobrancaFieldsSectionProps) {
+	const { control } = useFormContext<TrocaEnderecoFormValues>();
 	return (
 		<fieldset>
 			<div className="mb-4 flex items-center gap-3">
@@ -28,21 +35,27 @@ export function CobrancaFieldsSection({
 
 			<div className="mb-4 space-y-3">
 				<div className="space-y-1.5">
-					<label htmlFor="f_taxa_instalacao" className="text-sm font-medium">
+					<Label htmlFor="f_taxa_instalacao">
 						Taxa de Instalação <span className="text-destructive">*</span>
-					</label>
-					<select
-						id="f_taxa_instalacao"
-						className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-						{...register("f_taxa_instalacao")}
-					>
-						<option value="">Selecionar...</option>
-						{taxaOptions.map(([value, label]) => (
-							<option key={value} value={value}>
-								{label}
-							</option>
-						))}
-					</select>
+					</Label>
+					<Controller
+						control={control}
+						name="f_taxa_instalacao"
+						render={({ field }) => (
+							<Select onValueChange={field.onChange} value={field.value}>
+								<SelectTrigger>
+									<SelectValue placeholder="Selecionar..." />
+								</SelectTrigger>
+								<SelectContent>
+									{taxaOptions.map(([value, labelText]) => (
+										<SelectItem key={value} value={value}>
+											{labelText}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						)}
+					/>
 					{errors.f_taxa_instalacao && (
 						<p className="text-xs text-destructive">
 							{errors.f_taxa_instalacao.message}

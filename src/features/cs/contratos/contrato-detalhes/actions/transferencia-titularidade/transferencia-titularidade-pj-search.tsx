@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { SearchCombobox } from "#/components/search-combobox";
+import { Label } from "#/components/ui/label";
 import { searchPessoasJuridicas } from "@/features/cs/troca-titularidade/troca-titularidade-service";
 import type { SelectedPJ } from "./transferencia-titularidade-types";
 
@@ -53,9 +54,7 @@ export function PjSearch({ onSelect, onClear }: PjSearchProps) {
 
 	return (
 		<div className="space-y-1.5">
-			<label htmlFor="pj-search" className="text-sm font-medium">
-				Pessoa (PJ)
-			</label>
+			<Label htmlFor="pj-search">Pessoa (PJ)</Label>
 			<SearchCombobox
 				id="pj-search"
 				items={results}
@@ -63,7 +62,10 @@ export function PjSearch({ onSelect, onClear }: PjSearchProps) {
 				onValueChange={handleSelect}
 				onSearchChange={setSearch}
 				getItemLabel={(item) => `${item?.f_razao_social} — ${item?.f_cnpj}`}
-				getItemKey={(item) => item?.id ?? item?.f_cnpj ?? "pj-empty-item"}
+				getItemKey={(item) => {
+					if (!item) return "pj-empty-item";
+					return item.id;
+				}}
 				renderItem={(item) => `${item?.f_razao_social} — ${item?.f_cnpj}`}
 				isItemEqualToValue={(item, selectedItem) =>
 					item?.id === selectedItem?.id

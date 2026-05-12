@@ -7,6 +7,7 @@ import {
 	DropdownMenuGroup,
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
+import { Label } from "#/components/ui/label";
 import { cn } from "#/lib/utils";
 
 export interface MultiSelectOption<T extends string> {
@@ -61,9 +62,9 @@ export function FilterMultiSelect<T extends string>({
 
 	return (
 		<div className={cn("w-full min-w-0 space-y-2", className)}>
-			<label htmlFor={id} className="text-xs font-medium text-muted-foreground">
+			<Label htmlFor={id} className="text-xs font-medium text-muted-foreground">
 				{label}
-			</label>
+			</Label>
 			<DropdownMenu modal={false}>
 				<DropdownMenuTrigger asChild>
 					<Button

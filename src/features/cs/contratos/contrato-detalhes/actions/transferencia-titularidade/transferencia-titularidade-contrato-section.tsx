@@ -3,6 +3,8 @@ import type {
 	UseFormRegister,
 	UseFormSetValue,
 } from "react-hook-form";
+import { Input } from "#/components/ui/input";
+import { Label } from "#/components/ui/label";
 import { EnderecoSection } from "./endereco-section";
 import type { TransferenciaTitularidadeFormValues } from "./transferencia-titularidade-types";
 
@@ -42,28 +44,17 @@ export function ContratoSection({
 			<div className="mb-4 space-y-3">
 				{/* Contrato ID */}
 				<div className="space-y-1.5">
-					<label htmlFor="contrato-id" className="text-sm font-medium">
-						Contrato ID
-					</label>
-					<input
-						id="contrato-id"
-						value={contratoId}
-						disabled
-						className="flex h-9 w-full rounded-md border border-input bg-muted/50 px-3 py-1 text-sm shadow-sm"
-					/>
+					<Label htmlFor="contrato-id">Contrato ID</Label>
+					<Input id="contrato-id" value={contratoId} disabled />
 				</div>
 
 				{/* Endereço + Número */}
 				<div className="grid grid-cols-[1fr_auto] gap-3">
 					<div className="space-y-1.5">
-						<label htmlFor="f_endereco" className="text-sm font-medium">
+						<Label htmlFor="f_endereco">
 							Endereço <span className="text-destructive">*</span>
-						</label>
-						<input
-							id="f_endereco"
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-							{...register("f_endereco")}
-						/>
+						</Label>
+						<Input id="f_endereco" {...register("f_endereco")} />
 						{errors.f_endereco && (
 							<p className="text-xs text-destructive">
 								{errors.f_endereco.message}
@@ -71,14 +62,10 @@ export function ContratoSection({
 						)}
 					</div>
 					<div className="w-28 space-y-1.5">
-						<label htmlFor="f_numero" className="text-sm font-medium">
+						<Label htmlFor="f_numero">
 							Número <span className="text-destructive">*</span>
-						</label>
-						<input
-							id="f_numero"
-							className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-							{...register("f_numero")}
-						/>
+						</Label>
+						<Input id="f_numero" {...register("f_numero")} />
 						{errors.f_numero && (
 							<p className="text-xs text-destructive">
 								{errors.f_numero.message}

@@ -1,6 +1,7 @@
 import { Calendar } from "lucide-react";
 import type React from "react";
 import { Input } from "#/components/ui/input";
+import { Label } from "#/components/ui/label";
 
 export interface FilterDateFieldProps {
 	id: string;
@@ -19,13 +20,13 @@ export function FilterDateField({
 }: FilterDateFieldProps) {
 	return (
 		<div className="space-y-2">
-			<label
+			<Label
 				htmlFor={id}
 				className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"
 			>
 				{icon}
 				{label}
-			</label>
+			</Label>
 			<Input
 				id={id}
 				type="date"

@@ -170,7 +170,6 @@ export function TrocaEnderecoSheet({
 							<EnderecoFieldsSection register={register} errors={errors} />
 							<CobrancaFieldsSection
 								taxaOptions={taxaOptions}
-								register={register}
 								errors={errors}
 							/>
 

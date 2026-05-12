@@ -1,4 +1,5 @@
 import type { UseFormSetValue } from "react-hook-form";
+import { Label } from "#/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -129,9 +130,9 @@ export function CessionarioSection({
 			<div className="mb-4 space-y-3">
 				{/* Tipo de Pessoa */}
 				<div className="space-y-1.5">
-					<label className="text-sm font-medium" htmlFor="tipo-pessoa">
+					<Label htmlFor="tipo-pessoa">
 						Tipo de Pessoa <span className="text-destructive">*</span>
-					</label>
+					</Label>
 					<Select value={tipoPessoa} onValueChange={handleTipoPessoaChange}>
 						<SelectTrigger id="tipo-pessoa" className="w-full">
 							<SelectValue />

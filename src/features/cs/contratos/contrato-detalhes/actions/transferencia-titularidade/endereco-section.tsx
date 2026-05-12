@@ -9,6 +9,7 @@ import {
 } from "react-hook-form";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
+import { Label } from "#/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -143,9 +144,9 @@ export function EnderecoSection({
 	return (
 		<>
 			<div className="space-y-1.5">
-				<label htmlFor="f_cep" className="text-sm font-medium">
+				<Label htmlFor="f_cep">
 					CEP <span className="text-destructive">*</span>
-				</label>
+				</Label>
 				<div className="flex gap-2">
 					<Input
 						id="f_cep"
@@ -182,14 +183,10 @@ export function EnderecoSection({
 			{/* Bairro + Complemento */}
 			<div className="grid grid-cols-2 gap-3">
 				<div className="space-y-1.5">
-					<label htmlFor="f_bairro" className="text-sm font-medium">
+					<Label htmlFor="f_bairro">
 						Bairro <span className="text-destructive">*</span>
-					</label>
-					<input
-						id="f_bairro"
-						className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-						{...register("f_bairro")}
-					/>
+					</Label>
+					<Input id="f_bairro" {...register("f_bairro")} />
 					{errors.f_bairro && (
 						<p className="text-xs text-destructive">
 							{errors.f_bairro.message}
@@ -197,9 +194,9 @@ export function EnderecoSection({
 					)}
 				</div>
 				<div className="space-y-1.5">
-					<label htmlFor="f_complemento" className="text-sm font-medium">
+					<Label htmlFor="f_complemento">
 						Complemento <span className="text-destructive">*</span>
-					</label>
+					</Label>
 					<Controller
 						control={control}
 						name="f_complemento"
@@ -229,14 +226,10 @@ export function EnderecoSection({
 			{/* Cidade + Estado */}
 			<div className="grid grid-cols-[1fr_auto] gap-3">
 				<div className="space-y-1.5">
-					<label htmlFor="f_cidade" className="text-sm font-medium">
+					<Label htmlFor="f_cidade">
 						Cidade <span className="text-destructive">*</span>
-					</label>
-					<input
-						id="f_cidade"
-						className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-						{...register("f_cidade")}
-					/>
+					</Label>
+					<Input id="f_cidade" {...register("f_cidade")} />
 					{errors.f_cidade && (
 						<p className="text-xs text-destructive">
 							{errors.f_cidade.message}
@@ -244,9 +237,9 @@ export function EnderecoSection({
 					)}
 				</div>
 				<div className="w-24 space-y-1.5">
-					<label htmlFor="f_estado" className="text-sm font-medium">
+					<Label htmlFor="f_estado">
 						Estado <span className="text-destructive">*</span>
-					</label>
+					</Label>
 					<Controller
 						control={control}
 						name="f_estado"
