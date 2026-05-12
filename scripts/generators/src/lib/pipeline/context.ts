@@ -12,13 +12,3 @@ export interface PipelineExecutionContext<
 	pipelineContext?: TPipelineContext;
 	finalResult?: unknown;
 }
-
-export function getPipelineContextOrThrow<TPipelineContext>(
-	context: { pipelineContext?: TPipelineContext },
-	errorMessage: string,
-): TPipelineContext {
-	if (!context.pipelineContext) {
-		throw new Error(errorMessage);
-	}
-	return context.pipelineContext;
-}

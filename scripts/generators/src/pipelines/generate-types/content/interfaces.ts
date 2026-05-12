@@ -428,42 +428,6 @@ function generateCollectionRelationsInferred(
 // Legacy: mantido para compatibilidade
 // ============================================================
 
-/**
- * @deprecated Use generateBaseSchema instead.
- * Gera o schema Zod principal da collection (sem sufixo "Base").
- */
-export function generateMainSchema(
-	collectionName: string,
-	types: GeneratedTypes,
-): string | null {
-	const scalarEntries = _sortScalarEntries(types.scalars);
-	const cleanCollectionName = collectionName.replace(/^t_/, "");
-	const schemaName = ensureValidIdentifier(
-		`${cleanCollectionName.toLowerCase()}Schema`,
-	);
-
-	if (scalarEntries.length === 0) {
-		return null;
-	}
-
-	const lines: string[] = [];
-	lines.push(`export const ${schemaName} = z.object({`);
-
-	for (const [fieldName, fieldType] of scalarEntries) {
-		const resolvedType = getScalarFieldZodType(
-			fieldName,
-			fieldType,
-			types,
-			collectionName,
-		);
-		lines.push(`\t${formatKey(fieldName)}: ${resolvedType},`);
-	}
-
-	lines.push("});");
-
-	return lines.join("\n");
-}
-
 // ============================================================
 // Orchestrator
 // ============================================================

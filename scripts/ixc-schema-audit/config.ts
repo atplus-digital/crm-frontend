@@ -16,11 +16,6 @@ export interface EnumOption {
 	label: string;
 }
 
-export interface EnumInfo {
-	fieldName: string;
-	options: EnumOption[];
-}
-
 export interface RelationInfo {
 	fieldName: string;
 	targetCollection: string;

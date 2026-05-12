@@ -6,34 +6,6 @@ import {
 } from "@generators/pipelines/generate-types/utils/naming";
 import { generateFileHeader } from "./content";
 
-export function generateIndexFileWithReexports(
-	splitCollectionNames: readonly string[],
-	baseInterfaceNaming: BaseInterfaceNamingConfig,
-): string {
-	const header = generateFileHeader();
-
-	if (splitCollectionNames.length === 0) {
-		return header;
-	}
-
-	const exports: string[] = [];
-
-	for (const collectionName of splitCollectionNames) {
-		const baseTypeName = toCollectionBaseTypeName(
-			collectionName,
-			baseInterfaceNaming,
-		);
-		const typeName = toCollectionTypeName(collectionName);
-		const fileName = toFileName(collectionName);
-
-		exports.push(
-			`export type { ${baseTypeName}, ${typeName}Relations, ${typeName}RelationKey } from "./${fileName}";`,
-		);
-	}
-
-	return `${[header, ...exports.sort()].join("\n")}\n`;
-}
-
 /**
  * Gera index.ts com re-exports de TODAS as collections usando paths customizados.
  * Útil quando collections estão em subpastas (ex: other/).

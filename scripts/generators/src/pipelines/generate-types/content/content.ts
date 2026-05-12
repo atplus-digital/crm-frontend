@@ -13,7 +13,6 @@ export {
 	generateIndexContent,
 	generateLabelsContent,
 	generateSchemasContent,
-	generateSplitFiles,
 } from "./assembly";
 export type { EnumFieldInfo } from "./enums";
 // Enum functions
@@ -37,9 +36,7 @@ export {
 	generateCollectionInterfaces,
 	generateCollectionRelationKeyType,
 	generateCollectionRelationsInterface,
-	generateMainSchema,
 } from "./interfaces";
-// Sorting utilities
 export {
 	_categorizeField,
 	_sortMapEntries,

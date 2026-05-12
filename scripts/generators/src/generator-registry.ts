@@ -36,7 +36,5 @@ const GENERATOR_REGISTRY = [
 	},
 ] as const satisfies readonly GeneratorRegistryEntry[];
 
-export type GeneratorFlag = (typeof GENERATOR_REGISTRY)[number]["flag"];
-
 export type { GeneratorRegistryEntry };
 export { GENERATOR_REGISTRY };

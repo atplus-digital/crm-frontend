@@ -1,5 +1,3 @@
-import type { NocoBaseCredentials } from "./nocobase";
-
 export interface BaseInterfaceNamingConfig {
 	prefix: string;
 	suffix: string;
@@ -166,7 +164,3 @@ export interface ScriptConfig {
 		consolidatedMarkdownOutputFile?: string;
 	};
 }
-
-export type EnvConfig = NocoBaseCredentials;
-
-export interface RuntimeConfig extends ScriptConfig, NocoBaseCredentials {}

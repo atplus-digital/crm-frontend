@@ -98,6 +98,7 @@ export const NEGOCIACOES_SUBSTATUS_LABELS = {
 	7: "REPROVADO - Análise de Crédito",
 	12: "REPROVADO - Financeiro em Atraso",
 	14: "REPROVADO - Pontos de Atenção",
+	15: "REPROVADO - Documentação",
 	10: "PERDIDO",
 	1: "NA",
 } as const;
@@ -190,11 +191,27 @@ export const negociacoesStatusSchema = z.enum(["1", "2", "3", "4", "5", "6"], {
 });
 
 export const negociacoesSubstatusSchema = z.enum(
-	["13", "2", "3", "4", "11", "9", "8", "5", "6", "7", "12", "14", "10", "1"],
+	[
+		"13",
+		"2",
+		"3",
+		"4",
+		"11",
+		"9",
+		"8",
+		"5",
+		"6",
+		"7",
+		"12",
+		"14",
+		"15",
+		"10",
+		"1",
+	],
 	{
 		error: () => ({
 			message:
-				"substatus: valores válidos são [EM STANDBY, AGUARDANDO - Assinatura do contrato pelo cliente, AGUARDANDO - Auditoria, APROVADO - Aguardando inserção no IXC, APROVADO - Aguardando atualização no IXC, APROVADO - Concluído, APROVADO - Erro na integração com o IXC, REPROVADO - Divergência de Dados, REPROVADO - Fraude, REPROVADO - Análise de Crédito, REPROVADO - Financeiro em Atraso, REPROVADO - Pontos de Atenção, PERDIDO, NA]",
+				"substatus: valores válidos são [EM STANDBY, AGUARDANDO - Assinatura do contrato pelo cliente, AGUARDANDO - Auditoria, APROVADO - Aguardando inserção no IXC, APROVADO - Aguardando atualização no IXC, APROVADO - Concluído, APROVADO - Erro na integração com o IXC, REPROVADO - Divergência de Dados, REPROVADO - Fraude, REPROVADO - Análise de Crédito, REPROVADO - Financeiro em Atraso, REPROVADO - Pontos de Atenção, REPROVADO - Documentação, PERDIDO, NA]",
 		}),
 	},
 );

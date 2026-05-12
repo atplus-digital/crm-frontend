@@ -38,12 +38,6 @@ export function formatBaseInterfaceName(
 	return `${naming.prefix}${typeName}${naming.suffix}`;
 }
 
-export function formatBaseInterfacePattern(
-	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
-): string {
-	return formatBaseInterfaceName("<Collection>", baseInterfaceNaming);
-}
-
 /**
  * Converte nome para PascalCase.
  * Remove prefixo "t_" se presente.
@@ -179,19 +173,4 @@ export function toFileName(collectionName: string): string {
 		.filter(Boolean)
 		.map((part) => part.toLowerCase())
 		.join("-");
-}
-
-/**
- * Normaliza array de nomes de collections: remove duplicatas, trim e filtra vazios.
- */
-export function normalizeCollectionNames(
-	collectionNames: string[] | undefined,
-): string[] {
-	if (!collectionNames) {
-		return [];
-	}
-
-	return [...new Set(collectionNames)]
-		.map((collectionName) => collectionName.trim())
-		.filter((collectionName) => collectionName.length > 0);
 }

@@ -5,16 +5,6 @@ export interface DataSourceCollection {
 	fields?: DataSourceField[];
 }
 
-export interface RejectedField {
-	fieldName: string;
-	uniqueValues: number;
-	totalRecords: number;
-	reason: string;
-	suggestion?: string;
-}
-
-export type RejectedFieldsMap = Record<string, RejectedField>;
-
 export interface DataSourceField {
 	name: string;
 	type: string;
@@ -26,16 +16,6 @@ export interface DataSourceField {
 			label: string;
 		}>;
 		title?: string;
-	};
-}
-
-export interface InferredEnumsMap {
-	[fieldName: string]: {
-		values: string[];
-		labels: Record<string, string>;
-		cardinality: number;
-		totalRecords: number;
-		origin: "api" | "adapter" | "inferencia";
 	};
 }
 

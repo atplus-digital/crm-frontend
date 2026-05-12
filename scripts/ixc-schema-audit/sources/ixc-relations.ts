@@ -23,10 +23,3 @@ export function getIXCRelations(collectionName: string): RelationInfo[] {
 		type: rel.type as "belongsTo" | "hasMany",
 	}));
 }
-
-/**
- * Lista todas as collections com relações mapeadas
- */
-export function listCollectionsWithRelations(): string[] {
-	return Object.keys(IXC_RELATIONS_MAP);
-}

@@ -71,10 +71,3 @@ export function discoverCollections(): DiscoveredCollection[] {
 
 	return results.sort((a, b) => a.name.localeCompare(b.name));
 }
-
-/**
- * Quick test: mapeia para nomes apenas
- */
-export function listCollectionNames(): string[] {
-	return discoverCollections().map((c) => c.name);
-}

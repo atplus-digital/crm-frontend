@@ -672,45 +672,6 @@ export function generateContentForCollections(
  *
  * Retorna Map<filePath, content> onde filePath é relativo (ex: "pessoas/labels.ts")
  */
-export function generateSplitFiles(
-	splitCollections: Map<string, CollectionTypesMap>,
-	baseInterfaceNaming?: Partial<BaseInterfaceNamingConfig>,
-): Map<string, string> {
-	const result = new Map<string, string>();
-	const allCollectionsMap: CollectionTypesMap = {};
-	const splitCollectionNames = new Set<string>();
-
-	for (const [collectionName, collections] of splitCollections) {
-		splitCollectionNames.add(collectionName);
-		Object.assign(allCollectionsMap, collections);
-	}
-
-	for (const [_collectionName, collections] of splitCollections) {
-		for (const [colName, types] of Object.entries(collections)) {
-			const header = generateFileHeader();
-
-			const labelsContent = `${header}\n${generateLabelsContent(colName, types)}`;
-			const schemasContent = `${header}\n${generateSchemasContent(
-				colName,
-				types,
-				baseInterfaceNaming,
-				{
-					allCollectionsMap,
-					splitCollectionNames,
-					currentCollectionInOtherFolder: false,
-				},
-			)}`;
-			const indexContent = `${header}${generateIndexContent(colName, types, baseInterfaceNaming, true)}`;
-
-			const folder = toFileName(colName);
-			result.set(`${folder}/labels.ts`, labelsContent);
-			result.set(`${folder}/schemas.ts`, schemasContent);
-			result.set(`${folder}/index.ts`, indexContent);
-		}
-	}
-
-	return result;
-}
 
 /**
  * Gera conteúdo TypeScript completo com header.

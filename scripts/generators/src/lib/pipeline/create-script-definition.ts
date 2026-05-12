@@ -35,37 +35,6 @@ export interface RunGeneratorCliOptions<TContext = unknown> {
 	latestReport?: PipelineJsonReportResult;
 }
 
-/**
- * Input for {@link createGeneratorOptions} — partial context allowed.
- */
-export interface CreateGeneratorOptions<TContext = unknown> {
-	name: string;
-	stages: CliStage<TContext>[];
-	context?: TContext;
-	disableOutput?: boolean;
-	reportsOutputPath?: string;
-}
-
-// ──────────────────────────────────────────────
-// createGeneratorOptions — build CLI options from input
-// ──────────────────────────────────────────────
-
-/**
- * Creates a fully resolved {@link RunGeneratorCliOptions} from partial input.
- * Fills missing context with an empty object.
- */
-export function createGeneratorOptions<TContext>(
-	options: CreateGeneratorOptions<TContext>,
-): RunGeneratorCliOptions<TContext> {
-	return {
-		name: options.name,
-		stages: options.stages,
-		context: options.context ?? ({} as TContext),
-		disableOutput: options.disableOutput,
-		reportsOutputPath: options.reportsOutputPath,
-	};
-}
-
 function runGeneratorCli<TContext>(
 	options: RunGeneratorCliOptions<TContext>,
 	task: TaskRunner,

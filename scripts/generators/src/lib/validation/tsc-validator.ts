@@ -24,10 +24,6 @@ interface TscExecutionResult {
 
 const tscCache = new Map<string, Promise<TscExecutionResult>>();
 
-export function resetTypeScriptValidationCache(): void {
-	tscCache.clear();
-}
-
 function runTscOnce(tsconfigPath: string): Promise<TscExecutionResult> {
 	const cached = tscCache.get(tsconfigPath);
 	if (cached) return cached;

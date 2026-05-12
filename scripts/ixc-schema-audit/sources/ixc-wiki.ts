@@ -126,21 +126,3 @@ export async function getIXCSchemaFromWiki(
 
 	return result;
 }
-
-export function clearCache(collectionName?: string): void {
-	if (collectionName) {
-		const cachePath = getCachePath(collectionName);
-		if (fs.existsSync(cachePath)) {
-			fs.unlinkSync(cachePath);
-		}
-	} else {
-		if (fs.existsSync(CONFIG.CACHE_DIR)) {
-			const files = fs.readdirSync(CONFIG.CACHE_DIR);
-			for (const f of files) {
-				if (f.endsWith(".html")) {
-					fs.unlinkSync(path.join(CONFIG.CACHE_DIR, f));
-				}
-			}
-		}
-	}
-}
