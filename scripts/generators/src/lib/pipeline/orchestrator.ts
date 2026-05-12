@@ -4,9 +4,13 @@ import { Listr } from "listr2";
 import type { GeneratorDefinition } from "../types";
 import { env } from "../utils/env";
 
+type OrchestratorOptions = {
+	concurrent?: boolean;
+};
+
 /**
  * Creates an orchestration task list from {@link GeneratorDefinition}s and
- * executes them sequentially via Listr2.
+ * executes them via Listr2.
  *
  * Each generator runs its own pipeline stages; one failing does not
  * prevent others from running.
@@ -15,11 +19,12 @@ import { env } from "../utils/env";
  */
 export async function runOrchestrator(
 	generators: GeneratorDefinition[],
+	options: OrchestratorOptions = {},
 ): Promise<void> {
 	const tasks = createOrchestrationTasks(generators);
 
 	const rootListr = new Listr(tasks, {
-		concurrent: false,
+		concurrent: options.concurrent ?? false,
 		renderer: env.VITE_LOG_LEVEL === "debug" ? "verbose" : "default",
 		rendererOptions: {
 			lazy: false,
@@ -33,7 +38,7 @@ export async function runOrchestrator(
 
 type GeneratorCliTask = ListrTask<unknown, never, never>;
 
-export function createOrchestrationTasks(
+function createOrchestrationTasks(
 	generators: GeneratorDefinition[],
 ): GeneratorCliTask[] {
 	return generators.map((generator) => ({

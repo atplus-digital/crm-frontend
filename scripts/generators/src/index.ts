@@ -2,17 +2,25 @@ import { runOrchestrator } from "@scripts/generators/src/lib/pipeline/orchestrat
 import { parseGeneratorFlags } from "@scripts/generators/src/lib/utils/args";
 import { GENERATOR_REGISTRY } from "./generator-registry";
 
+const CONCURRENT_FLAG = "--concurrent" as const;
+
 async function main(): Promise<void> {
-	const selectedFlags = parseGeneratorFlags(
-		process.argv.slice(2),
-		GENERATOR_REGISTRY.map((entry) => entry.flag),
-	);
+	const { selectedGeneratorFlags, selectedAdditionalFlags } =
+		parseGeneratorFlags(
+			process.argv.slice(2),
+			GENERATOR_REGISTRY.map((entry) => entry.flag),
+			{
+				additionalAllowedFlags: [CONCURRENT_FLAG],
+			},
+		);
 
 	const generators = GENERATOR_REGISTRY.filter((entry) =>
-		selectedFlags.has(entry.flag),
+		selectedGeneratorFlags.has(entry.flag),
 	).map((entry) => entry.definition);
 
-	await runOrchestrator(generators);
+	await runOrchestrator(generators, {
+		concurrent: selectedAdditionalFlags.has(CONCURRENT_FLAG),
+	});
 }
 
 export { main as runGenerators };

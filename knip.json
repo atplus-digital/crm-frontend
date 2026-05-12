@@ -2,8 +2,20 @@
 	"$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
 	"tags": ["-lintignore"],
 
-	"entry": ["src/routes/router.tsx", "scripts/**/index.ts"],
-	"project": ["src/**/*.ts", "src/**/*.tsx", "scripts/**/*.ts"],
+	"entry": [
+		"src/routes/router.tsx",
+		"scripts/**/index.ts",
+		"src/routes/router.tsx!",
+		"scripts/**/index.ts!"
+	],
+	"project": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"scripts/**/*.ts",
+		"src/**/*.ts!",
+		"src/**/*.tsx!",
+		"scripts/**/*.ts!"
+	],
 	"rules": {
 		"exports": "warn",
 		"types": "warn",
