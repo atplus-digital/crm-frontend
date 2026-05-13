@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-07 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-12 -->
 
 # AGENTS.md — troca-de-endereco
 
@@ -14,15 +14,16 @@ Troca de Endereço subdomain — list/detail screens, query hooks, and filter co
 
 ## Key Files
 
-| File                                    | Purpose                                                            |
-| --------------------------------------- | ------------------------------------------------------------------ |
-| `troca-endereco-types.ts`               | Filter contracts, status options, and UI status color mappings     |
-| `troca-endereco-hooks.ts`               | Query options/hooks for list and detail using `nocobaseRepository` |
-| `troca-endereco-filters.tsx`            | Filter bar UI for status/cliente/IDs/date filters                  |
-| `troca-endereco-service.ts`             | Service layer for troca de endereço business logic                 |
-| `components/troca-endereco-list.tsx`    | Paginated/sortable table composition for exchange requests         |
-| `components/troca-endereco-details.tsx` | Detail page sections for identification, address, contact, notes   |
-| `index.ts`                              | Public exports for the subdomain                                   |
+| File                                      | Purpose                                                                              |
+| ----------------------------------------- | ------------------------------------------------------------------------------------ |
+| `troca-endereco-types.ts`                 | Filter contracts, status options, and UI status color mappings                       |
+| `troca-endereco-hooks.ts`                 | Query options/hooks for list and detail using `nocobaseRepository`                   |
+| `troca-endereco-filters.tsx`              | Filter bar UI for status/cliente/IDs/date filters                                    |
+| `troca-endereco-service.ts`               | Service layer for troca de endereço business logic                                   |
+| `components/troca-endereco-list.tsx`      | Paginated/sortable table composition for exchange requests                           |
+| `components/troca-endereco-details.tsx`   | Detail page (query/error handling + delegates to tab component)                      |
+| `components/troca-endereco-detalhes-tab/` | Detail tab decomposed into card components (summary, endereco, contato, observacoes) |
+| `index.ts`                                | Public exports for the subdomain                                                     |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
