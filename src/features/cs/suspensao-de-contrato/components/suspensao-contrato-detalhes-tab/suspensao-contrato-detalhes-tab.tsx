@@ -2,10 +2,13 @@ import { CardSectionSkeleton } from "#/components/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { CommentsList } from "#/features/cs/components/comments-list";
+import { useUpdateSuspensaoContrato } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks";
 import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { SuspensaoContratoActions } from "../sections/suspensao-contrato-actions";
+import { SuspensaoContratoComentarioDrawer } from "../sections/suspensao-contrato-comentario-drawer";
 import { AssinanteCard } from "./suspensao-contrato-assinante-card";
 import { ContratoCard } from "./suspensao-contrato-contrato-card";
+import { SuspensaoContratoContratoLinkCard } from "./suspensao-contrato-contrato-link-card";
 import { DadosClienteCard } from "./suspensao-contrato-dados-cliente-card";
 import { EnvioCard } from "./suspensao-contrato-envio-card";
 import { SuspensaoContratoSummaryCard } from "./suspensao-contrato-summary-card";
@@ -20,6 +23,8 @@ export function SuspensaoContratoDetalhesTab({
 	suspensaoContrato,
 	isLoading,
 }: SuspensaoContratoDetalhesTabProps) {
+	const updateMutation = useUpdateSuspensaoContrato();
+
 	if (isLoading) {
 		return (
 			<div className="flex flex-col gap-6">
@@ -54,19 +59,44 @@ export function SuspensaoContratoDetalhesTab({
 						</div>
 						<div className="space-y-6">
 							<EnvioCard suspensaoContrato={suspensaoContrato} />
+							<SuspensaoContratoContratoLinkCard
+								suspensaoContrato={suspensaoContrato}
+							/>
 						</div>
 					</div>
 
 					<SuspensaoContratoActions
 						status={Number(suspensaoContrato.f_status)}
-						onEnviar={() => console.log("TODO: mutation Enviar")}
-						onConcluir={() => console.log("TODO: mutation Concluir")}
-						onArquivar={() => console.log("TODO: mutation Arquivar")}
+						onEnviar={() =>
+							updateMutation.mutate({
+								id: suspensaoContrato.id,
+								data: { f_status: "1" },
+							})
+						}
+						onConcluir={() =>
+							updateMutation.mutate({
+								id: suspensaoContrato.id,
+								data: { f_status: "3" },
+							})
+						}
+						onArquivar={() =>
+							updateMutation.mutate({
+								id: suspensaoContrato.id,
+								data: { f_status: "4" },
+							})
+						}
+						isLoading={updateMutation.isPending}
 					/>
 
+					<div className="flex items-center justify-between">
+						<h3 className="text-sm font-medium">Comentários</h3>
+						<SuspensaoContratoComentarioDrawer
+							suspensaoId={suspensaoContrato.id}
+						/>
+					</div>
 					<CommentsList
 						comments={suspensaoContrato.f_comentarios}
-						title="Comentários"
+						title=""
 						description="Observações registradas"
 					/>
 				</TabsContent>

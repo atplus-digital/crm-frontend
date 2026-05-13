@@ -1,8 +1,11 @@
 import {
 	keepPreviousData,
 	queryOptions,
+	useMutation,
 	useQuery,
+	useQueryClient,
 } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { buildFilter, eq, gte, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
 import type {
@@ -86,5 +89,57 @@ export function useSuspensaoContratoById(id: number) {
 			return response as unknown as SuspensaoContratoWithRelations;
 		},
 		enabled: !Number.isNaN(id),
+	});
+}
+
+export function useUpdateSuspensaoContrato() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async ({
+			id,
+			data,
+		}: {
+			id: number;
+			data: Record<string, unknown>;
+		}) => {
+			return nocobaseRepository.update("t_suspensao_contrato", id, data);
+		},
+		onSuccess: (_data, variables) => {
+			toast.success("Atualizado com sucesso");
+			queryClient.invalidateQueries({
+				queryKey: ["suspensao-contrato", variables.id],
+			});
+			queryClient.invalidateQueries({ queryKey: ["suspensao-contrato"] });
+		},
+		onError: (error) => {
+			toast.error(
+				`Erro ao atualizar: ${error instanceof Error ? error.message : "desconhecido"}`,
+			);
+		},
+	});
+}
+
+export function useCreateSuspensaoComentario(suspensaoId: number) {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async (data: { f_comentario: string }) => {
+			return nocobaseRepository.create(
+				`t_suspensao_contrato/${suspensaoId}/f_comentarios` as any,
+				data,
+			);
+		},
+		onSuccess: () => {
+			toast.success("Comentário adicionado");
+			queryClient.invalidateQueries({
+				queryKey: ["suspensao-contrato", suspensaoId],
+			});
+		},
+		onError: (error) => {
+			toast.error(
+				`Erro ao adicionar comentário: ${error instanceof Error ? error.message : "desconhecido"}`,
+			);
+		},
 	});
 }

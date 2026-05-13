@@ -16,7 +16,7 @@ export function SuspensaoContratoSummaryCard({
 	return (
 		<SummaryCard
 			title={suspensaoContrato.f_titulo || "—"}
-			subtitle={`Suspensão de Contrato — ID Contrato ${suspensaoContrato.f_id_contrato}`}
+			subtitle={`SUSPENSÃO DE CONTRATO (ID ${suspensaoContrato.f_id_contrato}) — ${suspensaoContrato.f_titulo || "—"}`}
 			avatarName={suspensaoContrato.f_titulo || ""}
 			headerActions={
 				<div className="flex items-center gap-2 rounded-lg bg-background/80 px-3 py-1.5">
