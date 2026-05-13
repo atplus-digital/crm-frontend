@@ -5,7 +5,6 @@ import { SummaryCard } from "#/components/summary-card";
 import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { SUSPENSAOCONTRATO_STATUS_LABELS } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { formatDatePtBR } from "#/lib/utils";
-import { SuspensaoContratoActions } from "../sections/suspensao-contrato-actions";
 
 interface SuspensaoContratoSummaryCardProps {
 	suspensaoContrato: SuspensaoContratoWithRelations;
@@ -20,20 +19,17 @@ export function SuspensaoContratoSummaryCard({
 			subtitle={`Suspensão de Contrato — ID Contrato ${suspensaoContrato.f_id_contrato}`}
 			avatarName={suspensaoContrato.f_titulo || ""}
 			headerActions={
-				<>
-					<div className="flex items-center gap-2 rounded-lg bg-background/80 px-3 py-1.5">
-						<span className="text-xs font-medium text-muted-foreground">
-							Status
-						</span>
-						<SharedStatusBadge
-							value={suspensaoContrato.f_status}
-							labels={SUSPENSAOCONTRATO_STATUS_LABELS}
-							variant="inline"
-							defaultVariant="secondary"
-						/>
-					</div>
-					<SuspensaoContratoActions />
-				</>
+				<div className="flex items-center gap-2 rounded-lg bg-background/80 px-3 py-1.5">
+					<span className="text-xs font-medium text-muted-foreground">
+						Status
+					</span>
+					<SharedStatusBadge
+						value={suspensaoContrato.f_status}
+						labels={SUSPENSAOCONTRATO_STATUS_LABELS}
+						variant="inline"
+						defaultVariant="secondary"
+					/>
+				</div>
 			}
 		>
 			<div className="grid grid-cols-2 gap-4 sm:grid-cols-4">

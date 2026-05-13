@@ -57,7 +57,12 @@ export function SuspensaoContratoDetalhesTab({
 						</div>
 					</div>
 
-					<SuspensaoContratoActions />
+					<SuspensaoContratoActions
+						status={Number(suspensaoContrato.f_status)}
+						onEnviar={() => console.log("TODO: mutation Enviar")}
+						onConcluir={() => console.log("TODO: mutation Concluir")}
+						onArquivar={() => console.log("TODO: mutation Arquivar")}
+					/>
 
 					<CommentsList
 						comments={suspensaoContrato.f_comentarios}

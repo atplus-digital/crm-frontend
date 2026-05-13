@@ -1,13 +1,85 @@
 import { CheckCircle, FileSignature, Trash2 } from "lucide-react";
-import type { ActionItem } from "#/components/actions-menu";
-import { ActionsMenu } from "#/components/actions-menu";
+import { useState } from "react";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "#/components/ui/alert-dialog";
+import { Button } from "#/components/ui/button";
 
-const SUSPENSAO_ACTIONS: readonly ActionItem[] = [
-	{ icon: FileSignature, label: "Enviar para Assinatura", disabled: true },
-	{ icon: CheckCircle, label: "Concluir", disabled: true },
-	{ icon: Trash2, label: "Arquivar", disabled: true, variant: "destructive" },
-];
+interface SuspensaoContratoActionsProps {
+	status: number;
+	onEnviar: () => void;
+	onConcluir: () => void;
+	onArquivar: () => void;
+	isLoading?: boolean;
+}
 
-export function SuspensaoContratoActions() {
-	return <ActionsMenu actions={SUSPENSAO_ACTIONS} triggerLabel="Ações" />;
+export function SuspensaoContratoActions({
+	status,
+	onEnviar,
+	onConcluir,
+	onArquivar,
+	isLoading = false,
+}: SuspensaoContratoActionsProps) {
+	const [arquivarOpen, setArquivarOpen] = useState(false);
+	const statusNum = Number(status);
+
+	return (
+		<div className="flex flex-wrap gap-2">
+			<Button
+				variant="default"
+				size="sm"
+				disabled={statusNum !== 0 || isLoading}
+				onClick={onEnviar}
+			>
+				<FileSignature className="size-4 mr-2" />
+				Enviar para Assinatura
+			</Button>
+			<Button
+				variant="default"
+				size="sm"
+				disabled={statusNum !== 2 || isLoading}
+				onClick={onConcluir}
+			>
+				<CheckCircle className="size-4 mr-2" />
+				Concluir
+			</Button>
+			<Button
+				variant="destructive"
+				size="sm"
+				disabled={statusNum === 4 || isLoading}
+				onClick={() => setArquivarOpen(true)}
+			>
+				<Trash2 className="size-4 mr-2" />
+				Arquivar
+			</Button>
+			<AlertDialog open={arquivarOpen} onOpenChange={setArquivarOpen}>
+				<AlertDialogContent>
+					<AlertDialogHeader>
+						<AlertDialogTitle>Arquivar</AlertDialogTitle>
+						<AlertDialogDescription>
+							Tem certeza que deseja arquivar essa Suspensão de Contrato?
+						</AlertDialogDescription>
+					</AlertDialogHeader>
+					<AlertDialogFooter>
+						<AlertDialogCancel>Cancelar</AlertDialogCancel>
+						<AlertDialogAction
+							onClick={() => {
+								onArquivar();
+								setArquivarOpen(false);
+							}}
+						>
+							Confirmar
+						</AlertDialogAction>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
+		</div>
+	);
 }
