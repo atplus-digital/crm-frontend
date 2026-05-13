@@ -1,6 +1,7 @@
 import { Users } from "lucide-react";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
+import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 
 interface RelationshipsSectionProps {
 	trocaTitularidade: CrmTrocaTitularidadeWithRelations;
@@ -29,5 +30,3 @@ export function RelationshipsSection({
 		</DetailSection>
 	);
 }
-
-import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";

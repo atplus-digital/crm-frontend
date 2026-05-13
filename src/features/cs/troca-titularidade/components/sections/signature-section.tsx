@@ -1,6 +1,7 @@
 import { Link2 } from "lucide-react";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
+import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 
 interface SignatureSectionProps {
 	trocaTitularidade: CrmTrocaTitularidadeWithRelations;
@@ -48,5 +49,3 @@ export function SignatureSection({
 		</DetailSection>
 	);
 }
-
-import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";

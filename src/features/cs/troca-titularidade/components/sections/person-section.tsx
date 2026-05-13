@@ -1,6 +1,7 @@
 import { User } from "lucide-react";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
+import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import { formatPhone } from "#/lib/utils";
 
 interface PersonSectionProps {
@@ -53,5 +54,3 @@ export function PersonSection({
 		</DetailSection>
 	);
 }
-
-import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";

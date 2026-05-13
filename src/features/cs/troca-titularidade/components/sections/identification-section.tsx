@@ -2,6 +2,7 @@ import { FileText } from "lucide-react";
 import { StatusBadge as SharedStatusBadge } from "#/components/badges/status-badge";
 import { DetailField } from "#/features/cs/components/detail-field";
 import { DetailSection } from "#/features/cs/components/detail-section";
+import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import {
 	CRMTROCATITULARIDADE_STATUS_LABELS,
 	CRMTROCATITULARIDADE_SUBSTATUS_LABELS,
@@ -52,5 +53,3 @@ export function IdentificationSection({
 		</DetailSection>
 	);
 }
-
-import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";

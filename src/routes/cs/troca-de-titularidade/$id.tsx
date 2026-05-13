@@ -1,5 +1,5 @@
 import { requireAuth } from "#/features/auth";
-import { TrocaTitularidadeDetailPage } from "#/features/cs/troca-titularidade/components/troca-titularidade-details";
+import { TrocaTitularidadeDetailPage } from "#/pages/cs/troca-de-titularidade/troca-de-titularidade-detail";
 
 export async function loader({ request }: { request: Request }) {
 	requireAuth(new URL(request.url).pathname);

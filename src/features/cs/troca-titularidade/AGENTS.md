@@ -14,16 +14,14 @@ Ownership transfer feature — manages contract titularidade change requests bet
 
 ## Key Files
 
-| File                                        | Purpose                                                                                                 |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `index.ts`                                  | Barrel export for hooks and components                                                                  |
-| `troca-titularidade-types.ts`               | Filter options, badge variants, `TrocaTitularidadeFilters`                                              |
-| `troca-titularidade-hooks.ts`               | React Query hooks + `buildTrocaTitularidadeFilter()`                                                    |
-| `troca-titularidade-filters.tsx`            | `TrocaTitularidadeFilterBar` — 8-field filter UI                                                        |
-| `detail-section.tsx`                        | Local card wrapper for the transfer detail sections                                                     |
-| `components/troca-titularidade-list.tsx`    | Paginated list with sorting                                                                             |
-| `components/troca-titularidade-details.tsx` | Detail page with sectioned layout                                                                       |
-| `components/sections/`                      | Detail page sections (identification, person, address, signature, relationships, attachments, comments) |
+| File                                     | Purpose                                                                                                 |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `index.ts`                               | Barrel export for hooks and components                                                                  |
+| `troca-titularidade-types.ts`            | Filter options, badge variants, `TrocaTitularidadeFilters`                                              |
+| `troca-titularidade-hooks.ts`            | React Query hooks + `buildTrocaTitularidadeFilter()`                                                    |
+| `troca-titularidade-filters.tsx`         | `TrocaTitularidadeFilterBar` — 8-field filter UI                                                        |
+| `components/troca-titularidade-list.tsx` | Paginated list with sorting                                                                             |
+| `components/sections/`                   | Detail page sections (identification, person, address, signature, relationships, attachments, comments) |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -88,6 +86,7 @@ Ownership transfer feature — manages contract titularidade change requests bet
 - List page uses `DataTableContainer` with `TrocaTitularidadeFilterBar` for 8-field filtering (status, substatus, estado selects + cidade, contrato, cedente, cessionário text + date).
 - Hook `buildTrocaTitularidadeFilter()` maps typed filters to NocoBase `$eq`/`$includes`/`$gte` via `filter-builder` helpers.
 - Detail page renders sections in order: Identificação, Cedente, Cessionário, Endereço, Assinaturas, Relacionamentos, Anexos, Comentários.
+- Detail page lives in `src/pages/cs/troca-de-titularidade/` using `PageLayout` + `BackButton` prefix (same pattern as `contratos` detail).
 - ZapSign links render as external `<a>` tags (off-site URLs — correct usage).
 - All repository calls use `nocobaseRepository` with generated types from `#/generated/nocobase/crm-troca-titularidade`.
 
@@ -97,12 +96,12 @@ Ownership transfer feature — manages contract titularidade change requests bet
 
 ## Golden Samples
 
-| Pattern                    | Reference file                              |
-| -------------------------- | ------------------------------------------- |
-| Filter options from labels | `troca-titularidade-types.ts`               |
-| Filter bar UI              | `troca-titularidade-filters.tsx`            |
-| Filter builder in hooks    | `troca-titularidade-hooks.ts`               |
-| Detail sectioned layout    | `components/troca-titularidade-details.tsx` |
+| Pattern                    | Reference file                   |
+| -------------------------- | -------------------------------- |
+| Filter options from labels | `troca-titularidade-types.ts`    |
+| Filter bar UI              | `troca-titularidade-filters.tsx` |
+| Filter builder in hooks    | `troca-titularidade-hooks.ts`    |
+| Detail sectioned layout    | `components/sections/`           |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
 
