@@ -112,7 +112,7 @@ export function useCreateTrocaTitularidade() {
 
 export function useTrocaTitularidadeById(id: number) {
 	return useQuery<CrmTrocaTitularidadeWithRelations>({
-		queryKey: ["troca-titularidade", id],
+		queryKey: ["troca-titularidade", id] as const,
 		queryFn: async () => {
 			const response = await nocobaseRepository.get(
 				"t_crm_troca_titularidade",
@@ -132,6 +132,7 @@ export function useTrocaTitularidadeById(id: number) {
 			);
 			return response as CrmTrocaTitularidadeWithRelations;
 		},
-		enabled: !Number.isNaN(id),
+		enabled: Number.isFinite(id) && id > 0,
+		staleTime: 5_000,
 	});
 }
