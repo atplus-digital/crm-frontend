@@ -5,3 +5,5 @@ export { IdentificationSection } from "./identification-section";
 export { PersonSection } from "./person-section";
 export { RelationshipsSection } from "./relationships-section";
 export { SignatureSection } from "./signature-section";
+export { TransferenciaTitularidadeDetailSkeleton } from "./transferencia-titularidade-detail-skeleton";
+export { TransferenciaTitularidadeSummaryCard } from "./transferencia-titularidade-summary-card";

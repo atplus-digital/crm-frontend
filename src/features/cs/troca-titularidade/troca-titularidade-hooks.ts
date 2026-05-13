@@ -94,7 +94,7 @@ export function useCreateTrocaTitularidade() {
 
 	return useMutation({
 		mutationFn: (data: CreateTrocaTitularidadeInput) => {
-			console.log("Creating troca de titularidade with data:", data);
+			console.log("Criando transferência de titularidade com dados:", data);
 			return createTrocaTitularidade(data);
 		},
 		onSuccess: () => {

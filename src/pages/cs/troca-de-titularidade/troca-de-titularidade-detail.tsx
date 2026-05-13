@@ -2,8 +2,6 @@ import { useParams } from "react-router";
 import { BackButton } from "#/components/back-button";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/layouts/page-layout";
-import { Skeleton } from "#/components/ui/skeleton";
-import { CardSectionSkeleton } from "#/features/cs/components/detail-skeleton";
 import {
 	AddressSection,
 	AttachmentsSection,
@@ -12,6 +10,8 @@ import {
 	PersonSection,
 	RelationshipsSection,
 	SignatureSection,
+	TransferenciaTitularidadeDetailSkeleton,
+	TransferenciaTitularidadeSummaryCard,
 } from "#/features/cs/troca-titularidade/components/sections";
 import { useTrocaTitularidadeById } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import { getErrorMessage } from "#/lib/api-errors";
@@ -19,20 +19,16 @@ import { routePaths } from "#/routes/route-paths";
 
 export function TrocaTitularidadeDetailPage() {
 	const { id } = useParams<{ id: string }>();
-	const trocaTitularidadeId = Number(id);
+	const transferenciaId = Number(id);
 
 	const {
-		data: trocaTitularidade,
+		data: transferencia,
 		isLoading,
 		error,
-	} = useTrocaTitularidadeById(trocaTitularidadeId);
+	} = useTrocaTitularidadeById(transferenciaId);
 
-	const title = trocaTitularidade
-		? `Transferência de Titularidade #${trocaTitularidade.id}`
-		: undefined;
-
-	const subtitle = trocaTitularidade?.f_cedente
-		? `De: ${trocaTitularidade.f_cedente} → Para: ${trocaTitularidade.f_cessionario}`
+	const title = transferencia
+		? `Transferência de Titularidade #${transferencia.id}`
 		: undefined;
 
 	if (error) {
@@ -50,7 +46,7 @@ export function TrocaTitularidadeDetailPage() {
 		);
 	}
 
-	if (!isLoading && !trocaTitularidade) {
+	if (!isLoading && !transferencia) {
 		return (
 			<PageLayout
 				title="Transferência de Titularidade"
@@ -67,40 +63,47 @@ export function TrocaTitularidadeDetailPage() {
 
 	return (
 		<PageLayout
-			title={title ?? <Skeleton className="h-7 w-64" />}
-			subtitle={
-				subtitle ?? (isLoading ? <Skeleton className="h-4 w-96" /> : undefined)
-			}
+			title={title ?? "Transferência de Titularidade"}
 			prefixElement={
 				<BackButton fallbackTo={routePaths.cs_troca_de_titularidade} />
 			}
 		>
 			{isLoading ? (
+				<TransferenciaTitularidadeDetailSkeleton />
+			) : transferencia ? (
 				<div className="flex flex-col gap-6">
-					<CardSectionSkeleton />
-					<CardSectionSkeleton />
-					<CardSectionSkeleton />
-					<CardSectionSkeleton />
-					<CardSectionSkeleton />
-					<CardSectionSkeleton />
-					<CardSectionSkeleton />
-				</div>
-			) : trocaTitularidade ? (
-				<div className="flex flex-col gap-6">
-					<IdentificationSection trocaTitularidade={trocaTitularidade} />
-					<PersonSection
-						trocaTitularidade={trocaTitularidade}
-						variant="cedente"
-					/>
-					<PersonSection
-						trocaTitularidade={trocaTitularidade}
-						variant="cessionario"
-					/>
-					<AddressSection trocaTitularidade={trocaTitularidade} />
-					<SignatureSection trocaTitularidade={trocaTitularidade} />
-					<RelationshipsSection trocaTitularidade={trocaTitularidade} />
-					<AttachmentsSection trocaTitularidade={trocaTitularidade} />
-					<CommentsSection trocaTitularidade={trocaTitularidade} />
+					{/* Hero summary with quick info */}
+					<TransferenciaTitularidadeSummaryCard transferencia={transferencia} />
+
+					{/* Identification section - full width */}
+					<IdentificationSection trocaTitularidade={transferencia} />
+
+					{/* Two-column layout: Cedente + Cessionário */}
+					<div className="grid gap-6 lg:grid-cols-2">
+						<PersonSection
+							trocaTitularidade={transferencia}
+							variant="cedente"
+						/>
+						<PersonSection
+							trocaTitularidade={transferencia}
+							variant="cessionario"
+						/>
+					</div>
+
+					{/* Address section - full width */}
+					<AddressSection trocaTitularidade={transferencia} />
+
+					{/* Signature links */}
+					<SignatureSection trocaTitularidade={transferencia} />
+
+					{/* Relationships */}
+					<RelationshipsSection trocaTitularidade={transferencia} />
+
+					{/* Two-column: Attachments + Comments */}
+					<div className="grid gap-6 lg:grid-cols-2">
+						<AttachmentsSection trocaTitularidade={transferencia} />
+						<CommentsSection trocaTitularidade={transferencia} />
+					</div>
 				</div>
 			) : null}
 		</PageLayout>

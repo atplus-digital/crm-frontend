@@ -34,7 +34,7 @@ export function TrocaTitularidadePage() {
 	return (
 		<PageLayout
 			title="Transferência de Titularidade"
-			subtitle="Solicitações de troca de titularidade"
+			subtitle="Solicitações de transferência de titularidade"
 		>
 			<TrocaTitularidadeFilterBar
 				filters={filters}
