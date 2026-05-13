@@ -61,6 +61,7 @@ export function ContratoDetalhesTab({
 					<InformacoesAdicionaisCard
 						data={dadosAdicionais}
 						isLoading={isLoadingDadosAdicionais}
+						contratoId={contrato.id}
 					/>
 				</div>
 			</div>
