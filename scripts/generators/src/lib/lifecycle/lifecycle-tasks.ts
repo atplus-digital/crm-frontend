@@ -2,8 +2,8 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import {
 	backupDir,
+	cleanupTempSessionDir,
 	computeDiff,
-	removeDir,
 	runValidation,
 	swapTempToOutput,
 } from "@generators/lib/io/atomic-writer";
@@ -70,7 +70,7 @@ export async function validateGeneratedOutput(
 
 		const isValid = await runValidation(tempOutputDir);
 		if (!isValid) {
-			removeDir(params.tempDir);
+			cleanupTempSessionDir(params.tempDir);
 			throw new Error(
 				`Validação falhou para ${outputDir}. Alterações descartadas.`,
 			);
@@ -119,7 +119,7 @@ export async function handleNoChanges(
 	ctx: LifecycleCtx,
 	params: LifecycleTaskParams<unknown, unknown>,
 ): Promise<void> {
-	removeDir(params.tempDir);
+	cleanupTempSessionDir(params.tempDir);
 
 	params.onReportReady?.({
 		label: params.label,
@@ -174,7 +174,7 @@ export async function swapTempToOutputDirs(
 		swapTempToOutput(tempOutputDir, resolvedOutputDir);
 	}
 
-	removeDir(params.tempDir);
+	cleanupTempSessionDir(params.tempDir);
 }
 
 /** Task 7 — Render reports + summary */

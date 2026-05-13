@@ -57,10 +57,6 @@ export function runStandardPipeline<TRuntimeConfig, TPipelineContext>(
 		pipelineContext: options.pipelineContext,
 	};
 
-	// Ensure temp dir exists
-	fs.mkdirSync(tempDir, { recursive: true });
-
-	// Run all lifecycle phases as Listr2 subtasks for proper rendering
 	const taskParams: LifecycleTaskParams<TRuntimeConfig, TPipelineContext> = {
 		tempDir,
 		outputDirs,
@@ -90,6 +86,9 @@ export function runStandardPipeline<TRuntimeConfig, TPipelineContext>(
 			},
 		) as ReturnType<TaskRunner["newListr"]>;
 	}
+
+	// Ensure temp dir exists only for pipelines that emit staged output.
+	fs.mkdirSync(tempDir, { recursive: true });
 
 	return options.task.newListr(
 		[

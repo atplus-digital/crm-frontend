@@ -94,6 +94,24 @@ export function removeDir(dir: string): void {
 	}
 }
 
+export function cleanupTempSessionDir(tempDir: string): void {
+	removeDir(tempDir);
+
+	const tempRootDir = path.dirname(tempDir);
+	if (path.basename(tempRootDir) !== ".temp") {
+		return;
+	}
+
+	if (!fs.existsSync(tempRootDir)) {
+		return;
+	}
+
+	const tempRootEntries = fs.readdirSync(tempRootDir);
+	if (tempRootEntries.length === 0) {
+		removeDir(tempRootDir);
+	}
+}
+
 export async function runValidation(
 	targetDir: string,
 	options?: ValidationOptions,
