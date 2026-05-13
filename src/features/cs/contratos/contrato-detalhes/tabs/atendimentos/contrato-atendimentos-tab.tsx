@@ -1,6 +1,10 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
+import { useState } from "react";
 import { BasicTableCard } from "#/components/basic-table-card";
+import { FilterActions } from "#/components/filters/filter-actions";
+import { FilterInputField } from "#/components/filters/filter-input-field";
+import { FilterSelectField } from "#/components/filters/filter-select-field";
 import { TabContentCard } from "#/components/layouts/tab-content-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
@@ -101,7 +105,23 @@ interface ContratoAtendimentosTabProps {
 export function ContratoAtendimentosTab({
 	contratoId,
 }: ContratoAtendimentosTabProps) {
-	const { data, isLoading, error } = useContratoAtendimentos(contratoId);
+	const [assunto, setAssunto] = useState("");
+	const [status, setStatus] = useState<string | undefined>("");
+	const [appliedAssunto, setAppliedAssunto] = useState("");
+	const [appliedStatus, setAppliedStatus] = useState("");
+
+	const filters =
+		appliedAssunto || appliedStatus
+			? {
+					assunto: appliedAssunto || undefined,
+					status: appliedStatus || undefined,
+				}
+			: undefined;
+
+	const { data, isLoading, error } = useContratoAtendimentos(
+		contratoId,
+		filters,
+	);
 	const atendimentos = data?.data ?? [];
 
 	const statusCounts = atendimentos.reduce<
@@ -128,6 +148,38 @@ export function ContratoAtendimentosTab({
 
 	return (
 		<div className="flex flex-col gap-4">
+			<div className="flex flex-wrap items-end gap-4">
+				<FilterInputField
+					id="atendimento-assunto"
+					label="Assunto"
+					value={assunto}
+					onChange={setAssunto}
+					placeholder="Buscar por assunto..."
+				/>
+				<FilterSelectField
+					id="atendimento-status"
+					label="Status"
+					value={status ?? "all"}
+					onChange={(v) => setStatus(v ?? "all")}
+					options={Object.entries(SUTICKET_SUSTATUS_LABELS).map(([v, l]) => ({
+						value: v,
+						label: l,
+					}))}
+					placeholder="Todos"
+				/>
+				<FilterActions
+					onApply={() => {
+						setAppliedAssunto(assunto);
+						setAppliedStatus(status ?? "");
+					}}
+					onClear={() => {
+						setAssunto("");
+						setStatus("all");
+						setAppliedAssunto("");
+						setAppliedStatus("");
+					}}
+				/>
+			</div>
 			{!isLoading && !error && atendimentos.length > 0 && (
 				<div className="flex flex-wrap gap-4">
 					{Object.entries(statusCounts).map(([status, info]) => (

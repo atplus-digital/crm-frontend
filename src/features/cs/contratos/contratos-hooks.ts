@@ -87,15 +87,21 @@ export function useContratoTrocasTitularidade(id: number) {
 	return useQuery(contratoTrocasTitularidadeQueryOptions(id));
 }
 
-const contratoAtendimentosQueryOptions = (id: number) =>
+const contratoAtendimentosQueryOptions = (
+	id: number,
+	filters?: { assunto?: string; status?: string },
+) =>
 	queryOptions({
-		queryKey: ["cs", "contratos", "atendimentos", id] as const,
-		queryFn: () => fetchContratoAtendimentos(id),
+		queryKey: ["cs", "contratos", "atendimentos", id, filters] as const,
+		queryFn: () => fetchContratoAtendimentos(id, filters),
 		staleTime: 10_000,
 	});
 
-export function useContratoAtendimentos(id: number) {
-	return useQuery(contratoAtendimentosQueryOptions(id));
+export function useContratoAtendimentos(
+	id: number,
+	filters?: { assunto?: string; status?: string },
+) {
+	return useQuery(contratoAtendimentosQueryOptions(id, filters));
 }
 
 const contratoRegistrosQueryOptions = (id: number) =>

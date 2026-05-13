@@ -6,7 +6,7 @@ import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-
 import type { DadosAdicionaisClienteContrato } from "#/generated/types/nocobase/other/dados-adicionais-cliente-contrato";
 import type { RegistrosDeContato } from "#/generated/types/nocobase/registros-de-contato";
 import { getErrorMessage } from "#/lib/api-errors";
-import { buildFilter, eq, inFilter, or } from "#/lib/filter-builder";
+import { buildFilter, eq, includes, inFilter, or } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { ixcRepository, nocobaseRepository } from "#/repositories";
 import type { PaginatedResponse } from "#/repositories/types";
@@ -188,12 +188,23 @@ export async function fetchContratoTrocasTitularidade(
 
 export async function fetchContratoAtendimentos(
 	idContrato: number,
+	filters?: { assunto?: string; status?: string },
 ): Promise<PaginatedResponse<SuTicket>> {
 	try {
+		const conditions: Record<string, unknown>[] = [
+			eq("id_contrato", idContrato),
+		];
+		if (filters?.assunto) {
+			conditions.push(includes("titulo", filters.assunto));
+		}
+		if (filters?.status) {
+			conditions.push(eq("status", filters.status));
+		}
+
 		return ixcRepository.list<SuTicket>("su_ticket", {
 			page: 1,
 			pageSize: 50,
-			filter: eq("id_contrato", idContrato),
+			filter: conditions.length === 1 ? conditions[0] : { $and: conditions },
 		});
 	} catch (error) {
 		const message = getErrorMessage(error, "Erro desconhecido");
