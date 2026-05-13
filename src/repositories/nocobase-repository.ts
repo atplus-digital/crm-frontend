@@ -89,7 +89,7 @@ class TypedNocoBaseClient {
 		const response = await this.client.request<{ data: CollectionMap[T] }>({
 			url: `${collection}:get`,
 			method: "POST",
-			data: {
+			params: {
 				filterByTk: id,
 				...(options?.appends && { appends: options.appends }),
 				...(options?.fields && { fields: options.fields }),
