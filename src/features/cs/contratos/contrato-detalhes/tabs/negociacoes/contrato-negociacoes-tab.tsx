@@ -1,7 +1,12 @@
+import type { ColumnDef } from "@tanstack/react-table";
+import { StatusBadge } from "#/components/badges/status-badge";
 import { TabContentCard } from "#/components/layouts/tab-content-card";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import { useContratoTrocasTitularidade } from "#/features/cs/contratos/contratos-hooks";
 import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
+import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
+import { NEGOCIACAO_STATUS_LABELS } from "#/features/cs/negociacoes/negociacoes-types";
+import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 import {
 	TROCAS_TITULARIDADE_COLUMNS,
 	trocasTitularidadeTableColumns,
@@ -10,6 +15,34 @@ import {
 	RENOVACOES_COLUMNS,
 	renovacoesTableColumns,
 } from "./contrato-negociacoes-columns.tsx";
+
+const CONTRATOS_TABLE_COLUMNS: ColumnDef<NegociacaoWithRelations>[] = [
+	{ accessorKey: "id", header: "ID" },
+	{
+		accessorKey: "f_titulo",
+		header: "Título",
+	},
+	{
+		accessorKey: "f_valor_mensal",
+		header: "Valor Mensal",
+		cell: ({ getValue }) => formatCurrency(getValue<number>()),
+	},
+	{
+		accessorKey: "f_status",
+		header: "Status",
+		cell: ({ getValue }) => (
+			<StatusBadge
+				value={String(getValue<number>())}
+				labels={NEGOCIACAO_STATUS_LABELS}
+			/>
+		),
+	},
+	{
+		accessorKey: "createdAt",
+		header: "Criado em",
+		cell: ({ getValue }) => formatDatePtBR(getValue<string>()),
+	},
+];
 
 interface ContratoNegociacoesTabProps {
 	contratoId: number;
@@ -46,6 +79,11 @@ export function ContratoNegociacoesTab({
 		data: negociacoes,
 	});
 
+	const contratosTable = useDataTable({
+		columns: CONTRATOS_TABLE_COLUMNS,
+		data: negociacoes,
+	});
+
 	return (
 		<div className="flex flex-col gap-6">
 			<TabContentCard
@@ -74,6 +112,19 @@ export function ContratoNegociacoesTab({
 				count={negociacoes.length}
 			>
 				<DataTable table={negociacoesTable} />
+			</TabContentCard>
+
+			<TabContentCard
+				title="Contratos"
+				description="Negociações/contratos vinculados"
+				isLoading={isLoadingNegociacoes}
+				error={errorNegociacoes}
+				errorMessage="Erro ao carregar contratos vinculados"
+				isEmpty={negociacoes.length === 0}
+				emptyMessage="Nenhum contrato vinculado encontrado"
+				count={negociacoes.length}
+			>
+				<DataTable table={contratosTable} />
 			</TabContentCard>
 		</div>
 	);
