@@ -1,17 +1,11 @@
 import { DetailSkeleton } from "#/components/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
-import { AssinaturaDigitalCard } from "./assinatura-digital-card";
-import { ContatoCard } from "./contato-card";
-import { CupomVendedorCard } from "./cupom-vendedor-card";
 import { DadosClienteCard } from "./dados-cliente-card";
-import { EnderecoCobrancaCard } from "./endereco-cobranca-card";
-import { EnderecoInstalacaoCard } from "./endereco-instalacao-card";
+import { NegociacaoEditForm } from "./negociacao-edit-form";
+import { NegociacaoSituacaoSidebar } from "./negociacao-situacao-sidebar";
 import { NegociacaoSummaryCard } from "./negociacao-summary-card";
-import { PacoteServicosCard } from "./pacote-servicos-card";
-import { PontosAtencaoCard } from "./pontos-atencao-card";
-import { SistemaCard } from "./sistema-card";
-import { ValoresFinanceirosCard } from "./valores-financeiros-card";
 
 interface NegociacaoDetalhesTabProps {
 	negociacao: NegociacaoWithRelations | undefined;
@@ -34,23 +28,22 @@ export function NegociacaoDetalhesTab({
 		<div className="flex flex-col gap-6">
 			<NegociacaoSummaryCard negociacao={negociacao} />
 
-			<div className="grid gap-6 lg:grid-cols-2">
+			<div className="flex flex-col lg:grid lg:grid-cols-[64%_36%] gap-6">
 				<div className="space-y-6">
 					<DadosClienteCard negociacao={negociacao} />
-					<ContatoCard negociacao={negociacao} />
-					<PacoteServicosCard negociacao={negociacao} />
-				</div>
-				<div className="space-y-6">
-					<EnderecoInstalacaoCard negociacao={negociacao} />
-					<EnderecoCobrancaCard negociacao={negociacao} />
-					<ValoresFinanceirosCard negociacao={negociacao} />
-				</div>
-			</div>
 
-			<CupomVendedorCard negociacao={negociacao} />
-			<PontosAtencaoCard negociacao={negociacao} />
-			<AssinaturaDigitalCard negociacao={negociacao} />
-			<SistemaCard negociacao={negociacao} />
+					<Card>
+						<CardHeader>
+							<CardTitle>Atualize os dados abaixo</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<NegociacaoEditForm negociacao={negociacao} />
+						</CardContent>
+					</Card>
+				</div>
+
+				<NegociacaoSituacaoSidebar negociacao={negociacao} />
+			</div>
 		</div>
 	);
 }
