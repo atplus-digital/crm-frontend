@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-12 -->
 
 # AGENTS.md — suspensao-de-contrato
 
@@ -14,16 +14,17 @@ Contract suspension feature — manages suspension requests with ZapSign digital
 
 ## Key Files
 
-| File                                           | Purpose                                                                                  |
-| ---------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `suspensao-de-contrato-types.ts`               | Status labels (local override), filter options, badge variants, filter/params interfaces |
-| `suspensao-de-contrato-hooks.ts`               | React Query hooks for list/detail via `nocobaseRepository`                               |
-| `suspensao-de-contrato-filters.tsx`            | Filter bar component (Status, Título, dates, Criado por)                                 |
-| `detail-section.tsx`                           | Card wrapper for detail page sections                                                    |
-| `components/suspensao-de-contrato-list.tsx`    | DataTableContainer with 8 columns                                                        |
-| `components/suspensao-de-contrato-details.tsx` | Detail page with 2 tabs (Detalhes + Contrato)                                            |
-| `components/sections/`                         | Detail page sections (tabs, actions)                                                     |
-| `index.ts`                                     | Barrel export for hooks and components                                                   |
+| File                                                 | Purpose                                                                                  |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `suspensao-de-contrato-types.ts`                     | Status labels (local override), filter options, badge variants, filter/params interfaces |
+| `suspensao-de-contrato-hooks.ts`                     | React Query hooks for list/detail via `nocobaseRepository`                               |
+| `suspensao-de-contrato-filters.tsx`                  | Filter bar component (Status, Título, dates, Criado por)                                 |
+| `detail-section.tsx`                                 | Card wrapper for detail page sections                                                    |
+| `components/suspensao-de-contrato-list.tsx`          | DataTableContainer with 8 columns                                                        |
+| `components/suspensao-de-contrato-details.tsx`       | Detail page (query/error handling + delegates to tab component)                          |
+| `components/suspensao-contrato-detalhes-tab/`        | Detail tab decomposed into card components (summary, dados cliente, envio, suspensão)    |
+| `components/sections/suspensao-contrato-actions.tsx` | Action buttons (disabled UI-only)                                                        |
+| `index.ts`                                           | Barrel export for hooks and components                                                   |
 
 <!-- AGENTS-GENERATED:END filemap -->
 
@@ -72,7 +73,8 @@ Contract suspension feature — manages suspension requests with ZapSign digital
 
 - Hooks call `nocobaseRepository` directly (no service file) — same as `troca-titularidade`.
 - Status labels use `SUSPENSAOCONTRATO_STATUS_LABELS` from generated (`src/generated/types/nocobase/suspensao-contrato`), re-exported via `suspensao-de-contrato-types.ts`.
-- Detail page uses Tabs component with two tabs: "Detalhes Suspensão" and "Contrato".
+- Detail page delegates query/error/loading to `SuspensaoContratoDetalhesTab` orchestrator, which handles all states and composes SummaryCard + Tabs with card components.
+- Two tabs: "Detalhes Suspensão" (DadosClienteCard, EnvioCard, SuspensaoCard) and "Contrato" (AssinanteCard, ContratoCard).
 - Action buttons (Enviar, Concluir, Arquivar) are disabled UI-only — mutation logic is out of scope.
 
 <!-- AGENTS-GENERATED:END patterns -->
@@ -81,10 +83,12 @@ Contract suspension feature — manages suspension requests with ZapSign digital
 
 ## Golden Samples
 
-| Pattern                      | Reference file                                                                       |
-| ---------------------------- | ------------------------------------------------------------------------------------ |
-| Hook with untyped collection | `src/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks.ts`               |
-| Detail page with tabs        | `src/features/cs/suspensao-de-contrato/components/suspensao-de-contrato-details.tsx` |
+| Pattern                      | Reference file                                                                                                         |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Hook with untyped collection | `src/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks.ts`                                                 |
+| Detail page (refactored)     | `src/features/cs/suspensao-de-contrato/components/suspensao-de-contrato-details.tsx`                                   |
+| Summary card pattern         | `src/features/cs/suspensao-de-contrato/components/suspensao-contrato-detalhes-tab/suspensao-contrato-summary-card.tsx` |
+| Tab orchestrator pattern     | `src/features/cs/suspensao-de-contrato/components/suspensao-contrato-detalhes-tab/suspensao-contrato-detalhes-tab.tsx` |
 
 <!-- AGENTS-GENERATED:END golden-samples -->
 

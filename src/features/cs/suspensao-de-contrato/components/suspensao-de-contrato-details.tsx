@@ -1,12 +1,10 @@
 import { useParams } from "react-router";
 import { BackButton } from "#/components/back-button";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { Skeleton } from "#/components/ui/skeleton";
-import { CardSectionSkeleton } from "#/features/cs/components/detail-skeleton";
 import { useSuspensaoContratoById } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-hooks";
 import { getErrorMessage } from "#/lib/api-errors";
 import { routePaths } from "#/routes/route-paths";
-import { SuspensaoContratoTabs } from "./sections/suspensao-contrato-tabs";
+import { SuspensaoContratoDetalhesTab } from "./suspensao-contrato-detalhes-tab/suspensao-contrato-detalhes-tab";
 
 export function SuspensaoContratoDetailPage() {
 	const { id } = useParams<{ id: string }>();
@@ -33,36 +31,14 @@ export function SuspensaoContratoDetailPage() {
 	return (
 		<div className="flex-1 overflow-auto bg-background">
 			<div className="mx-auto max-w-400 p-4">
-				<div className="flex items-center gap-4 mb-6">
+				<div className="mb-6">
 					<BackButton fallbackTo={routePaths.cs_suspensao_de_contrato} />
-					<div>
-						{isLoading ? (
-							<>
-								<Skeleton className="h-7 w-64 mb-1" />
-								<Skeleton className="h-4 w-96" />
-							</>
-						) : (
-							<h1 className="text-2xl font-bold tracking-tight">
-								SUSPENSÃO DE CONTRATO (ID {suspensaoContrato?.f_id_contrato}) -{" "}
-								{suspensaoContrato?.f_titulo}
-							</h1>
-						)}
-					</div>
 				</div>
 
-				{isLoading ? (
-					<div className="flex flex-col gap-6">
-						<CardSectionSkeleton />
-						<CardSectionSkeleton />
-						<CardSectionSkeleton />
-					</div>
-				) : suspensaoContrato ? (
-					<SuspensaoContratoTabs suspensaoContrato={suspensaoContrato} />
-				) : (
-					<InlineErrorAlert>
-						Suspensão de contrato não encontrada
-					</InlineErrorAlert>
-				)}
+				<SuspensaoContratoDetalhesTab
+					suspensaoContrato={suspensaoContrato}
+					isLoading={isLoading}
+				/>
 			</div>
 		</div>
 	);
