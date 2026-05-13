@@ -16,6 +16,7 @@ import {
 import { updateNegociacao } from "#/features/cs/negociacoes/negociacoes-service";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { FIDELIDADE_LABELS } from "#/features/cs/negociacoes/negociacoes-types";
+import { CepLookupButton } from "./cep-lookup-button";
 
 const EDITABLE_STATUSES = [1, 2, 3, 4];
 
@@ -143,7 +144,26 @@ export function NegociacaoEditForm({ negociacao }: NegociacaoEditFormProps) {
 					Endereço
 				</h3>
 				<div className="grid grid-cols-2 gap-4">
-					{field("f_cep", "CEP", { required: false })}
+					<div>
+						<Label htmlFor="f_cep">CEP</Label>
+						<div className="flex gap-2">
+							<Input
+								id="f_cep"
+								disabled={disabled}
+								className="flex-1"
+								{...form.register("f_cep")}
+							/>
+							<CepLookupButton
+								cep={form.watch("f_cep") ?? ""}
+								onAddressFound={({ bairro, cidade, estado, endereco }) => {
+									form.setValue("f_bairro", bairro);
+									form.setValue("f_endereco_cidade", cidade);
+									form.setValue("f_endereco_estado", estado);
+									form.setValue("f_endereco", endereco);
+								}}
+							/>
+						</div>
+					</div>
 					{field("f_bairro", "Bairro")}
 					{field("f_endereco_cidade", "Cidade")}
 					{field("f_endereco_estado", "UF")}
