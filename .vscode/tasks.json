@@ -1,0 +1,65 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "pnpm install",
+      "type": "shell",
+      "command": "pnpm install",
+      "inAgents": true,
+      "runOptions": {
+        "runOn": "worktreeCreated"
+      },
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "pnpm dev",
+      "type": "shell",
+      "command": "pnpm dev",
+      "inAgents": true,
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "pnpm build",
+      "type": "shell",
+      "command": "pnpm build",
+      "inAgents": true,
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "pnpm test",
+      "type": "shell",
+      "command": "pnpm test",
+      "inAgents": true,
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "pnpm typecheck",
+      "type": "shell",
+      "command": "pnpm typecheck",
+      "inAgents": true,
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "pnpm biome:fix",
+      "type": "shell",
+      "command": "pnpm biome:fix",
+      "inAgents": true,
+      "presentation": {
+        "reveal": "silent"
+      }
+    }
+  ]
+}
