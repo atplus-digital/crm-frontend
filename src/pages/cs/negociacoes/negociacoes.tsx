@@ -46,10 +46,7 @@ export function NegociacoesPage() {
 	};
 
 	return (
-		<PageLayout
-			title="Renegociações"
-			subtitle="Gerencie suas negociações de renegociação"
-		>
+		<PageLayout title="Negociações" subtitle="Gerencie suas negociações">
 			<div className="space-y-4">
 				<ListaFilters filters={filters} onFilter={handleFilterChange} />
 				{error ? (

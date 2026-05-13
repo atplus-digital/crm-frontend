@@ -7,7 +7,7 @@ import { CupomVendedorCard } from "./cupom-vendedor-card";
 import { DadosClienteCard } from "./dados-cliente-card";
 import { EnderecoCobrancaCard } from "./endereco-cobranca-card";
 import { EnderecoInstalacaoCard } from "./endereco-instalacao-card";
-import { IdentificacaoCard } from "./identificacao-card";
+import { NegociacaoSummaryCard } from "./negociacao-summary-card";
 import { PacoteServicosCard } from "./pacote-servicos-card";
 import { PontosAtencaoCard } from "./pontos-atencao-card";
 import { SistemaCard } from "./sistema-card";
@@ -32,13 +32,21 @@ export function NegociacaoDetalhesTab({
 
 	return (
 		<div className="flex flex-col gap-6">
-			<IdentificacaoCard negociacao={negociacao} />
-			<DadosClienteCard negociacao={negociacao} />
-			<ContatoCard negociacao={negociacao} />
-			<EnderecoInstalacaoCard negociacao={negociacao} />
-			<EnderecoCobrancaCard negociacao={negociacao} />
-			<ValoresFinanceirosCard negociacao={negociacao} />
-			<PacoteServicosCard negociacao={negociacao} />
+			<NegociacaoSummaryCard negociacao={negociacao} />
+
+			<div className="grid gap-6 lg:grid-cols-2">
+				<div className="space-y-6">
+					<DadosClienteCard negociacao={negociacao} />
+					<ContatoCard negociacao={negociacao} />
+					<PacoteServicosCard negociacao={negociacao} />
+				</div>
+				<div className="space-y-6">
+					<EnderecoInstalacaoCard negociacao={negociacao} />
+					<EnderecoCobrancaCard negociacao={negociacao} />
+					<ValoresFinanceirosCard negociacao={negociacao} />
+				</div>
+			</div>
+
 			<CupomVendedorCard negociacao={negociacao} />
 			<PontosAtencaoCard negociacao={negociacao} />
 			<AssinaturaDigitalCard negociacao={negociacao} />

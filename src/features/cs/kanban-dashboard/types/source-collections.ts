@@ -83,7 +83,7 @@ export const NEGOCIACAO_MOTIVO_BADGE: Record<NegociacoesMotivo, BadgeStyle> = {
 		bgClass: "bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-200",
 	},
 	N: {
-		label: "Renegociação",
+		label: "Negociação",
 		colorClass:
 			"bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200",
 		bgClass:

@@ -94,7 +94,7 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 				defaultOpen: true,
 				children: [
 					{
-						label: "Renegociações",
+						label: "Negociações",
 						icon: <Handshake />,
 						to: routePaths.cs_negociacoes,
 					},
