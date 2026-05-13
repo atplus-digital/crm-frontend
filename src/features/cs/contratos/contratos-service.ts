@@ -6,7 +6,7 @@ import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-
 import type { DadosAdicionaisClienteContrato } from "#/generated/types/nocobase/other/dados-adicionais-cliente-contrato";
 import type { RegistrosDeContato } from "#/generated/types/nocobase/registros-de-contato";
 import { getErrorMessage } from "#/lib/api-errors";
-import { buildFilter, eq, inFilter } from "#/lib/filter-builder";
+import { buildFilter, eq, inFilter, or } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { ixcRepository, nocobaseRepository } from "#/repositories";
 import type { PaginatedResponse } from "#/repositories/types";
@@ -56,7 +56,7 @@ export async function fetchContratos(
 	params: ContratoListParams = {},
 ): Promise<PaginatedResponse<ContratoWithCliente>> {
 	try {
-		const { page = 1, pageSize = 15, sort, filters } = params;
+		const { page = 1, pageSize = 15, sort = ["-id"], filters } = params;
 		const filter = buildContratoFilter(filters);
 
 		return ixcRepository.list<ContratoWithCliente>("cliente_contrato", {
@@ -124,7 +124,10 @@ export async function fetchContratoProdutos(
 		return ixcRepository.list<VdContratosProdutos>("vd_contratos_produtos", {
 			page: 1,
 			pageSize: 100,
-			filter: eq("id_contrato", idContrato),
+			filter: or(
+				eq("id_contrato", idContrato),
+				eq("id_vd_contrato", idContrato),
+			),
 		});
 	} catch (error) {
 		const message = getErrorMessage(error, "Erro desconhecido");
@@ -136,6 +139,7 @@ export async function fetchContratoProdutos(
 	}
 }
 
+/** Documentação: Faturas filtradas por status A (aberto), R (recebido), P (parcial) */
 export async function fetchContratoFaturas(
 	idContrato: number,
 ): Promise<PaginatedResponse<FnAreceber>> {
@@ -143,7 +147,12 @@ export async function fetchContratoFaturas(
 		return ixcRepository.list<FnAreceber>("fn_areceber", {
 			page: 1,
 			pageSize: 10,
-			filter: eq("id_contrato", idContrato),
+			filter: {
+				$and: [
+					eq("id_contrato", idContrato),
+					inFilter("status", ["A", "R", "P"]),
+				],
+			},
 		});
 	} catch (error) {
 		const message = getErrorMessage(error, "Erro desconhecido");
