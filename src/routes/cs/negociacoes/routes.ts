@@ -33,6 +33,10 @@ export const negociacoesRoutes = [
 				lazy: () => import("./$id/comentarios"),
 			},
 			{
+				path: "contrato/*",
+				lazy: () => import("./$id/contrato"),
+			},
+			{
 				path: "*",
 				index: true,
 			},

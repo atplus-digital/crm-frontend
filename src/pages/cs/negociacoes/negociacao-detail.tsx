@@ -1,4 +1,4 @@
-import { Database, FilePlus, FolderOpen, Smartphone } from "lucide-react";
+import { Database, FilePlus, FileText, FolderOpen } from "lucide-react";
 import { Outlet, useParams } from "react-router";
 import { BackButton } from "#/components/back-button";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
@@ -50,9 +50,9 @@ export function NegociacaoDetailPage() {
 					icon: <FilePlus className="size-4" />,
 				},
 				{
-					value: "comentarios",
-					label: "Comentários",
-					icon: <Smartphone className="size-4" />,
+					value: "contrato",
+					label: "Contrato",
+					icon: <FileText className="size-4" />,
 				},
 			]}
 			defaultTab="detalhes"
