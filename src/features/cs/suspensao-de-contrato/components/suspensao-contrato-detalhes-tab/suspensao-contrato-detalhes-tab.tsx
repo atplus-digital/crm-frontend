@@ -1,7 +1,7 @@
+import { CardSectionSkeleton } from "#/components/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { CommentsList } from "#/features/cs/components/comments-list";
-import { CardSectionSkeleton } from "#/features/cs/components/detail-skeleton";
 import type { SuspensaoContratoWithRelations } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import { SuspensaoContratoActions } from "../sections/suspensao-contrato-actions";
 import { AssinanteCard } from "./suspensao-contrato-assinante-card";

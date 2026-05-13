@@ -1,6 +1,6 @@
 import { ClipboardList } from "lucide-react";
-import { DetailField } from "#/features/cs/components/detail-field";
-import { DetailSection } from "#/features/cs/components/detail-section";
+import { DetailField } from "#/components/detail-field";
+import { DetailSection } from "#/components/detail-section";
 import {
 	DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS,
 	DADOSADICIONAISCLIENTECONTRATO_PERFILDEUSO_LABELS,

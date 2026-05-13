@@ -16,22 +16,28 @@ features.
 
 ## Key Files
 
-| File                              | Purpose                                                 |
-| --------------------------------- | ------------------------------------------------------- |
-| `ui/`                             | shadcn/ui primitives and styled base components         |
-| `table/data-table.tsx`            | Base TanStack table renderer + `useDataTable` hook      |
-| `table/data-table-container.tsx`  | Standard reusable paginated table wrapper               |
-| `table/empty-table.tsx`           | Empty-state table placeholder with headers              |
-| `table/columns/view-action.tsx`   | Shared "Ver" action button for table row navigation     |
-| `filters/filter-select-field.tsx` | Controlled select field primitive (`FilterSelectField`) |
-| `filters/filter-input-field.tsx`  | Debounced `FilterInputField` component                  |
-| `filters/filter-date-field.tsx`   | Controlled date field primitive (`FilterDateField`)     |
-| `filters/filter-actions.tsx`      | Reusable `Filtrar`/`Limpar` action group                |
-| `feedback/inline-error-alert.tsx` | Reusable inline destructive feedback block              |
-| `theme-provider.tsx`              | Theme context/provider used by the app shell            |
-| `error-boundary.tsx`              | Global render error boundary fallback UI                |
-| `actions-menu/actions-menu.tsx`   | Generic dropdown action menu with icon support          |
-| `basic-table-card.tsx`            | Metric card (label + value) with children slot          |
+| File                              | Purpose                                                            |
+| --------------------------------- | ------------------------------------------------------------------ |
+| `ui/`                             | shadcn/ui primitives and styled base components                    |
+| `table/data-table.tsx`            | Base TanStack table renderer + `useDataTable` hook                 |
+| `table/data-table-container.tsx`  | Standard reusable paginated table wrapper                          |
+| `table/empty-table.tsx`           | Empty-state table placeholder with headers                         |
+| `table/columns/view-action.tsx`   | Shared "Ver" action button for table row navigation                |
+| `filters/filter-select-field.tsx` | Controlled select field primitive (`FilterSelectField`)            |
+| `filters/filter-input-field.tsx`  | Debounced `FilterInputField` component                             |
+| `filters/filter-date-field.tsx`   | Controlled date field primitive (`FilterDateField`)                |
+| `filters/filter-actions.tsx`      | Reusable `Filtrar`/`Limpar` action group                           |
+| `feedback/inline-error-alert.tsx` | Reusable inline destructive feedback block                         |
+| `theme-provider.tsx`              | Theme context/provider used by the app shell                       |
+| `error-boundary.tsx`              | Global render error boundary fallback UI                           |
+| `actions-menu/actions-menu.tsx`   | Generic dropdown action menu with icon support                     |
+| `basic-table-card.tsx`            | Metric card (label + value) with children slot                     |
+| `detail-field.tsx`                | Read-only label/value primitive for detail screens                 |
+| `detail-section.tsx`              | Generic Card + CardHeader/CardContent wrapper                      |
+| `detail-skeleton/`                | Detail skeleton loaders (DetailSkeleton, CardSectionSkeleton)      |
+| `entity-avatar.tsx`               | First-letter circle avatar for entity cards                        |
+| `metric-item.tsx`                 | Icon + label + value row for summary card metrics                  |
+| `summary-card.tsx`                | Summary card shell (avatar + title + header actions + metric grid) |
 
 **Scoped Docs:**
 
@@ -39,6 +45,7 @@ features.
 - `table/AGENTS.md` — Shared TanStack table controller/context and table composition patterns
 - `filters/AGENTS.md` — Shared filter primitives (field controls, layout, and actions)
 - `page-layout/AGENTS.md` — Reusable page layout with header/tab composition primitives
+- `detail-skeleton/AGENTS.md` — Detail skeleton components reference
 - `../layout/AGENTS.md` — App shell composition and sidebar patterns
 
 <!-- AGENTS-GENERATED:END filemap -->

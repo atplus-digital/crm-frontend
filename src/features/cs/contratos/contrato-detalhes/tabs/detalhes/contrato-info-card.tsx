@@ -1,6 +1,6 @@
 import { FileText } from "lucide-react";
-import { DetailField } from "#/features/cs/components/detail-field";
-import { DetailSection } from "#/features/cs/components/detail-section";
+import { DetailField } from "#/components/detail-field";
+import { DetailSection } from "#/components/detail-section";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
 import {
 	CLIENTECONTRATO_TIPO_LABELS,

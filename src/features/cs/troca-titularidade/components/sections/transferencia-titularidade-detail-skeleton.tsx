@@ -1,5 +1,5 @@
+import { CardSectionSkeleton } from "#/components/detail-skeleton";
 import { Skeleton } from "#/components/ui/skeleton";
-import { CardSectionSkeleton } from "#/features/cs/components/detail-skeleton";
 
 /**
  * Skeleton for the Transferência de Titularidade detail tab.

@@ -1,5 +1,5 @@
 import { FileText } from "lucide-react";
-import { DetailSection } from "#/features/cs/components/detail-section";
+import { DetailSection } from "#/components/detail-section";
 import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 
 interface AttachmentsSectionProps {

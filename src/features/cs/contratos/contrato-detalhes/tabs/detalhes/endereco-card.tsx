@@ -1,7 +1,7 @@
 import { MapPin } from "lucide-react";
+import { DetailField } from "#/components/detail-field";
+import { DetailSection } from "#/components/detail-section";
 import { Separator } from "#/components/ui/separator";
-import { DetailField } from "#/features/cs/components/detail-field";
-import { DetailSection } from "#/features/cs/components/detail-section";
 import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-types";
 
 interface EnderecoCardProps {

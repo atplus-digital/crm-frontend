@@ -1,5 +1,5 @@
-import { DetailField } from "#/features/cs/components/detail-field";
-import { DetailSection } from "#/features/cs/components/detail-section";
+import { DetailField } from "#/components/detail-field";
+import { DetailSection } from "#/components/detail-section";
 import { StatusBadge } from "#/features/cs/negociacoes/negociacao-badges";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { MOTIVO_LABELS } from "#/features/cs/negociacoes/negociacoes-types";

@@ -116,12 +116,12 @@ function MyForm() {
 - `./src/components/page-layout/AGENTS.md` — Reusable page layout with header/tab composition primitives
 - `./src/components/table/AGENTS.md` — Shared TanStack-based table primitives and controller context
 - `./src/components/ui/AGENTS.md` — shadcn/ui component reference and customization guide
+- `./src/components/detail-skeleton/AGENTS.md` — Shared skeleton loaders for detail screens
 - `./src/layout/AGENTS.md` — Authenticated app shell layout and navigation composition
 - `./src/features/AGENTS.md` — Cross-feature conventions and folder structure for domain modules
 - `./src/features/auth/AGENTS.md` — Authentication module
 - `./src/features/auth/permissions/AGENTS.md` — Permissions, actions/snippets and navigation guards
 - `./src/features/cs/AGENTS.md` — Customer Success domain (contratos, negociações, pessoas)
-- `./src/features/cs/components/detail-skeleton/AGENTS.md` — Shared skeletons for CS detail sections and cards
 - `./src/features/cs/contratos/AGENTS.md` — Contratos subdomain (IXC contracts list/detail and contract UI)
 - `./src/features/cs/kanban-dashboard/AGENTS.md` — Kanban Dashboard subdomain (unified TT/TE/SC/NEG board)
 - `./src/features/cs/negociacoes/AGENTS.md` — Negociações subdomain (kanban/list, filters, export and detail tabs)

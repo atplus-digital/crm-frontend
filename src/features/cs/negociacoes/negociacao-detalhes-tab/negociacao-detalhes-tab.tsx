@@ -1,5 +1,5 @@
+import { DetailSkeleton } from "#/components/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { DetailSkeleton } from "#/features/cs/components/detail-skeleton";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { AssinaturaDigitalCard } from "./assinatura-digital-card";
 import { ContatoCard } from "./contato-card";

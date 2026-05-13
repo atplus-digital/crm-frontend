@@ -1,5 +1,5 @@
+import { CardSectionSkeleton } from "#/components/detail-skeleton";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
-import { CardSectionSkeleton } from "#/features/cs/components/detail-skeleton";
 import type { TrocaEnderecoWithRelations } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
 import { ContatoCard } from "./troca-endereco-contato-card";
 import { EnderecoCard } from "./troca-endereco-endereco-card";

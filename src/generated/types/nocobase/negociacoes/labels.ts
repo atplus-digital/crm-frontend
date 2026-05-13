@@ -49,7 +49,7 @@ export const NEGOCIACOES_MOTIVO_LABELS = {
 	M: "Mudança de Endereço",
 	D: "Downgrade",
 	U: "Upgrade",
-	N: "Negociação",
+	N: "Renegociação",
 	R: "Reativação",
 	T: "Mudança de Tecnologia",
 	L: "Mudança de Titularidade",
@@ -158,7 +158,7 @@ export const negociacoesMotivoSchema = z.enum(
 	{
 		error: () => ({
 			message:
-				"motivo: valores válidos são [Venda Nova, Mudança de Endereço, Downgrade, Upgrade, Negociação, Reativação, Mudança de Tecnologia, Mudança de Titularidade, Segunda Contratação, Proposta]",
+				"motivo: valores válidos são [Venda Nova, Mudança de Endereço, Downgrade, Upgrade, Renegociação, Reativação, Mudança de Tecnologia, Mudança de Titularidade, Segunda Contratação, Proposta]",
 		}),
 	},
 );

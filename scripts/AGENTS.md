@@ -19,13 +19,17 @@ scripts/
 ├── code-check/              # Standalone git-hook utilities
 │   └── typecheck-staged.ts  # Incremental tsc for staged .ts/.tsx files
 └── generators/              # Code generation framework
-    ├── run-generator.ts      # Barrel re-export of generator-cli
     ├── tsconfig.generated.json  # TSConfig for validating generated output
     └── src/
-        ├── lib/              # Shared library (logger, atomic-writer, etc.)
+        ├── index.ts              # Main entry: runOrchestrator
+        ├── generator-registry.ts # Pipeline registry
+        ├── config/               # Datasource + custom request config
+        │   ├── datasources.ts
+        │   └── requests.ts
+        ├── lib/                  # Shared library (context, lifecycle, I/O, HTTP, utils, validation)
         ├── pipelines/
-        │   ├── generate-types/            # NocoBase + IXC type generation
-        │   └── generate-custom-requests/  # Custom request registry generation
+        │   ├── generate-types/            # NocoBase + IXC type generation (5 stages)
+        │   └── generate-custom-requests/  # Custom request registry generation (6 stages)
         └── AGENTS.md        # Shared library conventions
 ```
 
@@ -42,7 +46,8 @@ scripts/
 | Fix generation pipeline bugs           | `generators/src/pipelines/<pipeline>/`               | Follow the stage-by-stage pipeline pattern                     |
 | Add shared utility                     | `generators/src/lib/`                                | No barrel `index.ts` — direct imports only                     |
 | Fix incremental type checking          | `code-check/typecheck-staged.ts`                     | Standalone, no dependency on generators                        |
-| Modify generator CLI framework         | `generators/src/lib/generator-cli/`                  | Listr2-based runner, shared by both pipelines                  |
+| Modify pipeline lifecycle              | `generators/src/lib/lifecycle/`                      | `runStandardPipeline` in `lifecycle.ts`                        |
+| Modify pipeline context/reports        | `generators/src/lib/pipeline/`                       | `PipelineExecutionContext` + `addJsonReport`                   |
 
 <!-- AGENTS-GENERATED:END where-to-look -->
 
@@ -54,8 +59,9 @@ scripts/
 pnpm generate                    # Run all generators (types + custom requests)
 pnpm generate:types              # Generate TypeScript types from NocoBase + IXC schemas
 pnpm generate:requests           # Generate custom request registry from NocoBase API
-pnpm test scripts/generate-types # Run type generation tests
-pnpm test scripts/generate-custom-requests  # Run custom request tests
+pnpm generate                    # Run all generators (same as above)
+pnpm biome:scripts               # Format/lint generators code
+# Tests: removed with old.generators/ — Phase 2 TBD
 ```
 
 <!-- AGENTS-GENERATED:END commands -->
@@ -64,12 +70,14 @@ pnpm test scripts/generate-custom-requests  # Run custom request tests
 
 ## Conventions
 
-- **Self-executing entry points**: `void runGeneratorCli(...)` at module level
+- **Self-executing entry points**: `executeEntry(import.meta.url, ...)` at module level
 - **Path alias**: `@scripts/*` → `./scripts/*` (configured in root `tsconfig.json`)
-- **Portuguese error/log messages**: All user-facing strings in Portuguese
-- **Zod-validated env**: NocoBase credentials loaded from `.env.local` via `env-config.ts`
-- **No barrel exports in lib**: Import directly via `@scripts/generators/src/lib/<module>`
+- **Portuguese messages**: All user-facing strings in Portuguese
+- **Zod-validated env**: NocoBase credentials loaded from `.env.local` via `config/env.ts`
+- **No barrel exports in lib**: Import directly from specific files (not index.ts)
 - **One-way dependency**: `lib/` → pipelines, never reverse
+- **No Logger**: Listr2 `task` replaces Logger for output
+- **No adapters**: Enum inference from `uiSchema.enum` only — no IXC wiki adapters or data inference
 
 <!-- AGENTS-GENERATED:END conventions -->
 
@@ -77,11 +85,12 @@ pnpm test scripts/generate-custom-requests  # Run custom request tests
 
 ## Anti-Patterns
 
-| ❌ Avoid                                       | ✅ Use                                     |
-| ---------------------------------------------- | ------------------------------------------ |
-| Manually editing generated files               | Update config + regenerate                 |
-| Importing from pipeline internals in `lib/`    | Keep `lib/` pure, pipeline-free            |
-| Running type generation without workspace lock | Pipeline auto-locks via `workspace-locker` |
+| ❌ Avoid                                       | ✅ Use                                            |
+| ---------------------------------------------- | ------------------------------------------------- |
+| Manually editing generated files               | Update config + regenerate                        |
+| Importing from pipeline internals in `lib/`    | Keep `lib/` pure, pipeline-free                   |
+| Running type generation without workspace lock | Pipeline auto-locks via `locker.ts`               |
+| Writing directly to outputDir in stages        | Always write to `.temp/` — lifecycle handles swap |
 
 <!-- AGENTS-GENERATED:END anti-patterns -->
 
@@ -91,7 +100,8 @@ pnpm test scripts/generate-custom-requests  # Run custom request tests
 
 - `code-check/typecheck-staged.ts` is invoked by lint-staged, not `pnpm` scripts directly
 - `tsconfig.generated.json` validates only `src/generated/**/*.ts` — not the scripts themselves
-- Both pipelines use atomic writes (backup → swap → validate → keep/restore)
+- Both pipelines use validate-first: write to `.temp/` → validate (tsc + biome) → diff → backup + swap OR cleanup
+- Pipeline reports accumulate via `addJsonReport()` — lifecycle generates consolidated `.md` via `renderReportsMarkdown()`
 
 <!-- AGENTS-GENERATED:END notes -->
 

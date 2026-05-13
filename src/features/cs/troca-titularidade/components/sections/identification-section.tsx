@@ -1,7 +1,7 @@
 import { FileText } from "lucide-react";
 import { StatusBadge as SharedStatusBadge } from "#/components/badges/status-badge";
-import { DetailField } from "#/features/cs/components/detail-field";
-import { DetailSection } from "#/features/cs/components/detail-section";
+import { DetailField } from "#/components/detail-field";
+import { DetailSection } from "#/components/detail-section";
 import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
 import {
 	CRMTROCATITULARIDADE_STATUS_LABELS,

@@ -21,8 +21,6 @@ import {
 	generateRelationSchema,
 	generateUpdateSchema,
 } from "./interfaces";
-import { _sortMapEntries, _sortScalarEntries } from "./sorting";
-
 /**
  * Gera o header do arquivo TypeScript gerado.
  */

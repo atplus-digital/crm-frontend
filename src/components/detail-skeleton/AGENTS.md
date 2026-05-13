@@ -4,7 +4,7 @@
 
 ## Overview
 
-Shared skeleton components for Customer Success detail screens.
+Shared skeleton components for detail screens.
 
 ## Components
 
@@ -16,7 +16,7 @@ Shared skeleton components for Customer Success detail screens.
 ## Usage
 
 ```tsx
-import { DetailSkeleton, CardSectionSkeleton } from "#/features/cs/detail-skeleton";
+import { DetailSkeleton, CardSectionSkeleton } from "#/components/detail-skeleton";
 
 // DetailSkeleton - skeleton for detail sections
 <DetailSkeleton sections={3} />
