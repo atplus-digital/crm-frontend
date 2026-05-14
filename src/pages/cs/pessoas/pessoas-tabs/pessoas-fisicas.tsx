@@ -57,7 +57,11 @@ export function PessoasFisicasTabPage() {
 				handleFilterChange(DEFAULT_PESSOA_FISICA_TABLE_FILTERS);
 			}}
 		>
-			<FilterProvider<PessoaFisicaTableFilters> onFilter={handleFilterChange}>
+			<FilterProvider<PessoaFisicaTableFilters>
+				onFilter={handleFilterChange}
+				cleanToDefault
+				defaultFilters={DEFAULT_PESSOA_FISICA_TABLE_FILTERS}
+			>
 				<PessoasFisicasFilters filters={filters} />
 			</FilterProvider>
 		</DataTableContainer>

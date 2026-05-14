@@ -1,4 +1,5 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { FilterProvider } from "#/components/filters";
 import { PageLayout } from "#/components/layouts/page-layout";
 import { TrocaEnderecoList } from "#/features/cs/troca-de-endereco";
 import { TrocaEnderecoFilterBar } from "#/features/cs/troca-de-endereco/troca-endereco-filters";
@@ -33,7 +34,12 @@ export function TrocaDeEnderecoPage() {
 
 	return (
 		<PageLayout title="Troca de Endereço" subtitle="Atendimentos">
-			<TrocaEnderecoFilterBar filters={filters} onFilter={handleFilterChange} />
+			<FilterProvider<TrocaEnderecoFilters>
+				onFilter={handleFilterChange}
+				defaultFilters={DEFAULT_FILTERS}
+			>
+				<TrocaEnderecoFilterBar filters={filters} />
+			</FilterProvider>
 
 			{error ? (
 				<InlineErrorAlert>

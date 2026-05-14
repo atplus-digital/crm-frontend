@@ -5,6 +5,7 @@ import {
 	FilterInputField,
 	FilterSelectField,
 } from "#/components/filters";
+import { useFilterContext } from "#/components/filters/filter-context";
 import {
 	TROCA_ESTADO_FILTER_OPTIONS,
 	TROCA_STATUS_FILTER_OPTIONS,
@@ -19,13 +20,13 @@ import type {
 
 interface TrocaTitularidadeFilterBarProps {
 	filters: TrocaTitularidadeFilters;
-	onFilter: (f: TrocaTitularidadeFilters) => void;
 }
 
 export function TrocaTitularidadeFilterBar({
 	filters,
-	onFilter,
 }: TrocaTitularidadeFilterBarProps) {
+	const { onFilter } = useFilterContext<TrocaTitularidadeFilters>();
+
 	const statusId = useId();
 	const substatusId = useId();
 	const estadoId = useId();
@@ -36,19 +37,9 @@ export function TrocaTitularidadeFilterBar({
 	const criadoEmInicioId = useId();
 
 	return (
-		<FilterBarContainer
+		<FilterBarContainer<TrocaTitularidadeFilters>
+			filters={filters}
 			onApply={() => onFilter(filters)}
-			onClear={() => onFilter({})}
-			canClear={Boolean(
-				filters.status ||
-					filters.substatus ||
-					filters.estado ||
-					filters.cidade ||
-					filters.contratoId ||
-					filters.cedente ||
-					filters.cessionario ||
-					filters.criadoEmInicio,
-			)}
 		>
 			<FilterSelectField<CrmTrocaTitularidadeStatus>
 				id={statusId}

@@ -5,17 +5,14 @@ import {
 	FilterSelectField,
 } from "#/components/filters";
 import { useFilterContext } from "#/components/filters/filter-context";
-import {
-	DEFAULT_PESSOA_FISICA_TABLE_FILTERS,
-	type PessoaFisicaTableFilters,
-} from "#/features/cs/pessoas/pessoas-types";
+import type { PessoaFisicaTableFilters } from "#/features/cs/pessoas/pessoas-types";
 
 interface PessoasFisicasFiltersProps {
 	filters: PessoaFisicaTableFilters;
 }
 
 export function PessoasFisicasFilters({ filters }: PessoasFisicasFiltersProps) {
-	const { onFilter } = useFilterContext();
+	const { onFilter, hasActiveFilters, getCleanFilters } = useFilterContext();
 
 	return (
 		<FilterLayout
@@ -23,13 +20,8 @@ export function PessoasFisicasFilters({ filters }: PessoasFisicasFiltersProps) {
 			actions={
 				<FilterActions
 					onApply={() => onFilter(filters)}
-					onClear={() => onFilter(DEFAULT_PESSOA_FISICA_TABLE_FILTERS)}
-					canClear={
-						Boolean(filters.f_nome) ||
-						Boolean(filters.f_cpf) ||
-						filters.f_analise_ixc !==
-							DEFAULT_PESSOA_FISICA_TABLE_FILTERS.f_analise_ixc
-					}
+					onClear={() => onFilter(getCleanFilters())}
+					canClear={hasActiveFilters(filters)}
 					applyVariant="outline"
 					clearVariant="ghost"
 				/>

@@ -4,10 +4,7 @@ import {
 	FilterLayout,
 } from "#/components/filters";
 import { useFilterContext } from "#/components/filters/filter-context";
-import {
-	DEFAULT_PESSOA_JURIDICA_TABLE_FILTERS,
-	type PessoaJuridicaTableFilters,
-} from "#/features/cs/pessoas/pessoas-types";
+import type { PessoaJuridicaTableFilters } from "#/features/cs/pessoas/pessoas-types";
 
 interface PessoasJuridicasFiltersProps {
 	filters: PessoaJuridicaTableFilters;
@@ -16,7 +13,7 @@ interface PessoasJuridicasFiltersProps {
 export function PessoasJuridicasFilters({
 	filters,
 }: PessoasJuridicasFiltersProps) {
-	const { onFilter } = useFilterContext();
+	const { onFilter, hasActiveFilters, getCleanFilters } = useFilterContext();
 
 	return (
 		<FilterLayout
@@ -24,8 +21,8 @@ export function PessoasJuridicasFilters({
 			actions={
 				<FilterActions
 					onApply={() => onFilter(filters)}
-					onClear={() => onFilter(DEFAULT_PESSOA_JURIDICA_TABLE_FILTERS)}
-					canClear={Boolean(filters.f_razao_social || filters.f_cnpj)}
+					onClear={() => onFilter(getCleanFilters())}
+					canClear={hasActiveFilters(filters)}
 					applyVariant="outline"
 					clearVariant="ghost"
 				/>

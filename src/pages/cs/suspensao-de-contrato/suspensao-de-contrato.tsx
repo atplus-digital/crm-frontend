@@ -1,4 +1,5 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { FilterProvider } from "#/components/filters";
 import { PageLayout } from "#/components/layouts/page-layout";
 import { SuspensaoContratoList } from "#/features/cs/suspensao-de-contrato";
 import { SuspensaoContratoFilterBar as FilterBar } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-filters";
@@ -36,7 +37,12 @@ export function SuspensaoContratoPage() {
 			title="Suspensão de Contrato"
 			subtitle="Todas as Suspensões de Contrato"
 		>
-			<FilterBar filters={filters} onFilter={handleFilterChange} />
+			<FilterProvider<SuspensaoContratoFilters>
+				onFilter={handleFilterChange}
+				defaultFilters={DEFAULT_FILTERS}
+			>
+				<FilterBar filters={filters} />
+			</FilterProvider>
 
 			{error ? (
 				<InlineErrorAlert>

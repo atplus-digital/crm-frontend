@@ -1,7 +1,7 @@
 export { FilterActions } from "./filter-actions";
 export { FilterBadgeGroup } from "./filter-badge-group";
 export { FilterBarContainer } from "./filter-bar-container";
-export { FilterProvider } from "./filter-context";
+export { FilterProvider, useFilterContext } from "./filter-context";
 export { FilterDateField } from "./filter-date-field";
 export { FilterInputField } from "./filter-input-field";
 export { FilterLayout } from "./filter-layout";

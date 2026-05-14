@@ -1,5 +1,5 @@
 import type { Column } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import type { HTMLAttributes } from "react";
 
 import { Button } from "#/components/ui/button";
@@ -20,17 +20,20 @@ export function DataTableColumnHeader<TData, TValue>({
 		return <span className={cn(className)}>{title}</span>;
 	}
 
+	const sorted = column.getIsSorted();
+
 	return (
 		<div className={cn("flex items-center", className)}>
 			<Button
 				variant="ghost"
 				size="sm"
 				className="-ml-3 h-8 data-[state=sorted]:text-foreground"
-				onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+				onClick={() => column.toggleSorting(sorted === "asc")}
 			>
 				{title}
-				{column.getIsSorted() === "asc" && <ArrowUp />}
-				{column.getIsSorted() === "desc" && <ArrowDown />}
+				{sorted === "asc" && <ArrowUp />}
+				{sorted === "desc" && <ArrowDown />}
+				{sorted === false && <ArrowUpDown className="text-muted-foreground" />}
 			</Button>
 		</div>
 	);

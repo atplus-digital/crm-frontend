@@ -5,6 +5,7 @@ import {
 	FilterInputField,
 	FilterSelectField,
 } from "#/components/filters";
+import { useFilterContext } from "#/components/filters/filter-context";
 import {
 	TROCA_STATUS_FILTER_OPTIONS,
 	type TrocaEnderecoFilters,
@@ -13,19 +14,12 @@ import type { TrocaEnderecoStatus } from "#/generated/types/nocobase/troca-ender
 
 interface TrocaEnderecoFilterBarProps {
 	filters: TrocaEnderecoFilters;
-	onFilter: (filters: TrocaEnderecoFilters) => void;
 }
 
 export function TrocaEnderecoFilterBar({
 	filters,
-	onFilter,
 }: TrocaEnderecoFilterBarProps) {
-	const hasFilters =
-		filters.status ||
-		filters.cliente ||
-		filters.idContrato ||
-		filters.idAtendimento ||
-		filters.criadoEmInicio;
+	const { onFilter } = useFilterContext<TrocaEnderecoFilters>();
 
 	const statusId = useId();
 	const clienteId = useId();
@@ -34,11 +28,7 @@ export function TrocaEnderecoFilterBar({
 	const criadoEmInicioId = useId();
 
 	return (
-		<FilterBarContainer
-			onApply={() => onFilter(filters)}
-			onClear={() => onFilter({})}
-			canClear={Boolean(hasFilters)}
-		>
+		<FilterBarContainer filters={filters} onApply={() => onFilter(filters)}>
 			<FilterSelectField<TrocaEnderecoStatus>
 				id={statusId}
 				label="Status"

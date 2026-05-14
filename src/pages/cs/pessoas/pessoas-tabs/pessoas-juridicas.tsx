@@ -57,7 +57,11 @@ export function PessoasJuridicasTabPage() {
 				handleFilterChange(DEFAULT_PESSOA_JURIDICA_TABLE_FILTERS);
 			}}
 		>
-			<FilterProvider onFilter={handleFilterChange}>
+			<FilterProvider
+				onFilter={handleFilterChange}
+				cleanToDefault
+				defaultFilters={DEFAULT_PESSOA_JURIDICA_TABLE_FILTERS}
+			>
 				<PessoasJuridicasFilters filters={filters} />
 			</FilterProvider>
 		</DataTableContainer>

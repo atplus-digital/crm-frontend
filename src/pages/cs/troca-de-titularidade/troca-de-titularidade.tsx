@@ -1,4 +1,5 @@
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
+import { FilterProvider } from "#/components/filters";
 import { PageLayout } from "#/components/layouts/page-layout";
 import { TrocaTitularidadeList } from "#/features/cs/troca-titularidade";
 import { TrocaTitularidadeFilterBar } from "#/features/cs/troca-titularidade/troca-titularidade-filters";
@@ -36,10 +37,12 @@ export function TrocaTitularidadePage() {
 			title="Transferência de Titularidade"
 			subtitle="Solicitações de transferência de titularidade"
 		>
-			<TrocaTitularidadeFilterBar
-				filters={filters}
+			<FilterProvider<TrocaTitularidadeFilters>
 				onFilter={handleFilterChange}
-			/>
+				defaultFilters={DEFAULT_FILTERS}
+			>
+				<TrocaTitularidadeFilterBar filters={filters} />
+			</FilterProvider>
 
 			{error ? (
 				<InlineErrorAlert>

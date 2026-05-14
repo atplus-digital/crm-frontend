@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { Button } from "#/components/ui/button";
 import {
 	DropdownMenu,
@@ -26,6 +26,7 @@ interface FilterMultiSelectProps<T extends string> {
 	showAllOption?: boolean;
 	badgeTrigger?: boolean;
 	badgeColorClass?: (value: T) => string;
+	maxBadgeDisplay?: number;
 	className?: string;
 }
 
@@ -40,6 +41,7 @@ export function FilterMultiSelect<T extends string>({
 	showAllOption = true,
 	badgeTrigger = false,
 	badgeColorClass,
+	maxBadgeDisplay = 2,
 	className,
 }: FilterMultiSelectProps<T>) {
 	const valueSet = new Set(value);
@@ -80,30 +82,47 @@ export function FilterMultiSelect<T extends string>({
 						)}
 					>
 						{badgeTrigger && selectedOptions.length > 0 ? (
-							<div className="flex flex-wrap gap-1">
-								{selectedOptions.map((opt) => (
-									<span
-										key={opt.value}
-										className={cn(
-											"inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium",
-											badgeColorClass?.(opt.value) ??
-												"bg-primary/10 text-primary",
-										)}
-									>
-										{opt.label}
-									</span>
-								))}
-							</div>
+							<>
+								<div className="flex flex-nowrap items-center gap-1 overflow-hidden min-w-0 flex-1">
+									{selectedOptions.slice(0, maxBadgeDisplay).map((opt) => (
+										<span
+											key={opt.value}
+											className={cn(
+												"inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium shrink-0",
+												badgeColorClass?.(opt.value) ??
+													"bg-primary/10 text-primary",
+											)}
+										>
+											{opt.label}
+										</span>
+									))}
+									{selectedOptions.length > maxBadgeDisplay && (
+										<span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground shrink-0">
+											+{selectedOptions.length - maxBadgeDisplay}
+										</span>
+									)}
+								</div>
+								<button
+									type="button"
+									onClick={(e) => {
+										e.preventDefault();
+										e.stopPropagation();
+										onChange([]);
+									}}
+									className="rounded-full p-0.5 hover:bg-muted-foreground/20 shrink-0"
+								>
+									<X className="size-3 shrink-0 text-muted-foreground" />
+								</button>
+							</>
 						) : (
-							<span className="truncate">{triggerLabel}</span>
+							<>
+								<span className="truncate flex-1">{triggerLabel}</span>
+								<ChevronDown
+									className="size-4 shrink-0 text-muted-foreground"
+									aria-hidden="true"
+								/>
+							</>
 						)}
-						<ChevronDown
-							className={cn(
-								"size-4 shrink-0 text-muted-foreground",
-								badgeTrigger && selectedOptions.length > 0 && "ml-auto",
-							)}
-							aria-hidden="true"
-						/>
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="start">

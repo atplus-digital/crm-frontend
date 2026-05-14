@@ -65,6 +65,13 @@ export function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 			),
 		},
 		{
+			accessorKey: "data_cadastro_sistema",
+			header: ({ column }) => (
+				<DataTableColumnHeader column={column} title="Criado em" />
+			),
+			cell: ({ row }) => formatDatePtBR(row.original.data_cadastro_sistema),
+		},
+		{
 			accessorKey: "ultima_atualizacao",
 			header: ({ column }) => (
 				<DataTableColumnHeader column={column} title="Ultima Atualização" />

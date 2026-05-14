@@ -12,7 +12,6 @@ import {
 	INTERNET_STATUS_LABELS,
 	type InternetStatus,
 } from "#/features/cs/contratos/contratos-types";
-import { DEFAULT_CONTRATOS_TABLE_FILTERS } from ".";
 
 interface ContratosFiltersProps {
 	filters: ContratosTableFilters;
@@ -38,19 +37,12 @@ const SERVICO_STATUS_BADGE_COLORS: Record<InternetStatus, string> = {
 };
 
 export function ContratosFilters({ filters }: ContratosFiltersProps) {
-	const { onFilter } = useFilterContext();
+	const { onFilter, hasActiveFilters, getCleanFilters } = useFilterContext();
 
 	const selectedStatuses = JSON.parse(filters.status) as ContratoStatus[];
 	const selectedServicoStatuses = JSON.parse(
 		filters.servicoStatus,
 	) as InternetStatus[];
-
-	const canClear =
-		Boolean(filters.cpfCnpj) ||
-		Boolean(filters.nome) ||
-		Boolean(filters.contratoId) ||
-		selectedStatuses.length > 0 ||
-		selectedServicoStatuses.length > 0;
 
 	const statusOptions = Object.entries(CONTRATO_STATUS_LABELS).map(
 		([value, label]) => ({
@@ -72,8 +64,8 @@ export function ContratosFilters({ filters }: ContratosFiltersProps) {
 			actions={
 				<FilterActions
 					onApply={() => onFilter(filters)}
-					onClear={() => onFilter(DEFAULT_CONTRATOS_TABLE_FILTERS)}
-					canClear={canClear}
+					onClear={() => onFilter(getCleanFilters())}
+					canClear={hasActiveFilters(filters)}
 					clearVariant="ghost"
 				/>
 			}

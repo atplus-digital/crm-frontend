@@ -73,7 +73,13 @@ export function ContratosTable({
 			onSortingChange={onSortingChange}
 		>
 			{onFilterProvider ? (
-				<FilterProvider onFilter={onFilterProvider}>{children}</FilterProvider>
+				<FilterProvider
+					onFilter={onFilterProvider}
+					cleanToDefault
+					defaultFilters={DEFAULT_CONTRATOS_TABLE_FILTERS}
+				>
+					{children}
+				</FilterProvider>
 			) : (
 				children
 			)}

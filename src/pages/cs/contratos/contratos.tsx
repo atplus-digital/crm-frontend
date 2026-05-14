@@ -26,7 +26,7 @@ export function ContratosPage() {
 		handleFilterChange,
 	} = useListPage<ContratosTableFilters>({
 		defaultFilters: DEFAULT_CONTRATOS_TABLE_FILTERS,
-		defaultSort: ["-ultima_atualizacao"],
+		defaultSort: ["-data_cadastro_sistema"],
 	});
 
 	const { data, error, isLoading, isFetching } = useContratos({

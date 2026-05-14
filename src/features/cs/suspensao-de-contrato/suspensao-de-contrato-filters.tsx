@@ -5,6 +5,7 @@ import {
 	FilterInputField,
 	FilterSelectField,
 } from "#/components/filters";
+import { useFilterContext } from "#/components/filters/filter-context";
 import type { SuspensaoContratoStatus } from "#/features/cs/suspensao-de-contrato/suspensao-de-contrato-types";
 import {
 	SUSPENSAO_CONTRATO_STATUS_FILTER_OPTIONS,
@@ -13,19 +14,12 @@ import {
 
 interface SuspensaoContratoFilterBarProps {
 	filters: SuspensaoContratoFilters;
-	onFilter: (filters: SuspensaoContratoFilters) => void;
 }
 
 export function SuspensaoContratoFilterBar({
 	filters,
-	onFilter,
 }: SuspensaoContratoFilterBarProps) {
-	const hasFilters =
-		filters.status ||
-		filters.titulo ||
-		filters.createdAt ||
-		filters.updatedAt ||
-		filters.criadoPor;
+	const { onFilter } = useFilterContext<SuspensaoContratoFilters>();
 
 	const statusId = useId();
 	const tituloId = useId();
@@ -34,11 +28,7 @@ export function SuspensaoContratoFilterBar({
 	const criadoPorId = useId();
 
 	return (
-		<FilterBarContainer
-			onApply={() => onFilter(filters)}
-			onClear={() => onFilter({})}
-			canClear={Boolean(hasFilters)}
-		>
+		<FilterBarContainer filters={filters} onApply={() => onFilter(filters)}>
 			<FilterSelectField<SuspensaoContratoStatus>
 				id={statusId}
 				label="Status"
