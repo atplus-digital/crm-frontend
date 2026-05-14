@@ -1,18 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRightLeft, Loader2 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-} from "#/components/ui/alert-dialog";
+import { SheetDiscardGuard } from "#/components/sheet-discard-guard";
 import { Button } from "#/components/ui/button";
 import {
 	Sheet,
@@ -21,8 +12,9 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from "#/components/ui/sheet";
-import { useCreateTrocaTitularidade } from "@/features/cs/troca-titularidade/troca-titularidade-hooks";
-import type { CreateTrocaTitularidadeInput } from "@/features/cs/troca-titularidade/troca-titularidade-service";
+import { useCreateTrocaTitularidade } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
+import type { CreateTrocaTitularidadeInput } from "#/features/cs/troca-titularidade/troca-titularidade-service";
+import { useSheetDiscardGuard } from "#/hooks/use-sheet-discard-guard";
 import { CedenteSection } from "./transferencia-titularidade-cedente-section";
 import { CessionarioSection } from "./transferencia-titularidade-cessionario-section";
 import { ContratoSection } from "./transferencia-titularidade-contrato-section";
@@ -70,9 +62,16 @@ export function TransferenciaTitularidadeSheet({
 		formState: { errors, isDirty },
 	} = form;
 
+	// Discard guard
+	const {
+		showDiscardDialog,
+		setShowDiscardDialog,
+		handleOpenChange,
+		handleDiscardConfirm,
+		handleDiscardCancel,
+	} = useSheetDiscardGuard(onOpenChange, isDirty);
+
 	const [tipoPessoa, setTipoPessoa] = useState<TipoPessoa>("PF");
-	const [showDiscardDialog, setShowDiscardDialog] = useState(false);
-	const pendingOpenChangeRef = useRef<boolean | null>(null);
 
 	const [cessionario, setCessionario] = useState<CessionarioState>(
 		DEFAULT_CESSIONARIO_STATE,
@@ -108,11 +107,13 @@ export function TransferenciaTitularidadeSheet({
 			f_endereco: values.f_endereco,
 			f_numero: values.f_numero.trim(),
 			f_bairro: values.f_bairro,
-			// biome-ignore lint/suspicious/noExplicitAny: enum type from NocoBase
-			f_complemento: values.f_complemento as any,
+			f_complemento: values.f_complemento as NonNullable<
+				CreateTrocaTitularidadeInput["f_complemento"]
+			>,
 			f_cidade: values.f_cidade,
-			// biome-ignore lint/suspicious/noExplicitAny: enum type from NocoBase
-			f_estado: values.f_estado as any,
+			f_estado: values.f_estado as NonNullable<
+				CreateTrocaTitularidadeInput["f_estado"]
+			>,
 		};
 
 		mutation.mutate(payload, {
@@ -120,31 +121,7 @@ export function TransferenciaTitularidadeSheet({
 		});
 	};
 
-	const handleOpenChange = useCallback(
-		(nextOpen: boolean) => {
-			if (!nextOpen && isDirty) {
-				pendingOpenChangeRef.current = nextOpen;
-				setShowDiscardDialog(true);
-				return;
-			}
-			onOpenChange(nextOpen);
-		},
-		[isDirty, onOpenChange],
-	);
-
-	const handleDiscardConfirm = useCallback(() => {
-		setShowDiscardDialog(false);
-		if (pendingOpenChangeRef.current !== null) {
-			onOpenChange(pendingOpenChangeRef.current);
-			pendingOpenChangeRef.current = null;
-		}
-	}, [onOpenChange]);
-
-	const handleDiscardCancel = useCallback(() => {
-		setShowDiscardDialog(false);
-		pendingOpenChangeRef.current = null;
-	}, []);
-
+	// Reset form when sheet closes
 	// biome-ignore lint/correctness/useExhaustiveDependencies: reset/mutation are stable but including them causes infinite loop
 	useEffect(() => {
 		if (!open) {
@@ -239,24 +216,12 @@ export function TransferenciaTitularidadeSheet({
 				</SheetContent>
 			</Sheet>
 
-			<AlertDialog open={showDiscardDialog} onOpenChange={setShowDiscardDialog}>
-				<AlertDialogContent size="sm">
-					<AlertDialogHeader>
-						<AlertDialogTitle>Descartar alterações?</AlertDialogTitle>
-						<AlertDialogDescription>
-							Você tem alterações não salvas. Deseja sair sem salvar?
-						</AlertDialogDescription>
-					</AlertDialogHeader>
-					<AlertDialogFooter>
-						<AlertDialogCancel onClick={handleDiscardCancel}>
-							Cancelar
-						</AlertDialogCancel>
-						<AlertDialogAction onClick={handleDiscardConfirm}>
-							Descartar
-						</AlertDialogAction>
-					</AlertDialogFooter>
-				</AlertDialogContent>
-			</AlertDialog>
+			<SheetDiscardGuard
+				open={showDiscardDialog}
+				onOpenChange={setShowDiscardDialog}
+				onConfirm={handleDiscardConfirm}
+				onCancel={handleDiscardCancel}
+			/>
 		</>
 	);
 }

@@ -1,17 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, MapPin } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-} from "#/components/ui/alert-dialog";
+import { SheetDiscardGuard } from "#/components/sheet-discard-guard";
 import { Button } from "#/components/ui/button";
 import {
 	Sheet,
@@ -24,6 +15,7 @@ import type { ContratoWithCliente } from "#/features/cs/contratos/contratos-type
 import { useCreateTrocaEndereco } from "#/features/cs/troca-de-endereco/troca-endereco-hooks";
 import type { TrocaEnderecoTaxaInstalacao } from "#/generated/types/nocobase/troca-endereco";
 import { TROCAENDERECO_TAXAINSTALACAO_LABELS } from "#/generated/types/nocobase/troca-endereco";
+import { useSheetDiscardGuard } from "#/hooks/use-sheet-discard-guard";
 import { CobrancaFieldsSection } from "./cobranca-fields-section";
 import { EnderecoFieldsSection } from "./endereco-fields-section";
 import {
@@ -44,7 +36,6 @@ export function TrocaEnderecoSheet({
 	open,
 	onOpenChange,
 }: TrocaEnderecoSheetProps) {
-	// Hidden auto-filled fields
 	const contratoId = String(contrato.id);
 	const clienteNome = contrato.f_nc_cliente?.razao ?? "";
 
@@ -72,8 +63,14 @@ export function TrocaEnderecoSheet({
 		formState: { errors, isValid, isDirty },
 	} = form;
 
-	const [showDiscardDialog, setShowDiscardDialog] = useState(false);
-	const pendingOpenChangeRef = useRef<boolean | null>(null);
+	// Discard guard
+	const {
+		showDiscardDialog,
+		setShowDiscardDialog,
+		handleOpenChange,
+		handleDiscardConfirm,
+		handleDiscardCancel,
+	} = useSheetDiscardGuard(onOpenChange, isDirty);
 
 	// Taxa options from generated labels
 	const taxaOptions = useMemo(
@@ -85,32 +82,6 @@ export function TrocaEnderecoSheet({
 	// Mutation
 	const mutation = useCreateTrocaEndereco();
 
-	const handleOpenChange = useCallback(
-		(nextOpen: boolean) => {
-			if (!nextOpen && isDirty) {
-				pendingOpenChangeRef.current = nextOpen;
-				setShowDiscardDialog(true);
-				return;
-			}
-			onOpenChange(nextOpen);
-		},
-		[isDirty, onOpenChange],
-	);
-
-	const handleDiscardConfirm = useCallback(() => {
-		setShowDiscardDialog(false);
-		if (pendingOpenChangeRef.current !== null) {
-			onOpenChange(pendingOpenChangeRef.current);
-			pendingOpenChangeRef.current = null;
-		}
-	}, [onOpenChange]);
-
-	const handleDiscardCancel = useCallback(() => {
-		setShowDiscardDialog(false);
-		pendingOpenChangeRef.current = null;
-	}, []);
-
-	// Submit handler
 	const onSubmit: SubmitHandler<TrocaEnderecoFormValues> = (values) => {
 		mutation.mutate(
 			{
@@ -200,24 +171,12 @@ export function TrocaEnderecoSheet({
 				</SheetContent>
 			</Sheet>
 
-			<AlertDialog open={showDiscardDialog} onOpenChange={setShowDiscardDialog}>
-				<AlertDialogContent size="sm">
-					<AlertDialogHeader>
-						<AlertDialogTitle>Descartar alterações?</AlertDialogTitle>
-						<AlertDialogDescription>
-							Você tem alterações não salvas. Deseja sair sem salvar?
-						</AlertDialogDescription>
-					</AlertDialogHeader>
-					<AlertDialogFooter>
-						<AlertDialogCancel onClick={handleDiscardCancel}>
-							Cancelar
-						</AlertDialogCancel>
-						<AlertDialogAction onClick={handleDiscardConfirm}>
-							Descartar
-						</AlertDialogAction>
-					</AlertDialogFooter>
-				</AlertDialogContent>
-			</AlertDialog>
+			<SheetDiscardGuard
+				open={showDiscardDialog}
+				onOpenChange={setShowDiscardDialog}
+				onConfirm={handleDiscardConfirm}
+				onCancel={handleDiscardCancel}
+			/>
 		</>
 	);
 }
