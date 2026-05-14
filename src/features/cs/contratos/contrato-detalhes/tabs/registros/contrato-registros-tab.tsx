@@ -83,10 +83,12 @@ const registrosTableColumns: ColumnDef<RegistrosDeContato, unknown>[] = [
 		accessorKey: "criado_por",
 		header: "Criado por",
 		cell: ({ row }) => {
-			const original = row.original as unknown as {
-				createdBy?: { nickname?: string } | null;
-			};
-			return detailShortTextCell(original.createdBy?.nickname ?? "—");
+			const nickname = (
+				row.original as RegistrosDeContato & {
+					createdBy?: { nickname?: string } | null;
+				}
+			).createdBy?.nickname;
+			return detailShortTextCell(nickname ?? "—");
 		},
 	},
 ];

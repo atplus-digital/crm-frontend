@@ -1,11 +1,11 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
 import { useState } from "react";
-import { BasicTableCard } from "#/components/basic-table-card";
 import { FilterActions } from "#/components/filters/filter-actions";
 import { FilterInputField } from "#/components/filters/filter-input-field";
 import { FilterSelectField } from "#/components/filters/filter-select-field";
 import { TabContentCard } from "#/components/layouts/tab-content-card";
+import { StatusSummaryCards } from "#/components/status-summary-cards";
 import { DataTable, useDataTable } from "#/components/table/data-table";
 import {
 	detailActionCell,
@@ -21,11 +21,11 @@ import { SUTICKET_SUSTATUS_LABELS } from "#/generated/types/d_db_ixcsoft/su-tick
 import { formatDatePtBR } from "#/lib/utils";
 
 const ATENDIMENTO_STATUS_VARIANTS: Record<string, BadgeVariant> = {
-	N: "secondary", // Novo
-	P: "outline", // Pendente
-	EP: "default", // Em progresso
-	S: "default", // Solucionado
-	C: "destructive", // Cancelado
+	N: "secondary",
+	P: "outline",
+	EP: "default",
+	S: "default",
+	C: "destructive",
 };
 
 const ATENDIMENTO_COLUMNS = [
@@ -124,23 +124,6 @@ export function ContratoAtendimentosTab({
 	);
 	const atendimentos = data?.data ?? [];
 
-	const statusCounts = atendimentos.reduce<
-		Record<string, { count: number; variant: BadgeVariant }>
-	>(
-		(acc, a) => {
-			const status = a.status;
-			if (!acc[status]) {
-				acc[status] = {
-					count: 0,
-					variant: ATENDIMENTO_STATUS_VARIANTS[status] ?? "secondary",
-				};
-			}
-			acc[status].count++;
-			return acc;
-		},
-		{} as Record<string, { count: number; variant: BadgeVariant }>,
-	);
-
 	const table = useDataTable({
 		columns: atendimentosTableColumns,
 		data: atendimentos,
@@ -181,27 +164,16 @@ export function ContratoAtendimentosTab({
 				/>
 			</div>
 			{!isLoading && !error && atendimentos.length > 0 && (
-				<div className="flex flex-wrap gap-4">
-					{Object.entries(statusCounts).map(([status, info]) => (
-						<BasicTableCard
-							key={status}
-							label={
-								SUTICKET_SUSTATUS_LABELS[
-									status as keyof typeof SUTICKET_SUSTATUS_LABELS
-								] ?? status
-							}
-							value={info.count}
-						>
-							<div className="flex items-center gap-2">
-								<p className="text-lg font-semibold">{info.count}</p>
-								<Badge
-									variant={info.variant}
-									className="size-2 rounded-full p-0"
-								/>
-							</div>
-						</BasicTableCard>
-					))}
-				</div>
+				<StatusSummaryCards
+					items={atendimentos}
+					getKey={(a) => a.status}
+					getLabel={(key) =>
+						SUTICKET_SUSTATUS_LABELS[
+							key as keyof typeof SUTICKET_SUSTATUS_LABELS
+						] ?? key
+					}
+					getVariant={(key) => ATENDIMENTO_STATUS_VARIANTS[key] ?? "secondary"}
+				/>
 			)}
 			<TabContentCard
 				title="Atendimentos"

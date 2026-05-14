@@ -44,7 +44,7 @@ export function InformacoesAdicionaisForm({
 	const isEdit = !!recordId;
 	const form = useForm<FormValues>({
 		resolver: zodResolver(schema),
-		defaultValues: {
+		values: {
 			f_origem_cliente:
 				(defaultValues?.f_origem_cliente as string | undefined) ?? "",
 			f_perfil_de_uso:
@@ -93,7 +93,9 @@ export function InformacoesAdicionaisForm({
 					</SheetDescription>
 				</SheetHeader>
 				<form
-					onSubmit={form.handleSubmit(onSubmit as any)}
+					onSubmit={form.handleSubmit((values) => {
+						void onSubmit(values);
+					})}
 					className="space-y-4 mt-4"
 				>
 					<div>
