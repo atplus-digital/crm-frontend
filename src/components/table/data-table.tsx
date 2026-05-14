@@ -5,6 +5,7 @@ import type {
 	PaginationState,
 	SortingState,
 	Table,
+	VisibilityState,
 } from "@tanstack/react-table";
 import {
 	flexRender,
@@ -173,6 +174,8 @@ interface UseDataTableOptions<TData> {
 	onPaginationChange?: OnChangeFn<PaginationState>;
 	sorting?: SortingState;
 	onSortingChange?: OnChangeFn<SortingState>;
+	columnVisibility?: VisibilityState;
+	onColumnVisibilityChange?: OnChangeFn<VisibilityState>;
 }
 
 export function useDataTable<TData>(options: UseDataTableOptions<TData>) {
@@ -190,8 +193,12 @@ export function useDataTable<TData>(options: UseDataTableOptions<TData>) {
 				? { pagination: options.pagination }
 				: {}),
 			...(options.sorting !== undefined ? { sorting: options.sorting } : {}),
+			...(options.columnVisibility !== undefined
+				? { columnVisibility: options.columnVisibility }
+				: {}),
 		},
 		onPaginationChange: options.onPaginationChange,
 		onSortingChange: options.onSortingChange,
+		onColumnVisibilityChange: options.onColumnVisibilityChange,
 	});
 }
