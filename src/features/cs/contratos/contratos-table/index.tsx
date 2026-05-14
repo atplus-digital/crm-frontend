@@ -71,6 +71,7 @@ export function ContratosTable({
 			}}
 			sorting={sorting.length > 0 ? sorting : undefined}
 			onSortingChange={onSortingChange}
+			enableColumnVisibility
 		>
 			{onFilterProvider ? (
 				<FilterProvider
