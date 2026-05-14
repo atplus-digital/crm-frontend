@@ -33,6 +33,13 @@ export function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 			),
 		},
 		{
+			accessorKey: "ultima_atualizacao",
+			header: ({ column }) => (
+				<DataTableColumnHeader column={column} title="Ultima Atualização" />
+			),
+			cell: ({ row }) => formatDatePtBR(row.original.ultima_atualizacao),
+		},
+		{
 			accessorKey: "status",
 			header: ({ column }) => (
 				<DataTableColumnHeader column={column} title="Status Contrato" />
@@ -48,20 +55,33 @@ export function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 				<InternetStatusBadge status={row.original.status_internet} />
 			),
 		},
+
 		{
 			id: "cliente",
+			maxSize: 320,
 			header: "Cliente",
-			cell: ({ row }) => row.original.f_nc_cliente?.razao ?? "—",
+			cell: ({ row }) => (
+				<span className="block max-w-80 truncate">
+					{row.original.f_nc_cliente?.razao ?? "—"}
+				</span>
+			),
 		},
 		{
 			id: "cpf_cnpj",
+			maxSize: 190,
 			header: "CPF/CNPJ",
 			cell: ({ row }) => row.original.f_nc_cliente?.cnpj_cpf ?? "—",
 		},
 		{
 			accessorKey: "contrato",
+			maxSize: 420,
 			header: ({ column }) => (
 				<DataTableColumnHeader column={column} title="Descrição" />
+			),
+			cell: ({ row }) => (
+				<span className="block max-w-96 truncate">
+					{row.original.contrato ?? "—"}
+				</span>
 			),
 		},
 		{
@@ -69,14 +89,7 @@ export function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 			header: ({ column }) => (
 				<DataTableColumnHeader column={column} title="Criado em" />
 			),
-			cell: ({ row }) => formatDatePtBR(row.original.data_cadastro_sistema),
-		},
-		{
-			accessorKey: "ultima_atualizacao",
-			header: ({ column }) => (
-				<DataTableColumnHeader column={column} title="Ultima Atualização" />
-			),
-			cell: ({ row }) => formatDatePtBR(row.original.ultima_atualizacao),
+			cell: ({ row }) => formatDatePtBR(row.original.data),
 		},
 	];
 }

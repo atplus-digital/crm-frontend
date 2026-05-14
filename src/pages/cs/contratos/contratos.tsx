@@ -26,7 +26,7 @@ export function ContratosPage() {
 		handleFilterChange,
 	} = useListPage<ContratosTableFilters>({
 		defaultFilters: DEFAULT_CONTRATOS_TABLE_FILTERS,
-		defaultSort: ["-data_cadastro_sistema"],
+		defaultSort: ["-ultima_atualizacao"],
 	});
 
 	const { data, error, isLoading, isFetching } = useContratos({
@@ -37,7 +37,7 @@ export function ContratosPage() {
 	});
 
 	return (
-		<PageLayout title="Contratos" subtitle="Contratos encontrados no IXC">
+		<PageLayout title="Contratos" subtitle="Contratos IXC">
 			{error ? (
 				<InlineErrorAlert>
 					Erro ao carregar contratos: {getErrorMessage(error)}

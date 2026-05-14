@@ -165,4 +165,21 @@ describe("useListPage", () => {
 		expect(params.get("sort")).toBe("createdAt");
 		expect(params.get("page")).toBe("1");
 	});
+
+	it("keeps only one sort field and replaces direction", () => {
+		act(() => {
+			getHarnessSnapshot().handleSort("id");
+		});
+		expect(getSearchParams().get("sort")).toBe("id");
+
+		act(() => {
+			getHarnessSnapshot().handleSort("-id");
+		});
+		expect(getSearchParams().get("sort")).toBe("-id");
+
+		act(() => {
+			getHarnessSnapshot().handleSort("createdAt");
+		});
+		expect(getSearchParams().get("sort")).toBe("createdAt");
+	});
 });

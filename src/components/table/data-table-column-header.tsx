@@ -31,8 +31,8 @@ export function DataTableColumnHeader<TData, TValue>({
 				onClick={() => column.toggleSorting(sorted === "asc")}
 			>
 				{title}
-				{sorted === "asc" && <ArrowUp />}
-				{sorted === "desc" && <ArrowDown />}
+				{sorted === "desc" && <ArrowUp />}
+				{sorted === "asc" && <ArrowDown />}
 				{sorted === false && <ArrowUpDown className="text-muted-foreground" />}
 			</Button>
 		</div>

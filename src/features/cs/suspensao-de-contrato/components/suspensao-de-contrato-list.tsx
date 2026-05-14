@@ -117,12 +117,12 @@ export function SuspensaoContratoList({
 		updater: SortingState | ((old: SortingState) => SortingState),
 	) => {
 		const next = typeof updater === "function" ? updater(sorting) : updater;
-		const first = next[0];
-		if (!first) {
+		const last = next[next.length - 1];
+		if (!last) {
 			onSort("");
 			return;
 		}
-		onSort(first.desc ? `-${first.id}` : first.id);
+		onSort(last.desc ? `-${last.id}` : last.id);
 	};
 
 	const columns = useMemo(() => getColumns(), []);

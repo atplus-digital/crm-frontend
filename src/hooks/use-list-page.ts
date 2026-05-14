@@ -129,43 +129,8 @@ export function useListPage<TFilters extends object = object>(
 		(field: string) => {
 			if (!syncSortToUrl) return;
 			updateSearchParams((nextSearchParams) => {
-				// Empty field means clear all sorting
-				if (!field) {
-					nextSearchParams.delete("sort");
-					nextSearchParams.set("page", "1");
-					return;
-				}
-
-				const current = nextSearchParams.get("sort") ?? "";
-				const fields = current.split(",").filter(Boolean);
-
-				// Normalize: determine the column name and desired direction
-				const isDesc = field.startsWith("-");
-				const fieldName = isDesc ? field.slice(1) : field;
-
-				// Check if this column is already in the sort list (in any direction)
-				const existingValue =
-					fields.find((f) => f === fieldName) ??
-					fields.find((f) => f === `-${fieldName}`);
-				const existingIsDesc = existingValue?.startsWith("-") ?? false;
-
-				let nextSort = "";
-
-				if (!existingValue) {
-					// Column not currently sorted → add with desired direction
-					nextSort = [...fields, field].join(",");
-				} else if (isDesc === existingIsDesc) {
-					// Same direction → toggle off (remove)
-					nextSort = fields.filter((f) => f !== existingValue).join(",");
-				} else {
-					// Different direction → replace
-					nextSort = fields
-						.map((f) => (f === existingValue ? field : f))
-						.join(",");
-				}
-
-				if (nextSort) {
-					nextSearchParams.set("sort", nextSort);
+				if (field) {
+					nextSearchParams.set("sort", field);
 				} else {
 					nextSearchParams.delete("sort");
 				}

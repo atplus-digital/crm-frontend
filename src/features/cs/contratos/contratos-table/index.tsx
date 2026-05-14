@@ -39,12 +39,12 @@ export function ContratosTable({
 		updater: SortingState | ((old: SortingState) => SortingState),
 	) => {
 		const next = typeof updater === "function" ? updater(sorting) : updater;
-		const first = next[0];
-		if (!first) {
+		const last = next[next.length - 1];
+		if (!last) {
 			onSort("");
 			return;
 		}
-		onSort(serializeSort([first]));
+		onSort(serializeSort([last]));
 	};
 
 	const columns = useMemo(() => getColumns(), []);

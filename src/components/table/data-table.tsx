@@ -1,4 +1,5 @@
 import type {
+	Column,
 	ColumnDef,
 	OnChangeFn,
 	PaginationState,
@@ -10,6 +11,7 @@ import {
 	getCoreRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
+import type { CSSProperties, ReactNode } from "react";
 import { DEFAULT_DATA_TABLE_EMPTY_MESSAGE } from "#/components/table/constants";
 import { useResolvedDataTable } from "#/components/table/data-table-context";
 import { DataTableSkeleton } from "#/components/table/data-table-skeleton";
@@ -22,7 +24,48 @@ import {
 	Table as TablePrimitive,
 	TableRow,
 } from "#/components/ui/table";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "#/components/ui/tooltip";
 import { cn } from "#/lib/utils";
+
+function getColumnWidthStyle<TData>(
+	column: Column<TData, unknown>,
+): CSSProperties | undefined {
+	const { size, minSize, maxSize } = column.columnDef;
+	const hasExplicitWidth =
+		size !== undefined || minSize !== undefined || maxSize !== undefined;
+
+	if (!hasExplicitWidth) {
+		return undefined;
+	}
+
+	return {
+		width: column.getSize(),
+		...(minSize !== undefined ? { minWidth: minSize } : {}),
+		...(maxSize !== undefined ? { maxWidth: maxSize } : {}),
+	};
+}
+
+interface OverflowTooltipCellProps {
+	children: ReactNode;
+}
+
+function OverflowTooltipCell({ children }: OverflowTooltipCellProps) {
+	return (
+		<TooltipProvider>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<div className="w-full overflow-hidden">{children}</div>
+				</TooltipTrigger>
+				<TooltipContent>{children}</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
+	);
+}
 
 interface DataTableProps<TData> {
 	table?: Table<TData>;
@@ -73,7 +116,10 @@ export function DataTable<TData>({
 					{table.getHeaderGroups().map((headerGroup) => (
 						<TableRow key={headerGroup.id}>
 							{headerGroup.headers.map((header) => (
-								<TableHead key={header.id}>
+								<TableHead
+									key={header.id}
+									style={getColumnWidthStyle(header.column)}
+								>
 									{header.isPlaceholder
 										? null
 										: flexRender(
@@ -90,8 +136,21 @@ export function DataTable<TData>({
 						rows.map((row) => (
 							<TableRow key={row.id}>
 								{row.getVisibleCells().map((cell) => (
-									<TableCell key={cell.id}>
-										{flexRender(cell.column.columnDef.cell, cell.getContext())}
+									<TableCell
+										key={cell.id}
+										style={getColumnWidthStyle(cell.column)}
+									>
+										{cell.column.columnDef.maxSize !== undefined &&
+										cell.column.columnDef.maxSize < 999999 ? (
+											<OverflowTooltipCell>
+												{flexRender(
+													cell.column.columnDef.cell,
+													cell.getContext(),
+												)}
+											</OverflowTooltipCell>
+										) : (
+											flexRender(cell.column.columnDef.cell, cell.getContext())
+										)}
 									</TableCell>
 								))}
 							</TableRow>

@@ -62,12 +62,14 @@ export function ContratosFilters({ filters }: ContratosFiltersProps) {
 		<FilterLayout
 			fieldsClassName="lg:grid-cols-3 xl:grid-cols-5"
 			actions={
-				<FilterActions
-					onApply={() => onFilter(filters)}
-					onClear={() => onFilter(getCleanFilters())}
-					canClear={hasActiveFilters(filters)}
-					clearVariant="ghost"
-				/>
+				<div className="flex items-center justify-end">
+					<FilterActions
+						onApply={() => onFilter(filters)}
+						onClear={() => onFilter(getCleanFilters())}
+						canClear={hasActiveFilters(filters)}
+						clearVariant="ghost"
+					/>
+				</div>
 			}
 		>
 			<FilterInputField
