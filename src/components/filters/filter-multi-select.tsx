@@ -1,4 +1,6 @@
 import { ChevronDown, X } from "lucide-react";
+import type { BadgeColor } from "#/components/ui/badge";
+import { getBadgeSolidClass } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import {
 	DropdownMenu,
@@ -25,6 +27,12 @@ interface FilterMultiSelectProps<T extends string> {
 	allLabel?: string;
 	showAllOption?: boolean;
 	badgeTrigger?: boolean;
+	/**
+	 * Maps option value → BadgeColor for trigger badge pills.
+	 * Preferred over badgeColorClass (which takes raw Tailwind class strings).
+	 */
+	badgeColorMap?: Record<T, BadgeColor>;
+	/** @deprecated Use badgeColorMap instead */
 	badgeColorClass?: (value: T) => string;
 	maxBadgeDisplay?: number;
 	className?: string;
@@ -40,6 +48,7 @@ export function FilterMultiSelect<T extends string>({
 	allLabel = "Todos",
 	showAllOption = true,
 	badgeTrigger = false,
+	badgeColorMap,
 	badgeColorClass,
 	maxBadgeDisplay = 2,
 	className,
@@ -60,6 +69,13 @@ export function FilterMultiSelect<T extends string>({
 		} else {
 			onChange(value.filter((v) => v !== optionValue));
 		}
+	};
+
+	const getPillClass = (opt: MultiSelectOption<T>) => {
+		if (badgeColorMap) {
+			return getBadgeSolidClass(badgeColorMap[opt.value] ?? "gray");
+		}
+		return badgeColorClass?.(opt.value) ?? "bg-primary/10 text-primary";
 	};
 
 	return (
@@ -89,8 +105,7 @@ export function FilterMultiSelect<T extends string>({
 											key={opt.value}
 											className={cn(
 												"inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium shrink-0",
-												badgeColorClass?.(opt.value) ??
-													"bg-primary/10 text-primary",
+												getPillClass(opt),
 											)}
 										>
 											{opt.label}

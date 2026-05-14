@@ -1,5 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { StatusBadge } from "#/components/badges/status-badge";
+import type { BadgeColor } from "#/components/ui/badge";
 import type { Pessoas } from "#/generated/types/nocobase/pessoas";
 import {
 	PESSOAS_ANALISEIXC_LABELS,
@@ -7,13 +8,13 @@ import {
 } from "#/generated/types/nocobase/pessoas";
 import { formatDatePtBR } from "#/lib/utils";
 
-const CREDITO_COLOR_CLASSES: Record<
+const CREDITO_COLOR_MAP: Record<
 	keyof typeof PESSOAS_CREDITO_LABELS,
-	string
+	BadgeColor
 > = {
-	1: "bg-green-500/10 text-green-600 hover:bg-green-500/20",
-	2: "bg-yellow-500/10 text-yellow-600 hover:bg-yellow-500/20",
-	9: "bg-red-500/10 text-red-600 hover:bg-red-500/20",
+	1: "green",
+	2: "yellow",
+	9: "red",
 };
 
 const CREDITO_VARIANTS: Record<
@@ -25,12 +26,12 @@ const CREDITO_VARIANTS: Record<
 	9: "destructive",
 };
 
-const ANALISE_IXC_COLOR_CLASSES: Record<
+const ANALISE_IXC_COLOR_MAP: Record<
 	keyof typeof PESSOAS_ANALISEIXC_LABELS,
-	string
+	BadgeColor
 > = {
-	0: "bg-red-500/10 text-red-600 hover:bg-red-500/20",
-	1: "bg-green-500/10 text-green-600 hover:bg-green-500/20",
+	0: "red",
+	1: "green",
 };
 
 const ANALISE_IXC_VARIANTS: Record<
@@ -63,7 +64,7 @@ export const pfColumns: ColumnDef<Pessoas, unknown>[] = [
 						value="nao_analisado"
 						labels={{ nao_analisado: "Não analisado" }}
 						defaultVariant="secondary"
-						defaultClass="bg-gray-100 text-gray-600"
+						defaultColor="gray"
 					/>
 				);
 			}
@@ -72,7 +73,7 @@ export const pfColumns: ColumnDef<Pessoas, unknown>[] = [
 					value={value}
 					labels={PESSOAS_CREDITO_LABELS}
 					variants={CREDITO_VARIANTS}
-					colorClasses={CREDITO_COLOR_CLASSES}
+					colorMap={CREDITO_COLOR_MAP}
 					defaultVariant="secondary"
 				/>
 			);
@@ -97,7 +98,7 @@ export const pfColumns: ColumnDef<Pessoas, unknown>[] = [
 					value={value}
 					labels={PESSOAS_ANALISEIXC_LABELS}
 					variants={ANALISE_IXC_VARIANTS}
-					colorClasses={ANALISE_IXC_COLOR_CLASSES}
+					colorMap={ANALISE_IXC_COLOR_MAP}
 					defaultVariant="destructive"
 				/>
 			);

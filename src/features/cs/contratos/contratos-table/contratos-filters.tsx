@@ -5,6 +5,7 @@ import {
 	FilterMultiSelect,
 } from "#/components/filters";
 import { useFilterContext } from "#/components/filters/filter-context";
+import type { BadgeColor } from "#/components/ui/badge";
 import {
 	CONTRATO_STATUS_LABELS,
 	type ContratoStatus,
@@ -17,23 +18,23 @@ interface ContratosFiltersProps {
 	filters: ContratosTableFilters;
 }
 
-const STATUS_BADGE_COLORS: Record<ContratoStatus, string> = {
-	A: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-	I: "bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-400",
-	D: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400",
-	C: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
-	P: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
-	N: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400",
+const STATUS_BADGE_COLOR_MAP: Record<ContratoStatus, BadgeColor> = {
+	A: "green",
+	I: "slate",
+	D: "orange",
+	C: "red",
+	P: "blue",
+	N: "purple",
 };
 
-const SERVICO_STATUS_BADGE_COLORS: Record<InternetStatus, string> = {
-	A: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400",
-	D: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
-	FA: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400",
-	CM: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400",
-	CA: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400",
-	CE: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400",
-	AA: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
+const SERVICO_STATUS_BADGE_COLOR_MAP: Record<InternetStatus, BadgeColor> = {
+	A: "emerald",
+	D: "red",
+	FA: "amber",
+	CM: "orange",
+	CA: "orange",
+	CE: "purple",
+	AA: "blue",
 };
 
 export function ContratosFilters({ filters }: ContratosFiltersProps) {
@@ -103,7 +104,7 @@ export function ContratosFilters({ filters }: ContratosFiltersProps) {
 					});
 				}}
 				badgeTrigger
-				badgeColorClass={(value) => STATUS_BADGE_COLORS[value]}
+				badgeColorMap={STATUS_BADGE_COLOR_MAP}
 			/>
 			<FilterMultiSelect<InternetStatus>
 				id="filter-contratos-servico-status"
@@ -118,7 +119,7 @@ export function ContratosFilters({ filters }: ContratosFiltersProps) {
 					});
 				}}
 				badgeTrigger
-				badgeColorClass={(value) => SERVICO_STATUS_BADGE_COLORS[value]}
+				badgeColorMap={SERVICO_STATUS_BADGE_COLOR_MAP}
 			/>
 			<FilterInputField
 				id="filter-contratos-id"

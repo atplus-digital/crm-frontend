@@ -83,11 +83,8 @@ function getColumns(): ColumnDef<TrocaEnderecoWithRelations, unknown>[] {
 					<StatusBadge
 						value={displayLabel}
 						labels={TROCAENDERECO_STATUS_LABELS}
-						colorClasses={{
-							[displayLabel]:
-								"bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
-						}}
-						defaultClass="bg-gray-100 text-gray-800 dark:bg-gray-800/30 dark:text-gray-400"
+						colorMap={{ [displayLabel]: "blue" }}
+						defaultColor="gray"
 						variant="inline"
 						defaultVariant="secondary"
 					/>

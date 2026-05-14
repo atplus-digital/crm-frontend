@@ -1,4 +1,5 @@
 import type { UseFormSetValue } from "react-hook-form";
+import { Badge, type BadgeColor } from "#/components/ui/badge";
 import { Label } from "#/components/ui/label";
 import {
 	Select,
@@ -7,15 +8,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#/components/ui/select";
+import type { PessoaFisicaResult } from "#/features/cs/pessoas/components/pessoa-fisica-search";
+import { PessoaFisicaSearch } from "#/features/cs/pessoas/components/pessoa-fisica-search";
+import { PessoaJuridicaSearch } from "#/features/cs/pessoas/components/pessoa-juridica-search";
 import { CRMTROCATITULARIDADE_TIPOPESSOA_LABELS } from "#/generated/types/nocobase/crm-troca-titularidade";
 import { PESSOAS_CREDITO_LABELS } from "#/generated/types/nocobase/pessoas";
-import { cn } from "#/lib/utils";
 import {
 	ContactFields,
 	NomeDocumentoFields,
 } from "./transferencia-titularidade-cessionario-form-fields";
-import { PfSearch } from "./transferencia-titularidade-pf-search";
-import { PjSearch } from "./transferencia-titularidade-pj-search";
 import type {
 	CessionarioState,
 	SelectedPF,
@@ -43,32 +44,26 @@ interface CessionarioSectionProps {
 // Credit Badge
 // ============================================================================
 
-const CREDITO_COLORS: Record<keyof typeof PESSOAS_CREDITO_LABELS, string> = {
-	1: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
-	2: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400",
-	9: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
+const CREDITO_COLOR_MAP: Record<
+	keyof typeof PESSOAS_CREDITO_LABELS,
+	BadgeColor
+> = {
+	1: "blue",
+	2: "amber",
+	9: "red",
 };
 
 function CreditBadge({ credito }: { credito: number | string | undefined }) {
 	if (!credito) return null;
 
-	const label =
-		PESSOAS_CREDITO_LABELS[
-			Number(credito) as keyof typeof PESSOAS_CREDITO_LABELS
-		];
-	const color = CREDITO_COLORS[credito as keyof typeof CREDITO_COLORS] ?? "";
+	const creditoKey = Number(credito) as keyof typeof PESSOAS_CREDITO_LABELS;
+	const label = PESSOAS_CREDITO_LABELS[creditoKey];
+	const color = CREDITO_COLOR_MAP[creditoKey];
 
 	return (
 		<div className="flex items-center gap-2">
 			<span className="text-sm text-muted-foreground">Análise de Crédito:</span>
-			<span
-				className={cn(
-					"inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium",
-					color,
-				)}
-			>
-				{label}
-			</span>
+			<Badge color={color}>{label}</Badge>
 		</div>
 	);
 }
@@ -93,15 +88,15 @@ export function CessionarioSection({
 		onCessionarioChange({ ...cessionario, nome: "", documento: "" });
 	};
 
-	const handlePFSelect = (pf: SelectedPF) => {
+	const handlePFSelect = (pf: PessoaFisicaResult) => {
 		onSelectedPFChange(pf);
 		onCessionarioChange({
 			...cessionario,
-			nome: pf?.f_nome ?? "",
-			documento: pf?.f_cpf ?? "",
+			nome: pf.f_nome,
+			documento: pf.f_cpf,
 		});
-		setValue("f_cessionario", pf?.f_nome ?? "");
-		setValue("f_cessionario_documento", pf?.f_cpf ?? "");
+		setValue("f_cessionario", pf.f_nome);
+		setValue("f_cessionario_documento", pf.f_cpf);
 	};
 
 	const handleTipoPessoaChange = (value: string) => {
@@ -152,14 +147,17 @@ export function CessionarioSection({
 				{/* PF-specific fields */}
 				{tipoPessoa === "PF" && (
 					<>
-						<PfSearch onSelect={handlePFSelect} onClear={handleClearPFSearch} />
+						<PessoaFisicaSearch
+							onSelect={handlePFSelect}
+							onClear={handleClearPFSearch}
+						/>
 						{selectedPF && <CreditBadge credito={selectedPF.f_credito} />}
 					</>
 				)}
 
 				{/* PJ-specific fields */}
 				{tipoPessoa === "PJ" && (
-					<PjSearch onSelect={() => {}} onClear={onClearPJSearch} />
+					<PessoaJuridicaSearch onSelect={() => {}} onClear={onClearPJSearch} />
 				)}
 
 				{/* Nome + Documento */}

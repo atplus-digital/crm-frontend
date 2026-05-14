@@ -1,14 +1,14 @@
 import { StatusBadge } from "#/components/badges/status-badge";
+import type { BadgeColor } from "#/components/ui/badge";
 import type { NegociacoesItensRelacao } from "#/generated/types/nocobase/other/negociacoes-itens";
 import { NEGOCIACOESITENS_RELACAO_LABELS } from "#/generated/types/nocobase/other/negociacoes-itens";
 
-const RELACAO_COLORS: Record<
+const RELACAO_COLOR_MAP: Record<
 	keyof typeof NEGOCIACOESITENS_RELACAO_LABELS,
-	string
+	BadgeColor
 > = {
-	COMBO: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-	ADICIONAL:
-		"bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
+	COMBO: "blue",
+	ADICIONAL: "orange",
 };
 
 interface RelacaoBadgeProps {
@@ -20,7 +20,7 @@ export function RelacaoBadge({ relacao }: RelacaoBadgeProps) {
 		<StatusBadge
 			value={relacao}
 			labels={NEGOCIACOESITENS_RELACAO_LABELS}
-			colorClasses={RELACAO_COLORS}
+			colorMap={RELACAO_COLOR_MAP}
 			variant="inline"
 		/>
 	);

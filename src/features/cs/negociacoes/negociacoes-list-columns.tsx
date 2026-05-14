@@ -1,21 +1,22 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { StatusBadge } from "#/components/badges/status-badge";
 import { ViewActionButton } from "#/components/table/columns/view-action-button";
+import type { BadgeColor } from "#/components/ui/badge";
 import { MotivoBadge } from "#/features/cs/negociacoes/negociacao-badges/motivo-badge";
 import type { NegociacaoWithRelations } from "#/features/cs/negociacoes/negociacoes-types";
 import { NEGOCIACAO_STATUS_LABELS } from "#/features/cs/negociacoes/negociacoes-types";
 import { formatCurrency, formatDatePtBR } from "#/lib/utils";
 
-const negociacaoStatusColorClasses: Record<
+const negociacaoStatusColorMap: Record<
 	keyof typeof NEGOCIACAO_STATUS_LABELS,
-	string
+	BadgeColor
 > = {
-	"1": "bg-blue-500/10 text-blue-600 border-blue-500/20 hover:bg-blue-500/20",
-	"2": "bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20",
-	"3": "bg-purple-500/10 text-purple-600 border-purple-500/20 hover:bg-purple-500/20",
-	"4": "bg-orange-500/10 text-orange-600 border-orange-500/20 hover:bg-orange-500/20",
-	"5": "bg-green-500/10 text-green-600 border-green-500/20 hover:bg-green-500/20",
-	"6": "bg-gray-500/10 text-gray-600 border-gray-500/20 hover:bg-gray-500/20",
+	"1": "blue",
+	"2": "amber",
+	"3": "purple",
+	"4": "orange",
+	"5": "green",
+	"6": "gray",
 };
 
 export type NegociacaoItem = NegociacaoWithRelations;
@@ -89,9 +90,9 @@ export const columns: ColumnDef<NegociacaoItem>[] = [
 			<StatusBadge
 				value={row.original.f_status}
 				labels={NEGOCIACAO_STATUS_LABELS}
-				colorClasses={negociacaoStatusColorClasses}
-				defaultVariant="outline"
-				defaultClass={negociacaoStatusColorClasses["6"]}
+				colorMap={negociacaoStatusColorMap}
+				defaultVariant="soft"
+				defaultColor="gray"
 			/>
 		),
 	},

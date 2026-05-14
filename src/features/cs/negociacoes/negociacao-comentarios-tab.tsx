@@ -1,3 +1,4 @@
+import { Badge } from "#/components/ui/badge";
 import { useNegociacaoComentarios } from "#/features/cs/negociacoes/negociacoes-hooks";
 import { formatDatePtBR } from "#/lib/utils";
 import { CommentCard } from "./negociacao-comentarios-card";
@@ -28,9 +29,12 @@ export function NegociacaoComentariosTab({
 					timestamp={formatDatePtBR(comentario.createdAt)}
 					badge={
 						comentario.f_insere_atendimento_ixc === "1" ? (
-							<span className="inline-flex items-center rounded-md bg-green-500/15 px-2 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+							<Badge
+								color="green"
+								className="ring-1 ring-inset ring-green-600/20"
+							>
 								Enviado ao IXC
-							</span>
+							</Badge>
 						) : undefined
 					}
 				>

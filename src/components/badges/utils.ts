@@ -1,10 +1,7 @@
-import type { BadgeVariant } from "#/components/ui/badge";
+import type { BadgeColor, BadgeVariant } from "#/components/ui/badge";
 
 /**
- * Retorna o variant do Badge para um determinado valor de status.
- * @param value - O valor do status
- * @param variants - Mapeamento opcional de valor → variant
- * @param defaultVariant - Variant padrão (default: "secondary")
+ * Returns the Badge variant for a given status value.
  */
 export function getStatusVariant(
 	value: string,
@@ -15,10 +12,8 @@ export function getStatusVariant(
 }
 
 /**
- * Retorna a classe CSS para um determinado valor de status.
- * @param value - O valor do status
- * @param colorClasses - Mapeamento opcional de valor → classes Tailwind
- * @param defaultClass - Classe padrão
+ * Returns a Tailwind class string for a given status value (legacy — deprecated).
+ * @deprecated Use `getBadgeColorValue` + Badge color prop instead.
  */
 export function getColorClass(
 	value: string,
@@ -26,4 +21,19 @@ export function getColorClass(
 	defaultClass = "bg-gray-100 text-gray-800 dark:bg-gray-800/30 dark:text-gray-400",
 ): string {
 	return colorClasses?.[value] ?? defaultClass;
+}
+
+/**
+ * Returns the BadgeColor for a given status value.
+ *
+ * @example
+ * const color = getBadgeColorValue("A", { A: "emerald", I: "gray" }, "gray");
+ * // => "emerald" | "gray" (fallback)
+ */
+export function getBadgeColorValue(
+	value: string,
+	colorMap?: Record<string, BadgeColor>,
+	defaultColor: BadgeColor = "gray",
+): BadgeColor {
+	return colorMap?.[value] ?? defaultColor;
 }
