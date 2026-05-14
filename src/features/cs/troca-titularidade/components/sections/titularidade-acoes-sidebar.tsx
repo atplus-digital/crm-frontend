@@ -31,7 +31,6 @@ export function TitularidadeAcoesSidebar({
 	onExcluir,
 }: TitularidadeAcoesSidebarProps) {
 	const [dialog, setDialog] = useState<"arquivar" | "excluir" | null>(null);
-	const n = trocaTitularidade as any;
 
 	return (
 		<div className="space-y-4">
@@ -111,15 +110,17 @@ export function TitularidadeAcoesSidebar({
 					</div>
 					<div>
 						<span className="text-xs text-muted-foreground">Vendedor</span>
-						<p className="text-sm">{n.f_vendedor?.nickname ?? "—"}</p>
+						<p className="text-sm">
+							{trocaTitularidade.f_vendedor?.nickname ?? "—"}
+						</p>
 					</div>
-					{n.f_link_assinatura_cedente && (
+					{trocaTitularidade.f_link_assinatura_cedente && (
 						<div>
 							<span className="text-xs text-muted-foreground">
 								Link Ass. Cedente
 							</span>
 							<a
-								href={n.f_link_assinatura_cedente}
+								href={trocaTitularidade.f_link_assinatura_cedente}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="block text-sm text-primary underline truncate"
@@ -128,13 +129,13 @@ export function TitularidadeAcoesSidebar({
 							</a>
 						</div>
 					)}
-					{n.f_link_assinatura_cessionario && (
+					{trocaTitularidade.f_link_assinatura_cessionario && (
 						<div>
 							<span className="text-xs text-muted-foreground">
 								Link Ass. Cessionário
 							</span>
 							<a
-								href={n.f_link_assinatura_cessionario}
+								href={trocaTitularidade.f_link_assinatura_cessionario}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="block text-sm text-primary underline truncate"

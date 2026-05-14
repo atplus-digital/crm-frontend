@@ -31,11 +31,7 @@ export function TitularidadeComentarioDrawer({
 		mutationFn: (data: {
 			f_comentario: string;
 			f_comentario_troca_de_titularidade: number;
-		}) =>
-			nocobaseRepository.create(
-				"t_trocasdetitularidade_comentarios" as any,
-				data,
-			),
+		}) => nocobaseRepository.create("t_trocasdetitularidade_comentarios", data),
 		onSuccess: () => {
 			toast.success("Comentário adicionado");
 			queryClient.invalidateQueries({

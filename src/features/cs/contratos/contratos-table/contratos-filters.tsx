@@ -65,13 +65,13 @@ export function ContratosFilters({ filters }: ContratosFiltersProps) {
 			fieldsClassName="lg:grid-cols-3 xl:grid-cols-5"
 			actions={
 				<div className="flex items-center justify-between gap-2">
-					<DataTableColumnVisibility />
 					<FilterActions
 						onApply={() => onFilter(filters)}
 						onClear={() => onFilter(getCleanFilters())}
 						canClear={hasActiveFilters(filters)}
 						clearVariant="ghost"
 					/>
+					<DataTableColumnVisibility />
 				</div>
 			}
 		>

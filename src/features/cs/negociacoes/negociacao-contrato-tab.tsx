@@ -11,9 +11,7 @@ interface NegociacaoContratoTabProps {
 export function NegociacaoContratoTab({
 	negociacao,
 }: NegociacaoContratoTabProps) {
-	const linkAssinatura = (negociacao as any).f_link_assinatura as
-		| string
-		| undefined;
+	const linkAssinatura = negociacao.f_link_assinatura as string | undefined;
 
 	return (
 		<div className="space-y-6">
@@ -42,10 +40,10 @@ export function NegociacaoContratoTab({
 				</CardHeader>
 				<CardContent className="grid grid-cols-2 gap-4">
 					<DetailField label="Responsável pela assinatura">
-						{(negociacao as any).f_responsavel_assinatura || "—"}
+						{negociacao.f_responsavel_assinatura || "—"}
 					</DetailField>
 					<DetailField label="CPF Responsável">
-						{(negociacao as any).f_cpf_responsavel_assinatura || "—"}
+						{negociacao.f_cpf_responsavel_assinatura || "—"}
 					</DetailField>
 					{linkAssinatura && (
 						<DetailField label="Link Assinatura">

@@ -14,6 +14,7 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import type { CrmTrocaTitularidadeWithRelations } from "#/features/cs/troca-titularidade/troca-titularidade-hooks";
+import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-titularidade";
 import {
 	CRMTROCATITULARIDADE_COMPLEMENTO_LABELS,
 	CRMTROCATITULARIDADE_ESTADO_LABELS,
@@ -66,31 +67,34 @@ export function TitularidadeEditForm({
 }: TitularidadeEditFormProps) {
 	const queryClient = useQueryClient();
 	const hidden = isSaveHidden(trocaTitularidade);
-	const n = trocaTitularidade as any;
 
 	const form = useForm<FormValues>({
-		resolver: zodResolver(schema) as any,
+		resolver: zodResolver(schema),
 		defaultValues: {
-			f_cedente: n.f_cedente ?? "",
-			f_cedente_documento: n.f_cedente_documento ?? "",
-			f_cedente_responsavel_legal: n.f_cedente_responsavel_legal ?? "",
-			f_cedente_doc_resp_legal: n.f_cedente_doc_resp_legal ?? "",
-			f_cedente_telefone: n.f_cedente_telefone ?? "",
-			f_cedente_email: n.f_cedente_email ?? "",
-			f_cessionario: n.f_cessionario ?? "",
-			f_cessionario_documento: n.f_cessionario_documento ?? "",
-			f_cessionario_responsavel: n.f_cessionario_responsavel ?? "",
-			f_cessionario_doc_resp_legal: n.f_cessionario_doc_resp_legal ?? "",
-			f_cessionario_telefone: n.f_cessionario_telefone ?? "",
-			f_cessionario_email: n.f_cessionario_email ?? "",
-			f_id_contrato: n.f_id_contrato ?? "",
-			f_cep: n.f_cep ?? "",
-			f_endereco: n.f_endereco ?? "",
-			f_numero: n.f_numero ?? "",
-			f_bairro: n.f_bairro ?? "",
-			f_cidade: n.f_cidade ?? "",
-			f_estado: n.f_estado ?? "",
-			f_complemento: n.f_complemento ?? "",
+			f_cedente: trocaTitularidade.f_cedente ?? "",
+			f_cedente_documento: trocaTitularidade.f_cedente_documento ?? "",
+			f_cedente_responsavel_legal:
+				trocaTitularidade.f_cedente_responsavel_legal ?? "",
+			f_cedente_doc_resp_legal:
+				trocaTitularidade.f_cedente_doc_resp_legal ?? "",
+			f_cedente_telefone: trocaTitularidade.f_cedente_telefone ?? "",
+			f_cedente_email: trocaTitularidade.f_cedente_email ?? "",
+			f_cessionario: trocaTitularidade.f_cessionario ?? "",
+			f_cessionario_documento: trocaTitularidade.f_cessionario_documento ?? "",
+			f_cessionario_responsavel:
+				trocaTitularidade.f_cessionario_responsavel ?? "",
+			f_cessionario_doc_resp_legal:
+				trocaTitularidade.f_cessionario_doc_resp_legal ?? "",
+			f_cessionario_telefone: trocaTitularidade.f_cessionario_telefone ?? "",
+			f_cessionario_email: trocaTitularidade.f_cessionario_email ?? "",
+			f_id_contrato: trocaTitularidade.f_id_contrato ?? "",
+			f_cep: trocaTitularidade.f_cep ?? "",
+			f_endereco: trocaTitularidade.f_endereco ?? "",
+			f_numero: trocaTitularidade.f_numero ?? "",
+			f_bairro: trocaTitularidade.f_bairro ?? "",
+			f_cidade: trocaTitularidade.f_cidade ?? "",
+			f_estado: trocaTitularidade.f_estado ?? "",
+			f_complemento: trocaTitularidade.f_complemento ?? "",
 		},
 	});
 
@@ -99,7 +103,7 @@ export function TitularidadeEditForm({
 			nocobaseRepository.update(
 				"t_crm_troca_titularidade",
 				trocaTitularidade.id,
-				values as any,
+				values as Partial<CrmTrocaTitularidade>,
 			),
 		onSuccess: () => {
 			toast.success("Atualizado com sucesso");

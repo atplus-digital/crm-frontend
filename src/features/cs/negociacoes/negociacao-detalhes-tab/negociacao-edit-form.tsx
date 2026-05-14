@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { Resolver } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -66,35 +67,41 @@ export function NegociacaoEditForm({ negociacao }: NegociacaoEditFormProps) {
 	const showConfissao = negociacao.f_confissao_divida === "Sim";
 
 	const form = useForm<FormValues>({
-		resolver: zodResolver(schema) as any,
+		resolver: zodResolver(schema) as unknown as Resolver<FormValues>,
 		defaultValues: (() => {
-			const n = negociacao as any;
+			const n = negociacao;
 			return {
-				f_cep: n.f_cep ?? "",
-				f_bairro: n.f_bairro ?? "",
-				f_endereco_cidade: n.f_endereco_cidade ?? "",
-				f_endereco_estado: n.f_endereco_estado ?? "",
-				f_endereco: n.f_endereco ?? "",
-				f_endereco_numero: n.f_endereco_numero ?? "",
-				f_endereco_complemento: n.f_endereco_complemento ?? "",
-				f_endereco_referencia: n.f_endereco_referencia ?? "",
-				f_assinatura_gov: n.f_assinatura_gov ?? "",
-				f_fidelidade: n.f_fidelidade ?? "",
-				f_email_cobranca: n.f_email_cobranca ?? "",
-				f_data_vencimento: n.f_data_vencimento ?? "",
-				f_telefone: n.f_telefone ?? "",
-				f_telefone_2: n.f_telefone_2 ?? "",
-				f_responsavel_assinatura: n.f_responsavel_assinatura ?? "",
-				f_cpf_responsavel_assinatura: n.f_cpf_responsavel_assinatura ?? "",
+				f_cep: String(n.f_cep ?? ""),
+				f_bairro: String(n.f_bairro ?? ""),
+				f_endereco_cidade: String(n.f_endereco_cidade ?? ""),
+				f_endereco_estado: String(n.f_endereco_estado ?? ""),
+				f_endereco: String(n.f_endereco ?? ""),
+				f_endereco_numero: String(n.f_endereco_numero ?? ""),
+				f_endereco_complemento: String(n.f_endereco_complemento ?? ""),
+				f_endereco_referencia: String(n.f_endereco_referencia ?? ""),
+				f_assinatura_gov: String(n.f_assinatura_gov ?? ""),
+				f_fidelidade: String(n.f_fidelidade ?? ""),
+				f_email_cobranca: String(n.f_email_cobranca ?? ""),
+				f_data_vencimento: String(n.f_data_vencimento ?? ""),
+				f_telefone: String(n.f_telefone ?? ""),
+				f_telefone_2: String(n.f_telefone_2 ?? ""),
+				f_responsavel_assinatura: String(n.f_responsavel_assinatura ?? ""),
+				f_cpf_responsavel_assinatura: String(
+					n.f_cpf_responsavel_assinatura ?? "",
+				),
 				f_confissao_divida:
 					String(n.f_confissao_divida) === "Sim" ? "Sim" : "Nao",
 				f_valor_devedor: n.f_valor_devedor ?? undefined,
 				f_multa_juros: n.f_multa_juros ?? undefined,
 				f_entrada_saldo_devedor: n.f_entrada_saldo_devedor ?? undefined,
 				f_parcelas_mensais: n.f_parcelas_mensais ?? undefined,
-				f_valor_devedor_total: n.f_valor_devedor_total ?? undefined,
-				f_valor_da_parcela: n.f_valor_da_parcela ?? undefined,
-				f_periodo_final: n.f_periodo_final ?? "",
+				f_valor_devedor_total: n.f_valor_devedor_total
+					? Number(n.f_valor_devedor_total)
+					: undefined,
+				f_valor_da_parcela: n.f_valor_da_parcela
+					? Number(n.f_valor_da_parcela)
+					: undefined,
+				f_periodo_final: String(n.f_periodo_final ?? ""),
 				f_permuta: Boolean(n.f_permuta),
 			};
 		})(),
@@ -102,6 +109,7 @@ export function NegociacaoEditForm({ negociacao }: NegociacaoEditFormProps) {
 
 	const mutation = useMutation({
 		mutationFn: (values: FormValues) =>
+			// biome-ignore lint/suspicious/noExplicitAny: updateNegociacao expects full Negociacao type; form sends partial subset
 			updateNegociacao(negociacao.id, values as any),
 		onSuccess: () => {
 			toast.success("Negociação atualizada");
@@ -138,7 +146,7 @@ export function NegociacaoEditForm({ negociacao }: NegociacaoEditFormProps) {
 	);
 
 	return (
-		<form onSubmit={form.handleSubmit(onSubmit as any)} className="space-y-6">
+		<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 			<div className="space-y-4">
 				<h3 className="font-semibold text-sm text-muted-foreground">
 					Endereço

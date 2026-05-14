@@ -10,12 +10,10 @@ interface SuspensaoContratoContratoLinkCardProps {
 export function SuspensaoContratoContratoLinkCard({
 	suspensaoContrato,
 }: SuspensaoContratoContratoLinkCardProps) {
-	const linkAssinatura = (suspensaoContrato as any).f_link_assinatura as
+	const linkAssinatura = suspensaoContrato.f_link_assinatura as
 		| string
 		| undefined;
-	const contratos = (suspensaoContrato as any).f_contratos as
-		| unknown[]
-		| undefined;
+	const contratos = suspensaoContrato.f_contratos as unknown[] | undefined;
 
 	return (
 		<DetailSection

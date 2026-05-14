@@ -6,6 +6,7 @@ import {
 	useQueryClient,
 } from "@tanstack/react-query";
 import { toast } from "sonner";
+import type { CollectionName } from "#/generated/types/nocobase/collections";
 import { buildFilter, eq, gte, includes } from "#/lib/filter-builder";
 import { nocobaseRepository } from "#/repositories";
 import type {
@@ -126,7 +127,7 @@ export function useCreateSuspensaoComentario(suspensaoId: number) {
 	return useMutation({
 		mutationFn: async (data: { f_comentario: string }) => {
 			return nocobaseRepository.create(
-				`t_suspensao_contrato/${suspensaoId}/f_comentarios` as any,
+				`t_suspensao_contrato/${suspensaoId}/f_comentarios` as CollectionName,
 				data,
 			);
 		},
