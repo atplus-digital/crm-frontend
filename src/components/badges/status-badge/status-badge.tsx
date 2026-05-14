@@ -5,20 +5,16 @@ import {
 	getBadgeSolidClass,
 } from "#/components/ui/badge";
 import { cn } from "#/lib/utils";
-import { getBadgeColorValue, getColorClass, getStatusVariant } from "../utils";
+import { getBadgeColorValue, getStatusVariant } from "../utils";
 
 interface StatusBadgeProps {
 	value: string;
 	labels: Record<string, string>;
 	variants?: Record<string, BadgeVariant>;
-	/** @deprecated Use `colorMap` instead */
-	colorClasses?: Record<string, string>;
-	/** Preferred: maps status value → BadgeColor */
 	colorMap?: Record<string, BadgeColor>;
 	variant?: "badge" | "inline";
 	className?: string;
 	defaultVariant?: BadgeVariant;
-	defaultClass?: string;
 	/** Default color when value is not in colorMap (for variant="badge") */
 	defaultColor?: BadgeColor;
 }
@@ -27,20 +23,21 @@ export function StatusBadge({
 	value,
 	labels,
 	variants,
-	colorClasses,
 	colorMap,
 	variant = "badge",
 	className,
 	defaultVariant = "secondary",
-	defaultClass,
 	defaultColor,
 }: StatusBadgeProps) {
 	const label = labels[value] ?? value;
+	const resolvedColor = getBadgeColorValue(
+		value,
+		colorMap,
+		defaultColor ?? "gray",
+	);
 
 	if (variant === "inline") {
-		const colorClass = colorMap
-			? getBadgeSolidClass(colorMap[value] ?? defaultColor ?? "gray")
-			: getColorClass(value, colorClasses, defaultClass);
+		const colorClass = getBadgeSolidClass(resolvedColor);
 		return (
 			<span
 				className={cn(
@@ -55,19 +52,9 @@ export function StatusBadge({
 	}
 
 	const badgeVariant = getStatusVariant(value, variants, defaultVariant);
-	const badgeColor = colorMap
-		? getBadgeColorValue(value, colorMap, defaultColor ?? "gray")
-		: undefined;
-	const colorClass = colorMap
-		? undefined
-		: getColorClass(value, colorClasses, defaultClass);
 
 	return (
-		<Badge
-			variant={badgeVariant}
-			color={badgeColor}
-			className={cn(colorClass, className)}
-		>
+		<Badge variant={badgeVariant} color={resolvedColor} className={className}>
 			{label}
 		</Badge>
 	);

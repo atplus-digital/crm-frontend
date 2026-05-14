@@ -1,4 +1,4 @@
-import type { BadgeVariant } from "#/components/ui/badge";
+import type { BadgeColor, BadgeVariant } from "#/components/ui/badge";
 import { cn } from "#/lib/utils";
 import { StatusBadge } from "./status-badge";
 
@@ -9,8 +9,8 @@ interface StatusBadgeGroupProps {
 	substatusLabels: Record<string, string>;
 	statusVariants?: Record<string, BadgeVariant>;
 	substatusVariants?: Record<string, BadgeVariant>;
-	statusColorClasses?: Record<string, string>;
-	substatusColorClasses?: Record<string, string>;
+	statusColorMap?: Record<string, BadgeColor>;
+	substatusColorMap?: Record<string, BadgeColor>;
 	className?: string;
 }
 
@@ -21,8 +21,8 @@ export function StatusBadgeGroup({
 	substatusLabels,
 	statusVariants,
 	substatusVariants,
-	statusColorClasses,
-	substatusColorClasses,
+	statusColorMap,
+	substatusColorMap,
 	className,
 }: StatusBadgeGroupProps) {
 	return (
@@ -31,14 +31,14 @@ export function StatusBadgeGroup({
 				value={status}
 				labels={statusLabels}
 				variants={statusVariants}
-				colorClasses={statusColorClasses}
+				colorMap={statusColorMap}
 			/>
 			{substatus && (
 				<StatusBadge
 					value={substatus}
 					labels={substatusLabels}
 					variants={substatusVariants}
-					colorClasses={substatusColorClasses}
+					colorMap={substatusColorMap}
 				/>
 			)}
 		</div>

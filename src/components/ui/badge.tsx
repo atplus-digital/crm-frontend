@@ -8,7 +8,7 @@ import { cn } from "#/lib/utils";
 // Color presets
 // ---------------------------------------------------------------------------
 
-const BADGE_COLORS = [
+export const BADGE_COLORS = [
 	"slate",
 	"gray",
 	"red",
