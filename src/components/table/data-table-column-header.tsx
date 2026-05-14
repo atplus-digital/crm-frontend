@@ -1,5 +1,5 @@
 import type { Column } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
+import { ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
 import type { HTMLAttributes } from "react";
 
 import { Button } from "#/components/ui/button";
@@ -31,9 +31,11 @@ export function DataTableColumnHeader<TData, TValue>({
 				onClick={() => column.toggleSorting(sorted === "asc")}
 			>
 				{title}
-				{sorted === "desc" && <ArrowUp />}
-				{sorted === "asc" && <ArrowDown />}
-				{sorted === false && <ArrowUpDown className="text-muted-foreground" />}
+				{sorted === "desc" && <ChevronDown className="size-5" />}
+				{sorted === "asc" && <ChevronUp className="size-5" />}
+				{sorted === false && (
+					<ChevronsUpDown className="text-muted-foreground size-4" />
+				)}
 			</Button>
 		</div>
 	);

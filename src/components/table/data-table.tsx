@@ -56,11 +56,9 @@ interface OverflowTooltipCellProps {
 
 function OverflowTooltipCell({ children }: OverflowTooltipCellProps) {
 	return (
-		<TooltipProvider>
+		<TooltipProvider delayDuration={500}>
 			<Tooltip>
-				<TooltipTrigger asChild>
-					<div className="w-full overflow-hidden">{children}</div>
-				</TooltipTrigger>
+				<TooltipTrigger asChild>{children}</TooltipTrigger>
 				<TooltipContent>{children}</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>

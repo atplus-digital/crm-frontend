@@ -102,21 +102,23 @@ export function FilterMultiSelect<T extends string>({
 										</span>
 									)}
 								</div>
-								<button
-									type="button"
+								<span
+									aria-hidden="true"
 									onClick={(e) => {
 										e.preventDefault();
 										e.stopPropagation();
 										onChange([]);
 									}}
-									className="rounded-full p-0.5 hover:bg-muted-foreground/20 shrink-0"
+									className="rounded-full p-0.5 hover:bg-muted-foreground/20 shrink-0 cursor-pointer"
 								>
 									<X className="size-3 shrink-0 text-muted-foreground" />
-								</button>
+								</span>
 							</>
 						) : (
 							<>
-								<span className="truncate flex-1">{triggerLabel}</span>
+								<span className="truncate flex-1 flex items-center gap-1">
+									{triggerLabel}
+								</span>
 								<ChevronDown
 									className="size-4 shrink-0 text-muted-foreground"
 									aria-hidden="true"

@@ -83,7 +83,7 @@ export function ContratosFilters({ filters }: ContratosFiltersProps) {
 			/>
 			<FilterInputField
 				id="filter-contratos-nome"
-				label="Nome"
+				label="Nome / Razão Social"
 				placeholder="Buscar por nome..."
 				value={filters.nome}
 				onChange={(v) => {

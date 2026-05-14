@@ -60,11 +60,7 @@ export function getColumns(): ColumnDef<ContratoWithCliente, unknown>[] {
 			id: "cliente",
 			maxSize: 320,
 			header: "Cliente",
-			cell: ({ row }) => (
-				<span className="block max-w-80 truncate">
-					{row.original.f_nc_cliente?.razao ?? "—"}
-				</span>
-			),
+			cell: ({ row }) => <span>{row.original.f_nc_cliente?.razao ?? "—"}</span>,
 		},
 		{
 			id: "cpf_cnpj",

@@ -6,6 +6,7 @@ import { Slot } from "radix-ui";
 import * as React from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
+import { Kbd } from "#/components/ui/kbd";
 import { Separator } from "#/components/ui/separator";
 import {
 	Sheet,
@@ -261,21 +262,28 @@ function SidebarTrigger({
 	const { toggleSidebar } = useSidebar();
 
 	return (
-		<Button
-			data-sidebar="trigger"
-			data-slot="sidebar-trigger"
-			variant="ghost"
-			size="icon-sm"
-			className={cn(className)}
-			onClick={(event) => {
-				onClick?.(event);
-				toggleSidebar();
-			}}
-			{...props}
-		>
-			<PanelLeftIcon />
-			<span className="sr-only">Toggle Sidebar</span>
-		</Button>
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<Button
+					data-sidebar="trigger"
+					data-slot="sidebar-trigger"
+					variant="ghost"
+					size="icon-sm"
+					className={cn(className)}
+					onClick={(event) => {
+						onClick?.(event);
+						toggleSidebar();
+					}}
+					{...props}
+				>
+					<PanelLeftIcon />
+					<span className="sr-only">Toggle Sidebar</span>
+				</Button>
+			</TooltipTrigger>
+			<TooltipContent side="bottom">
+				Toggle Sidebar <Kbd>Ctrl</Kbd>+<Kbd>B</Kbd>
+			</TooltipContent>
+		</Tooltip>
 	);
 }
 
