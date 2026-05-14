@@ -1,5 +1,5 @@
 import { Loader2, Search } from "lucide-react";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo } from "react";
 import {
 	type Control,
 	Controller,
@@ -21,6 +21,7 @@ import {
 	CRMTROCATITULARIDADE_COMPLEMENTO_LABELS,
 	CRMTROCATITULARIDADE_ESTADO_LABELS,
 } from "#/generated/types/nocobase/crm-troca-titularidade";
+import { useCepLookup } from "#/hooks/use-cep-lookup";
 import type { TransferenciaTitularidadeFormValues } from "./transferencia-titularidade-types";
 
 // ============================================================================
@@ -44,9 +45,12 @@ export function EnderecoSection({
 	setValue,
 	errors,
 }: EnderecoSectionProps) {
-	const [isCepLoading, setIsCepLoading] = useState(false);
-	const [cepMessage, setCepMessage] = useState<string | null>(null);
-	const abortRef = useRef<AbortController | null>(null);
+	const {
+		isLoading: isCepLoading,
+		message: cepMessage,
+		result: cepResult,
+		lookupCep,
+	} = useCepLookup();
 
 	const complementoOptions = useMemo(
 		() => Object.entries(CRMTROCATITULARIDADE_COMPLEMENTO_LABELS),
@@ -57,89 +61,29 @@ export function EnderecoSection({
 		() => Object.entries(CRMTROCATITULARIDADE_ESTADO_LABELS),
 		[],
 	);
+
 	const cepValue = useWatch({ control, name: "f_cep" });
 
 	const cepField = register("f_cep");
 
-	const lookupCep = useCallback(
-		async (rawCep: string) => {
-			const normalizedCep = rawCep.replace(/\D/g, "");
-			if (normalizedCep.length !== 8) {
-				setCepMessage("Digite um CEP válido com 8 números.");
-				return;
-			}
+	// Sync CEP lookup result with form fields
+	useEffect(() => {
+		if (!cepResult) return;
 
-			abortRef.current?.abort();
-			const controller = new AbortController();
-			abortRef.current = controller;
+		const status: Record<string, boolean> = {
+			shouldDirty: true,
+			shouldValidate: true,
+		};
+		setValue("f_cep", cepResult.cep, status);
+		setValue("f_endereco", cepResult.street ?? "", status);
+		setValue("f_bairro", cepResult.neighborhood ?? "", status);
+		setValue("f_cidade", cepResult.city ?? "", status);
 
-			setIsCepLoading(true);
-			setCepMessage(null);
-
-			try {
-				const response = await fetch(
-					`https://brasilapi.com.br/api/cep/v1/${normalizedCep}`,
-					{
-						signal: controller.signal,
-					},
-				);
-
-				if (!response.ok) {
-					setCepMessage("CEP não encontrado.");
-					return;
-				}
-
-				const data = (await response.json()) as {
-					city?: string;
-					neighborhood?: string;
-					state?: string;
-					street?: string;
-				};
-
-				setValue("f_cep", normalizedCep, {
-					shouldDirty: true,
-					shouldValidate: true,
-				});
-				setValue("f_endereco", data.street ?? "", {
-					shouldDirty: true,
-					shouldValidate: true,
-				});
-				setValue("f_bairro", data.neighborhood ?? "", {
-					shouldDirty: true,
-					shouldValidate: true,
-				});
-				setValue("f_cidade", data.city ?? "", {
-					shouldDirty: true,
-					shouldValidate: true,
-				});
-
-				const state = data.state?.toUpperCase();
-				const availableStates = Object.keys(CRMTROCATITULARIDADE_ESTADO_LABELS);
-				if (state && availableStates.includes(state)) {
-					setValue("f_estado", state, {
-						shouldDirty: true,
-						shouldValidate: true,
-					});
-					setCepMessage("");
-					return;
-				}
-
-				setCepMessage(
-					state
-						? `Endereço preenchido, mas UF "${state}" não está disponível nesta lista.`
-						: "Endereço preenchido parcialmente; selecione a UF manualmente.",
-				);
-			} catch (error) {
-				if (error instanceof DOMException && error.name === "AbortError") {
-					return;
-				}
-				setCepMessage("Não foi possível consultar o CEP no momento.");
-			} finally {
-				setIsCepLoading(false);
-			}
-		},
-		[setValue],
-	);
+		const availableStates = Object.keys(CRMTROCATITULARIDADE_ESTADO_LABELS);
+		if (cepResult.state && availableStates.includes(cepResult.state)) {
+			setValue("f_estado", cepResult.state, status);
+		}
+	}, [cepResult, setValue]);
 
 	return (
 		<>
@@ -154,13 +98,13 @@ export function EnderecoSection({
 						{...cepField}
 						onBlur={(event) => {
 							cepField.onBlur(event);
-							void lookupCep(event.target.value);
+							lookupCep(event.target.value);
 						}}
 					/>
 					<Button
 						type="button"
 						variant="outline"
-						onClick={() => void lookupCep(cepValue ?? "")}
+						onClick={() => lookupCep(cepValue ?? "")}
 						disabled={isCepLoading}
 						className="min-w-24"
 					>
