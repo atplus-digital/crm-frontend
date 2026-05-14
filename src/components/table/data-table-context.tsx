@@ -3,6 +3,7 @@ import type {
 	PaginationState,
 	SortingState,
 	Table,
+	VisibilityState,
 } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 import { createContext, useContext } from "react";
@@ -30,6 +31,8 @@ export interface DataTableController<
 	clearFilters: () => void;
 	sorting?: SortingState;
 	onSortingChange?: OnChangeFn<SortingState>;
+	columnVisibility: VisibilityState;
+	setColumnVisibility: OnChangeFn<VisibilityState>;
 }
 
 const DataTableContext = createContext<DataTableController<
