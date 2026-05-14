@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SearchCombobox } from "#/components/search-combobox";
 import { Label } from "#/components/ui/label";
-import { searchPessoasFisicas } from "@/features/cs/troca-titularidade/troca-titularidade-service";
+import { searchPessoasFisicas } from "#/features/cs/troca-titularidade/troca-titularidade-service";
 import type { SelectedPF } from "./transferencia-titularidade-types";
 
 // ============================================================================
