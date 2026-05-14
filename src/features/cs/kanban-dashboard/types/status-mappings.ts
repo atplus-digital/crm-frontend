@@ -11,14 +11,14 @@ import type { UnifiedStatusKey } from "./status-columns";
 export function mapTrocaTitularidadeStatus(
 	status: CrmTrocaTitularidadeStatus,
 ): UnifiedStatusKey {
-	const mapping: Record<CrmTrocaTitularidadeStatus, UnifiedStatusKey> = {
+	const mapping = {
 		"0": "Novo",
 		"1": "Assinatura",
 		"2": "Em Andamento",
 		"3": "Concluido",
 		"9": "Cancelado",
 		"20": "Aguardando assinatura teste",
-	};
+	} as Record<string, UnifiedStatusKey>;
 	return mapping[status] ?? "Novo";
 }
 
