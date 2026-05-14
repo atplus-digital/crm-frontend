@@ -1,11 +1,7 @@
 import { z } from "zod";
-import type { CollectionRelationsMap } from "#/generated/types/nocobase/collections";
 import type { CrmTrocaTitularidade } from "#/generated/types/nocobase/crm-troca-titularidade";
 import { crm_troca_titularidadeBaseSchema } from "#/generated/types/nocobase/crm-troca-titularidade/schemas";
-import type { Empresas } from "#/generated/types/nocobase/empresas";
-import type { Pessoas } from "#/generated/types/nocobase/pessoas";
 import { getErrorMessage } from "#/lib/api-errors";
-import { includes, or } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";
 
@@ -91,62 +87,9 @@ export async function createTrocaTitularidade(
 	}
 }
 
-// ---------------------------------------------------------------------------
-// Lookup helpers (for PF/PJ search)
-// ---------------------------------------------------------------------------
-
-export async function searchPessoasFisicas(
-	query: string,
-): Promise<Pick<Pessoas, "id" | "f_nome" | "f_cpf" | "f_credito">[]> {
-	if (!query || query.length < 2) return [];
-
-	try {
-		const filter = or(includes("f_nome", query), includes("f_cpf", query));
-		const response = await nocobaseRepository.list("t_pessoas", {
-			page: 1,
-			pageSize: 20,
-			filter,
-			appends: [] as Array<keyof CollectionRelationsMap["t_pessoas"]>,
-		});
-
-		return (response.data as Pessoas[]).map((p) => ({
-			id: p.id,
-			f_nome: p.f_nome,
-			f_cpf: p.f_cpf,
-			f_credito: p.f_credito,
-		}));
-	} catch (error) {
-		const message = getErrorMessage(error, "Erro desconhecido");
-		log.error("Failed to search pessoas físicas", { error: message });
-		return [];
-	}
-}
-
-export async function searchPessoasJuridicas(
-	query: string,
-): Promise<Pick<Empresas, "id" | "f_razao_social" | "f_cnpj">[]> {
-	if (!query || query.length < 2) return [];
-
-	try {
-		const filter = or(
-			includes("f_razao_social", query),
-			includes("f_cnpj", query),
-		);
-		const response = await nocobaseRepository.list("t_empresas", {
-			page: 1,
-			pageSize: 20,
-			filter,
-			appends: [] as Array<keyof CollectionRelationsMap["t_empresas"]>,
-		});
-
-		return (response.data as Empresas[]).map((e) => ({
-			id: e.id,
-			f_razao_social: e.f_razao_social,
-			f_cnpj: e.f_cnpj,
-		}));
-	} catch (error) {
-		const message = getErrorMessage(error, "Erro desconhecido");
-		log.error("Failed to search pessoas jurídicas", { error: message });
-		return [];
-	}
-}
+// Re-exported from pessoas-service for backward-compatibility.
+// Prefer importing from #/features/cs/pessoas/pessoas-service directly.
+export {
+	searchPessoasFisicas,
+	searchPessoasJuridicas,
+} from "#/features/cs/pessoas/pessoas-service";
