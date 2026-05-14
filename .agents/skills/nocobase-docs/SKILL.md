@@ -91,6 +91,8 @@ Here's how to use each command in practice:
 1. Run `collections` to list all collections
 2. If they ask about a specific one, run `collections --name=<name>` to see its fields
 3. For detailed API specs, use `swagger --ns=collections/<name>`
+4. If the collection is from a non-main datasource (for example IXC), query it through
+   `dataSources/<dataSourceKey>/...` using `raw` (examples below)
 
 ### When someone asks "show me the data" or "what does this collection contain?"
 
@@ -110,6 +112,60 @@ Here's how to use each command in practice:
 1. Run `swagger --ns=collections` to get all collection schemas
 2. Cross-reference with `collections --name=<name>` for field details
 3. Check `scripts/generate-types/` for the project's type generation tooling
+4. Remember that `generate-types` is datasource-aware: it queries
+   `dataSources/<dataSourceKey>/collections:list?paginate=false` for each datasource key
+   (for example `main` and `d_db_ixcsoft`)
+
+### Reading field metadata from non-main datasources
+
+Use these patterns when you need collection fields outside `main` (for example `d_db_ixcsoft`).
+
+1. List collections of a specific datasource:
+
+```bash
+npx tsx .agents/skills/nocobase-docs/scripts/nocobase-client.ts raw "dataSources/d_db_ixcsoft/collections:list?paginate=false"
+```
+
+2. Read fields for one collection by filtering the datasource collection list:
+
+```bash
+npx tsx .agents/skills/nocobase-docs/scripts/nocobase-client.ts raw "dataSources/d_db_ixcsoft/collections:list?paginate=false"
+```
+
+Then select the target collection from the returned array/object (example: `cidade`)
+and inspect its `fields`.
+
+3. Optional: inspect only field names and labels from the collection object:
+
+- `name` is the technical field name
+- `uiSchema.title` is the label used by generators/UI when present
+- if `uiSchema.title` is missing, generator fallback is usually the field `name`
+
+Notes:
+
+- The same pattern works for `main`: replace `d_db_ixcsoft` with `main`.
+- This is read-only and allowed by the skill because the endpoint action is `:list`/`:get`.
+
+### Datasource-aware endpoints (generate-types)
+
+The `nocobase-docs` client and the `generate-types` pipeline use different read paths:
+
+- `nocobase-docs` skill focuses on generic read-only resources/actions:
+  - `collections:list`
+  - `collections:get`
+  - `/{collection}:list`
+  - `/{collection}:get`
+  - `/{collection}:count`
+  - `swagger:get`
+- `generate-types` fetches schemas through datasource-keyed endpoints:
+  - `GET /api/dataSources/main/collections:list?paginate=false`
+  - `GET /api/dataSources/d_db_ixcsoft/collections:list?paginate=false`
+
+Important:
+
+- The host/base URL is the same; what changes is the datasource key in the path.
+- In this project both configured datasources use NocoBase-style APIs, so endpoint
+  shape is the same and only `dataSourceKey` changes.
 
 ---
 
