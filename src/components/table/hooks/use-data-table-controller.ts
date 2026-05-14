@@ -2,6 +2,7 @@ import type {
 	ColumnDef,
 	OnChangeFn,
 	SortingState,
+	VisibilityState,
 } from "@tanstack/react-table";
 import { useCallback, useRef, useState } from "react";
 import { DEFAULT_DATA_TABLE_EMPTY_MESSAGE } from "#/components/table/constants";
@@ -68,6 +69,8 @@ export function useDataTableController<
 		onFiltersClear,
 	} = options;
 
+	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
 	const { pagination, onPaginationChange, page, pageSize } = usePagination({
 		initialPage: options.initialPage,
 		initialPageSize: options.initialPageSize,
@@ -81,6 +84,8 @@ export function useDataTableController<
 		pageCount: options.totalPages,
 		pagination,
 		onPaginationChange,
+		columnVisibility,
+		onColumnVisibilityChange: setColumnVisibility,
 		...(sorting !== undefined
 			? {
 					sorting,
@@ -180,5 +185,7 @@ export function useDataTableController<
 		clearFilters,
 		sorting,
 		onSortingChange,
+		columnVisibility,
+		setColumnVisibility,
 	};
 }
