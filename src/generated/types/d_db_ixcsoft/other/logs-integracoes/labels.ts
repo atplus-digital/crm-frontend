@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGSINTEGRACOES_FIELD_LABELS = {
+	data_requisicao: "data_requisicao",
+	id: "id",
+	id_integracao: "id_integracao",
+	id_registro: "id_registro",
+	metodo: "metodo",
+	request_body: "request_body",
+	response: "response",
+	status_code: "status_code",
+	tempo_resposta_ms: "tempo_resposta_ms",
+	tipo_integracao: "tipo_integracao",
+	url_request: "url_request",
+} as const;
+
 export const LOGSINTEGRACOES_METODO_LABELS = {
 	GET: "GET",
 	POST: "POST",

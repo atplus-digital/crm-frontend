@@ -9,6 +9,30 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SVAUSUARIOS_FIELD_LABELS = {
+	autenticacao: "autenticacao",
+	cnpj_cpf: "cnpj_cpf",
+	created_at: "created_at",
+	criado_em: "criado_em",
+	id: "id",
+	id_contrato: "id_contrato",
+	id_integracao: "id_integracao",
+	id_produto_contrato: "id_produto_contrato",
+	msisdn: "msisdn",
+	quantidade_dispositivos: "quantidade_dispositivos",
+	redirect_url: "redirect_url",
+	senha: "senha",
+	status_integracao: "status_integracao",
+	sub_dominio: "sub_dominio",
+	subscription_id: "subscription_id",
+	tipo_comunicacao: "tipo_comunicacao",
+	tipo_dispositivo: "tipo_dispositivo",
+	usar_email: "usar_email",
+	user: "user",
+	user_id: "user_id",
+	usuarios_adicionais: "usuarios_adicionais",
+} as const;
+
 export const SVAUSUARIOS_AUTENTICACAO_LABELS = {
 	S: "S",
 	N: "N",

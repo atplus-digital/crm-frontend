@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMSECRETARIAPERGUNTAS_FIELD_LABELS = {
+	data: "data",
+	id: "id",
+	pergunta: "pergunta",
+	resposta: "resposta",
+	visitante_id: "visitante_id",
+} as const;
+
 export const CRMSECRETARIAPERGUNTAS_RESPOSTA_LABELS = {
 	S: "S",
 	N: "N",

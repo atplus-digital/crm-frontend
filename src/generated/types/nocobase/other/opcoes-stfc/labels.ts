@@ -9,6 +9,22 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const OPCOESSTFC_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_canais: "Canais",
+	f_fk_opcoes_stfc: "f_fk_opcoes_stfc",
+	f_franquia: "Franquia de Minutos",
+	f_nome_do_plano: "Nome do plano",
+	f_portabilidade: "Portabilidade",
+	f_terminais: "Terminais",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const OPCOESSTFC_PORTABILIDADE_LABELS = {
 	SIM: "SIM",
 	NAO: "NÃO",

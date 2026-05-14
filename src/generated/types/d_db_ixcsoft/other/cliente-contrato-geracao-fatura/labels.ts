@@ -9,6 +9,29 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOGERACAOFATURA_FIELD_LABELS = {
+	ano_referencia: "ano_referencia",
+	geracao_ate: "geracao_ate",
+	id: "id",
+	id_carteira_cobranca: "id_carteira_cobranca",
+	id_cidade: "id_cidade",
+	id_cliente_final: "id_cliente_final",
+	id_cliente_inicial: "id_cliente_inicial",
+	id_contrato_final: "id_contrato_final",
+	id_contrato_inicial: "id_contrato_inicial",
+	id_filial: "id_filial",
+	id_tipo_cliente: "id_tipo_cliente",
+	id_tipo_cobranca: "id_tipo_cobranca",
+	mes_referencia: "mes_referencia",
+	momento_fin_geracao: "momento_fin_geracao",
+	momento_ini_geracao: "momento_ini_geracao",
+	status: "status",
+	tipo_contrato: "tipo_contrato",
+	tipo_pessoa: "tipo_pessoa",
+	total_faturas_geradas: "total_faturas_geradas",
+	total_valor_gerados: "total_valor_gerados",
+} as const;
+
 export const CLIENTECONTRATOGERACAOFATURA_STATUS_LABELS = {
 	N: "N",
 	G: "G",

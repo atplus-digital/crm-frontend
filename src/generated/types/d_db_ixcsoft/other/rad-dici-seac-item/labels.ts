@@ -9,6 +9,26 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADDICISEACITEM_FIELD_LABELS = {
+	cidade: "cidade",
+	data_cancelamento: "data_cancelamento",
+	data_emissao: "data_emissao",
+	id: "id",
+	id_cliente_contrato: "id_cliente_contrato",
+	id_rad_dici_seac: "id_rad_dici_seac",
+	id_tipo_documento: "id_tipo_documento",
+	mdoelo_nf: "mdoelo_nf",
+	modelo_nf: "modelo_nf",
+	numero_nf: "numero_nf",
+	qtd_acessos: "qtd_acessos",
+	tecnologia: "tecnologia",
+	tipo_atendimento: "tipo_atendimento",
+	tipo_cliente: "tipo_cliente",
+	tipo_meio_acesso: "tipo_meio_acesso",
+	tipo_produto: "tipo_produto",
+	type_connection_tv: "type_connection_tv",
+} as const;
+
 export const RADDICISEACITEM_TIPOATENDIMENTO_LABELS = {
 	R: "R",
 	U: "U",

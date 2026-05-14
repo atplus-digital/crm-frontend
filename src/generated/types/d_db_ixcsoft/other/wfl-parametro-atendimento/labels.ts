@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const WFLPARAMETROATENDIMENTO_FIELD_LABELS = {
+	descricao: "descricao",
+	id: "id",
+	id_assunto: "id_assunto",
+	id_setor: "id_setor",
+	id_tecnico: "id_tecnico",
+	id_wfl_processo: "id_wfl_processo",
+	prioridade: "prioridade",
+} as const;
+
 export const WFLPARAMETROATENDIMENTO_PRIORIDADE_LABELS = {
 	C: "C",
 	A: "A",

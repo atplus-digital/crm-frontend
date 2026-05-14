@@ -9,6 +9,39 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const GERACAOLOTEAGRUPFINAN_FIELD_LABELS = {
+	consultar_separadamente: "consultar_separadamente",
+	data_emissao_nf: "data_emissao_nf",
+	data_fim_emissao: "data_fim_emissao",
+	data_fim_vencimento: "data_fim_vencimento",
+	data_inicio_emissao: "data_inicio_emissao",
+	data_inicio_vencimento: "data_inicio_vencimento",
+	desc_filtro_lote: "desc_filtro_lote",
+	filtrar_filial_por: "filtrar_filial_por",
+	forma_recebimento_financeiro: "forma_recebimento_financeiro",
+	id: "id",
+	id_cliente_fim: "id_cliente_fim",
+	id_cliente_inicio: "id_cliente_inicio",
+	id_filial: "id_filial",
+	id_filial_tipo_doc: "id_filial_tipo_doc",
+	id_lote_financeiro: "id_lote_financeiro",
+	id_tipo_cliente: "id_tipo_cliente",
+	media_segundos_nota: "media_segundos_nota",
+	mes_ano_referencia_nf: "mes_ano_referencia_nf",
+	modelo_nf_especifico: "modelo_nf_especifico",
+	modelo_nf_geracao: "modelo_nf_geracao",
+	momento_fin_geracao: "momento_fin_geracao",
+	momento_ini_geracao: "momento_ini_geracao",
+	motivo_cancelamento_lote: "motivo_cancelamento_lote",
+	status_fatura: "status_fatura",
+	status_geracao_nf: "status_geracao_nf",
+	tipo_cliente_scm: "tipo_cliente_scm",
+	tipo_pessoa_nf: "tipo_pessoa_nf",
+	total_erros_ultima_geracao: "total_erros_ultima_geracao",
+	total_notas_geradas: "total_notas_geradas",
+	total_valor_gerado: "total_valor_gerado",
+} as const;
+
 export const GERACAOLOTEAGRUPFINAN_CONSULTARSEPARADAMENTE_LABELS = {
 	S: "S",
 	N: "N",

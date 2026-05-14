@@ -4,3 +4,10 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+// ============================================================
+// LABELS (single source of truth)
+// ============================================================
+export const SEGMENTOCRM_FIELD_LABELS = {
+	descricao: "descricao",
+	id: "id",
+} as const;

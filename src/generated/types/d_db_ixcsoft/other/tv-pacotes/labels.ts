@@ -9,6 +9,24 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TVPACOTES_FIELD_LABELS = {
+	canais: "canais",
+	codigo_pacote: "codigo_pacote",
+	data_inicio: "data_inicio",
+	descricao: "descricao",
+	id: "id",
+	id_de_linha: "id_de_linha",
+	id_plataforma: "id_plataforma",
+	isLifeLine: "isLifeLine",
+	isWide: "isWide",
+	ncm: "ncm",
+	nome: "nome",
+	plataforma: "plataforma",
+	svods: "svods",
+	tipo: "tipo",
+	valor: "valor",
+} as const;
+
 export const TVPACOTES_ISLIFELINE_LABELS = {
 	Y: "Y",
 	N: "N",

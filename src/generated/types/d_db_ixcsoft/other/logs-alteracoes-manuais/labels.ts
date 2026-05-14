@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGSALTERACOESMANUAIS_FIELD_LABELS = {
+	data_hora: "data_hora",
+	descricao_plano_antigo: "descricao_plano_antigo",
+	descricao_plano_novo: "descricao_plano_novo",
+	executou: "executou",
+	id: "id",
+	id_contrato: "id_contrato",
+	id_plano_antigo: "id_plano_antigo",
+	id_plano_novo: "id_plano_novo",
+	operador: "operador",
+	tipo: "tipo",
+} as const;
+
 export const LOGSALTERACOESMANUAIS_EXECUTOU_LABELS = {
 	U: "U",
 	S: "S",

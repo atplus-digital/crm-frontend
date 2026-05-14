@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REGISTROSDECONTATO_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_categoria: "Categoria",
+	f_encaminhamento_pendencia: "Encaminhamento",
+	f_feedback_observacao: "Feedback Observação",
+	f_fk_id_contrato: "Id Contrato",
+	f_ha_pendencia: "Há Pendência?",
+	f_nota_tecnico: "Feedback - Técnico Nota",
+	f_nota_vendas: "Feedback - Vendas Nota",
+	f_resumo_contato: "Resumo do Contato",
+	f_titulo: "Motivo do Contato",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const REGISTROSDECONTATO_CATEGORIA_LABELS = {
 	"pos-venda": "Pós Venda",
 	"pre-venda": "Pré Venda",

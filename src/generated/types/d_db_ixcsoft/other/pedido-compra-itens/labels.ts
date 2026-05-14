@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PEDIDOCOMPRAITENS_FIELD_LABELS = {
+	descricao_alt: "descricao_alt",
+	filial_id: "filial_id",
+	id: "id",
+	id_entrada: "id_entrada",
+	id_pedido_compra: "id_pedido_compra",
+	id_produto: "id_produto",
+	id_unidade: "id_unidade",
+	observacao: "observacao",
+	quantidade: "quantidade",
+	status: "status",
+	tipo: "tipo",
+	unidade_sigla: "unidade_sigla",
+	valor_total: "valor_total",
+	valor_unitario: "valor_unitario",
+} as const;
+
 export const PEDIDOCOMPRAITENS_STATUS_LABELS = {
 	A: "A",
 	F: "F",

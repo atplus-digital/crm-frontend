@@ -4,3 +4,12 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+// ============================================================
+// LABELS (single source of truth)
+// ============================================================
+export const DFELEMENTOSCOORDENADAS_FIELD_LABELS = {
+	id: "id",
+	id_coordenada: "id_coordenada",
+	id_elemento: "id_elemento",
+	sequencia: "sequencia",
+} as const;

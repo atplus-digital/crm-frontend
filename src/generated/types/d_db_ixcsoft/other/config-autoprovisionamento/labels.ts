@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CONFIGAUTOPROVISIONAMENTO_FIELD_LABELS = {
+	ativo: "ativo",
+	chat_id: "chat_id",
+	condicao_status: "condicao_status",
+	data_expiracao: "data_expiracao",
+	data_inicio_procura: "data_inicio_procura",
+	id: "id",
+	id_email: "id_email",
+	id_sms_marketing: "id_sms_marketing",
+	id_telegram: "id_telegram",
+	notificacao_push: "notificacao_push",
+	periodo_monitoramento: "periodo_monitoramento",
+	tipo_filtro: "tipo_filtro",
+} as const;
+
 export const CONFIGAUTOPROVISIONAMENTO_CONDICAOSTATUS_LABELS = {
 	S: "S",
 	N: "N",

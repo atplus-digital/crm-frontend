@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RASTREADORESACESSOSAPI_FIELD_LABELS = {
+	api_key: "api_key",
+	fornecedor_api: "fornecedor_api",
+	id: "id",
+	senha: "senha",
+	status: "status",
+	tipo_autenticacao: "tipo_autenticacao",
+	tipo_busca: "tipo_busca",
+	token: "token",
+	url_autenticacao: "url_autenticacao",
+	url_busca_posicao: "url_busca_posicao",
+	usuario: "usuario",
+} as const;
+
 export const RASTREADORESACESSOSAPI_STATUS_LABELS = {
 	A: "A",
 	I: "I",

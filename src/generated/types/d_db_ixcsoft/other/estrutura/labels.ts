@@ -9,6 +9,24 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ESTRUTURA_FIELD_LABELS = {
+	ativo: "ativo",
+	bairro: "bairro",
+	cep: "cep",
+	complemento: "complemento",
+	descricao: "descricao",
+	endereco: "endereco",
+	id: "id",
+	id_cidade: "id_cidade",
+	id_filial: "id_filial",
+	id_planejamento_analitico: "id_planejamento_analitico",
+	latitude: "latitude",
+	longitude: "longitude",
+	numero: "numero",
+	observacao: "observacao",
+	referencia: "referencia",
+} as const;
+
 export const ESTRUTURA_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

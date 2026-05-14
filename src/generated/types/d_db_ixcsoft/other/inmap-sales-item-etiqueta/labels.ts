@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const INMAPSALESITEMETIQUETA_FIELD_LABELS = {
+	id: "id",
+	id_etiqueta: "id_etiqueta",
+	id_item: "id_item",
+	item_tipo: "item_tipo",
+} as const;
+
 export const INMAPSALESITEMETIQUETA_ITEMTIPO_LABELS = {
 	L: "L",
 	N: "N",

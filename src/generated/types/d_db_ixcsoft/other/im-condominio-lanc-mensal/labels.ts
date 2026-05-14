@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const IMCONDOMINIOLANCMENSAL_FIELD_LABELS = {
+	ano: "ano",
+	descricao: "descricao",
+	id: "id",
+	id_condominio: "id_condominio",
+	id_lanc_padrao: "id_lanc_padrao",
+	id_produto: "id_produto",
+	mes: "mes",
+	valor_total: "valor_total",
+} as const;
+
 export const IMCONDOMINIOLANCMENSAL_MES_LABELS = {
 	"01": "01",
 	"02": "02",

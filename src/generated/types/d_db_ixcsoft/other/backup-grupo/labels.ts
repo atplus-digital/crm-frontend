@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const BACKUPGRUPO_FIELD_LABELS = {
+	ativo: "ativo",
+	descricao: "descricao",
+	dias_remover: "dias_remover",
+	email: "email",
+	hora: "hora",
+	id: "id",
+	id_smtp_backup: "id_smtp_backup",
+	porta: "porta",
+	qtde_minima_bkp: "qtde_minima_bkp",
+	tempo_estimado: "tempo_estimado",
+	tipo_backup: "tipo_backup",
+} as const;
+
 export const BACKUPGRUPO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

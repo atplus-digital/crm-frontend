@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADDICISEAC_FIELD_LABELS = {
+	ano: "ano",
+	cnpj_cpf: "cnpj_cpf",
+	data_referencia: "data_referencia",
+	id: "id",
+	id_filial: "id_filial",
+	mes: "mes",
+	modelo_nf: "modelo_nf",
+} as const;
+
 export const RADDICISEAC_MODELONF_LABELS = {
 	21: "21",
 	22: "22",

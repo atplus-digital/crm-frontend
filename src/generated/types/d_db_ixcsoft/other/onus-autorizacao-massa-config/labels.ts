@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ONUSAUTORIZACAOMASSACONFIG_FIELD_LABELS = {
+	concluido_em: "concluido_em",
+	id: "id",
+	id_transmissor: "id_transmissor",
+	iniciado_em: "iniciado_em",
+	ponids: "ponids",
+	scripts: "scripts",
+	status: "status",
+	total_onus: "total_onus",
+} as const;
+
 export const ONUSAUTORIZACAOMASSACONFIG_STATUS_LABELS = {
 	executando: "executando",
 	aguardando: "aguardando",

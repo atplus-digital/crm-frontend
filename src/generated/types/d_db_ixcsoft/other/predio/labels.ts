@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PREDIO_FIELD_LABELS = {
+	cor: "cor",
+	descricao: "descricao",
+	id: "id",
+	id_condominio: "id_condominio",
+	id_projeto: "id_projeto",
+	latitude: "latitude",
+	longitude: "longitude",
+	observacao: "observacao",
+	status: "status",
+} as const;
+
 export const PREDIO_STATUS_LABELS = {
 	A: "A",
 	I: "I",

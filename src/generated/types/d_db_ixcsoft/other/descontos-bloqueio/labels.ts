@@ -9,6 +9,22 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DESCONTOSBLOQUEIO_FIELD_LABELS = {
+	data_bloqueio: "data_bloqueio",
+	data_desbloqueio: "data_desbloqueio",
+	id: "id",
+	id_contrato: "id_contrato",
+	id_desconto_adicional: "id_desconto_adicional",
+	id_lote: "id_lote",
+	limite_desconto: "limite_desconto",
+	obs: "obs",
+	razao: "razao",
+	status: "status",
+	tipo_desbloqueio: "tipo_desbloqueio",
+	valor_desconto: "valor_desconto",
+	valor_plano: "valor_plano",
+} as const;
+
 export const DESCONTOSBLOQUEIO_STATUS_LABELS = {
 	B: "B",
 	A: "A",

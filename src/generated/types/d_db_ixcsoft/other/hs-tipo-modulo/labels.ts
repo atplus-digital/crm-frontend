@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const HSTIPOMODULO_FIELD_LABELS = {
+	descricao: "descricao",
+	exibir_titulo: "exibir_titulo",
+	habilitado: "habilitado",
+	id: "id",
+	menus: "menus",
+	nivel_acesso: "nivel_acesso",
+	ordem: "ordem",
+	posicao: "posicao",
+	titulo: "titulo",
+} as const;
+
 export const HSTIPOMODULO_EXIBIRTITULO_LABELS = {
 	N: "N",
 	S: "S",

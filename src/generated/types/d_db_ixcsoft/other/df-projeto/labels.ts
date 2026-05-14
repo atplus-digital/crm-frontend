@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DFPROJETO_FIELD_LABELS = {
+	cor_mapa: "cor_mapa",
+	id: "id",
+	id_filial: "id_filial",
+	latitude: "latitude",
+	longitude: "longitude",
+	nome: "nome",
+	status: "status",
+	zoom: "zoom",
+} as const;
+
 export const DFPROJETO_STATUS_LABELS = {
 	A: "A",
 	I: "I",

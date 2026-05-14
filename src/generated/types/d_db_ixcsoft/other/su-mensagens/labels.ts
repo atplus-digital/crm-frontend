@@ -9,6 +9,28 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SUMENSAGENS_FIELD_LABELS = {
+	data: "data",
+	data_final: "data_final",
+	data_inicio: "data_inicio",
+	existe_pendencia_externa: "existe_pendencia_externa",
+	id: "id",
+	id_evento_status: "id_evento_status",
+	id_resposta: "id_resposta",
+	id_su_diagnostico: "id_su_diagnostico",
+	id_ticket: "id_ticket",
+	latitude: "latitude",
+	longitude: "longitude",
+	mensagem: "mensagem",
+	observacao: "observacao",
+	operador: "operador",
+	status: "status",
+	su_status: "su_status",
+	titulo: "titulo",
+	ultima_atualizacao: "ultima_atualizacao",
+	visibilidade_mensagens: "visibilidade_mensagens",
+} as const;
+
 export const SUMENSAGENS_STATUS_LABELS = {
 	T: "T",
 	C: "C",

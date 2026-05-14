@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TABELAPRECOS_FIELD_LABELS = {
+	ativo: "ativo",
+	id: "id",
+	id_ultimo_operador: "id_ultimo_operador",
+	tabela: "tabela",
+	ultima_alteracao: "ultima_alteracao",
+} as const;
+
 export const TABELAPRECOS_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

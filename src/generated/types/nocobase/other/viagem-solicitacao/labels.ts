@@ -9,6 +9,34 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const VIAGEMSOLICITACAO_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_anexos: "Anexos",
+	f_colaborador_beneficiado: "Colaborador beneficiado",
+	f_data_retorno: "Data do Retorno",
+	f_data_viagem: "Data de Viagem",
+	f_destino_viagem: "Destino da Viagem",
+	f_diaria: "Diária",
+	f_fase: "Fase",
+	f_fk_solicitacao_viagem: "f_fk_solicitacao_viagem",
+	f_kaban_viagem: "Kanban",
+	f_meio_transporte: "Meio de transporte",
+	f_observacoes: "Observações",
+	f_percorrido: "km percorrido",
+	f_quantidade_dias: "Quantidade",
+	f_sub_total: "Subtotal",
+	f_total_pagar: "Total a Pagar",
+	f_valor_cobrado: "Valor cobrado",
+	f_valor_diaria: "Valor da Diária",
+	f_valor_pedagio: "Valor do Pedágio",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const VIAGEMSOLICITACAO_DESTINOVIAGEM_LABELS = {
 	"Bocaina do Sul": "Bocaina do Sul",
 	"Campo Belo do Sul": "Campo Belo do Sul",

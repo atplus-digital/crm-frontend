@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DEMANDASVIABILIDADES_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_custo_recorrente: "Custo Recorrente",
+	f_endereco: "Endereço",
+	f_fk_viabilidades: "f_fk_viabilidades",
+	f_forma_atendimento: "Forma de Atendimento",
+	f_localizacao: "Localização",
+	f_servico_pretendido: "Serviço Pretendido",
+	f_status: "Status",
+	f_valor_investimento: "Valor Investimento",
+	f_velocidade_pretendida: "Velocidade Pretendida",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const DEMANDASVIABILIDADES_FORMAATENDIMENTO_LABELS = {
 	1: "Rede Própria",
 	2: "Ultima Milha de Terceiros",

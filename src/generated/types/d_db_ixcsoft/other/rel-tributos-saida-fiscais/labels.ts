@@ -9,6 +9,27 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RELTRIBUTOSSAIDAFISCAIS_FIELD_LABELS = {
+	creation_date: "creation_date",
+	creation_user: "creation_user",
+	data_emissao_fin: "data_emissao_fin",
+	data_emissao_ini: "data_emissao_ini",
+	data_emissao_periodo: "data_emissao_periodo",
+	data_ultima_impres: "data_ultima_impres",
+	id: "id",
+	id_classificacao_fiscal: "id_classificacao_fiscal",
+	id_cliente: "id_cliente",
+	id_filial: "id_filial",
+	id_produto: "id_produto",
+	impresso_por: "impresso_por",
+	mod_doc_fiscal: "mod_doc_fiscal",
+	nome: "nome",
+	relatorio: "relatorio",
+	tipo_data_emissao: "tipo_data_emissao",
+	tipo_movimento: "tipo_movimento",
+	tributos: "tributos",
+} as const;
+
 export const RELTRIBUTOSSAIDAFISCAIS_TIPODATAEMISSAO_LABELS = {
 	P: "P",
 	D: "D",

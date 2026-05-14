@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SMARTTUBEDEVICELIMIT_FIELD_LABELS = {
+	codigo_plataforma: "codigo_plataforma",
+	id: "id",
+	id_integracao: "id_integracao",
+	padrao: "padrao",
+	quantidade_devices: "quantidade_devices",
+} as const;
+
 export const SMARTTUBEDEVICELIMIT_PADRAO_LABELS = {
 	S: "S",
 	N: "N",

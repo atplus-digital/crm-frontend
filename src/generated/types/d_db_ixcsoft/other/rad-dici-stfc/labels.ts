@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADDICISTFC_FIELD_LABELS = {
+	agrupar_codigo_fistel: "agrupar_codigo_fistel",
+	ano: "ano",
+	cnpj_cpf: "cnpj_cpf",
+	data_referencia: "data_referencia",
+	id: "id",
+	id_filial: "id_filial",
+	mes: "mes",
+	modelo_nf: "modelo_nf",
+} as const;
+
 export const RADDICISTFC_AGRUPARCODIGOFISTEL_LABELS = {
 	S: "S",
 	N: "N",

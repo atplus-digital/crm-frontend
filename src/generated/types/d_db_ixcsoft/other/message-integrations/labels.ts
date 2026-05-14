@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const MESSAGEINTEGRATIONS_FIELD_LABELS = {
+	actions: "actions",
+	config: "config",
+	created_at: "created_at",
+	description: "description",
+	direct_send: "direct_send",
+	hash: "hash",
+	id: "id",
+	name: "name",
+	status: "status",
+	storage: "storage",
+	tables: "tables",
+	template: "template",
+	type: "type",
+	updated_at: "updated_at",
+} as const;
+
 export const MESSAGEINTEGRATIONS_DIRECTSEND_LABELS = {
 	S: "S",
 	N: "N",

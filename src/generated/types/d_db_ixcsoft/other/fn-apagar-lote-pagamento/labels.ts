@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNAPAGARLOTEPAGAMENTO_FIELD_LABELS = {
+	comunicado: "comunicado",
+	data_vencimento_final: "data_vencimento_final",
+	data_vencimento_inicial: "data_vencimento_inicial",
+	descricao: "descricao",
+	id: "id",
+	id_conta: "id_conta",
+} as const;
+
 export const FNAPAGARLOTEPAGAMENTO_COMUNICADO_LABELS = {
 	S: "S",
 	N: "N",

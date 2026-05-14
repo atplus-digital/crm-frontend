@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADCACHE_FIELD_LABELS = {
+	id: "id",
+	ip: "ip",
+	nome: "nome",
+	porta: "porta",
+	status: "status",
+} as const;
+
 export const RADCACHE_STATUS_LABELS = {
 	A: "A",
 	I: "I",

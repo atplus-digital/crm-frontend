@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TRANSFALMOXPATRIMONIOWIZARD_FIELD_LABELS = {
+	data_insercao: "data_insercao",
+	id: "id",
+	id_almox_destino: "id_almox_destino",
+	id_almox_origem: "id_almox_origem",
+	id_filial_destino: "id_filial_destino",
+	id_filial_origem: "id_filial_origem",
+	id_produto: "id_produto",
+	id_transf: "id_transf",
+	id_transf_almox_item: "id_transf_almox_item",
+	qtde_patrimonio: "qtde_patrimonio",
+	status: "status",
+} as const;
+
 export const TRANSFALMOXPATRIMONIOWIZARD_STATUS_LABELS = {
 	A: "A",
 	F: "F",

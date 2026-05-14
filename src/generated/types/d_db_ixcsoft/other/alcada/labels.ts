@@ -9,6 +9,12 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ALCADA_FIELD_LABELS = {
+	acao: "acao",
+	alcada: "alcada",
+	id: "id",
+} as const;
+
 export const ALCADA_ALCADA_LABELS = {
 	P: "P",
 	PA: "PA",

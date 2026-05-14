@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const VIEWPRODESTOQUEALMOX_FIELD_LABELS = {
+	almox_ativo: "almox_ativo",
+	almox_descricao: "almox_descricao",
+	almox_id: "almox_id",
+	filial_id: "filial_id",
+	id_produto: "id_produto",
+	saldo: "saldo",
+} as const;
+
 export const VIEWPRODESTOQUEALMOX_ALMOXATIVO_LABELS = {
 	S: "S",
 	N: "N",

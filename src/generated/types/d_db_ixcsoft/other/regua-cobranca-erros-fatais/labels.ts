@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REGUACOBRANCAERROSFATAIS_FIELD_LABELS = {
+	data_inclusao: "data_inclusao",
+	estagio: "estagio",
+	id: "id",
+	id_areceber: "id_areceber",
+	id_cliente: "id_cliente",
+	id_cobranca: "id_cobranca",
+	id_lote: "id_lote",
+	queue: "queue",
+	status: "status",
+} as const;
+
 export const REGUACOBRANCAERROSFATAIS_ESTAGIO_LABELS = {
 	BC: "BC",
 	BL: "BL",

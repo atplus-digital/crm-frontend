@@ -9,6 +9,12 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DEPARTAMENTO_FIELD_LABELS = {
+	descricao: "descricao",
+	id: "id",
+	presta_atendimento: "presta_atendimento",
+} as const;
+
 export const DEPARTAMENTO_PRESTAATENDIMENTO_LABELS = {
 	S: "S",
 	N: "N",

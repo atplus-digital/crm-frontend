@@ -9,6 +9,22 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CONFIGURACAOMVNO_FIELD_LABELS = {
+	ambiente: "ambiente",
+	client_id: "client_id",
+	client_secret: "client_secret",
+	data_atualizacao_token: "data_atualizacao_token",
+	external_id: "external_id",
+	id: "id",
+	integracao: "integracao",
+	login: "login",
+	mvna: "mvna",
+	refresh_token: "refresh_token",
+	senha: "senha",
+	token: "token",
+	url: "url",
+} as const;
+
 export const CONFIGURACAOMVNO_AMBIENTE_LABELS = {
 	P: "P",
 	H: "H",

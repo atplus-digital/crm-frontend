@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const NFARQUIVOMESTRE_FIELD_LABELS = {
+	ano: "ano",
+	chave_autenticacao: "chave_autenticacao",
+	cnpj: "cnpj",
+	data: "data",
+	finalidade: "finalidade",
+	id: "id",
+	id_filial: "id_filial",
+	id_operador: "id_operador",
+	mes: "mes",
+	modelo: "modelo",
+	nome_arquivo: "nome_arquivo",
+	serie: "serie",
+} as const;
+
 export const NFARQUIVOMESTRE_FINALIDADE_LABELS = {
 	S: "S",
 	N: "N",

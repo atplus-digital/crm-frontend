@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNMOVIMFINANCLASSE_FIELD_LABELS = {
+	data: "data",
+	historico: "historico",
+	id: "id",
+	id_apagar: "id_apagar",
+	id_areceber: "id_areceber",
+	id_filial: "id_filial",
+	id_movim_finan: "id_movim_finan",
+	id_planejamento_analitico_finan: "id_planejamento_analitico_finan",
+	liberado: "liberado",
+	status: "status",
+	valor: "valor",
+} as const;
+
 export const FNMOVIMFINANCLASSE_LIBERADO_LABELS = {
 	S: "S",
 	N: "N",

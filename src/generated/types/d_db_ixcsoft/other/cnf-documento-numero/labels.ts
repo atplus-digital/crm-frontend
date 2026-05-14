@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CNFDOCUMENTONUMERO_FIELD_LABELS = {
+	contador: "contador",
+	contador_carteira: "contador_carteira",
+	contador_funcoes_sicredi: "contador_funcoes_sicredi",
+	controla_mensal: "controla_mensal",
+	descricao: "descricao",
+	filial_id: "filial_id",
+	filial_id_nome: "filial_id_nome",
+	id: "id",
+	modelo: "modelo",
+	numeracao_lote: "numeracao_lote",
+	prefixo_nosso_numero: "prefixo_nosso_numero",
+	serie: "serie",
+	timbrado: "timbrado",
+	tipo_fiscal_carteira: "tipo_fiscal_carteira",
+	vigencia_fim: "vigencia_fim",
+	vigencia_inicio: "vigencia_inicio",
+} as const;
+
 export const CNFDOCUMENTONUMERO_CONTADORFUNCOESSICREDI_LABELS = {
 	S: "S",
 	N: "N",

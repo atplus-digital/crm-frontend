@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMCAMPANHA_FIELD_LABELS = {
+	campanha: "campanha",
+	cor_mapa: "cor_mapa",
+	data_inicio: "data_inicio",
+	data_termino: "data_termino",
+	id: "id",
+	status: "status",
+} as const;
+
 export const CRMCAMPANHA_STATUS_LABELS = {
 	S: "S",
 	N: "N",

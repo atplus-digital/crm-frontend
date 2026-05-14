@@ -9,6 +9,28 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const VEICULOSDESPESAS_FIELD_LABELS = {
+	centro_custo_regra_rateio: "centro_custo_regra_rateio",
+	classificacao_infracao: "classificacao_infracao",
+	data: "data",
+	descricao: "descricao",
+	gerar_contas_apagar: "gerar_contas_apagar",
+	id: "id",
+	id_apagar: "id_apagar",
+	id_centro_custo_categoria_filtro: "id_centro_custo_categoria_filtro",
+	id_centro_custo_criterio_rateio: "id_centro_custo_criterio_rateio",
+	id_centro_custo_rel_centro_custo_categoria_padrao:
+		"id_centro_custo_rel_centro_custo_categoria_padrao",
+	id_condutor: "id_condutor",
+	id_filial: "id_filial",
+	id_veiculo: "id_veiculo",
+	kilometragem: "kilometragem",
+	observacao: "observacao",
+	quantidade_litros: "quantidade_litros",
+	valor: "valor",
+	valor_litro: "valor_litro",
+} as const;
+
 export const VEICULOSDESPESAS_CENTROCUSTOREGRARATEIO_LABELS = {
 	CE: "CE",
 	CR: "CR",

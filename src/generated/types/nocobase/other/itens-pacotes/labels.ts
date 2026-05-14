@@ -9,6 +9,26 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ITENSPACOTES_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_ch3bjzt4zr7: "f_ch3bjzt4zr7",
+	f_fk1: "f_fk1",
+	f_fk2: "f_fk2",
+	f_id_ixc: "ID IXC",
+	f_mensalidade_com_desconto: "Mensalidade com Desconto",
+	f_mensalidade_sem_desconto: "Mensalidade Sem Desconto",
+	f_nome_do_produto: "Nome do Produto",
+	f_tipo_ixc: "Tipo de Produto IXC",
+	f_tipo_produto: "Tipo de Produto",
+	f_vna9rme0f5j: "f_vna9rme0f5j",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const ITENSPACOTES_TIPOIXC_LABELS = {
 	I: "INTERNET",
 	SMP: "MVNO/SMP",

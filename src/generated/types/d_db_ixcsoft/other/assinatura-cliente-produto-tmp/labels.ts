@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ASSINATURACLIENTEPRODUTOTMP_FIELD_LABELS = {
+	ativo: "ativo",
+	create_time: "create_time",
+	data_validade: "data_validade",
+	descricao: "descricao",
+	id: "id",
+	id_assinatura_cliente: "id_assinatura_cliente",
+	id_produto: "id_produto",
+	id_tipo_documento: "id_tipo_documento",
+	obs: "obs",
+	quantidade: "quantidade",
+	situacao: "situacao",
+	status: "status",
+	update_time: "update_time",
+	valor_unitario: "valor_unitario",
+} as const;
+
 export const ASSINATURACLIENTEPRODUTOTMP_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

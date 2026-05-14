@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RECURSOSVIAGEM_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_destino_viagem: "Destino da Viagem",
+	f_fk_recursos_viagem: "f_fk_recursos_viagem",
+	f_km_percorrido: "Km Percorrido",
+	f_meio_transporte: "Meio de Transporte",
+	f_observacoes: "Observações",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const RECURSOSVIAGEM_DESTINOVIAGEM_LABELS = {
 	1: "Curitibanos",
 	2: "Florianópolis",

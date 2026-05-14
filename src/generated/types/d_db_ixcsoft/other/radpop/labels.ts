@@ -9,6 +9,26 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADPOP_FIELD_LABELS = {
+	abertura: "abertura",
+	altura: "altura",
+	bairro: "bairro",
+	cep: "cep",
+	endereco: "endereco",
+	id: "id",
+	id_cidade: "id_cidade",
+	id_diretorio: "id_diretorio",
+	id_fornecedor: "id_fornecedor",
+	id_projeto: "id_projeto",
+	latitude: "latitude",
+	longitude: "longitude",
+	numero: "numero",
+	numestacao_anatel: "numestacao_anatel",
+	observacoes: "observacoes",
+	pop: "pop",
+	tipo: "tipo",
+} as const;
+
 export const RADPOP_ABERTURA_LABELS = {
 	PA: "PA",
 	R: "R",

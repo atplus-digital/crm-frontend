@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SERVERINTERFACES_FIELD_LABELS = {
+	broadcast: "broadcast",
+	descricao: "descricao",
+	dns: "dns",
+	gateway: "gateway",
+	id: "id",
+	interface: "interface",
+	ip: "ip",
+	mac: "mac",
+	mascara: "mascara",
+	rede: "rede",
+	tipo: "tipo",
+} as const;
+
 export const SERVERINTERFACES_TIPO_LABELS = {
 	wan: "wan",
 	lan: "lan",

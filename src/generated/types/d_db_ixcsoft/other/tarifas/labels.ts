@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TARIFAS_FIELD_LABELS = {
+	custo_duracao_min_segundos: "custo_duracao_min_segundos",
+	custo_fracao_segundos: "custo_fracao_segundos",
+	custo_por_minuto: "custo_por_minuto",
+	duracao_min_segundos: "duracao_min_segundos",
+	franquia_segundos: "franquia_segundos",
+	id: "id",
+	id_tarifa_grupo: "id_tarifa_grupo",
+	padrao: "padrao",
+	prefixo: "prefixo",
+	tarifar_fracao_segundos: "tarifar_fracao_segundos",
+	tipo_chamada: "tipo_chamada",
+	valor: "valor",
+} as const;
+
 export const TARIFAS_PADRAO_LABELS = {
 	N: "N",
 	S: "S",

@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ROTINAIMPORTACAOSERVICOSADICIONAISDADOS_FIELD_LABELS = {
+	codigo: "codigo",
+	descricao: "descricao",
+	empresa: "empresa",
+	id: "id",
+	id_contrato: "id_contrato",
+	id_rotina: "id_rotina",
+	sessoes: "sessoes",
+	sessoes_cobradas: "sessoes_cobradas",
+	sessoes_gratuitas: "sessoes_gratuitas",
+	status_rotina: "status_rotina",
+	valor: "valor",
+	valor_unitario: "valor_unitario",
+} as const;
+
 export const ROTINAIMPORTACAOSERVICOSADICIONAISDADOS_STATUSROTINA_LABELS = {
 	A: "A",
 	P: "P",

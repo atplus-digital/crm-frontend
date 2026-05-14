@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SUOSSCHAMADOARQUIVOS_FIELD_LABELS = {
+	classificacao_arquivo: "classificacao_arquivo",
+	data_envio: "data_envio",
+	descricao: "descricao",
+	id: "id",
+	id_oss_chamado: "id_oss_chamado",
+	id_oss_chamado_mensagem: "id_oss_chamado_mensagem",
+	local_arquivo: "local_arquivo",
+	nome_arquivo: "nome_arquivo",
+	tipo: "tipo",
+} as const;
+
 export const SUOSSCHAMADOARQUIVOS_CLASSIFICACAOARQUIVO_LABELS = {
 	O: "O",
 	P: "P",

@@ -9,6 +9,43 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const HSADMARTIGOS_FIELD_LABELS = {
+	acessos: "acessos",
+	autor: "autor",
+	avaliacao_artigo: "avaliacao_artigo",
+	conteudo: "conteudo",
+	criado: "criado",
+	data_criacao: "data_criacao",
+	data_hora_de_criacao: "data_hora_de_criacao",
+	data_hora_modificacao: "data_hora_modificacao",
+	data_publicacao: "data_publicacao",
+	descricao: "descricao",
+	estado: "estado",
+	exibir_pagina_inicial: "exibir_pagina_inicial",
+	exibir_titulo: "exibir_titulo",
+	icone_email: "icone_email",
+	icone_impressao: "icone_impressao",
+	icone_pdf: "icone_pdf",
+	id: "id",
+	id_artigo: "id_artigo",
+	id_categoria: "id_categoria",
+	id_secao: "id_secao",
+	item_conteudo: "item_conteudo",
+	modificado: "modificado",
+	nivel_acesso: "nivel_acesso",
+	nome_categoria: "nome_categoria",
+	nome_categoria_como_link: "nome_categoria_como_link",
+	nome_secao: "nome_secao",
+	nome_secao_como_link: "nome_secao_como_link",
+	nomes_autores: "nomes_autores",
+	palavras_chave: "palavras_chave",
+	publicado: "publicado",
+	texto_alternativo: "texto_alternativo",
+	texto_introdutorio: "texto_introdutorio",
+	titulo: "titulo",
+	titulo_como_link: "titulo_como_link",
+} as const;
+
 export const HSADMARTIGOS_AVALIACAOARTIGO_LABELS = {
 	G: "G",
 	N: "N",

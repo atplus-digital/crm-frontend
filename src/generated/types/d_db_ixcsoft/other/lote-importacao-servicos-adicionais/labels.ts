@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOTEIMPORTACAOSERVICOSADICIONAIS_FIELD_LABELS = {
+	codigo: "codigo",
+	data_final: "data_final",
+	data_inicial: "data_inicial",
+	id: "id",
+	id_usuario: "id_usuario",
+	local_arquivo: "local_arquivo",
+	nome_arquivo: "nome_arquivo",
+	oculto: "oculto",
+	operador: "operador",
+	quantidade: "quantidade",
+	status: "status",
+	valor_total: "valor_total",
+} as const;
+
 export const LOTEIMPORTACAOSERVICOSADICIONAIS_OCULTO_LABELS = {
 	S: "S",
 	N: "N",

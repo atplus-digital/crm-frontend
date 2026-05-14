@@ -40,6 +40,7 @@ interface DataTableContainerProps<
 		pagination: { page: number; pageSize: number },
 	) => void;
 	showPagination?: boolean;
+	columnLabels?: Partial<Record<string, string>>;
 	children?: ReactNode;
 	enableColumnVisibility?: boolean;
 }
@@ -65,6 +66,7 @@ export function DataTableContainer<
 	onFiltersApply,
 	onFiltersClear,
 	showPagination = true,
+	columnLabels,
 	isLoading,
 	hasInitialQueryData,
 	children,
@@ -91,6 +93,7 @@ export function DataTableContainer<
 		onFiltersClear,
 		showPagination,
 		enableColumnVisibility,
+		columnLabels,
 	});
 
 	return (

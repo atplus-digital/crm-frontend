@@ -9,6 +9,12 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CNFLISTACONTA_FIELD_LABELS = {
+	ativo: "ativo",
+	descricao: "descricao",
+	id: "id",
+} as const;
+
 export const CNFLISTACONTA_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

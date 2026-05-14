@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PEDIDOOS_FIELD_LABELS = {
+	data_emissao: "data_emissao",
+	data_saida: "data_saida",
+	filial_id: "filial_id",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_comissionado: "id_comissionado",
+	id_condicao_pagamento: "id_condicao_pagamento",
+	id_contrato: "id_contrato",
+	id_oss_chamado: "id_oss_chamado",
+	id_saida: "id_saida",
+	id_tipo_documento: "id_tipo_documento",
+	status_fat_os: "status_fat_os",
+	status_pedido_os: "status_pedido_os",
+	tipo_produtos: "tipo_produtos",
+} as const;
+
 export const PEDIDOOS_STATUSFATOS_LABELS = {
 	N: "N",
 	F: "F",

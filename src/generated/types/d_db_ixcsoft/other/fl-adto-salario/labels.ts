@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FLADTOSALARIO_FIELD_LABELS = {
+	conta_: "conta_",
+	data: "data",
+	descricao: "descricao",
+	documento: "documento",
+	filial_id: "filial_id",
+	id: "id",
+	id_conta: "id_conta",
+	id_funcionario: "id_funcionario",
+	tipo_pagamento: "tipo_pagamento",
+	valor: "valor",
+} as const;
+
 export const FLADTOSALARIO_TIPOPAGAMENTO_LABELS = {
 	Dinheiro: "Dinheiro",
 	Cheque: "Cheque",

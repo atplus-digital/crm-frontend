@@ -9,6 +9,45 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DFCONFIG_FIELD_LABELS = {
+	colorir_caixa_atendimento_portas_disp:
+		"colorir_caixa_atendimento_portas_disp",
+	delay_update_mapa: "delay_update_mapa",
+	exibir_descricao_caixa_atendimento: "exibir_descricao_caixa_atendimento",
+	exibir_descricao_caixa_emenda: "exibir_descricao_caixa_emenda",
+	exibir_notificacao_caixas_de_atendimento:
+		"exibir_notificacao_caixas_de_atendimento",
+	exibir_notificacao_clientes_sem_coordenada:
+		"exibir_notificacao_clientes_sem_coordenada",
+	exibir_notificacao_feedback_app: "exibir_notificacao_feedback_app",
+	exibir_notificacao_logins_sem_coordenada:
+		"exibir_notificacao_logins_sem_coordenada",
+	exibir_notificacao_onu_sem_coordenada:
+		"exibir_notificacao_onu_sem_coordenada",
+	filtro_cliente_ativo: "filtro_cliente_ativo",
+	filtro_cliente_online: "filtro_cliente_online",
+	filtro_cliente_sem_coordenada: "filtro_cliente_sem_coordenada",
+	filtro_cliente_sem_projeto: "filtro_cliente_sem_projeto",
+	filtro_exibir_direcao_fibra: "filtro_exibir_direcao_fibra",
+	filtro_exibir_funcionarios: "filtro_exibir_funcionarios",
+	filtro_onu_estrutura: "filtro_onu_estrutura",
+	filtro_potencia_onu: "filtro_potencia_onu",
+	filtro_tipo_mapa: "filtro_tipo_mapa",
+	filtro_transmissor: "filtro_transmissor",
+	id: "id",
+	id_tipo_emenda_padrao: "id_tipo_emenda_padrao",
+	id_user: "id_user",
+	layer: "layer",
+	layer_sales: "layer_sales",
+	layer_service: "layer_service",
+	map_mode: "map_mode",
+	map_mode_sales: "map_mode_sales",
+	map_mode_service: "map_mode_service",
+	versao_fiber: "versao_fiber",
+	versao_update_categoria: "versao_update_categoria",
+	versao_update_estilo: "versao_update_estilo",
+} as const;
+
 export const DFCONFIG_COLORIRCAIXAATENDIMENTOPORTASDISP_LABELS = {
 	S: "S",
 	N: "N",

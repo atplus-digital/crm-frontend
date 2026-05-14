@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const BACKUPHISTORICO_FIELD_LABELS = {
+	data: "data",
+	id: "id",
+	nome: "nome",
+	tamanho_backup: "tamanho_backup",
+	tipo: "tipo",
+} as const;
+
 export const BACKUPHISTORICO_TIPO_LABELS = {
 	CS: "CS",
 	B: "B",

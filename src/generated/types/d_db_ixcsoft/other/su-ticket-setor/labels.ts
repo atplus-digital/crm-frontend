@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SUTICKETSETOR_FIELD_LABELS = {
+	ativo: "ativo",
+	email: "email",
+	exige_vinculo_produto: "exige_vinculo_produto",
+	id: "id",
+	mostra_hotsite: "mostra_hotsite",
+	ordem: "ordem",
+	presta_atendimento: "presta_atendimento",
+	setor: "setor",
+} as const;
+
 export const SUTICKETSETOR_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

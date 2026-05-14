@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGSERROSINTEGRACOES_FIELD_LABELS = {
+	data_hora: "data_hora",
+	id: "id",
+	id_assinatura_cliente_produto: "id_assinatura_cliente_produto",
+	id_contrato: "id_contrato",
+	id_sva_usuarios_lote: "id_sva_usuarios_lote",
+	id_usuario_integracao: "id_usuario_integracao",
+	mensagem_erro: "mensagem_erro",
+	status: "status",
+	tipo_integracao: "tipo_integracao",
+} as const;
+
 export const LOGSERROSINTEGRACOES_STATUS_LABELS = {
 	S: "S",
 	N: "N",

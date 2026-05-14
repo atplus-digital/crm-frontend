@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADSICIREGISTROS_FIELD_LABELS = {
+	codmunicipio: "codmunicipio",
+	faixa: "faixa",
+	id: "id",
+	id_rad_sici: "id_rad_sici",
+	item: "item",
+	nome: "nome",
+	sigla: "sigla",
+	tecnologia: "tecnologia",
+	tipo_pessoa: "tipo_pessoa",
+	uf: "uf",
+	valor: "valor",
+	valor_alfanum: "valor_alfanum",
+} as const;
+
 export const RADSICIREGISTROS_TIPOPESSOA_LABELS = {
 	F: "F",
 	J: "J",

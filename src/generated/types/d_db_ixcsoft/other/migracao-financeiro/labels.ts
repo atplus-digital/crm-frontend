@@ -9,6 +9,11 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const MIGRACAOFINANCEIRO_FIELD_LABELS = {
+	id: "id",
+	status: "status",
+} as const;
+
 export const MIGRACAOFINANCEIRO_STATUS_LABELS = {
 	N: "N",
 	A: "A",

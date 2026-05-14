@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RAMAISCALLCENTER_FIELD_LABELS = {
+	announce: "announce",
+	context: "context",
+	id: "id",
+	interface: "interface",
+	membername: "membername",
+	musiconhold: "musiconhold",
+	name: "name",
+	paused: "paused",
+	penalty: "penalty",
+	queue_name: "queue_name",
+	ringinuse: "ringinuse",
+	state_interface: "state_interface",
+	timeout: "timeout",
+	uniqueid: "uniqueid",
+} as const;
+
 export const RAMAISCALLCENTER_RINGINUSE_LABELS = {
 	yes: "yes",
 	no: "no",

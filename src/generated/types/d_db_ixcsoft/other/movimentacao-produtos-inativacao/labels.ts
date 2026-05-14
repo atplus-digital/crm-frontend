@@ -9,6 +9,35 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const MOVIMENTACAOPRODUTOSINATIVACAO_FIELD_LABELS = {
+	atualizado_em: "atualizado_em",
+	atualizado_por: "atualizado_por",
+	data: "data",
+	descricao_produto: "descricao_produto",
+	descricao_servico: "descricao_servico",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_contrato: "id_contrato",
+	id_produto: "id_produto",
+	inativo_em: "inativo_em",
+	inativo_por: "inativo_por",
+	inserido_em: "inserido_em",
+	inserido_por: "inserido_por",
+	motivo_inativacao: "motivo_inativacao",
+	obs: "obs",
+	obs_inativacao: "obs_inativacao",
+	plano: "plano",
+	qtde: "qtde",
+	tipo: "tipo",
+	tipo_movimentacao: "tipo_movimentacao",
+	valor: "valor",
+	valor_acrescimo: "valor_acrescimo",
+	valor_ate_vencimento: "valor_ate_vencimento",
+	valor_desconto: "valor_desconto",
+	valor_liquido: "valor_liquido",
+	valor_unit: "valor_unit",
+} as const;
+
 export const MOVIMENTACAOPRODUTOSINATIVACAO_TIPO_LABELS = {
 	I: "I",
 	T: "T",

@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMTIPOCANDIDATO_FIELD_LABELS = {
+	ativo: "ativo",
+	cor_mapa: "cor_mapa",
+	id: "id",
+	tipo: "tipo",
+} as const;
+
 export const CRMTIPOCANDIDATO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

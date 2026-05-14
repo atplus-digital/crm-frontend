@@ -9,6 +9,24 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FIADOR_FIELD_LABELS = {
+	bairro: "bairro",
+	cidade: "cidade",
+	conjuge: "conjuge",
+	conjuge_cpf: "conjuge_cpf",
+	conjuge_orgao_emissor: "conjuge_orgao_emissor",
+	conjuge_rg: "conjuge_rg",
+	cpf: "cpf",
+	endereco: "endereco",
+	endereco_numero: "endereco_numero",
+	estado_civil: "estado_civil",
+	id: "id",
+	nome: "nome",
+	orgao_emissor: "orgao_emissor",
+	rg: "rg",
+	telefone: "telefone",
+} as const;
+
 export const FIADOR_ESTADOCIVIL_LABELS = {
 	C: "C",
 	S: "S",

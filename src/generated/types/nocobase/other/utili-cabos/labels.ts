@@ -4,3 +4,19 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+// ============================================================
+// LABELS (single source of truth)
+// ============================================================
+export const UTILICABOS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_cabos_opticos: "Cabos Ópticos",
+	f_comprimento_utilizado: "Comprimento a ser Utilizado",
+	f_fk_cabos_opticos: "f_fk_cabos_opticos",
+	f_obs_historico: "Observação do Histórico",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;

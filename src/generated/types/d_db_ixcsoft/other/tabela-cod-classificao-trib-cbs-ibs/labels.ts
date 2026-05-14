@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TABELACODCLASSIFICAOTRIBCBSIBS_FIELD_LABELS = {
+	class_trib: "class_trib",
+	cst_ibs_cbs: "cst_ibs_cbs",
+	descricao_class_trib: "descricao_class_trib",
+	descricao_cst_ibs_cbs: "descricao_cst_ibs_cbs",
+	id: "id",
+	percent_reducao: "percent_reducao",
+	reforma_trib: "reforma_trib",
+	tipo_aliquota: "tipo_aliquota",
+} as const;
+
 export const TABELACODCLASSIFICAOTRIBCBSIBS_TIPOALIQUOTA_LABELS = {
 	P: "P",
 	SA: "SA",

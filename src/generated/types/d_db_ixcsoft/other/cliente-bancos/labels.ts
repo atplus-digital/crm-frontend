@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTEBANCOS_FIELD_LABELS = {
+	agencia: "agencia",
+	banco: "banco",
+	cnpj_cpf: "cnpj_cpf",
+	cod_banco: "cod_banco",
+	conta_corrente: "conta_corrente",
+	id: "id",
+	id_cliente: "id_cliente",
+	tempo_conta: "tempo_conta",
+	tipo_conta: "tipo_conta",
+	tipo_pessoa: "tipo_pessoa",
+	titular: "titular",
+} as const;
+
 export const CLIENTEBANCOS_TIPOCONTA_LABELS = {
 	C: "C",
 	P: "P",

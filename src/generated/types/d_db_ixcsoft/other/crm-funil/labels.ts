@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMFUNIL_FIELD_LABELS = {
+	cor_mapa: "cor_mapa",
+	funil: "funil",
+	id: "id",
+	tipo: "tipo",
+} as const;
+
 export const CRMFUNIL_TIPO_LABELS = {
 	negociacao: "negociacao",
 	lead: "lead",

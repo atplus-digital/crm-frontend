@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ALTVERSAOCHAVESHISTORICO_FIELD_LABELS = {
+	id: "id",
+	id_alt_versao_chaves: "id_alt_versao_chaves",
+	id_chave: "id_chave",
+	id_cliente: "id_cliente",
+	observacao: "observacao",
+	status: "status",
+	versao_antiga: "versao_antiga",
+	versao_nova: "versao_nova",
+} as const;
+
 export const ALTVERSAOCHAVESHISTORICO_STATUS_LABELS = {
 	A: "A",
 	S: "S",

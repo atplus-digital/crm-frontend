@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const NFECARTACORRECAO_FIELD_LABELS = {
+	emitida: "emitida",
+	id: "id",
+	id_entrada: "id_entrada",
+	id_saida: "id_saida",
+	motivo_carta: "motivo_carta",
+	sequencia: "sequencia",
+	xml_carta: "xml_carta",
+} as const;
+
 export const NFECARTACORRECAO_EMITIDA_LABELS = {
 	S: "S",
 	N: "N",

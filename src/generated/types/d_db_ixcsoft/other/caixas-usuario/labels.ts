@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CAIXASUSUARIO_FIELD_LABELS = {
+	caixa_padrao: "caixa_padrao",
+	descricao: "descricao",
+	id: "id",
+	id_conta: "id_conta",
+	id_usuario: "id_usuario",
+} as const;
+
 export const CAIXASUSUARIO_CAIXAPADRAO_LABELS = {
 	S: "S",
 	N: "N",

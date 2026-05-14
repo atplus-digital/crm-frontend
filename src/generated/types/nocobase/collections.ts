@@ -167,6 +167,7 @@ import type {
 } from "./other/links-indicadores-usuarios";
 import type { Logs, LogsRelations } from "./other/logs";
 import type { LogsCargos, LogsCargosRelations } from "./other/logs-cargos";
+import type { ModulosSfp, ModulosSfpRelations } from "./other/modulos-sfp";
 import type { Muu3vsavv3h, Muu3vsavv3hRelations } from "./other/muu3vsavv3h";
 import type { Na4eifobesz, Na4eifobeszRelations } from "./other/na4eifobesz";
 import type {
@@ -389,6 +390,7 @@ export type CollectionName =
 	| "t_linha_corporativa"
 	| "t_logs"
 	| "t_logs_cargos"
+	| "t_modulos_sfp"
 	| "t_muu3vsavv3h"
 	| "t_na4eifobesz"
 	| "t_negociacoes"
@@ -509,6 +511,7 @@ export interface CollectionMap {
 	t_linha_corporativa: LinhaCorporativa;
 	t_logs: Logs;
 	t_logs_cargos: LogsCargos;
+	t_modulos_sfp: ModulosSfp;
 	t_muu3vsavv3h: Muu3vsavv3h;
 	t_na4eifobesz: Na4eifobesz;
 	t_negociacoes: Negociacoes;
@@ -630,6 +633,7 @@ export interface CollectionRelationsMap {
 	t_linha_corporativa: LinhaCorporativaRelations;
 	t_logs: LogsRelations;
 	t_logs_cargos: LogsCargosRelations;
+	t_modulos_sfp: ModulosSfpRelations;
 	t_muu3vsavv3h: Muu3vsavv3hRelations;
 	t_na4eifobesz: Na4eifobeszRelations;
 	t_negociacoes: NegociacoesRelations;
@@ -752,6 +756,7 @@ export const COLLECTIONS = [
 	"t_linha_corporativa",
 	"t_logs",
 	"t_logs_cargos",
+	"t_modulos_sfp",
 	"t_muu3vsavv3h",
 	"t_na4eifobesz",
 	"t_negociacoes",

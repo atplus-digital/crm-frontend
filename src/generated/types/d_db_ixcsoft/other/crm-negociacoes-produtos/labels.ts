@@ -9,6 +9,26 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMNEGOCIACOESPRODUTOS_FIELD_LABELS = {
+	data_validade: "data_validade",
+	descricao: "descricao",
+	id: "id",
+	id_negociacao: "id_negociacao",
+	id_patrimonio: "id_patrimonio",
+	id_produto: "id_produto",
+	id_unidade: "id_unidade",
+	pdesconto: "pdesconto",
+	quantidade: "quantidade",
+	repetir: "repetir",
+	repetir_qtde: "repetir_qtde",
+	tipo: "tipo",
+	ultima_atualizacao: "ultima_atualizacao",
+	ultima_atualizacao_original: "ultima_atualizacao_original",
+	valor_total: "valor_total",
+	valor_unitario: "valor_unitario",
+	vdesconto: "vdesconto",
+} as const;
+
 export const CRMNEGOCIACOESPRODUTOS_REPETIR_LABELS = {
 	V: "V",
 	S: "S",

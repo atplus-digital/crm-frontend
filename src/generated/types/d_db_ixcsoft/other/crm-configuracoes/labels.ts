@@ -9,6 +9,11 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMCONFIGURACOES_FIELD_LABELS = {
+	chat_habilita: "chat_habilita",
+	id: "id",
+} as const;
+
 export const CRMCONFIGURACOES_CHATHABILITA_LABELS = {
 	S: "S",
 	N: "N",

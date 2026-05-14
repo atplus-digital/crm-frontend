@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGSEXCLUSAO_FIELD_LABELS = {
+	banco: "banco",
+	deletados: "deletados",
+	fim: "fim",
+	id: "id",
+	inicio: "inicio",
+	logs_config: "logs_config",
+	status: "status",
+	tabela: "tabela",
+	ultimo_backup: "ultimo_backup",
+} as const;
+
 export const LOGSEXCLUSAO_BANCO_LABELS = {
 	ElasticSearch: "ElasticSearch",
 	MariaDB: "MariaDB",

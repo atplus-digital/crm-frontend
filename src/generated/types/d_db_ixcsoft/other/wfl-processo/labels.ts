@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const WFLPROCESSO_FIELD_LABELS = {
+	ativo: "ativo",
+	descricao: "descricao",
+	id: "id",
+	id_depto: "id_depto",
+	operador_ultima_atualizacao: "operador_ultima_atualizacao",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const WFLPROCESSO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

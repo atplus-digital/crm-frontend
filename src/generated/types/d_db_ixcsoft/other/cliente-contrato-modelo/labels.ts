@@ -9,6 +9,36 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOMODELO_FIELD_LABELS = {
+	adesao_arquivo: "adesao_arquivo",
+	cabecalho: "cabecalho",
+	cabecalho_padrao: "cabecalho_padrao",
+	cliente_contrato_comodato: "cliente_contrato_comodato",
+	cliente_contrato_de_permanencia: "cliente_contrato_de_permanencia",
+	comodato_arquivo: "comodato_arquivo",
+	contrato_arquivo: "contrato_arquivo",
+	eh_modelo_termo: "eh_modelo_termo",
+	fidelidade: "fidelidade",
+	id: "id",
+	id_contrato_cliente: "id_contrato_cliente",
+	id_contrato_testes: "id_contrato_testes",
+	imprimi_roteador: "imprimi_roteador",
+	imprimir_comodatos: "imprimir_comodatos",
+	imprimir_debito: "imprimir_debito",
+	imprimir_login_assinante: "imprimir_login_assinante",
+	imprimir_pppoe: "imprimir_pppoe",
+	modelo_subcontrato: "modelo_subcontrato",
+	nome: "nome",
+	permanencia_arquivo: "permanencia_arquivo",
+	personalizado_arquivo: "personalizado_arquivo",
+	prazo: "prazo",
+	status: "status",
+	termo_personalizado: "termo_personalizado",
+	texto: "texto",
+	texto_imobiliaria: "texto_imobiliaria",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const CLIENTECONTRATOMODELO_EHMODELOTERMO_LABELS = {
 	S: "S",
 	N: "N",

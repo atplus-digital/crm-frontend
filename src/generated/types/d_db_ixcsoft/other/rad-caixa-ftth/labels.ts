@@ -9,6 +9,32 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADCAIXAFTTH_FIELD_LABELS = {
+	bairro: "bairro",
+	capacidade: "capacidade",
+	cep: "cep",
+	codigo_estilo_caixa: "codigo_estilo_caixa",
+	descricao: "descricao",
+	endereco: "endereco",
+	external_id: "external_id",
+	id: "id",
+	id_cidade: "id_cidade",
+	id_diretorio: "id_diretorio",
+	id_interface: "id_interface",
+	id_mini_projeto: "id_mini_projeto",
+	id_projeto: "id_projeto",
+	id_tecnologia: "id_tecnologia",
+	id_transmissor: "id_transmissor",
+	idx: "idx",
+	latitude: "latitude",
+	longitude: "longitude",
+	numero: "numero",
+	obs_caixa_ftth: "obs_caixa_ftth",
+	status: "status",
+	tipo: "tipo",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const RADCAIXAFTTH_STATUS_LABELS = {
 	A: "A",
 	I: "I",

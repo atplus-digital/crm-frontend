@@ -9,6 +9,31 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const HSADMITEMMENU_FIELD_LABELS = {
+	ao_clicar_abrir_em: "ao_clicar_abrir_em",
+	campo_filtro: "campo_filtro",
+	descricao_texto: "descricao_texto",
+	escondido: "escondido",
+	estilo: "estilo",
+	grupo_imoveis: "grupo_imoveis",
+	grupo_produtos: "grupo_produtos",
+	id: "id",
+	id_categoria: "id_categoria",
+	id_menu: "id_menu",
+	id_secao: "id_secao",
+	imagem_menu: "imagem_menu",
+	link: "link",
+	menu_pai: "menu_pai",
+	nivel_acesso: "nivel_acesso",
+	ordenar: "ordenar",
+	ordernar: "ordernar",
+	pagina_inicial: "pagina_inicial",
+	publicado: "publicado",
+	selecione_artigo: "selecione_artigo",
+	tipo_menu: "tipo_menu",
+	titulo: "titulo",
+} as const;
+
 export const HSADMITEMMENU_ESCONDIDO_LABELS = {
 	S: "S",
 	N: "N",

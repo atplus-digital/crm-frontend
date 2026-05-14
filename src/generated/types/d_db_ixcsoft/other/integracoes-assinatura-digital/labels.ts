@@ -9,6 +9,32 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const INTEGRACOESASSINATURADIGITAL_FIELD_LABELS = {
+	ambiente: "ambiente",
+	descricao: "descricao",
+	dias_expiracao: "dias_expiracao",
+	document_photo: "document_photo",
+	id: "id",
+	id_email_envio_assinatura: "id_email_envio_assinatura",
+	id_email_envio_assinatura_testemunha: "id_email_envio_assinatura_testemunha",
+	id_omnichannel_envio_assinatura: "id_omnichannel_envio_assinatura",
+	id_omnichannel_envio_assinatura_testemunha:
+		"id_omnichannel_envio_assinatura_testemunha",
+	id_webhook_integracao: "id_webhook_integracao",
+	integrador: "integrador",
+	metodo_envio_assinatura: "metodo_envio_assinatura",
+	permite_recusar_documento: "permite_recusar_documento",
+	responsavel_provedor: "responsavel_provedor",
+	selfie_photo: "selfie_photo",
+	testemunha_provedor: "testemunha_provedor",
+	token_autenticacao_webhook: "token_autenticacao_webhook",
+	token_integracao: "token_integracao",
+	token_usuario_api_responsavel: "token_usuario_api_responsavel",
+	token_usuario_api_testemunha: "token_usuario_api_testemunha",
+	url: "url",
+	usuario_api_webhook: "usuario_api_webhook",
+} as const;
+
 export const INTEGRACOESASSINATURADIGITAL_AMBIENTE_LABELS = {
 	P: "P",
 	H: "H",

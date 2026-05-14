@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SUOSSCHAMADOFEEDBACKS_FIELD_LABELS = {
+	cliente_id: "cliente_id",
+	dt_fechamento: "dt_fechamento",
+	dt_resposta: "dt_resposta",
+	funcionarios_id: "funcionarios_id",
+	id: "id",
+	pesquisa_satisfacao_id: "pesquisa_satisfacao_id",
+	status: "status",
+	su_oss_chamado_id: "su_oss_chamado_id",
+	su_ticket_id: "su_ticket_id",
+} as const;
+
 export const SUOSSCHAMADOFEEDBACKS_STATUS_LABELS = {
 	EN: "EN",
 	RE: "RE",

@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const GATEWAYOMNICHANNEL_FIELD_LABELS = {
+	descricao: "descricao",
+	gateway: "gateway",
+	id: "id",
+	token: "token",
+	url: "url",
+	utiliza_fila_mensagens: "utiliza_fila_mensagens",
+} as const;
+
 export const GATEWAYOMNICHANNEL_GATEWAY_LABELS = {
 	opasuite: "opasuite",
 } as const;

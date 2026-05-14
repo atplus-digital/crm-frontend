@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const WFLPARAMETROOSS_FIELD_LABELS = {
+	abre_duplicada_areceber: "abre_duplicada_areceber",
+	abre_duplicada_cliente: "abre_duplicada_cliente",
+	abre_duplicada_contrato: "abre_duplicada_contrato",
+	considera_contrato_inativo: "considera_contrato_inativo",
+	considera_contrato_negativado: "considera_contrato_negativado",
+	considera_finalizada: "considera_finalizada",
+	descricao: "descricao",
+	id: "id",
+	id_assunto: "id_assunto",
+	id_setor: "id_setor",
+	id_tecnico: "id_tecnico",
+	id_wfl_processo: "id_wfl_processo",
+	prioridade: "prioridade",
+	processo: "processo",
+} as const;
+
 export const WFLPARAMETROOSS_ABREDUPLICADAARECEBER_LABELS = {
 	S: "S",
 	N: "N",

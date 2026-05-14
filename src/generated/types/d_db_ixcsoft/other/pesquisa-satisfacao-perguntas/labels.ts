@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PESQUISASATISFACAOPERGUNTAS_FIELD_LABELS = {
+	descricao: "descricao",
+	id: "id",
+	obrigatoria: "obrigatoria",
+	ordenacao: "ordenacao",
+	pesquisa_satisfacao_id: "pesquisa_satisfacao_id",
+	tipo_resposta: "tipo_resposta",
+} as const;
+
 export const PESQUISASATISFACAOPERGUNTAS_OBRIGATORIA_LABELS = {
 	S: "S",
 	N: "N",

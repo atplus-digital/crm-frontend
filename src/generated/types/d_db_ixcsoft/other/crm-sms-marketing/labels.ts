@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMSMSMARKETING_FIELD_LABELS = {
+	descricao: "descricao",
+	form_variaveis: "form_variaveis",
+	gateway_sms: "gateway_sms",
+	id: "id",
+	intervalo_tempo_sms: "intervalo_tempo_sms",
+	marketing: "marketing",
+	mensagem: "mensagem",
+	prioridade: "prioridade",
+	remetente: "remetente",
+} as const;
+
 export const CRMSMSMARKETING_MARKETING_LABELS = {
 	S: "S",
 	N: "N",

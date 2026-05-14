@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CARTOESFIXADOSKANBAN_FIELD_LABELS = {
+	criado_em: "criado_em",
+	id: "id",
+	id_cartao: "id_cartao",
+	id_usuario: "id_usuario",
+	tipo_cartao: "tipo_cartao",
+} as const;
+
 export const CARTOESFIXADOSKANBAN_TIPOCARTAO_LABELS = {
 	lead: "lead",
 	negociacao: "negociacao",

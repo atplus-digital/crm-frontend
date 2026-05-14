@@ -9,6 +9,35 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const IMCONTRATOSALUGUEL_FIELD_LABELS = {
+	carteira_cobranca: "carteira_cobranca",
+	comissao: "comissao",
+	condicao_pagamento: "condicao_pagamento",
+	data: "data",
+	data_alteracao_valor: "data_alteracao_valor",
+	data_base_financeiro: "data_base_financeiro",
+	dia_vencimento: "dia_vencimento",
+	fidelidade: "fidelidade",
+	finalidade: "finalidade",
+	financeiro_automatico: "financeiro_automatico",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_fiador: "id_fiador",
+	id_filial: "id_filial",
+	id_imovel: "id_imovel",
+	id_modelo_impressao: "id_modelo_impressao",
+	id_representante: "id_representante",
+	reajuste_auto: "reajuste_auto",
+	reajuste_perc: "reajuste_perc",
+	status: "status",
+	tipo_cobranca: "tipo_cobranca",
+	tipo_doc: "tipo_doc",
+	valor: "valor",
+	valor_abatimento: "valor_abatimento",
+	valor_atualizado: "valor_atualizado",
+	vendedor: "vendedor",
+} as const;
+
 export const IMCONTRATOSALUGUEL_FINALIDADE_LABELS = {
 	R: "R",
 	C: "C",

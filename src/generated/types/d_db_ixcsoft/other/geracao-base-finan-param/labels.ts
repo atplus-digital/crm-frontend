@@ -9,6 +9,37 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const GERACAOBASEFINANPARAM_FIELD_LABELS = {
+	aliquota_icms: "aliquota_icms",
+	base_calculo_icms: "base_calculo_icms",
+	chave_acesso_nfcom_op: "chave_acesso_nfcom_op",
+	cnpj_op_longa_distancia: "cnpj_op_longa_distancia",
+	cod_classificacao_servico: "cod_classificacao_servico",
+	data_referencia: "data_referencia",
+	id: "id",
+	id_saida: "id_saida",
+	indicardor_devolucao: "indicardor_devolucao",
+	inf_adicionais_prod: "inf_adicionais_prod",
+	numero_processo: "numero_processo",
+	numero_processo_ressarcimento: "numero_processo_ressarcimento",
+	numero_protocolo_reclamacao: "numero_protocolo_reclamacao",
+	obs: "obs",
+	outras_despesas_acessoria: "outras_despesas_acessoria",
+	processo_judicial: "processo_judicial",
+	quant_fatura: "quant_fatura",
+	relacao_cofaturamento: "relacao_cofaturamento",
+	tipo_cliente_scm: "tipo_cliente_scm",
+	tipo_processo: "tipo_processo",
+	tipo_ressarcimento: "tipo_ressarcimento",
+	tp_faturamento_nfcom: "tp_faturamento_nfcom",
+	valor_cofins: "valor_cofins",
+	valor_desc: "valor_desc",
+	valor_icms: "valor_icms",
+	valor_pis: "valor_pis",
+	valor_total_item: "valor_total_item",
+	valor_un_item: "valor_un_item",
+} as const;
+
 export const GERACAOBASEFINANPARAM_INDICARDORDEVOLUCAO_LABELS = {
 	S: "S",
 	N: "N",

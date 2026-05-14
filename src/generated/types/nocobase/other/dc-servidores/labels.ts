@@ -9,6 +9,26 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DCSERVIDORES_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_discos: "Discos",
+	f_fabricante: "Fabricante",
+	f_fk_discos: "f_fk_discos",
+	f_memoria: "Memoria",
+	f_memorias: "Memoria",
+	f_modelo: "Modelo",
+	f_obs: "OBS",
+	f_processador: "Processador",
+	f_sn: "SN",
+	f_status: "Status",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const DCSERVIDORES_FABRICANTE_LABELS = {
 	1: "DELL",
 	2: "HPE",

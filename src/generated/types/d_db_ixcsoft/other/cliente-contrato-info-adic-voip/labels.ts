@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOINFOADICVOIP_FIELD_LABELS = {
+	ativo: "ativo",
+	fim_vigencia: "fim_vigencia",
+	id: "id",
+	id_contrato: "id_contrato",
+	inicio_vigencia: "inicio_vigencia",
+	portabilidade: "portabilidade",
+	range_final: "range_final",
+	range_inicial: "range_inicial",
+} as const;
+
 export const CLIENTECONTRATOINFOADICVOIP_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

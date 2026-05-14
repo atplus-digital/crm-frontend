@@ -9,6 +9,41 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOGERACAOFINANCEIRO_FIELD_LABELS = {
+	agendado: "agendado",
+	data_saida: "data_saida",
+	data_venc_fin: "data_venc_fin",
+	data_venc_ini: "data_venc_ini",
+	enviar_email: "enviar_email",
+	gera_adicional: "gera_adicional",
+	gera_adicional_data: "gera_adicional_data",
+	gera_cancelados: "gera_cancelados",
+	gera_finan_aa: "gera_finan_aa",
+	id: "id",
+	id_carteira_cobranca: "id_carteira_cobranca",
+	id_cidade: "id_cidade",
+	id_contrato_final: "id_contrato_final",
+	id_contrato_inicial: "id_contrato_inicial",
+	id_filial: "id_filial",
+	id_tipo_cliente: "id_tipo_cliente",
+	id_tipo_cobranca: "id_tipo_cobranca",
+	media_segundos_contrato: "media_segundos_contrato",
+	mes_repeticoes_geracao_lote: "mes_repeticoes_geracao_lote",
+	momento_fin_geracao: "momento_fin_geracao",
+	momento_ini_geracao: "momento_ini_geracao",
+	ordem: "ordem",
+	qtde_repeticoes_geracao_lote: "qtde_repeticoes_geracao_lote",
+	somente_sip: "somente_sip",
+	status: "status",
+	tipo_contrato: "tipo_contrato",
+	tipo_doc_fatura: "tipo_doc_fatura",
+	tipo_pessoa: "tipo_pessoa",
+	tipo_tipo_cobranca: "tipo_tipo_cobranca",
+	total_parcelas_geradas: "total_parcelas_geradas",
+	total_valor_gerado: "total_valor_gerado",
+	total_vendas_geradas: "total_vendas_geradas",
+} as const;
+
 export const CLIENTECONTRATOGERACAOFINANCEIRO_AGENDADO_LABELS = {
 	S: "S",
 	N: "N",

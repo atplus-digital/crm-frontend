@@ -9,6 +9,32 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DADOSBANCARIOS_FIELD_LABELS = {
+	agencia_dv: "agencia_dv",
+	banco: "banco",
+	camara_centralizadora: "camara_centralizadora",
+	cnpj_cpf: "cnpj_cpf",
+	cod_agencia: "cod_agencia",
+	cod_banco: "cod_banco",
+	cod_conta: "cod_conta",
+	cod_tipo_operacao: "cod_tipo_operacao",
+	conta_principal: "conta_principal",
+	id: "id",
+	id_fornecedor: "id_fornecedor",
+	id_vendedor: "id_vendedor",
+	meio_pagamento_preferencial: "meio_pagamento_preferencial",
+	numero_conta_dv: "numero_conta_dv",
+	pix_aleatorio: "pix_aleatorio",
+	pix_celular: "pix_celular",
+	pix_cpf_cnpj: "pix_cpf_cnpj",
+	pix_email: "pix_email",
+	tipo_conta: "tipo_conta",
+	tipo_pessoa: "tipo_pessoa",
+	tipo_pix_preferencial: "tipo_pix_preferencial",
+	tipo_recebimento: "tipo_recebimento",
+	titular: "titular",
+} as const;
+
 export const DADOSBANCARIOS_CONTAPRINCIPAL_LABELS = {
 	S: "S",
 	N: "N",

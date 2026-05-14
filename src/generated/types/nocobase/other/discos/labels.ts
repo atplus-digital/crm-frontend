@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DISCOS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_capacidade: "Capacidade",
+	f_data_aquisicao: "Data de Aquisição",
+	f_fk_discos: "f_fk_discos",
+	f_fornecedor: "Fornecedor",
+	f_modelo: "Modelo",
+	f_preco_compra: "Preço de Compra",
+	f_preco_venda_locacao: "Preço de Venda (locação)",
+	f_SN: "SN",
+	f_tipo: "Tipo",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const DISCOS_CAPACIDADE_LABELS = {
 	1: "480 GB",
 	2: "960 GB",

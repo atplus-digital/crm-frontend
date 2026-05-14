@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REMOCAOSPCSERASA_FIELD_LABELS = {
+	data_baixa: "data_baixa",
+	forma_remocao: "forma_remocao",
+	id: "id",
+	id_baixa: "id_baixa",
+	id_negativacao: "id_negativacao",
+} as const;
+
 export const REMOCAOSPCSERASA_FORMAREMOCAO_LABELS = {
 	M: "M",
 	R: "R",

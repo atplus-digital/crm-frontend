@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SERVIDORESEXTERNOS_FIELD_LABELS = {
+	ativo: "ativo",
+	descricao: "descricao",
+	id: "id",
+	identificador: "identificador",
+	prioridade: "prioridade",
+	ssh_host: "ssh_host",
+	ssh_login: "ssh_login",
+	ssh_porta: "ssh_porta",
+	ssh_senha: "ssh_senha",
+	tipo: "tipo",
+} as const;
+
 export const SERVIDORESEXTERNOS_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,27 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const OPCOESSMP_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_bonus: "Bonus",
+	f_fk_prod_negociacao_opcoes_smp: "f_fk_prod_negociacao_opcoes_smp",
+	f_franquia_dados: "Franquia de Dados",
+	f_minutos: "Pacote Minutos",
+	f_nome_do_plano: "Nome do Plano",
+	f_portabilidade: "Portabilidade",
+	f_sms: "Pacote SMS",
+	f_sva_incluso: "SVA Incluso",
+	f_terminal: "Terminal",
+	f_valor_smp: "Valor SMP",
+	f_valor_sva: "Valor SVA",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const OPCOESSMP_PORTABILIDADE_LABELS = {
 	0: "NÃO",
 	1: "SIM",

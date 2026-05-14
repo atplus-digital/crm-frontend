@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const OMNICHANNELMARKETING_FIELD_LABELS = {
+	canal_comunicacao: "canal_comunicacao",
+	descricao: "descricao",
+	enviar_template_atendimento: "enviar_template_atendimento",
+	id: "id",
+	midia_alternativa: "midia_alternativa",
+	template: "template",
+	texto_template: "texto_template",
+	tipo: "tipo",
+	tipo_comunicacao: "tipo_comunicacao",
+	variaveis_template: "variaveis_template",
+} as const;
+
 export const OMNICHANNELMARKETING_ENVIARTEMPLATEATENDIMENTO_LABELS = {
 	S: "S",
 	N: "N",

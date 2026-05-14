@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNEXTRATO_FIELD_LABELS = {
+	conciliado: "conciliado",
+	conciliado_extrato: "conciliado_extrato",
+	conciliado_financeiro: "conciliado_financeiro",
+	credito: "credito",
+	data: "data",
+	debito: "debito",
+	documento: "documento",
+	historico: "historico",
+	id: "id",
+	id_conciliacao_lote: "id_conciliacao_lote",
+	id_conta: "id_conta",
+	id_extrato: "id_extrato",
+	ids_financeiro: "ids_financeiro",
+	info1: "info1",
+	info2: "info2",
+	pix_txid: "pix_txid",
+} as const;
+
 export const FNEXTRATO_CONCILIADO_LABELS = {
 	S: "S",
 	N: "N",

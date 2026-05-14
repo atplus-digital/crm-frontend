@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGATUALIZACOES_FIELD_LABELS = {
+	chave_repositorio: "chave_repositorio",
+	conexao: "conexao",
+	data_fim: "data_fim",
+	data_inicio: "data_inicio",
+	descricao: "descricao",
+	etapa: "etapa",
+	homologacao: "homologacao",
+	id: "id",
+	id_usuario: "id_usuario",
+	log_suporte: "log_suporte",
+	motivo: "motivo",
+	status: "status",
+	versao: "versao",
+	versao_anterior: "versao_anterior",
+} as const;
+
 export const LOGATUALIZACOES_HOMOLOGACAO_LABELS = {
 	S: "S",
 	N: "N",

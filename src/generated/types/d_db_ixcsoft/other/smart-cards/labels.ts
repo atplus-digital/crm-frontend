@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SMARTCARDS_FIELD_LABELS = {
+	id: "id",
+	pin: "pin",
+	situacao: "situacao",
+	sn: "sn",
+	subscriber_code: "subscriber_code",
+} as const;
+
 export const SMARTCARDS_SITUACAO_LABELS = {
 	D: "D",
 	I: "I",

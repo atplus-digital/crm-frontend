@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RELATORIOBALANCO_FIELD_LABELS = {
+	ano_base: "ano_base",
+	ano_final: "ano_final",
+	balanco_patrimonial: "balanco_patrimonial",
+	conta_contabil: "conta_contabil",
+	creation_date: "creation_date",
+	creation_user: "creation_user",
+	data_ultima_impres: "data_ultima_impres",
+	id: "id",
+	id_filial: "id_filial",
+	impresso_por: "impresso_por",
+	nome: "nome",
+	relatorio: "relatorio",
+} as const;
+
 export const RELATORIOBALANCO_BALANCOPATRIMONIAL_LABELS = {
 	A: "A",
 	PASS: "PASS",

@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FUNCIONARIOSETORES_FIELD_LABELS = {
+	ativo: "ativo",
+	id: "id",
+	listar_agenda: "listar_agenda",
+	setor: "setor",
+	usuario: "usuario",
+} as const;
+
 export const FUNCIONARIOSETORES_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

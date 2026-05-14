@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const USUARIOSGRUPODASHBOARD_FIELD_LABELS = {
+	ativo: "ativo",
+	dashboard: "dashboard",
+	formulario: "formulario",
+	id: "id",
+	id_grupo: "id_grupo",
+	permissao: "permissao",
+	widget: "widget",
+} as const;
+
 export const USUARIOSGRUPODASHBOARD_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

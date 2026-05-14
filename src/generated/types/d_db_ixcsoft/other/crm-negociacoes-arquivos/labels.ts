@@ -4,3 +4,15 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+// ============================================================
+// LABELS (single source of truth)
+// ============================================================
+export const CRMNEGOCIACOESARQUIVOS_FIELD_LABELS = {
+	anexar_arquivo: "anexar_arquivo",
+	data_envio: "data_envio",
+	descricao: "descricao",
+	id: "id",
+	id_negociacao: "id_negociacao",
+	local_arquivo: "local_arquivo",
+	nome_arquivo: "nome_arquivo",
+} as const;

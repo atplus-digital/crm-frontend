@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const BACKUPDRIVE_FIELD_LABELS = {
+	ativo: "ativo",
+	descricao: "descricao",
+	host: "host",
+	id: "id",
+	porta: "porta",
+	registro_rclone: "registro_rclone",
+	senha: "senha",
+	tipo: "tipo",
+	usuario: "usuario",
+} as const;
+
 export const BACKUPDRIVE_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

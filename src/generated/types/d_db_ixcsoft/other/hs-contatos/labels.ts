@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const HSCONTATOS_FIELD_LABELS = {
+	cargo: "cargo",
+	celular: "celular",
+	cidade: "cidade",
+	email: "email",
+	estado: "estado",
+	fax: "fax",
+	id: "id",
+	id_categoria: "id_categoria",
+	inforcoes_adcionais: "inforcoes_adcionais",
+	nivel_acesso: "nivel_acesso",
+	nome: "nome",
+	ordernar: "ordernar",
+	publicado: "publicado",
+	rua: "rua",
+	telefone: "telefone",
+	url_site: "url_site",
+} as const;
+
 export const HSCONTATOS_PUBLICADO_LABELS = {
 	N: "N",
 	S: "S",

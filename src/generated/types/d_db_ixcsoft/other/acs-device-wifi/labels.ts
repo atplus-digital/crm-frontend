@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ACSDEVICEWIFI_FIELD_LABELS = {
+	enable: "enable",
+	id: "id",
+	id_device: "id_device",
+	is_mesh: "is_mesh",
+	path: "path",
+	senha: "senha",
+	ssid: "ssid",
+	tecnologia: "tecnologia",
+	updated_at: "updated_at",
+} as const;
+
 export const ACSDEVICEWIFI_ENABLE_LABELS = {
 	S: "S",
 	N: "N",

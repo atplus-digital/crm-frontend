@@ -9,6 +9,22 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PCPAPASSISTENCIA_FIELD_LABELS = {
+	data: "data",
+	data_coleta: "data_coleta",
+	data_concerto: "data_concerto",
+	data_devolucao: "data_devolucao",
+	descricao: "descricao",
+	filial_id: "filial_id",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_itens_pedido: "id_itens_pedido",
+	laudo: "laudo",
+	previsao_coleta: "previsao_coleta",
+	solicitante: "solicitante",
+	status: "status",
+} as const;
+
 export const PCPAPASSISTENCIA_STATUS_LABELS = {
 	N: "N",
 	C: "C",

@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ASSINATURANOTIFICACAOGRUPO_FIELD_LABELS = {
+	ativo: "ativo",
+	create_time: "create_time",
+	descricao: "descricao",
+	id: "id",
+	update_time: "update_time",
+} as const;
+
 export const ASSINATURANOTIFICACAOGRUPO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

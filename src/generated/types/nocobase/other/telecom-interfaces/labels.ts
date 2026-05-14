@@ -9,6 +9,29 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TELECOMINTERFACES_FIELD_LABELS = {
+	children: "Filhos",
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_configuracao: "Configuração",
+	f_descricao: "Descricão",
+	f_fk_equipamento: "Equipamento",
+	f_fk_interfaces_equipamentos: "Equipamentos",
+	f_fk_recurso_interface_ponta_a: "Recurso - Interface ponta at",
+	f_fk_recurso_interface_ponta_b: "Recurso - Interface ponta B",
+	f_interface: "Interface",
+	f_p9gxrkh5utl: "f_p9gxrkh5utl",
+	f_s3gs1jjkqzm: "Telecom  - Acessos",
+	f_tipo: "Tipo",
+	id: "ID",
+	parent: "Pai",
+	parentId: "ID do pai",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const TELECOMINTERFACES_CONFIGURACAO_LABELS = {
 	1: "Acesso",
 	2: "Tronco",

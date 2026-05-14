@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const VOIPURAHORARIOSRANGE_FIELD_LABELS = {
+	dom: "dom",
+	feriados: "feriados",
+	fim: "fim",
+	id: "id",
+	id_horarios: "id_horarios",
+	inicio: "inicio",
+	qua: "qua",
+	qui: "qui",
+	sab: "sab",
+	seg: "seg",
+	sex: "sex",
+	ter: "ter",
+} as const;
+
 export const VOIPURAHORARIOSRANGE_DOM_LABELS = {
 	S: "S",
 	N: "N",

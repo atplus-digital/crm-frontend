@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PATRIMONIOMODELOIMPRESSAOETIQUETA_FIELD_LABELS = {
+	altura_personalizada: "altura_personalizada",
+	controle_impressao: "controle_impressao",
+	criado_por: "criado_por",
+	data_criacao: "data_criacao",
+	data_ultima_impressao: "data_ultima_impressao",
+	descricao: "descricao",
+	exibir_descricao_completa: "exibir_descricao_completa",
+	id: "id",
+	impresso_por: "impresso_por",
+	largura_personalizada: "largura_personalizada",
+	modelo_padrao: "modelo_padrao",
+	modelo_padrao_sistema: "modelo_padrao_sistema",
+	origem_logo_impressao: "origem_logo_impressao",
+	qtde_colunas: "qtde_colunas",
+	tamanho_etiqueta: "tamanho_etiqueta",
+	utlizar_descricao: "utlizar_descricao",
+} as const;
+
 export const PATRIMONIOMODELOIMPRESSAOETIQUETA_CONTROLEIMPRESSAO_LABELS = {
 	codigo_patrimonio: "codigo_patrimonio",
 	mac: "mac",

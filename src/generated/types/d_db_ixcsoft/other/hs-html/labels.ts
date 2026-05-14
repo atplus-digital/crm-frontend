@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const HSHTML_FIELD_LABELS = {
+	html: "html",
+	id: "id",
+	import: "import",
+	titulo: "titulo",
+} as const;
+
 export const HSHTML_IMPORT_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CONSULTAPAGAMENTOSLOG_FIELD_LABELS = {
+	created_at: "created_at",
+	id: "id",
+	id_carteira_cobranca: "id_carteira_cobranca",
+	log: "log",
+	method: "method",
+	request_body: "request_body",
+	request_headers: "request_headers",
+	response_body: "response_body",
+	response_http_status: "response_http_status",
+	status: "status",
+	tipo_integracao: "tipo_integracao",
+	url: "url",
+} as const;
+
 export const CONSULTAPAGAMENTOSLOG_STATUS_LABELS = {
 	S: "S",
 	F: "F",

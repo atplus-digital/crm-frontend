@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CONVERTERCSTCFOPENTRADAXML_FIELD_LABELS = {
+	cfop_entrada: "cfop_entrada",
+	cfop_saida: "cfop_saida",
+	csosn_entrada: "csosn_entrada",
+	csosn_saida: "csosn_saida",
+	cst_entrada: "cst_entrada",
+	cst_saida: "cst_saida",
+	descricao: "descricao",
+	id: "id",
+	regime_tributario: "regime_tributario",
+} as const;
+
 export const CONVERTERCSTCFOPENTRADAXML_REGIMETRIBUTARIO_LABELS = {
 	simples: "simples",
 	normal: "normal",

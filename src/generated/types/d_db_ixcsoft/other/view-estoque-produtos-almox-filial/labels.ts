@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const VIEWESTOQUEPRODUTOSALMOXFILIAL_FIELD_LABELS = {
+	almox_ativo: "almox_ativo",
+	almox_descricao: "almox_descricao",
+	almox_id: "almox_id",
+	filial_id: "filial_id",
+	id: "id",
+	produto_ativo: "produto_ativo",
+	produto_controla_estoque: "produto_controla_estoque",
+	produto_descricao: "produto_descricao",
+	produto_id_class_fiscal: "produto_id_class_fiscal",
+	produto_pcomissao: "produto_pcomissao",
+	produto_preco_base: "produto_preco_base",
+	produto_tipo: "produto_tipo",
+	produto_unidade: "produto_unidade",
+	saldo: "saldo",
+} as const;
+
 export const VIEWESTOQUEPRODUTOSALMOXFILIAL_ALMOXATIVO_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNAPAGARAUDITORIA_FIELD_LABELS = {
+	data_hora: "data_hora",
+	id: "id",
+	id_fn_apagar: "id_fn_apagar",
+	motivo: "motivo",
+	operador: "operador",
+	status: "status",
+	tipo: "tipo",
+} as const;
+
 export const FNAPAGARAUDITORIA_STATUS_LABELS = {
 	A: "A",
 	R: "R",

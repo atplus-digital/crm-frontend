@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNADTOCLIENTE_FIELD_LABELS = {
+	data: "data",
+	filial_id: "filial_id",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_conta: "id_conta",
+	id_mov_fin_mestre: "id_mov_fin_mestre",
+	obs: "obs",
+	status: "status",
+	valor: "valor",
+	valor_aberto: "valor_aberto",
+	valor_baixado: "valor_baixado",
+} as const;
+
 export const FNADTOCLIENTE_STATUS_LABELS = {
 	A: "A",
 	B: "B",

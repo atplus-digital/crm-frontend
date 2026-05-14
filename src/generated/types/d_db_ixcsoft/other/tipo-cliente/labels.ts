@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TIPOCLIENTE_FIELD_LABELS = {
+	ativo: "ativo",
+	contribuinte_icms: "contribuinte_icms",
+	id: "id",
+	tipo_assinante: "tipo_assinante",
+	tipo_cliente: "tipo_cliente",
+	tipo_cliente_scm: "tipo_cliente_scm",
+} as const;
+
 export const TIPOCLIENTE_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

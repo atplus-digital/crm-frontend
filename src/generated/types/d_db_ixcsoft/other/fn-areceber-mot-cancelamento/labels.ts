@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNARECEBERMOTCANCELAMENTO_FIELD_LABELS = {
+	ativo: "ativo",
+	considerar_churn: "considerar_churn",
+	finalidade: "finalidade",
+	id: "id",
+	id_conta: "id_conta",
+	inadimplencia: "inadimplencia",
+	libera_periodo: "libera_periodo",
+	motivo: "motivo",
+	nao_vencidos_inadimplencia: "nao_vencidos_inadimplencia",
+} as const;
+
 export const FNARECEBERMOTCANCELAMENTO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const IXCPERMISSOESBOTOES_FIELD_LABELS = {
+	botao: "botao",
+	id: "id",
+	id_tabela: "id_tabela",
+	local: "local",
+	tipo: "tipo",
+} as const;
+
 export const IXCPERMISSOESBOTOES_LOCAL_LABELS = {
 	F: "F",
 	G: "G",

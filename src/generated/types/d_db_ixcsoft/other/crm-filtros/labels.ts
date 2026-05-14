@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMFILTROS_FIELD_LABELS = {
+	favorito: "favorito",
+	id: "id",
+	id_template: "id_template",
+	id_usuario: "id_usuario",
+	json: "json",
+	nome: "nome",
+} as const;
+
 export const CRMFILTROS_FAVORITO_LABELS = {
 	S: "S",
 	N: "N",

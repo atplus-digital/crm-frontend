@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_log_data: "Data",
+	f_log_level: "Log Level",
+	f_log_message: "Message",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const LOGS_LOGLEVEL_LABELS = {
 	info: "Info",
 	warning: "Warning",

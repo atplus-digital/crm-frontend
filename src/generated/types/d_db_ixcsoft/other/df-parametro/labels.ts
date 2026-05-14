@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DFPARAMETRO_FIELD_LABELS = {
+	equipe_frota: "equipe_frota",
+	filtrar_filial: "filtrar_filial",
+	id: "id",
+	mostrar_caixa_inativa: "mostrar_caixa_inativa",
+	mostrar_manutencao: "mostrar_manutencao",
+	mostrar_onus: "mostrar_onus",
+	mostrar_pops: "mostrar_pops",
+	mostrar_pops_projetos: "mostrar_pops_projetos",
+	nove_a_x_portas_disp: "nove_a_x_portas_disp",
+	ordenacao_projetos: "ordenacao_projetos",
+	quatro_a_oito_portas_disp: "quatro_a_oito_portas_disp",
+	todas_portas_disp: "todas_portas_disp",
+	um_a_tres_portas_disp: "um_a_tres_portas_disp",
+	zero_portas_disp: "zero_portas_disp",
+} as const;
+
 export const DFPARAMETRO_EQUIPEFROTA_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,27 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNRENEGOCIACAO_FIELD_LABELS = {
+	data_emissao: "data_emissao",
+	data_exclusao: "data_exclusao",
+	data_finalizada: "data_finalizada",
+	id: "id",
+	id_carteira_cobranca: "id_carteira_cobranca",
+	id_cliente: "id_cliente",
+	id_condicao_pagamento: "id_condicao_pagamento",
+	id_conta: "id_conta",
+	id_contrato: "id_contrato",
+	id_filial: "id_filial",
+	operador_responsavel_final: "operador_responsavel_final",
+	operador_responsavel_inicial: "operador_responsavel_inicial",
+	previsao: "previsao",
+	status: "status",
+	valor_acrescimos: "valor_acrescimos",
+	valor_descontos: "valor_descontos",
+	valor_parcelas: "valor_parcelas",
+	valor_total: "valor_total",
+} as const;
+
 export const FNRENEGOCIACAO_PREVISAO_LABELS = {
 	S: "S",
 	N: "N",

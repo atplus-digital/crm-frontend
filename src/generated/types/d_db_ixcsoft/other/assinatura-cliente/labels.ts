@@ -9,6 +9,30 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ASSINATURACLIENTE_FIELD_LABELS = {
+	comissao: "comissao",
+	create_time: "create_time",
+	data_ativacao: "data_ativacao",
+	data_emissao: "data_emissao",
+	data_ultimo_pagamento: "data_ultimo_pagamento",
+	data_validade: "data_validade",
+	descricao: "descricao",
+	id: "id",
+	id_assinatura_notificacao_grupo: "id_assinatura_notificacao_grupo",
+	id_carteira_cobranca: "id_carteira_cobranca",
+	id_cliente: "id_cliente",
+	id_filial: "id_filial",
+	id_tipo_cobranca: "id_tipo_cobranca",
+	id_tipo_documento: "id_tipo_documento",
+	id_vendedor: "id_vendedor",
+	obs: "obs",
+	status_assinatura: "status_assinatura",
+	status_financeiro: "status_financeiro",
+	status_validade: "status_validade",
+	tipo_plano: "tipo_plano",
+	update_time: "update_time",
+} as const;
+
 export const ASSINATURACLIENTE_STATUSASSINATURA_LABELS = {
 	P: "P",
 	A: "A",

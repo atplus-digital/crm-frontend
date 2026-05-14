@@ -9,6 +9,35 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ATENDIMENTOSIXC_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_assunto: "Assunto",
+	f_cliente: "Cliente",
+	f_contrato: "Contrato",
+	f_datafim: "Data Fim",
+	f_datainicio: "Data Início",
+	f_departamento: "Departamento",
+	f_descricao: "Descrição",
+	f_diagnosticos: "Diagnósticos",
+	f_finalizaatendimento: "Finaliza Atendimento?",
+	f_id_login: "ID Login",
+	f_idatendimento: "ID Atendimento",
+	f_idcliente: "ID Cliente",
+	f_idos: "ID O.S.",
+	f_prioridade: "Prioridade",
+	f_processo: "Processo",
+	f_responsavel: "Responsável",
+	f_tarefas: "Tarefas",
+	f_templates_atendimentos: "Templates Atendimento N1",
+	f_usuario: "Usuário",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const ATENDIMENTOSIXC_ASSUNTO_LABELS = {
 	88: "Reparo",
 	89: "Serviço",

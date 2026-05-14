@@ -9,6 +9,24 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADGRUPOPLANOS_FIELD_LABELS = {
+	descricao: "descricao",
+	dom: "dom",
+	feriados: "feriados",
+	horario_final: "horario_final",
+	horario_inicial: "horario_inicial",
+	id: "id",
+	id_radgrupos: "id_radgrupos",
+	multiplicador: "multiplicador",
+	opcao: "opcao",
+	qua: "qua",
+	qui: "qui",
+	sab: "sab",
+	seg: "seg",
+	sex: "sex",
+	ter: "ter",
+} as const;
+
 export const RADGRUPOPLANOS_DOM_LABELS = {
 	S: "S",
 	N: "N",

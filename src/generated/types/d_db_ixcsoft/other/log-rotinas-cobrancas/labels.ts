@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGROTINASCOBRANCAS_FIELD_LABELS = {
+	data_hora: "data_hora",
+	descricao: "descricao",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_receber: "id_receber",
+	status: "status",
+} as const;
+
 export const LOGROTINASCOBRANCAS_STATUS_LABELS = {
 	S: "S",
 	F: "F",

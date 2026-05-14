@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOTEDESCONTOSTEMPOBLOQUEIO_FIELD_LABELS = {
+	data_hora_criacao: "data_hora_criacao",
+	descontos_aplicados: "descontos_aplicados",
+	descontos_armazenados: "descontos_armazenados",
+	id: "id",
+	prazo_expiracao: "prazo_expiracao",
+	status: "status",
+} as const;
+
 export const LOTEDESCONTOSTEMPOBLOQUEIO_STATUS_LABELS = {
 	A: "A",
 	F: "F",

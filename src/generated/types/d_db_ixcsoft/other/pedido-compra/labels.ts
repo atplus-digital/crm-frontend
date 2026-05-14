@@ -9,6 +9,28 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PEDIDOCOMPRA_FIELD_LABELS = {
+	cancelamento_descricao: "cancelamento_descricao",
+	data: "data",
+	data_liberacao: "data_liberacao",
+	filial_id: "filial_id",
+	id: "id",
+	id_colaborador: "id_colaborador",
+	id_condicoes_pagamento: "id_condicoes_pagamento",
+	id_fornecedor: "id_fornecedor",
+	id_modelo: "id_modelo",
+	obs: "obs",
+	previsao_entrega: "previsao_entrega",
+	previsao_faturamento: "previsao_faturamento",
+	status: "status",
+	status_liberado: "status_liberado",
+	tipo_desconto: "tipo_desconto",
+	tipo_frete: "tipo_frete",
+	valor_desconto: "valor_desconto",
+	valor_frete: "valor_frete",
+	valor_negociado: "valor_negociado",
+} as const;
+
 export const PEDIDOCOMPRA_STATUS_LABELS = {
 	A: "A",
 	F: "F",

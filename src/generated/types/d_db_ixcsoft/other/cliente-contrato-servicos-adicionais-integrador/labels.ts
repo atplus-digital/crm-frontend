@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOSERVICOSADICIONAISINTEGRADOR_FIELD_LABELS = {
+	aviso_email: "aviso_email",
+	aviso_email_excedido: "aviso_email_excedido",
+	aviso_limite: "aviso_limite",
+	descricao: "descricao",
+	id: "id",
+	nome: "nome",
+	plataforma_integracao: "plataforma_integracao",
+} as const;
+
 export const CLIENTECONTRATOSERVICOSADICIONAISINTEGRADOR_PLATAFORMAINTEGRACAO_LABELS =
 	{
 		zapsign: "zapsign",

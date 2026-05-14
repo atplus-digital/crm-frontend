@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const IXCPERMISSOES_FIELD_LABELS = {
+	bloquear_acesso_form: "bloquear_acesso_form",
+	bloquear_form: "bloquear_form",
+	botoes_formulario: "botoes_formulario",
+	botoes_grid: "botoes_grid",
+	campos_formulario: "campos_formulario",
+	filtrar_filiais: "filtrar_filiais",
+	form: "form",
+	id: "id",
+	id_form: "id_form",
+	id_grupo: "id_grupo",
+	mostra_os_sem_funcionario: "mostra_os_sem_funcionario",
+	tipo_bloqueio: "tipo_bloqueio",
+	tipo_permissao: "tipo_permissao",
+	usuario: "usuario",
+} as const;
+
 export const IXCPERMISSOES_BLOQUEARACESSOFORM_LABELS = {
 	L: "L",
 	B: "B",

@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const VOIPURAMODULOSAU_FIELD_LABELS = {
+	acao_id_fila: "acao_id_fila",
+	acao_id_modulo: "acao_id_modulo",
+	acao_id_ramal: "acao_id_ramal",
+	acao_numexterno: "acao_numexterno",
+	acao_tipo: "acao_tipo",
+	audio: "audio",
+	descricao: "descricao",
+	id: "id",
+	texto: "texto",
+	tipo: "tipo",
+} as const;
+
 export const VOIPURAMODULOSAU_TIPO_LABELS = {
 	A: "A",
 	T: "T",

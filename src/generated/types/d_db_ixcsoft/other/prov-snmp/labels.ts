@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PROVSNMP_FIELD_LABELS = {
+	authentication_key: "authentication_key",
+	authentication_protocol: "authentication_protocol",
+	community: "community",
+	descricao: "descricao",
+	encryption_key: "encryption_key",
+	encryption_protocol: "encryption_protocol",
+	id: "id",
+	porta: "porta",
+	security_level: "security_level",
+	version: "version",
+} as const;
+
 export const PROVSNMP_AUTHENTICATIONPROTOCOL_LABELS = {
 	MD5: "MD5",
 	SHA: "SHA",

@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const IXCLOGS_FIELD_LABELS = {
+	campos: "campos",
+	data: "data",
+	executou: "executou",
+	id: "id",
+	id_tabela: "id_tabela",
+	operador: "operador",
+	tabela: "tabela",
+	tipo: "tipo",
+	usuario_ip: "usuario_ip",
+} as const;
+
 export const IXCLOGS_EXECUTOU_LABELS = {
 	S: "S",
 	U: "U",

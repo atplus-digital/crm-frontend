@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CONSULTASPF_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_id_pessoa: "ID Pessoa",
+	f_id_pessoa_fk: "f_id_pessoa_fk",
+	f_justificativa: "Justificativa",
+	f_retorno_spc: "Retorno SPC",
+	f_status_consulta: "Status Consulta",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const CONSULTASPF_STATUSCONSULTA_LABELS = {
 	1: "Aprovado",
 	2: "Aprovado com Alertas",

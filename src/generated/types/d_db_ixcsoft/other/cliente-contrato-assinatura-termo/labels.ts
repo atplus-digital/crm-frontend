@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOASSINATURATERMO_FIELD_LABELS = {
+	assinado: "assinado",
+	ativar_contrato: "ativar_contrato",
+	id: "id",
+	id_cliente_contrato_modelo: "id_cliente_contrato_modelo",
+	id_contrato: "id_contrato",
+	id_termo: "id_termo",
+	token_assinatura_digital: "token_assinatura_digital",
+	url_assinatura_digital: "url_assinatura_digital",
+} as const;
+
 export const CLIENTECONTRATOASSINATURATERMO_ASSINADO_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,34 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOALTPLANO_FIELD_LABELS = {
+	alt_plano_modelo_impressao: "alt_plano_modelo_impressao",
+	alt_plano_tipo_assinatura: "alt_plano_tipo_assinatura",
+	altera_plano: "altera_plano",
+	altera_tipo_cobranca: "altera_tipo_cobranca",
+	data_hora_alteracao: "data_hora_alteracao",
+	definicao_contrato_termo: "definicao_contrato_termo",
+	gerar_prorata_serv_adic: "gerar_prorata_serv_adic",
+	id: "id",
+	id_contrato: "id_contrato",
+	id_lote: "id_lote",
+	id_modelo_impressao: "id_modelo_impressao",
+	id_modelo_termo: "id_modelo_termo",
+	id_operador: "id_operador",
+	id_tipo_plano_atual: "id_tipo_plano_atual",
+	id_tipo_plano_novo: "id_tipo_plano_novo",
+	id_vd_contrato_atual: "id_vd_contrato_atual",
+	id_vd_contrato_novo: "id_vd_contrato_novo",
+	id_vendedor: "id_vendedor",
+	opcoes_vencidos: "opcoes_vencidos",
+	status: "status",
+	tipo_alteracao: "tipo_alteracao",
+	valor_acrescimo_atual: "valor_acrescimo_atual",
+	valor_atual: "valor_atual",
+	valor_desconto_atual: "valor_desconto_atual",
+	valor_novo: "valor_novo",
+} as const;
+
 export const CLIENTECONTRATOALTPLANO_ALTPLANOTIPOASSINATURA_LABELS = {
 	D: "D",
 	I: "I",

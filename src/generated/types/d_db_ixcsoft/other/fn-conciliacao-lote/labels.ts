@@ -9,6 +9,31 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNCONCILIACAOLOTE_FIELD_LABELS = {
+	agrupar_data_conciliar_totais_iguais: "agrupar_data_conciliar_totais_iguais",
+	arquivo_ofx: "arquivo_ofx",
+	conciliar_datas_diferentes: "conciliar_datas_diferentes",
+	id: "id",
+	id_conta: "id_conta",
+	id_filial: "id_filial",
+	momento_criacao_lote: "momento_criacao_lote",
+	momento_fin_processo_automatico: "momento_fin_processo_automatico",
+	momento_fin_processo_manual: "momento_fin_processo_manual",
+	momento_finalizacao_lote: "momento_finalizacao_lote",
+	momento_ini_processo_automatico: "momento_ini_processo_automatico",
+	momento_ini_processo_manual: "momento_ini_processo_manual",
+	mostrar_agrupado_por_dia: "mostrar_agrupado_por_dia",
+	nome_arquivo: "nome_arquivo",
+	periodo_final: "periodo_final",
+	periodo_inicial: "periodo_inicial",
+	status: "status",
+	tempo_aux_processo_manual: "tempo_aux_processo_manual",
+	total_registros_conciliados: "total_registros_conciliados",
+	total_registros_nao_conciliados: "total_registros_nao_conciliados",
+	valor_total_conciliado: "valor_total_conciliado",
+	valor_total_nao_conciliado: "valor_total_nao_conciliado",
+} as const;
+
 export const FNCONCILIACAOLOTE_AGRUPARDATACONCILIARTOTAISIGUAIS_LABELS = {
 	S: "S",
 	N: "N",

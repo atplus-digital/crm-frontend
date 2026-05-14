@@ -9,6 +9,29 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOTIPO_FIELD_LABELS = {
+	ativo: "ativo",
+	avisar_dias: "avisar_dias",
+	base_periodo_prestacao: "base_periodo_prestacao",
+	bloquear_dias: "bloquear_dias",
+	bloqueio_renegociado_n_dias: "bloqueio_renegociado_n_dias",
+	dias_carencia_pre: "dias_carencia_pre",
+	dias_proporcional_cob_mes: "dias_proporcional_cob_mes",
+	disponivel_viabilidade: "disponivel_viabilidade",
+	id: "id",
+	id_condicoes_pagamento: "id_condicoes_pagamento",
+	max_titulos_abertos_gerar_contrato: "max_titulos_abertos_gerar_contrato",
+	ordem: "ordem",
+	pagamento_antecipado: "pagamento_antecipado",
+	parcela_cobrar_proporcional: "parcela_cobrar_proporcional",
+	parcelas_cob_adicional: "parcelas_cob_adicional",
+	periodo: "periodo",
+	qtd_periodos: "qtd_periodos",
+	tipo_contrato: "tipo_contrato",
+	tipo_pagamento: "tipo_pagamento",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const CLIENTECONTRATOTIPO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

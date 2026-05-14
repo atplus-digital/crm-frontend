@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNTRANSFERENCIACAIXA_FIELD_LABELS = {
+	conta_destino: "conta_destino",
+	conta_origem: "conta_origem",
+	contas_id_destino: "contas_id_destino",
+	contas_id_origem: "contas_id_origem",
+	create_time: "create_time",
+	data_transferencia: "data_transferencia",
+	historico: "historico",
+	id: "id",
+	id_conta_destino: "id_conta_destino",
+	id_conta_origem: "id_conta_origem",
+	id_operador: "id_operador",
+	tipo_recebimento: "tipo_recebimento",
+	update_time: "update_time",
+	valor: "valor",
+} as const;
+
 export const FNTRANSFERENCIACAIXA_TIPORECEBIMENTO_LABELS = {
 	D: "D",
 	B: "B",

@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TRANSFMOTCANCELAMENTO_FIELD_LABELS = {
+	ativo: "ativo",
+	finalidade: "finalidade",
+	id: "id",
+	motivo: "motivo",
+} as const;
+
 export const TRANSFMOTCANCELAMENTO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

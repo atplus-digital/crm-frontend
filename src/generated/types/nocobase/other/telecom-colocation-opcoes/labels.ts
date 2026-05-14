@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TELECOMCOLOCATIONOPCOES_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_6c1tv6gt1ey: "f_6c1tv6gt1ey",
+	f_designacao_rack: "Designação do Rack",
+	f_energia: "Energia",
+	f_espaco_rack: "Espaço em Rack",
+	fk_opcoes_colocation: "fk_opcoes_colocation",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const TELECOMCOLOCATIONOPCOES_ENERGIA_LABELS = {
 	"0nqbw68srah": "AC 220",
 	e5b3lklfpq4: "AC 110",

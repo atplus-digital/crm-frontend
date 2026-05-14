@@ -9,6 +9,34 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SMS_FIELD_LABELS = {
+	adicionar_fila: "adicionar_fila",
+	aggregate_id: "aggregate_id",
+	api: "api",
+	api_id: "api_id",
+	api_id_shortcode: "api_id_shortcode",
+	descricao: "descricao",
+	id: "id",
+	inferface: "inferface",
+	interface_mk: "interface_mk",
+	ip: "ip",
+	max_caracteres: "max_caracteres",
+	num_fixo: "num_fixo",
+	porta_chip_goip: "porta_chip_goip",
+	porta_mk: "porta_mk",
+	remover_caracteres_especiais: "remover_caracteres_especiais",
+	rota_saida: "rota_saida",
+	senha: "senha",
+	tipo: "tipo",
+	token: "token",
+	url: "url",
+	usuario: "usuario",
+	utiliza_shortcode: "utiliza_shortcode",
+	utizar_nova_api: "utizar_nova_api",
+	versao: "versao",
+	webservice_version: "webservice_version",
+} as const;
+
 export const SMS_NUMFIXO_LABELS = {
 	S: "S",
 	N: "N",

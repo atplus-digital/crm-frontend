@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REQUISICAOCOMPRA_FIELD_LABELS = {
+	data: "data",
+	descricao: "descricao",
+	descricao_cancelamento: "descricao_cancelamento",
+	filial_id: "filial_id",
+	funcionario: "funcionario",
+	id: "id",
+	id_setor: "id_setor",
+	necessito_ate: "necessito_ate",
+	obs: "obs",
+	status: "status",
+	status_liberacao_compra: "status_liberacao_compra",
+} as const;
+
 export const REQUISICAOCOMPRA_STATUS_LABELS = {
 	A: "A",
 	F: "F",

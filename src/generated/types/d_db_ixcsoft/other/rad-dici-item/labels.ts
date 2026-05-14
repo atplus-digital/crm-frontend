@@ -9,6 +9,26 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADDICIITEM_FIELD_LABELS = {
+	cidade: "cidade",
+	data_cancelamento: "data_cancelamento",
+	data_emissao: "data_emissao",
+	dici_velocidade: "dici_velocidade",
+	id: "id",
+	id_plano: "id_plano",
+	id_rad_dici: "id_rad_dici",
+	id_tipo_documento: "id_tipo_documento",
+	modelo_nf: "modelo_nf",
+	nome_plano: "nome_plano",
+	qtd_acessos: "qtd_acessos",
+	tecnologia: "tecnologia",
+	tipo_atendimento: "tipo_atendimento",
+	tipo_cliente: "tipo_cliente",
+	tipo_meio_acesso: "tipo_meio_acesso",
+	tipo_produto: "tipo_produto",
+	velocidade: "velocidade",
+} as const;
+
 export const RADDICIITEM_TIPOATENDIMENTO_LABELS = {
 	R: "R",
 	U: "U",

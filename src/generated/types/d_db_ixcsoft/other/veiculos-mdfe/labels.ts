@@ -9,6 +9,27 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const VEICULOSMDFE_FIELD_LABELS = {
+	chave: "chave",
+	cidade_carregamento: "cidade_carregamento",
+	cmdf: "cmdf",
+	dhemi: "dhemi",
+	dhiniviagem: "dhiniviagem",
+	documento_id: "documento_id",
+	filial_id: "filial_id",
+	id: "id",
+	modal: "modal",
+	modelo: "modelo",
+	nmdf: "nmdf",
+	obs: "obs",
+	serie: "serie",
+	status: "status",
+	tpemit: "tpemit",
+	tptransp: "tptransp",
+	uf_final: "uf_final",
+	veiculo_id: "veiculo_id",
+} as const;
+
 export const VEICULOSMDFE_MODAL_LABELS = {
 	1: "1",
 	2: "2",

@@ -4,3 +4,11 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+// ============================================================
+// LABELS (single source of truth)
+// ============================================================
+export const CSOSNCST_FIELD_LABELS = {
+	csosn: "csosn",
+	cst: "cst",
+	id: "id",
+} as const;

@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PRODUTOS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_descricao_produto: "Descrição do Produto",
+	f_id_ixc: "ID IXC",
+	f_mensalidade_com_desconto: "Mensalidade com desconto",
+	f_mensalidade_sem_desconto: "Mensalidade sem desconto",
+	f_nome_produto: "Nome do Produto",
+	f_opcoes_smp_template: "Opções SMP",
+	f_opcoes_STFC: "Opções STFC",
+	f_tipo_ixc: "Tipo de Produto no IXC",
+	f_tipo_produto: "Tipo de Produto",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const PRODUTOS_TIPOIXC_LABELS = {
 	I: "INTERNET",
 	SMP: "SMP/MVNO",

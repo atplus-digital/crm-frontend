@@ -9,6 +9,26 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const EMPRESAS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_analise_ixc: "Análise no IXC",
+	f_cnpj: "CNPJ",
+	f_cpf_responsavel: "CPF Responsável",
+	f_credito: "Analise de Credito",
+	f_email_responsavel: "E-mail Responsável",
+	f_fundacao: "Fundação",
+	f_ie: "IE",
+	f_nome_fantasia: "Nome Fantasia",
+	f_razao_social: "Razão Social",
+	f_responsavel: "Responsável pela Assinatura",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const EMPRESAS_ANALISEIXC_LABELS = {
 	0: "Com Pendências",
 	1: "Sem Pendências",

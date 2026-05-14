@@ -4,3 +4,28 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+// ============================================================
+// LABELS (single source of truth)
+// ============================================================
+export const FOTOFUNCIONARIOS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	extname: "Nome da extensão",
+	f_fk_funcionarios: "f_fk_funcionarios",
+	f_funcionarios: "Funcionários",
+	filename: "Nome do arquivo",
+	id: "ID",
+	meta: "meta",
+	mimetype: "Tipo MIME",
+	path: "Caminho",
+	preview: "Pré-visualização",
+	size: "Tamanho",
+	storage: "Armazenamento",
+	storageId: "storageId",
+	title: "Título",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+	url: "URL",
+} as const;

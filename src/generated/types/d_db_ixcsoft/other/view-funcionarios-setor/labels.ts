@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const VIEWFUNCIONARIOSSETOR_FIELD_LABELS = {
+	ativo: "ativo",
+	ativo_funcionario_setor: "ativo_funcionario_setor",
+	funcionario: "funcionario",
+	id: "id",
+	id_funcionario: "id_funcionario",
+	setor: "setor",
+	usuario: "usuario",
+} as const;
+
 export const VIEWFUNCIONARIOSSETOR_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

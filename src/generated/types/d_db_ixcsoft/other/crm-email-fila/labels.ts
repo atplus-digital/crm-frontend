@@ -9,6 +9,31 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMEMAILFILA_FIELD_LABELS = {
+	anexos: "anexos",
+	cli_mail: "cli_mail",
+	cli_nome: "cli_nome",
+	data_hora_inclusao: "data_hora_inclusao",
+	envia_anexo: "envia_anexo",
+	enviado: "enviado",
+	filial: "filial",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_contrato: "id_contrato",
+	id_fn_areceber: "id_fn_areceber",
+	id_responsavel: "id_responsavel",
+	imagens: "imagens",
+	mensagem: "mensagem",
+	nro_tentativas_envio: "nro_tentativas_envio",
+	prioridade: "prioridade",
+	pular_envio: "pular_envio",
+	regua_cobranca_envios_id: "regua_cobranca_envios_id",
+	smtp: "smtp",
+	texto_hitorico: "texto_hitorico",
+	time_envio: "time_envio",
+	titulo: "titulo",
+} as const;
+
 export const CRMEMAILFILA_ENVIAANEXO_LABELS = {
 	S: "S",
 	N: "N",

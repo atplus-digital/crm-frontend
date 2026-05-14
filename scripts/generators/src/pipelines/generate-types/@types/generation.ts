@@ -30,6 +30,7 @@ export interface GeneratedTypes {
 	scalars: Map<string, string>;
 	relations: Map<string, RelationInfo>;
 	enums: Map<string, EnumOption[]>;
+	fieldLabels: Map<string, string>;
 	/**
 	 * Indica se o schema da collection foi obtido com sucesso pela rota primária.
 	 * `false` significa que a rota primária falhou (ex: 404) e foi usado fallback via sample.

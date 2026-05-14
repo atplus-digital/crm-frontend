@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const EQUIPAMENTOTERMOMODELO_FIELD_LABELS = {
+	id: "id",
+	modelo: "modelo",
+	padrao: "padrao",
+	padrao_sistema: "padrao_sistema",
+	status: "status",
+	termo_de: "termo_de",
+	texto: "texto",
+} as const;
+
 export const EQUIPAMENTOTERMOMODELO_PADRAO_LABELS = {
 	S: "S",
 	N: "N",

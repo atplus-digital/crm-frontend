@@ -9,6 +9,27 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ATIVIDADE_FIELD_LABELS = {
+	assunto: "assunto",
+	atividade_interna: "atividade_interna",
+	criado_por: "criado_por",
+	data: "data",
+	data_hora_fim: "data_hora_fim",
+	data_hora_inicio: "data_hora_inicio",
+	hora_marcada: "hora_marcada",
+	id: "id",
+	id_categoria_atividade: "id_categoria_atividade",
+	id_lead_negociacao: "id_lead_negociacao",
+	id_responsavel: "id_responsavel",
+	id_usuario: "id_usuario",
+	link_local: "link_local",
+	observacao: "observacao",
+	prioridade: "prioridade",
+	status: "status",
+	tipo: "tipo",
+	tipo_atividade: "tipo_atividade",
+} as const;
+
 export const ATIVIDADE_PRIORIDADE_LABELS = {
 	baixa: "baixa",
 	media: "media",

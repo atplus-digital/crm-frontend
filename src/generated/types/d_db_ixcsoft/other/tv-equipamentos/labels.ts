@@ -9,6 +9,31 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TVEQUIPAMENTOS_FIELD_LABELS = {
+	account_number: "account_number",
+	data_final: "data_final",
+	data_inicial: "data_inicial",
+	DHCP: "DHCP",
+	endereco_ip: "endereco_ip",
+	endereco_mac: "endereco_mac",
+	HD: "HD",
+	id: "id",
+	id_equipamento_plataforma: "id_equipamento_plataforma",
+	id_tv_usuarios: "id_tv_usuarios",
+	modelo_setbox: "modelo_setbox",
+	nome_aparelho: "nome_aparelho",
+	plataforma: "plataforma",
+	PLT: "PLT",
+	porta_de_rede: "porta_de_rede",
+	porta_ip: "porta_ip",
+	prioridade: "prioridade",
+	PVR: "PVR",
+	smartCard_setbox: "smartCard_setbox",
+	status: "status",
+	status_inicial: "status_inicial",
+	videos_simultaneos: "videos_simultaneos",
+} as const;
+
 export const TVEQUIPAMENTOS_DHCP_LABELS = {
 	Y: "Y",
 	N: "N",

@@ -4,6 +4,7 @@ import type {
 } from "@generators/pipelines/generate-types/@types/generation";
 import type { BaseInterfaceNamingConfig } from "@generators/pipelines/generate-types/@types/script";
 import {
+	toCollectionTypeName,
 	toFileName,
 	toValidIdentifier,
 } from "@generators/pipelines/generate-types/utils/naming";
@@ -65,6 +66,22 @@ function _toBaseSchemaName(collectionName: string): string {
 	return _ensureValidIdentifier(`${cleanCollectionName}BaseSchema`);
 }
 
+function generateFieldLabelsMap(
+	collectionName: string,
+	types: GeneratedTypes,
+): string {
+	const labelsName = `${toValidIdentifier(toCollectionTypeName(collectionName).toUpperCase())}_FIELD_LABELS`;
+	const entries = Array.from(types.fieldLabels.entries())
+		.sort(([a], [b]) => a.localeCompare(b))
+		.map(([fieldName, label]) => {
+			const escapedLabel = `'${label.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
+			return `\t${JSON.stringify(fieldName)}: ${escapedLabel}`;
+		})
+		.join(",\n");
+
+	return `export const ${labelsName} = {\n${entries}\n} as const;`;
+}
+
 function resolveExternalSchemaImportPath(
 	targetFolder: string,
 	targetIsSplitCollection: boolean,
@@ -112,7 +129,7 @@ export function generateLabelsContent(
 		lines.push(generateZodImport());
 	}
 
-	if (types.enums.size > 0) {
+	if (types.fieldLabels.size > 0 || types.enums.size > 0) {
 		lines.push("");
 		lines.push(
 			"// ============================================================",
@@ -121,7 +138,16 @@ export function generateLabelsContent(
 		lines.push(
 			"// ============================================================",
 		);
-		lines.push(generateCollectionEnumMaps(collectionName, types));
+		if (types.fieldLabels.size > 0) {
+			lines.push(generateFieldLabelsMap(collectionName, types));
+		}
+		if (types.enums.size > 0) {
+			lines.push("");
+			lines.push(generateCollectionEnumMaps(collectionName, types));
+		}
+	}
+
+	if (types.enums.size > 0) {
 		lines.push("");
 		lines.push(
 			"// ============================================================",

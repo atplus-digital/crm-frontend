@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOSERVICOSPARAM_FIELD_LABELS = {
+	acao_tipo: "acao_tipo",
+	cidade: "cidade",
+	data: "data",
+	data_validade: "data_validade",
+	descricao: "descricao",
+	id: "id",
+	id_produto: "id_produto",
+	id_unidade: "id_unidade",
+	percentual: "percentual",
+	repetir: "repetir",
+	repetir_qtde: "repetir_qtde",
+	tipo: "tipo",
+	tipo_da: "tipo_da",
+	tipo_desconto: "tipo_desconto",
+	uf: "uf",
+	valor: "valor",
+} as const;
+
 export const CLIENTECONTRATOSERVICOSPARAM_ACAOTIPO_LABELS = {
 	N: "N",
 	A: "A",

@@ -9,6 +9,24 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const NASCGNAT_FIELD_LABELS = {
+	configuracao_cgnat: "configuracao_cgnat",
+	id: "id",
+	id_integracao_cgnat: "id_integracao_cgnat",
+	id_nas: "id_nas",
+	interface_wan: "interface_wan",
+	ip_final: "ip_final",
+	ip_inicial: "ip_inicial",
+	ip_privado_por_publico: "ip_privado_por_publico",
+	ip_publico: "ip_publico",
+	porta_inicial: "porta_inicial",
+	portas_por_ip: "portas_por_ip",
+	protocolo: "protocolo",
+	rede: "rede",
+	tipo: "tipo",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const NASCGNAT_PROTOCOLO_LABELS = {
 	T: "T",
 	TU: "TU",

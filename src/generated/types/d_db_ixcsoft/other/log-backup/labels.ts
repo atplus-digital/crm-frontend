@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGBACKUP_FIELD_LABELS = {
+	acao: "acao",
+	data_inicio: "data_inicio",
+	data_termino: "data_termino",
+	id: "id",
+	log_erros: "log_erros",
+	log_normal: "log_normal",
+	nome_arquivo: "nome_arquivo",
+	obs_verificar: "obs_verificar",
+	origem_backup: "origem_backup",
+	status: "status",
+	tamanho_arquivo: "tamanho_arquivo",
+	tipo_backup: "tipo_backup",
+	tipo_envio: "tipo_envio",
+	ultima_atualizacao: "ultima_atualizacao",
+	usuario: "usuario",
+	usuario_verificou: "usuario_verificou",
+} as const;
+
 export const LOGBACKUP_ACAO_LABELS = {
 	backup: "backup",
 	restaurar: "restaurar",

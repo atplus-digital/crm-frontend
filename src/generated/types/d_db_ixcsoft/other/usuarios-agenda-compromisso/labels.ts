@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const USUARIOSAGENDACOMPROMISSO_FIELD_LABELS = {
+	avisar_email: "avisar_email",
+	avisar_email_minutos: "avisar_email_minutos",
+	avisar_popup: "avisar_popup",
+	avisar_popup_minutos: "avisar_popup_minutos",
+	data_hora_final: "data_hora_final",
+	data_hora_inicio: "data_hora_inicio",
+	descricao: "descricao",
+	email_convidados: "email_convidados",
+	id: "id",
+	id_evento_google: "id_evento_google",
+	id_usuario_agenda: "id_usuario_agenda",
+	local: "local",
+	setor: "setor",
+	status_google: "status_google",
+	titulo: "titulo",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const USUARIOSAGENDACOMPROMISSO_AVISAREMAIL_LABELS = {
 	S: "S",
 	N: "N",

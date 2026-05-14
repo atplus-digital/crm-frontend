@@ -9,6 +9,28 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CONDICOESPAGAMENTO_FIELD_LABELS = {
+	ativo: "ativo",
+	baixa_primeira: "baixa_primeira",
+	com_entrada: "com_entrada",
+	compra_venda: "compra_venda",
+	desconto_max: "desconto_max",
+	descricao_meio_pagamento_col: "descricao_meio_pagamento_col",
+	dia_fixo: "dia_fixo",
+	envia_data_vencimento_col: "envia_data_vencimento_col",
+	id: "id",
+	id_filial: "id_filial",
+	id_meio_pagamento_col: "id_meio_pagamento_col",
+	ind_pag: "ind_pag",
+	n_parcelas: "n_parcelas",
+	nome: "nome",
+	periodicidade: "periodicidade",
+	qtde_repeticoes_venda: "qtde_repeticoes_venda",
+	tipo: "tipo",
+	ultima_atualizacao: "ultima_atualizacao",
+	vencimento_personalizado: "vencimento_personalizado",
+} as const;
+
 export const CONDICOESPAGAMENTO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PESSOAS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_analise_ixc: "Análise no IXC",
+	f_cpf: "CPF",
+	f_credito: "Analise de Credito",
+	f_data_nascimento: "Data de Nascimento",
+	f_nome: "Nome Completo",
+	f_sexo: "Sexo",
+	f_vky78cvjtdw: "f_vky78cvjtdw",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const PESSOAS_ANALISEIXC_LABELS = {
 	0: "Com Pendências",
 	1: "Sem Pendências",

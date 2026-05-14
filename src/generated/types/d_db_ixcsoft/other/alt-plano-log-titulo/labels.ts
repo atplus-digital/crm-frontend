@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ALTPLANOLOGTITULO_FIELD_LABELS = {
+	data_emissao: "data_emissao",
+	data_vencimento: "data_vencimento",
+	id: "id",
+	id_cliente_contrato_alt_plano: "id_cliente_contrato_alt_plano",
+	obs: "obs",
+	opcoes: "opcoes",
+	status: "status",
+	tipo: "tipo",
+	valor: "valor",
+	valor_atual: "valor_atual",
+} as const;
+
 export const ALTPLANOLOGTITULO_OPCOES_LABELS = {
 	R: "R",
 	N: "N",

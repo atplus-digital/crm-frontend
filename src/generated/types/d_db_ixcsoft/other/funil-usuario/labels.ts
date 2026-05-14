@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FUNILUSUARIO_FIELD_LABELS = {
+	id: "id",
+	id_funil: "id_funil",
+	id_usuario: "id_usuario",
+	padrao: "padrao",
+} as const;
+
 export const FUNILUSUARIO_PADRAO_LABELS = {
 	S: "S",
 	N: "N",

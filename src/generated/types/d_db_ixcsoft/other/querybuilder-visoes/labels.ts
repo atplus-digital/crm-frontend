@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const QUERYBUILDERVISOES_FIELD_LABELS = {
+	atualizacao_data: "atualizacao_data",
+	autor: "autor",
+	cache_ttl: "cache_ttl",
+	descricao: "descricao",
+	filter_date: "filter_date",
+	form_pivot: "form_pivot",
+	groups: "groups",
+	id: "id",
+	json: "json",
+	nome: "nome",
+	subquery: "subquery",
+} as const;
+
 export const QUERYBUILDERVISOES_SUBQUERY_LABELS = {
 	S: "S",
 	N: "N",

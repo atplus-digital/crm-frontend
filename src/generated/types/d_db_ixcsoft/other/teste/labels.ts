@@ -9,6 +9,22 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TESTE_FIELD_LABELS = {
+	dfghdfghdfghdfghdfghdfg: "dfghdfghdfghdfghdfghdfg",
+	id: "id",
+	id_table: "id_table",
+	teste: "teste",
+	teste_arquivo: "teste_arquivo",
+	teste_enum: "teste_enum",
+	teste_enum2: "teste_enum2",
+	teste5: "teste5",
+	testeee: "testeee",
+	testeTabela: "testeTabela",
+	testetesteTabela: "testetesteTabela",
+	testetimestamp: "testetimestamp",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const TESTE_TESTEENUM_LABELS = {
 	S: "S",
 	N: "N",

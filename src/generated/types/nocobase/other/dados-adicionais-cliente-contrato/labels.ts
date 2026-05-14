@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DADOSADICIONAISCLIENTECONTRATO_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_forma_de_pagamento: "Forma de pagamento preferida",
+	f_id_cliente_contrato: "ID Contrato",
+	f_origem_cliente: "Origem do Cliente",
+	f_perfil_de_uso: "Perfil de uso",
+	f_pessoas_na_residencia: "Num Pessoas na Residência",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const DADOSADICIONAISCLIENTECONTRATO_FORMADEPAGAMENTO_LABELS = {
 	carne: "Carnê",
 	boleto: "Boleto",

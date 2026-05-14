@@ -9,6 +9,30 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTETRIAL_FIELD_LABELS = {
+	bairro: "bairro",
+	cep: "cep",
+	cidade: "cidade",
+	cnpj_cpf: "cnpj_cpf",
+	complemento: "complemento",
+	email: "email",
+	endereco: "endereco",
+	fantasia: "fantasia",
+	fone: "fone",
+	id: "id",
+	ie_identidade: "ie_identidade",
+	numero: "numero",
+	ramal: "ramal",
+	razao: "razao",
+	referencia: "referencia",
+	senha: "senha",
+	status: "status",
+	telefone_celular: "telefone_celular",
+	telefone_comercial: "telefone_comercial",
+	tipo_pessoa: "tipo_pessoa",
+	uf: "uf",
+} as const;
+
 export const CLIENTETRIAL_TIPOPESSOA_LABELS = {
 	F: "F",
 	J: "J",

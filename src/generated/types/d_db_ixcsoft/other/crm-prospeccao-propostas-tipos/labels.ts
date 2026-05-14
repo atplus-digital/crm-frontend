@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMPROSPECCAOPROPOSTASTIPOS_FIELD_LABELS = {
+	assinatura: "assinatura",
+	id: "id",
+	produtos_interesse: "produtos_interesse",
+	proposta: "proposta",
+} as const;
+
 export const CRMPROSPECCAOPROPOSTASTIPOS_ASSINATURA_LABELS = {
 	S: "S",
 	N: "N",

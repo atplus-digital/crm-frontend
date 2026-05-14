@@ -9,6 +9,35 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const USUARIOSGRUPOPERMISSOESFIBERDOCS_FIELD_LABELS = {
+	acesso_exclusivo_fiberdocs: "acesso_exclusivo_fiberdocs",
+	configuracao_elemento: "configuracao_elemento",
+	configuracao_sistema: "configuracao_sistema",
+	correcao_elementos: "correcao_elementos",
+	editor_fusao: "editor_fusao",
+	elemento_cabo: "elemento_cabo",
+	elemento_caixa_atendimento: "elemento_caixa_atendimento",
+	elemento_caixa_emenda: "elemento_caixa_emenda",
+	elemento_caixa_subterranea: "elemento_caixa_subterranea",
+	elemento_login: "elemento_login",
+	elemento_onu: "elemento_onu",
+	elemento_pop: "elemento_pop",
+	elemento_poste: "elemento_poste",
+	elemento_predio: "elemento_predio",
+	elemento_regiao_cobertura: "elemento_regiao_cobertura",
+	exportar_elemenetos: "exportar_elemenetos",
+	id: "id",
+	id_grupo: "id_grupo",
+	importar_elementos: "importar_elementos",
+	mapa_conexao: "mapa_conexao",
+	mesclar_projetos: "mesclar_projetos",
+	modo_desenho: "modo_desenho",
+	modo_edicao: "modo_edicao",
+	permitir_acesso_todos_projetos: "permitir_acesso_todos_projetos",
+	permitir_criar_projeto: "permitir_criar_projeto",
+	projeto_execucao: "projeto_execucao",
+} as const;
+
 export const USUARIOSGRUPOPERMISSOESFIBERDOCS_ACESSOEXCLUSIVOFIBERDOCS_LABELS =
 	{
 		S: "S",

@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SERVICEROTEIRIZACAOCONFIG_FIELD_LABELS = {
+	api_roteirizacao: "api_roteirizacao",
+	cep: "cep",
+	considerar_tempo_deslocamento: "considerar_tempo_deslocamento",
+	considerar_transito: "considerar_transito",
+	id: "id",
+	inicio_rota: "inicio_rota",
+	retornar_almoco: "retornar_almoco",
+	roteirizar_por: "roteirizar_por",
+} as const;
+
 export const SERVICEROTEIRIZACAOCONFIG_APIROTEIRIZACAO_LABELS = {
 	SA: "SA",
 	GL: "GL",

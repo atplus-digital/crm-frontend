@@ -9,6 +9,22 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const USERTRUSTEDDEVICES_FIELD_LABELS = {
+	browser: "browser",
+	created_at: "created_at",
+	device: "device",
+	device_hash: "device_hash",
+	expires_at: "expires_at",
+	id: "id",
+	op_system: "op_system",
+	platform: "platform",
+	signed_token: "signed_token",
+	status: "status",
+	user_agent: "user_agent",
+	user_id: "user_id",
+	user_ip: "user_ip",
+} as const;
+
 export const USERTRUSTEDDEVICES_DEVICE_LABELS = {
 	D: "D",
 	M: "M",

@@ -9,6 +9,31 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const MOVIMENTOCOMODATOS_FIELD_LABELS = {
+	descricao: "descricao",
+	filial_emissao: "filial_emissao",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_contrato: "id_contrato",
+	id_devolucao: "id_devolucao",
+	id_emprestimo: "id_emprestimo",
+	id_entrada: "id_entrada",
+	id_filial: "id_filial",
+	id_movimento_produtos: "id_movimento_produtos",
+	id_os: "id_os",
+	id_produto: "id_produto",
+	id_saida: "id_saida",
+	motivo_dispensa_nf: "motivo_dispensa_nf",
+	nf_complementar_comodato: "nf_complementar_comodato",
+	nota_cancelada_em: "nota_cancelada_em",
+	nota_emitida_em: "nota_emitida_em",
+	nota_emitida_por: "nota_emitida_por",
+	numero_nota: "numero_nota",
+	status_nota: "status_nota",
+	tipo: "tipo",
+	tipo_documento: "tipo_documento",
+} as const;
+
 export const MOVIMENTOCOMODATOS_STATUSNOTA_LABELS = {
 	AG: "AG",
 	F: "F",

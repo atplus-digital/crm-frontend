@@ -148,6 +148,70 @@ export function renderReportsMarkdown(
 	for (const [, namespace] of namespaces) {
 		lines.push(`## ${namespace.name}`, "");
 
+		if (namespace.name === "generate-types") {
+			const collectionEntries = namespace.entries.filter(
+				(entry) => typeof entry.payload.collectionName === "string",
+			);
+			const otherEntries = namespace.entries.filter(
+				(entry) => typeof entry.payload.collectionName !== "string",
+			);
+
+			for (const entry of otherEntries) {
+				lines.push(`### ${entry.title}`, "");
+				lines.push(`- id: \`${entry.entryId}\``);
+				lines.push(`- key: \`${entry.key}\``);
+				lines.push(`- pipeline: \`${entry.scope.pipeline}\``);
+				lines.push(`- stage: \`${entry.scope.stage}\``);
+				if (entry.scope.dataSourceKey) {
+					lines.push(`- datasource: \`${entry.scope.dataSourceKey}\``);
+				}
+				lines.push(`- criado em: \`${entry.createdAt}\``, "");
+				lines.push(
+					"```json",
+					JSON.stringify(entry.payload, null, 2),
+					"```",
+					"",
+				);
+			}
+
+			if (collectionEntries.length > 0) {
+				const grouped = new Map<string, JsonReportEntry[]>();
+				for (const entry of collectionEntries) {
+					const collectionName = entry.payload.collectionName as string;
+					const existing = grouped.get(collectionName);
+					if (existing) {
+						existing.push(entry);
+					} else {
+						grouped.set(collectionName, [entry]);
+					}
+				}
+
+				for (const [collectionName, entries] of [...grouped.entries()].sort(
+					([a], [b]) => a.localeCompare(b),
+				)) {
+					lines.push(`## ${collectionName}`, "");
+					for (const entry of entries) {
+						lines.push(`### ${entry.title}`, "");
+						lines.push(`- id: \`${entry.entryId}\``);
+						lines.push(`- key: \`${entry.key}\``);
+						lines.push(`- pipeline: \`${entry.scope.pipeline}\``);
+						lines.push(`- stage: \`${entry.scope.stage}\``);
+						if (entry.scope.dataSourceKey) {
+							lines.push(`- datasource: \`${entry.scope.dataSourceKey}\``);
+						}
+						lines.push(`- criado em: \`${entry.createdAt}\``, "");
+						lines.push(
+							"```json",
+							JSON.stringify(entry.payload, null, 2),
+							"```",
+							"",
+						);
+					}
+				}
+			}
+			continue;
+		}
+
 		for (const entry of namespace.entries) {
 			lines.push(`### ${entry.title}`, "");
 			lines.push(`- id: \`${entry.entryId}\``);

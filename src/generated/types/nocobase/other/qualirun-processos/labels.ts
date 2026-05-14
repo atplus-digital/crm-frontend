@@ -9,6 +9,24 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const QUALIRUNPROCESSOS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_detalhes_procedimento: "Detalhes do Procedimento",
+	f_fk_funcionarios: "f_fk_funcionarios",
+	f_funcionarios: "Funcionários",
+	f_id_externo: "ID Externo",
+	f_id_procedimento_qualirun: "ID Procedimento QualiRun",
+	f_link_externo: "Link Externo",
+	f_procedimento: "Procedimento",
+	f_status: "Status",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const QUALIRUNPROCESSOS_DETALHESPROCEDIMENTO_LABELS = {
 	1: "Utilizado para novos colaboradores preencherem os dados e a documentação de admissão, que serão utilizados no CRM, aba de Colaboradores.",
 	2: "Utilizado para novos colaboradores assinarem os termos padrões (Confidencialidade, LGPD e Uso Voz/Imagem) e outros que se enquadram conforme dados do contrato.",

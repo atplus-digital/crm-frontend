@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const MPELEMENTO_FIELD_LABELS = {
+	capacidade: "capacidade",
+	codigo_estilo: "codigo_estilo",
+	comprimento: "comprimento",
+	descricao: "descricao",
+	id: "id",
+	id_elemento_replicado: "id_elemento_replicado",
+	id_mini_projeto: "id_mini_projeto",
+	id_tipo_elemento: "id_tipo_elemento",
+	id_transmissor: "id_transmissor",
+	replicado: "replicado",
+	tabela_elemento_replicado: "tabela_elemento_replicado",
+	tipo: "tipo",
+} as const;
+
 export const MPELEMENTO_REPLICADO_LABELS = {
 	S: "S",
 	N: "N",

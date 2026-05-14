@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RESTRICOESSERASA_FIELD_LABELS = {
+	codigo: "codigo",
+	descricao: "descricao",
+	id: "id",
+	intermediador: "intermediador",
+} as const;
+
 export const RESTRICOESSERASA_INTERMEDIADOR_LABELS = {
 	SOA: "SOA",
 	CONNECT: "CONNECT",

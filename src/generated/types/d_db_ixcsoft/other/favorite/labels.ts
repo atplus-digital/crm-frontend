@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FAVORITE_FIELD_LABELS = {
+	ativo: "ativo",
+	fullpath: "fullpath",
+	grid: "grid",
+	id: "id",
+	usuario: "usuario",
+} as const;
+
 export const FAVORITE_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

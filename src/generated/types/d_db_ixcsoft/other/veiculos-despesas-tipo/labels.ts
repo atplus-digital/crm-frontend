@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const VEICULOSDESPESASTIPO_FIELD_LABELS = {
+	ativo: "ativo",
+	atualizado_em: "atualizado_em",
+	atualizado_por: "atualizado_por",
+	descricao: "descricao",
+	id: "id",
+	observacao: "observacao",
+	operador_id: "operador_id",
+	padrao_sistema: "padrao_sistema",
+} as const;
+
 export const VEICULOSDESPESASTIPO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,27 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const OSREDENEUTRA_FIELD_LABELS = {
+	caixa_ftth: "caixa_ftth",
+	complemento: "complemento",
+	data_aceita: "data_aceita",
+	data_solicitada: "data_solicitada",
+	endereco: "endereco",
+	external_id: "external_id",
+	id: "id",
+	id_cadastro_vinculado: "id_cadastro_vinculado",
+	id_cliente_neutro: "id_cliente_neutro",
+	id_operador_neutro: "id_operador_neutro",
+	mensagem: "mensagem",
+	modo_operacao: "modo_operacao",
+	plano: "plano",
+	porta_ftth: "porta_ftth",
+	resource_id: "resource_id",
+	status: "status",
+	tabela_cadastro_vinculado: "tabela_cadastro_vinculado",
+	tipo: "tipo",
+} as const;
+
 export const OSREDENEUTRA_MODOOPERACAO_LABELS = {
 	C: "C",
 	S: "S",

@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PLANEJAMENTOANALITICO_FIELD_LABELS = {
+	ativo: "ativo",
+	auxiliar: "auxiliar",
+	classificacao: "classificacao",
+	conta: "conta",
+	conta_dominio: "conta_dominio",
+	id: "id",
+	id_planejamento: "id_planejamento",
+	id_planejamento_analitico_finan: "id_planejamento_analitico_finan",
+	planejamento_analitico: "planejamento_analitico",
+	previsao: "previsao",
+	sequencia_planejamento_analitico: "sequencia_planejamento_analitico",
+	tipo: "tipo",
+} as const;
+
 export const PLANEJAMENTOANALITICO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

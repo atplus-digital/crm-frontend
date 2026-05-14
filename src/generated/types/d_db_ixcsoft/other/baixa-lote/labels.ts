@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const BAIXALOTE_FIELD_LABELS = {
+	codigo_tecido: "codigo_tecido",
+	data: "data",
+	fator_conversao: "fator_conversao",
+	filial_id: "filial_id",
+	id: "id",
+	id_item_pedido: "id_item_pedido",
+	id_origem: "id_origem",
+	id_produto: "id_produto",
+	lote: "lote",
+	origem: "origem",
+	qtde: "qtde",
+	qtde_entrada: "qtde_entrada",
+	temp: "temp",
+	tipo: "tipo",
+} as const;
+
 export const BAIXALOTE_TIPO_LABELS = {
 	E: "E",
 	S: "S",

@@ -9,6 +9,38 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMPROSPECCAOPROPOSTAS_FIELD_LABELS = {
+	assinatura: "assinatura",
+	assunto: "assunto",
+	cabecalho: "cabecalho",
+	corpo: "corpo",
+	corpo_modelo_proposta: "corpo_modelo_proposta",
+	corpo_whatsapp: "corpo_whatsapp",
+	data: "data",
+	email_destinatario: "email_destinatario",
+	hash: "hash",
+	id: "id",
+	id_contrato: "id_contrato",
+	id_modelo_proposta: "id_modelo_proposta",
+	id_negociacao: "id_negociacao",
+	id_prospeccao: "id_prospeccao",
+	id_responsavel: "id_responsavel",
+	id_tipo_proposta: "id_tipo_proposta",
+	link: "link",
+	observacao_recusa: "observacao_recusa",
+	omnichannel_canal_envio_id: "omnichannel_canal_envio_id",
+	omnichannel_template_id: "omnichannel_template_id",
+	rodape: "rodape",
+	status: "status",
+	tipo_envio: "tipo_envio",
+	ultima_atualizacao: "ultima_atualizacao",
+	ultima_atualizacao_original: "ultima_atualizacao_original",
+	uuid: "uuid",
+	validade: "validade",
+	variaveis_whatsapp: "variaveis_whatsapp",
+	whatsapp_destinatario: "whatsapp_destinatario",
+} as const;
+
 export const CRMPROSPECCAOPROPOSTAS_ASSINATURA_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FUNCIONARIOHORARIO_FIELD_LABELS = {
+	data_final: "data_final",
+	data_inicial: "data_inicial",
+	date_cancel: "date_cancel",
+	date_create: "date_create",
+	date_update: "date_update",
+	id: "id",
+	id_colaborador: "id_colaborador",
+	id_evento_google: "id_evento_google",
+	id_motivo_cancelamento: "id_motivo_cancelamento",
+	id_motivo_reserva_horario: "id_motivo_reserva_horario",
+	id_user_cancel: "id_user_cancel",
+	id_user_create: "id_user_create",
+	id_user_update: "id_user_update",
+	obs: "obs",
+	status: "status",
+	vincula_agenda_google: "vincula_agenda_google",
+} as const;
+
 export const FUNCIONARIOHORARIO_STATUS_LABELS = {
 	A: "A",
 	F: "F",

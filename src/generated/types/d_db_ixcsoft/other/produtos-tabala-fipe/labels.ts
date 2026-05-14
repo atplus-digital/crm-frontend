@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PRODUTOSTABALAFIPE_FIELD_LABELS = {
+	ano: "ano",
+	combustivel: "combustivel",
+	id: "id",
+	id_fipe: "id_fipe",
+	id_marca: "id_marca",
+	modelo: "modelo",
+	referencia: "referencia",
+	tipo: "tipo",
+	valor: "valor",
+	versao: "versao",
+	zerokm: "zerokm",
+} as const;
+
 export const PRODUTOSTABALAFIPE_TIPO_LABELS = {
 	C: "C",
 	M: "M",

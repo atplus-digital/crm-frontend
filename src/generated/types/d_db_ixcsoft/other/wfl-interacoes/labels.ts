@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const WFLINTERACOES_FIELD_LABELS = {
+	ativa_contrato: "ativa_contrato",
+	ativo: "ativo",
+	destinatario_email: "destinatario_email",
+	dispara_proxima: "dispara_proxima",
+	email_destino: "email_destino",
+	gatilho: "gatilho",
+	id: "id",
+	id_email: "id_email",
+	id_mensagem_omnichannel: "id_mensagem_omnichannel",
+	id_sms: "id_sms",
+	id_tarefa: "id_tarefa",
+	id_wfl_param_os: "id_wfl_param_os",
+	su_status_evento: "su_status_evento",
+	tipo_interacao: "tipo_interacao",
+} as const;
+
 export const WFLINTERACOES_ATIVACONTRATO_LABELS = {
 	S: "S",
 	N: "N",

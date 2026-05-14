@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CENTRALBLOQUEIOIP_FIELD_LABELS = {
+	bloqueado: "bloqueado",
+	data_hora: "data_hora",
+	houve_bloqueio: "houve_bloqueio",
+	id: "id",
+	id_cliente: "id_cliente",
+	ip: "ip",
+	tentativas: "tentativas",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const CENTRALBLOQUEIOIP_HOUVEBLOQUEIO_LABELS = {
 	S: "S",
 	N: "N",

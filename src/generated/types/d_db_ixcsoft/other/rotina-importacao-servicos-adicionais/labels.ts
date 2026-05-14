@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ROTINAIMPORTACAOSERVICOSADICIONAIS_FIELD_LABELS = {
+	arquivo: "arquivo",
+	data: "data",
+	id: "id",
+	id_integrador: "id_integrador",
+	mes_referencia: "mes_referencia",
+	multiplicador: "multiplicador",
+	produto: "produto",
+	quantidade_cobrancas: "quantidade_cobrancas",
+	status: "status",
+	valor_total: "valor_total",
+} as const;
+
 export const ROTINAIMPORTACAOSERVICOSADICIONAIS_STATUS_LABELS = {
 	A: "A",
 	F: "F",

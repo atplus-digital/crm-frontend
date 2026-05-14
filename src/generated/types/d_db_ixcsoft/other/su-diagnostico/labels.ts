@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SUDIAGNOSTICO_FIELD_LABELS = {
+	ativo: "ativo",
+	descricao: "descricao",
+	id: "id",
+	id_diagnostico: "id_diagnostico",
+	id_setor: "id_setor",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const SUDIAGNOSTICO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const USUARIOSGRUPOMAPA_FIELD_LABELS = {
+	descricao: "descricao",
+	id: "id",
+	id_grupo: "id_grupo",
+	permissao: "permissao",
+} as const;
+
 export const USUARIOSGRUPOMAPA_PERMISSAO_LABELS = {
 	S: "S",
 	N: "N",

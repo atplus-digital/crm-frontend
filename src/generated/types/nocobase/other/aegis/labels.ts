@@ -9,6 +9,22 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const AEGIS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_idlogin: "ID Login",
+	f_notas: "Notas",
+	f_notas_cliente: "Notas Cliente",
+	f_statusdesbloqueioconfiaca: "Status Desbloqueio de Confiança",
+	f_statuslogin: "Status Login",
+	f_statusmac: "Status MAC",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const AEGIS_STATUSDESBLOQUEIOCONFIACA_LABELS = {
 	success: "Desbloqueio de Confiança Efetuado por 2 Dias",
 	error: "Erro ao Realizar Desbloqueio de Confiança",

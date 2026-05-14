@@ -9,6 +9,26 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNAPAGARLOTE_FIELD_LABELS = {
+	arquivo_importacao: "arquivo_importacao",
+	data_emissao: "data_emissao",
+	data_hora_criacao: "data_hora_criacao",
+	data_hora_processamento: "data_hora_processamento",
+	data_referencia: "data_referencia",
+	descricao: "descricao",
+	id: "id",
+	id_filial: "id_filial",
+	id_fornecedor: "id_fornecedor",
+	previsao: "previsao",
+	status: "status",
+	tipo: "tipo",
+	tipo_pagamento: "tipo_pagamento",
+	total_erros: "total_erros",
+	total_registros_importados: "total_registros_importados",
+	total_registros_lidos: "total_registros_lidos",
+	valor_total_importado: "valor_total_importado",
+} as const;
+
 export const FNAPAGARLOTE_PREVISAO_LABELS = {
 	S: "S",
 	N: "N",

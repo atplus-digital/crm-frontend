@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SALESLAYOUTSFORMS_FIELD_LABELS = {
+	descricao: "descricao",
+	id: "id",
+	json: "json",
+	tipo: "tipo",
+	versao: "versao",
+} as const;
+
 export const SALESLAYOUTSFORMS_TIPO_LABELS = {
 	lead: "lead",
 	negociacao: "negociacao",

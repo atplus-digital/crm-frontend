@@ -9,6 +9,32 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const HSCONFIGECOMMERCE_FIELD_LABELS = {
+	id: "id",
+	img_gra_corte: "img_gra_corte",
+	img_gra_tam: "img_gra_tam",
+	img_med_corte: "img_med_corte",
+	img_med_tam: "img_med_tam",
+	img_peq_corte: "img_peq_corte",
+	img_peq_tam: "img_peq_tam",
+	img_preenchimento: "img_preenchimento",
+	mostra_parcelamento: "mostra_parcelamento",
+	mostra_valor: "mostra_valor",
+	orcamento_email: "orcamento_email",
+	pedido_carteira_cobranca: "pedido_carteira_cobranca",
+	pedido_dias_cancelar: "pedido_dias_cancelar",
+	pedido_documento: "pedido_documento",
+	pedido_documento_venda: "pedido_documento_venda",
+	pedido_vencimento: "pedido_vencimento",
+	pedido_vendedor: "pedido_vendedor",
+	produtos_controle_estoque: "produtos_controle_estoque",
+	produtos_mostra: "produtos_mostra",
+	produtos_ordem: "produtos_ordem",
+	produtos_pagina: "produtos_pagina",
+	tabela_padrao: "tabela_padrao",
+	tipo_ecommerce: "tipo_ecommerce",
+} as const;
+
 export const HSCONFIGECOMMERCE_IMGGRACORTE_LABELS = {
 	crop: "crop",
 	preenchimento: "preenchimento",

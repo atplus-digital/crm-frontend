@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CONTRATOMODELORELTERMO_FIELD_LABELS = {
+	id: "id",
+	id_cliente_contrato_modelo: "id_cliente_contrato_modelo",
+	id_termo: "id_termo",
+	inserir_automatico_contrato: "inserir_automatico_contrato",
+	status: "status",
+} as const;
+
 export const CONTRATOMODELORELTERMO_INSERIRAUTOMATICOCONTRATO_LABELS = {
 	S: "S",
 	N: "N",

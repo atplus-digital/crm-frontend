@@ -4,3 +4,11 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+// ============================================================
+// LABELS (single source of truth)
+// ============================================================
+export const CNFTRATAMENTOTRIBUTARIO_FIELD_LABELS = {
+	codigo: "codigo",
+	descricao: "descricao",
+	id: "id",
+} as const;

@@ -9,6 +9,37 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SOLICITACAOCOMPRAS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_0i82r8a2t99: "kanban",
+	f_anexos: "Anexos",
+	f_categoria: "Categoria de Compra",
+	f_departamento: "Departamento",
+	f_fornecedor: "Fornecedor",
+	f_justificativa: "Justificativa",
+	f_link: "Link do Produto",
+	f_metodo_de_pagamento: "Metodo de Pagamento",
+	f_motivo_arquivamento: "Motivo do Arquivamento",
+	f_observacoes_finais: "Observações Finais",
+	f_prazo: "Prazo de Pagamento",
+	f_prazo_de_entrega: "Prazo de Entrega",
+	f_produtos: "Produtos",
+	f_servico: "Serviço",
+	f_status: "Etapa",
+	f_tipo: "Tipo",
+	f_titulo: "Título",
+	f_valor_total: "Valor Total",
+	f_xm95ss7u5xw: "f_xm95ss7u5xw",
+	fk_demandas_solicitacao_compras: "fk_demandas_solicitacao_compras",
+	fk_solicitacao_compras: "fk_solicitacao_compras",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const SOLICITACAOCOMPRAS_CATEGORIA_LABELS = {
 	Produto: "Produto",
 	Serviço: "Serviço",

@@ -9,6 +9,42 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const VDCONTRATOSPRODUTOS_FIELD_LABELS = {
+	atualizado_por: "atualizado_por",
+	desconto_percentual: "desconto_percentual",
+	desconto_proporcional: "desconto_proporcional",
+	descricao: "descricao",
+	descricao_plano_valor_1: "descricao_plano_valor_1",
+	descricao_plano_valor_2: "descricao_plano_valor_2",
+	f_ay96yogcngf: "NC COntratos",
+	fixar_ip: "fixar_ip",
+	id: "id",
+	id_contrato: "id_contrato",
+	id_contrato_produto_plano: "id_contrato_produto_plano",
+	id_plano: "id_plano",
+	id_produto: "id_produto",
+	id_tipo_documento: "id_tipo_documento",
+	id_unidade: "id_unidade",
+	id_vd_contrato: "id_vd_contrato",
+	inserido_em: "inserido_em",
+	inserido_por: "inserido_por",
+	limite_pacote: "limite_pacote",
+	logins_simultaneos: "logins_simultaneos",
+	obs: "obs",
+	qtde: "qtde",
+	qtde_repeticoes_desconto_produto: "qtde_repeticoes_desconto_produto",
+	repetir: "repetir",
+	repetir_qtde: "repetir_qtde",
+	tipo: "tipo",
+	tipo_desconto: "tipo_desconto",
+	tv_pacotes_canais: "tv_pacotes_canais",
+	ultima_atualizacao: "ultima_atualizacao",
+	valor_adicional_pacote: "valor_adicional_pacote",
+	valor_ate_vencimento: "valor_ate_vencimento",
+	valor_desconto_produto: "valor_desconto_produto",
+	valor_unit: "valor_unit",
+} as const;
+
 export const VDCONTRATOSPRODUTOS_DESCONTOPROPORCIONAL_LABELS = {
 	S: "S",
 	N: "N",

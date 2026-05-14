@@ -9,6 +9,22 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNMOVIMFINANLANC_FIELD_LABELS = {
+	documento: "documento",
+	historico: "historico",
+	id: "id",
+	id_movim_finan: "id_movim_finan",
+	id_pagar: "id_pagar",
+	id_receber: "id_receber",
+	pacrecimo: "pacrecimo",
+	pdesconto: "pdesconto",
+	tipo_lanc: "tipo_lanc",
+	vacrescimo: "vacrescimo",
+	valor: "valor",
+	vdesconto: "vdesconto",
+	vencimento: "vencimento",
+} as const;
+
 export const FNMOVIMFINANLANC_TIPOLANC_LABELS = {
 	R: "R",
 	P: "P",

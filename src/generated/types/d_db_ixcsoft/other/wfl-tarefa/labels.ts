@@ -9,6 +9,26 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const WFLTAREFA_FIELD_LABELS = {
+	ativo: "ativo",
+	decisao: "decisao",
+	descricao: "descricao",
+	finaliza_processo: "finaliza_processo",
+	gera_comissao: "gera_comissao",
+	id: "id",
+	id_processo: "id_processo",
+	id_proxima_tarefa: "id_proxima_tarefa",
+	id_setor: "id_setor",
+	id_tarefa_anterior: "id_tarefa_anterior",
+	obrigatorio: "obrigatorio",
+	operador_ultima_atualizacao: "operador_ultima_atualizacao",
+	origem_prioridade_os: "origem_prioridade_os",
+	permite_finalizar: "permite_finalizar",
+	prazo_minutos: "prazo_minutos",
+	sequencia: "sequencia",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const WFLTAREFA_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

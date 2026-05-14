@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const EVENTLOG_FIELD_LABELS = {
+	duration_seconds: "duration_seconds",
+	end_time: "end_time",
+	error_message: "error_message",
+	event_name: "event_name",
+	id: "id",
+	rows_affected: "rows_affected",
+	start_time: "start_time",
+	status: "status",
+} as const;
+
 export const EVENTLOG_STATUS_LABELS = {
 	SUCCESS: "SUCCESS",
 	FAILED: "FAILED",

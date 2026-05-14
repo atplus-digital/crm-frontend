@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DASHCARDSMEMCACHED_FIELD_LABELS = {
+	card: "card",
+	data_fim: "data_fim",
+	data_inicio: "data_inicio",
+	dt_manager_router: "dt_manager_router",
+	id: "id",
+	nome_card_memcached: "nome_card_memcached",
+	status: "status",
+	tempo_execucao_consulta: "tempo_execucao_consulta",
+	ultimo_registro_memcached: "ultimo_registro_memcached",
+} as const;
+
 export const DASHCARDSMEMCACHED_STATUS_LABELS = {
 	S: "S",
 	N: "N",

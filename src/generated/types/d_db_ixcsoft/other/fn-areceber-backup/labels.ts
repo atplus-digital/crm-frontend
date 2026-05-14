@@ -9,6 +9,30 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNARECEBERBACKUP_FIELD_LABELS = {
+	data_emissao: "data_emissao",
+	data_vencimento: "data_vencimento",
+	documento: "documento",
+	filial_id: "filial_id",
+	fn_areceber_id: "fn_areceber_id",
+	id: "id",
+	id_carteira_cobranca: "id_carteira_cobranca",
+	id_cliente: "id_cliente",
+	id_conta: "id_conta",
+	id_contrato: "id_contrato",
+	id_saida: "id_saida",
+	pagamento_data: "pagamento_data",
+	pagamento_valor: "pagamento_valor",
+	previsao: "previsao",
+	rotina_origem: "rotina_origem",
+	status: "status",
+	tipo_recebimento: "tipo_recebimento",
+	ultima_atualizacao: "ultima_atualizacao",
+	valor: "valor",
+	valor_aberto: "valor_aberto",
+	valor_recebido: "valor_recebido",
+} as const;
+
 export const FNARECEBERBACKUP_PREVISAO_LABELS = {
 	N: "N",
 	S: "S",

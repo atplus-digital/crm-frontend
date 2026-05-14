@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DOCFILTROS_FIELD_LABELS = {
+	favorito: "favorito",
+	id: "id",
+	id_template: "id_template",
+	id_usuario: "id_usuario",
+	json: "json",
+	nome: "nome",
+} as const;
+
 export const DOCFILTROS_FAVORITO_LABELS = {
 	S: "S",
 	N: "N",

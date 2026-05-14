@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FRFATURAMENTOCLASSIFICACOES_FIELD_LABELS = {
+	ativo: "ativo",
+	descricao: "descricao",
+	id: "id",
+	porcentagem: "porcentagem",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const FRFATURAMENTOCLASSIFICACOES_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

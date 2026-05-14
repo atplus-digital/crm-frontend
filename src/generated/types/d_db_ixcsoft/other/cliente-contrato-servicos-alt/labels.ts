@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOSERVICOSALT_FIELD_LABELS = {
+	data: "data",
+	descricao: "descricao",
+	id: "id",
+	id_contrato: "id_contrato",
+	id_produto: "id_produto",
+	id_produto_contrato_vinc: "id_produto_contrato_vinc",
+	id_tipo_documento: "id_tipo_documento",
+	id_unidade: "id_unidade",
+	incluido_por_prorata: "incluido_por_prorata",
+	origem: "origem",
+	quantidade: "quantidade",
+	repetir: "repetir",
+	repetir_qtde: "repetir_qtde",
+	tipo: "tipo",
+	tipo_acres_desc: "tipo_acres_desc",
+	valor_unitario: "valor_unitario",
+} as const;
+
 export const CLIENTECONTRATOSERVICOSALT_INCLUIDOPORPRORATA_LABELS = {
 	S: "S",
 	N: "N",

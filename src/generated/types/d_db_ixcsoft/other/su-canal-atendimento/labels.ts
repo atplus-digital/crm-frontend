@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SUCANALATENDIMENTO_FIELD_LABELS = {
+	ativo: "ativo",
+	canal_atendimento: "canal_atendimento",
+	descricao: "descricao",
+	id: "id",
+} as const;
+
 export const SUCANALATENDIMENTO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

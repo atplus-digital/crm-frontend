@@ -35,6 +35,7 @@ export interface DataTableController<
 	setColumnVisibility: OnChangeFn<VisibilityState>;
 	showPagination?: boolean;
 	enableColumnVisibility?: boolean;
+	columnLabels?: Partial<Record<string, string>>;
 }
 
 const DataTableContext = createContext<DataTableController<

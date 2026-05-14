@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REDENEUTRAOPERADOR_FIELD_LABELS = {
+	api_server: "api_server",
+	ativo: "ativo",
+	client_id: "client_id",
+	client_secret: "client_secret",
+	descricao: "descricao",
+	id: "id",
+	integracao: "integracao",
+	tenant: "tenant",
+	token: "token",
+	token_generation_date: "token_generation_date",
+	url: "url",
+	url_callback: "url_callback",
+} as const;
+
 export const REDENEUTRAOPERADOR_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

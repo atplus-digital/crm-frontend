@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOACRESCIMOS_FIELD_LABELS = {
+	ativo: "ativo",
+	data: "data",
+	data_validade: "data_validade",
+	descricao: "descricao",
+	id: "id",
+	id_contrato: "id_contrato",
+	id_reajuste: "id_reajuste",
+	id_vd_contrato_produtos: "id_vd_contrato_produtos",
+	percentual: "percentual",
+	valor: "valor",
+} as const;
+
 export const CLIENTECONTRATOACRESCIMOS_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

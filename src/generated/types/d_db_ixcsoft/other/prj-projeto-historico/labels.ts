@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PRJPROJETOHISTORICO_FIELD_LABELS = {
+	data_hora: "data_hora",
+	id: "id",
+	id_operador: "id_operador",
+	id_prj_projeto: "id_prj_projeto",
+	status: "status",
+} as const;
+
 export const PRJPROJETOHISTORICO_STATUS_LABELS = {
 	A: "A",
 	P: "P",

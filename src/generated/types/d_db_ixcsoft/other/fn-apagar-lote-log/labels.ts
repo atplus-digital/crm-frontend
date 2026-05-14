@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNAPAGARLOTELOG_FIELD_LABELS = {
+	id: "id",
+	id_fn_apagar_lote: "id_fn_apagar_lote",
+	mensagem: "mensagem",
+	tipo: "tipo",
+} as const;
+
 export const FNAPAGARLOTELOG_TIPO_LABELS = {
 	E: "E",
 	A: "A",

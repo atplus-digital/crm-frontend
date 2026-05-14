@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const HSENQUETE_FIELD_LABELS = {
+	atraso: "atraso",
+	id: "id",
+	publicado: "publicado",
+	titulo: "titulo",
+} as const;
+
 export const HSENQUETE_PUBLICADO_LABELS = {
 	N: "N",
 	S: "S",

@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REQUISICAOMATERIALITEM_FIELD_LABELS = {
+	almoxarifados_vinculados: "almoxarifados_vinculados",
+	data_cancelamento: "data_cancelamento",
+	descricao: "descricao",
+	id: "id",
+	id_mot_cancelamento: "id_mot_cancelamento",
+	id_produto: "id_produto",
+	id_requisicao: "id_requisicao",
+	id_usuario: "id_usuario",
+	id_usuario_cancelamento: "id_usuario_cancelamento",
+	qtde: "qtde",
+	qtde_cancelada: "qtde_cancelada",
+	qtde_saldo: "qtde_saldo",
+	saldo_almox_solicitante: "saldo_almox_solicitante",
+	status: "status",
+} as const;
+
 export const REQUISICAOMATERIALITEM_STATUS_LABELS = {
 	A: "A",
 	P: "P",

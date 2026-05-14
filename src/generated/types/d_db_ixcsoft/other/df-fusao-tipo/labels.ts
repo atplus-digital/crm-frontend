@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DFFUSAOTIPO_FIELD_LABELS = {
+	cor: "cor",
+	criacao_automatica: "criacao_automatica",
+	descricao: "descricao",
+	id: "id",
+	nome: "nome",
+	perda: "perda",
+	status: "status",
+} as const;
+
 export const DFFUSAOTIPO_CRIACAOAUTOMATICA_LABELS = {
 	S: "S",
 	N: "N",

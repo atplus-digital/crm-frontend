@@ -9,6 +9,34 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMAGENDA_FIELD_LABELS = {
+	assunto: "assunto",
+	avisar_email: "avisar_email",
+	avisar_email_minutos: "avisar_email_minutos",
+	avisar_popup: "avisar_popup",
+	avisar_popup_minutos: "avisar_popup_minutos",
+	cliente_crm: "cliente_crm",
+	cor: "cor",
+	cor_texto: "cor_texto",
+	email_convidados: "email_convidados",
+	hora_fim: "hora_fim",
+	hora_inicio: "hora_inicio",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_evento_google: "id_evento_google",
+	id_lead: "id_lead",
+	id_negociacao: "id_negociacao",
+	id_responsavel: "id_responsavel",
+	id_texto_padrao: "id_texto_padrao",
+	id_tipo_agendamento: "id_tipo_agendamento",
+	id_usuario_agenda: "id_usuario_agenda",
+	local: "local",
+	status: "status",
+	status_google: "status_google",
+	tipo: "tipo",
+	vincular_agenda_usuario: "vincular_agenda_usuario",
+} as const;
+
 export const CRMAGENDA_AVISAREMAIL_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGINBG_FIELD_LABELS = {
+	checksum: "checksum",
+	date: "date",
+	html: "html",
+	id: "id",
+	nonce: "nonce",
+	type: "type",
+} as const;
+
 export const LOGINBG_TYPE_LABELS = {
 	Web: "Web",
 	Mobile: "Mobile",

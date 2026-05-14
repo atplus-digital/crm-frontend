@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DFCONEXOES_FIELD_LABELS = {
+	descricao: "descricao",
+	id: "id",
+	id_coord_elemento_1: "id_coord_elemento_1",
+	id_coord_elemento_2: "id_coord_elemento_2",
+	id_elemento_1: "id_elemento_1",
+	id_elemento_2: "id_elemento_2",
+	posicao_elemento_2: "posicao_elemento_2",
+	posicao_in_elemento_2: "posicao_in_elemento_2",
+	posicao_out_elemento_2: "posicao_out_elemento_2",
+	sequencia_elemento_2: "sequencia_elemento_2",
+	sequencia_in_elemento_2: "sequencia_in_elemento_2",
+	sequencia_out_elemento_2: "sequencia_out_elemento_2",
+	tabela_elemento_1: "tabela_elemento_1",
+	tabela_elemento_2: "tabela_elemento_2",
+} as const;
+
 export const DFCONEXOES_POSICAOELEMENTO2_LABELS = {
 	L: "L",
 	R: "R",

@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNAPAGARLOTEPAGAMENTOLOG_FIELD_LABELS = {
+	dados: "dados",
+	data_criacao: "data_criacao",
+	id: "id",
+	id_apagar: "id_apagar",
+	id_lote_pagamento: "id_lote_pagamento",
+	integracao: "integracao",
+	log: "log",
+	situacao: "situacao",
+	status: "status",
+} as const;
+
 export const FNAPAGARLOTEPAGAMENTOLOG_SITUACAO_LABELS = {
 	COMUNICADO: "COMUNICADO",
 	PAGO: "PAGO",

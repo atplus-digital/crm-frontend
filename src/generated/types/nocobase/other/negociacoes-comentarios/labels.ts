@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const NEGOCIACOESCOMENTARIOS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_comentario: "Comentário",
+	f_fk_comentarios_negociacoes: "f_fk_comentarios_negociacoes",
+	f_insere_atendimento_ixc: "Insere no Atendimento do IXC",
+	f_setor_para_obs: "Setor do Atendimento",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const NEGOCIACOESCOMENTARIOS_INSEREATENDIMENTOIXC_LABELS = {
 	0: "Não",
 	1: "Sim",

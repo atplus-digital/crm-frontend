@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REGUACOBRANCACOBRANCASLOGS_FIELD_LABELS = {
+	acao: "acao",
+	descricao: "descricao",
+	id: "id",
+	id_cobranca: "id_cobranca",
+	id_lote: "id_lote",
+	parametro_dias_id: "parametro_dias_id",
+	status: "status",
+	tipo_execucao: "tipo_execucao",
+} as const;
+
 export const REGUACOBRANCACOBRANCASLOGS_ACAO_LABELS = {
 	AN: "AN",
 	LD: "LD",

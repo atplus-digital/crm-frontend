@@ -9,6 +9,52 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMTROCATITULARIDADE_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_anexos: "Anexos",
+	f_bairro: "Bairro",
+	f_cedente: "Cedente",
+	f_cedente_doc_resp_legal: "Documento Responsável Legal Cedente",
+	f_cedente_documento: "Documento Cedente",
+	f_cedente_email: "Cedente Email",
+	f_cedente_responsavel_legal: "Cedente Responsável Legal",
+	f_cedente_telefone: "Cedente Telefone",
+	f_cep: "CEP",
+	f_cessionario: "Cessionário",
+	f_cessionario_doc_resp_legal: "Documento Responsável Legal Cessionário",
+	f_cessionario_documento: "Documento Cessionário",
+	f_cessionario_email: "Cessionário Email",
+	f_cessionario_responsavel: "Cessionário Responsável Legal",
+	f_cessionario_telefone: "Cessionário Telefone",
+	f_cidade: "Cidade",
+	f_comentarios: "Comentários",
+	f_complemento: "Complemento",
+	f_endereco: "Endereço",
+	f_estado: "Estado",
+	f_fk_negociacao_vendedor: "f_fk_negociacao_vendedor",
+	f_fk_pessoa_negociacao: "f_fk_pessoa_negociacao",
+	f_fk_pessoa_pj_negociacao: "f_fk_pessoa_pj_negociacao",
+	f_id_contrato: "Contrato ID",
+	f_link_assinatura_cedente: "Link para Assinatura Cedente",
+	f_link_assinatura_cessionario: "Link para Assinatura Cessionário",
+	f_numero: "Número",
+	f_ordenacao: "Ordenação",
+	f_pessoa_pf: "Pessoa (PF)",
+	f_pessoa_pj: "Pessoa (PJ)",
+	f_rw7rp8431ty: "teste",
+	f_status: "Status",
+	f_substatus: "Substatus",
+	f_tipo_pessoa: "Tipo de Pessoa",
+	f_trocadetitularidade_contrato: "Contrato",
+	f_vendedor: "Vendedor",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const CRMTROCATITULARIDADE_COMPLEMENTO_LABELS = {
 	Casa: "Casa",
 	Apartamento: "Apartamento",
@@ -26,7 +72,6 @@ export const CRMTROCATITULARIDADE_STATUS_LABELS = {
 	2: "Aguardando Auditoria",
 	3: "Concluído",
 	9: "Cancelado",
-	20: "Aguardando assinatura teste",
 } as const;
 
 export const CRMTROCATITULARIDADE_SUBSTATUS_LABELS = {
@@ -63,11 +108,11 @@ export const crm_troca_titularidadeEstadoSchema = z.enum(["SC"], {
 });
 
 export const crm_troca_titularidadeStatusSchema = z.enum(
-	["0", "1", "2", "3", "9", "20"],
+	["0", "1", "2", "3", "9"],
 	{
 		error: () => ({
 			message:
-				"status: valores válidos são [Novo, Aguardando assinatura, Aguardando Auditoria, Concluído, Cancelado, Aguardando assinatura teste]",
+				"status: valores válidos são [Novo, Aguardando assinatura, Aguardando Auditoria, Concluído, Cancelado]",
 		}),
 	},
 );

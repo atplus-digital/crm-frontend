@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const IXCTAREFASCRON_FIELD_LABELS = {
+	ambiente_codigo: "ambiente_codigo",
+	atualizado_em: "atualizado_em",
+	bloquear_execucao_simultanea: "bloquear_execucao_simultanea",
+	criado_em: "criado_em",
+	dia_mes_obrigatorio: "dia_mes_obrigatorio",
+	dia_semana_obrigatorio: "dia_semana_obrigatorio",
+	expressao: "expressao",
+	gravar_log: "gravar_log",
+	hora_obrigatorio: "hora_obrigatorio",
+	id: "id",
+	id_tarefa: "id_tarefa",
+	location: "location",
+	mes_obrigatorio: "mes_obrigatorio",
+	minuto_obrigatorio: "minuto_obrigatorio",
+	nome: "nome",
+	tipo: "tipo",
+} as const;
+
 export const IXCTAREFASCRON_AMBIENTECODIGO_LABELS = {
 	G: "G",
 	M: "M",

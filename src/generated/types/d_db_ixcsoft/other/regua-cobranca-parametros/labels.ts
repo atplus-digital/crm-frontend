@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REGUACOBRANCAPARAMETROS_FIELD_LABELS = {
+	abrir_os_apos_finalizacao_ultima: "abrir_os_apos_finalizacao_ultima",
+	cliente_tipo_id: "cliente_tipo_id",
+	cliente_tipo_pessoa: "cliente_tipo_pessoa",
+	comunicado_vencimento: "comunicado_vencimento",
+	data_ultima_alteracao: "data_ultima_alteracao",
+	email_responsaveis: "email_responsaveis",
+	enviar_finais_semana_feriado: "enviar_finais_semana_feriado",
+	filial_abertura: "filial_abertura",
+	filial_id: "filial_id",
+	fn_carteira_cobranca_id: "fn_carteira_cobranca_id",
+	id: "id",
+	smtp_id: "smtp_id",
+} as const;
+
 export const REGUACOBRANCAPARAMETROS_ABRIROSAPOSFINALIZACAOULTIMA_LABELS = {
 	S: "S",
 	N: "N",

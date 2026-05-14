@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGRADPORTAFTTH_FIELD_LABELS = {
+	data_atualizacao: "data_atualizacao",
+	ftth_porta: "ftth_porta",
+	id: "id",
+	id_alteracao: "id_alteracao",
+	id_cadastro: "id_cadastro",
+	id_caixa: "id_caixa",
+	motivo: "motivo",
+	status_porta: "status_porta",
+	tabela_cadastro: "tabela_cadastro",
+	tipo_alteracao: "tipo_alteracao",
+	usuario: "usuario",
+} as const;
+
 export const LOGRADPORTAFTTH_TIPOALTERACAO_LABELS = {
 	A: "A",
 	R: "R",

@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FLFOLHA_FIELD_LABELS = {
+	ano: "ano",
+	descontar_adiantamentos: "descontar_adiantamentos",
+	descricao: "descricao",
+	id: "id",
+	mes: "mes",
+} as const;
+
 export const FLFOLHA_DESCONTARADIANTAMENTOS_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const COTACAOCOMPRAITENS_FIELD_LABELS = {
+	aprovado: "aprovado",
+	id: "id",
+	id_cotacao: "id_cotacao",
+	id_produto: "id_produto",
+	id_unidade: "id_unidade",
+	quantidade: "quantidade",
+	status: "status",
+	valor_unitario: "valor_unitario",
+} as const;
+
 export const COTACAOCOMPRAITENS_APROVADO_LABELS = {
 	S: "S",
 	N: "N",

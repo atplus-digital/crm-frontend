@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SVAUSUARIOSSIMULACAOLOTE_FIELD_LABELS = {
+	cnpj_cpf: "cnpj_cpf",
+	criado_em: "criado_em",
+	email: "email",
+	id: "id",
+	id_contrato: "id_contrato",
+	id_integracao: "id_integracao",
+	id_produto: "id_produto",
+	id_sva_usuario: "id_sva_usuario",
+	id_sva_usuarios_lote: "id_sva_usuarios_lote",
+	mensagens: "mensagens",
+	status: "status",
+} as const;
+
 export const SVAUSUARIOSSIMULACAOLOTE_STATUS_LABELS = {
 	A: "A",
 	C: "C",

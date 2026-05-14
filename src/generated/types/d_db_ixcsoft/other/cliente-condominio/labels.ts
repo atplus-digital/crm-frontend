@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONDOMINIO_FIELD_LABELS = {
+	bairro: "bairro",
+	bloco_unico: "bloco_unico",
+	celular_sindico: "celular_sindico",
+	cep: "cep",
+	cnpj: "cnpj",
+	condominio: "condominio",
+	data_cadastro: "data_cadastro",
+	endereco: "endereco",
+	id: "id",
+	id_cidade: "id_cidade",
+	numero: "numero",
+	obs: "obs",
+	quantidade_shafts: "quantidade_shafts",
+	sindico: "sindico",
+} as const;
+
 export const CLIENTECONDOMINIO_BLOCOUNICO_LABELS = {
 	S: "S",
 	N: "N",

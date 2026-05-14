@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMSMSLOG_FIELD_LABELS = {
+	assunto: "assunto",
+	cliente_razao: "cliente_razao",
+	data_hora: "data_hora",
+	gateway: "gateway",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_mensagem: "id_mensagem",
+	id_responsavel_envio: "id_responsavel_envio",
+	status: "status",
+	telefone_celular: "telefone_celular",
+} as const;
+
 export const CRMSMSLOG_STATUS_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,34 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMEMAILLOG_FIELD_LABELS = {
+	anexos: "anexos",
+	assinatura: "assinatura",
+	assunto: "assunto",
+	cli_nome: "cli_nome",
+	data_hora: "data_hora",
+	data_hora_cancelamento: "data_hora_cancelamento",
+	data_hora_inclusao: "data_hora_inclusao",
+	destinatarios: "destinatarios",
+	envia_anexo: "envia_anexo",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_contrato: "id_contrato",
+	id_email_smtp: "id_email_smtp",
+	id_modelo_email: "id_modelo_email",
+	id_receber: "id_receber",
+	id_responsavel_cancelamento: "id_responsavel_cancelamento",
+	id_responsavel_envio: "id_responsavel_envio",
+	msg_erro: "msg_erro",
+	password: "password",
+	smtp_auth: "smtp_auth",
+	smtp_host: "smtp_host",
+	smtp_port: "smtp_port",
+	smtp_secure: "smtp_secure",
+	status: "status",
+	username: "username",
+} as const;
+
 export const CRMEMAILLOG_ASSINATURA_LABELS = {
 	S: "S",
 	N: "N",

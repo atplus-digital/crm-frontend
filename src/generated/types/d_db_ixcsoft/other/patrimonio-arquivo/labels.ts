@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PATRIMONIOARQUIVO_FIELD_LABELS = {
+	classificacao_arquivo: "classificacao_arquivo",
+	data_envio: "data_envio",
+	descricao: "descricao",
+	id: "id",
+	id_patrimonio: "id_patrimonio",
+	local_arquivo: "local_arquivo",
+	nome_arquivo: "nome_arquivo",
+	tipo: "tipo",
+} as const;
+
 export const PATRIMONIOARQUIVO_CLASSIFICACAOARQUIVO_LABELS = {
 	O: "O",
 	P: "P",

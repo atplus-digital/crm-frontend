@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ENTRADADFE_FIELD_LABELS = {
+	chnfe: "chnfe",
+	cnpj: "cnpj",
+	csitnfe: "csitnfe",
+	data: "data",
+	dfe_importado: "dfe_importado",
+	id: "id",
+	id_filial: "id_filial",
+	id_fornecedor: "id_fornecedor",
+	ie: "ie",
+	manifestado: "manifestado",
+	nprot: "nprot",
+	nsu: "nsu",
+	tpnf: "tpnf",
+	ultimo_nsu: "ultimo_nsu",
+	vnf: "vnf",
+	xnome: "xnome",
+} as const;
+
 export const ENTRADADFE_ULTIMONSU_LABELS = {
 	S: "S",
 	N: "N",

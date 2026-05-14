@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LINHACORPORATIVA_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_fk_funcionarios: "f_fk_funcionarios",
+	f_funcionarios: "Funcionários",
+	f_iccid_corporativo: "ICCID Corporativo",
+	f_numero_movel_corporativo: "Número Móvel Corporativo",
+	f_tipo: "Tipo",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const LINHACORPORATIVA_TIPO_LABELS = {
 	1: "Chip Corporativo",
 	2: "DID Fixo",

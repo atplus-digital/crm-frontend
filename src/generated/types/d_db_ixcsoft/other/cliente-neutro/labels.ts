@@ -9,6 +9,29 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTENEUTRO_FIELD_LABELS = {
+	ativo: "ativo",
+	automatizar_reservas: "automatizar_reservas",
+	chave_assinatura: "chave_assinatura",
+	client_id: "client_id",
+	client_secret: "client_secret",
+	data_reservada: "data_reservada",
+	descricao: "descricao",
+	id: "id",
+	id_assunto: "id_assunto",
+	id_cliente: "id_cliente",
+	id_colaborador_responsavel: "id_colaborador_responsavel",
+	id_contrato: "id_contrato",
+	id_processo: "id_processo",
+	inserir_atendimento: "inserir_atendimento",
+	melhor_horario_reserva: "melhor_horario_reserva",
+	mensagem: "mensagem",
+	prioridade: "prioridade",
+	redes: "redes",
+	usuario_portal: "usuario_portal",
+	vlan: "vlan",
+} as const;
+
 export const CLIENTENEUTRO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

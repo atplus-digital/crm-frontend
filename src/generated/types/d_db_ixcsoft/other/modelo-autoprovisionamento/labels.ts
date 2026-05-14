@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const MODELOAUTOPROVISIONAMENTO_FIELD_LABELS = {
+	ativo: "ativo",
+	dispositivos_vinculados: "dispositivos_vinculados",
+	id: "id",
+	id_hardware: "id_hardware",
+	id_perfil: "id_perfil",
+	id_transmissor: "id_transmissor",
+	tipo: "tipo",
+} as const;
+
 export const MODELOAUTOPROVISIONAMENTO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

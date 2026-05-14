@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const HSLINKS_FIELD_LABELS = {
+	id: "id",
+	id_categoria: "id_categoria",
+	Nome: "Nome",
+	ordernar: "ordernar",
+	publicado: "publicado",
+	url: "url",
+} as const;
+
 export const HSLINKS_PUBLICADO_LABELS = {
 	N: "N",
 	S: "S",

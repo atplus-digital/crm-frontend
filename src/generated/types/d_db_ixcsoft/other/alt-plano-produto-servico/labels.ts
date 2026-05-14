@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ALTPLANOPRODUTOSERVICO_FIELD_LABELS = {
+	descricao: "descricao",
+	gerar_prorata_serv_adic: "gerar_prorata_serv_adic",
+	id: "id",
+	id_cliente_contrato_alt_plano: "id_cliente_contrato_alt_plano",
+	id_contrato: "id_contrato",
+	id_plano: "id_plano",
+	id_produto: "id_produto",
+	id_tipo_documento: "id_tipo_documento",
+	id_vd_contrato: "id_vd_contrato",
+	id_vd_contrato_produtos: "id_vd_contrato_produtos",
+	obs: "obs",
+	qtde: "qtde",
+	tipo: "tipo",
+	valor: "valor",
+	valor_ate_vencimento: "valor_ate_vencimento",
+	valor_desconto_produto: "valor_desconto_produto",
+} as const;
+
 export const ALTPLANOPRODUTOSERVICO_GERARPRORATASERVADIC_LABELS = {
 	S: "S",
 	N: "N",

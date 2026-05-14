@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMMODELOEMAIL_FIELD_LABELS = {
+	aceite_digital: "aceite_digital",
+	assunto: "assunto",
+	ativo: "ativo",
+	cor_botoes: "cor_botoes",
+	id: "id",
+	logotipo: "logotipo",
+	titulo: "titulo",
+	vencer_no_aceite: "vencer_no_aceite",
+	whatsapp_destinatario: "whatsapp_destinatario",
+} as const;
+
 export const CRMMODELOEMAIL_ACEITEDIGITAL_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const IXCFALHATAREFA_FIELD_LABELS = {
+	controle_valor_atual: "controle_valor_atual",
+	controle_valor_esperado: "controle_valor_esperado",
+	data_hora_inicio: "data_hora_inicio",
+	data_ultima_atualizacao: "data_ultima_atualizacao",
+	email_dest: "email_dest",
+	id: "id",
+	id_smtp_envio: "id_smtp_envio",
+	id_tarefa: "id_tarefa",
+	maximo_minutos: "maximo_minutos",
+	numero_tentativas_monitoramento: "numero_tentativas_monitoramento",
+	status_execucao: "status_execucao",
+} as const;
+
 export const IXCFALHATAREFA_STATUSEXECUCAO_LABELS = {
 	P: "P",
 	E: "E",

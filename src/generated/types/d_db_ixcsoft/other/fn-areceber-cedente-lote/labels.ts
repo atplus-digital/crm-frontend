@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNARECEBERCEDENTELOTE_FIELD_LABELS = {
+	arquivo_retorno: "arquivo_retorno",
+	id: "id",
+	id_carteira_cobranca: "id_carteira_cobranca",
+	id_modelo_retorno_bancario: "id_modelo_retorno_bancario",
+	media_segundos_titulo: "media_segundos_titulo",
+	momento_fin_processo: "momento_fin_processo",
+	momento_ini_processo: "momento_ini_processo",
+	status: "status",
+	tipo_retorno: "tipo_retorno",
+	total_divergencias_valor: "total_divergencias_valor",
+	total_erros_processamento: "total_erros_processamento",
+	total_registros_lidos: "total_registros_lidos",
+	total_titulos_processados: "total_titulos_processados",
+	total_valor_baixado: "total_valor_baixado",
+} as const;
+
 export const FNARECEBERCEDENTELOTE_STATUS_LABELS = {
 	A: "A",
 	P: "P",

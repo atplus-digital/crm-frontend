@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const USUARIOSVISAO_FIELD_LABELS = {
+	abre_listando: "abre_listando",
+	compartilha_grupo: "compartilha_grupo",
+	consulta_padrao: "consulta_padrao",
+	id: "id",
+	id_filial: "id_filial",
+	id_grupo: "id_grupo",
+	id_usuario: "id_usuario",
+	json_visao: "json_visao",
+	mostra_campos: "mostra_campos",
+	nome_grid: "nome_grid",
+	nome_visao: "nome_visao",
+	ordena_consulta: "ordena_consulta",
+} as const;
+
 export const USUARIOSVISAO_ABRELISTANDO_LABELS = {
 	S: "S",
 	N: "N",

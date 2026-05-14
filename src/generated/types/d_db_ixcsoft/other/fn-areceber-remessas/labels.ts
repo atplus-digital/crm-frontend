@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNARECEBERREMESSAS_FIELD_LABELS = {
+	enviado: "enviado",
+	id: "id",
+	id_carteira: "id_carteira",
+	id_receber: "id_receber",
+	id_remessa: "id_remessa",
+	tipo_remessa: "tipo_remessa",
+} as const;
+
 export const FNARECEBERREMESSAS_ENVIADO_LABELS = {
 	S: "S",
 	N: "N",

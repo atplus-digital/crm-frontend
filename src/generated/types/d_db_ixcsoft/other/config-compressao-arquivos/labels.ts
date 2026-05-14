@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CONFIGCOMPRESSAOARQUIVOS_FIELD_LABELS = {
+	escala_reducao: "escala_reducao",
+	id: "id",
+	reducao_imagem: "reducao_imagem",
+	reduzir_qualidade_imagem: "reduzir_qualidade_imagem",
+	status: "status",
+	tamanho_min_arquivo_kb: "tamanho_min_arquivo_kb",
+	tamanho_min_arquivo_pdf_kb: "tamanho_min_arquivo_pdf_kb",
+} as const;
+
 export const CONFIGCOMPRESSAOARQUIVOS_REDUZIRQUALIDADEIMAGEM_LABELS = {
 	S: "S",
 	N: "N",

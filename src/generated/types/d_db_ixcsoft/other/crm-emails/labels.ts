@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMEMAILS_FIELD_LABELS = {
+	assinatura: "assinatura",
+	assunto: "assunto",
+	corpo: "corpo",
+	data_hora: "data_hora",
+	destinatarios: "destinatarios",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_email_smtp: "id_email_smtp",
+	id_modelo_email: "id_modelo_email",
+	id_negociacao: "id_negociacao",
+	id_responsavel: "id_responsavel",
+} as const;
+
 export const CRMEMAILS_ASSINATURA_LABELS = {
 	S: "S",
 	N: "N",

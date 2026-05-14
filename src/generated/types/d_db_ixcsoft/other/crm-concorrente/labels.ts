@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMCONCORRENTE_FIELD_LABELS = {
+	ativo: "ativo",
+	cor_mapa: "cor_mapa",
+	descricao: "descricao",
+	id: "id",
+	nome: "nome",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const CRMCONCORRENTE_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

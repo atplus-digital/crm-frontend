@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const VOIPURA_FIELD_LABELS = {
+	descricao: "descricao",
+	gravacao: "gravacao",
+	id: "id",
+	id_modulo_entrada: "id_modulo_entrada",
+} as const;
+
 export const VOIPURA_GRAVACAO_LABELS = {
 	S: "S",
 	N: "N",

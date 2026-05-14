@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADIPPOOLV6_FIELD_LABELS = {
+	called_station_id: "called_station_id",
+	calling_station_id: "calling_station_id",
+	expiry_time: "expiry_time",
+	framed_ip_address: "framed_ip_address",
+	id: "id",
+	id_pool: "id_pool",
+	nas_ip_address: "nas_ip_address",
+	pool_key: "pool_key",
+	pool_name: "pool_name",
+	status: "status",
+	username: "username",
+} as const;
+
 export const RADIPPOOLV6_STATUS_LABELS = {
 	D: "D",
 	R: "R",

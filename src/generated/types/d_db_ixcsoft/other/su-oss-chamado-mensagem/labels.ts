@@ -9,6 +9,34 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SUOSSCHAMADOMENSAGEM_FIELD_LABELS = {
+	data: "data",
+	data_final: "data_final",
+	data_inicio: "data_inicio",
+	finaliza_processo: "finaliza_processo",
+	gera_comissao: "gera_comissao",
+	gps_time: "gps_time",
+	historico: "historico",
+	id: "id",
+	id_chamado: "id_chamado",
+	id_compromisso: "id_compromisso",
+	id_diagnostico_especifico: "id_diagnostico_especifico",
+	id_equipe: "id_equipe",
+	id_evento: "id_evento",
+	id_evento_status: "id_evento_status",
+	id_operador: "id_operador",
+	id_proxima_tarefa: "id_proxima_tarefa",
+	id_resposta: "id_resposta",
+	id_su_diagnostico: "id_su_diagnostico",
+	id_tecnico: "id_tecnico",
+	latitude: "latitude",
+	longitude: "longitude",
+	mensagem: "mensagem",
+	origem_registro: "origem_registro",
+	status: "status",
+	tipo_cobranca: "tipo_cobranca",
+} as const;
+
 export const SUOSSCHAMADOMENSAGEM_FINALIZAPROCESSO_LABELS = {
 	S: "S",
 	N: "N",

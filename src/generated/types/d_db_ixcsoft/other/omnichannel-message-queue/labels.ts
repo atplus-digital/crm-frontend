@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const OMNICHANNELMESSAGEQUEUE_FIELD_LABELS = {
+	dados_envio: "dados_envio",
+	data_inclusao: "data_inclusao",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_gateway_omnichannel: "id_gateway_omnichannel",
+	id_template: "id_template",
+	message: "message",
+	regua_cobranca_envios_id: "regua_cobranca_envios_id",
+	status: "status",
+} as const;
+
 export const OMNICHANNELMESSAGEQUEUE_STATUS_LABELS = {
 	A: "A",
 	S: "S",

@@ -9,6 +9,29 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const GERACAOLOTEASSINATURAS_FIELD_LABELS = {
+	data_emissao_nf_geracao: "data_emissao_nf_geracao",
+	descricao_filtro: "descricao_filtro",
+	filtro_forma_rec_financeiro: "filtro_forma_rec_financeiro",
+	filtro_id_assinatura_final: "filtro_id_assinatura_final",
+	filtro_id_assinatura_inicial: "filtro_id_assinatura_inicial",
+	filtro_id_filial: "filtro_id_filial",
+	filtro_mes_ano_referencia_nf: "filtro_mes_ano_referencia_nf",
+	filtro_status_financeiro: "filtro_status_financeiro",
+	filtro_tipo_pessoa: "filtro_tipo_pessoa",
+	filtro_venc_final_financeiro: "filtro_venc_final_financeiro",
+	filtro_venc_inicial_financeiro: "filtro_venc_inicial_financeiro",
+	id: "id",
+	media_segundos_nota: "media_segundos_nota",
+	modelo_nf_geracao: "modelo_nf_geracao",
+	momento_fin_geracao: "momento_fin_geracao",
+	momento_ini_geracao: "momento_ini_geracao",
+	status: "status",
+	total_erros_ultima_geracao: "total_erros_ultima_geracao",
+	total_notas_geradas: "total_notas_geradas",
+	total_valor_gerado: "total_valor_gerado",
+} as const;
+
 export const GERACAOLOTEASSINATURAS_FILTROFORMARECFINANCEIRO_LABELS = {
 	A: "A",
 	C: "C",

@@ -9,6 +9,37 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADUSUARIOSWISPRO_FIELD_LABELS = {
+	cidade: "cidade",
+	cliente_id: "cliente_id",
+	cliente_nome: "cliente_nome",
+	external_id: "external_id",
+	ftth_porta: "ftth_porta",
+	id: "id",
+	id_caixa_ftth: "id_caixa_ftth",
+	id_df_projeto: "id_df_projeto",
+	id_onu: "id_onu",
+	info_endereco: "info_endereco",
+	ip: "ip",
+	latitude: "latitude",
+	longitude: "longitude",
+	mac: "mac",
+	modo: "modo",
+	numero: "numero",
+	olt: "olt",
+	plano_id: "plano_id",
+	plano_nome: "plano_nome",
+	pppoe_nome: "pppoe_nome",
+	pppoe_senha: "pppoe_senha",
+	provincia: "provincia",
+	rua: "rua",
+	servidor: "servidor",
+	status: "status",
+	status_iva: "status_iva",
+	tipo: "tipo",
+	tipo_fatura: "tipo_fatura",
+} as const;
+
 export const RADUSUARIOSWISPRO_MODO_LABELS = {
 	E: "E",
 	P: "P",

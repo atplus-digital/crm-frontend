@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const AJUSTEINVENTARIO_FIELD_LABELS = {
+	data: "data",
+	documento: "documento",
+	filial_id: "filial_id",
+	historico: "historico",
+	id: "id",
+	id_almox: "id_almox",
+	inventario_antigo: "inventario_antigo",
+	observacao: "observacao",
+	operador: "operador",
+} as const;
+
 export const AJUSTEINVENTARIO_INVENTARIOANTIGO_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,33 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FIBERDOCSUSUARIOCONFIG_FIELD_LABELS = {
+	descricao_caixa_emenda: "descricao_caixa_emenda",
+	direcao_cabo: "direcao_cabo",
+	direcao_caixa_atendimento: "direcao_caixa_atendimento",
+	exibir_notificacao_elementos_quebrados:
+		"exibir_notificacao_elementos_quebrados",
+	exibir_notificacao_logins_sem_projeto:
+		"exibir_notificacao_logins_sem_projeto",
+	exibir_notificacao_onus_sem_projeto: "exibir_notificacao_onus_sem_projeto",
+	ferramenta_agrupamento: "ferramenta_agrupamento",
+	ferramenta_ima: "ferramenta_ima",
+	id: "id",
+	json_dicas: "json_dicas",
+	json_novidades: "json_novidades",
+	json_novidades_contextuais: "json_novidades_contextuais",
+	json_tutoriais: "json_tutoriais",
+	logins_sem_projeto: "logins_sem_projeto",
+	menu_inicial: "menu_inicial",
+	overlay_exibicao: "overlay_exibicao",
+	projetos_fixados: "projetos_fixados",
+	renderizacao_de_elementos: "renderizacao_de_elementos",
+	tempo_atualizacao_logins: "tempo_atualizacao_logins",
+	ultima_melhoria_vista: "ultima_melhoria_vista",
+	user_id: "user_id",
+	versao_update_estilos_padrao: "versao_update_estilos_padrao",
+} as const;
+
 export const FIBERDOCSUSUARIOCONFIG_DESCRICAOCAIXAEMENDA_LABELS = {
 	M: "M",
 	E: "E",

@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const EMPRESASETOR_FIELD_LABELS = {
+	ativo: "ativo",
+	cor: "cor",
+	empresa_setor_chatid_telegram: "empresa_setor_chatid_telegram",
+	id: "id",
+	id_chat: "id_chat",
+	id_depto: "id_depto",
+	recebe_telegram_setor: "recebe_telegram_setor",
+	setor: "setor",
+	token_bot_telegram_setor: "token_bot_telegram_setor",
+} as const;
+
 export const EMPRESASETOR_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

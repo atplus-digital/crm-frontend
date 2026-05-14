@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOGERACAOFINANCEIROLOG_FIELD_LABELS = {
+	id: "id",
+	id_cliente_contrato_geracao_financeiro:
+		"id_cliente_contrato_geracao_financeiro",
+	id_contrato: "id_contrato",
+	id_saida: "id_saida",
+	mensagem: "mensagem",
+	tipo: "tipo",
+} as const;
+
 export const CLIENTECONTRATOGERACAOFINANCEIROLOG_TIPO_LABELS = {
 	S: "S",
 	E: "E",

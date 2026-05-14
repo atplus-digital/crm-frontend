@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LICENCASIOT_FIELD_LABELS = {
+	codigo_licenca_integracao: "codigo_licenca_integracao",
+	descricao: "descricao",
+	id: "id",
+	id_assinatura_integracao: "id_assinatura_integracao",
+	id_cliente_integracao: "id_cliente_integracao",
+	id_contrato: "id_contrato",
+	id_integracao: "id_integracao",
+	id_licenca_integracao: "id_licenca_integracao",
+	status: "status",
+} as const;
+
 export const LICENCASIOT_STATUS_LABELS = {
 	A: "A",
 	I: "I",

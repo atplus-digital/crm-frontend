@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PRODUTOSIXCMVNO_FIELD_LABELS = {
+	ativo: "ativo",
+	id: "id",
+	id_assinatura_integracao: "id_assinatura_integracao",
+	id_integracao: "id_integracao",
+	id_plano_integracao: "id_plano_integracao",
+	id_plano_integracao_add: "id_plano_integracao_add",
+	id_produto_ixc: "id_produto_ixc",
+	tipo_referencia: "tipo_referencia",
+} as const;
+
 export const PRODUTOSIXCMVNO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

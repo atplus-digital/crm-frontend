@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGSALTERACAOVENCIMENTOMASSA_FIELD_LABELS = {
+	data_hora: "data_hora",
+	id: "id",
+	id_areceber: "id_areceber",
+	id_cliente: "id_cliente",
+	id_lote: "id_lote",
+	id_operador: "id_operador",
+	log: "log",
+	novo_vencimento: "novo_vencimento",
+	operador: "operador",
+	status: "status",
+	vencimento_antigo: "vencimento_antigo",
+	vencimento_novo: "vencimento_novo",
+} as const;
+
 export const LOGSALTERACAOVENCIMENTOMASSA_STATUS_LABELS = {
 	A: "A",
 	NA: "NA",

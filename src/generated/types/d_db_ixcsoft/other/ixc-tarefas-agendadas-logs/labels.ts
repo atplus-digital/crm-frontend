@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const IXCTAREFASAGENDADASLOGS_FIELD_LABELS = {
+	data_fim: "data_fim",
+	data_inicio: "data_inicio",
+	id: "id",
+	id_tarefa: "id_tarefa",
+	id_usuario: "id_usuario",
+	log: "log",
+	origem: "origem",
+	servidor_ip: "servidor_ip",
+	servidor_nome: "servidor_nome",
+} as const;
+
 export const IXCTAREFASAGENDADASLOGS_ORIGEM_LABELS = {
 	S: "S",
 	U: "U",

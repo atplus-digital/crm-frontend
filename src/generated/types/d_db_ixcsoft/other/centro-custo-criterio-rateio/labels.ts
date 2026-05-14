@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CENTROCUSTOCRITERIORATEIO_FIELD_LABELS = {
+	descricao: "descricao",
+	estrutura: "estrutura",
+	id: "id",
+	status: "status",
+} as const;
+
 export const CENTROCUSTOCRITERIORATEIO_ESTRUTURA_LABELS = {
 	CC: "CC",
 	CR: "CR",

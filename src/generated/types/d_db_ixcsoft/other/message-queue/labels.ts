@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const MESSAGEQUEUE_FIELD_LABELS = {
+	created_at: "created_at",
+	id: "id",
+	id_integration: "id_integration",
+	message: "message",
+	random_id_ixc: "random_id_ixc",
+	status: "status",
+} as const;
+
 export const MESSAGEQUEUE_STATUS_LABELS = {
 	WS: "WS",
 	WR: "WR",

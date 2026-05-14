@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PESQUISASATISFACAO_FIELD_LABELS = {
+	cor_cabecalho: "cor_cabecalho",
+	descricao: "descricao",
+	forma_envio: "forma_envio",
+	id: "id",
+	link: "link",
+	logotipo: "logotipo",
+	mensagem_email: "mensagem_email",
+	mensagem_omnichannel: "mensagem_omnichannel",
+} as const;
+
 export const PESQUISASATISFACAO_FORMAENVIO_LABELS = {
 	E: "E",
 	W: "W",

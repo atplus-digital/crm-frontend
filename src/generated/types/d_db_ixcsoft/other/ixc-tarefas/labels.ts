@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const IXCTAREFAS_FIELD_LABELS = {
+	atualizado_em: "atualizado_em",
+	criado_em: "criado_em",
+	cron: "cron",
+	dia_mes: "dia_mes",
+	dia_semana: "dia_semana",
+	hora: "hora",
+	id: "id",
+	id_tarefa: "id_tarefa",
+	mes: "mes",
+	minuto: "minuto",
+	status: "status",
+} as const;
+
 export const IXCTAREFAS_STATUS_LABELS = {
 	A: "A",
 	I: "I",

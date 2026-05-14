@@ -9,6 +9,31 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PACOTES_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_abre_atendimento: "Abre Atendimento",
+	f_clausula_bonus_velocidade: "Cláusula Bônus de Velocidade?",
+	f_fk_desconto_pacotes: "f_fk_desconto_pacotes",
+	f_fk_id_pacote: "f_fk_id_pacote",
+	f_itens_do_pacote: "Itens do Pacote",
+	f_mbps_bonus: "MBPS Bônus",
+	f_mbps_padrao: "MBPS Padrão",
+	f_mbps_total: "MBPS Total",
+	f_mensalidade_com_desconto: "Total Mensalidade com Desconto",
+	f_mensalidade_sem_desconto: "Total Mensalidade sem Desconto",
+	f_nome_pacote: "Pacote",
+	f_pacote_adicional: "Pacote Adicional?",
+	f_pacote_principal: "Pacote principal?",
+	f_status: "Status",
+	f_vender_para: "Tipo de Pessoa",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const PACOTES_ABREATENDIMENTO_LABELS = {
 	0: "NAO",
 	1: "SIM",

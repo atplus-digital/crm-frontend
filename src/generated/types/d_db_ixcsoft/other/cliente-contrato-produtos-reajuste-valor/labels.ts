@@ -9,6 +9,34 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECONTRATOPRODUTOSREAJUSTEVALOR_FIELD_LABELS = {
+	carteira_cobranca: "carteira_cobranca",
+	cidade: "cidade",
+	cliente: "cliente",
+	condominio: "condominio",
+	contrato: "contrato",
+	data_ativacao_final: "data_ativacao_final",
+	data_ativacao_inicial: "data_ativacao_inicial",
+	data_base_final: "data_base_final",
+	data_base_inicial: "data_base_inicial",
+	data_expiracao_fin: "data_expiracao_fin",
+	data_expiracao_ini: "data_expiracao_ini",
+	data_renovacao_final: "data_renovacao_final",
+	data_renovacao_inicial: "data_renovacao_inicial",
+	data_validade: "data_validade",
+	descricao: "descricao",
+	id: "id",
+	id_filial: "id_filial",
+	mes_ativacao: "mes_ativacao",
+	percentual: "percentual",
+	plano_venda: "plano_venda",
+	status: "status",
+	status_internet: "status_internet",
+	tipo_cliente: "tipo_cliente",
+	tipo_cobranca: "tipo_cobranca",
+	tipo_servico: "tipo_servico",
+} as const;
+
 export const CLIENTECONTRATOPRODUTOSREAJUSTEVALOR_STATUS_LABELS = {
 	A: "A",
 	I: "I",

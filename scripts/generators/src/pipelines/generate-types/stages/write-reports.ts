@@ -4,6 +4,8 @@ import type { TaskRunner } from "@generators/lib/types";
 import type { DataSourceGenerationConfig } from "../@types/script";
 import type { GenerateTypesPipelineCtx } from "./fetch-schemas";
 
+const I18N_TITLE_TEMPLATE_REGEX = /^\s*\{\{\s*t\(.+\)\s*\}\}\s*$/;
+
 // ──────────────────────────────────────────────
 // Stage: write-reports
 // ──────────────────────────────────────────────
@@ -185,6 +187,100 @@ export async function writeReportsStage(
 					dataSource: dataSourceKey,
 					totalNonSplit: nonSplitNames.length,
 					nonSplitCollectionNames: nonSplitNames,
+				},
+			},
+			now,
+		);
+	}
+
+	// ── Report 5: Fields with i18n title template ──
+	const i18nFieldsMap = new Map<
+		string,
+		{ fieldName: string; labelTemplate: string; collections: Set<string> }
+	>();
+	const collectionEntries = Object.entries(pipelineCtx.collectionTypes ?? {});
+	for (const [collectionName, generatedTypes] of collectionEntries) {
+		for (const [
+			fieldName,
+			fieldLabel,
+		] of generatedTypes.fieldLabels.entries()) {
+			if (!I18N_TITLE_TEMPLATE_REGEX.test(fieldLabel)) {
+				continue;
+			}
+
+			const dedupeKey = `${fieldName}::${fieldLabel}`;
+			const current = i18nFieldsMap.get(dedupeKey);
+			if (current) {
+				current.collections.add(collectionName);
+				continue;
+			}
+
+			i18nFieldsMap.set(dedupeKey, {
+				fieldName,
+				labelTemplate: fieldLabel,
+				collections: new Set([collectionName]),
+			});
+		}
+	}
+
+	const uniqueI18nFields = Array.from(i18nFieldsMap.values())
+		.map((entry) => ({
+			fieldName: entry.fieldName,
+			labelTemplate: entry.labelTemplate,
+			collections: Array.from(entry.collections).sort(),
+			collectionCount: entry.collections.size,
+		}))
+		.sort((a, b) => {
+			const byField = a.fieldName.localeCompare(b.fieldName);
+			if (byField !== 0) return byField;
+			return a.labelTemplate.localeCompare(b.labelTemplate);
+		});
+
+	context.reports = addJsonReport(
+		context.reports,
+		{
+			namespace: "generate-types",
+			key: `i18n-title-template-fields-${dataSourceKey}`,
+			title: "Campos com Title I18n Template",
+			scope: {
+				pipeline: "generate-types",
+				stage: "write-reports",
+				dataSourceKey,
+			},
+			payload: {
+				dataSource: dataSourceKey,
+				totalUniqueFields: uniqueI18nFields.length,
+				fields: uniqueI18nFields,
+			},
+		},
+		now,
+	);
+
+	// ── Report 6: Collection content summaries ──
+	for (const [collectionName, generated] of Object.entries(
+		pipelineCtx.collectionTypes ?? {},
+	).sort(([a], [b]) => a.localeCompare(b))) {
+		context.reports = addJsonReport(
+			context.reports,
+			{
+				namespace: "generate-types",
+				key: `collection-content-${dataSourceKey}-${collectionName}`,
+				title: "Conteúdo da Collection",
+				scope: {
+					pipeline: "generate-types",
+					stage: "write-reports",
+					dataSourceKey,
+				},
+				payload: {
+					dataSource: dataSourceKey,
+					collectionName,
+					scalarFieldCount: generated.scalars.size,
+					relationFieldCount: generated.relations.size,
+					enumFieldCount: generated.enums.size,
+					fieldLabelCount: generated.fieldLabels.size,
+					scalarFieldNames: Array.from(generated.scalars.keys()).sort(),
+					relationFieldNames: Array.from(generated.relations.keys()).sort(),
+					enumFieldNames: Array.from(generated.enums.keys()).sort(),
 				},
 			},
 			now,

@@ -9,6 +9,24 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REQUISICAOMATERIAL_FIELD_LABELS = {
+	data: "data",
+	data_cancelamento: "data_cancelamento",
+	data_confirmacao: "data_confirmacao",
+	id: "id",
+	id_almox: "id_almox",
+	id_filial: "id_filial",
+	id_mot_cancelamento: "id_mot_cancelamento",
+	id_tecnico: "id_tecnico",
+	id_tecnico_confirma: "id_tecnico_confirma",
+	id_usuario_cancelamento: "id_usuario_cancelamento",
+	id_usuario_confirma: "id_usuario_confirma",
+	obs: "obs",
+	pref_almox: "pref_almox",
+	status: "status",
+	tipo: "tipo",
+} as const;
+
 export const REQUISICAOMATERIAL_STATUS_LABELS = {
 	A: "A",
 	P: "P",

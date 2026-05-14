@@ -9,6 +9,31 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TROCAENDERECO_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_bairro: "Bairro",
+	f_cep: "CEP",
+	f_cliente: "Cliente",
+	f_endereco: "Endereco",
+	f_endereco_cidade: "Cidade",
+	f_endereco_complemento: "Complemento",
+	f_endereco_estado: "Estado",
+	f_endereco_numero: "Numero",
+	f_endereco_referencia: "Ponto de Referência",
+	f_id_atendimento: "ID Atendimento",
+	f_id_contrato: "ID Contrato",
+	f_obs: "Observações",
+	f_status: "Status",
+	f_taxa_instalacao: "Taxa de Instalação",
+	f_telefone_contato: "Telefone para Contato",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const TROCAENDERECO_STATUS_LABELS = {
 	1: "Atendimento Gerado",
 	2: "Atendimento Concluído",

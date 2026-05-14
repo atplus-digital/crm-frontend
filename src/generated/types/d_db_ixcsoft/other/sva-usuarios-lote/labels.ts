@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SVAUSUARIOSLOTE_FIELD_LABELS = {
+	criado_em: "criado_em",
+	data_final_ativacao: "data_final_ativacao",
+	data_inicial_ativacao: "data_inicial_ativacao",
+	id: "id",
+	id_filial: "id_filial",
+	id_integracao: "id_integracao",
+	id_produto: "id_produto",
+	permitir_criacao_contrato_sva: "permitir_criacao_contrato_sva",
+	status: "status",
+	status_acesso: "status_acesso",
+	status_contrato: "status_contrato",
+	tipo_pessoa: "tipo_pessoa",
+} as const;
+
 export const SVAUSUARIOSLOTE_PERMITIRCRIACAOCONTRATOSVA_LABELS = {
 	S: "S",
 	N: "N",

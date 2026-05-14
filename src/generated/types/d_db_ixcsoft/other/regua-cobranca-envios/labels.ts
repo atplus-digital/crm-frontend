@@ -9,6 +9,24 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REGUACOBRANCAENVIOS_FIELD_LABELS = {
+	crm_email_log_id: "crm_email_log_id",
+	data_hora: "data_hora",
+	etapa_cobranca: "etapa_cobranca",
+	gateway: "gateway",
+	id: "id",
+	id_lote: "id_lote",
+	motivo_falha: "motivo_falha",
+	os: "os",
+	reenviada: "reenviada",
+	regua_cobranca_cobranca_id: "regua_cobranca_cobranca_id",
+	regua_cobranca_parametros_dias: "regua_cobranca_parametros_dias",
+	status: "status",
+	tipo_envio: "tipo_envio",
+	tipo_execucao: "tipo_execucao",
+	titulo_anexo: "titulo_anexo",
+} as const;
+
 export const REGUACOBRANCAENVIOS_ETAPACOBRANCA_LABELS = {
 	LP: "LP",
 	CV: "CV",

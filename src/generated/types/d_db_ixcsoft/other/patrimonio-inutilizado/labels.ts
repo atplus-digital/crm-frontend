@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PATRIMONIOINUTILIZADO_FIELD_LABELS = {
+	data_inutilizado: "data_inutilizado",
+	id: "id",
+	id_motivo: "id_motivo",
+	id_operador: "id_operador",
+	quantidade: "quantidade",
+	status: "status",
+	valor: "valor",
+} as const;
+
 export const PATRIMONIOINUTILIZADO_STATUS_LABELS = {
 	A: "A",
 	F: "F",

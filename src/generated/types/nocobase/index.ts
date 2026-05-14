@@ -283,6 +283,11 @@ export type {
 	LogsCargosRelations,
 } from "./other/logs-cargos";
 export type {
+	ModulosSfp,
+	ModulosSfpRelationKey,
+	ModulosSfpRelations,
+} from "./other/modulos-sfp";
+export type {
 	Muu3vsavv3h,
 	Muu3vsavv3hRelationKey,
 	Muu3vsavv3hRelations,

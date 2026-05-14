@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ALTVERSAOCHAVES_FIELD_LABELS = {
+	codigo_clientes: "codigo_clientes",
+	data_alteracao: "data_alteracao",
+	descricao: "descricao",
+	id: "id",
+	id_produto: "id_produto",
+	qtd_chaves: "qtd_chaves",
+	qtd_clientes: "qtd_clientes",
+	responsavel: "responsavel",
+	status: "status",
+	tipo_chave: "tipo_chave",
+	versao_antiga: "versao_antiga",
+	versao_nova: "versao_nova",
+} as const;
+
 export const ALTVERSAOCHAVES_STATUS_LABELS = {
 	P: "P",
 	F: "F",

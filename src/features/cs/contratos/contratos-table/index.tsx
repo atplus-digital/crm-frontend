@@ -16,7 +16,7 @@ export const DEFAULT_CONTRATOS_TABLE_FILTERS: ContratosTableFilters = {
 	contratoId: "",
 };
 
-import { getColumns } from "./columns";
+import { CONTRATO_COLUMN_LABELS, getColumns } from "./columns";
 import { parseSort, serializeSort } from "./sorting";
 import type { ContratosTableProps } from "./types";
 
@@ -72,6 +72,7 @@ export function ContratosTable({
 			sorting={sorting.length > 0 ? sorting : undefined}
 			onSortingChange={onSortingChange}
 			enableColumnVisibility
+			columnLabels={CONTRATO_COLUMN_LABELS}
 		>
 			{onFilterProvider ? (
 				<FilterProvider

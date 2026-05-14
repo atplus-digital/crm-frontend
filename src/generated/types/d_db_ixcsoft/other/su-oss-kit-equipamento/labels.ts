@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SUOSSKITEQUIPAMENTO_FIELD_LABELS = {
+	adicional_mensalidade: "adicional_mensalidade",
+	comodato: "comodato",
+	id: "id",
+	id_oss_kit: "id_oss_kit",
+	id_produto: "id_produto",
+	id_su_oss_assunto: "id_su_oss_assunto",
+	qtde: "qtde",
+	repetir: "repetir",
+	repetir_qtde: "repetir_qtde",
+	repetir_valor_unit: "repetir_valor_unit",
+	tipo_item: "tipo_item",
+} as const;
+
 export const SUOSSKITEQUIPAMENTO_ADICIONALMENSALIDADE_LABELS = {
 	S: "S",
 	N: "N",

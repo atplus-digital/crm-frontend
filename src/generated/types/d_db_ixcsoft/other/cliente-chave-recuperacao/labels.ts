@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CLIENTECHAVERECUPERACAO_FIELD_LABELS = {
+	codigo_recuperacao: "codigo_recuperacao",
+	data_hora_geracao: "data_hora_geracao",
+	data_hora_utilizacao: "data_hora_utilizacao",
+	id: "id",
+	id_chave: "id_chave",
+	id_usuario_liberacao: "id_usuario_liberacao",
+	local_recuperacao: "local_recuperacao",
+	motivo_recuperacao: "motivo_recuperacao",
+	status_codigo: "status_codigo",
+	tipo_recuperacao: "tipo_recuperacao",
+} as const;
+
 export const CLIENTECHAVERECUPERACAO_LOCALRECUPERACAO_LABELS = {
 	FN: "FN",
 	CA: "CA",

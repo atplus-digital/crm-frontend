@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const INTEGRACAOFISCALCOL_FIELD_LABELS = {
+	access_key: "access_key",
+	ambiente: "ambiente",
+	descricao_vendor_col: "descricao_vendor_col",
+	envia_email_siigo: "envia_email_siigo",
+	id: "id",
+	id_vendor_col: "id_vendor_col",
+	integracao: "integracao",
+	modelo_fatura: "modelo_fatura",
+	modelo_nota_credito: "modelo_nota_credito",
+	observacoes: "observacoes",
+	usuario: "usuario",
+} as const;
+
 export const INTEGRACAOFISCALCOL_AMBIENTE_LABELS = {
 	homologacao: "homologacao",
 	producao: "producao",

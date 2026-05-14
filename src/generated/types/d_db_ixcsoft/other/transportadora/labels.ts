@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TRANSPORTADORA_FIELD_LABELS = {
+	api_ecommerce: "api_ecommerce",
+	cpf_cnpj: "cpf_cnpj",
+	endereco: "endereco",
+	habilita_ecommerce: "habilita_ecommerce",
+	id: "id",
+	id_cidade: "id_cidade",
+	ie: "ie",
+	isento_icms: "isento_icms",
+	numero: "numero",
+	rntc: "rntc",
+	telefone: "telefone",
+	tipo_pessoa: "tipo_pessoa",
+	transportadora: "transportadora",
+	veic_principal_placa: "veic_principal_placa",
+	veic_principal_rntc: "veic_principal_rntc",
+	veic_principal_uf: "veic_principal_uf",
+} as const;
+
 export const TRANSPORTADORA_HABILITAECOMMERCE_LABELS = {
 	S: "S",
 	N: "N",

@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PDVCONFIG_FIELD_LABELS = {
+	cliente_id: "cliente_id",
+	cliente_nome: "cliente_nome",
+	id: "id",
+	id_tipo_doc_pedido: "id_tipo_doc_pedido",
+	id_tipo_doc_venda: "id_tipo_doc_venda",
+	pagamento_id: "pagamento_id",
+	pagamento_nome: "pagamento_nome",
+	parcelamento_id: "parcelamento_id",
+	parcelamento_nome: "parcelamento_nome",
+	tipo: "tipo",
+} as const;
+
 export const PDVCONFIG_TIPO_LABELS = {
 	P: "P",
 	V: "V",

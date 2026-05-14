@@ -9,6 +9,22 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADHARDWARE_FIELD_LABELS = {
+	ativo: "ativo",
+	fabricante: "fabricante",
+	hardware: "hardware",
+	hardware_tipo: "hardware_tipo",
+	id: "id",
+	imagem: "imagem",
+	login: "login",
+	obs: "obs",
+	porta_ssh: "porta_ssh",
+	porta_telnet: "porta_telnet",
+	qtd_portas: "qtd_portas",
+	script: "script",
+	tipo: "tipo",
+} as const;
+
 export const RADHARDWARE_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

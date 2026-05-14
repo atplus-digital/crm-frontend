@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LISTARBACKUPSDRIVE_FIELD_LABELS = {
+	data: "data",
+	diretorio: "diretorio",
+	id: "id",
+	nome: "nome",
+	tamanho_backup: "tamanho_backup",
+	tipo: "tipo",
+} as const;
+
 export const LISTARBACKUPSDRIVE_TIPO_LABELS = {
 	A: "A",
 	B: "B",

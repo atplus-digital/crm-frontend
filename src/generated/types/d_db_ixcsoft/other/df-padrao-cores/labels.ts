@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DFPADRAOCORES_FIELD_LABELS = {
+	criacao_automatica: "criacao_automatica",
+	id: "id",
+	nome: "nome",
+	padrao_sistema: "padrao_sistema",
+	sequencia_1: "sequencia_1",
+	sequencia_2: "sequencia_2",
+	total_sequencia_1: "total_sequencia_1",
+	total_sequencia_2: "total_sequencia_2",
+} as const;
+
 export const DFPADRAOCORES_CRIACAOAUTOMATICA_LABELS = {
 	S: "S",
 	N: "N",

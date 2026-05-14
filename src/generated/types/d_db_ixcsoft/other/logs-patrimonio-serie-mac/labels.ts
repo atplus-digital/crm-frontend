@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOGSPATRIMONIOSERIEMAC_FIELD_LABELS = {
+	id: "id",
+	id_entrada: "id_entrada",
+	id_patrimonio: "id_patrimonio",
+	mac: "mac",
+	nro_serie: "nro_serie",
+	status: "status",
+} as const;
+
 export const LOGSPATRIMONIOSERIEMAC_STATUS_LABELS = {
 	success: "success",
 	error: "error",

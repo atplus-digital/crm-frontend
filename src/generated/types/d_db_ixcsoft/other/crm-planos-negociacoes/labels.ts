@@ -9,6 +9,43 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CRMPLANOSNEGOCIACOES_FIELD_LABELS = {
+	ativo: "ativo",
+	autenticacao: "autenticacao",
+	contem_no_plano: "contem_no_plano",
+	cor_mapa: "cor_mapa",
+	desconto_fidelidade: "desconto_fidelidade",
+	descricao: "descricao",
+	fidelidade: "fidelidade",
+	id: "id",
+	id_assunto: "id_assunto",
+	id_campanha: "id_campanha",
+	id_estagio: "id_estagio",
+	id_filial: "id_filial",
+	id_funil: "id_funil",
+	id_grupo: "id_grupo",
+	id_modelo_contrato: "id_modelo_contrato",
+	id_plano: "id_plano",
+	id_tipo_agendamento: "id_tipo_agendamento",
+	id_tipo_cobranca: "id_tipo_cobranca",
+	id_wfl_processo: "id_wfl_processo",
+	inserir_acesso: "inserir_acesso",
+	inserir_atendimento: "inserir_atendimento",
+	inserir_contrato: "inserir_contrato",
+	inserir_tarefa: "inserir_tarefa",
+	menssagem: "menssagem",
+	modelo_email: "modelo_email",
+	nao_contem_no_plano: "nao_contem_no_plano",
+	ordem: "ordem",
+	prioridade: "prioridade",
+	tipo_conexao_mapa: "tipo_conexao_mapa",
+	ultima_atualizacao: "ultima_atualizacao",
+	valor_fixo: "valor_fixo",
+	valor_mensal: "valor_mensal",
+	velocidade: "velocidade",
+	viabilidade_por_caixa: "viabilidade_por_caixa",
+} as const;
+
 export const CRMPLANOSNEGOCIACOES_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

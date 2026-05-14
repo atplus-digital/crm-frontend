@@ -9,6 +9,28 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PATRIMONIOMOVIMENTACAO_FIELD_LABELS = {
+	cliente_destino: "cliente_destino",
+	data_movimentacao: "data_movimentacao",
+	filial_destino: "filial_destino",
+	finalidade: "finalidade",
+	id: "id",
+	id_almoxarifado_destino: "id_almoxarifado_destino",
+	id_almoxarifado_origem: "id_almoxarifado_origem",
+	id_contrato: "id_contrato",
+	id_estrutura: "id_estrutura",
+	id_movimento: "id_movimento",
+	id_patrimonio: "id_patrimonio",
+	id_pedido_os: "id_pedido_os",
+	indisponivel: "indisponivel",
+	motivo: "motivo",
+	obs: "obs",
+	observacao: "observacao",
+	responsavel: "responsavel",
+	setor_destino: "setor_destino",
+	tipo_movimento: "tipo_movimento",
+} as const;
+
 export const PATRIMONIOMOVIMENTACAO_INDISPONIVEL_LABELS = {
 	S: "S",
 	N: "N",

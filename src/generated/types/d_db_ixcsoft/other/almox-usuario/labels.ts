@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ALMOXUSUARIO_FIELD_LABELS = {
+	id: "id",
+	id_almox: "id_almox",
+	id_usuario: "id_usuario",
+	padrao_usuario: "padrao_usuario",
+} as const;
+
 export const ALMOXUSUARIO_PADRAOUSUARIO_LABELS = {
 	S: "S",
 	N: "N",

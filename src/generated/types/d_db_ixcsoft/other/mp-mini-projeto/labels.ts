@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const MPMINIPROJETO_FIELD_LABELS = {
+	descricao: "descricao",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_colaborador: "id_colaborador",
+	id_estrutura: "id_estrutura",
+	id_funcionario: "id_funcionario",
+	id_projeto: "id_projeto",
+	id_usuario: "id_usuario",
+	status: "status",
+	tipo: "tipo",
+} as const;
+
 export const MPMINIPROJETO_STATUS_LABELS = {
 	A: "A",
 	F: "F",

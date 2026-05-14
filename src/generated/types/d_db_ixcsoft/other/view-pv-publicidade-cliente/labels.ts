@@ -4,3 +4,10 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+// ============================================================
+// LABELS (single source of truth)
+// ============================================================
+export const VIEWPVPUBLICIDADECLIENTE_FIELD_LABELS = {
+	id: "id",
+	razao: "razao",
+} as const;

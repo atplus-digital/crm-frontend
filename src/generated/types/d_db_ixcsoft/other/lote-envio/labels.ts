@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const LOTEENVIO_FIELD_LABELS = {
+	canal: "canal",
+	contato: "contato",
+	criado_em: "criado_em",
+	enviado_a_fila: "enviado_a_fila",
+	falha_razao: "falha_razao",
+	id: "id",
+	id_destinatario: "id_destinatario",
+	id_lote_envios: "id_lote_envios",
+	processado: "processado",
+	status: "status",
+	tipo_destinatario: "tipo_destinatario",
+	variaveis: "variaveis",
+} as const;
+
 export const LOTEENVIO_CANAL_LABELS = {
 	E: "E",
 	W: "W",

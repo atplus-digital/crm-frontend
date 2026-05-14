@@ -4,3 +4,11 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+// ============================================================
+// LABELS (single source of truth)
+// ============================================================
+export const CONVERTERCOFINSENTRADAXML_FIELD_LABELS = {
+	cofins_st_entrada: "cofins_st_entrada",
+	cofins_st_saida: "cofins_st_saida",
+	id: "id",
+} as const;

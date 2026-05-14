@@ -43,6 +43,7 @@ interface UseDataTableControllerOptions<
 	onFiltersClear?: (filters: TFilters, pagination: PaginationSnapshot) => void;
 	showPagination?: boolean;
 	enableColumnVisibility?: boolean;
+	columnLabels?: Partial<Record<string, string>>;
 }
 
 export function useDataTableController<
@@ -71,6 +72,7 @@ export function useDataTableController<
 		onFiltersClear,
 		showPagination,
 		enableColumnVisibility,
+		columnLabels,
 	} = options;
 
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -193,5 +195,6 @@ export function useDataTableController<
 		setColumnVisibility,
 		showPagination,
 		enableColumnVisibility,
+		columnLabels,
 	};
 }

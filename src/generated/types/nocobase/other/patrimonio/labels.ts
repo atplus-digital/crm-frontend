@@ -9,6 +9,30 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PATRIMONIO_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_armazenamento: "Armazenamento",
+	f_estado_uso: "Estado de Uso",
+	f_fk_funcionarios: "f_fk_funcionarios",
+	f_funcionarios: "Funcionários",
+	f_id_tecnico_ixc: "ID Técnico IXC",
+	f_modelo: "Modelo",
+	f_nome_patrimonio: "Nome do Patrimônio",
+	f_numero_serie: "Número de Série",
+	f_processador: "Processador",
+	f_quantidade: "Quantidade",
+	f_ram: "RAM",
+	f_so: "Sistema Operacional",
+	f_tipo_patrimonio: "Tipo de Patrimônio",
+	f_valor_patrimonio: "Valor do Patrimônio",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const PATRIMONIO_ESTADOUSO_LABELS = {
 	NOVO: "NOVO",
 	"USADO, EM ESTADO DE NOVO": "USADO, EM ESTADO DE NOVO",

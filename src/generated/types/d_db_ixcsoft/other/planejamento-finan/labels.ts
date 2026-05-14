@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PLANEJAMENTOFINAN_FIELD_LABELS = {
+	cod_planejamento: "cod_planejamento",
+	contador: "contador",
+	id: "id",
+	nivel_superior: "nivel_superior",
+	planejamento: "planejamento",
+	tipo: "tipo",
+} as const;
+
 export const PLANEJAMENTOFINAN_TIPO_LABELS = {
 	A: "A",
 	P: "P",

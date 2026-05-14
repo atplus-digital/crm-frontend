@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const IXCPERMISSOESABAS_FIELD_LABELS = {
+	aba: "aba",
+	id: "id",
+	id_tabela: "id_tabela",
+	tipo: "tipo",
+} as const;
+
 export const IXCPERMISSOESABAS_TIPO_LABELS = {
 	H: "H",
 	R: "R",

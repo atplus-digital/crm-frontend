@@ -9,6 +9,26 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REGUACOBRANCAPARAMETROSDIAS_FIELD_LABELS = {
+	abrir_os: "abrir_os",
+	anexar_titulo: "anexar_titulo",
+	dias_antes_vencimento: "dias_antes_vencimento",
+	dias_apos_vencimento: "dias_apos_vencimento",
+	email_responsaveis: "email_responsaveis",
+	envia_carta: "envia_carta",
+	etapa_cobranca: "etapa_cobranca",
+	id: "id",
+	id_modelo_carta: "id_modelo_carta",
+	id_os_parametro: "id_os_parametro",
+	notificacoes_push_id: "notificacoes_push_id",
+	regua_cobranca_parametros_id: "regua_cobranca_parametros_id",
+	sms: "sms",
+	smtp: "smtp",
+	smtp_envio_empresa: "smtp_envio_empresa",
+	tipo_envio: "tipo_envio",
+	whatsapp: "whatsapp",
+} as const;
+
 export const REGUACOBRANCAPARAMETROSDIAS_ABRIROS_LABELS = {
 	S: "S",
 	N: "N",

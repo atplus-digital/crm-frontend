@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const TRANSPORTADORAVEICULOS_FIELD_LABELS = {
+	balsa: "balsa",
+	descricao: "descricao",
+	id: "id",
+	id_transportadora: "id_transportadora",
+	padrao: "padrao",
+	placa: "placa",
+	rntc: "rntc",
+	uf: "uf",
+	vagao: "vagao",
+} as const;
+
 export const TRANSPORTADORAVEICULOS_PADRAO_LABELS = {
 	S: "S",
 	N: "N",

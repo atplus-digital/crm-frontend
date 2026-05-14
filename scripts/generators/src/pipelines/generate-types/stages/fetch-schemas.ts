@@ -10,6 +10,63 @@ import type {
 } from "../@types/script";
 import { extractRelationInfo, mapFieldType } from "../content/field-mapper";
 
+const I18N_TEMPLATE_KEY_REGEX = /^\s*\{\{\s*t\(\s*["']([^"']+)["']/;
+
+const I18N_PT_LABEL_OVERRIDES: Record<string, string> = {
+	Children: "Filhos",
+	"Created at": "Criado em",
+	"Created by": "Criado por",
+	Departments: "Departamentos",
+	Email: "E-mail",
+	"Extension name": "Nome da extensão",
+	"File name": "Nome do arquivo",
+	ID: "ID",
+	"Main department": "Departamento principal",
+	"MIME type": "Tipo MIME",
+	"Role UID": "UID da função",
+	Nickname: "Apelido",
+	Owners: "Proprietários",
+	Parent: "Pai",
+	"Superior department": "Departamento superior",
+	"Parent ID": "ID do pai",
+	Password: "Senha",
+	Path: "Caminho",
+	Phone: "Telefone",
+	Preview: "Pré-visualização",
+	Roles: "Funções",
+	Size: "Tamanho",
+	Storage: "Armazenamento",
+	"Department name": "Nome do departamento",
+	"Role name": "Nome da função",
+	Title: "Título",
+	"Last updated at": "Última atualização em",
+	"Last updated by": "Última atualização por",
+	URL: "URL",
+	Username: "Usuário",
+};
+
+function extractI18nTemplateKey(rawLabel: string): string | null {
+	const match = rawLabel.match(I18N_TEMPLATE_KEY_REGEX);
+	if (!match) {
+		return null;
+	}
+	return match[1]?.trim() || null;
+}
+
+function resolveFieldLabel(field: DataSourceField): string {
+	const rawLabel = field.uiSchema?.title?.trim();
+	if (!rawLabel) {
+		return field.name;
+	}
+
+	const i18nTemplateKey = extractI18nTemplateKey(rawLabel);
+	if (!i18nTemplateKey) {
+		return rawLabel;
+	}
+
+	return I18N_PT_LABEL_OVERRIDES[i18nTemplateKey] ?? rawLabel;
+}
+
 // ──────────────────────────────────────────────
 // Pipeline context types (shared across stages)
 // ──────────────────────────────────────────────
@@ -166,6 +223,7 @@ export async function fetchSchemas(
 			scalars: Map<string, string>;
 			relations: Map<string, RelationInfo>;
 			enums: Map<string, Array<{ value: string | number; label: string }>>;
+			fieldLabels: Map<string, string>;
 			schemaAvailable: boolean;
 		};
 		unresolved: Array<{ field: string; target: string }>;
@@ -186,10 +244,12 @@ export async function fetchSchemas(
 			string,
 			Array<{ value: string | number; label: string }>
 		>();
+		const fieldLabels = new Map<string, string>();
 		const collectionUnresolved: Array<{ field: string; target: string }> = [];
 
 		for (const field of fields) {
 			if (excludeFields.has(field.name)) continue;
+			fieldLabels.set(field.name, resolveFieldLabel(field));
 
 			// Try relation first
 			const manualRelations = pipelineCtx.relations?.[collectionName];
@@ -252,6 +312,7 @@ export async function fetchSchemas(
 			scalars,
 			relations,
 			enums,
+			fieldLabels,
 			schemaAvailable,
 		};
 

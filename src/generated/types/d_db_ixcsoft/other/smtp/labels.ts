@@ -9,6 +9,27 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SMTP_FIELD_LABELS = {
+	assunto_envio: "assunto_envio",
+	autenticacao: "autenticacao",
+	bcc_email: "bcc_email",
+	codificacao_utf8: "codificacao_utf8",
+	conexao_ssl: "conexao_ssl",
+	destino_envio: "destino_envio",
+	forcar_codificacao: "forcar_codificacao",
+	id: "id",
+	limite_dia: "limite_dia",
+	limite_hora: "limite_hora",
+	porta: "porta",
+	remetente: "remetente",
+	remover_xmailer: "remover_xmailer",
+	responsavel_envio: "responsavel_envio",
+	senha: "senha",
+	servidor_saida: "servidor_saida",
+	texto_envio: "texto_envio",
+	usuario: "usuario",
+} as const;
+
 export const SMTP_AUTENTICACAO_LABELS = {
 	S: "S",
 	N: "N",

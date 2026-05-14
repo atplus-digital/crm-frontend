@@ -9,6 +9,24 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const DATACENTERMEMORIAS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_capacidade: "Capacidade",
+	f_fabricante: "Fabricante",
+	f_fk_memorias: "f_fk_memorias",
+	f_fk_servidor: "Servidores",
+	f_sn: "SN",
+	f_status: "Status",
+	f_tipo: "Tipo",
+	f_valor_locacao: "Valor Locação",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const DATACENTERMEMORIAS_CAPACIDADE_LABELS = {
 	2: "2 GB",
 	4: "4 GB",

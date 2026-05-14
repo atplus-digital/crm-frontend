@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RADUSUARIOSALT_FIELD_LABELS = {
+	ativo: "ativo",
+	grupo_atual: "grupo_atual",
+	grupo_novo: "grupo_novo",
+	id: "id",
+	id_alteracao: "id_alteracao",
+	id_grupo_novo: "id_grupo_novo",
+	id_login: "id_login",
+	login: "login",
+} as const;
+
 export const RADUSUARIOSALT_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

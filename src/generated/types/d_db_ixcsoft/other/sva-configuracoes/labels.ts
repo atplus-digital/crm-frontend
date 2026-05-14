@@ -9,6 +9,24 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SVACONFIGURACOES_FIELD_LABELS = {
+	ambiente: "ambiente",
+	api_key: "api_key",
+	api_secret: "api_secret",
+	data_atualizacao_token: "data_atualizacao_token",
+	external_id: "external_id",
+	id: "id",
+	id_filial_cobranca: "id_filial_cobranca",
+	login: "login",
+	plataforma: "plataforma",
+	refresh_token: "refresh_token",
+	senha: "senha",
+	seu_prefixo: "seu_prefixo",
+	token: "token",
+	url: "url",
+	usuario_automatico: "usuario_automatico",
+} as const;
+
 export const SVACONFIGURACOES_AMBIENTE_LABELS = {
 	P: "P",
 	H: "H",

@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNARECEBERMOTCANCELAMENTOADICIONAL_FIELD_LABELS = {
+	ativo: "ativo",
+	descricao: "descricao",
+	id: "id",
+	id_fn_areceber_mot_cancelamento: "id_fn_areceber_mot_cancelamento",
+	motivo_adicional: "motivo_adicional",
+} as const;
+
 export const FNARECEBERMOTCANCELAMENTOADICIONAL_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

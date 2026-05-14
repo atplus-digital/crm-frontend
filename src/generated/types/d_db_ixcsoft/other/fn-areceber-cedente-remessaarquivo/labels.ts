@@ -9,6 +9,17 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNARECEBERCEDENTEREMESSAARQUIVO_FIELD_LABELS = {
+	data: "data",
+	emissao: "emissao",
+	id: "id",
+	id_carteira: "id_carteira",
+	numero: "numero",
+	tipo_remessa: "tipo_remessa",
+	traz_todos_titulos_abertos: "traz_todos_titulos_abertos",
+	vencimento: "vencimento",
+} as const;
+
 export const FNARECEBERCEDENTEREMESSAARQUIVO_TRAZTODOSTITULOSABERTOS_LABELS = {
 	S: "S",
 	N: "N",

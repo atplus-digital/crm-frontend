@@ -9,6 +9,42 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNARECEBERCEDENTE_FIELD_LABELS = {
+	abatimentos: "abatimentos",
+	acrescimos: "acrescimos",
+	agencia_codigo: "agencia_codigo",
+	ass_gerencianet: "ass_gerencianet",
+	cod_mov: "cod_mov",
+	codigo_autorizacao: "codigo_autorizacao",
+	conta_numero: "conta_numero",
+	data_credito: "data_credito",
+	data_hora: "data_hora",
+	data_ocorrencia: "data_ocorrencia",
+	data_vencimento: "data_vencimento",
+	file_md5: "file_md5",
+	fn_areceber_assinatura: "fn_areceber_assinatura",
+	id: "id",
+	id_carteira_cobranca: "id_carteira_cobranca",
+	id_cliente: "id_cliente",
+	id_cobranca: "id_cobranca",
+	id_lote_retorno: "id_lote_retorno",
+	id_movim_finan: "id_movim_finan",
+	iof: "iof",
+	local_pagamento: "local_pagamento",
+	motivo: "motivo",
+	nosso_numero: "nosso_numero",
+	obs: "obs",
+	status: "status",
+	tarifa: "tarifa",
+	temp: "temp",
+	tipo_carteira: "tipo_carteira",
+	valor: "valor",
+	valor_atualizado: "valor_atualizado",
+	valor_liquido: "valor_liquido",
+	valor_original: "valor_original",
+	valor_pago: "valor_pago",
+} as const;
+
 export const FNARECEBERCEDENTE_STATUS_LABELS = {
 	I: "I",
 	N: "N",

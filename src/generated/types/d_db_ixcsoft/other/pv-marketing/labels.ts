@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PVMARKETING_FIELD_LABELS = {
+	cliente_envia: "cliente_envia",
+	id: "id",
+	texto: "texto",
+	tipo_msg: "tipo_msg",
+} as const;
+
 export const PVMARKETING_TIPOMSG_LABELS = {
 	S: "S",
 	E: "E",

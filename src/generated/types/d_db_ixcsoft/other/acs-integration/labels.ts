@@ -9,6 +9,22 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ACSINTEGRATION_FIELD_LABELS = {
+	api_token: "api_token",
+	client_id: "client_id",
+	client_secret: "client_secret",
+	delete_on_sync: "delete_on_sync",
+	expire_api_token: "expire_api_token",
+	host: "host",
+	id: "id",
+	name: "name",
+	private_key: "private_key",
+	public_key: "public_key",
+	secret: "secret",
+	type: "type",
+	user: "user",
+} as const;
+
 export const ACSINTEGRATION_DELETEONSYNC_LABELS = {
 	S: "S",
 	N: "N",

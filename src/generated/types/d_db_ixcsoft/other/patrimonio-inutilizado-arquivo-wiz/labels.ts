@@ -9,6 +9,20 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PATRIMONIOINUTILIZADOARQUIVOWIZ_FIELD_LABELS = {
+	classificacao_arquivo: "classificacao_arquivo",
+	data_envio: "data_envio",
+	descricao: "descricao",
+	id: "id",
+	id_inutilizado: "id_inutilizado",
+	id_patrimonio: "id_patrimonio",
+	ids_patrimonio: "ids_patrimonio",
+	local_arquivo: "local_arquivo",
+	nome_arquivo: "nome_arquivo",
+	status_inutilizado: "status_inutilizado",
+	tipo: "tipo",
+} as const;
+
 export const PATRIMONIOINUTILIZADOARQUIVOWIZ_CLASSIFICACAOARQUIVO_LABELS = {
 	O: "O",
 	P: "P",

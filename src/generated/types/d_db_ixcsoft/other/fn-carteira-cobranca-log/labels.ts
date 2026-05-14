@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNCARTEIRACOBRANCALOG_FIELD_LABELS = {
+	ambiente: "ambiente",
+	created_at: "created_at",
+	id: "id",
+	id_carteira_cobranca: "id_carteira_cobranca",
+	log: "log",
+	metodo_http: "metodo_http",
+	request_body: "request_body",
+	request_headers: "request_headers",
+	response_body: "response_body",
+	response_http_status: "response_http_status",
+	status: "status",
+	url: "url",
+} as const;
+
 export const FNCARTEIRACOBRANCALOG_AMBIENTE_LABELS = {
 	P: "P",
 	H: "H",

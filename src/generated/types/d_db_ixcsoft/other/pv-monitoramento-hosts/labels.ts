@@ -9,6 +9,25 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PVMONITORAMENTOHOSTS_FIELD_LABELS = {
+	ativo: "ativo",
+	data_hora_ult_atualizacao: "data_hora_ult_atualizacao",
+	descricao: "descricao",
+	disponibilidade: "disponibilidade",
+	id: "id",
+	id_filial: "id_filial",
+	id_grupo_monitoramento: "id_grupo_monitoramento",
+	ip: "ip",
+	latitude: "latitude",
+	longitude: "longitude",
+	nome_host: "nome_host",
+	protocolo: "protocolo",
+	qualidade: "qualidade",
+	status: "status",
+	tempo_medio_resposta: "tempo_medio_resposta",
+	ultima_atualizacao: "ultima_atualizacao",
+} as const;
+
 export const PVMONITORAMENTOHOSTS_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

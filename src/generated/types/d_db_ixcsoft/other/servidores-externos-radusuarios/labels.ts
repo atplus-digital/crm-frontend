@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SERVIDORESEXTERNOSRADUSUARIOS_FIELD_LABELS = {
+	id: "id",
+	id_radusuarios: "id_radusuarios",
+	id_servidores_externos: "id_servidores_externos",
+	login: "login",
+	servidores_externos_identificador: "servidores_externos_identificador",
+	sessao_atual: "sessao_atual",
+} as const;
+
 export const SERVIDORESEXTERNOSRADUSUARIOS_SESSAOATUAL_LABELS = {
 	S: "S",
 	N: "N",

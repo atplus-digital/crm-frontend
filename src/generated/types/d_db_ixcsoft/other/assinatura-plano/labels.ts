@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ASSINATURAPLANO_FIELD_LABELS = {
+	ativo: "ativo",
+	create_time: "create_time",
+	descricao: "descricao",
+	id: "id",
+	id_assinatura_notificacao_grupo: "id_assinatura_notificacao_grupo",
+	id_carteira_cobranca: "id_carteira_cobranca",
+	id_filial: "id_filial",
+	id_tipo_cobranca: "id_tipo_cobranca",
+	id_tipo_documento: "id_tipo_documento",
+	obs: "obs",
+	tipo_plano: "tipo_plano",
+	update_time: "update_time",
+} as const;
+
 export const ASSINATURAPLANO_ATIVO_LABELS = {
 	S: "S",
 	N: "N",

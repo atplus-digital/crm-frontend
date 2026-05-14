@@ -9,6 +9,33 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const SITES_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_anexos: "Anexos",
+	f_bairro: "Bairro",
+	f_cep: "CEP",
+	f_cidade: "Cidade",
+	f_complemento: "Complemento",
+	f_contatos: "Contatos",
+	f_dados_acesso: "Dados de Acesso",
+	f_endereco: "Endereço",
+	f_fk_sites_equipamentos: "Equipamentos",
+	f_fk_telecom_contatos: "f_fk_telecom_contatos",
+	f_nome: "Nome do Site",
+	f_numero: "Número",
+	f_racks: "Racks",
+	f_sigla: "Sigla",
+	f_status: "Status",
+	f_tipo: "Tipo de Site",
+	f_uf: "UF",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const SITES_STATUS_LABELS = {
 	repnmsclnb8: "Planejado",
 	x2lk2z9p2ds: "Ativo",

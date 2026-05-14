@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const PRODUTOSIMG_FIELD_LABELS = {
+	id: "id",
+	id_produto: "id_produto",
+	imagem: "imagem",
+	imagem_big: "imagem_big",
+	imagem_thumb: "imagem_thumb",
+	principal: "principal",
+} as const;
+
 export const PRODUTOSIMG_PRINCIPAL_LABELS = {
 	S: "S",
 	N: "N",

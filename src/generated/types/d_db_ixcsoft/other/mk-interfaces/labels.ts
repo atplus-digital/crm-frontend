@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const MKINTERFACES_FIELD_LABELS = {
+	comment: "comment",
+	disabled: "disabled",
+	dynamic: "dynamic",
+	id: "id",
+	id_concentrador: "id_concentrador",
+	id_interface: "id_interface",
+	interface_radius: "interface_radius",
+	mac: "mac",
+	mtu: "mtu",
+	name: "name",
+	running: "running",
+	sincronizado: "sincronizado",
+	slave: "slave",
+	type: "type",
+} as const;
+
 export const MKINTERFACES_INTERFACERADIUS_LABELS = {
 	S: "S",
 	N: "N",

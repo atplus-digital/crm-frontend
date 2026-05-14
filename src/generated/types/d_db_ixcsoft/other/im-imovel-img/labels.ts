@@ -9,6 +9,15 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const IMIMOVELIMG_FIELD_LABELS = {
+	id: "id",
+	id_imovel: "id_imovel",
+	imagem: "imagem",
+	imagem_big: "imagem_big",
+	imagem_thumb: "imagem_thumb",
+	principal: "principal",
+} as const;
+
 export const IMIMOVELIMG_PRINCIPAL_LABELS = {
 	S: "S",
 	N: "N",

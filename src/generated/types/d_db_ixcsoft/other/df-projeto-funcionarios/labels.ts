@@ -4,3 +4,11 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+// ============================================================
+// LABELS (single source of truth)
+// ============================================================
+export const DFPROJETOFUNCIONARIOS_FIELD_LABELS = {
+	id: "id",
+	id_df_projeto: "id_df_projeto",
+	id_funcionarios: "id_funcionarios",
+} as const;

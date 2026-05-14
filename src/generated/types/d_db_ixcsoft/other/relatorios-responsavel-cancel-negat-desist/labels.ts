@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const RELATORIOSRESPONSAVELCANCELNEGATDESIST_FIELD_LABELS = {
+	data_final_periodo: "data_final_periodo",
+	data_inicial_periodo: "data_inicial_periodo",
+	data_periodo: "data_periodo",
+	id: "id",
+	id_cliente: "id_cliente",
+	id_contrato: "id_contrato",
+	tipo_data: "tipo_data",
+} as const;
+
 export const RELATORIOSRESPONSAVELCANCELNEGATDESIST_TIPODATA_LABELS = {
 	P: "P",
 	D: "D",

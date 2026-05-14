@@ -9,6 +9,32 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const QUALIRUNINFOADICIONAIS_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_2fxykekjpk2: "teste",
+	f_contato_emergencia: "Contato de Emergência",
+	f_curso: "Curso",
+	f_fk_funcionarios: "f_fk_funcionarios",
+	f_funcionarios: "Funcionários",
+	f_grau_escolaridade: "Grau de Escolaridade",
+	f_id_externo: "ID Externo",
+	f_parentesco_cpf: "CPF Parentesco",
+	f_parentesco_nome: "Nome Parentesco",
+	f_parentesco_vinculo: "Vínculo Parentesco",
+	f_situacao_curso: "Situação do Curso",
+	f_sqt1x7ndy5j: "teste",
+	f_status: "Status",
+	f_telefone_contato_emergencia: "Telefone Contato de Emergência",
+	f_tkxxh3xi2zw: "teste",
+	f_vinculo_contato_emergencia: "Vínculo Contato de Emergência",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const QUALIRUNINFOADICIONAIS_GRAUESCOLARIDADE_LABELS = {
 	"Ensino Médio": "Ensino Médio",
 	Superior: "Superior",

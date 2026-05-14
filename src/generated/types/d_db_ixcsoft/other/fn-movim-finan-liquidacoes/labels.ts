@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const FNMOVIMFINANLIQUIDACOES_FIELD_LABELS = {
+	data: "data",
+	id: "id",
+	id_adto_cliente: "id_adto_cliente",
+	id_fn_movim_finan: "id_fn_movim_finan",
+	obs: "obs",
+	tipo_liquidacao: "tipo_liquidacao",
+	valor: "valor",
+} as const;
+
 export const FNMOVIMFINANLIQUIDACOES_TIPOLIQUIDACAO_LABELS = {
 	Dinheiro: "Dinheiro",
 	Cheque: "Cheque",

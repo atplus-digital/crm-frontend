@@ -4,3 +4,21 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
+// ============================================================
+// LABELS (single source of truth)
+// ============================================================
+export const SETOR_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_fk_funcionarios: "f_fk_funcionarios",
+	f_fk_sistemas_acessos: "f_fk_sistemas_acessos",
+	f_funcionarios: "Responsável do Setor",
+	f_funcionarios_1: "Funcionários",
+	f_nome_setor: "Nome do Setor",
+	f_sistemas_acessos: "Sistemas / Acessos",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;

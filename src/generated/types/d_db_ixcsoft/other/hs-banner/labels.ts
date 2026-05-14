@@ -9,6 +9,24 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const HSBANNER_FIELD_LABELS = {
+	altura: "altura",
+	categoria: "categoria",
+	cliente: "cliente",
+	decricoes_anotacoes: "decricoes_anotacoes",
+	exibicoes_contratadas: "exibicoes_contratadas",
+	exibir_baner: "exibir_baner",
+	fixo: "fixo",
+	id: "id",
+	largura: "largura",
+	limitado: "limitado",
+	nome: "nome",
+	ordenar: "ordenar",
+	seletor_imagem: "seletor_imagem",
+	tags: "tags",
+	url: "url",
+} as const;
+
 export const HSBANNER_EXIBIRBANER_LABELS = {
 	N: "N",
 	S: "S",

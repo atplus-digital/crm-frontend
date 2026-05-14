@@ -9,6 +9,26 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const QUEUEAUTOPROVISIONAMENTO_FIELD_LABELS = {
+	boxes: "boxes",
+	codigo_ultimo_erro: "codigo_ultimo_erro",
+	data_inicio: "data_inicio",
+	force_monitoring: "force_monitoring",
+	id: "id",
+	id_cliente_fibra: "id_cliente_fibra",
+	id_movimento_produto: "id_movimento_produto",
+	id_oss_chamado: "id_oss_chamado",
+	id_perfil: "id_perfil",
+	localizacao: "localizacao",
+	log: "log",
+	olts: "olts",
+	onu: "onu",
+	status: "status",
+	template: "template",
+	tempo_em_processo: "tempo_em_processo",
+	ultimo_monitoramento: "ultimo_monitoramento",
+} as const;
+
 export const QUEUEAUTOPROVISIONAMENTO_STATUS_LABELS = {
 	invalido: "invalido",
 	procurando: "procurando",

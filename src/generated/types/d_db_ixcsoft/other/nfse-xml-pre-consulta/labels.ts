@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const NFSEXMLPRECONSULTA_FIELD_LABELS = {
+	comunicado: "comunicado",
+	consultado: "consultado",
+	data_envio: "data_envio",
+	id: "id",
+	id_lote: "id_lote",
+	id_saida: "id_saida",
+	num_tentativas: "num_tentativas",
+	xml: "xml",
+	xml_pre_envio: "xml_pre_envio",
+} as const;
+
 export const NFSEXMLPRECONSULTA_COMUNICADO_LABELS = {
 	S: "S",
 	N: "N",

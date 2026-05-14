@@ -9,6 +9,21 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CONFIGURACOES_FIELD_LABELS = {
+	createdAt: "Criado em",
+	createdBy: "Criado por",
+	createdById: "createdById",
+	f_chave: "Chave",
+	f_descricao: "Descrição",
+	f_escopo: "Escopo de Utilização",
+	f_nome: "Nome da Opção",
+	f_valor: "Valor da Opção",
+	id: "ID",
+	updatedAt: "Última atualização em",
+	updatedBy: "Última atualização por",
+	updatedById: "updatedById",
+} as const;
+
 export const CONFIGURACOES_ESCOPO_LABELS = {
 	IXC: "IXCSoft",
 	GERAL: "GERAL",

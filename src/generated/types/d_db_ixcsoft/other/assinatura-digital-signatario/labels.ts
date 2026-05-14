@@ -9,6 +9,19 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ASSINATURADIGITALSIGNATARIO_FIELD_LABELS = {
+	cpf_cnpj: "cpf_cnpj",
+	email: "email",
+	id: "id",
+	id_assinatura_digital_historico: "id_assinatura_digital_historico",
+	id_externo: "id_externo",
+	nome: "nome",
+	status_assinatura: "status_assinatura",
+	tipo_signatario: "tipo_signatario",
+	token_signatario: "token_signatario",
+	url_assinatura_digital: "url_assinatura_digital",
+} as const;
+
 export const ASSINATURADIGITALSIGNATARIO_STATUSASSINATURA_LABELS = {
 	P: "P",
 	A: "A",

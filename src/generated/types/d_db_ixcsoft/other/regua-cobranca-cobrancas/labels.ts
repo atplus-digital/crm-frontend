@@ -9,6 +9,16 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const REGUACOBRANCACOBRANCAS_FIELD_LABELS = {
+	cliente_id: "cliente_id",
+	descricao: "descricao",
+	fn_areceber_id: "fn_areceber_id",
+	id: "id",
+	os_gerada: "os_gerada",
+	regua_cobranca_parametros_dias_id: "regua_cobranca_parametros_dias_id",
+	status: "status",
+} as const;
+
 export const REGUACOBRANCACOBRANCAS_OSGERADA_LABELS = {
 	S: "S",
 	N: "N",

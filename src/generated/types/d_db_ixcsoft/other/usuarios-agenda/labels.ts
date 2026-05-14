@@ -9,6 +9,14 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const USUARIOSAGENDA_FIELD_LABELS = {
+	descricao: "descricao",
+	id: "id",
+	id_usuario: "id_usuario",
+	permitir_conflito_de_horario: "permitir_conflito_de_horario",
+	token_google: "token_google",
+} as const;
+
 export const USUARIOSAGENDA_PERMITIRCONFLITODEHORARIO_LABELS = {
 	S: "S",
 	N: "N",

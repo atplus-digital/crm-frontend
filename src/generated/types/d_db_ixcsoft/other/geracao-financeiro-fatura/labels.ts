@@ -9,6 +9,30 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const GERACAOFINANCEIROFATURA_FIELD_LABELS = {
+	ano_referencia: "ano_referencia",
+	cidade: "cidade",
+	geracao_ate: "geracao_ate",
+	id: "id",
+	id_carteira_cobranca: "id_carteira_cobranca",
+	id_cliente_final: "id_cliente_final",
+	id_cliente_inicial: "id_cliente_inicial",
+	id_contrato_final: "id_contrato_final",
+	id_contrato_inicial: "id_contrato_inicial",
+	id_filial: "id_filial",
+	id_geracao_lote_agrup_finan: "id_geracao_lote_agrup_finan",
+	mes_referencia: "mes_referencia",
+	momento_fin_geracao: "momento_fin_geracao",
+	momento_ini_geracao: "momento_ini_geracao",
+	status: "status",
+	tipo_cliente: "tipo_cliente",
+	tipo_cobranca: "tipo_cobranca",
+	tipo_contrato: "tipo_contrato",
+	tipo_pessoa: "tipo_pessoa",
+	total_boletos_gerados: "total_boletos_gerados",
+	total_valor_gerados: "total_valor_gerados",
+} as const;
+
 export const GERACAOFINANCEIROFATURA_STATUS_LABELS = {
 	N: "N",
 	G: "G",

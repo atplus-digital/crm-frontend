@@ -9,6 +9,18 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const HSADMCATEGORIAS_FIELD_LABELS = {
+	descricao: "descricao",
+	id: "id",
+	imagem: "imagem",
+	nivel_acesso: "nivel_acesso",
+	ordem_categoria: "ordem_categoria",
+	posicao_imagem: "posicao_imagem",
+	publicado: "publicado",
+	secao: "secao",
+	titulo: "titulo",
+} as const;
+
 export const HSADMCATEGORIAS_PUBLICADO_LABELS = {
 	N: "N",
 	S: "S",

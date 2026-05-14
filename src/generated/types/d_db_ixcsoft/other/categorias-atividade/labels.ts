@@ -9,6 +9,13 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const CATEGORIASATIVIDADE_FIELD_LABELS = {
+	categoria: "categoria",
+	id: "id",
+	prioridade: "prioridade",
+	status: "status",
+} as const;
+
 export const CATEGORIASATIVIDADE_PRIORIDADE_LABELS = {
 	alta: "alta",
 	media: "media",

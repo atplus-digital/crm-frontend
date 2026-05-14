@@ -9,6 +9,23 @@ import { z } from "zod";
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
+export const ASSINATURADIGITALHISTORICO_FIELD_LABELS = {
+	ambiente: "ambiente",
+	data_assinatura: "data_assinatura",
+	data_hora: "data_hora",
+	descricao: "descricao",
+	id: "id",
+	id_cliente_contrato_assinatura_termo: "id_cliente_contrato_assinatura_termo",
+	id_contrato: "id_contrato",
+	id_integracao: "id_integracao",
+	id_ordem_servico: "id_ordem_servico",
+	id_usuario: "id_usuario",
+	origem_geracao: "origem_geracao",
+	status: "status",
+	tipo_documento: "tipo_documento",
+	token_documento: "token_documento",
+} as const;
+
 export const ASSINATURADIGITALHISTORICO_AMBIENTE_LABELS = {
 	P: "P",
 	H: "H",
