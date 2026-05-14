@@ -5,6 +5,7 @@ import {
 	FilterMultiSelect,
 } from "#/components/filters";
 import { useFilterContext } from "#/components/filters/filter-context";
+import { DataTableColumnVisibility } from "#/components/table/data-table-column-visibility";
 import type { BadgeColor } from "#/components/ui/badge";
 import {
 	CONTRATO_STATUS_LABELS,
@@ -63,7 +64,8 @@ export function ContratosFilters({ filters }: ContratosFiltersProps) {
 		<FilterLayout
 			fieldsClassName="lg:grid-cols-3 xl:grid-cols-5"
 			actions={
-				<div className="flex items-center justify-end">
+				<div className="flex items-center justify-between gap-2">
+					<DataTableColumnVisibility />
 					<FilterActions
 						onApply={() => onFilter(filters)}
 						onClear={() => onFilter(getCleanFilters())}

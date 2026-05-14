@@ -71,6 +71,11 @@ export function DataTablePagination<TData>({
 		table: tableProp,
 		componentName: "DataTablePagination",
 	});
+
+	if (context?.showPagination === false) {
+		return null;
+	}
+
 	const total = totalProp ?? context?.total;
 
 	const { pageIndex, pageSize } = table.getState().pagination;

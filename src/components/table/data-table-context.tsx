@@ -33,6 +33,8 @@ export interface DataTableController<
 	onSortingChange?: OnChangeFn<SortingState>;
 	columnVisibility: VisibilityState;
 	setColumnVisibility: OnChangeFn<VisibilityState>;
+	showPagination?: boolean;
+	enableColumnVisibility?: boolean;
 }
 
 const DataTableContext = createContext<DataTableController<

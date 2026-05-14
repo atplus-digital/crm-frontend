@@ -11,9 +11,13 @@ import {
 } from "#/components/ui/dropdown-menu";
 
 export function DataTableColumnVisibility<TData>() {
-	const { table } = useResolvedDataTable<TData>({
+	const { context, table } = useResolvedDataTable<TData>({
 		componentName: "DataTableColumnVisibility",
 	});
+
+	if (context?.enableColumnVisibility === false) {
+		return null;
+	}
 
 	const hideableColumns = table
 		.getAllLeafColumns()

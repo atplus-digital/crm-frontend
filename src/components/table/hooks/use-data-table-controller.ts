@@ -41,6 +41,8 @@ interface UseDataTableControllerOptions<
 	onFiltersChange?: (filters: TFilters) => void;
 	onFiltersApply?: (filters: TFilters, pagination: PaginationSnapshot) => void;
 	onFiltersClear?: (filters: TFilters, pagination: PaginationSnapshot) => void;
+	showPagination?: boolean;
+	enableColumnVisibility?: boolean;
 }
 
 export function useDataTableController<
@@ -67,6 +69,8 @@ export function useDataTableController<
 		onFiltersChange,
 		onFiltersApply,
 		onFiltersClear,
+		showPagination,
+		enableColumnVisibility,
 	} = options;
 
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -187,5 +191,7 @@ export function useDataTableController<
 		onSortingChange,
 		columnVisibility,
 		setColumnVisibility,
+		showPagination,
+		enableColumnVisibility,
 	};
 }

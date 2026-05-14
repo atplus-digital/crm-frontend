@@ -6,7 +6,6 @@ import type {
 import type { ReactNode } from "react";
 import { DEFAULT_DATA_TABLE_EMPTY_MESSAGE } from "#/components/table/constants";
 import { DataTable } from "#/components/table/data-table";
-import { DataTableColumnVisibility } from "#/components/table/data-table-column-visibility";
 import type { TableFilters } from "#/components/table/data-table-context";
 import { DataTableProvider } from "#/components/table/data-table-context";
 import { DataTablePagination } from "#/components/table/data-table-pagination";
@@ -90,19 +89,16 @@ export function DataTableContainer<
 		onFiltersChange,
 		onFiltersApply,
 		onFiltersClear,
+		showPagination,
+		enableColumnVisibility,
 	});
 
 	return (
 		<DataTableProvider value={controller}>
 			<div className="flex flex-col gap-4">
-				{enableColumnVisibility || children ? (
-					<div className="flex items-center gap-2">
-						{enableColumnVisibility && <DataTableColumnVisibility />}
-						{children}
-					</div>
-				) : null}
+				{children}
 				<DataTable />
-				{showPagination ? <DataTablePagination /> : null}
+				<DataTablePagination />
 			</div>
 		</DataTableProvider>
 	);
