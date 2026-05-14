@@ -6,6 +6,7 @@ import type {
 import type { ReactNode } from "react";
 import { DEFAULT_DATA_TABLE_EMPTY_MESSAGE } from "#/components/table/constants";
 import { DataTable } from "#/components/table/data-table";
+import { DataTableColumnVisibility } from "#/components/table/data-table-column-visibility";
 import type { TableFilters } from "#/components/table/data-table-context";
 import { DataTableProvider } from "#/components/table/data-table-context";
 import { DataTablePagination } from "#/components/table/data-table-pagination";
@@ -41,6 +42,7 @@ interface DataTableContainerProps<
 	) => void;
 	showPagination?: boolean;
 	children?: ReactNode;
+	enableColumnVisibility?: boolean;
 }
 
 export function DataTableContainer<
@@ -67,6 +69,7 @@ export function DataTableContainer<
 	isLoading,
 	hasInitialQueryData,
 	children,
+	enableColumnVisibility = false,
 }: DataTableContainerProps<TData, TFilters>) {
 	const controller = useDataTableController<TData, TFilters>({
 		columns,
@@ -92,7 +95,12 @@ export function DataTableContainer<
 	return (
 		<DataTableProvider value={controller}>
 			<div className="flex flex-col gap-4">
-				{children}
+				{enableColumnVisibility || children ? (
+					<div className="flex items-center gap-2">
+						{enableColumnVisibility && <DataTableColumnVisibility />}
+						{children}
+					</div>
+				) : null}
 				<DataTable />
 				{showPagination ? <DataTablePagination /> : null}
 			</div>
