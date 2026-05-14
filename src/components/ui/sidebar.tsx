@@ -281,7 +281,7 @@ function SidebarTrigger({
 				</Button>
 			</TooltipTrigger>
 			<TooltipContent side="bottom">
-				Toggle Sidebar <Kbd>Ctrl</Kbd>+<Kbd>B</Kbd>
+				Menu Lateral <Kbd>Ctrl</Kbd>+<Kbd>B</Kbd>
 			</TooltipContent>
 		</Tooltip>
 	);
