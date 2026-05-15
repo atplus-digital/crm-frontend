@@ -86,10 +86,3 @@ export async function createTrocaTitularidade(
 		throw error;
 	}
 }
-
-// Re-exported from pessoas-service for backward-compatibility.
-// Prefer importing from #/features/cs/pessoas/pessoas-service directly.
-export {
-	searchPessoasFisicas,
-	searchPessoasJuridicas,
-} from "#/features/cs/pessoas/pessoas-service";

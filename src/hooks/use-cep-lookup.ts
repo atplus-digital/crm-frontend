@@ -4,7 +4,7 @@ import { useCallback, useRef, useState } from "react";
 // Types
 // ============================================================================
 
-export interface CepResult {
+interface CepResult {
 	cep: string;
 	street?: string;
 	neighborhood?: string;

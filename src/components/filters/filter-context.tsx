@@ -9,7 +9,7 @@ import { createContext, useContext } from "react";
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export type FilterMap = object;
 
-export interface FilterContextValue<TFilters extends FilterMap = FilterMap> {
+interface FilterContextValue<TFilters extends FilterMap = FilterMap> {
 	onFilter: (filters: TFilters) => void;
 	/** When true, "Limpar" resets to defaultFilters; when false, clears all. */
 	cleanToDefault: boolean;

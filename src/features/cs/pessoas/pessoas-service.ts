@@ -19,7 +19,6 @@ import type {
 
 // Aliases de domínio para clareza no código de serviço
 type PessoaFisica = Pessoas;
-type PessoaJuridica = Empresas;
 
 const log = createLogger("services:cs:pessoas");
 
@@ -127,94 +126,6 @@ export async function fetchPessoasJuridicas(
 	} catch (error) {
 		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to fetch pessoas jurídicas", { error: message });
-		throw error;
-	}
-}
-
-export async function createPessoaFisica(
-	data: Partial<PessoaFisica>,
-): Promise<PessoaFisica> {
-	try {
-		const result = await nocobaseRepository.create<"t_pessoas">(
-			"t_pessoas",
-			data as Partial<Pessoas>,
-		);
-		return result as Pessoas;
-	} catch (error) {
-		const message = getErrorMessage(error, "Erro desconhecido");
-		log.error("Failed to create pessoa física", { error: message });
-		throw error;
-	}
-}
-
-export async function updatePessoaFisica(
-	id: number,
-	data: Partial<PessoaFisica>,
-): Promise<PessoaFisica> {
-	try {
-		const result = await nocobaseRepository.update<"t_pessoas">(
-			"t_pessoas",
-			id,
-			data as Partial<Pessoas>,
-		);
-		return result as Pessoas;
-	} catch (error) {
-		const message = getErrorMessage(error, "Erro desconhecido");
-		log.error("Failed to update pessoa física", { id, error: message });
-		throw error;
-	}
-}
-
-export async function deletePessoaFisica(id: number): Promise<void> {
-	try {
-		await nocobaseRepository.delete("t_pessoas", id);
-	} catch (error) {
-		const message = getErrorMessage(error, "Erro desconhecido");
-		log.error("Failed to delete pessoa física", { id, error: message });
-		throw error;
-	}
-}
-
-export async function createPessoaJuridica(
-	data: Partial<PessoaJuridica>,
-): Promise<PessoaJuridica> {
-	try {
-		const result = await nocobaseRepository.create<"t_empresas">(
-			"t_empresas",
-			data as Partial<Empresas>,
-		);
-		return result as Empresas;
-	} catch (error) {
-		const message = getErrorMessage(error, "Erro desconhecido");
-		log.error("Failed to create pessoa jurídica", { error: message });
-		throw error;
-	}
-}
-
-export async function updatePessoaJuridica(
-	id: number,
-	data: Partial<PessoaJuridica>,
-): Promise<PessoaJuridica> {
-	try {
-		const result = await nocobaseRepository.update<"t_empresas">(
-			"t_empresas",
-			id,
-			data as Partial<Empresas>,
-		);
-		return result as Empresas;
-	} catch (error) {
-		const message = getErrorMessage(error, "Erro desconhecido");
-		log.error("Failed to update pessoa jurídica", { id, error: message });
-		throw error;
-	}
-}
-
-export async function deletePessoaJuridica(id: number): Promise<void> {
-	try {
-		await nocobaseRepository.delete("t_empresas", id);
-	} catch (error) {
-		const message = getErrorMessage(error, "Erro desconhecido");
-		log.error("Failed to delete pessoa jurídica", { id, error: message });
 		throw error;
 	}
 }

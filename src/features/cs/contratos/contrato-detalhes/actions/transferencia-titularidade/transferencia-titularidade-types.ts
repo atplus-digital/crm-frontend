@@ -13,12 +13,6 @@ export type SelectedPF = {
 	f_credito?: number | string;
 } | null;
 
-export type SelectedPJ = {
-	id: number;
-	f_razao_social: string;
-	f_cnpj: string;
-} | null;
-
 // ============================================================================
 // Cessionário State (managed outside form)
 // ============================================================================
