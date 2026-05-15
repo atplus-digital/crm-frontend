@@ -24,7 +24,7 @@
 		"generate:types": "pnpm generate --types",
 		"generate:requests": "pnpm generate --requests",
 		"analyze-bundle": "pnpx vite-bundle-analyzer",
-		"ixc:audit": "tsx scripts/ixc-schema-audit/index.ts"
+		"ixc:audit": "tsx scripts/nocobase/ixc-schema-audit/index.ts"
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.4.1",
