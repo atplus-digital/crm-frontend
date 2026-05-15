@@ -38,6 +38,7 @@
 		"@radix-ui/react-tooltip",
 		"shadcn",
 		"tailwindcss",
-		"tw-animate-css"
+		"tw-animate-css",
+		"cmdk"
 	]
 }
