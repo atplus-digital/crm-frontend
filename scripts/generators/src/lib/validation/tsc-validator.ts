@@ -49,10 +49,9 @@ function createScopedTsconfigPath(
 		.replace(/[^a-zA-Z0-9_.-]/g, "_");
 	const scopedPath = path.join(cacheDir, `${slug}.json`);
 	const normalizedTarget = targetDir.replace(/\\/g, "/");
-	const normalizedBase = baseTsconfigPath.replace(/\\/g, "/");
 
 	const scopedConfig = {
-		extends: normalizedBase,
+		extends: baseTsconfigPath, // Use absolute path so it resolves from anywhere
 		include: [`${normalizedTarget}/**/*.ts`, `${normalizedTarget}/**/*.d.ts`],
 		compilerOptions: {
 			types: [],
