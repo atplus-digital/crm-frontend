@@ -211,6 +211,7 @@ describe("TC-UT-LK-007: isWorkspaceLocked returns false when no settings", () =>
 
 describe("TC-UT-LK-008: Lock file path is consistent for same output dir", () => {
 	const workspaceRoot = "/tmp/test-locker-consistent";
+	const settingsPath = path.join(workspaceRoot, ".vscode", "settings.json");
 
 	beforeEach(() => {
 		vi.stubGlobal("process", {

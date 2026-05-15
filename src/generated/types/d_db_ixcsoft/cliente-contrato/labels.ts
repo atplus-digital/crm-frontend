@@ -11,8 +11,8 @@ import { z } from "zod";
 // ============================================================
 export const CLIENTECONTRATO_FIELD_LABELS = {
 	agrupar_financeiro_contrato: "agrupar_financeiro_contrato",
-	alerta_contrato: "alerta_contrato",
-	apartamento: "apartamento",
+	alerta_contrato: "Alerta Contrato",
+	apartamento: "Apartamento",
 	aplica_desconto_tempo_bloqueio: "aplica_desconto_tempo_bloqueio",
 	aplicar_desconto_tempo_bloqueio: "aplicar_desconto_tempo_bloqueio",
 	assinatura_digital: "assinatura_digital",

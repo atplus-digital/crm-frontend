@@ -1,4 +1,3 @@
-import { Listr } from "listr2";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock lifecycle module
@@ -13,9 +12,9 @@ vi.mock("@scripts/generators/src/lib/utils/env", () => ({
 }));
 
 import { runStandardPipeline } from "@scripts/generators/src/lib/lifecycle/lifecycle";
+import type { GeneratorDefinition } from "../types";
 // Import after mocking
 import { runOrchestrator } from "./orchestrator";
-import type { GeneratorDefinition } from "./types";
 
 describe("TC-UT-ORCH-001: Sequential run executes generators in order", () => {
 	beforeEach(() => {
@@ -56,8 +55,10 @@ describe("TC-UT-ORCH-001: Sequential run executes generators in order", () => {
 
 		expect(runStandardPipeline).toHaveBeenCalledTimes(2);
 		// Verify sequential execution by checking call order
-		expect(runStandardPipeline.mock.calls[0][0].label).toBe("types-generator");
-		expect(runStandardPipeline.mock.calls[1][0].label).toBe(
+		expect(vi.mocked(runStandardPipeline).mock.calls[0][0].label).toBe(
+			"types-generator",
+		);
+		expect(vi.mocked(runStandardPipeline).mock.calls[1][0].label).toBe(
 			"requests-generator",
 		);
 	});
