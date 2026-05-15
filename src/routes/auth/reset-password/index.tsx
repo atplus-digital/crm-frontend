@@ -21,7 +21,7 @@ export function Component() {
 	return (
 		<GuestLayout
 			title="Redefinir Senha"
-			description="Informe seu e-mail para receber as instruções"
+			description="Informe seu e-mail ou usuário para receber as instruções"
 		>
 			<ResetPasswordPage />
 		</GuestLayout>

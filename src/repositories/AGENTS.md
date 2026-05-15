@@ -53,7 +53,7 @@ Data-access layer for NocoBase and IXC — typed repository wrappers with centra
 | `update(collection, id, data)` | Typed record update                                   |
 | `delete(collection, id)`       | Record deletion                                       |
 | `count(collection, params)`    | Count helper with optional filter                     |
-| `signIn(credentials)`          | Authentication endpoint wrapper                       |
+| `signIn(credentials)`          | Authentication via account (email or username)        |
 | `signOut()`                    | Logout endpoint wrapper                               |
 | `checkAuth<T>()`               | Auth check wrapper                                    |
 | `clearToken()`                 | Clears SDK auth token                                 |

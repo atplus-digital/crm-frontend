@@ -71,14 +71,14 @@ Authentication module — NocoBase SDK client, auth store, service operations, a
 
 ### Service (`service.ts`)
 
-| Function               | Signature                                                                       | Purpose                                                                       |
-| ---------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `signIn`               | `(credentials: LoginCredentials) => Promise<{ token: string; user: AuthUser }>` | Authenticates user, updates store and permissions                             |
-| `signOut`              | `() => Promise<void>`                                                           | Signs out remotely when possible, then always clears local auth + permissions |
-| `checkAuth`            | `() => Promise<AuthUser>`                                                       | Calls `auth:check`, updates user and permissions                              |
-| `requestPasswordReset` | `(email: string) => Promise<void>`                                              | Calls `auth:lostPassword`                                                     |
-| `confirmPasswordReset` | `(data: ResetPasswordConfirm) => Promise<void>`                                 | Calls `auth:resetPassword`                                                    |
-| `updateProfile`        | `(payload: UpdateProfilePayload) => Promise<AuthUser>`                          | Updates authenticated user profile and refreshes user state                   |
+| Function               | Signature                                                                       | Purpose                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `signIn`               | `(credentials: LoginCredentials) => Promise<{ token: string; user: AuthUser }>` | Authenticates user via account (email or username), updates store and permissions |
+| `signOut`              | `() => Promise<void>`                                                           | Signs out remotely when possible, then always clears local auth + permissions     |
+| `checkAuth`            | `() => Promise<AuthUser>`                                                       | Calls `auth:check`, updates user and permissions                                  |
+| `requestPasswordReset` | `(account: string) => Promise<void>`                                            | Calls `auth:lostPassword` with account (email or username)                        |
+| `confirmPasswordReset` | `(data: ResetPasswordConfirm) => Promise<void>`                                 | Calls `auth:resetPassword`                                                        |
+| `updateProfile`        | `(payload: UpdateProfilePayload) => Promise<AuthUser>`                          | Updates authenticated user profile and refreshes user state                       |
 
 ### Store (`store.ts`)
 
