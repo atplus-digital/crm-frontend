@@ -178,7 +178,8 @@ export const CLIENTECONTRATO_FIELD_LABELS = {
 	referencia: "referencia",
 	renovacao_automatica: "renovacao_automatica",
 	restricao_auto_desbloqueio: "restricao_auto_desbloqueio",
-	restricao_auto_libera_susp_parcial: "restricao_auto_libera_susp_parcial",
+	restricao_auto_libera_susp_parcial:
+		"Restrição de liberação automática suspensão parcial",
 	selfie_photo: "selfie_photo",
 	situacao_financeira_contrato: "situacao_financeira_contrato",
 	status: "status",
