@@ -140,7 +140,7 @@ export function VendasPage() {
 		>
 			<div className="space-y-4">
 				{/* Suas Vendas por Status — 5 fixed cards, always visible */}
-				<div className="flex flex-wrap gap-4">
+				<div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
 					{CARD_STATUSES.map((status) => {
 						const isActive = activeStatus === status;
 						return (
