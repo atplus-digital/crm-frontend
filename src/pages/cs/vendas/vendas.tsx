@@ -2,9 +2,10 @@ import { useStore } from "@tanstack/react-store";
 import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
+import { BasicTableCard } from "#/components/basic-table-card";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/layouts/page-layout";
-import { StatusSummaryCards } from "#/components/status-summary-cards";
+
 import { Button } from "#/components/ui/button";
 import { authStore } from "#/features/auth";
 import { useNegociacoes } from "#/features/cs/negociacoes/negociacoes-hooks";
@@ -20,9 +21,30 @@ import { VendasFilters } from "#/features/cs/vendas/vendas-filters/vendas-filter
 import { useVendedores } from "#/features/cs/vendas/vendas-hooks";
 import { useListPage } from "#/hooks/use-list-page";
 import { getErrorMessage } from "#/lib/api-errors";
+import { cn } from "#/lib/utils";
 
 /** Status values to show in cards (excludes "6" = Arquivado) */
 const CARD_STATUSES: NegociacaoStatus[] = ["1", "2", "3", "4", "5"];
+
+/** Map status key → badge color class */
+const STATUS_DOT_COLORS: Record<NegociacaoStatus, string> = {
+	"1": "bg-blue-500",
+	"2": "bg-amber-500",
+	"3": "bg-purple-500",
+	"4": "bg-orange-500",
+	"5": "bg-green-500",
+	"6": "bg-gray-500",
+};
+
+/** Map status key → active card ring/border color */
+const STATUS_RING_COLORS: Record<NegociacaoStatus, string> = {
+	"1": "border-blue-500 ring-1 ring-blue-500/30 bg-blue-500/5",
+	"2": "border-amber-500 ring-1 ring-amber-500/30 bg-amber-500/5",
+	"3": "border-purple-500 ring-1 ring-purple-500/30 bg-purple-500/5",
+	"4": "border-orange-500 ring-1 ring-orange-500/30 bg-orange-500/5",
+	"5": "border-green-500 ring-1 ring-green-500/30 bg-green-500/5",
+	"6": "border-gray-500 ring-1 ring-gray-500/30 bg-gray-500/5",
+};
 
 const DEFAULT_FILTERS: NegociacaoFilters = {};
 
@@ -51,6 +73,25 @@ export function VendasPage() {
 		}),
 	});
 	const cardsItems = cardsData?.data ?? [];
+
+	// Count per status for the cards
+	const statusCounts = useMemo(() => {
+		const counts: Record<NegociacaoStatus, number> = {
+			"1": 0,
+			"2": 0,
+			"3": 0,
+			"4": 0,
+			"5": 0,
+			"6": 0,
+		};
+		for (const item of cardsItems) {
+			const status = String(item.f_status) as NegociacaoStatus;
+			if (status in counts) {
+				counts[status]++;
+			}
+		}
+		return counts;
+	}, [cardsItems]);
 
 	const apiFilters = useMemo(
 		() =>
@@ -82,10 +123,8 @@ export function VendasPage() {
 		toast.success(`CSV exportado: ${negociacoes.length} vendas`);
 	};
 
-	const handleStatusClick = (key: string) => {
-		setActiveStatus((prev) =>
-			prev === key ? null : (key as NegociacaoStatus),
-		);
+	const handleStatusClick = (status: NegociacaoStatus) => {
+		setActiveStatus((prev) => (prev === status ? null : status));
 	};
 
 	return (
@@ -100,17 +139,36 @@ export function VendasPage() {
 			}
 		>
 			<div className="space-y-4">
-				<StatusSummaryCards
-					items={cardsItems.filter((n) =>
-						CARD_STATUSES.includes(String(n.f_status) as NegociacaoStatus),
-					)}
-					getKey={(n) => String(n.f_status)}
-					getLabel={(key) =>
-						NEGOCIACAO_STATUS_LABELS[key as NegociacaoStatus] ?? key
-					}
-					onClick={handleStatusClick}
-					activeKey={activeStatus}
-				/>
+				{/* Suas Vendas por Status — 5 fixed cards, always visible */}
+				<div className="flex flex-wrap gap-4">
+					{CARD_STATUSES.map((status) => {
+						const isActive = activeStatus === status;
+						return (
+							<BasicTableCard
+								key={status}
+								label={NEGOCIACAO_STATUS_LABELS[status]}
+								value={statusCounts[status]}
+								className={cn(
+									"cursor-pointer transition-colors",
+									isActive && STATUS_RING_COLORS[status],
+								)}
+								onClick={() => handleStatusClick(status)}
+							>
+								<div className="flex items-center gap-2">
+									<p className="text-lg font-semibold">
+										{statusCounts[status]}
+									</p>
+									<span
+										className={cn(
+											"inline-block size-2 rounded-full",
+											STATUS_DOT_COLORS[status],
+										)}
+									/>
+								</div>
+							</BasicTableCard>
+						);
+					})}
+				</div>
 
 				<VendasFilters
 					filters={filters}
