@@ -1,6 +1,6 @@
 import { resolveNocoBaseEnv } from "@shared/utils/env";
+import { fieldNameConfig } from "../../config.js";
 import type { PipelineContext } from "../@types/script";
-import { fieldNameConfig } from "../config.js";
 
 /**
  * Stage 1 — Resolve credentials and build flat list of field updates from config.
@@ -18,6 +18,7 @@ export async function resolveConfig(
 
 	// Flatten nested config into a flat list of update requests
 	const updates: PipelineContext["updates"] = [];
+	const collectionsToUpdate = new Set<string>();
 
 	for (const [datasourceKey, collections] of Object.entries(fieldNameConfig)) {
 		for (const [collectionName, fields] of Object.entries(
@@ -30,6 +31,7 @@ export async function resolveConfig(
 					fieldName,
 					newLabel,
 				});
+				collectionsToUpdate.add(`${datasourceKey}.${collectionName}`);
 			}
 		}
 	}
@@ -41,5 +43,5 @@ export async function resolveConfig(
 		return;
 	}
 
-	task.output = `${updates.length} campo(s) encontrado(s) na configuração.`;
+	task.output = `${updates.length} campo(s) em ${collectionsToUpdate.size} collection(s) para atualizar.`;
 }

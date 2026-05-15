@@ -17,8 +17,8 @@ import { updateFields } from "./stages/update-fields";
  *
  * Stages:
  *   1. Resolve config — loads NocoBase credentials and flattens fieldNameConfig
- *   2. Fetch existing fields — 1 GET/datasource → lookup map of uiSchema per field
- *   3. Update fields — sends POST requests for each field label (sub-tasks per field)
+ *   2. Fetch existing fields + filter updates — loads uiSchema and removes already-updated labels
+ *   3. Update fields — sends POST requests for each pending field label
  *   4. Summary — prints results
  */
 export async function runUpdateFieldNamesPipeline(): Promise<void> {
@@ -44,17 +44,22 @@ export async function runUpdateFieldNamesPipeline(): Promise<void> {
 		},
 		{
 			title: "Atualizando labels dos campos",
+			skip: (ctx: PipelineContext) =>
+				ctx.updates.length === 0
+					? "Nenhum campo precisa ser atualizado."
+					: false,
 			task: (ctx: PipelineContext, task: TaskRunner) => updateFields(ctx, task),
 		},
 		{
 			title: "Resumo",
+			skip: (ctx: PipelineContext) =>
+				ctx.results.length === 0 ? "Nenhum campo atualizado." : false,
 			task: (ctx: PipelineContext, task: TaskRunner) => {
 				const succeeded = ctx.results.filter((r) => r.success).length;
 				const failed = ctx.results.filter((r) => !r.success).length;
 				const total = ctx.results.length;
-
 				if (failed === 0) {
-					task.title = `✅ Concluído: ${succeeded}/${total} campo(s) atualizado(s)`;
+					task.title = `Concluído: ${succeeded}/${total} campo(s) atualizado(s)`;
 				} else {
 					task.title = `⚠️ Concluído: ${succeeded} atualizado(s), ${failed} erro(s) de ${total} total`;
 				}
@@ -68,13 +73,17 @@ export async function runUpdateFieldNamesPipeline(): Promise<void> {
 		},
 	];
 
+	const shouldUseVerboseRenderer =
+		process.env.VITE_LOG_LEVEL === "debug" || !process.stdout.isTTY;
+
 	const rootListr = new Listr(tasks, {
 		concurrent: false,
-		renderer: process.env.VITE_LOG_LEVEL === "debug" ? "verbose" : "default",
+		renderer: shouldUseVerboseRenderer ? "verbose" : "default",
 		rendererOptions: {
 			lazy: false,
 			collapseSkips: false,
 			collapseErrors: false,
+			collapseSubtasks: false,
 		},
 	});
 
