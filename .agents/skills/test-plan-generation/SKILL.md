@@ -1,5 +1,5 @@
 ---
-name: Test Plan Generation
+name: test-plan-generation
 description: Generate comprehensive test plans with coverage matrices and risk-based testing
 testingTypes: [e2e, integration, unit]
 languages: [typescript]
