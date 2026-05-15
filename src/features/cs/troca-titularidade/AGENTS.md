@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-04-22 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-15 -->
 
 # AGENTS.md — cs/troca-titularidade
 
@@ -14,14 +14,14 @@ Ownership transfer feature — manages contract titularidade change requests bet
 
 ## Key Files
 
-| File                                     | Purpose                                                                                                 |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `index.ts`                               | Barrel export for hooks and components                                                                  |
-| `troca-titularidade-types.ts`            | Filter options, badge variants, `TrocaTitularidadeFilters`                                              |
-| `troca-titularidade-hooks.ts`            | React Query hooks + `buildTrocaTitularidadeFilter()`                                                    |
-| `troca-titularidade-filters.tsx`         | `TrocaTitularidadeFilterBar` — 8-field filter UI                                                        |
-| `components/troca-titularidade-list.tsx` | Paginated list with sorting                                                                             |
-| `components/sections/`                   | Detail page sections (identification, person, address, signature, relationships, attachments, comments) |
+| File                                     | Purpose                                                          |
+| ---------------------------------------- | ---------------------------------------------------------------- |
+| `index.ts`                               | Barrel export for hooks and components                           |
+| `troca-titularidade-types.ts`            | Filter options, badge variants, `TrocaTitularidadeFilters`       |
+| `troca-titularidade-hooks.ts`            | React Query hooks + `buildTrocaTitularidadeFilter()`             |
+| `troca-titularidade-filters.tsx`         | `TrocaTitularidadeFilterBar` — 8-field filter UI                 |
+| `components/troca-titularidade-list.tsx` | Paginated list with sorting                                      |
+| `components/sections/`                   | Detail skeleton and summary card (skeleton loader, hero summary) |
 
 <!-- AGENTS-GENERATED:END filemap -->
 

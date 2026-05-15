@@ -1,4 +1,4 @@
-export type Primitive =
+type Primitive =
 	| string
 	| number
 	| boolean

@@ -3,7 +3,6 @@ import type {
 	NegociacoesComentarios,
 	NegociacoesComentariosRelations,
 	NegociacoesItens,
-	Pacotes,
 } from "#/generated/types/nocobase/index";
 import { getErrorMessage } from "#/lib/api-errors";
 import { eq } from "#/lib/filter-builder";
@@ -169,52 +168,6 @@ export async function fetchNegociacaoComentarios(
 	}
 }
 
-export async function fetchNegociacaoPacotes(
-	negociacaoId: number,
-): Promise<PaginatedResponse<Pacotes>> {
-	try {
-		const response = await nocobaseRepository.list("t_pacotes", {
-			page: 1,
-			pageSize: 100,
-			filter: { f_negociacao: negociacaoId },
-		});
-
-		return {
-			data: response.data as unknown as Pacotes[],
-			meta: response.meta,
-		};
-	} catch (error) {
-		const message = getErrorMessage(error, "Erro desconhecido");
-		log.error("Failed to fetch negociação pacotes", {
-			negociacaoId,
-			error: message,
-		});
-		throw error;
-	}
-}
-
-export async function createNegociacao(
-	data: Omit<Negociacao, "f_contrato_ixc"> & {
-		f_contrato_ixc?: number | string | null;
-	},
-): Promise<Negociacao> {
-	try {
-		const payload: Record<string, unknown> = {};
-
-		Object.assign(payload, data);
-		if (data.f_contrato_ixc != null) {
-			payload.f_contrato_ixc = String(data.f_contrato_ixc);
-		}
-
-		const result = await nocobaseRepository.create("t_negociacoes", payload);
-		return result as unknown as Negociacao;
-	} catch (error) {
-		const message = getErrorMessage(error, "Erro desconhecido");
-		log.error("Failed to create negociação", { data, error: message });
-		throw error;
-	}
-}
-
 export async function updateNegociacao(
 	id: number,
 	data: Omit<Negociacao, "f_contrato_ixc"> & {
@@ -238,16 +191,6 @@ export async function updateNegociacao(
 	} catch (error) {
 		const message = getErrorMessage(error, "Erro desconhecido");
 		log.error("Failed to update negociação", { id, error: message });
-		throw error;
-	}
-}
-
-export async function deleteNegociacao(id: number): Promise<void> {
-	try {
-		await nocobaseRepository.delete("t_negociacoes", id);
-	} catch (error) {
-		const message = getErrorMessage(error, "Erro desconhecido");
-		log.error("Failed to delete negociação", { id, error: message });
 		throw error;
 	}
 }
