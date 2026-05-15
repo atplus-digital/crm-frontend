@@ -1,6 +1,6 @@
 import { useStore } from "@tanstack/react-store";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { InlineErrorAlert } from "#/components/feedback/inline-error-alert";
 import { PageLayout } from "#/components/layouts/page-layout";
@@ -32,34 +32,39 @@ export function VendasPage() {
 		null,
 	);
 
-	const { filters, handleFilterChange } = useListPage<NegociacaoFilters>({
-		defaultFilters: DEFAULT_FILTERS,
-		defaultPageSize: 100,
-		defaultSort: ["-createdAt"],
-		syncSortToUrl: false,
-	});
+	const { filters, handleFilterChange, page, pageSize } =
+		useListPage<NegociacaoFilters>({
+			defaultFilters: DEFAULT_FILTERS,
+			defaultPageSize: 100,
+			defaultSort: ["-createdAt"],
+			syncSortToUrl: false,
+		});
 	const { data: vendedores } = useVendedores();
 
-	// Cards query — current user's sales, no status filter
+	// Cards always show the current user's totals regardless of table filters
+	// TODO: pageSize 200 is a known limitation — a server-side aggregation endpoint would be better
 	const { data: cardsData } = useNegociacoes({
 		page: 1,
-		pageSize: 999,
+		pageSize: 200,
 		filters: normalizeNegociacaoFilters({
 			vendedorId: user?.id,
 		}),
 	});
 	const cardsItems = cardsData?.data ?? [];
 
-	// Table query — all filters + active status from card
-	const apiFilters = normalizeNegociacaoFilters({
-		...filters,
-		vendedorId: user?.id,
-		...(activeStatus ? { status: activeStatus } : {}),
-	});
+	const apiFilters = useMemo(
+		() =>
+			normalizeNegociacaoFilters({
+				...filters,
+				vendedorId: user?.id,
+				...(activeStatus ? { status: activeStatus } : {}),
+			}),
+		[filters, user?.id, activeStatus],
+	);
 
 	const { data, error, refetch } = useNegociacoes({
-		page: 1,
-		pageSize: 100,
+		page,
+		pageSize,
 		filters: apiFilters,
 	});
 
