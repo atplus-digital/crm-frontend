@@ -23,8 +23,7 @@
 		"generate": "tsx scripts/generators/src/index.ts",
 		"generate:types": "pnpm generate --types",
 		"generate:requests": "pnpm generate --requests",
-		"analyze-bundle": "pnpx vite-bundle-analyzer",
-		"ixc:audit": "tsx scripts/nocobase/ixc-schema-audit/index.ts"
+		"analyze-bundle": "pnpx vite-bundle-analyzer"
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.4.1",
