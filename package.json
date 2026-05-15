@@ -9,6 +9,7 @@
 		"dev": "vite dev",
 		"prepare": "husky",
 		"test": "vitest run",
+		"test:scripts": "vitest run --config scripts/vitest.config.ts",
 		"build": "vite build",
 		"start": "node dist",
 		"biome:fix": "biome check --write",

@@ -3,10 +3,7 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
 	test: {
-		include: [
-			"src/**/*.{test,spec}.{js,ts,tsx}",
-			"scripts/**/*.{test,spec}.{js,ts}",
-		],
+		include: ["src/**/*.{test,spec}.{js,ts,tsx}"],
 		environment: "jsdom",
 		globalSetup: ["./src/_tests/global-setup.ts"],
 		setupFiles: ["./src/_tests/mock-env.ts"],
@@ -16,7 +13,7 @@ export default defineConfig({
 		coverage: {
 			provider: "v8",
 			reporter: ["text", "json-summary", "html-spa"],
-			include: ["src/**/*.ts", "scripts/**/*.ts"],
+			include: ["src/**/*.ts"],
 			exclude: [
 				"src/generated/**",
 				"scripts/generators/src/pipelines/generate-types/config.ts",
@@ -28,9 +25,10 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: {
-			"@scripts": path.resolve(__dirname, "./scripts"),
-			"@": path.resolve(__dirname, "./src"),
 			"#": path.resolve(__dirname, "./src"),
+			"@": path.resolve(__dirname, "./src"),
+			"@scripts": path.resolve(__dirname, "./scripts"),
+			"@generators": path.resolve(__dirname, "./scripts/generators/src"),
 		},
 	},
 });
