@@ -29,11 +29,8 @@ interface FilterMultiSelectProps<T extends string> {
 	badgeTrigger?: boolean;
 	/**
 	 * Maps option value → BadgeColor for trigger badge pills.
-	 * Preferred over badgeColorClass (which takes raw Tailwind class strings).
 	 */
 	badgeColorMap?: Record<T, BadgeColor>;
-	/** @deprecated Use badgeColorMap instead */
-	badgeColorClass?: (value: T) => string;
 	maxBadgeDisplay?: number;
 	className?: string;
 }
@@ -49,7 +46,6 @@ export function FilterMultiSelect<T extends string>({
 	showAllOption = true,
 	badgeTrigger = false,
 	badgeColorMap,
-	badgeColorClass,
 	maxBadgeDisplay = 2,
 	className,
 }: FilterMultiSelectProps<T>) {
@@ -75,7 +71,7 @@ export function FilterMultiSelect<T extends string>({
 		if (badgeColorMap) {
 			return getBadgeSolidClass(badgeColorMap[opt.value] ?? "gray");
 		}
-		return badgeColorClass?.(opt.value) ?? "bg-primary/10 text-primary";
+		return "bg-primary/10 text-primary";
 	};
 
 	return (
