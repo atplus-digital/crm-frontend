@@ -10,7 +10,7 @@
 		"prepare": "husky",
 		"test": "vitest run",
 		"build": "vite build",
-		"preview": "vite preview",
+		"start": "node dist",
 		"biome:fix": "biome check --write",
 		"format:md": "pnpm dlx prettier --write \"**/*.{md,mdx}\" --log-level=warn --no-error-on-unmatched-pattern  --cache",
 		"knip": "knip",
