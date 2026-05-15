@@ -64,7 +64,7 @@ describe("TC-UT-LK-002: applyWorkspaceLockIfNeeded skips when already locked", (
 	});
 
 	it("should not modify settings when already locked", () => {
-		const originalContent = fs.readFileSync(settingsPath, "utf-8");
+		void fs.readFileSync(settingsPath, "utf-8");
 
 		applyWorkspaceLockIfNeeded(["src/generated"], true);
 
@@ -227,8 +227,6 @@ describe("TC-UT-LK-008: Lock file path is consistent for same output dir", () =>
 
 	it("should produce consistent lock entries for same directory", () => {
 		applyWorkspaceLockIfNeeded(["src/generated"], true);
-		const settingsPath = path.join(workspaceRoot, ".vscode", "settings.json");
-		const settings1 = JSON.parse(fs.readFileSync(settingsPath, "utf-8"));
 
 		applyWorkspaceLockIfNeeded(["src/generated"], true);
 		const settings2 = JSON.parse(fs.readFileSync(settingsPath, "utf-8"));

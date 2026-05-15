@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import type { PipelineExecutionContext } from "./context";
 import { createReportsContext } from "./reports";
 
@@ -23,10 +23,10 @@ describe("TC-UT-CTX-001: PipelineExecutionContext has correct shape", () => {
 describe("TC-UT-CTX-002: PipelineExecutionContext accepts optional properties", () => {
 	it("should allow optional overrideConfig", () => {
 		const reports = createReportsContext();
-		const context: PipelineExecutionContext<string> = {
+		const context: PipelineExecutionContext<{ foo: string }> = {
 			tempDir: "/tmp/test",
 			outputDirs: ["src/generated"],
-			runtimeConfig: "{}",
+			runtimeConfig: { foo: "baz" },
 			overrideConfig: { foo: "bar" },
 			reports,
 		};

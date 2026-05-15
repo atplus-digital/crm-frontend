@@ -40,7 +40,7 @@ describe("TC-UT-CSD-001: Valid config produces correct script definition shape",
 
 		const result = createScriptTasks(mockInput);
 
-		expect(result.getOutputDirs()).toEqual([
+		expect(result.getOutputDirs({})).toEqual([
 			"src/generated/a",
 			"src/generated/b",
 		]);
@@ -65,7 +65,7 @@ describe("TC-UT-CSD-002: createPipelineOptions returns proper factory input", ()
 		};
 
 		const result = createScriptTasks(mockInput);
-		const pipelineOptions = result.createPipelineOptions();
+		const pipelineOptions = result.createPipelineOptions({});
 
 		expect(pipelineOptions).toHaveProperty("defaultConfig", {});
 		expect(pipelineOptions).toHaveProperty("getOutputDirs");
@@ -94,7 +94,7 @@ describe("TC-UT-CSD-003: Multiple stages are preserved in createCliOptions", () 
 			}),
 		};
 
-		const result = createScriptTasks(mockInput);
+		createScriptTasks(mockInput);
 		const cliOptions = mockInput.createCliOptions();
 
 		expect(cliOptions.stages).toHaveLength(3);
@@ -114,7 +114,7 @@ describe("TC-UT-CSD-004: cliOptions.name is used as label", () => {
 		};
 
 		const result = createScriptTasks(mockInput);
-		const pipelineOptions = result.createPipelineOptions();
+		const pipelineOptions = result.createPipelineOptions({});
 
 		expect(pipelineOptions.label).toBe("my-custom-label");
 	});
@@ -134,7 +134,7 @@ describe("TC-UT-CSD-005: getOutputDirs returns empty array when no outputDirs", 
 
 		const result = createScriptTasks(mockInput);
 
-		expect(result.getOutputDirs()).toEqual([]);
+		expect(result.getOutputDirs({})).toEqual([]);
 	});
 });
 
@@ -172,7 +172,7 @@ describe("TC-UT-CSD-007: Pipeline stages array is not empty", () => {
 		};
 
 		const result = createScriptTasks(mockInput);
-		const pipelineOptions = result.createPipelineOptions();
+		const pipelineOptions = result.createPipelineOptions({});
 
 		expect(pipelineOptions.stages.length).toBeGreaterThan(0);
 	});

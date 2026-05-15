@@ -5,7 +5,7 @@ const mockExecFile = vi.fn();
 vi.mock("node:child_process", async (importOriginal) => {
 	const actual = await importOriginal();
 	return {
-		...actual,
+		...(actual as object),
 		execFile: (...args: unknown[]) => mockExecFile(...args),
 		default: {
 			...(actual as object),

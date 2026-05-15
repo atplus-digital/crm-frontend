@@ -116,7 +116,7 @@ describe("lifecycle", () => {
 			newListr: vi.fn().mockReturnValue({}),
 		};
 
-		diffTempVsOutput.mockImplementation(async (ctx) => {
+		vi.mocked(diffTempVsOutput).mockImplementation(async (ctx) => {
 			ctx.hasChanges = false;
 			ctx.diffs = [];
 		});
@@ -156,7 +156,7 @@ describe("lifecycle", () => {
 			newListr: vi.fn().mockReturnValue({}),
 		};
 
-		diffTempVsOutput.mockImplementation(async (ctx) => {
+		vi.mocked(diffTempVsOutput).mockImplementation(async (ctx) => {
 			ctx.hasChanges = true;
 			ctx.diffs = [
 				{ changedFiles: ["a.ts"], unchangedFiles: [], deletedFiles: [] },
@@ -201,7 +201,7 @@ describe("lifecycle", () => {
 			newListr: vi.fn().mockReturnValue({}),
 		};
 
-		diffTempVsOutput.mockImplementation(async (ctx) => {
+		vi.mocked(diffTempVsOutput).mockImplementation(async (ctx) => {
 			ctx.hasChanges = false;
 			ctx.diffs = [];
 		});
@@ -301,7 +301,7 @@ describe("lifecycle", () => {
 
 		const options = {
 			task: mockTask as unknown as TaskRunner,
-			overrideConfig: { customKey: "customValue" },
+			overrideConfig: { basePath: "/custom" },
 			defaultConfig: { basePath: "/default" },
 			getOutputDirs: () => ["src/generated"],
 			stages: [],

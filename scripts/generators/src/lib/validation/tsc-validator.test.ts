@@ -8,7 +8,7 @@ const mockWriteFileSync = vi.hoisted(() => vi.fn());
 
 // Mock node:fs for directory existence checks
 vi.mock("node:fs", async (importOriginal) => {
-	const actual = await importOriginal();
+	const actual = (await importOriginal()) as typeof import("node:fs");
 	return {
 		...actual,
 		existsSync: mockExistsSync,
@@ -25,7 +25,8 @@ vi.mock("node:fs", async (importOriginal) => {
 
 // This mock MUST be at the top level before any imports
 vi.mock("node:child_process", async (importOriginal) => {
-	const actual = await importOriginal();
+	const actual =
+		(await importOriginal()) as typeof import("node:child_process");
 	return {
 		...actual,
 		spawn: mockSpawnFn,
@@ -167,14 +168,5 @@ describe("tsc-validator", () => {
 		expect(consoleSpy.mock.calls.length).toBeLessThanOrEqual(10);
 
 		consoleSpy.mockRestore();
-	});
-
-	// TC-UT-VAL-007: tsc not found returns false
-	// Note: Simulating synchronous spawn failure is complex with the current mock setup.
-	// The actual tsc-validator handles this via error event on the child process.
-	// Skipping for now as this requires deeper mock integration.
-	it.skip("TC-UT-VAL-007: should return false when tsc is not found", async () => {
-		// This test is skipped - spawn-not-found behavior is tested via error event handling
-		expect(true).toBe(true);
 	});
 });
