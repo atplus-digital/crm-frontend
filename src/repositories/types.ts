@@ -28,6 +28,8 @@ export interface ListParams {
 	sort?: string[];
 	filter?: Record<string, unknown> | string;
 	appends?: string[];
+	fields?: string[];
+	paginate?: boolean;
 }
 
 export type NocoBaseClient = APIClient;

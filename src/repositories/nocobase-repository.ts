@@ -29,6 +29,8 @@ class TypedNocoBaseClient {
 		collection: T,
 		params?: ListParams & {
 			appends?: Array<keyof CollectionRelationsMap[T]>;
+			fields?: Array<keyof CollectionMap[T]>;
+			paginate?: boolean;
 		},
 	): Promise<PaginatedResponse<CollectionMap[T]>> {
 		// biome-ignore lint/suspicious/noExplicitAny: NocoBase API returns unpredictable response structure, must use any
@@ -41,6 +43,8 @@ class TypedNocoBaseClient {
 				...(params?.sort && params.sort.length > 0 && { sort: params.sort }),
 				...(params?.filter && { filter: JSON.stringify(params.filter) }),
 				...(params?.appends && { appends: params.appends }),
+				...(params?.fields && { fields: params.fields }),
+				...(params?.paginate !== undefined && { paginate: params.paginate }),
 			},
 		});
 
@@ -192,6 +196,8 @@ class NocoBaseRepository {
 		collection: T,
 		params?: ListParams & {
 			appends?: Array<keyof CollectionRelationsMap[T]>;
+			fields?: Array<keyof CollectionMap[T]>;
+			paginate?: boolean;
 		},
 	): Promise<PaginatedResponse<CollectionMap[T]>> {
 		log.info("Listing from collection", { collection, params });
