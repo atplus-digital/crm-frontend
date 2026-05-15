@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 // We need to test the pure functions from atomic-writer that don't depend on external validation modules
 // The functions computeDiff, backupDir, swapTempToOutput, removeDir, cleanupTempSessionDir

@@ -196,4 +196,5 @@ export function normalizeNegociacaoFilters(
 export type NegociacaoListParams = Omit<ListParams, "filter"> & {
 	filters?: NegociacaoFilters;
 	appends?: Array<keyof NegociacoesRelations>;
+	fields?: Array<keyof Negociacoes>;
 };

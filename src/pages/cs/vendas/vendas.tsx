@@ -1,4 +1,4 @@
-import { useStore } from "@tanstack/react-store";
+import { useSelector } from "@tanstack/react-store";
 import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -49,7 +49,7 @@ const STATUS_RING_COLORS: Record<NegociacaoStatus, string> = {
 const DEFAULT_FILTERS: NegociacaoFilters = {};
 
 export function VendasPage() {
-	const user = useStore(authStore, (state) => state.user);
+	const user = useSelector(authStore, (state) => state.user);
 	const [activeStatus, setActiveStatus] = useState<NegociacaoStatus | null>(
 		null,
 	);
@@ -57,7 +57,7 @@ export function VendasPage() {
 	const { filters, handleFilterChange, page, pageSize } =
 		useListPage<NegociacaoFilters>({
 			defaultFilters: DEFAULT_FILTERS,
-			defaultPageSize: 100,
+			defaultPageSize: 10,
 			defaultSort: ["-createdAt"],
 			syncSortToUrl: false,
 		});
@@ -71,6 +71,7 @@ export function VendasPage() {
 		filters: normalizeNegociacaoFilters({
 			vendedorId: user?.id,
 		}),
+		fields: ["f_status"],
 	});
 	const cardsItems = cardsData?.data ?? [];
 
@@ -97,10 +98,10 @@ export function VendasPage() {
 		() =>
 			normalizeNegociacaoFilters({
 				...filters,
-				vendedorId: user?.id,
+				// vendedorId: user?.id,
 				...(activeStatus ? { status: activeStatus } : {}),
 			}),
-		[filters, user?.id, activeStatus],
+		[filters, activeStatus],
 	);
 
 	const { data, error, refetch } = useNegociacoes({

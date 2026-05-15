@@ -20,6 +20,7 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			"@scripts": path.resolve(__dirname, "./"),
+			"@generators": path.resolve(__dirname, "./generators/src/"),
 		},
 	},
 });

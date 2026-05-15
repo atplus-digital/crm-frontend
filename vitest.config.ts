@@ -16,8 +16,6 @@ export default defineConfig({
 			include: ["src/**/*.ts"],
 			exclude: [
 				"src/generated/**",
-				"scripts/generators/src/pipelines/generate-types/config.ts",
-				"scripts/generators/src/pipelines/generate-types/@types/**",
 				"src/_tests/global-setup.ts",
 				"src/_tests/mock-env.ts",
 			],
@@ -28,7 +26,6 @@ export default defineConfig({
 			"#": path.resolve(__dirname, "./src"),
 			"@": path.resolve(__dirname, "./src"),
 			"@scripts": path.resolve(__dirname, "./scripts"),
-			"@generators": path.resolve(__dirname, "./scripts/generators/src"),
 		},
 	},
 });
