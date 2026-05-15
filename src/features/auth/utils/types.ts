@@ -48,12 +48,12 @@ export interface AuthState {
 }
 
 export interface LoginCredentials {
-	email: string;
+	account: string;
 	password: string;
 }
 
 export interface ResetPasswordRequest {
-	email: string;
+	account: string;
 }
 
 export interface ResetPasswordConfirm {

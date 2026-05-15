@@ -23,7 +23,7 @@ const log = createLogger("auth");
 export async function signIn(
 	credentials: LoginCredentials,
 ): Promise<{ token: string; user: AuthUser }> {
-	log.info("Sign in attempt", { email: credentials.email });
+	log.info("Sign in attempt", { account: credentials.account });
 	const rawResponse = await nocobaseRepository.signIn(credentials);
 	const responseData = rawResponse.data?.data;
 	const parsed = authResponseSchema.safeParse(responseData);
@@ -81,9 +81,9 @@ export async function checkAuth(): Promise<AuthUser> {
 	return user;
 }
 
-export async function requestPasswordReset(email: string): Promise<void> {
-	log.info("Password reset requested", { email });
-	const payload: ResetPasswordRequest = { email };
+export async function requestPasswordReset(account: string): Promise<void> {
+	log.info("Password reset requested", { account });
+	const payload: ResetPasswordRequest = { account };
 
 	await nocobaseRepository.request({
 		url: "auth:lostPassword",

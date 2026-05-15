@@ -250,10 +250,10 @@ class NocoBaseRepository {
 	}
 
 	async signIn(credentials: {
-		email: string;
+		account: string;
 		password: string;
 	}): Promise<{ data: { data: { token: string; user: unknown } } }> {
-		log.info("Sign in attempt", { email: credentials.email });
+		log.info("Sign in attempt", { account: credentials.account });
 		return await this.client.auth.signIn(credentials);
 	}
 
