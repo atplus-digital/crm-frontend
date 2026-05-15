@@ -31,7 +31,7 @@ import {
 	renderReportsMarkdown,
 } from "@generators/lib/pipeline/reports";
 
-import type { TaskRunner } from "../types";
+import type { TaskRunner } from "@shared/types";
 // Import the module under test using relative paths
 import {
 	backupCurrentOutput,

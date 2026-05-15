@@ -1,0 +1,9 @@
+services:
+  crm-atplus:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crm-atplus
+    ports:
+      - "8080:80"
+    restart: unless-stopped

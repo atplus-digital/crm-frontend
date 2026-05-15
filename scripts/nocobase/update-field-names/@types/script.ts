@@ -2,7 +2,7 @@
  * Types for the update-field-names pipeline.
  */
 
-import type { TaskRunner } from "@generators/lib/types";
+import type { TaskRunner } from "@shared/types";
 
 /** Credentials for the NocoBase API */
 export interface NocoBaseCredentials {
@@ -27,10 +27,22 @@ export interface FieldUpdateResult {
 	errorMessage?: string;
 }
 
+/**
+ * NocoBase uiSchema — opaque record.
+ * Uses index signature because NocoBase can add arbitrary keys
+ * (x-component, x-component-designer, x-read-pretty, x-use-component-props, etc.).
+ * We only override `title`; everything else passes through unchanged.
+ */
+export type UiSchema = Record<string, unknown>;
+
+/** Lookup map: `${datasourceKey}.${collectionName}.${fieldName}` → uiSchema */
+export type FieldUiSchemaLookup = Map<string, UiSchema | undefined>;
+
 /** Pipeline context carried through all Listr2 tasks */
 export interface PipelineContext {
 	credentials: NocoBaseCredentials;
 	updates: FieldUpdateRequest[];
+	fieldLookup: FieldUiSchemaLookup;
 	results: FieldUpdateResult[];
 }
 

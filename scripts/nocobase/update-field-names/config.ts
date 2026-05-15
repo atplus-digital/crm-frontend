@@ -18,9 +18,7 @@ type DatasourceCollectionsMap = {
 
 export const fieldNameConfig = {
 	d_db_ixcsoft: {
-		cidade: {
-			distrito_cod: "Distrito Cod",
-		},
+		cidade: {},
 		cliente_contrato: {},
 		fn_areceber: {},
 		radusuarios: {},

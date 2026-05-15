@@ -44,7 +44,7 @@ import * as fs from "node:fs";
 import { applyWorkspaceLockIfNeeded } from "@generators/lib/io/locker";
 import { createReportsContext } from "@generators/lib/pipeline/reports";
 import { runPipelineStages } from "@generators/lib/pipeline/runner";
-import type { TaskRunner } from "../types";
+import type { TaskRunner } from "@shared/types";
 import { runStandardPipeline } from "./lifecycle";
 import {
 	backupCurrentOutput,

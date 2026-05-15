@@ -21,6 +21,7 @@ export default defineConfig({
 		alias: {
 			"@scripts": path.resolve(__dirname, "./"),
 			"@generators": path.resolve(__dirname, "./generators/src/"),
+			"@shared": path.resolve(__dirname, "./shared/"),
 		},
 	},
 });

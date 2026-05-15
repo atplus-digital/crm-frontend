@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
-import type { TaskRunner } from "@generators/lib/types";
+import type { TaskRunner } from "@shared/types";
 import type { DataSourceGenerationConfig } from "../@types/script";
 import type {
 	GenerateFileWrite,

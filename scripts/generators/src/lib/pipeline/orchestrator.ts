@@ -1,8 +1,8 @@
 import { runStandardPipeline } from "@scripts/generators/src/lib/lifecycle/lifecycle";
+import { env } from "@shared/utils/env";
 import type { ListrTask } from "listr2";
 import { Listr } from "listr2";
 import type { GeneratorDefinition } from "../types";
-import { env } from "../utils/env";
 
 type OrchestratorOptions = {
 	concurrent?: boolean;

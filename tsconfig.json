@@ -10,7 +10,8 @@
 			"#/*": ["./src/*"],
 			"@/*": ["./src/*"],
 			"@scripts/*": ["./scripts/*"],
-			"@generators/*": ["./scripts/generators/src/*"]
+			"@generators/*": ["./scripts/generators/src/*"],
+			"@shared/*": ["./scripts/shared/*"]
 		},
 		"lib": ["ES2022", "DOM", "DOM.Iterable"],
 		"types": ["vite/client"],

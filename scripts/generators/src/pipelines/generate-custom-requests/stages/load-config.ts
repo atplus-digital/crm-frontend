@@ -1,7 +1,7 @@
 import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
-import type { TaskRunner } from "@generators/lib/types";
 import { requestsConfig } from "@scripts/generators/config/requests";
-import { resolveNocoBaseEnv } from "@scripts/generators/src/lib/utils/env";
+import type { TaskRunner } from "@shared/types";
+import { resolveNocoBaseEnv } from "@shared/utils/env";
 import type {
 	ManualRegistryEntry,
 	RequestsMap,

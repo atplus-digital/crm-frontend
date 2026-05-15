@@ -6,7 +6,6 @@
 
 import { z } from "zod";
 import { ufBaseSchema } from "../uf/schemas";
-import { cidadeOrigemSchema } from "./labels";
 
 export const CIDADE_TABLE_NAME = "cidade";
 
@@ -25,7 +24,7 @@ export const cidadeBaseSchema = z.object({
 	latitude: z.string(),
 	longitude: z.string(),
 	nome: z.string(),
-	origem: cidadeOrigemSchema,
+	origem: z.string(),
 	regiao: z.string(),
 	uf: z.number(),
 });

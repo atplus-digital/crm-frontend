@@ -1,5 +1,5 @@
+import type { TaskRunner } from "@shared/types";
 import { describe, expect, it, vi } from "vitest";
-import type { TaskRunner } from "../types";
 import { runPipelineStages } from "./runner";
 
 // Mock TaskRunner

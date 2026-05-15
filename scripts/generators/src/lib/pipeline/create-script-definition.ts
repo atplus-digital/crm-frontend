@@ -1,11 +1,7 @@
+import type { OrchestrationTaskRunner, TaskRunner } from "@shared/types";
 import type { CreateScriptTasksInput } from "../../generator-registry";
 import type { PipelineJsonReportResult } from "../lifecycle/lifecycle-tasks";
-import type {
-	GeneratorDefinition,
-	OrchestrationTaskResult,
-	OrchestrationTaskRunner,
-	TaskRunner,
-} from "../types";
+import type { GeneratorDefinition, OrchestrationTaskResult } from "../types";
 
 //@ ──────────────────────────────────────────────
 //@ Local types (no Logger)

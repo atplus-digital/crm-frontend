@@ -1,7 +1,6 @@
 import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
-import type { TaskRunner } from "@generators/lib/types";
 import {
 	toDataSourceOutputFolder,
 	toSafePathSegment,
@@ -10,6 +9,7 @@ import {
 	escapeString,
 	serializePayloadData,
 } from "@scripts/generators/src/lib/utils/strings";
+import type { TaskRunner } from "@shared/types";
 import type { CollectionSchemaMapping } from "../@types/collection-schema";
 import type { GeneratedRegistryEntry } from "../@types/generated-registry";
 import type { RequestsMap, ScriptConfig } from "../@types/script-config";

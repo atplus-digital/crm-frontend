@@ -5,9 +5,10 @@
  * Não usa runStandardPipeline (que é para pipelines com atomic write de arquivos).
  */
 
-import type { TaskRunner } from "@generators/lib/types";
+import type { TaskRunner } from "@shared/types";
 import { Listr } from "listr2";
 import type { PipelineContext } from "./@types/script";
+import { fetchExistingFields } from "./stages/fetch-existing-fields";
 import { resolveConfig } from "./stages/resolve-config";
 import { updateFields } from "./stages/update-fields";
 
@@ -16,13 +17,15 @@ import { updateFields } from "./stages/update-fields";
  *
  * Stages:
  *   1. Resolve config — loads NocoBase credentials and flattens fieldNameConfig
- *   2. Update fields — sends POST requests for each field label (sub-tasks per field)
- *   3. Summary — prints results
+ *   2. Fetch existing fields — 1 GET/datasource → lookup map of uiSchema per field
+ *   3. Update fields — sends POST requests for each field label (sub-tasks per field)
+ *   4. Summary — prints results
  */
 export async function runUpdateFieldNamesPipeline(): Promise<void> {
 	const initialContext: PipelineContext = {
 		credentials: { baseUrl: "", token: "", timeoutMs: 30_000 },
 		updates: [],
+		fieldLookup: new Map(),
 		results: [],
 	};
 
@@ -31,6 +34,12 @@ export async function runUpdateFieldNamesPipeline(): Promise<void> {
 			title: "Resolvendo configuração e credenciais",
 			task: async (ctx: PipelineContext, task: TaskRunner) => {
 				await resolveConfig(ctx, task);
+			},
+		},
+		{
+			title: "Buscando uiSchema existente dos campos",
+			task: async (ctx: PipelineContext, task: TaskRunner) => {
+				await fetchExistingFields(ctx, task);
 			},
 		},
 		{

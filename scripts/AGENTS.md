@@ -1,4 +1,4 @@
-<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-09 -->
+<!-- Managed by agent: keep sections and order; edit content, not structure. Last updated: 2026-05-15 -->
 
 # AGENTS.md — scripts/
 
@@ -18,19 +18,23 @@ Automation scripts for development workflow — type generation from NocoBase/IX
 scripts/
 ├── code-check/              # Standalone git-hook utilities
 │   └── typecheck-staged.ts  # Incremental tsc for staged .ts/.tsx files
-└── generators/              # Code generation framework
-    ├── tsconfig.generated.json  # TSConfig for validating generated output
-    └── src/
-        ├── index.ts              # Main entry: runOrchestrator
-        ├── generator-registry.ts # Pipeline registry
-        ├── config/               # Datasource + custom request config
-        │   ├── datasources.ts
-        │   └── requests.ts
-        ├── lib/                  # Shared library (context, lifecycle, I/O, HTTP, utils, validation)
-        ├── pipelines/
-        │   ├── generate-types/            # NocoBase + IXC type generation (5 stages)
-        │   └── generate-custom-requests/  # Custom request registry generation (6 stages)
-        └── AGENTS.md        # Shared library conventions
+├── generators/              # Code generation framework
+│   ├── tsconfig.generated.json  # TSConfig for validating generated output
+│   └── src/
+│       ├── index.ts              # Main entry: runOrchestrator
+│       ├── generator-registry.ts # Pipeline registry
+│       ├── config/               # Datasource + custom request config
+│       │   ├── datasources.ts
+│       │   └── requests.ts
+│       ├── lib/                  # Shared library (context, lifecycle, I/O, HTTP, utils, validation)
+│       ├── pipelines/
+│       │   ├── generate-types/            # NocoBase + IXC type generation (5 stages)
+│       │   └── generate-custom-requests/  # Custom request registry generation (6 stages)
+│       └── AGENTS.md        # Shared library conventions
+└── shared/                   # Shared utilities extracted from generators
+    ├── http/                 # HTTP client, NocoBase client
+    ├── utils/                # Environment utilities
+    └── types.ts              # Shared script types
 ```
 
 <!-- AGENTS-GENERATED:END structure -->
@@ -44,7 +48,7 @@ scripts/
 | Add a new NocoBase/IXC collection type | `generators/src/pipelines/generate-types/`           | Add to `datasources.config.ts`, then run `pnpm generate:types` |
 | Add a new custom request               | `generators/src/pipelines/generate-custom-requests/` | Add to `requests.config.ts`, then run `pnpm generate:requests` |
 | Fix generation pipeline bugs           | `generators/src/pipelines/<pipeline>/`               | Follow the stage-by-stage pipeline pattern                     |
-| Add shared utility                     | `generators/src/lib/`                                | No barrel `index.ts` — direct imports only                     |
+| Add shared utility                     | `shared/`                                            | HTTP clients, env utils — extracted from generators/src/lib    |
 | Fix incremental type checking          | `code-check/typecheck-staged.ts`                     | Standalone, no dependency on generators                        |
 | Modify pipeline lifecycle              | `generators/src/lib/lifecycle/`                      | `runStandardPipeline` in `lifecycle.ts`                        |
 | Modify pipeline context/reports        | `generators/src/lib/pipeline/`                       | `PipelineExecutionContext` + `addJsonReport`                   |

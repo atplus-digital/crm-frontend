@@ -1,17 +1,14 @@
 import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
 import type { AsyncPipelineStage } from "@generators/lib/pipeline/runner";
 import type { PipelineJsonReportResult } from "@scripts/generators/src/lib/lifecycle/lifecycle-tasks";
-import type { ListrTaskResult, ListrTaskWrapper } from "listr2";
+import type { OrchestrationTaskRunner, TaskRunner } from "@shared/types";
+import type { ListrTaskResult } from "listr2";
 
 // ──────────────────────────────────────────────
-// Shared types
+// Shared types (re-exported from @shared/types for backward compat)
 // ──────────────────────────────────────────────
 
-/**
- * Type alias for the Listr2 task wrapper used across pipeline orchestration.
- */
-// biome-ignore lint/suspicious/noExplicitAny: Listr2 requires unconstrained renderer generics
-export type TaskRunner = ListrTaskWrapper<any, any, any>;
+export type { OrchestrationTaskRunner, TaskRunner };
 
 // ──────────────────────────────────────────────
 // Generator definitions
@@ -51,8 +48,6 @@ type StandardPipelineFactoryInput<
 // ──────────────────────────────────────────────
 // Orchestration
 // ──────────────────────────────────────────────
-
-export type OrchestrationTaskRunner = TaskRunner;
 
 type NestedTaskList = ReturnType<OrchestrationTaskRunner["newListr"]>;
 

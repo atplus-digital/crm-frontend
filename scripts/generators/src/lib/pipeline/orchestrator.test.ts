@@ -5,7 +5,7 @@ vi.mock("@scripts/generators/src/lib/lifecycle/lifecycle", () => ({
 	runStandardPipeline: vi.fn().mockResolvedValue(undefined),
 }));
 
-vi.mock("@scripts/generators/src/lib/utils/env", () => ({
+vi.mock("@shared/utils/env", () => ({
 	env: {
 		VITE_LOG_LEVEL: "info",
 	},

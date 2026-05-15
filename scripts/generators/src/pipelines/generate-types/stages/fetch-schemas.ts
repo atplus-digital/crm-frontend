@@ -1,5 +1,5 @@
 import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
-import type { TaskRunner } from "@generators/lib/types";
+import type { TaskRunner } from "@shared/types";
 import type { CollectionTypesMap, RelationInfo } from "../@types/generation";
 import type {
 	DataSourceClient,

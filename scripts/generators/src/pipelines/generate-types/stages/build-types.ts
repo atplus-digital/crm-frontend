@@ -1,5 +1,5 @@
 import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
-import type { TaskRunner } from "@generators/lib/types";
+import type { TaskRunner } from "@shared/types";
 import type { CollectionTypesMap } from "../@types/generation";
 import type { DataSourceGenerationConfig } from "../@types/script";
 import type { GenerateTypesPipelineCtx } from "./fetch-schemas";

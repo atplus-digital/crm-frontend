@@ -5,9 +5,6 @@
  */
 import type { z } from "zod";
 
-// Re-exports: Labels + Enums
-export * from "./labels";
-
 // Re-exports: Schemas
 export * from "./schemas";
 

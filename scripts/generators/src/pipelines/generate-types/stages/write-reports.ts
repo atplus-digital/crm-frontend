@@ -1,6 +1,6 @@
 import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
 import { addJsonReport } from "@generators/lib/pipeline/reports";
-import type { TaskRunner } from "@generators/lib/types";
+import type { TaskRunner } from "@shared/types";
 import type { DataSourceGenerationConfig } from "../@types/script";
 import type { GenerateTypesPipelineCtx } from "./fetch-schemas";
 

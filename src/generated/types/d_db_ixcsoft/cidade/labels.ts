@@ -4,8 +4,6 @@
  * biome-ignore-all lint/suspicious/noEmptyInterface: auto-generated
  */
 
-import { z } from "zod";
-
 // ============================================================
 // LABELS (single source of truth)
 // ============================================================
@@ -15,31 +13,14 @@ export const CIDADE_FIELD_LABELS = {
 	cod_ibge: "cod_ibge",
 	cod_siafi: "cod_siafi",
 	codigo: "codigo",
-	distrito_cod: "distrito_cod",
+	distrito_cod: "Distrito Cod",
 	distrito_desc: "distrito_desc",
 	f_uf: "UF",
 	id: "id",
 	latitude: "latitude",
 	longitude: "longitude",
 	nome: "nome",
-	origem: "origem",
+	origem: "Origem",
 	regiao: "regiao",
 	uf: "uf",
 } as const;
-
-export const CIDADE_ORIGEM_LABELS = {
-	N: "N",
-	I: "I",
-} as const;
-
-// ============================================================
-// ENUM SCHEMAS (validação em runtime)
-// ============================================================
-export const cidadeOrigemSchema = z.enum(["N", "I"], {
-	error: () => ({ message: "origem: valores válidos são [N, I]" }),
-});
-
-// ============================================================
-// ENUM TYPES (inferidos dos schemas)
-// ============================================================
-export type CidadeOrigem = z.infer<typeof cidadeOrigemSchema>;

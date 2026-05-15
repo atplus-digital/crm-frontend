@@ -1,4 +1,4 @@
-import { fetchJsonWithAuth } from "@generators/lib/http/http-client";
+import { fetchJsonWithAuth } from "@shared/http/http-client";
 
 export interface NocoBaseApiCredentials {
 	baseUrl: string;

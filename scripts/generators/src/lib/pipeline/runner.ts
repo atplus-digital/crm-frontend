@@ -1,4 +1,4 @@
-import type { TaskRunner } from "@generators/lib/types";
+import type { TaskRunner } from "@shared/types";
 import type { ListrTaskResult } from "listr2";
 
 type PipelineStageResult<TContext> =

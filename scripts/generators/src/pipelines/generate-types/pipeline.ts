@@ -1,17 +1,17 @@
 import * as path from "node:path";
-import { NocoBaseApiClient } from "@generators/lib/http/nocobase-client";
 import type { PipelineExecutionContext } from "@generators/lib/pipeline/context";
 import {
 	type AsyncPipelineStage,
 	runPipelineStages,
 } from "@generators/lib/pipeline/runner";
-import type { OrchestrationTaskRunner } from "@generators/lib/types";
 import { toDataSourceOutputFolder } from "@generators/lib/utils/path-utils";
 import { runStandardPipeline } from "@scripts/generators/src/lib/lifecycle/lifecycle";
+import { NocoBaseApiClient } from "@shared/http/nocobase-client";
+import type { OrchestrationTaskRunner } from "@shared/types";
+import { resolveNocoBaseEnv } from "@shared/utils/env";
 import type { ListrTaskResult } from "listr2";
 import { dataSourceConfigs } from "../../../config/datasources";
 import type { RunGeneratorCliOptions } from "../../lib/pipeline/create-script-definition";
-import { resolveNocoBaseEnv } from "../../lib/utils/env";
 import type {
 	DataSourceClient,
 	DataSourceCollection,

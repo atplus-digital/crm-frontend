@@ -1,4 +1,4 @@
-import { resolveNocoBaseEnv } from "@generators/lib/utils/env";
+import { resolveNocoBaseEnv } from "@shared/utils/env";
 import type { PipelineContext } from "../@types/script";
 import { fieldNameConfig } from "../config.js";
 
@@ -7,7 +7,7 @@ import { fieldNameConfig } from "../config.js";
  */
 export async function resolveConfig(
 	ctx: PipelineContext,
-	task: import("@generators/lib/types").TaskRunner,
+	task: import("@shared/types").TaskRunner,
 ): Promise<void> {
 	const env = resolveNocoBaseEnv();
 	ctx.credentials = {

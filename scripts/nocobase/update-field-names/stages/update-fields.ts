@@ -1,11 +1,13 @@
-import type { TaskRunner } from "@generators/lib/types";
+import type { TaskRunner } from "@shared/types";
 import type { Listr } from "listr2";
-import type { PipelineContext } from "../@types/script";
+import type { PipelineContext, UiSchema } from "../@types/script";
 
 /**
- * Stage 2 — Execute all field label updates via NocoBase API.
+ * Stage 3 — Execute all field label updates via NocoBase API.
  *
  * Each update is a sub-task in Listr2, showing progress per field.
+ * Merges existing uiSchema from lookup with the new title before POST,
+ * preserving all other uiSchema properties (enum, x-component, etc.).
  * Returns undefined when there are no updates (skips sub-task creation).
  */
 export function updateFields(
@@ -31,6 +33,14 @@ export function updateFields(
 			);
 
 			try {
+				const lookupKey = `${request.datasourceKey}.${request.collectionName}.${request.fieldName}`;
+				const existingUiSchema = ctx.fieldLookup.get(lookupKey);
+
+				const mergedUiSchema: UiSchema = {
+					...(existingUiSchema ?? {}),
+					title: request.newLabel,
+				};
+
 				const response = await fetch(
 					`${endpoint}?filterByTk=${request.fieldName}`,
 					{
@@ -40,7 +50,7 @@ export function updateFields(
 							"Content-Type": "application/json",
 						},
 						body: JSON.stringify({
-							uiSchema: { title: request.newLabel },
+							uiSchema: mergedUiSchema,
 						}),
 						signal: controller.signal,
 					},

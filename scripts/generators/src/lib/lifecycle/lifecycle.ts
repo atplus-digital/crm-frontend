@@ -2,7 +2,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { applyWorkspaceLockIfNeeded } from "@generators/lib/io/locker";
 import { createReportsContext } from "@generators/lib/pipeline/reports";
-import type { TaskRunner } from "@generators/lib/types";
+import type { TaskRunner } from "@shared/types";
 import type { PipelineExecutionContext } from "../pipeline/context";
 import { type AsyncPipelineStage, runPipelineStages } from "../pipeline/runner";
 import type {
