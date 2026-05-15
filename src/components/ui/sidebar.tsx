@@ -262,7 +262,7 @@ function SidebarTrigger({
 	const { toggleSidebar } = useSidebar();
 
 	return (
-		<Tooltip>
+		<Tooltip delayDuration={800}>
 			<TooltipTrigger asChild>
 				<Button
 					data-sidebar="trigger"
