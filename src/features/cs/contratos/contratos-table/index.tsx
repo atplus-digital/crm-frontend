@@ -4,14 +4,14 @@ import { FilterProvider } from "#/components/filters";
 import { DataTableContainer } from "#/components/table/data-table-container";
 import type { ContratosTableFilters } from "#/features/cs/contratos/contratos-types";
 import {
-	ContratoStatus,
+	// ContratoStatus,
 	toContratoFilters,
 } from "#/features/cs/contratos/contratos-types";
 
 export const DEFAULT_CONTRATOS_TABLE_FILTERS: ContratosTableFilters = {
 	cpfCnpj: "",
 	nome: "",
-	status: JSON.stringify([ContratoStatus.Ativo]),
+	status: "[]",
 	servicoStatus: JSON.stringify([]),
 	contratoId: "",
 };

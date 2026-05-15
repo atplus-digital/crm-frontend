@@ -5,7 +5,7 @@ import type {
 	PessoasAnaliseIxc,
 } from "#/generated/types/nocobase/pessoas";
 import { getErrorMessage } from "#/lib/api-errors";
-import { buildFilter, eq, includes } from "#/lib/filter-builder";
+import { buildFilter, eq, includes, or } from "#/lib/filter-builder";
 import { createLogger } from "#/lib/logger";
 import { nocobaseRepository } from "#/repositories";
 import type {
@@ -241,8 +241,7 @@ async function doSearchPessoasFisicas(
 	query: string,
 ): Promise<Pick<Pessoas, "id" | "f_nome" | "f_cpf" | "f_credito">[]> {
 	const filter = buildFilter([
-		includes("f_nome", query),
-		includes("f_cpf", query),
+		or(includes("f_nome", query), includes("f_cpf", query)),
 	]);
 
 	const response = await nocobaseRepository.list("t_pessoas", {
@@ -267,8 +266,7 @@ export async function searchPessoasJuridicas(
 
 	try {
 		const filter = buildFilter([
-			includes("f_razao_social", query),
-			includes("f_cnpj", query),
+			or(includes("f_razao_social", query), includes("f_cnpj", query)),
 		]);
 
 		const response = await nocobaseRepository.list("t_empresas", {
