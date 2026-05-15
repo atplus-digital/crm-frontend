@@ -1,9 +1,16 @@
 import {
+	BadgeDollarSign,
+	Building2,
+	FileCheck2,
 	FileText,
 	FlaskConical,
 	Handshake,
 	LayoutDashboard,
-	Users,
+	MapPinned,
+	PauseCircle,
+	Repeat,
+	UserRound,
+	UsersRound,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import type { AppRoutePath } from "#/routes/route-paths";
@@ -48,77 +55,6 @@ interface NavSection {
 
 export const APP_NAV_SECTIONS: NavSection[] = [
 	{
-		label: "Customer Success",
-		icon: <Users className="size-4" />,
-		to: routePaths.cs_dashboard,
-		matches: [CS_SECTION_PREFIX],
-		items: [
-			{
-				label: "Dashboard",
-				icon: <LayoutDashboard />,
-				to: routePaths.cs_dashboard,
-			},
-			{
-				label: "Clientes",
-				icon: <Users />,
-				to: routePaths.cs_contratos,
-				defaultOpen: true,
-				children: [
-					{
-						label: "Contratos",
-						icon: <FileText />,
-						to: routePaths.cs_contratos,
-					},
-					{
-						label: "Pessoas",
-						icon: <Users />,
-						to: routePaths.cs_pessoas,
-					},
-					{
-						label: "Vendas",
-						icon: <Users />,
-						to: routePaths.cs_vendas,
-					},
-					{
-						label: "Propostas",
-						icon: <Users />,
-						to: routePaths.cs_propostas,
-					},
-				],
-			},
-
-			{
-				label: "Operações",
-				icon: <Handshake />,
-				to: routePaths.cs_negociacoes,
-				defaultOpen: true,
-				children: [
-					{
-						label: "Negociações",
-						icon: <Handshake />,
-						to: routePaths.cs_negociacoes,
-					},
-
-					{
-						label: "Troca de Titularidade",
-						icon: <FileText />,
-						to: routePaths.cs_troca_de_titularidade,
-					},
-					{
-						label: "Troca de Endereço",
-						icon: <FileText />,
-						to: routePaths.cs_troca_de_endereco,
-					},
-					{
-						label: "Suspensão de Contrato",
-						icon: <FileText />,
-						to: routePaths.cs_suspensao_de_contrato,
-					},
-				],
-			},
-		],
-	},
-	{
 		label: "Testes",
 		icon: <FlaskConical className="size-4" />,
 		to: routePaths.testes,
@@ -128,6 +64,77 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 				label: "Testes",
 				icon: <FlaskConical />,
 				to: routePaths.testes,
+			},
+		],
+	},
+	{
+		label: "Customer Success",
+		icon: <UsersRound className="size-4" />,
+		to: routePaths.cs_dashboard,
+		matches: [CS_SECTION_PREFIX],
+		items: [
+			{
+				label: "Dashboard",
+				icon: <LayoutDashboard />,
+				to: routePaths.cs_dashboard,
+			},
+			{
+				label: "Comercial",
+				icon: <Building2 />,
+				to: routePaths.cs_contratos,
+				defaultOpen: true,
+				children: [
+					{
+						label: "Pessoas",
+						icon: <UserRound />,
+						to: routePaths.cs_pessoas,
+					},
+					{
+						label: "Vendas",
+						icon: <BadgeDollarSign />,
+						to: routePaths.cs_vendas,
+					},
+					{
+						label: "Propostas",
+						icon: <FileCheck2 />,
+						to: routePaths.cs_propostas,
+					},
+				],
+			},
+
+			{
+				label: "Clientes",
+				icon: <Handshake />,
+				to: routePaths.cs_negociacoes,
+				defaultOpen: true,
+				children: [
+					{
+						label: "Contratos",
+						icon: <FileText />,
+						to: routePaths.cs_contratos,
+					},
+					{
+						label: "Negociações",
+						icon: <Handshake />,
+						to: routePaths.cs_negociacoes,
+					},
+
+					{
+						label: "Troca de Titularidade",
+						icon: <Repeat />,
+						to: routePaths.cs_troca_de_titularidade,
+					},
+					{
+						label: "Troca de Endereço",
+						icon: <MapPinned />,
+						to: routePaths.cs_troca_de_endereco,
+					},
+					{
+						label: "Suspensão de Contrato",
+						icon: <PauseCircle />,
+						to: routePaths.cs_suspensao_de_contrato,
+					},
+				],
 			},
 		],
 	},
