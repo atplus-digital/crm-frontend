@@ -19,6 +19,7 @@ import {
 } from "#/features/cs/negociacoes/negociacoes-types";
 import { VendasFilters } from "#/features/cs/vendas/vendas-filters/vendas-filters";
 import { useVendedores } from "#/features/cs/vendas/vendas-hooks";
+import type { NegociacoesMotivo } from "#/generated/types/nocobase/negociacoes";
 import { useListPage } from "#/hooks/use-list-page";
 import { getErrorMessage } from "#/lib/api-errors";
 import { cn } from "#/lib/utils";
@@ -47,6 +48,7 @@ const STATUS_RING_COLORS: Record<NegociacaoStatus, string> = {
 };
 
 const DEFAULT_FILTERS: NegociacaoFilters = {};
+const VENDAS_MOTIVOS: NegociacoesMotivo[] = ["I", "S"];
 
 export function VendasPage() {
 	const user = useSelector(authStore, (state) => state.user);
@@ -54,25 +56,27 @@ export function VendasPage() {
 		null,
 	);
 
-	const { filters, handleFilterChange, page, pageSize } =
+	const { filters, handleFilterChange, page, pageSize, setPage, setPageSize } =
 		useListPage<NegociacaoFilters>({
 			defaultFilters: DEFAULT_FILTERS,
 			defaultPageSize: 10,
 			defaultSort: ["-createdAt"],
 			syncSortToUrl: false,
 		});
+
 	const { data: vendedores } = useVendedores();
 
 	// Cards always show the current user's totals regardless of table filters
-	// TODO: pageSize 200 is a known limitation — a server-side aggregation endpoint would be better
 	const { data: cardsData } = useNegociacoes({
-		page: 1,
-		pageSize: 200,
+		paginate: false,
 		filters: normalizeNegociacaoFilters({
+			motivo: VENDAS_MOTIVOS,
 			vendedorId: user?.id,
 		}),
 		fields: ["f_status"],
+		appends: [],
 	});
+
 	const cardsItems = cardsData?.data ?? [];
 
 	// Count per status for the cards
@@ -98,6 +102,7 @@ export function VendasPage() {
 		() =>
 			normalizeNegociacaoFilters({
 				...filters,
+				motivo: VENDAS_MOTIVOS,
 				// vendedorId: user?.id,
 				...(activeStatus ? { status: activeStatus } : {}),
 			}),
@@ -184,10 +189,14 @@ export function VendasPage() {
 				) : (
 					<NegociacoesList
 						negociacoes={negociacoes}
+						page={page}
 						totalCount={data?.meta?.total ?? 0}
-						pageSize={data?.meta?.pageSize ?? 15}
+						totalPages={data?.meta?.totalPage ?? 1}
+						pageSize={pageSize}
 						onRefresh={() => refetch()}
 						onExport={handleExport}
+						onPageChange={setPage}
+						onPageSizeChange={setPageSize}
 					/>
 				)}
 			</div>

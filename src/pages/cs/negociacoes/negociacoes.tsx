@@ -15,7 +15,7 @@ import { getErrorMessage } from "#/lib/api-errors";
 const DEFAULT_FILTERS: NegociacaoFilters = {};
 
 export function NegociacoesPage() {
-	const { filters, handleFilterChange, page, pageSize } =
+	const { filters, handleFilterChange, page, pageSize, setPage, setPageSize } =
 		useListPage<NegociacaoFilters>({
 			defaultFilters: DEFAULT_FILTERS,
 			defaultPageSize: 15,
@@ -56,10 +56,14 @@ export function NegociacoesPage() {
 				) : (
 					<NegociacoesList
 						negociacoes={negociacoes}
+						page={page}
 						totalCount={data?.meta?.total ?? 0}
+						totalPages={data?.meta?.totalPage ?? 1}
 						pageSize={pageSize}
 						onRefresh={() => refetch()}
 						onExport={handleExport}
+						onPageChange={setPage}
+						onPageSizeChange={setPageSize}
 					/>
 				)}
 			</div>

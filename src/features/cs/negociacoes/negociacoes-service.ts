@@ -29,6 +29,8 @@ export async function fetchNegociacoes(
 			sort = ["-createdAt"],
 			filters,
 			appends = ["f_vendedor", "f_pessoa", "f_negociacao_pessoa_juridica"],
+			fields,
+			paginate,
 		} = params;
 
 		const filter = buildNegociacaoFilter(filters);
@@ -41,6 +43,12 @@ export async function fetchNegociacoes(
 			>,
 			...(sort.length > 0 && { sort }),
 			...(filter && { filter }),
+			...(fields && {
+				fields: fields as Array<
+					keyof import("#/generated/types/nocobase/negociacoes").Negociacoes
+				>,
+			}),
+			...(paginate !== undefined && { paginate }),
 		});
 
 		return {

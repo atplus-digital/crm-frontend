@@ -92,7 +92,7 @@ export const NEGOCIACAO_SUBSTATUS_VARIANTS: Record<
 export interface NegociacaoFilters {
 	titulo?: string;
 	contratoIxc?: string;
-	motivo?: NegociacoesMotivo;
+	motivo?: NegociacoesMotivo | NegociacoesMotivo[];
 	status?: NegociacoesStatus;
 	substatus?: string;
 

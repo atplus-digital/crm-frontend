@@ -10,7 +10,9 @@ interface NegociacoesListProps {
 	negociacoes?: NegociacaoItem[];
 	isLoading?: boolean;
 	hasInitialQueryData?: boolean;
+	page?: number;
 	totalCount?: number;
+	totalPages?: number;
 	pageSize?: number;
 	onRefresh?: () => void;
 	onExport?: () => void;
@@ -22,7 +24,9 @@ export function NegociacoesList({
 	negociacoes = [],
 	isLoading,
 	hasInitialQueryData,
+	page = 1,
 	totalCount = 0,
+	totalPages = 1,
 	pageSize = 15,
 	onRefresh,
 	onExport,
@@ -36,6 +40,8 @@ export function NegociacoesList({
 			isLoading={isLoading}
 			hasInitialQueryData={hasInitialQueryData}
 			total={totalCount}
+			totalPages={totalPages}
+			initialPage={page}
 			initialPageSize={pageSize}
 			emptyMessage="Nenhuma negociação encontrada"
 			onPageChange={onPageChange}

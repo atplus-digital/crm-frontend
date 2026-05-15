@@ -57,7 +57,14 @@ export function buildNegociacaoFilter(
 	}
 
 	if (filters.motivo) {
-		conditions.push(eq("f_motivo", filters.motivo));
+		if (Array.isArray(filters.motivo)) {
+			const motivos = filters.motivo.filter(Boolean);
+			if (motivos.length > 0) {
+				conditions.push(or(...motivos.map((motivo) => eq("f_motivo", motivo))));
+			}
+		} else {
+			conditions.push(eq("f_motivo", filters.motivo));
+		}
 	}
 
 	if (filters.fidelidade) {
