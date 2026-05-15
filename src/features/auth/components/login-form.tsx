@@ -18,7 +18,7 @@ import { extractNocoBaseError } from "#/lib/api-errors";
 import { routePaths } from "#/routes/route-paths";
 
 const loginSchema = z.object({
-	email: z.email("E-mail inválido"),
+	account: z.string().min(1, "Obrigatório"),
 	password: z.string().min(1, "Senha é obrigatória"),
 });
 
@@ -29,30 +29,32 @@ export function LoginForm() {
 
 	const form = useForm<LoginValues>({
 		resolver: zodResolver(loginSchema),
-		defaultValues: { email: "", password: "" },
+		defaultValues: { account: "", password: "" },
 	});
 
 	const onSubmit: SubmitHandler<LoginValues> = async (values) => {
 		try {
-			await signIn({ email: values.email, password: values.password });
+			await signIn({ account: values.account, password: values.password });
 			const search = new URLSearchParams(window.location.search);
 			const returnTo = search.get("returnTo") || routePaths.home;
 			await navigate(returnTo);
 		} catch (err: unknown) {
-			toast.error(extractNocoBaseError(err, "E-mail ou senha inválidos"));
+			toast.error(
+				extractNocoBaseError(err, "E-mail, usuário ou senha inválidos"),
+			);
 		}
 	};
 
 	return (
 		<Form form={form} onSubmit={onSubmit} className="space-y-4">
-			<Field name="email">
-				<FieldLabel>E-mail</FieldLabel>
+			<Field name="account">
+				<FieldLabel>E-mail ou usuário</FieldLabel>
 				<FieldControl>
 					<Input
-						type="email"
-						placeholder="seu@email.com"
-						{...form.register("email")}
-						autoComplete="email"
+						type="text"
+						placeholder="seu@email.com ou nome de usuário"
+						{...form.register("account")}
+						autoComplete="username"
 					/>
 				</FieldControl>
 				<FieldError />

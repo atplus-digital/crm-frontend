@@ -17,7 +17,7 @@ import { requestPasswordReset } from "#/features/auth";
 import { routePaths } from "#/routes/route-paths";
 
 const schema = z.object({
-	email: z.string().min(1, "Obrigatório").email("E-mail inválido"),
+	account: z.string().min(1, "Obrigatório"),
 });
 
 type ResetPasswordValues = z.infer<typeof schema>;
@@ -27,14 +27,14 @@ export function ResetPasswordPage() {
 
 	const form = useForm<ResetPasswordValues>({
 		resolver: zodResolver(schema),
-		defaultValues: { email: "" },
+		defaultValues: { account: "" },
 	});
 
 	const { isSubmitting } = form.formState;
 
 	async function onSubmit(values: ResetPasswordValues) {
 		try {
-			await requestPasswordReset(values.email);
+			await requestPasswordReset(values.account);
 			setIsSuccess(true);
 		} catch {
 			toast.error("Erro ao enviar. Tente novamente.");
@@ -45,7 +45,7 @@ export function ResetPasswordPage() {
 		return (
 			<div className="space-y-4 text-center">
 				<p className="text-sm text-muted-foreground">
-					Se o e-mail estiver cadastrado, você receberá as instruções para
+					Se a conta estiver cadastrada, você receberá as instruções para
 					redefinir sua senha.
 				</p>
 				<Link
@@ -60,14 +60,14 @@ export function ResetPasswordPage() {
 
 	return (
 		<Form form={form} onSubmit={onSubmit} className="space-y-4">
-			<Field name="email">
-				<FieldLabel>E-mail</FieldLabel>
+			<Field name="account">
+				<FieldLabel>E-mail ou usuário</FieldLabel>
 				<FieldControl>
 					<Input
-						type="email"
-						placeholder="seu@email.com"
-						{...form.register("email")}
-						autoComplete="email"
+						type="text"
+						placeholder="seu@email.com ou nome de usuário"
+						{...form.register("account")}
+						autoComplete="username"
 					/>
 				</FieldControl>
 				<FieldError />
