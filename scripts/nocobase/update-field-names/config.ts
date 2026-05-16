@@ -1,4 +1,4 @@
-import type { CollectionMap as IxcCollectionMap } from "#/generated/types/d_db_ixcsoft/collections";
+import type { CollectionMap as IxcCollectionMap } from "@/generated/types/d_db_ixcsoft/collections";
 
 type DatasourceFieldNameConfig<TCollections> = {
 	[K in Extract<keyof TCollections, string>]?: TCollections[K] extends object
@@ -34,6 +34,9 @@ export const fieldNameConfig = {
 			obs_cancelamento: "Observação do cancelamento",
 			status: "Status",
 			cep: "CEP",
+			complemento: "Complemento",
+			endereco: "Endereço",
+			numero: "Número",
 		},
 		fn_areceber: {},
 		radusuarios: {},
