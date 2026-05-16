@@ -120,7 +120,9 @@ export function runStandardPipeline<TRuntimeConfig, TPipelineContext>(
 			{
 				title: "Sem alterações",
 				skip: (ctx): string | boolean =>
-					(ctx as LifecycleCtx).hasChanges ? "Alterações detectadas" : false,
+					(ctx as LifecycleCtx).hasChanges
+						? "Sem alterações detectadas"
+						: false,
 				task: async (ctx): Promise<void> =>
 					handleNoChanges(ctx as LifecycleCtx, taskParams),
 			},
