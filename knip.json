@@ -25,6 +25,7 @@
 		"unlisted": "warn"
 	},
 	"ignore": [
+		".agents/**",
 		"src/generated/**",
 		"src/components/ui/**",
 		"scripts/generators/src/lib/pipeline/reports.ts",
