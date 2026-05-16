@@ -208,12 +208,6 @@ export function generateBaseSchema(
 ): string | null {
 	const scalarEntries = _sortScalarEntries(types.scalars);
 	const schemaName = toBaseSchemaName(collectionName);
-
-	// Se não tem campos escalares, não gera schema
-	if (scalarEntries.length === 0) {
-		return null;
-	}
-
 	const lines: string[] = [];
 	lines.push(`export const ${schemaName} = z.object({`);
 

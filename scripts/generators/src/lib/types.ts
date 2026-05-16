@@ -8,7 +8,7 @@ import type { ListrTaskResult } from "listr2";
 // Shared types (re-exported from @shared/types for backward compat)
 // ──────────────────────────────────────────────
 
-export type { OrchestrationTaskRunner, TaskRunner };
+export type { OrchestrationTaskRunner };
 
 // ──────────────────────────────────────────────
 // Generator definitions

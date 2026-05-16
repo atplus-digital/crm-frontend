@@ -134,6 +134,92 @@ function extractRelationFromField(
 	return extractRelationInfo(field, manualRelations, inferRelationsByName);
 }
 
+function normalizeCollectionNames(collectionNames: string[]): string[] {
+	return Array.from(
+		new Set(collectionNames.map((name) => name.trim()).filter(Boolean)),
+	);
+}
+
+function resolveSplitDependents(
+	apiCollections: DataSourceCollection[],
+	splitCollectionNames: string[],
+	relationsMapping: Record<string, ManualRelationMapping> | undefined,
+	inferRelationsByName: boolean,
+): string[] {
+	const normalizedSplitCollections =
+		normalizeCollectionNames(splitCollectionNames);
+	if (normalizedSplitCollections.length === 0) {
+		return [];
+	}
+
+	const splitSet = new Set(normalizedSplitCollections);
+	const dependentCollections = new Set<string>();
+	const collectionLookup = new Map(
+		apiCollections.map((collection) => [collection.name, collection]),
+	);
+
+	const addDependent = (collectionName: string | null | undefined): void => {
+		const normalizedName = collectionName?.trim();
+		if (!normalizedName || splitSet.has(normalizedName)) {
+			return;
+		}
+		dependentCollections.add(normalizedName);
+	};
+
+	// Dependências de saída: splitCollection -> targetCollection
+	for (const splitCollectionName of normalizedSplitCollections) {
+		const splitCollection = collectionLookup.get(splitCollectionName);
+		const splitManualMapping = relationsMapping?.[splitCollectionName];
+
+		for (const relationDef of Object.values(splitManualMapping ?? {})) {
+			addDependent(relationDef.target);
+		}
+
+		for (const field of splitCollection?.fields ?? []) {
+			const relation = extractRelationFromField(
+				field,
+				splitManualMapping,
+				inferRelationsByName,
+			);
+			addDependent(relation?.targetCollection);
+		}
+	}
+
+	// Dependências de entrada: otherCollection -> splitCollection
+	for (const apiCollection of apiCollections) {
+		const collectionName = apiCollection.name?.trim();
+		if (!collectionName || splitSet.has(collectionName)) {
+			continue;
+		}
+
+		const manualMapping = relationsMapping?.[collectionName];
+		const isManualDependent = Object.values(manualMapping ?? {}).some((rel) =>
+			splitSet.has(rel.target.trim()),
+		);
+
+		if (isManualDependent) {
+			dependentCollections.add(collectionName);
+			continue;
+		}
+
+		const isFieldDependent = (apiCollection.fields ?? []).some((field) => {
+			const relation = extractRelationFromField(
+				field,
+				manualMapping,
+				inferRelationsByName,
+			);
+			const targetCollection = relation?.targetCollection?.trim();
+			return Boolean(targetCollection && splitSet.has(targetCollection));
+		});
+
+		if (isFieldDependent) {
+			dependentCollections.add(collectionName);
+		}
+	}
+
+	return Array.from(dependentCollections);
+}
+
 // ──────────────────────────────────────────────
 // Stage: fetch-schemas
 // ──────────────────────────────────────────────
@@ -169,6 +255,7 @@ export async function fetchSchemas(
 	}
 
 	const client: DataSourceClient = pipelineCtx.client;
+	const inferRelationsByName = dataSource.inferRelationsByName ?? false;
 
 	// Fetch raw API collection list for relation resolution and optional expansion
 	let apiCollections: DataSourceCollection[];
@@ -182,30 +269,44 @@ export async function fetchSchemas(
 	}
 
 	// 1. Resolve collection names from config
-	const explicitCollections = [
+	const explicitCollections = normalizeCollectionNames([
 		...(dataSource.collections ?? []),
 		...(dataSource.splitCollections ?? []),
-	];
+	]);
+	const includeAllCollections = dataSource.includeAllCollections === true;
+	const includeDependents =
+		!includeAllCollections && dataSource.includeDependents === true;
 
-	const resolvedCollections = dataSource.includeAllCollections
+	const dependentCollections = includeDependents
+		? resolveSplitDependents(
+				apiCollections,
+				dataSource.splitCollections ?? [],
+				pipelineCtx.relations,
+				inferRelationsByName,
+			)
+		: [];
+
+	const resolvedCollections = includeAllCollections
 		? [
 				...explicitCollections,
 				...apiCollections.map((collection) => collection.name),
 			]
-		: explicitCollections;
+		: [...explicitCollections, ...dependentCollections];
 
-	const normalizedCollections = Array.from(
-		new Set(resolvedCollections.map((name) => name.trim()).filter(Boolean)),
-	);
+	const normalizedCollections = normalizeCollectionNames(resolvedCollections);
 
 	if (normalizedCollections.length === 0) {
 		throw new Error(
 			`DataSource '${dataSource.name}' não possui collections para processar. ` +
-				"Configure collections/splitCollections ou habilite includeAllCollections em datasources.ts.",
+				"Configure collections/splitCollections, habilite includeAllCollections ou use includeDependents em datasources.ts.",
 		);
 	}
 
-	task.output = `📦 Processando ${normalizedCollections.length} collection(s) do datasource '${dataSource.name}'...`;
+	const dependentsSummary =
+		includeDependents && dependentCollections.length > 0
+			? ` (+${dependentCollections.length} dependente(s))`
+			: "";
+	task.output = `📦 Processando ${normalizedCollections.length} collection(s) do datasource '${dataSource.name}'${dependentsSummary}...`;
 
 	const collectionLookup = new Map(apiCollections.map((c) => [c.name, c]));
 	const knownCollections = new Set([
@@ -215,7 +316,6 @@ export async function fetchSchemas(
 
 	// 2. Process fields from the API response for configured collections
 	const excludeFields = new Set(dataSource.excludeFields ?? []);
-	const inferRelationsByName = dataSource.inferRelationsByName ?? false;
 
 	const entries: Array<{
 		collectionName: string;
@@ -344,7 +444,10 @@ export async function fetchSchemas(
 		...context,
 		pipelineContext: {
 			...pipelineCtx,
-			collections: explicitCollections.map((name) => ({ name })),
+			collections: (includeDependents
+				? normalizedCollections
+				: explicitCollections
+			).map((name) => ({ name })),
 			collectionTypes,
 			unresolvedRelations: allUnresolved,
 		} satisfies GenerateTypesPipelineCtx,

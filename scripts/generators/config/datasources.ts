@@ -5,7 +5,8 @@ export const dataSourceConfigs: DataSourceGenerationConfig[] = [
 		name: "nocobase",
 		type: "nocobase",
 		dataSource: "main",
-		includeAllCollections: true,
+		// includeAllCollections: true,
+		includeDependents: true,
 		inferRelationsByName: false,
 		splitCollections: [
 			"users",
@@ -24,7 +25,8 @@ export const dataSourceConfigs: DataSourceGenerationConfig[] = [
 		name: "ixc",
 		type: "nocobase",
 		dataSource: "d_db_ixcsoft",
-		includeAllCollections: true,
+		// includeAllCollections: true,
+		includeDependents: true,
 		splitCollections: [
 			"cliente",
 			"cliente_contrato",

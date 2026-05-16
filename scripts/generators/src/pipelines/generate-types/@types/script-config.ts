@@ -92,6 +92,13 @@ interface BaseDataSourceGenerationConfig {
 	 */
 	includeAllCollections?: boolean;
 	/**
+	 * Quando includeAllCollections estiver desabilitado, inclui automaticamente
+	 * collections relacionadas às splitCollections.
+	 * As dependentes entram como não-split (pasta "other").
+	 * @default false
+	 */
+	includeDependents?: boolean;
+	/**
 	 * Diretório de saída opcional por datasource.
 	 * Quando omitido, o script deriva automaticamente de ScriptConfig.outputDir
 	 * usando a chave dataSource (ex: "main" -> "nocobase").
