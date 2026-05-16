@@ -31,13 +31,15 @@ export async function runUpdateFieldNamesPipeline(): Promise<void> {
 
 	const tasks = [
 		{
-			title: "Resolvendo configuração e credenciais",
+			title: "Resolvendo configurações",
 			task: async (ctx: PipelineContext, task: TaskRunner) => {
 				await resolveConfig(ctx, task);
 			},
 		},
 		{
-			title: "Buscando uiSchema existente dos campos",
+			title: "Buscando dados dos campos",
+			skip: (ctx: PipelineContext) =>
+				ctx.updates.length === 0 ? "Nenhum configurado." : false,
 			task: async (ctx: PipelineContext, task: TaskRunner) => {
 				await fetchExistingFields(ctx, task);
 			},

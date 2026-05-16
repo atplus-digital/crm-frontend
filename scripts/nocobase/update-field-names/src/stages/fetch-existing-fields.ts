@@ -89,5 +89,10 @@ export async function fetchExistingFields(
 	}
 
 	ctx.updates = pendingUpdates;
-	task.output = `Filtragem concluída: ${skippedAlreadyUpdated} campo(s) já atualizado(s), ${ctx.updates.length} pendente(s).`;
+
+	if (pendingUpdates.length === 0) {
+		task.title = `${skippedAlreadyUpdated} campo${skippedAlreadyUpdated === 1 ? "" : "s"} já atualizados`;
+		return;
+	}
+	task.output = `${ctx.updates.length}/${skippedAlreadyUpdated} pendente${ctx.updates.length === 1 ? "" : "s"}.`;
 }

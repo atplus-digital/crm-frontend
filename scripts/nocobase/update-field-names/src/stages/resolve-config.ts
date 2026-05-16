@@ -39,7 +39,7 @@ export async function resolveConfig(
 	ctx.updates = updates;
 
 	if (updates.length === 0) {
-		task.output = "Nenhum campo configurado para atualização.";
+		task.title = "Nenhum campo configurado para atualização.";
 		return;
 	}
 
