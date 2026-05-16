@@ -15,10 +15,10 @@ import type {
 import type { Empresas, EmpresasRelations } from "./empresas";
 import type { FFuncionarios, FFuncionariosRelations } from "./funcionarios";
 import type { Negociacoes, NegociacoesRelations } from "./negociacoes";
-import type { _3advfk0gv0z, _3advfk0gv0zRelations } from "./other/3advfk0gv0z";
 import type { _902ctke5dhq, _902ctke5dhqRelations } from "./other/902ctke5dhq";
 import type { Acessos, AcessosRelations } from "./other/acessos";
 import type { Aegis, AegisRelations } from "./other/aegis";
+import type { AiEmployees, AiEmployeesRelations } from "./other/aiemployees";
 import type {
 	AnexosNegociacoes,
 	AnexosNegociacoesRelations,
@@ -46,14 +46,6 @@ import type {
 	CabosOpticosRelations,
 } from "./other/cabos-opticos";
 import type { Cargos, CargosRelations } from "./other/cargos";
-import type {
-	ColaboradoresDoSetor,
-	ColaboradoresDoSetorRelations,
-} from "./other/colaboradores-do-setor";
-import type {
-	ColaboradoresXSetor,
-	ColaboradoresXSetorRelations,
-} from "./other/colaboradores-x-setor";
 import type {
 	ComentarioViagem,
 	ComentarioViagemRelations,
@@ -117,15 +109,7 @@ import type {
 	EquipamentosEmPredios,
 	EquipamentosEmPrediosRelations,
 } from "./other/equipamentos-em-predios";
-import type {
-	EventosDemanda,
-	EventosDemandaRelations,
-} from "./other/eventos-demanda";
 import type { Facilidade, FacilidadeRelations } from "./other/facilidade";
-import type {
-	FFkOrigemTipos,
-	FFkOrigemTiposRelations,
-} from "./other/fk-origem-tipos";
 import type {
 	FornecedoresTelecom,
 	FornecedoresTelecomRelations,
@@ -139,16 +123,11 @@ import type {
 	FotoFuncionariosRelations,
 } from "./other/foto-funcionarios";
 import type { Historico, HistoricoRelations } from "./other/historico";
-import type { Ij93gv1hx9m, Ij93gv1hx9mRelations } from "./other/ij93gv1hx9m";
 import type {
 	InfoArquivos,
 	InfoArquivosRelations,
 } from "./other/info-arquivos";
 import type { InfoAso, InfoAsoRelations } from "./other/info-aso";
-import type {
-	InterfacesEquipamentos,
-	InterfacesEquipamentosRelations,
-} from "./other/interfaces-equipamentos";
 import type {
 	ItensPacotes,
 	ItensPacotesRelations,
@@ -161,15 +140,9 @@ import type {
 	LinhaCorporativa,
 	LinhaCorporativaRelations,
 } from "./other/linha-corporativa";
-import type {
-	LinksIndicadoresUsuarios,
-	LinksIndicadoresUsuariosRelations,
-} from "./other/links-indicadores-usuarios";
 import type { Logs, LogsRelations } from "./other/logs";
 import type { LogsCargos, LogsCargosRelations } from "./other/logs-cargos";
 import type { ModulosSfp, ModulosSfpRelations } from "./other/modulos-sfp";
-import type { Muu3vsavv3h, Muu3vsavv3hRelations } from "./other/muu3vsavv3h";
-import type { Na4eifobesz, Na4eifobeszRelations } from "./other/na4eifobesz";
 import type {
 	NegociacoesComentarios,
 	NegociacoesComentariosRelations,
@@ -178,7 +151,6 @@ import type {
 	NegociacoesItens,
 	NegociacoesItensRelations,
 } from "./other/negociacoes-itens";
-import type { Nukww9tmq83, Nukww9tmq83Relations } from "./other/nukww9tmq83";
 import type { OeQualirun, OeQualirunRelations } from "./other/oe-qualirun";
 import type { OpcoesSmp, OpcoesSmpRelations } from "./other/opcoes-smp";
 import type {
@@ -190,10 +162,6 @@ import type {
 	OpcoesStfcTemplate,
 	OpcoesStfcTemplateRelations,
 } from "./other/opcoes-stfc-template";
-import type {
-	OrigemXTipos,
-	OrigemXTiposRelations,
-} from "./other/origem-x-tipos";
 import type { P10scfhrhkw, P10scfhrhkwRelations } from "./other/p10scfhrhkw";
 import type { Pacotes, PacotesRelations } from "./other/pacotes";
 import type { Parentesco, ParentescoRelations } from "./other/parentesco";
@@ -216,27 +184,17 @@ import type {
 	QualirunProcessosRelations,
 } from "./other/qualirun-processos";
 import type {
-	FRecursosFilho,
-	FRecursosFilhoRelations,
-} from "./other/recursos-filho";
-import type {
 	RecursosViagem,
 	RecursosViagemRelations,
 } from "./other/recursos-viagem";
-import type { Rguxtr9p91d, Rguxtr9p91dRelations } from "./other/rguxtr9p91d";
 import type { Roles, RolesRelations } from "./other/roles";
 import type { Servicos, ServicosRelations } from "./other/servicos";
-import type {
-	ServicosXServicos,
-	ServicosXServicosRelations,
-} from "./other/servicos-x-servicos";
 import type { Setor, SetorRelations } from "./other/setor";
 import type {
 	SistemasAcessos,
 	SistemasAcessosRelations,
 } from "./other/sistemas-acessos";
 import type { Sites, SitesRelations } from "./other/sites";
-import type { Siurxeb1juy, Siurxeb1juyRelations } from "./other/siurxeb1juy";
 import type {
 	SolicitacaoCompras,
 	SolicitacaoComprasRelations,
@@ -288,33 +246,16 @@ import type {
 	TemplatesAtendimentoN1Relations,
 } from "./other/templates-atendimento-n1";
 import type {
-	TemplatesXOrdensDeServico,
-	TemplatesXOrdensDeServicoRelations,
-} from "./other/templates-x-ordens-de-servico";
-import type {
-	TipoXTemplates,
-	TipoXTemplatesRelations,
-} from "./other/tipo-x-templates";
-import type {
 	TrocasdetitularidadeComentarios,
 	TrocasdetitularidadeComentariosRelations,
 } from "./other/trocasdetitularidade-comentarios";
 import type { Turnos, TurnosRelations } from "./other/turnos";
 import type { UtiliCabos, UtiliCabosRelations } from "./other/utili-cabos";
 import type {
-	VendedorCupons,
-	VendedorCuponsRelations,
-} from "./other/vendedor-cupons";
-import type {
 	ViagemSolicitacao,
 	ViagemSolicitacaoRelations,
 } from "./other/viagem-solicitacao";
 import type { VlanTags, VlanTagsRelations } from "./other/vlan-tags";
-import type {
-	VwMermaidPorServico,
-	VwMermaidPorServicoRelations,
-} from "./other/vw-mermaid-por-servico";
-import type { Ynltolqbwj1, Ynltolqbwj1Relations } from "./other/ynltolqbwj1";
 import type { Zapsign, ZapsignRelations } from "./other/zapsign";
 import type { Pessoas, PessoasRelations } from "./pessoas";
 import type {
@@ -330,19 +271,11 @@ import type { Users, UsersRelations } from "./users";
 
 // Tipo union com todas as collections disponíveis
 export type CollectionName =
-	| "colaboradores_do_setor"
-	| "colaboradores_x_setor"
+	| "aiEmployees"
 	| "departments"
-	| "eventos_demanda"
 	| "f_contatos"
-	| "f_fk_origem_tipos"
 	| "f_funcionarios"
-	| "f_recursos_filho"
-	| "interfaces_equipamentos"
-	| "links_indicadores_usuarios"
-	| "origem_x_tipos"
 	| "roles"
-	| "t_3advfk0gv0z"
 	| "t_902ctke5dhq"
 	| "t_acessos"
 	| "t_aegis"
@@ -382,7 +315,6 @@ export type CollectionName =
 	| "t_foto_aniversario"
 	| "t_foto_funcionarios"
 	| "t_historico"
-	| "t_ij93gv1hx9m"
 	| "t_info_arquivos"
 	| "t_info_aso"
 	| "t_itens_pacotes"
@@ -391,12 +323,9 @@ export type CollectionName =
 	| "t_logs"
 	| "t_logs_cargos"
 	| "t_modulos_sfp"
-	| "t_muu3vsavv3h"
-	| "t_na4eifobesz"
 	| "t_negociacoes"
 	| "t_negociacoes_comentarios"
 	| "t_negociacoes_itens"
-	| "t_nukww9tmq83"
 	| "t_oe_qualirun"
 	| "t_opcoes_smp"
 	| "t_opcoes_smp_template"
@@ -414,13 +343,10 @@ export type CollectionName =
 	| "t_qualirun_processos"
 	| "t_recursos_viagem"
 	| "t_registros_de_contato"
-	| "t_rguxtr9p91d"
 	| "t_servicos"
-	| "t_servicos_x_servicos"
 	| "t_setor"
 	| "t_sistemas_acessos"
 	| "t_sites"
-	| "t_siurxeb1juy"
 	| "t_solicitacao_compras"
 	| "t_suspensao_contrato"
 	| "t_tabela_geral"
@@ -442,28 +368,15 @@ export type CollectionName =
 	| "t_utili_cabos"
 	| "t_viagem_solicitacao"
 	| "t_vlan_tags"
-	| "t_ynltolqbwj1"
 	| "t_zapsign"
-	| "templates_x_ordens_de_servico"
-	| "tipo_x_templates"
-	| "users"
-	| "vendedor_cupons"
-	| "vw_mermaid_por_servico";
+	| "users";
 
 export interface CollectionMap {
-	colaboradores_do_setor: ColaboradoresDoSetor;
-	colaboradores_x_setor: ColaboradoresXSetor;
+	aiEmployees: AiEmployees;
 	departments: Departments;
-	eventos_demanda: EventosDemanda;
 	f_contatos: FContatos;
-	f_fk_origem_tipos: FFkOrigemTipos;
 	f_funcionarios: FFuncionarios;
-	f_recursos_filho: FRecursosFilho;
-	interfaces_equipamentos: InterfacesEquipamentos;
-	links_indicadores_usuarios: LinksIndicadoresUsuarios;
-	origem_x_tipos: OrigemXTipos;
 	roles: Roles;
-	t_3advfk0gv0z: _3advfk0gv0z;
 	t_902ctke5dhq: _902ctke5dhq;
 	t_acessos: Acessos;
 	t_aegis: Aegis;
@@ -503,7 +416,6 @@ export interface CollectionMap {
 	t_foto_aniversario: FotoAniversario;
 	t_foto_funcionarios: FotoFuncionarios;
 	t_historico: Historico;
-	t_ij93gv1hx9m: Ij93gv1hx9m;
 	t_info_arquivos: InfoArquivos;
 	t_info_aso: InfoAso;
 	t_itens_pacotes: ItensPacotes;
@@ -512,12 +424,9 @@ export interface CollectionMap {
 	t_logs: Logs;
 	t_logs_cargos: LogsCargos;
 	t_modulos_sfp: ModulosSfp;
-	t_muu3vsavv3h: Muu3vsavv3h;
-	t_na4eifobesz: Na4eifobesz;
 	t_negociacoes: Negociacoes;
 	t_negociacoes_comentarios: NegociacoesComentarios;
 	t_negociacoes_itens: NegociacoesItens;
-	t_nukww9tmq83: Nukww9tmq83;
 	t_oe_qualirun: OeQualirun;
 	t_opcoes_smp: OpcoesSmp;
 	t_opcoes_smp_template: OpcoesSmpTemplate;
@@ -535,13 +444,10 @@ export interface CollectionMap {
 	t_qualirun_processos: QualirunProcessos;
 	t_recursos_viagem: RecursosViagem;
 	t_registros_de_contato: RegistrosDeContato;
-	t_rguxtr9p91d: Rguxtr9p91d;
 	t_servicos: Servicos;
-	t_servicos_x_servicos: ServicosXServicos;
 	t_setor: Setor;
 	t_sistemas_acessos: SistemasAcessos;
 	t_sites: Sites;
-	t_siurxeb1juy: Siurxeb1juy;
 	t_solicitacao_compras: SolicitacaoCompras;
 	t_suspensao_contrato: SuspensaoContrato;
 	t_tabela_geral: TabelaGeral;
@@ -563,29 +469,16 @@ export interface CollectionMap {
 	t_utili_cabos: UtiliCabos;
 	t_viagem_solicitacao: ViagemSolicitacao;
 	t_vlan_tags: VlanTags;
-	t_ynltolqbwj1: Ynltolqbwj1;
 	t_zapsign: Zapsign;
-	templates_x_ordens_de_servico: TemplatesXOrdensDeServico;
-	tipo_x_templates: TipoXTemplates;
 	users: Users;
-	vendedor_cupons: VendedorCupons;
-	vw_mermaid_por_servico: VwMermaidPorServico;
 }
 
 export interface CollectionRelationsMap {
-	colaboradores_do_setor: ColaboradoresDoSetorRelations;
-	colaboradores_x_setor: ColaboradoresXSetorRelations;
+	aiEmployees: AiEmployeesRelations;
 	departments: DepartmentsRelations;
-	eventos_demanda: EventosDemandaRelations;
 	f_contatos: FContatosRelations;
-	f_fk_origem_tipos: FFkOrigemTiposRelations;
 	f_funcionarios: FFuncionariosRelations;
-	f_recursos_filho: FRecursosFilhoRelations;
-	interfaces_equipamentos: InterfacesEquipamentosRelations;
-	links_indicadores_usuarios: LinksIndicadoresUsuariosRelations;
-	origem_x_tipos: OrigemXTiposRelations;
 	roles: RolesRelations;
-	t_3advfk0gv0z: _3advfk0gv0zRelations;
 	t_902ctke5dhq: _902ctke5dhqRelations;
 	t_acessos: AcessosRelations;
 	t_aegis: AegisRelations;
@@ -625,7 +518,6 @@ export interface CollectionRelationsMap {
 	t_foto_aniversario: FotoAniversarioRelations;
 	t_foto_funcionarios: FotoFuncionariosRelations;
 	t_historico: HistoricoRelations;
-	t_ij93gv1hx9m: Ij93gv1hx9mRelations;
 	t_info_arquivos: InfoArquivosRelations;
 	t_info_aso: InfoAsoRelations;
 	t_itens_pacotes: ItensPacotesRelations;
@@ -634,12 +526,9 @@ export interface CollectionRelationsMap {
 	t_logs: LogsRelations;
 	t_logs_cargos: LogsCargosRelations;
 	t_modulos_sfp: ModulosSfpRelations;
-	t_muu3vsavv3h: Muu3vsavv3hRelations;
-	t_na4eifobesz: Na4eifobeszRelations;
 	t_negociacoes: NegociacoesRelations;
 	t_negociacoes_comentarios: NegociacoesComentariosRelations;
 	t_negociacoes_itens: NegociacoesItensRelations;
-	t_nukww9tmq83: Nukww9tmq83Relations;
 	t_oe_qualirun: OeQualirunRelations;
 	t_opcoes_smp: OpcoesSmpRelations;
 	t_opcoes_smp_template: OpcoesSmpTemplateRelations;
@@ -657,13 +546,10 @@ export interface CollectionRelationsMap {
 	t_qualirun_processos: QualirunProcessosRelations;
 	t_recursos_viagem: RecursosViagemRelations;
 	t_registros_de_contato: RegistrosDeContatoRelations;
-	t_rguxtr9p91d: Rguxtr9p91dRelations;
 	t_servicos: ServicosRelations;
-	t_servicos_x_servicos: ServicosXServicosRelations;
 	t_setor: SetorRelations;
 	t_sistemas_acessos: SistemasAcessosRelations;
 	t_sites: SitesRelations;
-	t_siurxeb1juy: Siurxeb1juyRelations;
 	t_solicitacao_compras: SolicitacaoComprasRelations;
 	t_suspensao_contrato: SuspensaoContratoRelations;
 	t_tabela_geral: TabelaGeralRelations;
@@ -685,30 +571,17 @@ export interface CollectionRelationsMap {
 	t_utili_cabos: UtiliCabosRelations;
 	t_viagem_solicitacao: ViagemSolicitacaoRelations;
 	t_vlan_tags: VlanTagsRelations;
-	t_ynltolqbwj1: Ynltolqbwj1Relations;
 	t_zapsign: ZapsignRelations;
-	templates_x_ordens_de_servico: TemplatesXOrdensDeServicoRelations;
-	tipo_x_templates: TipoXTemplatesRelations;
 	users: UsersRelations;
-	vendedor_cupons: VendedorCuponsRelations;
-	vw_mermaid_por_servico: VwMermaidPorServicoRelations;
 }
 
 // Lista de todas as collections (para uso em runtime)
 export const COLLECTIONS = [
-	"colaboradores_do_setor",
-	"colaboradores_x_setor",
+	"aiEmployees",
 	"departments",
-	"eventos_demanda",
 	"f_contatos",
-	"f_fk_origem_tipos",
 	"f_funcionarios",
-	"f_recursos_filho",
-	"interfaces_equipamentos",
-	"links_indicadores_usuarios",
-	"origem_x_tipos",
 	"roles",
-	"t_3advfk0gv0z",
 	"t_902ctke5dhq",
 	"t_acessos",
 	"t_aegis",
@@ -748,7 +621,6 @@ export const COLLECTIONS = [
 	"t_foto_aniversario",
 	"t_foto_funcionarios",
 	"t_historico",
-	"t_ij93gv1hx9m",
 	"t_info_arquivos",
 	"t_info_aso",
 	"t_itens_pacotes",
@@ -757,12 +629,9 @@ export const COLLECTIONS = [
 	"t_logs",
 	"t_logs_cargos",
 	"t_modulos_sfp",
-	"t_muu3vsavv3h",
-	"t_na4eifobesz",
 	"t_negociacoes",
 	"t_negociacoes_comentarios",
 	"t_negociacoes_itens",
-	"t_nukww9tmq83",
 	"t_oe_qualirun",
 	"t_opcoes_smp",
 	"t_opcoes_smp_template",
@@ -780,13 +649,10 @@ export const COLLECTIONS = [
 	"t_qualirun_processos",
 	"t_recursos_viagem",
 	"t_registros_de_contato",
-	"t_rguxtr9p91d",
 	"t_servicos",
-	"t_servicos_x_servicos",
 	"t_setor",
 	"t_sistemas_acessos",
 	"t_sites",
-	"t_siurxeb1juy",
 	"t_solicitacao_compras",
 	"t_suspensao_contrato",
 	"t_tabela_geral",
@@ -808,11 +674,6 @@ export const COLLECTIONS = [
 	"t_utili_cabos",
 	"t_viagem_solicitacao",
 	"t_vlan_tags",
-	"t_ynltolqbwj1",
 	"t_zapsign",
-	"templates_x_ordens_de_servico",
-	"tipo_x_templates",
 	"users",
-	"vendedor_cupons",
-	"vw_mermaid_por_servico",
 ] as const;

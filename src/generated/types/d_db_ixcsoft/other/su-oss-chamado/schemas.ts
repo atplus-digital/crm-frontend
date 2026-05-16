@@ -8,11 +8,9 @@ import { z } from "zod";
 import { clienteBaseSchema } from "../../cliente/schemas";
 import { cliente_contratoBaseSchema } from "../../cliente-contrato/schemas";
 import { su_ticketBaseSchema } from "../../su-ticket/schemas";
-import { empresa_setorBaseSchema } from "../empresa-setor/schemas";
 import { funcionariosBaseSchema } from "../funcionarios/schemas";
 import { su_diagnosticoBaseSchema } from "../su-diagnostico/schemas";
 import { su_oss_assuntoBaseSchema } from "../su-oss-assunto/schemas";
-import { wfl_tarefaBaseSchema } from "../wfl-tarefa/schemas";
 import {
 	su_oss_chamadoGeraComissaoSchema,
 	su_oss_chamadoHabilitaAssinaturaClienteSchema,
@@ -123,9 +121,9 @@ export const su_oss_chamadoRelationSchema = z.object({
 	f_diagnosticos: z.lazy(() => su_diagnosticoBaseSchema.nullable()),
 	f_nc_atendimentos: z.lazy(() => su_ticketBaseSchema.nullable()),
 	f_pzurkpjz7ub: z.lazy(() => su_oss_assuntoBaseSchema.nullable()),
-	f_tarefa: z.lazy(() => wfl_tarefaBaseSchema.nullable()),
+	f_tarefa: z.number().nullable(),
 	f_vpc23waj8bf: z.lazy(() => clienteBaseSchema.nullable()),
-	f_wnstu9yvv3j: z.lazy(() => empresa_setorBaseSchema.nullable()),
+	f_wnstu9yvv3j: z.number().nullable(),
 });
 
 // ============================================================

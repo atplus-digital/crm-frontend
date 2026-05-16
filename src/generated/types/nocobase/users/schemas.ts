@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { aiemployeesBaseSchema } from "../other/aiemployees/schemas";
 import { departmentsBaseSchema } from "../other/departments/schemas";
 import { rolesBaseSchema } from "../other/roles/schemas";
 
@@ -41,7 +42,7 @@ export const usersBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const usersRelationSchema = z.object({
-	aiEmployees: z.number().array(),
+	aiEmployees: z.lazy(() => aiemployeesBaseSchema.array()),
 	createdBy: z.lazy(() => usersBaseSchema.nullable()),
 	departments: z.lazy(() => departmentsBaseSchema.array()),
 	mainDepartment: z.lazy(() => departmentsBaseSchema.nullable()),

@@ -5,7 +5,6 @@
  */
 
 import { z } from "zod";
-import { funcionarios_arquivosBaseSchema } from "../funcionarios-arquivos/schemas";
 import {
 	funcionariosAtivoSchema,
 	funcionariosCamisetaSchema,
@@ -172,9 +171,7 @@ export const funcionariosBaseSchema = z.object({
 // RELATION SCHEMA (campos de relação)
 // ============================================================
 export const funcionariosRelationSchema = z.object({
-	f_funcionarios_arquivos: z.lazy(() =>
-		funcionarios_arquivosBaseSchema.array(),
-	),
+	f_funcionarios_arquivos: z.number().array(),
 });
 
 // ============================================================
