@@ -2,17 +2,15 @@
  * Types for the update-field-names pipeline.
  */
 
-import type { TaskRunner } from "@shared/types";
-
 /** Credentials for the NocoBase API */
-export interface NocoBaseCredentials {
+interface NocoBaseCredentials {
 	baseUrl: string;
 	token: string;
 	timeoutMs: number;
 }
 
 /** A single field update request */
-export interface FieldUpdateRequest {
+interface FieldUpdateRequest {
 	datasourceKey: string;
 	collectionName: string;
 	fieldName: string;
@@ -20,7 +18,7 @@ export interface FieldUpdateRequest {
 }
 
 /** Result of a single field update */
-export interface FieldUpdateResult {
+interface FieldUpdateResult {
 	request: FieldUpdateRequest;
 	success: boolean;
 	statusCode?: number;
@@ -36,7 +34,7 @@ export interface FieldUpdateResult {
 export type UiSchema = Record<string, unknown>;
 
 /** Lookup map: `${datasourceKey}.${collectionName}.${fieldName}` → uiSchema */
-export type FieldUiSchemaLookup = Map<string, UiSchema | undefined>;
+type FieldUiSchemaLookup = Map<string, UiSchema | undefined>;
 
 /** Pipeline context carried through all Listr2 tasks */
 export interface PipelineContext {
@@ -45,9 +43,3 @@ export interface PipelineContext {
 	fieldLookup: FieldUiSchemaLookup;
 	results: FieldUpdateResult[];
 }
-
-/** A stage function signature matching the Listr2 task pattern */
-export type PipelineStage = (
-	ctx: PipelineContext,
-	task: TaskRunner,
-) => Promise<void> | ReturnType<TaskRunner["newListr"]> | void;
