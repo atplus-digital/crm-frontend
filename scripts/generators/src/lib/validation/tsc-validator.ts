@@ -3,8 +3,8 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 
 const TSCONFIG_CANDIDATES = [
-	path.resolve(process.cwd(), "scripts/generators/tsconfig.generated.json"),
-	path.resolve(process.cwd(), "scripts/tsconfig.generated.json"),
+	path.resolve(process.cwd(), "scripts/generators/tsconfig.json"),
+	path.resolve(process.cwd(), "scripts/tsconfig.json"),
 ];
 
 function resolveTsconfigPath(): string {

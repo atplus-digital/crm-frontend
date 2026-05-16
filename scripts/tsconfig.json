@@ -1,0 +1,15 @@
+{
+	"extends": "../tsconfig.json",
+	"include": ["**/*.ts"],
+	"compilerOptions": {
+		"paths": {
+			"#/*": ["./src/*"],
+			"@/*": ["./src/*"],
+			"@scripts/*": ["./scripts/*"],
+			"@generators/*": ["./scripts/generators/src/*"],
+			"@shared/*": ["./scripts/shared/*"]
+		},
+		"lib": ["ES2022"],
+		"types": ["node"]
+	}
+}
