@@ -85,6 +85,11 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 				defaultOpen: true,
 				children: [
 					{
+						label: "Contratos",
+						icon: <FileText />,
+						to: routePaths.cs_contratos,
+					},
+					{
 						label: "Pessoas",
 						icon: <UserRound />,
 						to: routePaths.cs_pessoas,
@@ -108,11 +113,6 @@ export const APP_NAV_SECTIONS: NavSection[] = [
 				to: routePaths.cs_negociacoes,
 				defaultOpen: true,
 				children: [
-					{
-						label: "Contratos",
-						icon: <FileText />,
-						to: routePaths.cs_contratos,
-					},
 					{
 						label: "Negociações",
 						icon: <Handshake />,
